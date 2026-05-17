@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>MVP Fluxos Agênticos de AI - v3</title>
+<style>
+  @page { margin: 2cm; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; color: #1a1a2e; line-height: 1.6; font-size: 11pt; }
+  .cover { page-break-after: always; text-align: center; padding-top: 8cm; }
+  .cover h1 { font-size: 28pt; color: #1a1a2e; margin-bottom: 0.5cm; }
+  .cover .subtitle { font-size: 16pt; color: #00d4aa; margin-bottom: 1cm; }
+  .cover .meta { font-size: 10pt; color: #666; margin-top: 3cm; }
+  .cover .logo { font-size: 36pt; font-weight: bold; color: #1a1a2e; margin-bottom: 0.5cm; }
+  
+  h2 { color: #1a1a2e; border-bottom: 3px solid #00d4aa; padding-bottom: 4px; margin-top: 1.5cm; margin-bottom: 0.5cm; font-size: 16pt; }
+  h3 { color: #1a1a2e; margin-top: 0.8cm; margin-bottom: 0.3cm; font-size: 13pt; }
+  h4 { color: #ff6b35; margin-top: 0.5cm; margin-bottom: 0.2cm; font-size: 11pt; }
+  p { margin-bottom: 0.3cm; }
+  ul, ol { margin-left: 0.5cm; margin-bottom: 0.3cm; }
+  li { margin-bottom: 0.15cm; }
+  
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 9pt; font-weight: bold; margin-right: 4px; }
+  .badge-s { background: #1a1a2e; color: white; }
+  .badge-a { background: #00d4aa; color: #1a1a2e; }
+  .badge-b { background: #ff6b35; color: white; }
+  .badge-c { background: #e0e0e0; color: #333; }
+  .badge-d { background: #f5f5f5; color: #999; }
+  
+  table { width: 100%; border-collapse: collapse; margin: 0.5cm 0; font-size: 9pt; }
+  th { background: #1a1a2e; color: white; padding: 6px 8px; text-align: left; }
+  td { padding: 5px 8px; border-bottom: 1px solid #e0e0e0; }
+  tr:nth-child(even) { background: #f9f9f9; }
+  
+  .callout { background: #f0fdfa; border-left: 4px solid #00d4aa; padding: 10px 14px; margin: 0.5cm 0; border-radius: 0 4px 4px 0; }
+  .callout-warn { background: #fff7ed; border-left: 4px solid #ff6b35; }
+  .callout-info { background: #eef2ff; border-left: 4px solid #6366f1; }
+  
+  .page-break { page-break-before: always; }
+  .section { page-break-inside: avoid; }
+  
+  .metrics-grid { display: flex; gap: 0.5cm; margin: 0.5cm 0; flex-wrap: wrap; }
+  .metric-card { flex: 1; min-width: 2.5cm; background: #f8f8f8; border-radius: 6px; padding: 10px; text-align: center; }
+  .metric-card .value { font-size: 22pt; font-weight: bold; color: #1a1a2e; }
+  .metric-card .label { font-size: 8pt; color: #666; margin-top: 2px; }
+  
+  .toc { margin: 1cm 0; }
+  .toc a { color: #1a1a2e; text-decoration: none; display: block; padding: 4px 0; }
+  .toc a:hover { color: #00d4aa; }
+  
+  .agent-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.3cm; margin: 0.5cm 0; }
+  .agent-card { border: 1px solid #e0e0e0; border-radius: 6px; padding: 8px; }
+  .agent-card .name { font-weight: bold; color: #1a1a2e; }
+  .agent-card .model { font-size: 8pt; color: #666; }
+  .agent-card .desc { font-size: 9pt; margin-top: 3px; }
+  
+  footer { text-align: center; font-size: 8pt; color: #999; margin-top: 2cm; padding-top: 0.5cm; border-top: 1px solid #e0e0e0; }
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+<div class="cover">
+  <div class="logo">PERETTO &amp; CO</div>
+  <h1>MVP Fluxos Agênticos de AI</h1>
+  <div class="subtitle">Arquitetura de Agentes · Modelos Gratuitos · Orquestração Assíncrona</div>
+  <p style="margin-top: 1cm; font-size: 10pt; color: #666;">
+    Documento atualizado com a hierarquia de modelos free<br>
+    e arquitetura de subagents para operação CSM
+  </p>
+  <div class="meta">
+    <strong>Autor:</strong> Marcos<br>
+    <strong>Código/Versão:</strong> 002/03<br>
+    <strong>Área:</strong> CSM / Account Manager<br>
+    <strong>Data:</strong> 17/05/2026<br>
+    <strong>Periodicidade:</strong> A cada 1 mês<br>
+    <strong>Status:</strong> Ativo
+  </div>
+</div>
+
+<!-- SUMÁRIO -->
+<div class="page-break"></div>
+<h2>Sumário</h2>
+<div class="toc">
+  <a href="#s1">1. Objetivo e Visão Geral</a>
+  <a href="#s2">2. Hierarquia de Modelos Gratuitos</a>
+  <a href="#s3">3. Arquitetura de Agentes</a>
+  <a href="#s4">4. Pesos e Contrapesos</a>
+  <a href="#s5">5. Agentes por Função</a>
+  <a href="#s6">6. Fluxos de Orquestração Assíncrona</a>
+  <a href="#s7">7. Transição AM → CSM</a>
+  <a href="#s8">8. Framework Mínimo Viável</a>
+  <a href="#s9">9. Integração com Ekyte</a>
+  <a href="#s10">10. Instalação e Setup</a>
+  <a href="#s11">11. Impacto Esperado</a>
+</div>
+
+<!-- 1. OBJETIVO -->
+<div class="page-break" id="s1"></div>
+<h2>1. Objetivo e Visão Geral</h2>
+
+<p>Este documento apresenta o MVP de Fluxos Agênticos de AI da Peretto &amp; Co — a primeira implementação prática de uma infraestrutura de agentes de AI rodando sobre a operação real de um squad de marketing de performance, agora com a transição estratégica de Account Manager para Customer Success Manager.</p>
+
+<p>Não é estudo de caso. Não é piloto. É uma operação em produção, construída módulo a módulo, validada no Squad Prime, e projetada para replicar para toda a rede V4 Company.</p>
+
+<div class="metrics-grid">
+  <div class="metric-card"><div class="value">5</div><div class="label">Layers de AI</div></div>
+  <div class="metric-card"><div class="value">12</div><div class="label">Agentes Criados</div></div>
+  <div class="metric-card"><div class="value">10+</div><div class="label">Modelos Free</div></div>
+  <div class="metric-card"><div class="value">3</div><div class="label">Providers</div></div>
+  <div class="metric-card"><div class="value">1</div><div class="label">Squad + CSM</div></div>
+  <div class="metric-card"><div class="value">5</div><div class="label">Automações Cron</div></div>
+</div>
+
+<h3>O problema que este MVP resolve</h3>
+<p>Squads de marketing de performance tomam decisões baseadas em dados que chegam tarde, fragmentados e sem contexto. O gestor de tráfego descobre o problema na segunda quando o cliente já ligou na sexta. O account manager monta a ata depois da reunião, quando a memória já falhou. O coordenador percebe o desvio de OKR no replanejamento trimestral.</p>
+<p>O resultado é tempo gasto em coleta e formatação de informação em vez de em decisão e execução.</p>
+
+<table>
+  <tr><th>Antes</th><th>Com o MVP</th></tr>
+  <tr><td>Briefing de comitê montado na hora da reunião</td><td>Briefing entregue domingo 20h, pace vs OKR por cliente</td></tr>
+  <tr><td>Ata preenchida depois, da memória</td><td>Transcrição automática + agente gera ata no formato padrão</td></tr>
+  <tr><td>Desvio de KPI percebido quando o cliente reclama</td><td>Detector de flags roda quinta 7h, antes do Growth</td></tr>
+  <tr><td>OKRs atualizadas quando alguém lembra</td><td>KRs calculados automaticamente toda quinta 8h</td></tr>
+  <tr><td>FCA aberta dias depois do problema</td><td>FCA gerada automaticamente quando anomalia é detectada</td></tr>
+  <tr><td>Um modelo para tudo</td><td>12 agentes com modelos especializados por função</td></tr>
+</table>
+
+<!-- 2. HIERARQUIA DE MODELOS -->
+<div class="page-break" id="s2"></div>
+<h2>2. Hierarquia de Modelos Gratuitos</h2>
+
+<p>Todos os modelos abaixo são <strong>100% gratuitos</strong> — via OpenCode Zen, Google AI ou OpenRouter. A hierarquia segue o princípio de usar o modelo certo para a tarefa certa, maximizando qualidade sem gastar um centavo.</p>
+
+<div class="callout">
+  <strong>Regra de ouro:</strong> O custo de raciocínio ruim é maior que o custo de token. DeepSeek V4 Flash para análise profunda, Gemini para visual, GPT-OSS para orquestração. Cada modelo no seu nicho.
+</div>
+
+<h3>Tier S — Modelos Principais</h3>
+<table>
+  <tr><th>Modelo</th><th>Provedor</th><th>Contexto</th><th>Força</th><th>Agentes</th></tr>
+  <tr>
+    <td><span class="badge badge-s">S</span> opencode/deepseek-v4-flash-free</td>
+    <td>OpenCode Zen</td>
+    <td>1M tokens</td>
+    <td>Raciocínio, código, análise complexa, matemática, lógica</td>
+    <td>@analista-dados, @revisor, @flag-*, @executor-comite</td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-s">S</span> google/gemini-2.5-flash</td>
+    <td>Google AI</td>
+    <td>1M tokens</td>
+    <td>Criação visual, HTML/CSS, multimodal, documentos, design</td>
+    <td>@gerar-pdf, @gerar-ppt, @gerar-html, @gerar-doc</td>
+  </tr>
+</table>
+
+<h3>Tier A — Orquestração e Escrita</h3>
+<table>
+  <tr><th>Modelo</th><th>Provedor</th><th>Contexto</th><th>Força</th><th>Agentes</th></tr>
+  <tr>
+    <td><span class="badge badge-a">A</span> openrouter/openai/gpt-oss-120b:free</td>
+    <td>OpenRouter</td>
+    <td>128k</td>
+    <td>Escrita geral, planejamento, orquestração CSM</td>
+    <td>@csm-orquestrador</td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-a">A</span> openrouter/nousresearch/hermes-3-llama-3.1-405b:free</td>
+    <td>OpenRouter</td>
+    <td>32k</td>
+    <td>Raciocínio profundo (405B), nuance, segunda opinião</td>
+    <td>Revisão crítica, análise de contrato</td>
+  </tr>
+</table>
+
+<h3>Tier B — Velocidade e Estrutura</h3>
+<table>
+  <tr><th>Modelo</th><th>Provedor</th><th>Contexto</th><th>Força</th></tr>
+  <tr>
+    <td><span class="badge badge-b">B</span> opencode/minimax-m2.5-free</td>
+    <td>OpenCode Zen</td>
+    <td>256k</td>
+    <td>Velocidade, tarefas rápidas, classificação, parsing</td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-b">B</span> opencode/nemotron-3-super-free</td>
+    <td>OpenCode Zen</td>
+    <td>128k</td>
+    <td>Output estruturado, schemas, formatação, extração</td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-b">B</span> openrouter/nvidia/nemotron-3-super-120b-a12b:free</td>
+    <td>OpenRouter</td>
+    <td>128k</td>
+    <td>120B param, tarefas técnicas complexas</td>
+  </tr>
+</table>
+
+<h3>Tier C — Backup e Tarefas Leves</h3>
+<table>
+  <tr><th>Modelo</th><th>Provedor</th><th>Contexto</th><th>Força</th></tr>
+  <tr>
+    <td><span class="badge badge-c">C</span> opencode/qwen3.6-plus-free</td>
+    <td>OpenCode Zen</td>
+    <td>128k</td>
+    <td>Auxiliar leve, análises simples, backup geral</td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-c">C</span> openrouter/meta-llama/llama-3.3-70b-instruct:free</td>
+    <td>OpenRouter</td>
+    <td>128k</td>
+    <td>Backup confiável quando os S/A rate-limitarem</td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-c">C</span> openrouter/deepseek/deepseek-v4-flash:free</td>
+    <td>OpenRouter</td>
+    <td>1M</td>
+    <td>Mesmo modelo S via OpenRouter (fallback do Zen)</td>
+  </tr>
+</table>
+
+<h3>Tier D — Triviais</h3>
+<table>
+  <tr><th>Modelo</th><th>Provedor</th><th>Contexto</th><th>Força</th></tr>
+  <tr>
+    <td><span class="badge badge-d">D</span> openrouter/google/gemma-4-31b-it:free</td>
+    <td>OpenRouter</td>
+    <td>8k</td>
+    <td>Classificação simples, regex, transform rápido</td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-d">D</span> openrouter/nvidia/nemotron-3-nano-30b-a3b:free</td>
+    <td>OpenRouter</td>
+    <td>128k</td>
+    <td>Tarefas mínimas, extração simples</td>
+  </tr>
+</table>
+
+<div class="callout callout-info">
+  <strong>Estratégia de uso:</strong> DeepSeek V4 Flash (Zen) é o padrão do projeto. Gemini 2.5 Flash entra para criação visual/documentos. GPT-OSS 120B para orquestração CSM. Os tiers B/C/D são para tarefas específicas ou fallback. OpenRouter free serve como backup quando o Zen rate-limitar.
+</div>
+
+<!-- 3. ARQUITETURA DE AGENTES -->
+<div class="page-break" id="s3"></div>
+<h2>3. Arquitetura de Agentes</h2>
+
+<p>O OpenCode permite dois tipos de agente: <strong>Primary</strong> (alterna com Tab: Build/Plan) e <strong>Subagent</strong> (invocado com @). Criamos 12 subagents especializados, cada um com modelo, permissões e prompt específicos.</p>
+
+<h3>Diagrama de Camadas</h3>
+<pre style="background: #f5f5f5; padding: 10px; border-radius: 4px; font-size: 9pt; line-height: 1.3;">
+                    ┌──────────────────────────────────────────┐
+                    │         @csm-orquestrador                 │
+                    │  GPT-OSS 120B · Acima do squad           │
+                    │  Planejamento · Setup · Visão Estratégica │
+                    └──────────┬───────────────────────────────┘
+                               │ invoca (task tool)
+                   ┌───────────┼───────────────┐
+                   ▼           ▼               ▼
+         ┌─────────────────┐ ┌──────────┐ ┌──────────────┐
+         │  @analista-dados │ │ @revisor │ │  @flag-*     │
+         │  DeepSeek V4     │ │ DeepSeek │ │ (4 agentes)  │
+         │  edit:allow      │ │edit:deny │ │ DeepSeek V4  │
+         │  bash:allow      │ │bash:deny │ │ edit:deny    │
+         └────────┬─────────┘ └──────────┘ └──────┬───────┘
+                  │ feedback loop                  │ dados
+                  ▼                                ▼
+         ┌──────────────────────────────────────────────────┐
+         │              AGENTES DE ENTREGA                   │
+         │  ┌──────────┐ ┌──────────┐ ┌──────────┐           │
+         │  │gerar-pdf │ │gerar-ppt │ │gerar-html│           │
+         │  │Gemini 2.5│ │Gemini 2.5│ │Gemini 2.5│           │
+         │  └──────────┘ └──────────┘ └──────────┘           │
+         │  ┌──────────┐ ┌────────────────────────┐          │
+         │  │gerar-doc │ │ @executor-comite       │          │
+         │  │Gemini 2.5│ │ Briefing · Ata · FCA   │          │
+         │  └──────────┘ │ DeepSeek V4             │          │
+         │               └────────────────────────┘          │
+         └──────────────────────────────────────────────────┘
+</pre>
+
+<!-- 4. PESOS E CONTRAPESOS -->
+<div class="page-break" id="s4"></div>
+<h2>4. Pesos e Contrapesos</h2>
+
+<h3>Matriz de Permissões por Agente</h3>
+<table>
+  <tr><th>Agente</th><th>read</th><th>edit</th><th>bash</th><th>webfetch</th><th>Autonomia</th></tr>
+  <tr><td>@analista-dados</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>Relatórios internos</td></tr>
+  <tr><td>@revisor</td><td>✅</td><td>❌ deny</td><td>❌ deny</td><td>✅</td><td>Só valida, nunca edita</td></tr>
+  <tr><td>@gerar-pdf/ppt/html/doc</td><td>✅</td><td>✅</td><td>✅</td><td>❌</td><td>Documentos (sem revisão)</td></tr>
+  <tr><td>@flag-* (4 agentes)</td><td>✅</td><td>❌ deny</td><td>✅</td><td>❌</td><td>Diagnóstico, não execução</td></tr>
+  <tr><td>@csm-orquestrador</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>Setup inicial (com revisão)</td></tr>
+  <tr><td>@executor-comite</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>Briefings (com @revisor)</td></tr>
+</table>
+
+<h3>Regras de Ouro da Governança</h3>
+<ol>
+  <li><strong>Agente que escreve em sistema real</strong> (Ekyte, CRM, campanhas) → precisa de @revisor antes</li>
+  <li><strong>Agente que só cria documentos/relatórios</strong> → roda autônomo sem revisão</li>
+  <li><strong>Agente que detecta anomalia</strong> → só diagnostica, não executa. Quem executa é o humano ou script com crontab</li>
+  <li><strong>@revisor tem edit:deny</strong> — ele aponta o erro, não corrige. Quem corrige é o agente executor</li>
+</ol>
+
+<h3>Fluxo de Validação Típico</h3>
+<pre style="background: #f5f5f5; padding: 10px; border-radius: 4px; font-size: 9pt;">
+@analista-dados                         @revisor
+┌──────────────┐    output JSON     ┌──────────────┐
+│ Puxa dados    │ ─────────────────► │ Valida dados  │
+│ Gera análise  │                    │ Cruza histór. │
+└──────────────┘                    └──────┬────────┘
+                                           │
+                               ┌───────────┴───────────┐
+                               │ Aprovado?              │
+                         ┌─────┴─────┐          ┌──────┴──────┐
+                         │ SIM ✅    │          │ NÃO ❌      │
+                    ┌────▼────┐ ┌───▼───┐  ┌───▼──────────┐
+                    │@gerar   │ │@gerar │  │Volta pro     │
+                    │-ppt/pdf │ │-html  │  │@analista     │
+                    │-doc     │ │       │  │com feedback  │
+                    └─────────┘ └───────┘  └──────────────┘
+</pre>
+
+<!-- 5. AGENTES POR FUNÇÃO -->
+<div class="page-break" id="s5"></div>
+<h2>5. Agentes por Função</h2>
+
+<h3>5.1 Agentes de Entrega (Gemini 2.5 Flash)</h3>
+<table>
+  <tr><th>Agente</th><th>Função</th><th>Input</th><th>Output</th></tr>
+  <tr><td>@gerar-pdf</td><td>Gera PDFs estilizados padrão V4</td><td>"Relatório do cliente X"</td><td>.pdf + preview</td></tr>
+  <tr><td>@gerar-ppt</td><td>Apresentações para comitê/QBR/Growth</td><td>"Deck do comitê de segunda"</td><td>.html ou .pptx</td></tr>
+  <tr><td>@gerar-html</td><td>Dashboards e landing pages</td><td>"Dashboard de OKRs"</td><td>.html responsivo</td></tr>
+  <tr><td>@gerar-doc</td><td>Documentos, atas, propostas, FCAs</td><td>"Ata do Growth de terça"</td><td>.md → .docx/.pdf</td></tr>
+</table>
+
+<h3>5.2 Agentes de Análise (DeepSeek V4 Flash)</h3>
+<table>
+  <tr><th>Agente</th><th>Função</th><th>Input</th><th>Output</th></tr>
+  <tr><td>@analista-dados</td><td>Análise multi-fonte, insights, JSON estruturado</td><td>"Analisa performance do cliente Y"</td><td>JSON com métricas + flags</td></tr>
+  <tr><td>@revisor</td><td>Valida outputs, confere números, formatação</td><td>"Revisa este relatório"</td><td>✅/❌ com correções</td></tr>
+  <tr><td>@executor-comite</td><td>Briefing automático do comitê domingo 20h</td><td>"Prepara o comitê"</td><td>Briefing .md + .html</td></tr>
+</table>
+
+<h3>5.3 Agentes CSM</h3>
+<table>
+  <tr><th>Agente</th><th>Modelo</th><th>Função</th></tr>
+  <tr><td>@csm-orquestrador</td><td>GPT-OSS 120B</td><td>Setup da unidade, triagem de flags, QBR, orquestração estratégica</td></tr>
+  <tr><td>@flag-roi</td><td>DeepSeek V4</td><td>ROAS abaixo da meta 2 semanas → classifica tipo + gera CHAS</td></tr>
+  <tr><td>@flag-churn</td><td>DeepSeek V4</td><td>NPS + CSAT caem → distingue percepção vs resultado</td></tr>
+  <tr><td>@flag-okr</td><td>DeepSeek V4</td><td>KR &lt; 60% do esperado → execução vs premissa</td></tr>
+  <tr><td>@flag-operacao</td><td>DeepSeek V4</td><td>Sprint atrasa sem FCA → 3 níveis de severidade</td></tr>
+</table>
+
+<!-- 6. FLUXOS DE ORQUESTRAÇÃO -->
+<div class="page-break" id="s6"></div>
+<h2>6. Fluxos de Orquestração Assíncrona</h2>
+
+<h3>Fluxo 1 — Preparação do Comitê de Segunda</h3>
+<pre style="background: #f5f5f5; padding: 10px; border-radius: 4px; font-size: 9pt;">
+Domingo 20h (cron ou comando manual):
+
+1. @executor-comite → "Prepara o comitê de segunda"
+2. @analista-dados (paralelo, sessões filhas por cliente)
+   → [Cliente A] Puxa dados: OKR, ROAS, sprint, NPS
+   → [Cliente B] Puxa dados: OKR, ROAS, sprint, NPS
+3. @revisor (paralelo) → Valida cada JSON
+4. @executor-comite consolida → briefing .md + .html
+5. Usuário revisa na segunda 7h antes do comitê 8h
+</pre>
+
+<h3>Fluxo 2 — Detecção de Flags (Quinta 7h)</h3>
+<pre style="background: #f5f5f5; padding: 10px; border-radius: 4px; font-size: 9pt;">
+1. @csm → "Roda detecção de flags para todos os clientes"
+2. @flag-roi (paralelo por cliente) → verifica ROAS 2 semanas
+3. @flag-churn (paralelo) → verifica NPS + CSAT
+4. @flag-okr (paralelo) → verifica KRs
+5. @flag-operacao (paralelo) → verifica sprints + timesheet
+6. @csm consolida → prioriza por urgência → briefing ao CSM humano
+</pre>
+
+<h3>Fluxo 3 — Preparação de QBR</h3>
+<pre style="background: #f5f5f5; padding: 10px; border-radius: 4px; font-size: 9pt;">
+Usuário: @csm "Prepara QBR do cliente X"
+
+1. @csm → Invoca @analista-dados (quarter inteiro)
+2. @analista-dados → ROAS q/q, OKR progress, sprints, NPS trend
+3. @revisor → Valida dados
+4. @gerar-ppt → Gera apresentação com layout V4
+5. Usuário recebe o deck pronto
+</pre>
+
+<!-- 7. TRANSIÇÃO AM → CSM -->
+<div class="page-break" id="s7"></div>
+<h2>7. Transição AM → CSM</h2>
+
+<p>Baseado na Escola de CSM - Aula 1 e no documento Implementando o Manual de Operação.</p>
+
+<h3>O que muda</h3>
+<table>
+  <tr><th>Hoje (Account Hero)</th><th>Novo (CSM Arquiteto)</th></tr>
+  <tr><td>Apaga incêndio operacional</td><td>Desenha estrutura que não precisa de bombeiro</td></tr>
+  <tr><td>Atende WhatsApp 22h</td><td>Filtra comunicação: time técnico blindado</td></tr>
+  <tr><td>Sobe campanha, faz criativo</td><td>Define objetivo de negócio, não o "como"</td></tr>
+  <tr><td>Reunião de 90min</td><td>Reunião de 30min com pauta fixa</td></tr>
+  <tr><td>Descobre problema quando cliente liga</td><td>Detector de flags roda antes do cliente sentir</td></tr>
+  <tr><td>Memoriza histórico</td><td>Vault Obsidian com memória persistente</td></tr>
+</table>
+
+<h3>Nova Divisão de Responsabilidades</h3>
+<pre style="background: #f5f5f5; padding: 10px; border-radius: 4px; font-size: 9pt;">
+┌────────────────────────────────────────────────────────┐
+│                    CSM (@csm-orquestrador)               │
+│  Foco: Resultado do cliente · ROI · Retenção · QBR     │
+│  Acima do squad. Não executa — orquestra.               │
+│  Ponto único de responsabilidade pelo resultado.         │
+├────────────────────────────────────────────────────────┤
+│                    COORDENADOR                           │
+│  Foco: Operação · Qualidade técnica · Time Ops          │
+│  Audita checklist · Facilita rituais · Protege o tambor │
+├────────────────────────────────────────────────────────┤
+│         AM · GT · Copy · Design (Time Técnico)          │
+│  Foco: Execução · Entrega · O "Como" técnico            │
+│  Blindados pelo CSM — não falam com cliente direto      │
+└────────────────────────────────────────────────────────┘
+</pre>
+
+<h3>Timeline da Transição</h3>
+<table>
+  <tr><th>Período</th><th>O que acontece</th></tr>
+  <tr><td><strong>Q2 2026 (Agora)</strong></td><td>AM ainda opera como generalista. CSM agente em paralelo (setup + flags). Documentação da transição.</td></tr>
+  <tr><td><strong>Q3 2026 (Início)</strong></td><td>CSM assume como orquestrador. Coordenador assume operação técnica. AM vira executor no squad.</td></tr>
+  <tr><td><strong>Q4 2026</strong></td><td>CSM consolidado. Squad roda sem supervisão do CSM. CSM gerencia múltiplos squads.</td></tr>
+</table>
+
+<!-- 8. FRAMEWORK -->
+<div class="page-break" id="s8"></div>
+<h2>8. Framework Mínimo Viável</h2>
+
+<h3>Roadmap de Implementação</h3>
+<table>
+  <tr><th>Step</th><th>O que</th><th>Status</th></tr>
+  <tr><td>1</td><td>Skills por função (builders-hub)</td><td>✅ Completo</td></tr>
+  <tr><td>2</td><td>Agentes OpenCode por função (12 subagents)</td><td>✅ Completo</td></tr>
+  <tr><td>3</td><td>Orquestração assíncrona (@ agente invoca @ agente)</td><td>✅ Configurado</td></tr>
+  <tr><td>4</td><td>Automações (cron + scripts + MCPs)</td><td>🔄 Em progresso</td></tr>
+  <tr><td>5</td><td>Módulo Ekyte (leitura/escrita via API)</td><td>📋 Pendente</td></tr>
+</table>
+
+<h3>Estrutura de Módulo (por skill)</h3>
+<p>Cada função segue o padrão de 4 arquivos:</p>
+<ul>
+  <li><strong>SKILL.md</strong> — o agente em si (prompt + fluxos + templates)</li>
+  <li><strong>CONTEXT.md</strong> — o que o agente precisa saber sobre a operação</li>
+  <li><strong>TRIGGERS.md</strong> — quando usar, frases de ativação</li>
+  <li><strong>OUTPUTS.md</strong> — exemplos de output esperado para calibrar</li>
+</ul>
+
+<!-- 9. INTEGRAÇÃO EKYTE -->
+<div class="page-break" id="s9"></div>
+<h2>9. Integração com Ekyte</h2>
+
+<p>O Ekyte tem API REST real em api.ekyte.com/v1.1 com autenticação por apiKey.</p>
+
+<h3>Módulos do Ekyte</h3>
+<table>
+  <tr><th>Conector</th><th>Função</th></tr>
+  <tr><td>connector.py</td><td>Base de tudo. Autentica, pagina, cobre todos os endpoints.</td></tr>
+  <tr><td>checklist_ekyte.py</td><td>Substitui [ ? ] do checklist por [ S/N ] reais do Ekyte.</td></tr>
+  <tr><td>sprints.py</td><td>Lê sprints ativas, calcula conclusão, gera relatório pro briefing.</td></tr>
+  <tr><td>fca.py</td><td>Cria FCAs automaticamente quando análise detecta desvio crítico.</td></tr>
+  <tr><td>base_conhecimento.py</td><td>Salva atas, análises e OKRs nos quadros do Ekyte.</td></tr>
+</table>
+
+<!-- 10. INSTALAÇÃO -->
+<div class="page-break" id="s10"></div>
+<h2>10. Instalação e Setup</h2>
+
+<h3>Pré-requisitos</h3>
+<ul>
+  <li>OpenCode instalado (última versão)</li>
+  <li>Providers configurados: Google AI + OpenRouter</li>
+  <li>OpenCode Zen ativado (modelos gratuitos disponíveis)</li>
+  <li>Python 3.9+</li>
+</ul>
+
+<h3>Passo a Passo</h3>
+<ol>
+  <li><strong>Clone o repositório</strong><br>
+  <code>git clone &lt;seu-repo&gt; &amp;&amp; cd v4perettoco</code></li>
+  <li><strong>Arquivos de configuração</strong> (já criados)<br>
+  <code>opencode.json</code> — Config principal do projeto<br>
+  <code>.opencode/agents/*.md</code> — 12 subagents<br>
+  <code>~/.config/opencode/agents/*.md</code> — Espelho global</li>
+  <li><strong>Instale dependências Python</strong><br>
+  <code>pip install -r v4-automations/setup/requirements.txt</code></li>
+  <li><strong>Configure .env</strong><br>
+  <code>cp v4-automations/config/.env.template .env</code><br>
+  Preencha: EKYTE_API_KEY, GOOGLE_OAUTH, META_ADS_TOKEN</li>
+  <li><strong>Autentique Google OAuth</strong><br>
+  <code>python v4-automations/setup/auth_google.py</code></li>
+  <li><strong>Instale crons</strong><br>
+  <code>python v4-automations/setup/install_cron.py</code></li>
+  <li><strong>Teste um agente manualmente</strong><br>
+  No OpenCode TUI: <code>@analista-dados "testa conexão com dados mock"</code></li>
+</ol>
+
+<!-- 11. IMPACTO -->
+<div class="page-break" id="s11"></div>
+<h2>11. Impacto Esperado</h2>
+
+<h3>Métricas</h3>
+<table>
+  <tr><th>Métrica</th><th>Hoje</th><th>Meta 90 dias</th></tr>
+  <tr><td>Tempo de prep. do Comitê</td><td>45-60 min</td><td>&lt; 5 min</td></tr>
+  <tr><td>Tempo para detectar desvio de KPI</td><td>3-5 dias</td><td>&lt; 24h</td></tr>
+  <tr><td>Taxa de preenchimento de ata</td><td>~60%</td><td>&gt; 95%</td></tr>
+  <tr><td>Tempo de abertura de FCA</td><td>1-3 dias</td><td>Automático</td></tr>
+  <tr><td>Atualização de OKRs</td><td>Manual semanal</td><td>Toda quinta 8h</td></tr>
+  <tr><td>Resposta a flag de churn</td><td>Semanas</td><td>48-72h</td></tr>
+  <tr><td>Onboarding de pessoa nova</td><td>1-2 semanas</td><td>&lt; 2 dias</td></tr>
+</table>
+
+<h3>O que não é mensurável mas é mais importante</h3>
+<ul>
+  <li>Cada agente executando em paralelo = você faz 5 coisas ao mesmo tempo</li>
+  <li>@revisor como contrapeso = autonomia sem perder controle</li>
+  <li>Sessões assíncronas (sessão filha) = você navega entre tarefas sem perder contexto</li>
+  <li>Sistema fica mais inteligente a cada semana: vault registra → OUTPUTS.md calibra → agente melhora</li>
+  <li>Vantagem composta: quanto mais tempo opera com agentes, maior a distância de quem não tem</li>
+</ul>
+
+<div class="callout callout-warn">
+  <strong>A janela de vantagem competitiva está aberta.</strong> Não por muito tempo. Quem construir a infraestrutura agora vai ser impossível de alcançar em três anos. O currículo de 2027 não vai perguntar qual linguagem você programa. Vai perguntar quantos agentes você sabe orquestrar.
+</div>
+
+<footer>
+  V4 Company · Peretto &amp; Co · MVP Fluxos Agênticos de AI · v002/03 · Maio 2026<br>
+  Modelos Gratuitos: OpenCode Zen + Google AI + OpenRouter<br>
+  Repositório: github.com/marcoslrvusa/v4perettoco
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "opencode/deepseek-v4-flash-free",
+  "small_model": "opencode/minimax-m2.5-free",
+  "permission": {
+    "edit": "allow",
+    "bash": "allow",
+    "read": "allow",
+    "glob": "allow",
+    "grep": "allow",
+    "webfetch": "allow",
+    "websearch": "allow",
+    "skill": "allow",
+    "question": "allow",
+    "todowrite": "allow"
+  },
+  "agent": {
+    "build": {
+      "mode": "primary",
+      "permission": {
+        "edit": "allow",
+        "bash": "allow",
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "webfetch": "allow",
+        "websearch": "allow",
+        "skill": "allow",
+        "task": {
+          "*": "allow"
+        }
+      }
+    },
+    "plan": {
+      "mode": "primary",
+      "permission": {
+        "edit": "deny",
+        "bash": "deny",
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "webfetch": "allow",
+        "websearch": "allow",
+        "skill": "allow"
+      }
+    }
+  },
+  "command": {
+    "session-save": {
+      "description": "Exporta a sessão atual para a pasta log/",
+      "template": "Exporte a sessão atual do OpenCode para a pasta log/ do projeto usando: !`bash /home/marcos/Desktop/v4perettoco-main-final/v4perettoco-main/scripts/session-save.sh`\n\nDepois de salvar, liste o arquivo gerado e confirme que foi salvo corretamente."
+    },
+    "session-list": {
+      "description": "Lista todas as sessões salvas na pasta log/",
+      "template": "Liste as sessões salvas anteriormente na pasta log/: !`ls -lh /home/marcos/Desktop/v4perettoco-main-final/v4perettoco-main/log/*.json 2>/dev/null | awk '{print $5, $6, $7, $8, $9}'`\n\nListe também as sessões ativas do OpenCode: !`opencode session list --format table 2>/dev/null`\n\nApresente um resumo organizado das sessões disponíveis, com data, título e tamanho. Pergunte ao usuário se ele quer carregar alguma."
+    },
+    "session-load": {
+      "description": "Carrega contexto de uma sessão anterior salva em log/",
+      "template": "Primeiro, liste as sessões disponíveis em log/: !`ls -1t /home/marcos/Desktop/v4perettoco-main-final/v4perettoco-main/log/*.json 2>/dev/null | head -20`\n\nO usuário vai escolher uma sessão pelo nome do arquivo (ou número). Carregue o arquivo escolhido, extraia o resumo das mensagens e apresente o contexto relevante para a sessão atual.\n\nSe o usuário pedir para carregar uma sessão específica que não está em log/, tente exportá-la primeiro com /session-save e depois carregue."
+    },
+    "agendar-rituais": {
+      "description": "Configura os crons de automação (detector_flags, briefing, OKRs)",
+      "template": "Configure os crons de automação do projeto:\n\n1. Verifique se as dependências estão instaladas:\n!`pip list 2>/dev/null | grep -iE \"requests|openai|google|pandas\" || echo \"algumas dependencias podem faltar\"`\n\n2. Verifique o arquivo .env:\n!`ls -la /home/marcos/Desktop/v4perettoco-main-final/v4perettoco-main/.env 2>/dev/null || echo \"Arquivo .env nao encontrado\"`\n\n3. Verifique os scripts de automação existentes:\n!`ls /home/marcos/Desktop/v4perettoco-main-final/v4perettoco-main/v4-automations/scripts/ 2>/dev/null`\n!`ls /home/marcos/Desktop/v4perettoco-main-final/v4perettoco-main/csm-hub/automacoes/ 2>/dev/null`\n\n4. Execute o setup de crons:\npython /home/marcos/Desktop/v4perettoco-main-final/v4perettoco-main/v4-automations/setup/install_cron.py\n\nGuie o usuário em cada etapa."
+    }
+  }
+}
