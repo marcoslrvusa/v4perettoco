@@ -1,3 +1,7 @@
+---
+aliases: [flag-churn-outputs]
+tags: [csm, csm-outputs]
+---
 # OUTPUTS — Flag Churn V1
 
 ## Output: Diagnóstico + plano de retenção
@@ -33,3 +37,7 @@ PLANO DE RETENÇÃO:
 
 CRITÉRIO DE RESOLUÇÃO: NPS ≥ 60 na próxima coleta (maio).
 ```
+
+← [[SKILL|flag-churn]]
+
+← [[flag-churn|voltar para flag-churn]]

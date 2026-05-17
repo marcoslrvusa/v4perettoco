@@ -19,7 +19,7 @@ A skill faz tudo:
 5. Faz push e abre um Pull Request automatico com o template preenchido
 6. Te da o link do PR pra acompanhar
 
-O curador revisa, aprova, e em poucos dias sua skill entra no hub. Todo mundo que rodar `/sync-hub` vai recebe-la.
+O curador revisa, aprova, e em poucos dias sua skill entra no hub. Todo mundo que rodar [[sync-hub]] vai recebe-la.
 
 ## Como compartilhar (caminho tecnico)
 
@@ -60,7 +60,7 @@ version: 1.0.0
 - Se a skill depende de ferramenta externa (MCP, API), documentar setup no proprio SKILL.md
 
 ### Duplicar em ambos os agentes
-Toda skill vive em `.claude/skills/` E `.agents/skills/`. A `/criador-de-skills` faz isso automaticamente, mas se voce editar manualmente, garanta que os dois estao sincronizados.
+Toda skill vive em `.claude/skills/` E `.agents/skills/`. A [[criador-de-skills]] faz isso automaticamente, mas se voce editar manualmente, garanta que os dois estao sincronizados.
 
 ### Sem quebrar o que ja existe
 - Nao renomeia skills ja existentes (ate pode, mas abre issue primeiro)
@@ -72,11 +72,11 @@ Toda skill vive em `.claude/skills/` E `.agents/skills/`. A `/criador-de-skills`
 2. **Curador humano** (por enquanto, @guilherme) revisa
 3. Se aprovado, merge na `main`
 4. GitHub Action regenera `REGISTRY.md` automaticamente
-5. Todos que rodarem `/sync-hub` recebem a skill
+5. Todos que rodarem [[sync-hub]] recebem a skill
 
 ## Conflitos de merge
 
-A skill `/compartilhar-skill` ja tenta rebasear em `origin/main` antes de abrir o PR. Se der conflito, ela te guia pela resolucao. Arquivos pessoais (`clientes/`, `bases/`) nunca conflitam porque estao no `.gitignore`.
+A skill [[compartilhar-skill]] ja tenta rebasear em `origin/main` antes de abrir o PR. Se der conflito, ela te guia pela resolucao. Arquivos pessoais (`clientes/`, `bases/`) nunca conflitam porque estao no `.gitignore`.
 
 ## Duvidas?
 

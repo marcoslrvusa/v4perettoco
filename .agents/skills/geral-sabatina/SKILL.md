@@ -2,8 +2,9 @@
 name: geral-sabatina
 description: Entrevista o usuario de forma implacavel sobre cada aspecto de um plano ou design ate atingir entendimento compartilhado. Percorre cada ramo da arvore de decisao, resolvendo dependencias uma a uma. Use quando o usuario quiser testar um plano, ser questionado sobre uma ideia, ou mencionar "sabatina".
 user-invocable: true
+aliases: [geral-sabatina]
+tags: [skill, area-geral]
 ---
-
 # Sabatina — Stress-Test de Planos e Ideias
 
 Entreviste o usuario de forma implacavel sobre cada aspecto do plano ate atingir entendimento compartilhado. Percorra cada ramo da arvore de decisao, resolvendo dependencias uma a uma. Para cada pergunta, forneca sua resposta recomendada.

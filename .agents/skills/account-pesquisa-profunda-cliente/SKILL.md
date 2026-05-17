@@ -4,8 +4,9 @@ description: Pesquisa profunda de cliente para KB acionavel. PREMISSA OBRIGATORI
 area: account
 author: guilhermelippert
 version: 1.5.0
+aliases: [account-pesquisa-profunda-cliente]
+tags: [skill, area-account]
 ---
-
 ## REGRA CRITICA — paths absolutos sempre
 
 **Toda operacao de filesystem (mkdir, rm, cp, mv, ls, find, Write, Edit) DEVE usar caminho absoluto comecando em `/Users/...` ou na raiz do repo.** Nunca path relativo.

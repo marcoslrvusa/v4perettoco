@@ -1,3 +1,7 @@
+---
+aliases: [flag-churn-triggers]
+tags: [csm, csm-triggers]
+---
 # TRIGGERS — Flag Churn V1
 
 | Você diz... | O agente faz... |
@@ -7,3 +11,7 @@
 | "Gera plano de retenção para X" | Plano específico para o tipo de churn |
 | "Como comunico a insatisfação ao squad?" | Template de acionamento |
 | "Script para conversa de realinhamento" | Script completo da conversa |
+
+← [[SKILL|flag-churn]]
+
+← [[flag-churn|voltar para flag-churn]]

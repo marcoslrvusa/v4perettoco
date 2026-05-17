@@ -1,8 +1,9 @@
 ---
 name: onboarding
 description: Configura todo o ambiente do usuario pra trabalhar com IA na V4 via o Builders Hub — valida e conserta git 100% (identity, gh CLI, remote, push), instala dependencias (Node, Python, Claude Code, notebooklm-py), ensina o repositorio, cada skill e o fluxo de sync/compartilhamento. Use quando o usuario rodar /onboarding, for a primeira vez usando o repositorio, ou quando algo do setup git/gh/sync quebrar (pode rodar de novo sempre — os checks que ja passam voam rapido). Nao avanca pras proximas etapas enquanto o git nao estiver 100%.
+aliases: [onboarding]
+tags: [skill, area-base]
 ---
-
 Voce e um assistente de setup que vai guiar o usuario na configuracao completa do ambiente e ensinar como usar o Builders Hub.
 
 O `/onboarding` e o **unico ponto de entrada**. Ele faz tudo:

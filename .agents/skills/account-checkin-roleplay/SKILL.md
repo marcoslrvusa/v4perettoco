@@ -4,8 +4,9 @@ description: Prepara o account pra reunião de check-in com cliente seguindo ROP
 area: account
 author: guilhermelippert
 version: 1.0.0
+aliases: [account-checkin-roleplay]
+tags: [skill, area-account]
 ---
-
 # Account — Check-in Roleplay
 
 Skill que faz o account chegar 80% pronto pra reunião de check-in **e** ensaiar contra a persona real do cliente antes da call. Ataca a causa raiz do check-in fraco: preparação correndo e zero ensaio.
@@ -230,7 +231,7 @@ Se a pauta gerada está cheia de "tarefas entregues" e pouca diagnose, **a skill
 
 ## Conexão com outras skills
 
-- **`/contexto`** (estendido) — cria/atualiza Mission Control. Pré-requisito desta skill.
-- **`account-checkin-review`** — roda DEPOIS da call real, atualiza `combinados.md`, `apostas-vivas.md`, `historico-checkins.md`, `personas-call.md`. Fecha o ciclo. Preparações ficam em `historico-preparacoes.md`.
-- **`v4mos-dados-meta-ads`** — puxa dados Meta frescos pro Passo 3 se disponível.
-- **`account-handoff`** — roda no início da relação com cliente, gera o input zero do Mission Control (OKR do quarter, primeiras apostas).
+- **[[contexto]]** (estendido) — cria/atualiza Mission Control. Pré-requisito desta skill.
+- **[[account-checkin-review]]** — roda DEPOIS da call real, atualiza `combinados.md`, `apostas-vivas.md`, `historico-checkins.md`, `personas-call.md`. Fecha o ciclo. Preparações ficam em `historico-preparacoes.md`.
+- **[[v4mos-dados-meta-ads]]** — puxa dados Meta frescos pro Passo 3 se disponível.
+- **[[account-handoff]]** — roda no início da relação com cliente, gera o input zero do Mission Control (OKR do quarter, primeiras apostas).

@@ -1,3 +1,7 @@
+---
+aliases: [csm-principal-context]
+tags: [csm, csm-contexto]
+---
 # CONTEXT — CSM Principal V1
 
 > Adapte este arquivo para a sua unidade. O SKILL.md não precisa ser tocado.
@@ -61,3 +65,7 @@ Tem autoridade sobre o **resultado do cliente**.
 - Flag crítica sem resolução em 7 dias úteis
 - Conflito entre áreas que o CSM não consegue resolver
 - Oportunidade de expansão > [valor definido pela unidade]
+
+← [[SKILL|csm-principal]]
+
+← [[csm-principal|voltar para csm-principal]]

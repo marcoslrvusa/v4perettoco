@@ -1,3 +1,7 @@
+---
+aliases: [flag-roi-context]
+tags: [csm, csm-contexto]
+---
 # CONTEXT — adapte para sua unidade
 
 ## Thresholds da unidade (substitua os defaults)
@@ -26,3 +30,7 @@ THRESHOLDS_PERSONALIZADOS = {
 # Vault Obsidian path: [preencher]
 # Email do Coordenador: [preencher]
 # Email da Gerência (para escaladas): [preencher]
+
+← [[SKILL|flag-roi]]
+
+← [[flag-roi|voltar para flag-roi]]

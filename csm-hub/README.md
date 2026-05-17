@@ -1,3 +1,7 @@
+---
+aliases: [csm-hub]
+tags: [csm]
+---
 # CSM Hub — V4 Company
 
 > Sistema agêntico de Customer Success Management para squads de marketing.
@@ -104,3 +108,13 @@ O agente guia o processo completo.
 - `v4-automations` — para conectores Google Ads, Meta, GA4, Ekyte, Gmail
 - `obsidian-vault` — para memória histórica dos clientes
 - Python 3.9+ com dependências do v4-automations instaladas
+
+- [[modulos/csm-principal/SKILL|csm-principal]]
+
+- [[modulos/flag-churn/SKILL|flag-churn]]
+
+- [[modulos/flag-okr/SKILL|flag-okr]]
+
+- [[modulos/flag-operacao/SKILL|flag-operacao]]
+
+- [[modulos/flag-roi/SKILL|flag-roi]]

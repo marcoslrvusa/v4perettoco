@@ -1,3 +1,7 @@
+---
+aliases: [flag-okr-triggers]
+tags: [csm, csm-triggers]
+---
 # TRIGGERS — Flag OKR V1
 
 | Você diz... | O agente faz... |
@@ -7,3 +11,7 @@
 | "Preciso replaneja o OKR com o cliente" | Script de comunicação ao cliente |
 | "Gera plano de aceleração" | Plano semanal com ações e impacto esperado |
 | "Devo comunicar o desvio agora?" | Decisão com critério (>40% → sim) |
+
+← [[SKILL|flag-okr]]
+
+← [[flag-okr|voltar para flag-okr]]

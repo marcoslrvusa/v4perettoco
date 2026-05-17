@@ -4,8 +4,9 @@ description: 'Primeira skill que o account roda quando recebe um cliente novo de
 area: account
 author: guilhermelippert
 version: 1.0.0
+aliases: [account-handoff]
+tags: [skill, area-account]
 ---
-
 # /account-handoff
 
 Transforme **form de kickoff + transcript da reuniao de vendas** na **primeira versao da Knowledge Base** e do **Mission Control** de um cliente que acabou de sair de vendas. O entregavel estrela e um **deck HTML interativo** com **dois modos**:

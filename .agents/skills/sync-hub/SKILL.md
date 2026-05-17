@@ -1,8 +1,9 @@
 ---
 name: sync-hub
 description: Atualiza o Builders Hub local puxando as skills mais recentes do repo publico, mostra diff do que mudou desde a ultima sync e regenera o REGISTRY.md. Use quando o usuario rodar /sync-hub, quiser "baixar as skills novas do time", "atualizar meu hub" ou similar. Preserva arquivos pessoais de clientes/ e bases/ (gitignored). Lida com conflitos de forma segura e guia o usuario se algo precisar de resolucao manual.
+aliases: [sync-hub]
+tags: [skill, area-base]
 ---
-
 # /sync-hub — Atualiza o Builders Hub local
 
 Faz o usuario receber as skills novas que o time compartilhou desde a ultima vez que ele rodou. Pensado pra ser 100% seguro: nao toca em arquivos pessoais, nao descarta trabalho em andamento, e guia qualquer conflito passo a passo.

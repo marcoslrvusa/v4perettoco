@@ -1,0 +1,2 @@
+- Ver com todos os clientes que tem GAP entre o que é oportunidade, mql e sql
+- Preciso ter clareza dos dados 

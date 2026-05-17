@@ -1,3 +1,7 @@
+---
+aliases: [flag-operacao-triggers]
+tags: [csm, csm-triggers]
+---
 # TRIGGERS — Flag Operação V1
 
 | Você diz... | O agente faz... |
@@ -7,3 +11,7 @@
 | "Ritual não aconteceu" | Avaliação de impacto + ação |
 | "Tarefa travada por aprovação do cliente" | Nível 3 + template de acionamento |
 | "Quanto tempo tenho antes de escalar?" | SLA por nível + critério de escalada |
+
+← [[SKILL|flag-operacao]]
+
+← [[flag-operacao|voltar para flag-operacao]]

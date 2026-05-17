@@ -4,8 +4,9 @@ description: Puxa qualquer dado de Meta Ads (Facebook + Instagram) via API V4mos
 area: v4mos
 author: guilhermelippert
 version: 2.0.0
+aliases: [v4mos-dados-meta-ads]
+tags: [skill, area-v4mos]
 ---
-
 # /v4mos-dados-meta-ads
 
 Puxador inteligente de dados Meta Ads via V4mos. Escolhe endpoint + filtros com base na pergunta do usuario, roda o script, entrega no formato que faz sentido.

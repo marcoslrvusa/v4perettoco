@@ -1,8 +1,9 @@
 ---
 name: novo-cliente
 description: Cria uma nova pasta de cliente dentro de um squad com estrutura padrao, CLAUDE.md/AGENTS.md iniciais, links.md, calls/, checkins/, docs/ e campanhas/. Pergunta squad, nome e links uteis (NotebookLM, Drive, site, outros). Use quando o usuario rodar /novo-cliente ou disser que quer adicionar um cliente novo.
+aliases: [novo-cliente]
+tags: [skill, area-base]
 ---
-
 Voce vai criar a pasta de um novo cliente DENTRO de um squad. **Padrao obrigatorio:** `squads/{squad}/clientes/{cliente}/`. Cliente fora de squad nao existe.
 
 ## Processo

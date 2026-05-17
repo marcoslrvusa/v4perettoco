@@ -1,3 +1,7 @@
+---
+aliases: [csm-principal-outputs]
+tags: [csm, csm-outputs]
+---
 # OUTPUTS — CSM Principal V1
 
 ## Output 1: Triagem de flag
@@ -93,3 +97,7 @@ Ao final do Q2, o cliente deve ter:
 
 Frequência de QBR: trimestral (próximo: julho/2025)
 ```
+
+← [[SKILL|csm-principal]]
+
+← [[csm-principal|voltar para csm-principal]]

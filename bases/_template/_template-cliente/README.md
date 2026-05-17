@@ -1,3 +1,5 @@
+<img src="../../../v4-logo.png" alt="V4 Logo" width="120"/>
+
 # [Nome do Cliente]
 
 Copie esta pasta e renomeie com o nome do cliente.

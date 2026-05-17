@@ -1,8 +1,9 @@
 ---
 name: criador-de-skills
 description: Cria skills novas e melhora skills existentes no Builders Hub. Use quando o usuario quiser criar uma skill do zero, transformar um workflow que funcionou em skill reutilizavel, editar uma skill existente, ou rodar avaliacoes. Forca prefixo de papel OU prefixo de fonte ({prefixo}-{nome}) e escreve a skill em .claude/skills/ E .agents/skills/ ao mesmo tempo.
+aliases: [criador-de-skills]
+tags: [skill, area-base]
 ---
-
 # Skill Creator — Builders Hub
 
 Cria skills novas e itera pra deixar elas melhores. No contexto do **Builders Hub**, toda skill criada por essa criador-de-skills segue dois padroes rigidos que a gente valida antes de escrever qualquer arquivo:

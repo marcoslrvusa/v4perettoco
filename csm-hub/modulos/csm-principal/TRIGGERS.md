@@ -1,3 +1,7 @@
+---
+aliases: [csm-principal-triggers]
+tags: [csm, csm-triggers]
+---
 # TRIGGERS — CSM Principal V1
 
 | Você diz... | O agente faz... |
@@ -20,3 +24,7 @@
 - Área acionada reportou que resolveu — precisa validar e fechar
 - Reunião com cliente amanhã — precisa de briefing de saúde
 - Nova unidade implementando o CSM — setup inicial
+
+← [[SKILL|csm-principal]]
+
+← [[csm-principal|voltar para csm-principal]]

@@ -1,8 +1,9 @@
 ---
 name: contexto
 description: Le todos os arquivos em uma KB (cliente, squad ou projeto), gera CLAUDE.md e AGENTS.md, e quando for cliente cria/atualiza mission-control/ com OKRs, apostas vivas, combinados, personas e historico de check-ins. Detecta o nivel automaticamente. Use quando o usuario rodar /contexto, quiser que a IA "conheca" um cliente/squad/projeto, ou quiser criar/atualizar Mission Control de cliente.
+aliases: [contexto]
+tags: [skill, area-base]
 ---
-
 Voce vai analisar uma Knowledge Base e gerar os arquivos `CLAUDE.md` e `AGENTS.md` que funcionem como "memoria" pra qualquer trabalho futuro. Quando a KB for de CLIENTE, tambem crie/atualize `mission-control/`, que e o estado vivo usado por skills de check-in.
 
 ## Estrutura esperada

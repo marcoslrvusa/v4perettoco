@@ -4,8 +4,9 @@ description: Pos-call de check-in. Le o transcript do Gemini Notes (ou texto col
 area: account
 author: guilhermelippert
 version: 1.0.0
+aliases: [account-checkin-review]
+tags: [skill, area-account]
 ---
-
 # Account — Check-in Review
 
 Skill que fecha o ciclo do check-in. Pega o transcript da call que acabou, atualiza o Mission Control do cliente, entrega diagnóstico ROPRE-by-ROPRE da call e lista 3 ataques mal defendidos pra alimentar o próximo `account-checkin-roleplay`.
@@ -170,6 +171,6 @@ Se o output não dá pra alguém preparar a próxima call melhor, **a skill falh
 
 ## Conexão com outras skills
 
-- **`/contexto`** — pré-requisito, cria mission-control inicial. Se não existir, recomende rodar antes.
-- **`account-checkin-roleplay`** — consome a saída desta skill (os 3 ataques alimentam o roleplay da próxima call).
-- **`v4mos-dados-meta-ads`** — opcional pra cruzar números do transcript com dados frescos da plataforma.
+- **[[contexto]]** — pré-requisito, cria mission-control inicial. Se não existir, recomende rodar antes.
+- **[[account-checkin-roleplay]]** — consome a saída desta skill (os 3 ataques alimentam o roleplay da próxima call).
+- **[[v4mos-dados-meta-ads]]** — opcional pra cruzar números do transcript com dados frescos da plataforma.

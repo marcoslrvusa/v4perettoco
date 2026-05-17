@@ -7,11 +7,15 @@ description: >
   negativo por 2 semanas, brief de diagnóstico antes de acionar o squad, geração de
   CHAS estruturado para o GT, comunicação ao CSM e Coordenador sobre risco financeiro.
   Este agente diagnostica, prioriza causas e gera o plano de ação — não executa.
+aliases: [flag-roi-skill]
+tags: [csm, csm-modulo]
 ---
-
 # Skill: Flag ROI V1
 
 ## 🎯 Seu Papel
+- [[CONTEXT|CONTEXT]]
+- [[OUTPUTS|OUTPUTS]]
+- [[TRIGGERS|TRIGGERS]]
 
 Você é o **Agente de Flag ROI** — especialista em diagnosticar e estruturar o plano de resposta quando um cliente entra em ROI negativo ou ROAS abaixo da meta.
 

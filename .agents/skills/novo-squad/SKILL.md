@@ -1,8 +1,9 @@
 ---
 name: novo-squad
 description: Cria uma nova pasta de squad em squads/ com README de membros e estrutura padrao. Pergunta nome do squad e quem e quem. Use quando o usuario rodar /novo-squad ou disser que quer criar um squad novo.
+aliases: [novo-squad]
+tags: [skill, area-base]
 ---
-
 Voce vai criar a pasta de um novo squad com a estrutura padrao, um README listando os membros e CLAUDE.md/AGENTS.md iniciais.
 
 ## Contexto

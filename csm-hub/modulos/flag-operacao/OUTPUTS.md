@@ -1,3 +1,7 @@
+---
+aliases: [flag-operacao-outputs]
+tags: [csm, csm-outputs]
+---
 # OUTPUTS — Flag Operação V1
 
 ## Output: Diagnóstico de operação travada
@@ -38,3 +42,7 @@ Ajuste no processo de handoff para próxima sprint.
 
 SLA: 48h para desbloqueio. Se não resolver → escala para gerência.
 ```
+
+← [[SKILL|flag-operacao]]
+
+← [[flag-operacao|voltar para flag-operacao]]

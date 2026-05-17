@@ -6,7 +6,7 @@
 
 ## O que tem aqui
 
-- **Skills prontas** organizadas por papel ou fonte de dados (veja [REGISTRY.md](./REGISTRY.md))
+- **Skills prontas** organizadas por papel ou fonte de dados (veja [[REGISTRY]])
 - **Skills de setup** pra você configurar seu ambiente sem saber git
 - **Templates** de KB pra organizar squads, clientes e projetos
 - **Mission Control de cliente** pra manter OKRs, apostas vivas, combinados, personas e histórico de check-ins
@@ -40,25 +40,25 @@ Valida git/GitHub CLI/dependências 100%, instala o que faltar, e te guia pelo r
 
 | Skill | O que faz |
 |---|---|
-| `/onboarding` | Configura tudo e te ensina o fluxo V4 |
-| `/sync-hub` | Atualiza suas skills com o que o time compartilhou |
-| `/compartilhar-skill` | Empacota uma skill sua e manda pro Hub (abre PR automático) |
-| `/criador-de-skills` | Cria skill nova do zero com prefixo de papel ou fonte |
-| `/contexto` | Lê uma KB, gera CLAUDE.md/AGENTS.md e atualiza Mission Control quando for cliente |
-| `/novo-squad` | Cria um squad antes do primeiro cliente |
-| `/novo-cliente` | Cria cliente dentro de um squad com `calls/`, `checkins/`, `docs/`, `campanhas/` e `links.md` |
-| `/novo-projeto` | Cria uma KB genérica em `bases/` |
-| `/geral-brainstormar-sobre-minha-funcao` | Descobre onde IA agrega mais valor no seu dia |
-| `/geral-sabatina` | Stress-test de planos e ideias |
+| [[onboarding]] | Configura tudo e te ensina o fluxo V4 |
+| [[sync-hub]] | Atualiza suas skills com o que o time compartilhou |
+| [[compartilhar-skill]] | Empacota uma skill sua e manda pro Hub (abre PR automático) |
+| [[criador-de-skills]] | Cria skill nova do zero com prefixo de papel ou fonte |
+| [[contexto]] | Lê uma KB, gera CLAUDE.md/AGENTS.md e atualiza Mission Control quando for cliente |
+| [[novo-squad]] | Cria um squad antes do primeiro cliente |
+| [[novo-cliente]] | Cria cliente dentro de um squad com `calls/`, `checkins/`, `docs/`, `campanhas/` e `links.md` |
+| [[novo-projeto]] | Cria uma KB genérica em `bases/` |
+| [[geral-brainstormar-sobre-minha-funcao]] | Descobre onde IA agrega mais valor no seu dia |
+| [[geral-sabatina]] | Stress-test de planos e ideias |
 
 ## Skills de account e check-in
 
 | Skill | Quando usar |
 |---|---|
-| `/account-handoff` | Primeiro fluxo quando um cliente sai de vendas. Gera KB preliminar, Mission Control preliminar e deck HTML de kickoff. |
-| `/account-pesquisa-profunda-cliente` | Pesquisa profunda depois que dados internos mínimos já estão na KB. |
-| `/account-checkin-roleplay` | Antes do check-in. Prepara ROPRE, simula o cliente real e salva o ensaio em `checkins/`. |
-| `/account-checkin-review` | Depois do check-in. Lê o transcript, atualiza Mission Control e salva review em `checkins/`. |
+| [[account-handoff]] | Primeiro fluxo quando um cliente sai de vendas. Gera KB preliminar, Mission Control preliminar e deck HTML de kickoff. |
+| [[account-pesquisa-profunda-cliente]] | Pesquisa profunda depois que dados internos mínimos já estão na KB. |
+| [[account-checkin-roleplay]] | Antes do check-in. Prepara ROPRE, simula o cliente real e salva o ensaio em `checkins/`. |
+| [[account-checkin-review]] | Depois do check-in. Lê o transcript, atualiza Mission Control e salva review em `checkins/`. |
 
 Fluxo recomendado de cliente:
 
@@ -71,7 +71,7 @@ Fluxo recomendado de cliente:
 /account-checkin-review     # depois da call
 ```
 
-Todas as skills compartilhadas pelo time ficam em [REGISTRY.md](./REGISTRY.md).
+Todas as skills compartilhadas pelo time ficam em [[REGISTRY]].
 
 ## Convenção de nomes
 
@@ -147,7 +147,7 @@ Tem uma skill que funciona bem? Compartilha com o time:
 /compartilhar-skill
 ```
 
-A skill empacota, valida, cria branch, abre PR. Você só aprova no final. Detalhes em [CONTRIBUTING.md](./CONTRIBUTING.md).
+A skill empacota, valida, cria branch, abre PR. Você só aprova no final. Detalhes em [[CONTRIBUTING]].
 
 ## Links
 

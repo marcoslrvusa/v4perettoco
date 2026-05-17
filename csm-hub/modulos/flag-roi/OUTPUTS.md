@@ -1,3 +1,7 @@
+---
+aliases: [flag-roi-outputs]
+tags: [csm, csm-outputs]
+---
 # OUTPUTS — Flag ROI V1
 
 ## Output: CHAS de ROI negativo
@@ -33,3 +37,7 @@ SUCCESS:
 ROAS ≥ 3.0 por 2 semanas consecutivas.
 Rollback: se ação 2 não funcionar em 10 dias → revisar segmentação de público.
 ```
+
+← [[SKILL|flag-roi]]
+
+← [[flag-roi|voltar para flag-roi]]

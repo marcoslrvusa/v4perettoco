@@ -1,8 +1,9 @@
 ---
 name: compartilhar-skill
 description: Empacota uma skill local e abre Pull Request no Builders Hub publico automaticamente. Use quando o usuario rodar /compartilhar-skill, disser que quer "compartilhar essa skill com o time", "publicar no hub", "enviar pro repo" ou similar. Valida nome/frontmatter/duplo-write, resolve conflitos com origin/main via rebase, cria branch, commita, faz push e abre PR via gh CLI — o usuario so precisa aprovar depois. Nunca commita arquivos pessoais de clientes/ ou bases/.
+aliases: [compartilhar-skill]
+tags: [skill, area-base]
 ---
-
 # /compartilhar-skill — Envia skill pro Builders Hub
 
 Pega uma skill que ja funciona no ambiente local do usuario, valida tudo, e abre um Pull Request no repo publico pro curador revisar. O usuario termina com um link do PR e a ideia de que o time inteiro vai poder usar a skill em poucos dias.

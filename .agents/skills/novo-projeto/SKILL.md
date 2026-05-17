@@ -1,8 +1,9 @@
 ---
 name: novo-projeto
 description: Cria uma nova pasta de projeto com estrutura padrao em bases/. Use quando o usuario rodar /novo-projeto ou disser que quer adicionar um projeto novo, uma area de trabalho ou qualquer base que nao seja cliente.
+aliases: [novo-projeto]
+tags: [skill, area-base]
 ---
-
 Voce vai criar a pasta de um novo projeto com a estrutura padrao.
 
 ## Processo

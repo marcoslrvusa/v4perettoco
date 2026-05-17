@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas Copco USA — Digital Strategy V4</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #E31919;
+    --red-dark: #B80F0F;
+    --red-light: #FF2424;
+    --black: #0A0A0A;
+    --black2: #111111;
+    --black3: #1A1A1A;
+    --black4: #222222;
+    --gray: #2E2E2E;
+    --gray2: #3D3D3D;
+    --gray3: #555;
+    --white: #FFFFFF;
+    --white2: #F0F0F0;
+    --white3: #C8C8C8;
+    --text-muted: #888;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  .topbar {
+    background: var(--red);
+    padding: 8px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  header {
+    background: var(--black2);
+    border-bottom: 1px solid var(--gray);
+    padding: 20px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    color: var(--white);
+    line-height: 1;
+  }
+
+  .logo-text span { color: var(--red); }
+
+  .logo img {
+    height: 32px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+  }
+
+  .nav {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--white3);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav a:hover { color: var(--red); }
+
+  .hero {
+    padding: 80px 48px 64px;
+    background: var(--black2);
+    border-bottom: 3px solid var(--red);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: 'ATLAS COPCO USA';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 200px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.03);
+    line-height: 1;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    background: var(--red);
+    color: var(--white);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(52px, 8vw, 96px);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 span { color: var(--red); }
+
+  .hero-sub {
+    font-size: 17px;
+    color: var(--white3);
+    max-width: 680px;
+    line-height: 1.55;
+    margin-bottom: 40px;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--gray);
+    border: 1px solid var(--gray);
+    max-width: 900px;
+  }
+
+  .hero-stat {
+    background: var(--black3);
+    padding: 24px 28px;
+    border-right: 1px solid var(--gray);
+  }
+
+  .hero-stat:last-child { border-right: none; }
+
+  .stat-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 44px;
+    font-weight: 900;
+    color: var(--red);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-number.white { color: var(--white); }
+
+  .stat-label {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--white3);
+    margin-top: 6px;
+    display: block;
+  }
+
+  section {
+    padding: 72px 48px;
+    border-bottom: 1px solid var(--gray);
+  }
+
+  section:nth-child(even) { background: var(--black3); }
+
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--red);
+  }
+
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    margin-bottom: 48px;
+  }
+
+  .section-title span { color: var(--red); }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--gray); }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--gray); }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; background: var(--gray); }
+
+  .card {
+    background: var(--black3);
+    padding: 32px;
+    position: relative;
+    transition: background 0.2s;
+  }
+
+  .card:hover { background: var(--black4); }
+
+  .card-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 72px;
+    font-weight: 900;
+    color: rgba(227,25,25,0.15);
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    line-height: 1;
+  }
+
+  .card-tag {
+    display: inline-block;
+    background: var(--red);
+    color: var(--white);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    margin-bottom: 16px;
+  }
+
+  .card-tag.gray { background: var(--gray2); }
+  .card-tag.dark { background: var(--black); border: 1px solid var(--gray); }
+
+  .card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 12px;
+    line-height: 1.1;
+  }
+
+  .card p {
+    font-size: 15px;
+    color: var(--white3);
+    line-height: 1.6;
+  }
+
+  .card-metric {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--red);
+    margin-top: 16px;
+    display: block;
+  }
+
+  .ba-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    background: var(--gray);
+  }
+
+  .ba-block {
+    background: var(--black3);
+    padding: 40px;
+    border-left: 4px solid var(--red);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ba-block::after {
+    content: attr(data-num);
+    position: absolute;
+    bottom: -10px;
+    right: 20px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 120px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+  }
+
+  .ba-block h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    color: var(--white);
+  }
+
+  .ba-block .ba-sub {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 16px;
+  }
+
+  .ba-block p { font-size: 15px; color: var(--white3); line-height: 1.6; margin-bottom: 16px; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+
+  .tag {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border: 1px solid var(--gray2);
+    color: var(--white3);
+  }
+
+  .tag.red { border-color: var(--red); color: var(--red); }
+
+  .insight-list { display: flex; flex-direction: column; gap: 2px; }
+
+  .insight-item {
+    display: flex;
+    gap: 0;
+    background: var(--gray);
+  }
+
+  .insight-num {
+    width: 56px;
+    background: var(--red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    flex-shrink: 0;
+    color: var(--white);
+  }
+
+  .insight-num.dark { background: var(--gray2); }
+
+  .insight-content {
+    flex: 1;
+    background: var(--black3);
+    padding: 22px 28px;
+  }
+
+  .insight-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .insight-body { font-size: 15px; color: var(--white3); line-height: 1.6; }
+
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--gray);
+  }
+
+  .phase {
+    background: var(--black3);
+    padding: 36px;
+    position: relative;
+  }
+
+  .phase-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 4px;
+  }
+
+  .phase-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 26px;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .phase-period {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .phase ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .phase ul li {
+    font-size: 15px;
+    color: var(--white3);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.5;
+  }
+
+  .phase ul li::before {
+    content: '—';
+    color: var(--red);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .alert-box {
+    background: var(--red);
+    padding: 32px 40px;
+    margin-bottom: 40px;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  .alert-icon {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .alert-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .alert-body { font-size: 15px; line-height: 1.6; opacity: 0.9; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  table thead th {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 14px 20px;
+    text-align: left;
+    border-bottom: 1px solid var(--gray);
+    background: var(--black2);
+  }
+
+  table tbody tr {
+    border-bottom: 1px solid var(--gray);
+    transition: background 0.15s;
+  }
+
+  table tbody tr:hover { background: var(--black4); }
+
+  table tbody td {
+    padding: 16px 20px;
+    vertical-align: top;
+    color: var(--white3);
+  }
+
+  .link-button {
+    display: inline-block;
+    background: var(--red);
+    color: var(--white);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 14px 36px;
+    text-decoration: none;
+    transition: background 0.2s;
+    border: none;
+    cursor: default;
+  }
+
+  .link-button:hover { background: var(--red-dark); }
+
+  .next-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--gray);
+    margin-top: 40px;
+  }
+
+  .next-step {
+    background: var(--black3);
+    padding: 32px;
+    border-top: 3px solid var(--red);
+  }
+
+  .next-step-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--red);
+    margin-bottom: 8px;
+  }
+
+  .next-step h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .next-step p {
+    font-size: 15px;
+    color: var(--white3);
+    line-height: 1.5;
+  }
+
+  footer {
+    background: var(--black2);
+    border-top: 3px solid var(--red);
+    padding: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 32px;
+  }
+
+  .footer-brand {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .footer-brand strong {
+    display: block;
+    font-size: 24px;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .footer-brand strong span { color: var(--red); }
+
+  .footer-note {
+    font-size: 14px;
+    color: var(--text-muted);
+    text-align: right;
+    max-width: 400px;
+    line-height: 1.6;
+  }
+
+  .viz-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 24px 0;
+  }
+
+  .viz-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .viz-label {
+    width: 140px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--white3);
+    flex-shrink: 0;
+    text-align: right;
+  }
+
+  .viz-track {
+    flex: 1;
+    height: 28px;
+    background: var(--black4);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--gray);
+  }
+
+  .viz-fill {
+    height: 100%;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--white);
+    font-family: 'Barlow Condensed', sans-serif;
+    transition: width 0.3s;
+  }
+
+  .viz-fill.red { background: var(--red); }
+  .viz-fill.white { background: var(--gray2); }
+  .viz-fill.yellow { background: var(--gray2); color: var(--white3); }
+  .viz-fill.gray { background: var(--black4); border: 1px solid var(--gray); }
+
+  .viz-value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--white);
+    min-width: 60px;
+  }
+
+  .viz-icon-row {
+    display: flex;
+    gap: 0;
+    background: var(--gray);
+    margin: 24px 0;
+  }
+
+  .viz-icon-item {
+    flex: 1;
+    background: var(--black3);
+    padding: 28px 20px;
+    text-align: center;
+    border-right: 1px solid var(--gray);
+  }
+
+  .viz-icon-item:last-child { border-right: none; }
+
+  .viz-icon-symbol {
+    font-size: 32px;
+    line-height: 1;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .viz-icon-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--red);
+    display: block;
+  }
+
+  .viz-icon-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 4px;
+    display: block;
+  }
+
+  .viz-dot-row {
+    display: flex;
+    gap: 2px;
+    margin: 16px 0;
+  }
+
+  .viz-dot {
+    width: 100%;
+    height: 12px;
+    border-radius: 2px;
+  }
+
+  .viz-dot.on { background: var(--red); }
+  .viz-dot.off { background: var(--black4); }
+  .viz-dot.warn { background: #f1c40f; }
+
+  .viz-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 24px 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--white3);
+  }
+
+  .viz-flow-step {
+    background: var(--black4);
+    padding: 12px 20px;
+    text-align: center;
+    border-radius: 4px;
+    min-width: 100px;
+    position: relative;
+  }
+
+  .viz-flow-step.red { background: var(--red); color: var(--white); }
+
+  .viz-flow-arrow {
+    font-size: 20px;
+    color: var(--red);
+    padding: 0 8px;
+    font-weight: 700;
+  }
+
+  .viz-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--gray);
+  }
+
+  .viz-compare-card {
+    background: var(--black3);
+    padding: 24px;
+  }
+
+  .viz-compare-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .viz-big-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--red);
+    line-height: 1;
+  }
+
+  .viz-big-num.yellow { color: #f1c40f; }
+  .viz-big-num.white { color: var(--white); }
+
+  .speaker-note {
+    background: var(--black4);
+    border-left: 3px solid var(--red);
+    padding: 20px 28px;
+    margin-top: 32px;
+    font-size: 16px;
+    color: var(--white2);
+    line-height: 1.7;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .speaker-note strong {
+    color: var(--red);
+  }
+
+  @media (max-width: 900px) {
+    header, .topbar, section, .hero, footer { padding-left: 24px; padding-right: 24px; }
+    .hero-stats, .grid-3, .grid-4, .timeline, .next-steps { grid-template-columns: 1fr 1fr; }
+    .grid-2, .ba-grid { grid-template-columns: 1fr; }
+    .hero::before { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    .hero-stats, .grid-3, .grid-4, .timeline, .hero-stat, .next-steps { grid-template-columns: 1fr; }
+    .nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <span>Confidential Strategic Document · V4 Company Internal Use</span>
+  <span>Updated: May 2026</span>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo"><img src="data:image/png;base64,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" alt="V4 Logo"></div>
+  <ul class="nav">
+    <li><a href="#diagnosis">Diagnosis</a></li>
+    <li><a href="#divisions">Divisions</a></li>
+    <li><a href="#issues">Issues</a></li>
+    <li><a href="#solution">Solution</a></li>
+    <li><a href="#budget">Budget</a></li>
+  </ul>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">Strategic Intelligence · Data-Driven Digital Strategy</div>
+  <h1>Atlas Copco USA<br><span>Digital</span><br>Strategy</h1>
+  <p class="hero-sub">From 3 years of inactivity to a focused reactivation plan for two divisions sharing $3,000/month. Complete campaign architecture, keyword strategy, and 90-day execution roadmap.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="stat-number">$155K</span>
+      <span class="stat-label">Historical Spend</span>
+    </div>
+    <div class="hero-stat">
+      <span class="stat-number">643</span>
+      <span class="stat-label">Total Conversions</span>
+    </div>
+    <div class="hero-stat">
+      <span class="stat-number">$242</span>
+      <span class="stat-label">Avg. CPA</span>
+    </div>
+    <div class="hero-stat">
+      <span class="stat-number">3 Years</span>
+      <span class="stat-label">Account Inactive</span>
+    </div>
+  </div>
+</section>
+
+  <div class="speaker-note">
+    <strong>Digital strategy for Atlas Copco USA.</strong> Two divisions — Portable Air (APE) and Power &amp; Light (PAL) — share one Google Ads account. The account has been inactive for 3 years. 34 campaigns registered, zero active. Budget: $3,000/month. We are starting from zero. Every dollar must work.
+  </div>
+</section>
+
+<!-- THE WAKE-UP CALL -->
+<section id="diagnosis">
+  <div class="section-label">The Wake-Up Call</div>
+  <h2 class="section-title">Two divisions.<br><span>One budget. Zero campaigns.</span></h2>
+
+  <div class="alert-box">
+    <div class="alert-icon">!</div>
+    <div>
+      <div class="alert-title">Critical finding: 3 years inactive</div>
+      <div class="alert-body">The account has been 100% inactive for 3 years. 34 campaigns registered, zero active. APE (Portable Air) and PAL (Power &amp; Light) share the same $3,000/month budget — but serve completely different buyers, products, and sales cycles. We need a lean, focused reactivation plan.</div>
+    </div>
+  </div>
+
+  <div class="viz-icon-row">
+    <div class="viz-icon-item">
+      <span class="viz-icon-symbol" style="font-weight: 900; font-family: 'Barlow Condensed', sans-serif; font-size: 20px; color: var(--red);">—</span>
+      <span class="viz-icon-num" style="color: var(--red);">0</span>
+      <span class="viz-icon-label">Active Campaigns</span>
+    </div>
+    <div class="viz-icon-item">
+      <span class="viz-icon-symbol" style="font-weight: 900; font-family: 'Barlow Condensed', sans-serif; font-size: 20px; color: var(--red);">—</span>
+      <span class="viz-icon-num" style="color: var(--red);">34</span>
+      <span class="viz-icon-label">Registered Campaigns</span>
+    </div>
+    <div class="viz-icon-item">
+      <span class="viz-icon-symbol" style="font-weight: 900; font-family: 'Barlow Condensed', sans-serif; font-size: 20px; color: var(--white3);">/</span>
+      <span class="viz-icon-num" style="color: var(--white);">3 yrs</span>
+      <span class="viz-icon-label">Inactive</span>
+    </div>
+    <div class="viz-icon-item">
+      <span class="viz-icon-symbol" style="font-weight: 900; font-family: 'Barlow Condensed', sans-serif; font-size: 20px; color: var(--white);">$</span>
+      <span class="viz-icon-num" style="color: var(--white);">$3K</span>
+      <span class="viz-icon-label">Budget / Month</span>
+    </div>
+    <div class="viz-icon-item">
+      <span class="viz-icon-symbol" style="font-weight: 900; font-family: 'Barlow Condensed', sans-serif; font-size: 20px; color: var(--white3);">II</span>
+      <span class="viz-icon-num" style="color: var(--white);">2</span>
+      <span class="viz-icon-label">Divisions</span>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-tag">Joint Engagement</div>
+      <h3>Two divisions, one strategy</h3>
+      <p>APE and PAL operate under the same Google Ads account with a shared $3,000/month budget. Each division has $1,500/month and requires a dedicated approach that respects their unique products, buyers, and sales cycles. The strategy is unified at the account level and tailored at the campaign level.</p>
+    </div>
+    <div class="card">
+      <div class="card-tag">The Challenge</div>
+      <h3>Reactivation from zero</h3>
+      <p>After 3 years inactive, Quality Scores expired, historical ad formats (ETAs) are obsolete, and keyword data is from 2022. The first weeks will rebuild the account's relevance from scratch. $3,000/month must be allocated with precision — one Core Search campaign per division, not fragmented experiments.</p>
+      <span class="card-metric">90 days to traction</span>
+    </div>
+  </div>
+
+  <div class="speaker-note">
+    <strong>The situation: 3 years, zero campaigns running.</strong> Two divisions, $3,000/month total — $1,500 each. Products, customers, and sales cycles are completely different. The plan: one lean Core Search campaign per division with 4 Ad Groups each. No fragmentation. Maximum focus.
+  </div>
+</section>
+
+<!-- THE TWO DIVISIONS -->
+<section id="divisions">
+  <div class="section-label">The Two Divisions</div>
+  <h2 class="section-title">Same company.<br><span>Completely different worlds.</span></h2>
+
+  <div class="ba-grid">
+    <div class="ba-block" data-num="01">
+      <h3>APE — Portable Air</h3>
+      <div class="ba-sub">Tania · Will · Brandon · Edson</div>
+      <p>Portable diesel and electric air compressors, dryers, nitrogen generators, and tools. Construction, infrastructure, emergency response. Ticket $5K–50K. Sales cycle: weeks to months. Buyer calls to purchase.</p>
+      <div class="tags">
+        <span class="tag red">$5K–50K ticket</span>
+        <span class="tag">Mid-Sized Diesel</span>
+        <span class="tag">Emergency trigger</span>
+        <span class="tag">Calls convert</span>
+        <span class="tag">CPA $107–188</span>
+      </div>
+    </div>
+    <div class="ba-block" data-num="02">
+      <h3>PAL — Power &amp; Light</h3>
+      <div class="ba-sub">Nico · Ayush · Justin · Felipe</div>
+      <p>Diesel generators, energy storage systems, light towers. Enterprise, industrial plants, large-scale projects. Ticket $50K–500K+. Sales cycle: months to years. Buyer researches, fills forms, involves procurement.</p>
+      <div class="tags">
+        <span class="tag red">$50K–500K+ ticket</span>
+        <span class="tag">Long B2B cycle</span>
+        <span class="tag">Project trigger</span>
+        <span class="tag">Forms convert</span>
+        <span class="tag">CPA $139–284</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="speaker-note">
+    <strong>Two different businesses.</strong> APE sells portable compressors. Ticket: $5K-$50K. Buyer is a contractor. He calls to buy. PAL sells large generators. Ticket: $50K-$500K+. Buyer is an engineering director. He fills forms, involves procurement. Same company, completely different worlds.
+  </div>
+</section>
+
+<!-- ACCOUNT X-RAY -->
+<section>
+  <div class="section-label">Account X-Ray</div>
+  <h2 class="section-title">The data tells<br><span>two different stories.</span></h2>
+
+  <div class="grid-2" style="margin-bottom: 32px;">
+    <div class="card">
+      <div class="card-tag">APE Performance</div>
+      <div class="card-number">01</div>
+      <h3>Portable Air — $54K spent</h3>
+      <p><strong>$53,937</strong> historical spend &middot; <strong>265</strong> conversions &middot; <strong>$204</strong> avg CPA</p>
+      <p>Best campaign: <strong>Mid-Sized Diesel</strong> — $107 CPA, 74 calls (37% of total). Proves the model works when keywords and landing pages align. Worst performers wasted budget on competitor terms and unsegmented campaigns.</p>
+      <span class="card-metric">$107</span>
+      <span class="stat-label">Best CPA — Mid-Sized Diesel</span>
+    </div>
+    <div class="card">
+      <div class="card-tag">PAL Performance</div>
+      <div class="card-number">02</div>
+      <h3>Power &amp; Light — $35K spent</h3>
+      <p><strong>$35,254</strong> historical spend &middot; <strong>153</strong> conversions &middot; <strong>$229</strong> avg CPA</p>
+      <p>Best campaign: <strong>Sustainability PMax</strong> — $34 CPA, 73 conversions. Excellent efficiency, but PMax is a black box. Without conversion data, we can't replicate the success. PAL also suffered from residential intent leakage.</p>
+      <span class="card-metric">$34</span>
+      <span class="stat-label">Best CPA — Sustainability PMax</span>
+    </div>
+  </div>
+
+  <div class="viz-group">
+    <div class="viz-row">
+      <span class="viz-label">Spend</span>
+      <div class="viz-track"><div class="viz-fill red" style="width: 60%">$54K</div></div>
+      <span class="viz-value" style="color: var(--red)">APE</span>
+    </div>
+    <div class="viz-row">
+      <span class="viz-label"></span>
+      <div class="viz-track"><div class="viz-fill white" style="width: 40%">$35K</div></div>
+      <span class="viz-value" style="color: var(--white)">PAL</span>
+    </div>
+    <div class="viz-row">
+      <span class="viz-label">Conversions</span>
+      <div class="viz-track"><div class="viz-fill red" style="width: 63%">265</div></div>
+      <span class="viz-value" style="color: var(--red)">APE</span>
+    </div>
+    <div class="viz-row">
+      <span class="viz-label"></span>
+      <div class="viz-track"><div class="viz-fill white" style="width: 37%">153</div></div>
+      <span class="viz-value" style="color: var(--white)">PAL</span>
+    </div>
+    <div class="viz-row">
+      <span class="viz-label">Avg CPA</span>
+      <div class="viz-track"><div class="viz-fill red" style="width: 47%">$204</div></div>
+      <span class="viz-value" style="color: var(--red)">APE</span>
+    </div>
+    <div class="viz-row">
+      <span class="viz-label"></span>
+      <div class="viz-track"><div class="viz-fill white" style="width: 53%">$229</div></div>
+      <span class="viz-value" style="color: var(--white)">PAL</span>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-bottom: 16px;">What worked — and what didn't</div>
+  <div style="display: flex; gap: 2px; background: var(--gray);">
+    <div style="flex: 1; background: var(--black3); padding: 28px;">
+      <span style="font-family: 'Barlow Condensed',sans-serif; font-size: 14px; font-weight: 700; color: var(--red); text-transform: uppercase;">APE Winners</span>
+      <div style="margin-top: 12px; font-size: 13px; color: var(--white3); line-height: 1.8;">
+        Mid-Sized Diesel: $107 CPA<br>
+        Dynamic Search: $86 CPA<br>
+        OEM PMax: $84 CPA
+      </div>
+    </div>
+    <div style="flex: 1; background: var(--black3); padding: 28px;">
+      <span style="font-family: 'Barlow Condensed',sans-serif; font-size: 14px; font-weight: 700; color: var(--gray2); text-transform: uppercase;">APE Losers</span>
+      <div style="margin-top: 12px; font-size: 13px; color: var(--white3); line-height: 1.8;">
+        Compressors General: $768 CPA<br>
+        Compressors Specs: $1,008 CPA<br>
+        E-Air Display: $7K, 0 conversions
+      </div>
+    </div>
+    <div style="flex: 1; background: var(--black3); padding: 28px;">
+      <span style="font-family: 'Barlow Condensed',sans-serif; font-size: 14px; font-weight: 700; color: var(--red); text-transform: uppercase;">PAL Winners</span>
+      <div style="margin-top: 12px; font-size: 13px; color: var(--white3); line-height: 1.8;">
+        Sustainability PMax: $34 CPA<br>
+        Sustainability Search: $139 CPA<br>
+        Generators Specs: $128 CPA
+      </div>
+    </div>
+    <div style="flex: 1; background: var(--black3); padding: 28px;">
+      <span style="font-family: 'Barlow Condensed',sans-serif; font-size: 14px; font-weight: 700; color: var(--gray2); text-transform: uppercase;">PAL Losers</span>
+      <div style="margin-top: 12px; font-size: 13px; color: var(--white3); line-height: 1.8;">
+        Generators General: $3.2K, 0 conv<br>
+        Generators Use Case: $811 CPA<br>
+        Sustainability Video: $10K, 0 conv
+      </div>
+    </div>
+  </div>
+
+  <div class="speaker-note">
+    <strong>The numbers tell the story.</strong> APE: $54K spent, 265 conversions. Best campaign: Mid-Sized Diesel at $107 CPA. It works when keywords and landing pages are aligned. PAL: $35K spent, 153 conversions. Best: Sustainability PMax at $34 CPA. But PMax is a black box — without conversion data, we can't replicate the formula.
+  </div>
+</section>
+
+<!-- SEARCH TERMS PROBLEM -->
+<section>
+  <div class="section-label">The Waste</div>
+  <h2 class="section-title">Your budget was paying<br><span>your competitors' bills.</span></h2>
+
+  <div class="viz-group">
+    <div class="viz-row">
+      <span class="viz-label">APE waste</span>
+      <div class="viz-track"><div class="viz-fill red" style="width: 55%">55% lost to competitors</div></div>
+      <span class="viz-value" style="color: var(--red)">!</span>
+    </div>
+    <div class="viz-row">
+      <span class="viz-label">PAL waste</span>
+      <div class="viz-track"><div class="viz-fill white" style="width: 35%">35% residential traffic</div></div>
+      <span class="viz-value" style="color: var(--white)">HIGH</span>
+    </div>
+    <div class="viz-row">
+      <span class="viz-label">Savings</span>
+      <div class="viz-track"><div class="viz-fill red" style="width: 18%">15-20% with negatives</div></div>
+      <span class="viz-value" style="color: var(--red)">FIX</span>
+    </div>
+  </div>
+
+  <div class="insight-list">
+    <div class="insight-item">
+      <div class="insight-num">55%</div>
+      <div class="insight-content">
+        <div class="insight-title">APE: more than half went to competitors</div>
+        <div class="insight-body">55%+ of APE search spend was captured by competitor keywords — Sullair, Ingersoll Rand, Doosan. Every dollar spent on a competitor term is a dollar that doesn't bring a prospect to Atlas Copco's door. These terms have value only when used as conquest targeting with the right ad copy and landing page.</div>
+      </div>
+    </div>
+    <div class="insight-item">
+      <div class="insight-num dark">—</div>
+      <div class="insight-content">
+        <div class="insight-title">PAL: residential intent, not industrial</div>
+        <div class="insight-body">PAL campaigns were capturing residential and light commercial intent — "generac generator," "natural gas generator for home use." A $50K–500K industrial generator buyer does not search for home generators. The targeting was fundamentally misaligned with the product and persona.</div>
+      </div>
+    </div>
+    <div class="insight-item">
+      <div class="insight-num">!</div>
+      <div class="insight-content">
+        <div class="insight-title">Hidden opportunity: negative keywords</div>
+        <div class="insight-body">Adding just ~40 negative keywords across both divisions could save 15–20% of the budget immediately. Terms like "parts," "repair," "manual," "rental," "home use," and competitor brand names (when not doing conquest) are pure waste.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="speaker-note">
+    <strong>Where the money went wrong.</strong> APE: 55% of spend went to competitor keywords — Sullair, Ingersoll Rand, Doosan. That budget brought zero Atlas Copco leads. PAL: campaigns showed for residential searches, not industrial buyers. Someone buying a 500kW generator doesn't search "home generator." Fix: just 40 negative keywords save 15-20% of budget immediately.
+  </div>
+</section>
+
+<!-- BUYER PERSONAS -->
+<section>
+  <div class="section-label">Buyer Personas</div>
+  <h2 class="section-title">Know who you're<br><span>talking to.</span></h2>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-tag">APE Persona</div>
+      <div class="card-number">A</div>
+      <h3>Fleet Operator · Mid-Sized Contractor</h3>
+      <p><strong>Age:</strong> 35–64 (81%), 89% Male</p>
+      <p><strong>Trigger:</strong> Emergency breakdown OR fleet expansion</p>
+      <p><strong>Journey:</strong> Research specs → Compare brands → Request quote → Close</p>
+      <p><strong>Channel:</strong> Google Search → Phone call</p>
+      <p><strong>Acceptable CPA:</strong> &lt; $150</p>
+      <p><strong>Ticket:</strong> $5K–50K</p>
+      <p><strong>Sales cycle:</strong> Weeks to months</p>
+      <span class="card-metric">Call to buy</span>
+    </div>
+    <div class="card">
+      <div class="card-tag">PAL Persona</div>
+      <div class="card-number">B</div>
+      <h3>Engineering Director · Plant Manager</h3>
+      <p><strong>Age:</strong> 45–65+, predominantly Male</p>
+      <p><strong>Trigger:</strong> New project, ESG compliance, critical replacement</p>
+      <p><strong>Journey:</strong> RFP → Multiple quotes → Budget approval → Due diligence</p>
+      <p><strong>Channel:</strong> Search/PMax → Form → Sales</p>
+      <p><strong>Acceptable CPA:</strong> &lt; $300</p>
+      <p><strong>Ticket:</strong> $50K–500K+</p>
+      <p><strong>Sales cycle:</strong> Months to years</p>
+      <span class="card-metric">Form to buy</span>
+    </div>
+  </div>
+
+  <div style="margin-top: 32px;">
+    <div class="section-label" style="margin-bottom: 16px;">How each buyer buys</div>
+    <div class="viz-compare">
+      <div class="viz-compare-card">
+        <div class="viz-compare-title"><span style="color: var(--red);">▉</span> APE Buyer Journey</div>
+        <div class="viz-flow">
+          <span class="viz-flow-step">Google Search</span>
+          <span class="viz-flow-arrow">→</span>
+          <span class="viz-flow-step">Compare Specs</span>
+          <span class="viz-flow-arrow">→</span>
+          <span class="viz-flow-step red">CALL</span>
+        </div>
+        <div style="margin-top: 16px; display: flex; gap: 16px;">
+          <div><span class="viz-big-num" style="font-size: 28px;">$5-50K</span><br><span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Ticket</span></div>
+          <div><span class="viz-big-num" style="font-size: 28px; color: var(--white);">2-8 wks</span><br><span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Cycle</span></div>
+          <div><span class="viz-big-num" style="font-size: 28px; color: var(--white);">&lt;$150</span><br><span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Target CPA</span></div>
+        </div>
+      </div>
+      <div class="viz-compare-card">
+        <div class="viz-compare-title"><span style="color: var(--white3);">▉</span> PAL Buyer Journey</div>
+        <div class="viz-flow">
+          <span class="viz-flow-step">Search / PMax</span>
+          <span class="viz-flow-arrow">→</span>
+          <span class="viz-flow-step">Form → RFP</span>
+          <span class="viz-flow-arrow">→</span>
+          <span class="viz-flow-step red">PROCUREMENT</span>
+        </div>
+        <div style="margin-top: 16px; display: flex; gap: 16px;">
+          <div><span class="viz-big-num" style="font-size: 28px;">$50-500K+</span><br><span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Ticket</span></div>
+          <div><span class="viz-big-num" style="font-size: 28px; color: var(--white);">2-24 mo</span><br><span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Cycle</span></div>
+          <div><span class="viz-big-num" style="font-size: 28px; color: var(--white);">&lt;$300</span><br><span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Target CPA</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="speaker-note">
+    <strong>Two different buyers, two different approaches.</strong> APE buyer calls to buy. PAL buyer involves procurement. We must treat them separately.
+  </div>
+</section>
+
+<!-- CAMPAIGN CHALLENGES -->
+<section id="issues">
+  <div class="section-label">Campaign Challenges</div>
+  <h2 class="section-title">4 reactivation hurdles.<br><span>Each one has a plan.</span></h2>
+
+  <div class="insight-list">
+    <div class="insight-item">
+      <div class="insight-num">01</div>
+      <div class="insight-content">
+        <div class="insight-title">Quality Score expired — 3 years inactive</div>
+        <div class="insight-body">Google Ads Quality Scores decay with inactivity. After 3 years, the account starts from near zero. Initial CPCs will be 30–50% higher for the first 2–4 weeks. Expected and manageable — exact/phrase match focus and relevant ad copy rebuild QS quickly.</div>
+      </div>
+    </div>
+    <div class="insight-item">
+      <div class="insight-num">02</div>
+      <div class="insight-content">
+        <div class="insight-title">Obsolete ad formats — ETAs must be replaced</div>
+        <div class="insight-body">All existing Expanded Text Ads are deprecated. Every reactivated campaign needs new Responsive Search Ads (RSAs) with 15 headlines and 4 descriptions. This is standard procedure and an opportunity to refresh messaging for 2026.</div>
+      </div>
+    </div>
+    <div class="insight-item">
+      <div class="insight-num">03</div>
+      <div class="insight-content">
+        <div class="insight-title">Historical keyword waste — competitors and noise</div>
+        <div class="insight-body">55% of APE search spend went to competitor terms (Sullair, Ingersoll Rand, Doosan). PAL captured residential intent instead of industrial buyers. Adding ~40 negative keywords saves 15–20% of budget immediately. Exact and Phrase match only — no Broad.</div>
+      </div>
+    </div>
+    <div class="insight-item">
+      <div class="insight-num">04</div>
+      <div class="insight-content">
+        <div class="insight-title">Limited budget — $1,500/division/month</div>
+        <div class="insight-body">At $50/day per division, every dollar must work. No room for fragmented experiments. One Core Search campaign per division with 4 Ad Groups maximizes traction. PMax is a future consideration for S3+ — not part of the initial structure.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="speaker-note">
+    <strong>Four challenges to address.</strong> 1) Expired Quality Score after 3 years — higher CPCs for 2-4 weeks, manageable. 2) Old ad formats must be replaced with RSAs. 3) Historical keyword waste — 55% went to competitors for APE. 40 negative keywords save 15-20% of budget. 4) Limited budget — $1,500/division/month. One Core Search campaign per division, not fragmented.
+  </div>
+</section>
+
+<!-- THE SOLUTION -->
+<section id="solution">
+  <div class="section-label">The Fix</div>
+  <h2 class="section-title">3 phases.<br><span>90 days to traction.</span></h2>
+
+  <div class="timeline">
+    <div class="phase">
+      <div class="phase-label">S1 — Foundation</div>
+      <div class="phase-title">Build</div>
+      <div class="phase-period">Days 1–21 · Core Infrastructure</div>
+      <ul>
+        <li>Set up campaign tracking and conversions</li>
+        <li>Build dedicated landing pages (APE + PAL)</li>
+        <li>Create account structure — 1 Core Search per division</li>
+        <li>Launch Core Search campaigns with 4 Ad Groups each</li>
+        <li>Add ~40 negative keywords (15–20% savings)</li>
+        <li>Set up offline conversion import</li>
+        <li>Fix CTA "Contact" redirect</li>
+        <li>S1 Review at Day 21</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <div class="phase-label">S2 — Acceleration</div>
+      <div class="phase-title">Grow</div>
+      <div class="phase-period">Days 22–50 · Optimization</div>
+      <ul>
+        <li>Launch Remarketing Display + RLSA</li>
+        <li>Adjust Ad Group budget allocation by performance</li>
+        <li>Create MOF content (buying guides, ROI calculators)</li>
+        <li>A/B test ad copy and landing pages</li>
+        <li>Search term analysis + expand negatives</li>
+        <li>Begin bid adjustments by device/location</li>
+        <li>S2 Review at Day 50</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <div class="phase-label">S3 — Scale</div>
+      <div class="phase-title">Dominate</div>
+      <div class="phase-period">Days 51–90 · TOC Optimization</div>
+      <ul>
+        <li>TOC Cycle — identify constraint, fix, repeat</li>
+        <li>Scale high-performing Ad Groups</li>
+        <li>Prepare PMax as retargeting reinforcement (S3+)</li>
+        <li>Q3–Q4 planning and budget recommendation</li>
+        <li>Build full funnel reporting dashboard</li>
+        <li>Stakeholder presentation with results</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="margin-top: 40px;">
+    <div class="section-label" style="margin-bottom: 16px;">Timeline progress</div>
+    <div style="display: flex; gap: 2px; background: var(--gray); padding: 2px; border-radius: 4px;">
+      <div style="flex: 2.3; background: var(--red); padding: 12px 16px; text-align: center; border-radius: 3px 0 0 3px;">
+        <span style="font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; color: var(--white);">S1 · Foundation</span>
+        <span style="display: block; font-size: 11px; color: rgba(255,255,255,0.8);">Days 1-21</span>
+      </div>
+      <div style="flex: 3.2; background: var(--gray2); padding: 12px 16px; text-align: center;">
+        <span style="font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; color: var(--white);">S2 · Acceleration</span>
+        <span style="display: block; font-size: 11px; color: var(--text-muted);">Days 22-50</span>
+      </div>
+      <div style="flex: 4.5; background: var(--gray2); padding: 12px 16px; text-align: center; border-radius: 0 3px 3px 0;">
+        <span style="font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; color: var(--white);">S3 · Scale</span>
+        <span style="display: block; font-size: 11px; color: var(--text-muted);">Days 51-90</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="speaker-note">
+    <strong>The plan: 3 phases in 90 days.</strong> Phase 1 — Foundation (days 1-21): set up campaign tracking, build landing pages, launch core search, add negative keywords. Phase 2 — Acceleration (days 22-50): remarketing, A/B tests, optimize with real data. Phase 3 — Scale (days 51-90): find the bottleneck, scale what works, plan next quarter.
+  </div>
+</section>
+
+<!-- CAMPAIGN STRUCTURE -->
+<section>
+  <div class="section-label">Campaign Architecture</div>
+  <h2 class="section-title">Lean structure.<br><span>Maximum impact.</span></h2>
+
+  <p style="font-size: 14px; color: var(--white3); max-width: 800px; margin-bottom: 40px; line-height: 1.6;">With $1,500/month per division, a single Core Search campaign with 4 Ad Groups gains more traction than multiple fragmented campaigns. PMax is a future consideration (S3+) — not part of initial structure.</p>
+
+  <div class="grid-2">
+    <div class="card" style="padding: 36px;">
+      <div class="card-tag">APE — $50/day</div>
+      <h3>Core Search: Portable Air</h3>
+      <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 10px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--black4); border-left: 3px solid var(--red);">
+          <div><span style="font-weight: 700; font-size: 14px;">Mid-Sized Diesel</span><br><span style="font-size: 11px; color: var(--text-muted);">"diesel air compressor 300 cfm" · Phrase/Exact</span></div>
+          <span style="font-family: 'Barlow Condensed',sans-serif; font-size: 20px; font-weight: 900; color: var(--red);">$20</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--black4); border-left: 3px solid var(--gray2);">
+          <div><span style="font-weight: 700; font-size: 14px;">Air Compressors Large</span><br><span style="font-size: 11px; color: var(--text-muted);">"large air compressor industrial" · Phrase/Exact</span></div>
+          <span style="font-family: 'Barlow Condensed',sans-serif; font-size: 20px; font-weight: 900; color: var(--white);">$15</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--black4); border-left: 3px solid var(--gray2);">
+          <div><span style="font-weight: 700; font-size: 14px;">Competitors</span><br><span style="font-size: 11px; color: var(--text-muted);">"sullair compressor" · Exact</span></div>
+          <span style="font-family: 'Barlow Condensed',sans-serif; font-size: 20px; font-weight: 900; color: var(--white);">$10</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--black4); border-left: 3px solid var(--gray2);">
+          <div><span style="font-weight: 700; font-size: 14px;">Brand</span><br><span style="font-size: 11px; color: var(--text-muted);">"atlas copco portable compressor" · Exact</span></div>
+          <span style="font-family: 'Barlow Condensed',sans-serif; font-size: 20px; font-weight: 900; color: var(--white);">$5</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="padding: 36px;">
+      <div class="card-tag">PAL — $50/day</div>
+      <h3>Core Search: Power &amp; Light</h3>
+      <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 10px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--black4); border-left: 3px solid var(--red);">
+          <div><span style="font-weight: 700; font-size: 14px;">Generators Specs</span><br><span style="font-size: 11px; color: var(--text-muted);">"industrial generator 500 kW" · Phrase/Exact</span></div>
+          <span style="font-family: 'Barlow Condensed',sans-serif; font-size: 20px; font-weight: 900; color: var(--red);">$20</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--black4); border-left: 3px solid var(--gray2);">
+          <div><span style="font-weight: 700; font-size: 14px;">Sustainability</span><br><span style="font-size: 11px; color: var(--text-muted);">"energy storage system industrial" · Phrase/Exact</span></div>
+          <span style="font-family: 'Barlow Condensed',sans-serif; font-size: 20px; font-weight: 900; color: var(--white);">$15</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--black4); border-left: 3px solid var(--gray2);">
+          <div><span style="font-weight: 700; font-size: 14px;">Competitors</span><br><span style="font-size: 11px; color: var(--text-muted);">"generac industrial generator" · Exact</span></div>
+          <span style="font-family: 'Barlow Condensed',sans-serif; font-size: 20px; font-weight: 900; color: var(--white);">$10</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--black4); border-left: 3px solid var(--gray2);">
+          <div><span style="font-weight: 700; font-size: 14px;">Brand</span><br><span style="font-size: 11px; color: var(--text-muted);">"atlas copco power generator" · Exact</span></div>
+          <span style="font-family: 'Barlow Condensed',sans-serif; font-size: 20px; font-weight: 900; color: var(--white);">$5</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 32px;">
+    <div class="section-label" style="margin-bottom: 16px;">Daily Budget Allocation — $100/day total</div>
+    <div class="viz-group">
+      <div class="viz-row">
+        <span class="viz-label">APE Mid-Sized Diesel</span>
+        <div class="viz-track"><div class="viz-fill red" style="width: 20%">$20</div></div>
+        <span class="viz-value" style="color: var(--red)">40%</span>
+      </div>
+      <div class="viz-row">
+        <span class="viz-label">APE Air Compressors</span>
+        <div class="viz-track"><div class="viz-fill red" style="width: 15%">$15</div></div>
+        <span class="viz-value" style="color: var(--red)">30%</span>
+      </div>
+      <div class="viz-row">
+        <span class="viz-label">APE Competitor + Brand</span>
+        <div class="viz-track"><div class="viz-fill gray" style="width: 15%">$15</div></div>
+        <span class="viz-value" style="color: var(--white3)">30%</span>
+      </div>
+      <div class="viz-row" style="border-top: 1px solid var(--gray); padding-top: 12px;">
+        <span class="viz-label" style="color: var(--red); font-weight: 800;">APE Total</span>
+        <div class="viz-track"><div class="viz-fill red" style="width: 50%">$50/day</div></div>
+        <span class="viz-value" style="color: var(--red)">50%</span>
+      </div>
+    </div>
+    <div class="viz-group" style="margin-top: 8px;">
+      <div class="viz-row">
+        <span class="viz-label">PAL Generators Specs</span>
+        <div class="viz-track"><div class="viz-fill white" style="width: 20%">$20</div></div>
+        <span class="viz-value" style="color: var(--white)">40%</span>
+      </div>
+      <div class="viz-row">
+        <span class="viz-label">PAL Sustainability</span>
+        <div class="viz-track"><div class="viz-fill white" style="width: 15%">$15</div></div>
+        <span class="viz-value" style="color: var(--white)">30%</span>
+      </div>
+      <div class="viz-row">
+        <span class="viz-label">PAL Competitor + Brand</span>
+        <div class="viz-track"><div class="viz-fill gray" style="width: 15%">$15</div></div>
+        <span class="viz-value" style="color: var(--white3)">30%</span>
+      </div>
+      <div class="viz-row" style="border-top: 1px solid var(--gray); padding-top: 12px;">
+        <span class="viz-label" style="color: var(--white); font-weight: 800;">PAL Total</span>
+        <div class="viz-track"><div class="viz-fill white" style="width: 50%">$50/day</div></div>
+        <span class="viz-value" style="color: var(--white)">50%</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="speaker-note">
+    <strong>$3,000/month means we must be lean.</strong> One Core Search campaign per division, 4 ad groups each. APE priority: Mid-Sized Diesel ($20/day). PAL priority: Generator Specs + Sustainability ($20/day). Smaller budgets for competitor and brand. PMax comes later — phase 3, after we have data.
+  </div>
+</section>
+
+<!-- BUDGET & PROJECTIONS -->
+<section id="budget">
+  <div class="section-label">Budget &amp; Projections</div>
+  <h2 class="section-title">$3,000/month.<br><span>A plan to make it count.</span></h2>
+
+  <div class="hero-stats" style="margin-bottom: 40px;">
+    <div class="hero-stat">
+      <span class="stat-number">$3,000</span>
+      <span class="stat-label">Total Monthly Budget</span>
+    </div>
+    <div class="hero-stat">
+      <span class="stat-number">$1,500</span>
+      <span class="stat-label">Per Division / Month</span>
+    </div>
+    <div class="hero-stat">
+      <span class="stat-number">72–102</span>
+      <span class="stat-label">Projected Conversions (90d)</span>
+    </div>
+    <div class="hero-stat">
+      <span class="stat-number">$88–125</span>
+      <span class="stat-label">Est. Blended CPA</span>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-bottom: 16px;">90-Day Investment Breakdown</div>
+  <table style="margin-bottom: 40px;">
+    <thead>
+      <tr>
+        <th>Division</th>
+        <th>90-Day Investment</th>
+        <th>Est. Conversions</th>
+        <th>Est. CPA Range</th>
+        <th>Primary Channel</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span style="font-weight: 700; color: var(--white);">APE — Portable Air</span></td>
+        <td>$4,500</td>
+        <td>25–36</td>
+        <td>$125–180</td>
+        <td>Search → Call</td>
+      </tr>
+      <tr>
+        <td><span style="font-weight: 700; color: var(--white);">PAL — Power &amp; Light</span></td>
+        <td>$4,500</td>
+        <td>15–22</td>
+        <td>$200–300</td>
+        <td>Search → Form</td>
+      </tr>
+      <tr>
+        <td><span style="font-weight: 700; color: var(--red);">Total</span></td>
+        <td><span style="font-weight: 700;">$9,000</span></td>
+        <td><span style="font-weight: 700;">40–58</span></td>
+        <td><span style="font-weight: 700;">$155–225</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="alert-box" style="background: var(--black3); border: 1px solid var(--gray);">
+    <div class="alert-icon" style="color: var(--red);">i</div>
+    <div>
+      <div class="alert-title" style="color: var(--red);">Optimistic projection with full infrastructure</div>
+      <div class="alert-body" style="opacity: 0.85;">With dedicated landing pages, QS rebuilt, and negative keywords active, we project a blended CPA of $88–125 and 72–102 total conversions over 90 days. These numbers assume landing pages are approved within the first 10 days.</div>
+    </div>
+  </div>
+
+  <div class="speaker-note">
+    <strong>Projection for 90 days:</strong> 40-58 conversions, blended CPA $155-$225. Total investment: $9,000 over 3 months. Assumes landing pages approved in first 10 days. Search APE: 25-36 conversions at $125-180 CPA. Search PAL: 15-22 at $200-300 CPA.
+  </div>
+</section>
+
+<!-- RISK -->
+<section>
+  <div class="section-label">Risk Assessment</div>
+  <h2 class="section-title">We know the risks.<br><span>We have a plan for each.</span></h2>
+
+  <div style="display: flex; flex-direction: column; gap: 2px;">
+    <div style="display: flex; gap: 0; background: var(--gray);">
+      <div style="width: 120px; background: var(--red); display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed',sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; color: var(--white); flex-shrink: 0; padding: 8px;">CRITICAL</div>
+      <div style="flex: 1; background: var(--black3); padding: 20px 28px;">
+        <span style="font-weight: 700; color: var(--white);">Landing pages not approved on time</span>
+        <span style="display: block; font-size: 13px; color: var(--white3); margin-top: 4px;">Without dedicated LPs per division, APE and PAL leads mix and conversion rates suffer. <strong>Priority #1 — approve within first 10 days.</strong></span>
+      </div>
+    </div>
+    <div style="display: flex; gap: 0; background: var(--gray);">
+      <div style="width: 120px; background: var(--gray2); display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed',sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; color: var(--white); flex-shrink: 0; padding: 8px;">CERTAIN</div>
+      <div style="flex: 1; background: var(--black3); padding: 20px 28px;">
+        <span style="font-weight: 700; color: var(--white);">Expired Quality Score — high initial CPC</span>
+        <span style="display: block; font-size: 13px; color: var(--white3); margin-top: 4px;">Expected for 2–4 weeks. Mitigated by strong creative, relevant LPs, and exact/phrase match focus. QS rebuilds with good performance.</span>
+      </div>
+    </div>
+    <div style="display: flex; gap: 0; background: var(--gray);">
+      <div style="width: 120px; background: var(--gray2); display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed',sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; color: var(--white); flex-shrink: 0; padding: 8px;">MEDIUM</div>
+      <div style="flex: 1; background: var(--black3); padding: 20px 28px;">
+        <span style="font-weight: 700; color: var(--white);">Long B2B cycle — no visible short-term leads</span>
+        <span style="display: block; font-size: 13px; color: var(--white3); margin-top: 4px;">PAL leads take months to close. Must educate stakeholders to measure pipeline, not immediate revenue. North star = MQL → SQL → Opportunity.</span>
+      </div>
+    </div>
+    <div style="display: flex; gap: 0; background: var(--gray);">
+      <div style="width: 120px; background: var(--gray2); display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed',sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; color: var(--white); flex-shrink: 0; padding: 8px;">HIGH</div>
+      <div style="flex: 1; background: var(--black3); padding: 20px 28px;">
+        <span style="font-weight: 700; color: var(--white);">Limited budget — $1,500/division/month</span>
+        <span style="display: block; font-size: 13px; color: var(--white3); margin-top: 4px;">At $50/day, every dollar must work. Single Core Search per division maximizes traction. No room for experimental campaigns — focus on proven keyword themes.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="speaker-note">
+    <strong>Main risks, clear plans.</strong> Critical: landing pages need approval in first 10 days. Expired Quality Score: expected, higher CPC for 2-4 weeks, manageable. PAL long B2B cycle: measure pipeline, not immediate revenue. Budget: $1,500/division/month — every dollar counts.
+  </div>
+</section>
+
+<!-- NEXT STEPS -->
+<section>
+  <div class="section-label">Next Steps</div>
+  <h2 class="section-title">What needs to happen<br><span>right now.</span></h2>
+
+  <p style="font-size: 14px; color: var(--white3); max-width: 700px; margin-bottom: 40px; line-height: 1.6;">Three dependencies block the entire plan. Until these are resolved, nothing moves. Each has been scoped, sized, and prepared — all that's needed is approval.</p>
+
+  <div class="next-steps">
+    <div class="next-step">
+      <div class="next-step-num">Step 1</div>
+      <h3>Approve Dedicated LPs</h3>
+      <p>Two landing pages: one for APE (Portable Air), one for PAL (Power &amp; Light). Aligns message with buyer persona and improves Quality Score. <strong>Estimated: 5 days to build after approval.</strong></p>
+    </div>
+    <div class="next-step">
+      <div class="next-step-num">Step 2</div>
+      <h3>Approve Budget Allocation</h3>
+      <p>Confirm $1,500/month per division ($3,000 total) for Google Search. First 30 days will show enough data to validate the strategy and request scale. <strong>Estimated: 90-day commitment of $9,000.</strong></p>
+    </div>
+    <div class="next-step">
+      <div class="next-step-num">Step 3</div>
+      <h3>Campaign Setup &amp; Launch</h3>
+      <p>Build ad groups, write RSAs, set up negative keywords, and launch Core Search campaigns. Each division gets 4 Ad Groups with differentiated bidding. <strong>Estimated: 7 days to first campaign live.</strong></p>
+    </div>
+  </div>
+
+  <div style="margin-top: 48px; text-align: center;">
+    <span class="link-button">Approve Next Steps</span>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <span class="logo-text" style="font-size: 18px; display: block; margin-bottom: 4px;">ATLAS <span>COPCO</span></span>
+    Strategic intelligence for paid media<br>
+    Document: Atlas Copco USA · May 2026
+  </div>
+  <div class="footer-note">
+    Data compiled from Atlas Copco USA Google Ads account historical data, Technical Diagnostic report, and Action Plan analysis. For internal strategic planning use. Prepared by V4 Company.
+  </div>
+</footer>
+
+</body>
+</html>

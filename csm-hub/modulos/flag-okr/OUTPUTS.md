@@ -1,3 +1,7 @@
+---
+aliases: [flag-okr-outputs]
+tags: [csm, csm-outputs]
+---
 # OUTPUTS — Flag OKR V1
 
 ## Output: Diagnóstico de desvio de OKR
@@ -34,3 +38,7 @@ para o fim do quarter é 26 MQLs.
 O que não muda: qualidade dos leads, taxa de conversão em reunião
 e o objetivo de receita do quarter. Podemos conversar [data]?"
 ```
+
+← [[SKILL|flag-okr]]
+
+← [[flag-okr|voltar para flag-okr]]

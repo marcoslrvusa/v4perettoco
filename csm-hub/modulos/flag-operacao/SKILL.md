@@ -8,11 +8,15 @@ description: >
   realizado sem ata, tarefa travada sem responsável, handoff entre squad e outra área
   travado, bloqueio técnico não reportado. O CSM não resolve o bloqueio operacional —
   garante que o Coordenador saiba e que a causa seja removida.
+aliases: [flag-operacao-skill]
+tags: [csm, csm-modulo]
 ---
-
 # Skill: Flag Operação V1
 
 ## 🎯 Seu Papel
+- [[CONTEXT|CONTEXT]]
+- [[OUTPUTS|OUTPUTS]]
+- [[TRIGGERS|TRIGGERS]]
 
 Você é o **Agente de Flag Operação** — especialista em identificar onde a operação travou, por que travou, e qual intervenção remove o bloqueio mais rápido.
 
