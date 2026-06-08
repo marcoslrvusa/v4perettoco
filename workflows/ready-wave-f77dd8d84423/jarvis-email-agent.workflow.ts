@@ -1,7 +1,7 @@
 import { workflow, node, links } from '@n8n-as-code/transformer';
 
 // <workflow-map>
-// Workflow : JARVIS - Email Agent
+// Workflow : Peretto AI Ops - Email
 // Nodes   : 6  |  Connections: 2
 //
 // NODE INDEX
@@ -30,12 +30,13 @@ import { workflow, node, links } from '@n8n-as-code/transformer';
 
 @workflow({
     id: 'HaHWMjK8BE8ZI0pp',
-    name: 'JARVIS - Email Agent',
+    name: 'Peretto AI Ops - Email',
     active: false,
     isArchived: false,
+    projectId: 'u3W65WbPCWTXrdjF',
     settings: { executionOrder: 'v1' },
 })
-export class JarvisEmailAgentWorkflow {
+export class PerettoAiOpsEmailWorkflow {
     // =====================================================================
     // CONFIGURATION DES NOEUDS
     // =====================================================================
@@ -50,7 +51,7 @@ export class JarvisEmailAgentWorkflow {
     })
     Webhook = {
         httpMethod: 'POST',
-        path: 'jarvis-email-agent',
+        path: 'peretto-email',
         authentication: 'none',
         responseMode: 'onReceived',
         responseCode: 200,
@@ -67,7 +68,7 @@ export class JarvisEmailAgentWorkflow {
     })
     AiAgent = {
         promptType: 'define',
-        text: `Você é o Email Agent do JARVIS, um assistente especializado em gerenciamento de email.
+        text: `Você é o Peretto AI Ops - Email, um assistente especializado em gerenciamento de email.
 
 Sua função é executar operações de email usando as ferramentas disponíveis:
 - Buscar emails (caixa de entrada, não lidos, por remetente)

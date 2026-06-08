@@ -1,7 +1,7 @@
 import { workflow, node, links } from '@n8n-as-code/transformer';
 
 // <workflow-map>
-// Workflow : JARVIS - Contacts Agent
+// Workflow : Peretto AI Ops - Contacts
 // Nodes   : 5  |  Connections: 2
 //
 // NODE INDEX
@@ -29,12 +29,13 @@ import { workflow, node, links } from '@n8n-as-code/transformer';
 
 @workflow({
     id: 'Hp2pmqu92vxLXvFH',
-    name: 'JARVIS - Contacts Agent',
+    name: 'Peretto AI Ops - Contacts',
     active: true,
     isArchived: false,
+    projectId: 'u3W65WbPCWTXrdjF',
     settings: { executionOrder: 'v1' },
 })
-export class JarvisContactsAgentWorkflow {
+export class PerettoAiOpsContactsWorkflow {
     // =====================================================================
     // CONFIGURATION DES NOEUDS
     // =====================================================================
@@ -49,7 +50,7 @@ export class JarvisContactsAgentWorkflow {
     })
     Webhook = {
         httpMethod: 'POST',
-        path: 'jarvis-contacts-agent',
+        path: 'peretto-contacts',
         authentication: 'none',
         responseMode: 'onReceived',
         responseCode: 200,
@@ -66,7 +67,7 @@ export class JarvisContactsAgentWorkflow {
     })
     AiAgent = {
         promptType: 'define',
-        text: `Você é o Contacts Agent do JARVIS, especializado em gerenciar contatos.
+        text: `Você é o Peretto AI Ops - Contacts, especializado em gerenciar contatos.
 
 Funções:
 1. "buscar" - Buscar contato por nome/email

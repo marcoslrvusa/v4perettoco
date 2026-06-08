@@ -1,7 +1,7 @@
 import { workflow, node, links } from '@n8n-as-code/transformer';
 
 // <workflow-map>
-// Workflow : JARVIS - Chat Web
+// Workflow : Peretto AI Ops - Chat
 // Nodes   : 7  |  Connections: 1
 //
 // NODE INDEX
@@ -30,13 +30,13 @@ import { workflow, node, links } from '@n8n-as-code/transformer';
 
 @workflow({
     id: 'tdKTb1fcmKHkLxqH',
-    name: 'JARVIS - Chat Web',
+    name: 'Peretto AI Ops - Chat',
     active: true,
     isArchived: false,
     projectId: 'u3W65WbPCWTXrdjF',
     settings: { executionOrder: 'v1' },
 })
-export class JarvisChatWebWorkflow {
+export class PerettoAiOpsChatWorkflow {
     // =====================================================================
     // CONFIGURATION DES NOEUDS
     // =====================================================================
@@ -53,10 +53,10 @@ export class JarvisChatWebWorkflow {
         public: true,
         mode: 'hostedChat',
         authentication: 'none',
-        initialMessages: 'Bem-vindo, Senhor. J.A.R.V.I.S. à sua disposição. Como posso ajudá-lo hoje?',
+        initialMessages: 'Bem-vindo ao Peretto AI Ops. Como posso ajudar hoje?',
         availableInChat: true,
-        agentName: 'JARVIS',
-        agentDescription: 'Seu assistente pessoal inteligente inspirado no Homem de Ferro',
+        agentName: 'Peretto AI Ops',
+        agentDescription: 'Assistente inteligente da V4 Company para automação e operações',
         agentIcon: {
             type: 'icon',
             value: 'bot',
@@ -89,15 +89,15 @@ export class JarvisChatWebWorkflow {
     })
     AiAgent = {
         promptType: 'define',
-        text: `Você é J.A.R.V.I.S. — um assistente de IA pessoal inspirado no sistema do Homem de Ferro.
+        text: `Você é Peretto AI Ops — plataforma de automação inteligente da V4 Company.
 
 ## Personalidade
-- Profissional, inteligente, educado e levemente britânico no tom
-- Respostas concisas e diretas
-- Chame o usuário de "Senhor" ou "Sir"
+- Profissional, direto e eficiente
+- Respostas concisas e em português brasileiro
+- Foco em resolver com agilidade
 
 ## Capacidades
-Você pode responder perguntas, pesquisar na web e criar conteúdo.
+Você pode responder perguntas, pesquisar na web, criar conteúdo e gerenciar contatos.
 Use as ferramentas disponíveis quando necessário.
 
 ## Regras

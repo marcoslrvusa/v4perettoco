@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard de Testes de Agentes — Peretto & Co.</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #E31919;
+    --red-dark: #B80F0F;
+    --red-light: #FF2424;
+    --red-gradient: linear-gradient(135deg, #E31919 0%, #FF4D4D 100%);
+    --black: #0A0A0A;
+    --black2: #0E0E0E;
+    --black3: #141414;
+    --black4: #1C1C1C;
+    --black5: #252525;
+    --gray: #2A2A2A;
+    --gray2: #383838;
+    --gray3: #505050;
+    --gray4: #6B6B6B;
+    --white: #FFFFFF;
+    --white3: #B0B0B0;
+    --text-muted: #787878;
+    --green: #22C55E;
+    --amber: #D97706;
+    --purple: #A855F7;
+    --yellow: #EAB308;
+
+    --status-success: var(--green);
+    --status-partial: var(--yellow);
+    --status-skipped: var(--gray4);
+    --status-blocker: var(--red);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-size: 18px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--red); color: var(--white); }
+
+  /* ===== TOPBAR ===== */
+  .topbar {
+    background: var(--red);
+    padding: 12px 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .topbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .topbar-logo img {
+    height: 75px; /* Placeholder, no image provided */
+    width: auto;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    padding: 80px 56px 60px;
+    background: linear-gradient(160deg, var(--black2) 0%, var(--black) 40%, var(--black3) 100%);
+    border-bottom: 1px solid var(--gray);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 900px;
+    background: radial-gradient(circle, rgba(227,25,25,0.05) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(48px, 8vw, 90px);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 span { background: var(--red-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+  .hero-sub {
+    font-size: 21px;
+    color: var(--white3);
+    max-width: 700px;
+    margin: 0 auto 48px;
+    line-height: 1.65;
+  }
+
+  /* ===== SECTION ===== */
+  .section {
+    padding: 80px 56px;
+    border-bottom: 1px solid var(--gray);
+    position: relative;
+  }
+
+  .section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(42px, 5.5vw, 58px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+
+  .section-title span { background: var(--red-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+  .section-desc {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 640px;
+    margin: 14px auto 0;
+    line-height: 1.6;
+  }
+
+  /* ===== SUMMARY CARD ===== */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--gray);
+    margin-top: 60px;
+    margin-bottom: 60px;
+  }
+
+  .summary-item {
+    background: var(--black3);
+    padding: 32px;
+    text-align: center;
+    position: relative;
+  }
+
+  .summary-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .summary-item:hover::before { opacity: 1; }
+  .summary-item.total::before { background: var(--white3); }
+  .summary-item.success::before { background: var(--green); }
+  .summary-item.partial::before { background: var(--yellow); }
+  .summary-item.skipped::before { background: var(--gray4); }
+  .summary-item.blocker::before { background: var(--red); }
+
+
+  .summary-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .summary-item.total .summary-number { color: var(--white); }
+  .summary-item.success .summary-number { color: var(--green); }
+  .summary-item.partial .summary-number { color: var(--yellow); }
+  .summary-item.skipped .summary-number { color: var(--gray4); }
+  .summary-item.blocker .summary-number { color: var(--red); }
+
+
+  .summary-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  /* ===== FILTERS & SEARCH ===== */
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 30px;
+    align-items: center;
+  }
+
+  .filter-tab, .filter-button {
+    background: var(--black4);
+    color: var(--white3);
+    border: 1px solid var(--gray2);
+    padding: 8px 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .filter-tab:hover, .filter-button:hover {
+    background: var(--gray);
+    color: var(--white);
+    border-color: var(--gray3);
+  }
+
+  .filter-tab.active, .filter-button.active {
+    background: var(--red);
+    border-color: var(--red);
+    color: var(--white);
+  }
+
+  .search-bar {
+    flex-grow: 1;
+    margin-left: auto;
+  }
+
+  .search-bar input {
+    width: 100%;
+    padding: 10px 15px;
+    background: var(--black4);
+    border: 1px solid var(--gray2);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-size: 16px;
+  }
+
+  .search-bar input::placeholder {
+    color: var(--text-muted);
+  }
+
+  /* ===== AGENT GRID ===== */
+  .agent-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .agent-card {
+    background: var(--black3);
+    border: 1px solid var(--gray);
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+    border-left: 3px solid transparent; /* Default */
+  }
+
+  .agent-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .agent-card.status-SUCCESS { border-left-color: var(--status-success); }
+  .agent-card.status-SUCCESS:hover { border-color: var(--status-success); }
+  .agent-card.status-PARTIAL { border-left-color: var(--status-partial); }
+  .agent-card.status-PARTIAL:hover { border-color: var(--status-partial); }
+  .agent-card.status-SKIPPED { border-left-color: var(--status-skipped); }
+  .agent-card.status-SKIPPED:hover { border-color: var(--status-skipped); }
+  .agent-card.status-BLOCKER { border-left-color: var(--status-blocker); }
+  .agent-card.status-BLOCKER:hover { border-color: var(--status-blocker); }
+
+
+  .agent-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    opacity: 0.03;
+    pointer-events: none;
+  }
+
+  .agent-card.status-SUCCESS::before { background: var(--status-success); }
+  .agent-card.status-PARTIAL::before { background: var(--status-partial); }
+  .agent-card.status-SKIPPED::before { background: var(--status-skipped); }
+  .agent-card.status-BLOCKER::before { background: var(--status-blocker); }
+
+  .agent-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .agent-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    background: var(--black4);
+    color: var(--white3);
+    border: 1px solid var(--gray2);
+  }
+
+  .agent-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+
+  .agent-description {
+    font-size: 15px;
+    color: var(--white3);
+    margin-bottom: 14px;
+    line-height: 1.6;
+  }
+
+  .agent-details-toggle {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    color: var(--red-light);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 10px 0;
+    border-top: 1px solid var(--gray);
+    margin-top: 10px;
+  }
+
+  .agent-details-content {
+    display: none;
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    padding-top: 10px;
+  }
+
+  .agent-details-content.visible {
+    display: block;
+  }
+
+  /* ===== BLOCKERS SECTION ===== */
+  .blockers-section {
+    background: var(--black2);
+    padding: 40px;
+    margin-top: 60px;
+    border: 1px solid var(--red-dark);
+    position: relative;
+  }
+
+  .blockers-section::before {
+    content: '🚨';
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    font-size: 40px;
+  }
+
+  .blockers-section h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--red-light);
+    margin-bottom: 20px;
+  }
+
+  .blockers-list {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .blockers-list li {
+    background: var(--black3);
+    border-left: 3px solid var(--red);
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: var(--white3);
+  }
+
+  /* ===== EXPORT BUTTON ===== */
+  .export-button-container {
+    text-align: center;
+    margin-top: 60px;
+  }
+
+  .export-button {
+    background: var(--red-gradient);
+    color: var(--white);
+    border: none;
+    padding: 15px 30px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  .export-button:hover {
+    transform: translateY(-2px);
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    padding: 32px 56px;
+    background: var(--black3);
+    border-top: 1px solid var(--gray);
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  .footer-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  .footer-brand span {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--white3);
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    .topbar { padding-left: 28px; padding-right: 28px; }
+    .hero { padding: 60px 28px 40px; }
+    .section { padding: 60px 28px; }
+    .summary-grid { grid-template-columns: 1fr 1fr; }
+    .filter-bar { flex-direction: column; align-items: stretch; }
+    .search-bar { margin-left: 0; margin-top: 10px; }
+  }
+
+  @media (max-width: 600px) {
+    .topbar { padding-left: 20px; padding-right: 20px; }
+    .hero { padding: 40px 20px 32px; }
+    .hero h1 { font-size: clamp(40px, 10vw, 52px); }
+    .hero-sub { font-size: 17px; }
+    .section { padding: 40px 20px; }
+    .agent-grid { grid-template-columns: 1fr; }
+    .summary-grid { grid-template-columns: 1fr; }
+    footer { padding: 32px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-logo">
+    <!-- Placeholder for logo, no image provided -->
+    <span style="font-size: 24px; color: var(--white); font-weight: 900;">P&C</span>
+    <span>Peretto & Co.</span>
+  </div>
+  <span>v4.0 · Maio 2026</span>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Agent Orchestra V4 — <span>Unified Test Dashboard</span></h1>
+  <p class="hero-sub">Resultados consolidados de 35 agentes de IA em 4 sessões de teste. Visão geral de performance, status e bloqueios.</p>
+</section>
+
+<section class="section">
+  <div class="section-inner">
+    <div class="summary-grid">
+      <div class="summary-item total">
+        <div class="summary-number" id="totalAgents">35</div>
+        <div class="summary-label">Total de Agentes</div>
+      </div>
+      <div class="summary-item success">
+        <div class="summary-number" id="successAgents">33</div>
+        <div class="summary-label">Sucesso</div>
+      </div>
+      <div class="summary-item partial">
+        <div class="summary-number" id="partialAgents">1</div>
+        <div class="summary-label">Parcial</div>
+      </div>
+      <div class="summary-item skipped">
+        <div class="summary-number" id="skippedAgents">1</div>
+        <div class="summary-label">Ignorado</div>
+      </div>
+      <div class="summary-item blocker">
+        <div class="summary-number" id="blockerAgents">7</div>
+        <div class="summary-label">Bloqueios</div>
+      </div>
+    </div>
+
+    <div class="filter-bar">
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-filter-type="session" data-filter-value="all">Todos</button>
+        <button class="filter-tab" data-filter-type="session" data-filter-value="1">Session 1</button>
+        <button class="filter-tab" data-filter-type="session" data-filter-value="2">Session 2</button>
+        <button class="filter-tab" data-filter-type="session" data-filter-value="3">Session 3</button>
+        <button class="filter-tab" data-filter-type="session" data-filter-value="4">Session 4</button>
+        <button class="filter-tab" data-filter-type="session" data-filter-value="infrastructure">Infrastructure</button>
+      </div>
+      <div class="filter-buttons">
+        <button class="filter-button active" data-filter-type="status" data-filter-value="all">Todos</button>
+        <button class="filter-button" data-filter-type="status" data-filter-value="SUCCESS">Sucesso</button>
+        <button class="filter-button" data-filter-type="status" data-filter-value="PARTIAL">Parcial</button>
+        <button class="filter-button" data-filter-type="status" data-filter-value="SKIPPED">Ignorado</button>
+        <button class="filter-button" data-filter-type="status" data-filter-value="BLOCKER">Bloqueios</button>
+      </div>
+      <div class="search-bar">
+        <input type="text" id="agentSearch" placeholder="Buscar agente por nome ou descrição...">
+      </div>
+    </div>
+
+    <div class="agent-grid" id="agentGrid">
+      <!-- Agent cards will be injected here by JavaScript -->
+    </div>
+
+    <div class="blockers-section">
+      <h2>Bloqueios de API</h2>
+      <ul class="blockers-list">
+        <li>API do SEMRush: Limite de requisições excedido em testes de volume.</li>
+        <li>API do Google Analytics 4: Problemas de autenticação intermitentes.</li>
+        <li>API do Google Search Console: Acesso negado para algumas propriedades.</li>
+        <li>API do ChatGPT: Erros de rate limit durante o Citation Checker.</li>
+        <li>API do Perplexity: Respostas inconsistentes para algumas queries.</li>
+        <li>API do Gemini: Latência elevada em horários de pico.</li>
+        <li>API do Claude: Falha na extração de dados estruturados em 5% dos casos.</li>
+      </ul>
+    </div>
+
+    <div class="export-button-container">
+      <button class="export-button" onclick="exportAgentsJson()">Exportar JSON</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">
+    <span style="font-size: 24px; color: var(--white); font-weight: 900;">P&C</span>
+    <span>Peretto & Co.</span>
+  </div>
+  <p>&copy; 2026 Peretto & Co. Todos os direitos reservados.</p>
+</footer>
+
+<script>
+  const agentsData = [
+    { id: 1, session: 1, handle: '@estrategia-marketing', name: 'Marketing strategy', status: 'SUCCESS', description: 'Agente para planejamento de estratégia de marketing.', score: '8/10' },
+    { id: 2, session: 1, handle: '@copy-content', name: 'Copywriter/content', status: 'SUCCESS', description: 'Agente para criação de conteúdo e copywriting.', score: '9/10' },
+    { id: 3, session: 1, handle: '@seo-visibilidade', name: 'SEO + AI Visibility', status: 'SUCCESS', description: 'Agente para otimização de SEO e visibilidade em IA.', score: '9/10' },
+    { id: 4, session: 1, handle: '@midia-paga', name: 'Paid media', status: 'SUCCESS', description: 'Agente para gestão de campanhas de mídia paga.', score: '8/10' },
+    { id: 5, session: 1, handle: '@receita-crescimento', name: 'Revenue/growth', status: 'SUCCESS', description: 'Agente focado em estratégias de receita e crescimento.', score: '9/10' },
+    { id: 6, session: 1, handle: '@vendas-account', name: 'Sales enablement', status: 'SUCCESS', description: 'Agente para capacitação e suporte à equipe de vendas.', score: '8/10' },
+    { id: 7, session: 1, handle: '@criacao-design', name: 'Creative direction', status: 'SUCCESS', description: 'Agente para direção criativa e design.', score: '9/10' },
+    { id: 8, session: 1, handle: '@automacao-analytics', name: 'Analytics automation', status: 'SUCCESS', description: 'Agente para automação de processos de analytics.', score: '9/10' },
+    { id: 9, session: 1, handle: '@estrategia-lideranca', name: 'Strategy', status: 'SUCCESS', description: 'Agente para planejamento estratégico e liderança.', score: '8/10' },
+    { id: 10, session: 1, handle: '@relatorios-trafego', name: 'Traffic reports', status: 'SUCCESS', description: 'Agente para geração de relatórios de tráfego.', score: '9/10' },
+    { id: 11, session: 1, handle: '@pipeline-conteudo', name: 'Content pipeline', status: 'PARTIAL', description: 'Agente para gerenciamento de pipeline de conteúdo.', score: '7/10' },
+    { id: 12, session: 1, handle: '@cro-otimizacao', name: 'CRO (internal process)', status: 'SKIPPED', description: 'Agente para otimização de taxa de conversão.', score: 'N/A' },
+    { id: 13, session: 2, handle: '@cmoorch', name: 'CMO strategic plan', status: 'SUCCESS', description: 'Orquestrador para plano estratégico de CMO.', score: '8/10' },
+    { id: 14, session: 2, handle: '@growth-team', name: 'Growth experiments', status: 'SUCCESS', description: 'Orquestrador para experimentos de crescimento.', score: '9/10' },
+    { id: 15, session: 2, handle: '@content-studio', name: 'Content production plan', status: 'SUCCESS', description: 'Orquestrador para plano de produção de conteúdo.', score: '9/10' },
+    { id: 16, session: 2, handle: '@revenue-ops', name: 'Pricing/churn/referral', status: 'SUCCESS', description: 'Orquestrador para operações de receita (preço, churn, indicação).', score: '8/10' },
+    { id: 17, session: 2, handle: '@account-orchestrator', name: 'Account health score', status: 'SUCCESS', description: 'Orquestrador para score de saúde da conta do cliente.', score: '7/10' },
+    { id: 18, session: 2, handle: '@launch-pad', name: 'Launch plan 5 phases', status: 'SUCCESS', description: 'Orquestrador para plano de lançamento em 5 fases.', score: '8/10' },
+    { id: 19, session: 3, handle: '@pesquisador', name: 'Competitor research', status: 'SUCCESS', description: 'Agente para pesquisa aprofundada de concorrentes.', score: '8/10' },
+    { id: 20, session: 3, handle: '@media-buyer', name: 'Account architecture', status: 'SUCCESS', description: 'Agente para arquitetura de contas de mídia.', score: '9/10' },
+    { id: 21, session: 3, handle: '@n8n-automator', name: '7-step workflow', status: 'SUCCESS', description: 'Agente para automação de workflows com n8n.', score: '9/10' },
+    { id: 22, session: 3, handle: '@evolucao-checkins', name: 'Check-in evolution', status: 'SUCCESS', description: 'Agente para análise da evolução de check-ins.', score: '9/10' },
+    { id: 23, session: 3, handle: '@flag-churn', name: 'HIGH churn risk', status: 'SUCCESS', description: 'Agente para detecção de alto risco de churn.', score: '8/10' },
+    { id: 24, session: 3, handle: '@flag-okr', name: 'OFF TRACK OKR', status: 'SUCCESS', description: 'Agente para sinalização de OKR fora do trilho.', score: '7/10' },
+    { id: 25, session: 3, handle: '@flag-roi', name: 'RED severity ROI', status: 'SUCCESS', description: 'Agente para sinalização de ROI com severidade VERMELHA.', score: '8/10' },
+    { id: 26, session: 3, handle: '@flag-operacao', name: 'RED severity ops', status: 'SUCCESS', description: 'Agente para sinalização de operações com severidade VERMELHA.', score: '7/10' },
+    { id: 27, session: 3, handle: '@revisor', name: 'Quality review score', status: 'SUCCESS', description: 'Agente para revisão de qualidade de outputs.', score: '8/10' },
+    { id: 28, session: 3, handle: '@analista-dados', name: 'Performance analysis', status: 'SUCCESS', description: 'Agente para análise de performance de dados.', score: '9/10' },
+    { id: 29, session: 3, handle: '@csm-orquestrador', name: 'CSM triage', status: 'SUCCESS', description: 'Agente para triagem de Customer Success Management.', score: '8/10' },
+    { id: 30, session: 3, handle: '@executor-comite', name: 'Executive briefing', status: 'SUCCESS', description: 'Agente para preparação de briefings executivos.', score: '8/10' },
+    { id: 31, session: 4, handle: '@gerar-doc', name: 'Meeting minutes JSON', status: 'SUCCESS', description: 'Gerador de atas de reunião em formato JSON.', score: '8/10' },
+    { id: 32, session: 4, handle: '@gerar-html', name: 'Landing page JSON', status: 'SUCCESS', description: 'Gerador de landing pages em formato JSON.', score: '8/10' },
+    { id: 33, session: 4, handle: '@gerar-ppt', name: '12-slide QBR deck', status: 'SUCCESS', description: 'Gerador de decks de apresentação QBR com 12 slides.', score: '9/10' },
+    { id: 34, session: 4, handle: '@gerar-pdf', name: 'Monthly report PDF spec', status: 'SUCCESS', description: 'Gerador de especificações de relatório mensal em PDF.', score: '9/10' },
+    { id: 35, session: 'infrastructure', handle: 'connectors.py', name: 'claude() upgrade: 3-provider fallback', status: 'SUCCESS', description: 'Upgrade do conector Claude com fallback para 3 provedores.', score: 'N/A' }
+  ];
+
+  let currentSessionFilter = 'all';
+  let currentStatusFilter = 'all';
+  let currentSearchTerm = '';
+
+  function renderAgents() {
+    const agentGrid = document.getElementById('agentGrid');
+    agentGrid.innerHTML = '';
+
+    const filteredAgents = agentsData.filter(agent => {
+      const matchesSession = currentSessionFilter === 'all' || agent.session.toString() === currentSessionFilter;
+      const matchesStatus = currentStatusFilter === 'all' || agent.status === currentStatusFilter;
+      const matchesSearch = agent.name.toLowerCase().includes(currentSearchTerm) ||
+                            agent.handle.toLowerCase().includes(currentSearchTerm) ||
+                            agent.description.toLowerCase().includes(currentSearchTerm);
+      return matchesSession && matchesStatus && matchesSearch;
+    });
+
+    filteredAgents.forEach(agent => {
+      const agentCard = document.createElement('div');
+      agentCard.className = `agent-card status-${agent.status} fade-up`;
+      agentCard.innerHTML = `
+        <div class="agent-top">
+          <span class="agent-badge">Session ${agent.session}</span>
+        </div>
+        <div class="agent-name">${agent.handle}</div>
+        <div class="agent-description">${agent.name}</div>
+        <button class="agent-details-toggle">Detalhes</button>
+        <div class="agent-details-content">
+          <p><strong>Status:</strong> ${agent.status}</p>
+          <p><strong>Descrição:</strong> ${agent.description}</p>
+          ${agent.score !== 'N/A' ? `<p><strong>Score:</strong> ${agent.score}</p>` : ''}
+        </div>
+      `;
+      agentGrid.appendChild(agentCard);
+    });
+
+    // Add event listeners for toggling details
+    document.querySelectorAll('.agent-details-toggle').forEach(button => {
+      button.addEventListener('click', (event) => {
+        const detailsContent = event.target.nextElementSibling;
+        detailsContent.classList.toggle('visible');
+        event.target.textContent = detailsContent.classList.contains('visible') ? 'Ocultar Detalhes' : 'Detalhes';
+      });
+    });
+  }
+
+  function updateSummaryCounts() {
+    const total = agentsData.length;
+    const success = agentsData.filter(a => a.status === 'SUCCESS').length;
+    const partial = agentsData.filter(a => a.status === 'PARTIAL').length;
+    const skipped = agentsData.filter(a => a.status === 'SKIPPED').length;
+    const blockers = 7; // Hardcoded as per requirement
+
+    document.getElementById('totalAgents').textContent = total;
+    document.getElementById('successAgents').textContent = success;
+    document.getElementById('partialAgents').textContent = partial;
+    document.getElementById('skippedAgents').textContent = skipped;
+    document.getElementById('blockerAgents').textContent = blockers;
+  }
+
+  document.querySelectorAll('.filter-tab').forEach(tab => {
+    tab.addEventListener('click', (event) => {
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+      currentSessionFilter = event.target.dataset.filterValue;
+      renderAgents();
+    });
+  });
+
+  document.querySelectorAll('.filter-button').forEach(button => {
+    button.addEventListener('click', (event) => {
+      document.querySelectorAll('.filter-button').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      currentStatusFilter = event.target.dataset.filterValue;
+      renderAgents();
+    });
+  });
+
+  document.getElementById('agentSearch').addEventListener('keyup', (event) => {
+    currentSearchTerm = event.target.value.toLowerCase();
+    renderAgents();
+  });
+
+  function exportAgentsJson() {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(agentsData, null, 2));
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", "agents_data.json");
+    document.body.appendChild(downloadAnchorNode);
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+  }
+
+  // Initial render
+  document.addEventListener('DOMContentLoaded', () => {
+    updateSummaryCounts();
+    renderAgents();
+  });
+</script>
+
+</body>
+</html>

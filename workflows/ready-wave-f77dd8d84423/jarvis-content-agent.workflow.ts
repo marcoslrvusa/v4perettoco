@@ -1,7 +1,7 @@
 import { workflow, node, links } from '@n8n-as-code/transformer';
 
 // <workflow-map>
-// Workflow : JARVIS - Content Agent
+// Workflow : Peretto AI Ops - Content
 // Nodes   : 5  |  Connections: 2
 //
 // NODE INDEX
@@ -29,12 +29,13 @@ import { workflow, node, links } from '@n8n-as-code/transformer';
 
 @workflow({
     id: 'zJSwihRdvEkhxsam',
-    name: 'JARVIS - Content Agent',
+    name: 'Peretto AI Ops - Content',
     active: true,
     isArchived: false,
+    projectId: 'u3W65WbPCWTXrdjF',
     settings: { executionOrder: 'v1' },
 })
-export class JarvisContentAgentWorkflow {
+export class PerettoAiOpsContentWorkflow {
     // =====================================================================
     // CONFIGURATION DES NOEUDS
     // =====================================================================
@@ -49,7 +50,7 @@ export class JarvisContentAgentWorkflow {
     })
     Webhook = {
         httpMethod: 'POST',
-        path: 'jarvis-content-agent',
+        path: 'peretto-content',
         authentication: 'none',
         responseMode: 'onReceived',
         responseCode: 200,
@@ -66,7 +67,7 @@ export class JarvisContentAgentWorkflow {
     })
     AiAgent = {
         promptType: 'define',
-        text: `Você é o Content Agent do JARVIS, especializado em criar conteúdo.
+        text: `Você é o Peretto AI Ops - Content, especializado em criar conteúdo.
 
 Capacidades:
 1. Escrever posts para redes sociais (LinkedIn, Twitter/X, Instagram)

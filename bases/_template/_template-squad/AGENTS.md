@@ -4,5 +4,5 @@
 
 Este e o squad {NOME}.
 
-Os membros do squad estao listados em `README.md` (mesma pasta).
+Os membros do squad estao listados em `{NOME}.md` (entry point do squad na mesma pasta).
 Os clientes deste squad ficam em `./clientes/`.

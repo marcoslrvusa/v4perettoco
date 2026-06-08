@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Orchestra V4 — 20 agentes · 62 skills · Uma agência em texto</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #E31919; --red-dark: #B80F0F; --red-light: #FF2424; --gold: #FFD700;
+  --red-gradient: linear-gradient(135deg, #E31919 0%, #FF4D4D 100%);
+  --gold-gradient: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  --black: #0A0A0A; --black2: #0E0E0E; --black3: #141414; --black4: #1C1C1C; --black5: #252525;
+  --gray: #2A2A2A; --gray2: #383838; --gray3: #505050; --gray4: #6B6B6B;
+  --white: #FFFFFF; --white2: #E8E8E8; --white3: #B0B0B0; --text-muted: #787878;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+::selection { background: var(--red); color: var(--white); }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black); color: var(--white);
+  font-family: 'Barlow', sans-serif; font-size: 18px; line-height: 1.65;
+  overflow-x: hidden; -webkit-font-smoothing: antialiased;
+}
+
+/* ===== KEYFRAMES ===== */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pulseGlow { 0%, 100% { box-shadow: 0 0 20px rgba(227,25,25,0.1); } 50% { box-shadow: 0 0 50px rgba(227,25,25,0.3); } }
+@keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-14px); } }
+@keyframes pulseRing { 0% { transform: scale(1); opacity: 0.4; } 50% { transform: scale(1.1); opacity: 0.1; } 100% { transform: scale(1); opacity: 0.4; } }
+@keyframes scanline { 0% { top: -100%; } 100% { top: 100%; } }
+@keyframes typing { from { width: 0; } to { width: 100%; } }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+@keyframes glowPulse { 0%, 100% { text-shadow: 0 0 8px rgba(227,25,25,0.3); } 50% { text-shadow: 0 0 20px rgba(227,25,25,0.6), 0 0 40px rgba(227,25,25,0.2); } }
+@keyframes dataDash { to { stroke-dashoffset: 0; } }
+@keyframes nodePop { 0% { r: 0; opacity: 0; } 50% { opacity: 1; } 100% { r: var(--final-r, 4); opacity: 0.8; } }
+@keyframes borderTrace { 0% { clip-path: inset(0 100% 0 0); } 100% { clip-path: inset(0 0 0 0); } }
+@keyframes glitch { 2%, 64% { transform: translate(2px, 0) skew(0deg); } 4%, 60% { transform: translate(-2px, 0) skew(0deg); } 62% { transform: translate(0, 0) skew(0deg); } }
+@keyframes terminalCursor { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+.animate-on-scroll { opacity: 0; transform: translateY(30px); transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+.animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+
+/* ===== CANVAS BG ===== */
+#particle-canvas {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 0; pointer-events: none;
+}
+
+/* ===== TOPBAR ===== */
+.topbar {
+  background: var(--red); padding: 10px 56px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: 'Barlow Condensed', sans-serif; font-size: 13px;
+  font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  position: relative; z-index: 10;
+}
+
+/* ===== HEADER ===== */
+header {
+  background: rgba(14,14,14,0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--gray); padding: 22px 56px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+}
+
+.logo { display: flex; align-items: center; gap: 12px; }
+.logo-icon {
+  width: 36px; height: 36px; background: var(--red-gradient); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 900; color: var(--white);
+  position: relative; overflow: hidden;
+}
+.logo-icon::after {
+  content: ''; position: absolute; width: 100%; height: 2px;
+  background: rgba(255,255,255,0.3); top: 0; left: -100%;
+  animation: scanline 3s linear infinite;
+}
+.logo-text { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; }
+.logo-text span { color: var(--red); }
+
+.nav { display: flex; gap: 36px; list-style: none; align-items: center; }
+.nav a {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--white3);
+  text-decoration: none; transition: color 0.2s; position: relative;
+}
+.nav a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--red-gradient); transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+.nav a:hover { color: var(--white); }
+.nav a:hover::after { width: 100%; }
+.nav-cta {
+  background: var(--red-gradient); padding: 10px 22px; color: var(--white) !important;
+  text-decoration: none; transition: opacity 0.2s, transform 0.2s;
+  position: relative; overflow: hidden;
+}
+.nav-cta::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); opacity: 0; transition: opacity 0.3s; }
+.nav-cta:hover::before { opacity: 1; }
+.nav-cta:hover { opacity: 0.95; transform: translateY(-1px); }
+.nav-cta::after { display: none !important; }
+
+/* ===== HERO ===== */
+.hero {
+  padding: 80px 56px 60px;
+  background: linear-gradient(160deg, var(--black2) 0%, var(--black) 40%, var(--black3) 100%);
+  border-bottom: 1px solid var(--gray);
+  position: relative; overflow: hidden; min-height: 90vh;
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+.hero-glow {
+  position: absolute; top: -30%; right: -10%;
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(227,25,25,0.08) 0%, transparent 70%);
+  border-radius: 50%; pointer-events: none;
+}
+
+.hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 2; }
+
+/* ===== ROBOT CONTAINER ===== */
+.robot-container {
+  position: relative; width: 440px; height: 440px;
+  animation: float 5s ease-in-out infinite;
+}
+
+.robot-ring { position: absolute; top: 50%; left: 50%; border-radius: 50%; border: 1px solid rgba(227,25,25,0.12); animation: pulseRing 4s ease-in-out infinite; }
+.robot-ring:nth-child(1) { width: 340px; height: 340px; margin-left: -170px; margin-top: -170px; }
+.robot-ring:nth-child(2) { width: 260px; height: 260px; margin-left: -130px; margin-top: -130px; border-color: rgba(227,25,25,0.07); animation-delay: 1s; }
+.robot-ring:nth-child(3) { width: 180px; height: 180px; margin-left: -90px; margin-top: -90px; border-color: rgba(255,215,0,0.06); animation-delay: 2s; }
+
+.robot-node {
+  position: absolute; width: 10px; height: 10px; border-radius: 50%; z-index: 3;
+}
+.robot-node.r { background: var(--red); box-shadow: 0 0 12px rgba(227,25,25,0.5); }
+.robot-node.g { background: var(--gold); box-shadow: 0 0 12px rgba(255,215,0,0.4); }
+
+.robot-svg { position: relative; z-index: 2; width: 100%; height: 100%; }
+
+.robot-scanline {
+  position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+  background: rgba(227,25,25,0.08); z-index: 4; pointer-events: none;
+  animation: scanline 4s linear infinite;
+}
+
+/* ===== TERMINAL ===== */
+.hero-terminal {
+  position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%);
+  z-index: 5; width: 90%; max-width: 360px;
+  font-family: 'JetBrains Mono', monospace; font-size: 12px;
+}
+
+.terminal-window {
+  background: rgba(10,10,10,0.92); border: 1px solid var(--gray2);
+  border-radius: 8px; overflow: hidden;
+  backdrop-filter: blur(8px);
+}
+
+.terminal-header {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 14px; background: var(--black4);
+  border-bottom: 1px solid var(--gray);
+}
+.terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+.terminal-dot:nth-child(1) { background: #FF5F56; }
+.terminal-dot:nth-child(2) { background: #FFBD2E; }
+.terminal-dot:nth-child(3) { background: #27C93F; }
+.terminal-title { font-size: 11px; color: var(--text-muted); margin-left: 8px; }
+
+.terminal-body {
+  padding: 14px 16px; min-height: 110px;
+  font-size: 11px; line-height: 1.7; color: var(--white3);
+}
+
+.terminal-line { opacity: 0; transition: opacity 0.3s; }
+.terminal-line.visible { opacity: 1; }
+.terminal-prompt { color: var(--red-light); }
+.terminal-command { color: var(--white); }
+.terminal-output { color: var(--white3); }
+.terminal-output.ok { color: #27C93F; }
+.terminal-cursor { display: inline-block; width: 8px; height: 14px; background: var(--red); vertical-align: middle; margin-left: 2px; animation: terminalCursor 1s step-end infinite; }
+
+/* ===== HERO CONTENT ===== */
+.hero-content { position: relative; z-index: 2; max-width: 900px; }
+
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(227,25,25,0.12); border: 1px solid rgba(227,25,25,0.25);
+  color: var(--red-light); font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 7px 16px; margin-bottom: 28px; animation: fadeUp 0.8s ease;
+}
+.hero-tag-dot { width: 6px; height: 6px; background: var(--red); border-radius: 50%; animation: pulseGlow 2s ease-in-out infinite; }
+
+.hero h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(48px, 7.5vw, 88px);
+  font-weight: 900; line-height: 0.9; letter-spacing: -0.03em;
+  text-transform: uppercase; margin-bottom: 22px;
+  animation: fadeUp 0.8s ease 0.1s both;
+}
+.hero h1 span { background: var(--red-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: glowPulse 3s ease-in-out infinite; }
+.hero h1 .highlight-gold { background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+.hero-sub {
+  font-size: 20px; font-weight: 300; color: var(--white3);
+  max-width: 640px; line-height: 1.6; margin-bottom: 40px;
+  animation: fadeUp 0.8s ease 0.2s both;
+}
+.hero-sub strong { color: var(--white); font-weight: 500; }
+
+.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; animation: fadeUp 0.8s ease 0.3s both; position: relative; z-index: 5; }
+
+.btn-primary, .btn-secondary {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; padding: 18px 36px;
+  text-decoration: none; transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1); cursor: pointer;
+  position: relative; overflow: hidden;
+}
+.btn-primary { background: var(--red-gradient); color: var(--white); border: none; }
+.btn-primary::before {
+  content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  transition: left 0.5s;
+}
+.btn-primary:hover::before { left: 100%; }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(227,25,25,0.3); }
+.btn-secondary { background: transparent; color: var(--white); border: 1px solid var(--gray); }
+.btn-secondary:hover { border-color: var(--red); transform: translateY(-2px); background: rgba(227,25,25,0.04); }
+
+.hero-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+  background: var(--gray); border: 1px solid var(--gray);
+  max-width: 960px; margin-top: 56px; animation: fadeUp 0.8s ease 0.4s both;
+}
+
+.hero-stat {
+  background: var(--black3); padding: 28px 32px; border-right: 1px solid var(--gray);
+  position: relative; overflow: hidden; cursor: default;
+}
+.hero-stat::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--red-gradient); opacity: 0; transition: opacity 0.3s; }
+.hero-stat:hover::before { opacity: 1; }
+.hero-stat:last-child { border-right: none; }
+
+.stat-number {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 52px; font-weight: 900;
+  background: var(--red-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  line-height: 1; display: block;
+}
+.stat-number.gold { background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.stat-label { font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); margin-top: 8px; display: block; }
+
+/* ===== SECTIONS ===== */
+section { padding: 100px 56px; border-bottom: 1px solid var(--gray); position: relative; }
+section:nth-child(even) { background: var(--black3); }
+.section-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 2; }
+
+.section-label {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--red);
+  margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+}
+.section-label::before { content: ''; display: block; width: 28px; height: 2px; background: var(--red-gradient); }
+
+.section-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(40px, 5.5vw, 60px);
+  font-weight: 900; line-height: 0.92; letter-spacing: -0.02em;
+  text-transform: uppercase; margin-bottom: 18px;
+}
+.section-title span { background: var(--red-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+.section-desc { font-size: 19px; color: var(--white3); max-width: 760px; line-height: 1.65; margin-bottom: 48px; font-weight: 300; }
+
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--gray); }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--gray); }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; background: var(--gray); }
+
+/* ===== CARDS ===== */
+.card {
+  background: var(--black4); padding: 40px 36px; position: relative;
+  transition: background 0.3s, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  perspective: 800px;
+}
+.card:hover { background: var(--black5); transform: translateY(-4px); }
+.card-icon { width: 48px; height: 48px; background: var(--red-gradient-soft); border: 1px solid rgba(227,25,25,0.15); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 20px; }
+.card-tag { display: inline-block; background: rgba(227,25,25,0.1); color: var(--red-light); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; margin-bottom: 16px; border: 1px solid rgba(227,25,25,0.2); }
+.card h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: 14px; line-height: 1.1; }
+.card p { font-size: 16px; color: var(--white3); line-height: 1.65; font-weight: 300; }
+.card-metric { font-family: 'Barlow Condensed', sans-serif; font-size: 42px; font-weight: 900; background: var(--red-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-top: 20px; display: block; }
+.card-metric.gold { background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+/* ===== GLASS CARD ===== */
+.glass-card {
+  background: linear-gradient(135deg, rgba(28,28,28,0.8) 0%, rgba(20,20,20,0.6) 100%);
+  border: 1px solid rgba(255,255,255,0.06); backdrop-filter: blur(12px);
+  padding: 36px; transition: transform 0.3s, border-color 0.3s;
+}
+.glass-card:hover { transform: translateY(-2px); border-color: rgba(227,25,25,0.2); }
+
+/* ===== ALERT BOX ===== */
+.alert-box {
+  background: linear-gradient(135deg, rgba(227,25,25,0.1) 0%, rgba(227,25,25,0.02) 100%);
+  border-left: 4px solid var(--red); padding: 40px 44px; margin-bottom: 48px;
+  display: flex; gap: 28px; align-items: flex-start;
+}
+.alert-icon { width: 64px; height: 64px; background: var(--red); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed', sans-serif; font-size: 32px; font-weight: 900; flex-shrink: 0; color: var(--white); }
+.alert-title { font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; }
+.alert-body { font-size: 17px; line-height: 1.7; opacity: 0.9; font-weight: 300; }
+
+/* ===== PILLARS ===== */
+.pillar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--gray); }
+.pillar-block { background: var(--black4); padding: 48px 40px; position: relative; overflow: hidden; transition: background 0.3s; }
+.pillar-block:hover { background: var(--black5); }
+.pillar-block::after { content: attr(data-num); position: absolute; bottom: -10px; right: 16px; font-family: 'Barlow Condensed', sans-serif; font-size: 140px; font-weight: 900; color: rgba(227,25,25,0.06); line-height: 1; pointer-events: none; }
+.pillar-icon { width: 52px; height: 52px; background: var(--red-gradient-soft); border: 1px solid rgba(227,25,25,0.15); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 20px; position: relative; z-index: 1; }
+.pillar-block h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 900; text-transform: uppercase; margin-bottom: 6px; position: relative; z-index: 1; }
+.pillar-sub { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--red); margin-bottom: 18px; position: relative; z-index: 1; }
+.pillar-body { font-size: 16px; color: var(--white3); line-height: 1.65; margin-bottom: 20px; position: relative; z-index: 1; font-weight: 300; }
+.pillar-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; position: relative; z-index: 1; }
+.pillar-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 12px; border: 1px solid var(--gray2); color: var(--white3); }
+
+/* ===== AGENT CATALOG ===== */
+.agent-catalog { display: flex; flex-direction: column; gap: 1px; }
+.agent-row {
+  display: grid; grid-template-columns: 36px 1fr 160px 110px; gap: 0;
+  background: var(--gray); transition: transform 0.2s;
+  cursor: default;
+}
+.agent-row:hover { transform: translateX(4px); }
+.agent-num { background: var(--black4); display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 900; color: var(--red); }
+.agent-info { background: var(--black4); padding: 14px 20px; display: flex; flex-direction: column; justify-content: center; }
+.agent-name { font-family: 'Barlow Condensed', sans-serif; font-size: 17px; font-weight: 800; text-transform: uppercase; line-height: 1.2; }
+.agent-name code { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 500; color: var(--red-light); }
+.agent-role { font-size: 12px; color: var(--white3); font-weight: 300; margin-top: 2px; }
+.agent-skills { background: var(--black4); padding: 14px 16px; display: flex; align-items: center; font-size: 11px; color: var(--text-muted); font-weight: 300; font-family: 'JetBrains Mono', monospace; }
+.agent-type { display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.agent-type.specialist { background: var(--black4); color: var(--red-light); border-left: 1px solid var(--gray); }
+.agent-type.orchestrator { background: var(--black4); color: var(--gold); border-left: 1px solid var(--gray); }
+.agent-type.niche { background: var(--black4); color: var(--white3); border-left: 1px solid var(--gray); }
+
+/* ===== COMPARE ===== */
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--gray); margin-top: 40px; }
+.compare-col { padding: 40px 36px; }
+.compare-col.old { background: var(--black4); }
+.compare-col.new { background: var(--black4); border-left: 3px solid var(--red); position: relative; }
+.compare-col.new::before { content: 'ORCHESTRA'; position: absolute; top: 16px; right: 16px; font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; color: var(--red); border: 1px solid rgba(227,25,25,0.3); padding: 3px 10px; }
+.compare-title { font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 900; text-transform: uppercase; margin-bottom: 4px; }
+.compare-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
+.compare-list { list-style: none; }
+.compare-list li { font-size: 16px; color: var(--white3); padding: 12px 0; border-bottom: 1px solid var(--gray); display: flex; align-items: flex-start; gap: 12px; line-height: 1.4; font-weight: 300; }
+.compare-list li::before { font-weight: 900; font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+.compare-col.old .compare-list li::before { content: '✕'; color: var(--gray3); }
+.compare-col.new .compare-list li::before { content: '✓'; color: var(--red); }
+
+/* ===== METHOD STEPS ===== */
+.method-steps { display: flex; flex-direction: column; gap: 2px; }
+.method-step { display: flex; gap: 0; background: var(--gray); transition: transform 0.2s; }
+.method-step:hover { transform: translateX(4px); }
+.method-num { width: 72px; background: var(--red-gradient); display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 900; flex-shrink: 0; color: var(--white); }
+.method-content { flex: 1; background: var(--black4); padding: 28px 36px; display: flex; align-items: flex-start; gap: 24px; }
+.method-main { flex: 1; }
+.method-phase { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); margin-bottom: 4px; }
+.method-title { font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 800; text-transform: uppercase; margin-bottom: 8px; }
+.method-desc { font-size: 15px; color: var(--white3); line-height: 1.6; font-weight: 300; }
+.method-kpis { flex-shrink: 0; text-align: right; min-width: 200px; }
+.method-kpi-label { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+.method-kpi-vals { font-size: 13px; color: var(--white3); line-height: 1.7; font-weight: 300; }
+
+/* ===== FORMATIONS ===== */
+.formation-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--gray); }
+.formation-card { background: var(--black4); padding: 36px 32px; transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+.formation-card:hover { background: var(--black5); transform: translateY(-2px); }
+.formation-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+.formation-emoji { font-size: 28px; }
+.formation-name { font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 900; text-transform: uppercase; }
+.formation-lineup { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.formation-agent { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; background: rgba(227,25,25,0.08); border: 1px solid rgba(227,25,25,0.15); padding: 4px 10px; color: var(--red-light); }
+.formation-agent.lead { background: var(--red); color: var(--white); border-color: var(--red); }
+.formation-desc { font-size: 15px; color: var(--white3); line-height: 1.6; font-weight: 300; }
+.formation-output { font-size: 13px; color: var(--text-muted); margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--gray); font-weight: 300; }
+
+/* ===== ARCHITECTURE MAP ===== */
+.arch-map {
+  position: relative; padding: 60px 40px;
+  background: var(--black4); border: 1px solid var(--gray);
+  margin-top: 40px; overflow: hidden;
+}
+.arch-level { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 16px 0; position: relative; }
+.arch-node {
+  padding: 12px 20px; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  background: var(--black5); border: 1px solid var(--gray2);
+  transition: all 0.3s; cursor: default;
+}
+.arch-node:hover { border-color: var(--red); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(227,25,25,0.1); }
+.arch-node.primary { border-color: var(--red); background: rgba(227,25,25,0.08); }
+.arch-node.secondary { border-color: var(--gold); background: rgba(255,215,0,0.06); }
+.arch-node.tertiary { border-color: var(--gray3); }
+.arch-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); text-align: center; margin-bottom: 4px; }
+.arch-connector { text-align: center; color: var(--gray3); font-size: 18px; font-family: 'Barlow Condensed', sans-serif; }
+.arch-level-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); text-align: center; margin: 4px 0; opacity: 0.6; }
+
+/* ===== CODE INLINE ===== */
+.inline-code { font-family: 'JetBrains Mono', monospace; font-size: 13px; background: rgba(255,255,255,0.06); padding: 2px 8px; color: var(--red-light); border: 1px solid rgba(227,25,25,0.1); }
+
+/* ===== FAQ ===== */
+.faq-grid { display: grid; gap: 1px; background: var(--gray); }
+.faq-block { background: var(--black4); padding: 28px 32px; cursor: pointer; transition: background 0.3s; border-left: 3px solid var(--gray); }
+.faq-block:hover { background: var(--black5); }
+.faq-block.open { border-color: var(--red); }
+.faq-question { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; transition: color 0.3s; }
+.faq-question::after { content: '+'; font-size: 24px; color: var(--red); transition: transform 0.3s; flex-shrink: 0; margin-left: 16px; }
+.faq-block.open .faq-question::after { content: '−'; transform: rotate(180deg); }
+.faq-block.open .faq-question { color: var(--red); }
+.faq-answer { font-size: 16px; color: var(--white3); line-height: 1.7; margin-top: 12px; display: none; font-weight: 300; max-width: 900px; }
+.faq-block.open .faq-answer { display: block; }
+
+/* ===== CTA ===== */
+.cta-section {
+  padding: 100px 56px;
+  background: linear-gradient(160deg, var(--black3) 0%, rgba(227,25,25,0.04) 100%);
+  text-align: center; position: relative; overflow: hidden;
+}
+.cta-section::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(227,25,25,0.04) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
+.cta-section h2 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(40px, 5.5vw, 60px); font-weight: 900; line-height: 0.92; letter-spacing: -0.02em; text-transform: uppercase; margin-bottom: 18px; position: relative; z-index: 1; }
+.cta-section h2 span { background: var(--red-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.cta-section p { font-size: 19px; max-width: 640px; margin: 0 auto 36px; opacity: 0.85; font-weight: 300; position: relative; z-index: 1; color: var(--white2); }
+.cta-button-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+.cta-primary, .cta-secondary {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; padding: 18px 40px;
+  text-decoration: none; transition: all 0.3s; cursor: pointer;
+}
+.cta-primary { background: var(--red-gradient); color: var(--white); border: none; }
+.cta-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(227,25,25,0.3); }
+.cta-secondary { background: transparent; color: var(--white); border: 1px solid var(--gray2); }
+.cta-secondary:hover { border-color: var(--red); transform: translateY(-2px); }
+.cta-guarantee { font-size: 13px; color: var(--text-muted); margin-top: 20px; font-weight: 300; }
+
+/* ===== FOOTER ===== */
+footer { background: var(--black2); border-top: 1px solid var(--gray); padding: 56px; display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; }
+.footer-brand { display: flex; align-items: center; gap: 12px; font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+.footer-brand img { height: 32px; width: auto; opacity: 0.7; transition: opacity 0.3s; }
+.footer-brand img:hover { opacity: 1; }
+.footer-links { display: flex; gap: 24px; list-style: none; }
+.footer-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--white3); }
+.footer-note { font-size: 13px; color: var(--text-muted); text-align: right; max-width: 400px; line-height: 1.6; font-weight: 300; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .pillar-grid, .formation-grid { grid-template-columns: 1fr; }
+  .agent-row { grid-template-columns: 30px 1fr 80px; }
+  .agent-skills { display: none; }
+  .method-kpis { display: none; }
+  .hero-terminal { display: none; }
+}
+@media (max-width: 900px) {
+  header, .topbar, section, .hero, footer, .cta-section { padding-left: 28px; padding-right: 28px; }
+  .hero-stats, .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+  .grid-2, .formation-grid { grid-template-columns: 1fr; }
+  .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+  .robot-container { width: 280px; height: 280px; margin: 0 auto; }
+  .hero-stats { grid-template-columns: 1fr 1fr; }
+  .compare-grid { grid-template-columns: 1fr; }
+  .compare-col.new { border-left: none; border-top: 3px solid var(--red); }
+  .arch-map { padding: 30px 20px; }
+  .arch-level { gap: 6px; }
+  .arch-node { padding: 8px 12px; font-size: 10px; }
+}
+@media (max-width: 600px) {
+  body { font-size: 16px; }
+  header, .topbar, section, .hero, footer, .cta-section { padding-left: 20px; padding-right: 20px; }
+  .hero-stats, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .hero { min-height: auto; padding: 60px 20px 48px; }
+  .hero h1 { font-size: clamp(36px, 10vw, 48px); }
+  .hero-grid { gap: 32px; }
+  .robot-container { width: 200px; height: 200px; }
+  .robot-ring:nth-child(1) { width: 170px; height: 170px; margin-left: -85px; margin-top: -85px; }
+  .robot-ring:nth-child(2) { width: 130px; height: 130px; margin-left: -65px; margin-top: -65px; }
+  .robot-ring:nth-child(3) { width: 90px; height: 90px; margin-left: -45px; margin-top: -45px; }
+  .stat-number { font-size: 40px; }
+  .nav { display: none; }
+  .section-title { font-size: clamp(28px, 7vw, 36px); }
+  .pillar-block { padding: 36px 28px; }
+  .alert-box { flex-direction: column; gap: 16px; }
+  .alert-icon { width: 48px; height: 48px; font-size: 24px; }
+  .faq-question { font-size: 18px; }
+  .cta-section h2 { font-size: clamp(28px, 7vw, 36px); }
+  .agent-row { grid-template-columns: 24px 1fr; }
+  .agent-type { display: none; }
+  .arch-map { display: none; }
+  .agent-name code { font-size: 12px; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="particle-canvas"></canvas>
+
+<div class="topbar">
+  <span>✦ Agent Orchestra V4 — Multi-Agent System · V4 Company</span>
+  <span>v1.0 · Release 2026</span>
+</div>
+
+<header>
+  <div class="logo">
+    <img src="logo-peretto.png" alt="Peretto & Co." style="height:75px;width:auto;">
+    <span class="logo-text">Agent <span>Orchestra</span></span>
+  </div>
+  <ul class="nav">
+    <li><a href="#architecture">Stack</a></li>
+    <li><a href="#agents">Agents</a></li>
+    <li><a href="#formations">Teams</a></li>
+    <li><a href="#patterns">Patterns</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#" class="nav-cta">✦ /orquestra</a></li>
+  </ul>
+</header>
+
+<section class="hero" id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-grid">
+    <div class="hero-content">
+      <div class="hero-tag">
+        <span class="hero-tag-dot"></span>
+        Multi-Agent Orchestration · 20 Subagents · Swarm Architecture
+      </div>
+      <h1>
+        <span>20 agentes</span><br>
+        em um <span class="highlight-gold">sistema</span><br>
+        multi-agente.
+      </h1>
+      <p class="hero-sub">
+        <strong>62 skills integradas · 8 formações de time · 3 camadas de orquestração.</strong><br>
+        Um humano + um enxame de IA = o output de uma agência completa.
+        Cada agente sabe quais skills usar, como coordenar outros agentes
+        e que formato de output produzir.
+      </p>
+      <div class="hero-actions">
+        <a href="#formations" class="btn-primary">✦ Explorar Formações</a>
+        <a href="#agents" class="btn-secondary">Catálogo Técnico →</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="robot-container">
+        <div class="robot-ring"></div>
+        <div class="robot-ring"></div>
+        <div class="robot-ring"></div>
+        <div class="robot-node r" style="top:2%;left:50%"></div>
+        <div class="robot-node g" style="top:50%;right:2%"></div>
+        <div class="robot-node r" style="bottom:2%;left:50%"></div>
+        <div class="robot-node g" style="top:50%;left:2%"></div>
+        <div class="robot-scanline"></div>
+        <svg class="robot-svg" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="rGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#E31919"/><stop offset="100%" stop-color="#FF4D4D"/>
+            </linearGradient>
+            <linearGradient id="gGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#FFD700"/><stop offset="100%" stop-color="#FFA500"/>
+            </linearGradient>
+            <filter id="glow"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+
+          <!-- Body -->
+          <rect x="145" y="155" width="110" height="130" rx="16" fill="var(--black4)" stroke="url(#rGrad)" stroke-width="2" filter="url(#glow)"/>
+          <rect x="155" y="165" width="90" height="4" rx="2" fill="rgba(227,25,25,0.25)"/>
+          <rect x="155" y="177" width="70" height="4" rx="2" fill="rgba(255,255,255,0.06)"/>
+          <rect x="155" y="187" width="55" height="4" rx="2" fill="rgba(255,255,255,0.04)"/>
+          <rect x="155" y="197" width="80" height="4" rx="2" fill="rgba(255,255,255,0.06)"/>
+          <rect x="155" y="207" width="65" height="4" rx="2" fill="rgba(227,25,25,0.15)"/>
+          <rect x="155" y="217" width="90" height="4" rx="2" fill="rgba(255,255,255,0.06)"/>
+
+          <!-- Chest matrix -->
+          <rect x="182" y="232" width="36" height="24" rx="4" fill="rgba(0,0,0,0.4)" stroke="rgba(227,25,25,0.2)" stroke-width="1"/>
+          <circle cx="191" cy="244" r="3" fill="var(--red)"><animate attributeName="opacity" values="1;0.2;1" dur="1.2s" repeatCount="indefinite"/></circle>
+          <circle cx="200" cy="244" r="3" fill="var(--red)"><animate attributeName="opacity" values="0.3;1;0.3" dur="1.5s" repeatCount="indefinite"/></circle>
+          <circle cx="209" cy="244" r="3" fill="var(--red)"><animate attributeName="opacity" values="0.8;0.2;0.8" dur="1s" repeatCount="indefinite"/></circle>
+
+          <!-- Core glow -->
+          <circle cx="200" cy="210" r="28" fill="rgba(227,25,25,0.06)" stroke="rgba(227,25,25,0.12)" stroke-width="1"/>
+          <circle cx="200" cy="210" r="12" fill="rgba(227,25,25,0.2)">
+            <animate attributeName="r" values="12;15;12" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="200" cy="210" r="6" fill="var(--red)">
+            <animate attributeName="r" values="6;8;6" dur="2s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- Head -->
+          <rect x="160" y="85" width="80" height="70" rx="14" fill="var(--black4)" stroke="url(#rGrad)" stroke-width="2"/>
+          <rect x="160" y="85" width="80" height="70" rx="14" fill="url(#rGrad)" opacity="0.04"/>
+          <!-- Eyes -->
+          <ellipse cx="185" cy="115" rx="10" ry="11" fill="var(--black)" stroke="url(#rGrad)" stroke-width="1.5"/>
+          <ellipse cx="215" cy="115" rx="10" ry="11" fill="var(--black)" stroke="url(#rGrad)" stroke-width="1.5"/>
+          <circle cx="185" cy="115" r="5" fill="url(#rGrad)">
+            <animate attributeName="r" values="5;6;5" dur="1.5s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="1;0.7;1" dur="3s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="215" cy="115" r="5" fill="url(#rGrad)">
+            <animate attributeName="r" values="5;6;5" dur="1.5s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="1;0.7;1" dur="3s" repeatCount="indefinite" begin="0.5s"/>
+          </circle>
+          <!-- Eye glow -->
+          <circle cx="185" cy="115" r="18" fill="rgba(227,25,25,0.04)"/>
+          <circle cx="215" cy="115" r="18" fill="rgba(227,25,25,0.04)"/>
+
+          <!-- Antenna -->
+          <rect x="196" y="68" width="8" height="20" rx="3" fill="var(--gray2)"/>
+          <circle cx="200" cy="64" r="8" fill="url(#rGrad)">
+            <animate attributeName="r" values="8;10;8" dur="1s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="200" cy="64" r="16" fill="rgba(227,25,25,0.06)">
+            <animate attributeName="r" values="16;22;16" dur="1s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- Arms -->
+          <g>
+            <animateTransform attributeName="transform" type="rotate" values="-4,130,171;4,130,171;-4,130,171" dur="3s" repeatCount="indefinite"/>
+            <rect x="115" y="165" width="28" height="10" rx="5" fill="var(--gray2)" stroke="url(#rGrad)" stroke-width="1"/>
+            <circle cx="115" cy="170" r="7" fill="url(#rGrad)"/>
+            <circle cx="115" cy="170" r="11" fill="rgba(227,25,25,0.06)"/>
+          </g>
+          <g>
+            <animateTransform attributeName="transform" type="rotate" values="4,270,171;-4,270,171;4,270,171" dur="3s" repeatCount="indefinite"/>
+            <rect x="257" y="165" width="28" height="10" rx="5" fill="var(--gray2)" stroke="url(#rGrad)" stroke-width="1"/>
+            <circle cx="285" cy="170" r="7" fill="url(#rGrad)"/>
+            <circle cx="285" cy="170" r="11" fill="rgba(227,25,25,0.06)"/>
+          </g>
+
+          <!-- Legs -->
+          <rect x="162" y="285" width="18" height="32" rx="6" fill="var(--gray2)" stroke="url(#rGrad)" stroke-width="1"/>
+          <rect x="220" y="285" width="18" height="32" rx="6" fill="var(--gray2)" stroke="url(#rGrad)" stroke-width="1"/>
+          <rect x="157" y="313" width="28" height="10" rx="3" fill="url(#rGrad)"/>
+          <rect x="215" y="313" width="28" height="10" rx="3" fill="url(#rGrad)"/>
+
+          <!-- Floating particles -->
+          <circle cx="155" cy="195" r="2.5" fill="var(--red)" opacity="0.5">
+            <animate attributeName="opacity" values="0.5;0;0.5" dur="2s" repeatCount="indefinite"/>
+            <animate attributeName="cy" values="195;175;195" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="245" cy="205" r="2" fill="var(--gold)" opacity="0.5">
+            <animate attributeName="opacity" values="0;0.5;0" dur="1.8s" repeatCount="indefinite"/>
+            <animate attributeName="cx" values="245;260;245" dur="1.8s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="165" cy="245" r="2" fill="var(--red)" opacity="0.4">
+            <animate attributeName="opacity" values="0.4;0;0.4" dur="2.5s" repeatCount="indefinite"/>
+            <animate attributeName="cx" values="165;150;165" dur="2.5s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="235" cy="255" r="1.5" fill="var(--gold)" opacity="0.4">
+            <animate attributeName="opacity" values="0;0.4;0" dur="2.2s" repeatCount="indefinite"/>
+            <animate attributeName="cy" values="255;240;255" dur="2.2s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- Orbiting nodes -->
+          <circle r="5" fill="url(#rGrad)" opacity="0.8">
+            <animateMotion dur="7s" repeatCount="indefinite" path="M200,200 m-115,0 a115,115 0 1,1 230,0 a115,115 0 1,1 -230,0"/>
+          </circle>
+          <circle r="4" fill="var(--gold)" opacity="0.6">
+            <animateMotion dur="9s" repeatCount="indefinite" path="M200,200 m-85,0 a85,85 0 1,0 170,0 a85,85 0 1,0 -170,0"/>
+          </circle>
+          <circle r="3" fill="var(--red)" opacity="0.5">
+            <animateMotion dur="11s" repeatCount="indefinite" path="M200,200 m-140,0 a140,140 0 1,0 280,0 a140,140 0 1,0 -280,0"/>
+          </circle>
+        </svg>
+
+        <div class="hero-terminal">
+          <div class="terminal-window">
+            <div class="terminal-header">
+              <div class="terminal-dot"></div>
+              <div class="terminal-dot"></div>
+              <div class="terminal-dot"></div>
+              <span class="terminal-title">agent-orchestra — bash</span>
+            </div>
+            <div class="terminal-body" id="terminal">
+              <div class="terminal-line visible"><span class="terminal-prompt">$</span> <span class="terminal-command">orchestra deploy --agents=20 --formation=growth</span></div>
+              <div class="terminal-line visible"><span class="terminal-output ok">✓ Swarm initialized. 20 agents online.</span></div>
+              <div class="terminal-line visible" style="transition-delay:0.5s"><span class="terminal-prompt">$</span> <span class="terminal-command">@growth-team --objective "crescer 40% em 60 dias"</span></div>
+              <div class="terminal-line visible" style="transition-delay:1s"><span class="terminal-output ok">✓ Growth Strike Team assembled:</span></div>
+              <div class="terminal-line visible" style="transition-delay:1.5s"><span class="terminal-output">  │ ├── @cro-lab    → pipeline de experimentos</span></div>
+              <div class="terminal-line visible" style="transition-delay:2s"><span class="terminal-output">  │ ├── @midia-paga → campanhas pagas</span></div>
+              <div class="terminal-line visible" style="transition-delay:2.5s"><span class="terminal-output">  │ ├── @seo        → SEO + AI Visibility</span></div>
+              <div class="terminal-line visible" style="transition-delay:3s"><span class="terminal-output">  │ └── @copy       → criativos e landing pages</span></div>
+              <div class="terminal-line visible" style="transition-delay:3.5s"><span class="terminal-prompt">$</span> <span class="terminal-command">orchestra status</span></div>
+              <div class="terminal-line visible" style="transition-delay:4s">
+                <span class="terminal-output ok">✓ All systems operational · 8 formações disponíveis · 🔥</span>
+                <span class="terminal-cursor"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="stat-number" data-count="20">0</span>
+      <span class="stat-label">Subagentes Especializados</span>
+    </div>
+    <div class="hero-stat">
+      <span class="stat-number" data-count="62">0</span>
+      <span class="stat-label">Skills Integradas no Swarm</span>
+    </div>
+    <div class="hero-stat">
+      <span class="stat-number gold" data-count="8">0</span>
+      <span class="stat-label">Formações de Time (Party Comps)</span>
+    </div>
+    <div class="hero-stat">
+      <span class="stat-number gold" data-count="3">0</span>
+      <span class="stat-label">Camadas de Orquestração</span>
+    </div>
+  </div>
+</section>
+
+<section id="architecture">
+  <div class="section-inner">
+    <div class="section-label">System Architecture</div>
+    <h2 class="section-title">Stack: <span>skill → agent</span>  → team → swarm</h2>
+    <p class="section-desc">
+      Quatro camadas que transformam skills individuais em um sistema multi-agente
+      coordenado. Cada camada adiciona um nível de abstração e capacidade.
+    </p>
+
+    <div class="arch-map animate-on-scroll">
+      <div class="arch-level-label">▸ CAMADA 4 · SWARM ORCHESTRATOR</div>
+      <div class="arch-level">
+        <div class="arch-node primary">@cmoorch</div>
+      </div>
+      <div class="arch-connector">▼</div>
+
+      <div class="arch-level-label">▸ CAMADA 3 · TEAM ORCHESTRATORS</div>
+      <div class="arch-level">
+        <div class="arch-node secondary">@growth-team</div>
+        <div class="arch-node secondary">@content-studio</div>
+        <div class="arch-node secondary">@revenue-ops</div>
+        <div class="arch-node secondary">@account-orch</div>
+        <div class="arch-node secondary">@launch-pad</div>
+      </div>
+      <div class="arch-connector">▼</div>
+
+      <div class="arch-level-label">▸ CAMADA 2 · DOMAIN SPECIALISTS</div>
+      <div class="arch-level">
+        <div class="arch-node tertiary">@estrategia</div>
+        <div class="arch-node tertiary">@copy</div>
+        <div class="arch-node tertiary">@seo</div>
+        <div class="arch-node tertiary">@cro</div>
+        <div class="arch-node tertiary">@midia</div>
+        <div class="arch-node tertiary">@receita</div>
+        <div class="arch-node tertiary">@vendas</div>
+        <div class="arch-node tertiary">@design</div>
+        <div class="arch-node tertiary">@automacao</div>
+        <div class="arch-node tertiary">@lideranca</div>
+      </div>
+      <div class="arch-connector">▼</div>
+
+      <div class="arch-level-label">▸ CAMADA 1 · SKILLS (62)</div>
+      <div class="arch-level">
+        <div class="arch-node tertiary" style="font-size:10px;padding:6px 10px">copywriting</div>
+        <div class="arch-node tertiary" style="font-size:10px;padding:6px 10px">seo-audit</div>
+        <div class="arch-node tertiary" style="font-size:10px;padding:6px 10px">ai-seo</div>
+        <div class="arch-node tertiary" style="font-size:10px;padding:6px 10px">page-cro</div>
+        <div class="arch-node tertiary" style="font-size:10px;padding:6px 10px">paid-ads</div>
+        <div class="arch-node tertiary" style="font-size:10px;padding:6px 10px">pricing</div>
+        <div class="arch-node tertiary" style="font-size:10px;padding:6px 10px">n8n</div>
+        <div class="arch-node tertiary" style="font-size:10px;padding:6px 10px">+ 55 mais</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="agents">
+  <div class="section-inner">
+    <div class="section-label">Agent Roster</div>
+    <h2 class="section-title">20 agentes em <span>3 tiers</span></h2>
+    <p class="section-desc">
+      Cada agente conhece suas skills, sabe invocar outros agentes e produz output
+      estruturado que o resto do ecossistema consome.
+    </p>
+
+    <div class="section-label" style="margin-top:40px">🧠 Tier 1 · Domain Specialists</div>
+    <div class="agent-catalog animate-on-scroll">
+      <div class="agent-row">
+        <div class="agent-num">01</div>
+        <div class="agent-info">
+          <div class="agent-name"><code>@estrategia-marketing</code></div>
+          <div class="agent-role">Estrategista · Pesquisa · Posicionamento</div>
+        </div>
+        <div class="agent-skills">customer-research, competitor-profiling, content-strategy</div>
+        <div class="agent-type specialist">DOMAIN</div>
+      </div>
+      <div class="agent-row">
+        <div class="agent-num">02</div>
+        <div class="agent-info">
+          <div class="agent-name"><code>@copy-content</code></div>
+          <div class="agent-role">Copywriter · Conteúdo · Social</div>
+        </div>
+        <div class="agent-skills">copywriting, ad-creative, email-sequence, social-content</div>
+        <div class="agent-type specialist">DOMAIN</div>
+      </div>
+      <div class="agent-row">
+        <div class="agent-num">03</div>
+        <div class="agent-info">
+          <div class="agent-name"><code>@seo-visibilidade</code></div>
+          <div class="agent-role">SEO · AI Visibility · Schema</div>
+        </div>
+        <div class="agent-skills">seo-audit, ai-seo, schema-markup, programmatic-seo</div>
+        <div class="agent-type specialist">DOMAIN</div>
+      </div>
+      <div class="agent-row">
+        <div class="agent-num">04</div>
+        <div class="agent-info">
+          <div class="agent-name"><code>@cro-otimizacao</code></div>
+          <div class="agent-role">CRO · Experimentação · Funis</div>
+        </div>
+        <div class="agent-skills">page-cro, signup-cro, form-cro, ab-test-setup</div>
+        <div class="agent-type specialist">DOMAIN</div>
+      </div>
+      <div class="agent-row">
+        <div class="agent-num">05</div>
+        <div class="agent-info">
+          <div class="agent-name"><code>@midia-paga</code></div>
+          <div class="agent-role">Paid Media · Meta · Google · LinkedIn</div>
+        </div>
+        <div class="agent-skills">paid-ads, gt-media-buyer, v4mos-meta-ads</div>
+        <div class="agent-type specialist">DOMAIN</div>
+      </div>
+      <div class="agent-row">
+        <div class="agent-num">06</div>
+        <div class="agent-info">
+          <div class="agent-name"><code>@receita-crescimento</code></div>
+          <div class="agent-role">Pricing · Churn · Referral · RevOps</div>
+        </div>
+        <div class="agent-skills">pricing, churn-prevention, referral, revops</div>
+        <div class="agent-type specialist">DOMAIN</div>
+      </div>
+      <div class="agent-row">
+        <div class="agent-num">07</div>
+        <div class="agent-info">
+          <div class="agent-name"><code>@vendas-account</code></div>
+          <div class="agent-role">Sales Enablement · Handoff</div>
+        </div>
+        <div class="agent-skills">sales-enablement, cold-email, account-handoff</div>
+        <div class="agent-type specialist">DOMAIN</div>
+      </div>
+      <div class="agent-row">
+        <div class="agent-num">08</div>
+        <div class="agent-info">
+          <div class="agent-name"><code>@criacao-design</code></div>
+          <div class="agent-role">Frontend · Imagem · Vídeo</div>
+        </div>
+        <div class="agent-skills">geral-frontend-design, image, video</div>
+        <div class="agent-type specialist">DOMAIN</div>
+      </div>
+      <div class="agent-row">
+        <div class="agent-num">09</div>
+        <div class="agent-info">
+          <div class="agent-name"><code>@automacao-analytics</code></div>
+          <div class="agent-role">n8n · Tracking · Data Pipelines</div>
+        </div>
+        <div class="agent-skills">n8n-architect, analytics-tracking</div>
+        <div class="agent-type specialist">DOMAIN</div>
+      </div>
+      <div class="agent-row">
+        <div class="agent-num">10</div>
+        <div class="agent-info">
+          <div class="agent-name"><code>@estrategia-lideranca</code></div>
+          <div class="agent-role">Sabatina · Parcerias · Launch</div>
+        </div>
+        <div class="agent-skills">sabatina, co-marketing, launch-strategy</div>
+        <div class="agent-type specialist">DOMAIN</div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:28px">🚀 Tier 2 · Team Orchestrators</div>
+    <div class="agent-catalog animate-on-scroll">
+      <div class="agent-row">
+        <div class="agent-num">11</div>
+        <div class="agent-info">
+          <div class="agent-name"><code>@cmoorch</code></div>
+          <div class="agent-role">CMO Orchestrator · Swarm Regent</div>
+        </div>
+        <div class="agent-skills">Todas as skills · Orquestração geral</div>
+        <div class="agent-type orchestrator">SWARM</div>
+      </div>
+      <div class="agent-row">
+        <div class="agent-num">12</div>
+        <div class="agent-info">
+          <div class="agent-name"><code>@growth-team</code></div>
+          <div class="agent-role">Growth Integrado · Cross-channel</div>
+        </div>
+        <div class="agent-skills">CRO + Mídia + SEO + Conteúdo</div>
+        <div class="agent-type orchestrator">SWARM</div>
+      </div>
+      <div class="agent-row">
+        <div class="agent-num">13</div>
+        <div class="agent-info">
+          <div class="agent-name"><code>@content-studio</code></div>
+          <div class="agent-role">Content Pipeline · Escala</div>
+        </div>
+        <div class="agent-skills">Pesquisa + Copy + SEO + Design</div>
+        <div class="agent-type orchestrator">SWARM</div>
+      </div>
+      <div class="agent-row">
+        <div class="agent-num">14</div>
+        <div class="agent-info">
+          <div class="agent-name"><code>@revenue-ops</code></div>
+          <div class="agent-role">Revenue Operations · Forecasting</div>
+        </div>
+        <div class="agent-skills">Revenue + Churn + Automação + Analytics</div>
+        <div class="agent-type orchestrator">SWARM</div>
+      </div>
+      <div class="agent-row">
+        <div class="agent-num">15</div>
+        <div class="agent-info">
+          <div class="agent-name"><code>@account-orchestrator</code></div>
+          <div class="agent-role">CSM · Account Health · Expansão</div>
+        </div>
+        <div class="agent-skills">Check-in + Flags + CSM + Pesquisa</div>
+        <div class="agent-type orchestrator">SWARM</div>
+      </div>
+      <div class="agent-row">
+        <div class="agent-num">16</div>
+        <div class="agent-info">
+          <div class="agent-name"><code>@launch-pad</code></div>
+          <div class="agent-role">Product Launch · GTM</div>
+        </div>
+        <div class="agent-skills">Launch + Copy + Mídia + SEO + Diretórios</div>
+        <div class="agent-type orchestrator">SWARM</div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:28px">🔬 Tier 3 · Niche Specialists</div>
+    <div class="agent-catalog animate-on-scroll">
+      <div class="agent-row">
+        <div class="agent-num">17</div>
+        <div class="agent-info">
+          <div class="agent-name"><code>@cro-lab</code></div>
+          <div class="agent-role">Experimentos · Learning Log</div>
+        </div>
+        <div class="agent-skills">ab-test, page-cro, signup-cro, onboarding-cro</div>
+        <div class="agent-type niche">NICHE</div>
+      </div>
+      <div class="agent-row">
+        <div class="agent-num">18</div>
+        <div class="agent-info">
+          <div class="agent-name"><code>@pesquisador</code></div>
+          <div class="agent-role">Deep Research · Personas · Intel</div>
+        </div>
+        <div class="agent-skills">customer-research, competitor-profiling, sabatina</div>
+        <div class="agent-type niche">NICHE</div>
+      </div>
+      <div class="agent-row">
+        <div class="agent-num">19</div>
+        <div class="agent-info">
+          <div class="agent-name"><code>@media-buyer</code></div>
+          <div class="agent-role">Media Buying · TOC · Predição</div>
+        </div>
+        <div class="agent-skills">gt-media-buyer, paid-ads, v4mos-meta-ads</div>
+        <div class="agent-type niche">NICHE</div>
+      </div>
+      <div class="agent-row">
+        <div class="agent-num">20</div>
+        <div class="agent-info">
+          <div class="agent-name"><code>@n8n-automator</code></div>
+          <div class="agent-role">Workflows · Integrações · ETL</div>
+        </div>
+        <div class="agent-skills">n8n-architect, analytics-tracking</div>
+        <div class="agent-type niche">NICHE</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="formations">
+  <div class="section-inner">
+    <div class="section-label">Party Compositions</div>
+    <h2 class="section-title">8 formações para <span>8 missões</span></h2>
+    <p class="section-desc">
+      Cada formação é um time pré-configurado com líder, especialistas e output
+      definido. Invoque com <span class="inline-code">/team-*</span> no OpenCode.
+    </p>
+
+    <div class="formation-grid animate-on-scroll">
+      <div class="formation-card">
+        <div class="formation-header">
+          <div class="formation-emoji">⚡</div>
+          <div class="formation-name">Growth Strike Team</div>
+        </div>
+        <div class="formation-lineup">
+          <span class="formation-agent lead">@growth-team</span>
+          <span class="formation-agent">@cro-lab</span>
+          <span class="formation-agent">@midia-paga</span>
+          <span class="formation-agent">@seo-visibilidade</span>
+          <span class="formation-agent">@copy-content</span>
+        </div>
+        <div class="formation-desc">Acelerar aquisição e conversão em 30-60 dias com experimentos CRO, campanhas pagas, SEO e criativos integrados.</div>
+        <div class="formation-output">Plano de growth integrado · Experimentos rodando · Relatório semanal</div>
+      </div>
+      <div class="formation-card">
+        <div class="formation-header">
+          <div class="formation-emoji">🏭</div>
+          <div class="formation-name">Content Factory</div>
+        </div>
+        <div class="formation-lineup">
+          <span class="formation-agent lead">@content-studio</span>
+          <span class="formation-agent">@estrategia-marketing</span>
+          <span class="formation-agent">@copy-content</span>
+          <span class="formation-agent">@criacao-design</span>
+          <span class="formation-agent">@seo-visibilidade</span>
+        </div>
+        <div class="formation-desc">Produzir conteúdo em escala: pesquisa → copy → design → SEO → publicação. Qualidade consistente em todo o pipeline.</div>
+        <div class="formation-output">Calendário editorial · Pacote de conteúdo · Relatório de performance</div>
+      </div>
+      <div class="formation-card">
+        <div class="formation-header">
+          <div class="formation-emoji">🤗</div>
+          <div class="formation-name">Client Success Pod</div>
+        </div>
+        <div class="formation-lineup">
+          <span class="formation-agent lead">@account-orchestrator</span>
+          <span class="formation-agent">@revenue-ops</span>
+          <span class="formation-agent">@pesquisador</span>
+          <span class="formation-agent">@vendas-account</span>
+          <span class="formation-agent">@flag-churn</span>
+        </div>
+        <div class="formation-desc">Saúde do cliente com diagnóstico contínuo, pesquisa de mercado e plano de expansão. Previne churn antes de acontecer.</div>
+        <div class="formation-output">QBR · Plano de expansão · Diagnóstico · Action plan</div>
+      </div>
+      <div class="formation-card">
+        <div class="formation-header">
+          <div class="formation-emoji">🚀</div>
+          <div class="formation-name">Product Launch Squad</div>
+        </div>
+        <div class="formation-lineup">
+          <span class="formation-agent lead">@launch-pad</span>
+          <span class="formation-agent">@estrategia-marketing</span>
+          <span class="formation-agent">@copy-content</span>
+          <span class="formation-agent">@midia-paga</span>
+          <span class="formation-agent">@criacao-design</span>
+          <span class="formation-agent">@seo-visibilidade</span>
+        </div>
+        <div class="formation-desc">Lançamento completo: positioning, landing page, campanhas, SEO pré-launch, diretórios e PR.</div>
+        <div class="formation-output">Launch plan · Landing page · Campanha multicanal · PR kit</div>
+      </div>
+      <div class="formation-card">
+        <div class="formation-header">
+          <div class="formation-emoji">🏢</div>
+          <div class="formation-name">Full Agency</div>
+        </div>
+        <div class="formation-lineup">
+          <span class="formation-agent lead">@cmoorch</span>
+          <span class="formation-agent">@growth-team</span>
+          <span class="formation-agent">@content-studio</span>
+          <span class="formation-agent">@account-orchestrator</span>
+          <span class="formation-agent">@revenue-ops</span>
+        </div>
+        <div class="formation-desc">Agência completa para um cliente: estratégia, execução cross-funil e reporting executivo integrado.</div>
+        <div class="formation-output">Estratégia integrada · Execução cross-funil · Reporting</div>
+      </div>
+      <div class="formation-card">
+        <div class="formation-header">
+          <div class="formation-emoji">🧪</div>
+          <div class="formation-name">CRO Lab</div>
+        </div>
+        <div class="formation-lineup">
+          <span class="formation-agent lead">@cro-lab</span>
+          <span class="formation-agent">@estrategia-marketing</span>
+          <span class="formation-agent">@copy-content</span>
+          <span class="formation-agent">@criacao-design</span>
+          <span class="formation-agent">@automacao-analytics</span>
+        </div>
+        <div class="formation-desc">Máquina de experimentos contínua com hipóteses baseadas em dados, variações de copy/design e tracking.</div>
+        <div class="formation-output">Pipeline de experimentos · Resultados com significância · Learning log</div>
+      </div>
+      <div class="formation-card">
+        <div class="formation-header">
+          <div class="formation-emoji">🎯</div>
+          <div class="formation-name">Media Buying Command</div>
+        </div>
+        <div class="formation-lineup">
+          <span class="formation-agent lead">@media-buyer</span>
+          <span class="formation-agent">@analista-dados</span>
+          <span class="formation-agent">@copy-content</span>
+          <span class="formation-agent">@criacao-design</span>
+          <span class="formation-agent">@automacao-analytics</span>
+        </div>
+        <div class="formation-desc">Performance máxima em mídia paga com análise preditiva, criativos otimizados e automação de campanhas.</div>
+        <div class="formation-output">Arquitetura de contas · Análise preditiva · Reports</div>
+      </div>
+      <div class="formation-card">
+        <div class="formation-header">
+          <div class="formation-emoji">📊</div>
+          <div class="formation-name">Executive Board</div>
+        </div>
+        <div class="formation-lineup">
+          <span class="formation-agent lead">@cmoorch</span>
+          <span class="formation-agent">@estrategia-lideranca</span>
+          <span class="formation-agent">@revenue-ops</span>
+          <span class="formation-agent">@account-orchestrator</span>
+          <span class="formation-agent">@analista-dados</span>
+        </div>
+        <div class="formation-desc">Decisões estratégicas de alto nível: dados consolidados, sabatina de planos, alocação de recursos.</div>
+        <div class="formation-output">Board deck · OKRs revisados · Decisões · Alocação</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="patterns">
+  <div class="section-inner">
+    <div class="section-label">Orchestration Patterns</div>
+    <h2 class="section-title">4 padrões de <span>coordenação</span></h2>
+    <p class="section-desc">
+      Cada missão exige um padrão de orquestração diferente. A Agent Orchestra
+      suporta todos nativamente.
+    </p>
+
+    <div class="method-steps animate-on-scroll">
+      <div class="method-step">
+        <div class="method-num">01</div>
+        <div class="method-content">
+          <div class="method-main">
+            <div class="method-phase">Pipeline · Cadeia Linear</div>
+            <div class="method-title">Chain of Agents</div>
+            <div class="method-desc">
+              A saída de um agente alimenta o próximo sequencialmente.
+              <span class="inline-code">@pesquisador → @copy-content → @criacao-design → @revisor</span>
+            </div>
+          </div>
+          <div class="method-kpis">
+            <div class="method-kpi-label">Ideal para</div>
+            <div class="method-kpi-vals">Processos com dependência<br>sequencial clara</div>
+          </div>
+        </div>
+      </div>
+      <div class="method-step">
+        <div class="method-num">02</div>
+        <div class="method-content">
+          <div class="method-main">
+            <div class="method-phase">Hub & Spoke · Estrela</div>
+            <div class="method-title">Orchestrator Pattern</div>
+            <div class="method-desc">
+              Um orquestrador coordena múltiplos especialistas em paralelo.
+              <span class="inline-code">@growth-team</span> → <span class="inline-code">@cro @midia @seo @copy</span>
+            </div>
+          </div>
+          <div class="method-kpis">
+            <div class="method-kpi-label">Ideal para</div>
+            <div class="method-kpi-vals">Coordenação cross-disciplina<br>com líder central</div>
+          </div>
+        </div>
+      </div>
+      <div class="method-step">
+        <div class="method-num">03</div>
+        <div class="method-content">
+          <div class="method-main">
+            <div class="method-phase">Mesh · Malha Colaborativa</div>
+            <div class="method-title">Collaborative Mesh</div>
+            <div class="method-desc">
+              Múltiplos agentes colaboram e iteram entre si sem hierarquia rígida.
+              <span class="inline-code">@content-studio ↔ @copy ↔ @design ↔ @estrategia</span>
+            </div>
+          </div>
+          <div class="method-kpis">
+            <div class="method-kpi-label">Ideal para</div>
+            <div class="method-kpi-vals">Projetos complexos<br>com iteração contínua</div>
+          </div>
+        </div>
+      </div>
+      <div class="method-step">
+        <div class="method-num">04</div>
+        <div class="method-content">
+          <div class="method-main">
+            <div class="method-phase">Event-Driven · Flag Triggered</div>
+            <div class="method-title">Event Cascade</div>
+            <div class="method-desc">
+              Um gatilho automático inicia uma cascata de agentes sem intervenção humana.
+              <span class="inline-code">@flag-churn → @account-orch → @revenue-ops → @copy</span>
+            </div>
+          </div>
+          <div class="method-kpis">
+            <div class="method-kpi-label">Ideal para</div>
+            <div class="method-kpi-vals">Alertas automáticos<br>com resposta em cascata</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="section-inner">
+    <div class="section-label">FAQ</div>
+    <h2 class="section-title">Technical <span>reference</span></h2>
+    <p class="section-desc">Arquitetura, uso e conceitos do sistema multi-agente.</p>
+
+    <div class="faq-grid">
+      <div class="faq-block open" onclick="this.classList.toggle('open')">
+        <div class="faq-question">O que é a Agent Orchestra V4?</div>
+        <div class="faq-answer">É um sistema multi-agente que transforma as 62 skills do Builders Hub V4 em 20 subagentes orquestráveis. Cada agente domina de 4 a 8 skills e pode ser invocado sozinho ou em formação de time. A arquitetura segue 3 tiers: especialistas de domínio (execução), orquestradores de time (coordenação) e CMO orchestrator (estratégia).</div>
+      </div>
+      <div class="faq-block" onclick="this.classList.toggle('open')">
+        <div class="faq-question">Como agentes se relacionam com skills?</div>
+        <div class="faq-answer">Skills são instrumentos individuais (cada uma sabe fazer uma coisa). Agentes são músicos que combinam múltiplos instrumentos. Orquestradores são maestros que coordenam músicos em uma sinfonia. A Agent Orchestra não substitui skills — ela as organiza em um sistema coerente com cadeias de valor, gates de qualidade e output padronizado (JSON/Markdown).</div>
+      </div>
+      <div class="faq-block" onclick="this.classList.toggle('open')">
+        <div class="faq-question">Como funciona o quality gate?</div>
+        <div class="faq-answer"><span class="inline-code">@revisor</span> é o quality gate obrigatório do sistema. Ele não edita nada — apenas valida: (1) números conferem com fontes, (2) formato segue padrão V4, (3) recomendações alinham com OKRs, (4) tom é apropriado. Se algo estiver errado, ele reporta e você pede correção. Todo output de agente deve passar pelo revisor antes de entrega.</div>
+      </div>
+      <div class="faq-block" onclick="this.classList.toggle('open')">
+        <div class="faq-question">Posso criar formações customizadas?</div>
+        <div class="faq-answer">Sim. Qualquer combinação de agentes funciona. Use a sintaxe <span class="inline-code">@agente1 + @agente2 + @agente3</span> na sua mensagem. O primeiro agente assume liderança. Os padrões suportados são: cadeia linear (pipeline), hub & spoke (orquestrador central), malha colaborativa (mesh) e event-driven (flag-triggered).</div>
+      </div>
+      <div class="faq-block" onclick="this.classList.toggle('open')">
+        <div class="faq-question">Agentes funcionam com dados reais?</div>
+        <div class="faq-answer">Sim. <span class="inline-code">@analista-dados</span>, <span class="inline-code">@flag-*</span> (churn, okr, operacao, roi) e <span class="inline-code">@automacao-analytics</span> acessam dados reais de campanhas, OKRs, NPS, CSAT e métricas. A skill <span class="inline-code">v4mos-dados-meta-ads</span> puxa dados ao vivo de Meta Ads via API. Use <span class="inline-code">@contexto</span> para carregar a KB do cliente antes de invocar os agentes.</div>
+      </div>
+      <div class="faq-block" onclick="this.classList.toggle('open')">
+        <div class="faq-question">Onde está a documentação completa?</div>
+        <div class="faq-answer">O arquivo <span class="inline-code">ORCHESTRA.md</span> na raiz do projeto tem: catálogo detalhado dos 20 agentes com skills fonte, 8 formações de time com lineup completo, 5 padrões de orquestração com diagramas, 3 cenários reais passo-a-passo (churn recovery, product launch, growth optimization) e guia rápido de uso.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2><span>20 agentes</span> · 62 skills · 8 times</h2>
+  <p>Um comando no OpenCode e o enxame entra em ação.</p>
+  <div class="cta-button-group">
+    <a href="#" class="cta-primary">✦ /orquestra — Ver Mapa</a>
+    <a href="#" class="cta-secondary">📖 Ler ORCHESTRA.md</a>
+  </div>
+  <div class="cta-guarantee">Zero config · Zero instalação · Só invocar o agente</div>
+</section>
+
+<footer>
+  <div class="footer-brand">
+    <img src="logo-peretto.png" alt="Peretto & Co.">
+    <span>Peretto &amp; Co.</span>
+  </div>
+  <div class="footer-note">
+    Agent Orchestra V4 é um produto oficial V4 Company.<br>
+    v1.0 · Release 2026 · Todos os direitos reservados.<br>
+    20 agents · 62 skills · 8 team formations.
+  </div>
+</footer>
+
+<script>
+// ===== PARTICLE CANVAS =====
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let mouse = { x: -1000, y: -1000 };
+let animationId;
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = document.body.scrollHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+class Particle {
+  constructor() {
+    this.reset();
+  }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.size = Math.random() * 2 + 0.5;
+    this.speedX = (Math.random() - 0.5) * 0.3;
+    this.speedY = (Math.random() - 0.5) * 0.3;
+    this.opacity = Math.random() * 0.5 + 0.1;
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+    if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+    // Mouse interaction
+    const dx = this.x - mouse.x;
+    const dy = this.y - mouse.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < 120) {
+      const force = (120 - dist) / 120;
+      this.x += dx * force * 0.02;
+      this.y += dy * force * 0.02;
+    }
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(227, 25, 25, ${this.opacity})`;
+    ctx.fill();
+  }
+}
+
+const particleCount = Math.min(80, Math.floor(canvas.width / 15));
+for (let i = 0; i < particleCount; i++) {
+  particles.push(new Particle());
+}
+
+function drawConnections() {
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 150) {
+        const opacity = (1 - dist / 150) * 0.15;
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = `rgba(227, 25, 25, ${opacity})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
+  }
+}
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => { p.update(); p.draw(); });
+  drawConnections();
+  animationId = requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+document.addEventListener('mousemove', e => {
+  mouse.x = e.clientX;
+  mouse.y = e.clientY + window.scrollY;
+});
+
+document.addEventListener('scroll', () => {
+  canvas.height = document.body.scrollHeight;
+});
+
+// ===== SCROLL OBSERVER =====
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+// ===== COUNTER ANIMATION =====
+function animateCounters() {
+  document.querySelectorAll('.stat-number[data-count]').forEach(el => {
+    const target = parseInt(el.dataset.count);
+    const duration = 1500;
+    const start = performance.now();
+    function update(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(eased * target);
+      el.textContent = current;
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  });
+}
+
+const counterObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      animateCounters();
+      counterObserver.disconnect();
+    }
+  });
+}, { threshold: 0.3 });
+counterObserver.observe(document.querySelector('.hero-stats'));
+
+// ===== SMOOTH SCROLL =====
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// ===== TERMINAL TYPEWRITER =====
+(function animateTerminal() {
+  const lines = document.querySelectorAll('.terminal-line');
+  lines.forEach((line, i) => {
+    setTimeout(() => line.classList.add('visible'), i * 600);
+  });
+})();
+</script>
+</body>
+</html>

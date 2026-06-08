@@ -1,7 +1,7 @@
 import { workflow, node, links } from '@n8n-as-code/transformer';
 
 // <workflow-map>
-// Workflow : JARVIS - WhatsApp Interface
+// Workflow : Peretto AI Ops - WhatsApp
 // Nodes   : 6  |  Connections: 5
 //
 // NODE INDEX
@@ -9,16 +9,16 @@ import { workflow, node, links } from '@n8n-as-code/transformer';
 // Property name                    Node type (short)         Flags
 // Webhook                            webhook
 // FormatInput                        code
-// CallJarvis                         toolWorkflow
+// CallPerettoAiOps                   toolWorkflow
 // FormatResponse                     code
-// Whatsapp                           whatsApp
+// Whatsapp                           whatsApp                   [creds]
 // RespondToWebhook                   respondToWebhook
 //
 // ROUTING MAP
 // ──────────────────────────────────────────────────────────────────
 // Webhook
 //    → FormatInput
-//      → CallJarvis
+//      → CallPerettoAiOps
 //        → FormatResponse
 //          → Whatsapp
 //            → RespondToWebhook
@@ -30,13 +30,13 @@ import { workflow, node, links } from '@n8n-as-code/transformer';
 
 @workflow({
     id: 'zXmAorUdV3jQuBHx',
-    name: 'JARVIS - WhatsApp Interface',
+    name: 'Peretto AI Ops - WhatsApp',
     active: true,
     isArchived: false,
     projectId: 'u3W65WbPCWTXrdjF',
     settings: { executionOrder: 'v1' },
 })
-export class JarvisWhatsappInterfaceWorkflow {
+export class PerettoAiOpsWhatsappWorkflow {
     // =====================================================================
     // CONFIGURATION DES NOEUDS
     // =====================================================================
@@ -51,7 +51,7 @@ export class JarvisWhatsappInterfaceWorkflow {
     })
     Webhook = {
         httpMethod: 'POST',
-        path: 'jarvis-whatsapp',
+        path: 'peretto-whatsapp',
         authentication: 'none',
         responseMode: 'responseNode',
         responseCode: 200,
@@ -108,14 +108,14 @@ return [{
 
     @node({
         id: '7844f323-0330-4fb2-9c59-5f98d6126030',
-        name: 'Call JARVIS',
+        name: 'Call Peretto AI Ops',
         type: '@n8n/n8n-nodes-langchain.toolWorkflow',
         version: 2.2,
         position: [790, 300],
     })
-    CallJarvis = {
-        name: 'jarvisMain',
-        description: 'Call the main JARVIS orchestrator',
+    CallPerettoAiOps = {
+        name: 'perettoMain',
+        description: 'Call the main Peretto AI Ops orchestrator',
         source: 'database',
         workflowId: 'MiT8fbGXxIxX6NKP',
         workflowInputs: {
@@ -150,7 +150,7 @@ return [{
     FormatResponse = {
         mode: 'runOnceForAllItems',
         language: 'javaScript',
-        jsCode: `// Formatar resposta do JARVIS para WhatsApp
+        jsCode: `        // Formatar resposta do Peretto AI Ops para WhatsApp
 const result = $input.first().json;
 let responseText = '';
 
@@ -184,17 +184,17 @@ return [{
         webhookId: '82913059-80bb-4432-9740-e1c939e151d2',
         name: 'WhatsApp',
         type: 'n8n-nodes-base.whatsApp',
-        version: 1,
+        version: 1.1,
         position: [1330, 300],
+        credentials: { whatsAppApi: { id: 'CREDENTIAL_ID', name: 'WhatsApp API' } },
     })
     Whatsapp = {
         resource: 'message',
         operation: 'send',
-        recipientType: 'individual',
-        from: '',
-        to: '={{ $json.sender }}',
+        phoneNumberId: '{{ $json.phoneNumberId }}',
+        recipientPhoneNumber: '={{ $json.sender }}',
         messageType: 'text',
-        textMessage: '={{ $json.response }}',
+        textBody: '={{ $json.response }}',
     };
 
     @node({
@@ -217,8 +217,8 @@ return [{
     @links()
     defineRouting() {
         this.Webhook.out(0).to(this.FormatInput.in(0));
-        this.FormatInput.out(0).to(this.CallJarvis.in(0));
-        this.CallJarvis.out(0).to(this.FormatResponse.in(0));
+        this.FormatInput.out(0).to(this.CallPerettoAiOps.in(0));
+        this.CallPerettoAiOps.out(0).to(this.FormatResponse.in(0));
         this.FormatResponse.out(0).to(this.Whatsapp.in(0));
         this.Whatsapp.out(0).to(this.RespondToWebhook.in(0));
     }

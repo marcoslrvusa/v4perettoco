@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Engine Room — Arquitetura dos Agentes de Operação V4</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #E31919;
+    --red-dark: #B80F0F;
+    --red-light: #FF2424;
+    --red-gradient: linear-gradient(135deg, #E31919 0%, #FF4D4D 100%);
+    --red-gradient-soft: linear-gradient(135deg, rgba(227,25,25,0.15) 0%, rgba(255,77,77,0.05) 100%);
+    --black: #0A0A0A;
+    --black2: #0E0E0E;
+    --black3: #141414;
+    --black4: #1C1C1C;
+    --black5: #252525;
+    --gray: #2A2A2A;
+    --gray2: #383838;
+    --gray3: #505050;
+    --gray4: #6B6B6B;
+    --white: #FFFFFF;
+    --white2: #E8E8E8;
+    --white3: #B0B0B0;
+    --text-muted: #787878;
+    --glass-bg: rgba(20,20,20,0.6);
+    --glass-border: rgba(255,255,255,0.06);
+
+    --layer-collect: #0d6efd;
+    --layer-analyze: #6f42c1;
+    --layer-produce: #E31919;
+    --layer-deliver: #28a745;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  ::selection { background: var(--red); color: var(--white); }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-size: 18px;
+    line-height: 1.65;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes pulseGlow { 0%,100% { box-shadow: 0 0 20px rgba(227,25,25,0.1); } 50% { box-shadow: 0 0 40px rgba(227,25,25,0.25); } }
+  @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+  @keyframes countUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+
+  .animate { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .animate.visible { opacity: 1; transform: translateY(0); }
+
+  /* ===== TOPBAR ===== */
+  .topbar {
+    background: var(--red);
+    padding: 10px 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .topbar span { opacity: 0.8; }
+
+  /* ===== HEADER ===== */
+  header {
+    background: rgba(14,14,14,0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--gray);
+    padding: 22px 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    transition: border-color 0.3s;
+  }
+
+  header.scrolled { border-color: var(--gray2); }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo-icon {
+    width: 36px; height: 36px;
+    background: var(--red-gradient);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--white);
+  }
+
+  .logo-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .logo-text span { color: var(--red); }
+
+  .nav { display: flex; gap: 36px; list-style: none; align-items: center; }
+
+  .nav a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--white3); text-decoration: none;
+    transition: color 0.2s; position: relative;
+  }
+
+  .nav a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 2px; background: var(--red-gradient);
+    transition: width 0.3s;
+  }
+
+  .nav a:hover { color: var(--white); }
+  .nav a:hover::after { width: 100%; }
+
+  .nav-cta {
+    background: var(--red); padding: 10px 22px;
+    color: var(--white) !important; text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.9; }
+  .nav-cta::after { display: none !important; }
+
+  /* ===== HERO ===== */
+  .hero {
+    padding: 80px 56px 60px;
+    background: linear-gradient(160deg, var(--black2) 0%, var(--black) 40%, var(--black3) 100%);
+    border-bottom: 1px solid var(--gray);
+    position: relative;
+    overflow: hidden;
+    min-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .hero::before {
+    content: ''; position: absolute; top: -40%; right: -15%;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(227,25,25,0.06) 0%, transparent 70%);
+    border-radius: 50%; pointer-events: none;
+  }
+
+  .hero::after {
+    content: ''; position: absolute; bottom: -20%; left: -10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(227,25,25,0.04) 0%, transparent 70%);
+    border-radius: 50%; pointer-events: none;
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 900px; }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(227,25,25,0.12);
+    border: 1px solid rgba(227,25,25,0.25);
+    color: var(--red-light);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 7px 16px; margin-bottom: 28px;
+    animation: fadeUp 0.8s ease;
+  }
+
+  .hero-tag-dot {
+    width: 6px; height: 6px; background: var(--red);
+    border-radius: 50%; animation: pulseGlow 2s ease-in-out infinite;
+  }
+
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(56px, 8vw, 100px);
+    font-weight: 900; line-height: 0.88;
+    letter-spacing: -0.03em; text-transform: uppercase;
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s ease 0.1s both;
+  }
+
+  .hero h1 span {
+    background: var(--red-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 20px; font-weight: 400;
+    color: var(--white3); max-width: 680px;
+    line-height: 1.6; margin-bottom: 40px;
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+
+  .hero-sub strong { color: var(--white); font-weight: 500; }
+
+  .hero-actions {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--red-gradient); color: var(--white);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 18px 36px; text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s; border: none; cursor: pointer;
+  }
+
+  .btn-primary:hover { opacity: 0.92; transform: translateY(-2px); }
+  .btn-primary.ghost { background: transparent; border: 1px solid var(--gray); }
+  .btn-primary.ghost:hover { border-color: var(--red); }
+
+  .hero-diagram {
+    margin-top: 48px;
+    animation: fadeUp 0.8s ease 0.4s both;
+  }
+
+  .pipeline-flow {
+    display: flex; align-items: center; gap: 0;
+    background: var(--black4); border: 1px solid var(--gray);
+    padding: 0; overflow: hidden;
+  }
+
+  .pipeline-step {
+    flex: 1; padding: 24px 20px;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; position: relative;
+    font-family: 'Barlow Condensed', sans-serif;
+    transition: background 0.3s;
+  }
+
+  .pipeline-step:hover { background: var(--black5); }
+
+  .pipeline-step + .pipeline-step { border-left: 1px solid var(--gray); }
+
+  .pipeline-step .step-num {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.12em; margin-bottom: 6px;
+  }
+
+  .pipeline-step .step-num.collect { color: var(--layer-collect); }
+  .pipeline-step .step-num.analyze { color: var(--layer-analyze); }
+  .pipeline-step .step-num.produce { color: var(--layer-produce); }
+  .pipeline-step .step-num.deliver { color: var(--layer-deliver); }
+
+  .pipeline-step .step-icon { font-size: 28px; margin-bottom: 6px; }
+  .pipeline-step .step-name { font-size: 15px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; }
+  .pipeline-step .step-arrow { color: var(--text-muted); font-size: 20px; position: absolute; right: -12px; top: 50%; transform: translateY(-50%); z-index: 2; }
+
+  .pipeline-step .step-tag {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+    padding: 3px 10px; margin-top: 6px;
+  }
+
+  .pipeline-step .step-tag.collect { background: rgba(13,110,253,0.15); color: #6ea8fe; border: 1px solid rgba(13,110,253,0.25); }
+  .pipeline-step .step-tag.analyze { background: rgba(111,66,193,0.15); color: #b794f4; border: 1px solid rgba(111,66,193,0.25); }
+  .pipeline-step .step-tag.produce { background: rgba(227,25,25,0.15); color: var(--red-light); border: 1px solid rgba(227,25,25,0.25); }
+  .pipeline-step .step-tag.deliver { background: rgba(40,167,69,0.15); color: #75b798; border: 1px solid rgba(40,167,69,0.25); }
+
+  /* ===== SECTIONS ===== */
+  section { padding: 100px 56px; border-bottom: 1px solid var(--gray); position: relative; }
+  section:nth-child(even) { background: var(--black3); }
+
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .section-label::before {
+    content: ''; display: block; width: 28px;
+    height: 2px; background: var(--red-gradient);
+  }
+
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(40px, 5.5vw, 60px);
+    font-weight: 900; line-height: 0.92;
+    letter-spacing: -0.02em; text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .section-title span {
+    background: var(--red-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .section-desc {
+    font-size: 20px; color: var(--white3);
+    max-width: 760px; line-height: 1.65;
+    margin-bottom: 56px; font-weight: 300;
+  }
+
+  /* ===== GRID CARDS ===== */
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--gray); }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--gray); }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; background: var(--gray); }
+
+  .card {
+    background: var(--black4);
+    padding: 40px 36px;
+    position: relative;
+    transition: background 0.3s, transform 0.3s;
+  }
+
+  .card:hover {
+    background: var(--black5);
+    transform: translateY(-4px);
+  }
+
+  .card-icon {
+    width: 48px; height: 48px;
+    background: var(--red-gradient-soft);
+    border: 1px solid rgba(227,25,25,0.15);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; margin-bottom: 20px;
+  }
+
+  .card-tag {
+    display: inline-block;
+    background: rgba(227,25,25,0.1);
+    color: var(--red-light);
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 10px; margin-bottom: 16px;
+    border: 1px solid rgba(227,25,25,0.2);
+  }
+
+  .card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 26px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.02em;
+    margin-bottom: 14px; line-height: 1.1;
+  }
+
+  .card p, .card-body {
+    font-size: 16px; color: var(--white3);
+    line-height: 1.65; font-weight: 300;
+  }
+
+  .card-metric {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 42px; font-weight: 900;
+    background: var(--red-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-top: 20px; display: block;
+  }
+
+  .card-list { list-style: none; margin-top: 16px; }
+
+  .card-list li {
+    font-size: 16px; color: var(--white3);
+    padding: 10px 0; border-bottom: 1px solid var(--gray);
+    display: flex; align-items: flex-start; gap: 12px;
+    line-height: 1.45; font-weight: 300;
+  }
+
+  .card-list li:last-child { border-bottom: none; }
+
+  .card-list li::before {
+    content: ''; width: 6px; height: 6px;
+    background: var(--red); flex-shrink: 0;
+    margin-top: 8px; border-radius: 50%;
+  }
+
+  /* ===== AGENT CARDS (architecture style) ===== */
+  .agent-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    background: var(--gray);
+  }
+
+  .agent-card {
+    background: var(--black4);
+    padding: 36px 32px;
+    position: relative;
+    transition: background 0.3s, transform 0.3s;
+  }
+
+  .agent-card:hover {
+    background: var(--black5);
+    transform: translateY(-2px);
+  }
+
+  .agent-card.featured {
+    border-left: 3px solid var(--red);
+    background: linear-gradient(135deg, var(--black4) 0%, rgba(227,25,25,0.03) 100%);
+  }
+
+  .agent-card .agent-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .agent-card .agent-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+
+  .agent-card .agent-icon.collect { background: rgba(13,110,253,0.15); border: 1px solid rgba(13,110,253,0.2); }
+  .agent-card .agent-icon.analyze { background: rgba(111,66,193,0.15); border: 1px solid rgba(111,66,193,0.2); }
+  .agent-card .agent-icon.produce { background: rgba(227,25,25,0.15); border: 1px solid rgba(227,25,25,0.2); }
+  .agent-card .agent-icon.deliver { background: rgba(40,167,69,0.15); border: 1px solid rgba(40,167,69,0.2); }
+
+  .agent-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 10px;
+  }
+
+  .agent-badge.collect { background: rgba(13,110,253,0.12); color: #6ea8fe; border: 1px solid rgba(13,110,253,0.2); }
+  .agent-badge.analyze { background: rgba(111,66,193,0.12); color: #b794f4; border: 1px solid rgba(111,66,193,0.2); }
+  .agent-badge.produce { background: rgba(227,25,25,0.12); color: var(--red-light); border: 1px solid rgba(227,25,25,0.2); }
+  .agent-badge.deliver { background: rgba(40,167,69,0.12); color: #75b798; border: 1px solid rgba(40,167,69,0.2); }
+
+  .agent-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.02em;
+    margin-bottom: 4px;
+  }
+
+  .agent-role {
+    font-size: 13px; color: var(--text-muted);
+    font-weight: 500; margin-bottom: 12px;
+  }
+
+  .agent-what {
+    font-size: 15px; color: var(--white3);
+    line-height: 1.6; font-weight: 300;
+    margin-bottom: 12px;
+  }
+
+  .agent-detail {
+    font-size: 13px; color: var(--text-muted);
+    font-weight: 400; line-height: 1.5;
+  }
+
+  .agent-metric {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 3px 10px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--gray2);
+    color: var(--white3);
+  }
+
+  /* ===== LAYER BLOCK ===== */
+  .layer { margin-bottom: 80px; }
+
+  .layer-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 24px 28px;
+    background: var(--black4);
+    border-left: 4px solid var(--red);
+    margin-bottom: 2px;
+  }
+
+  .layer-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 48px; font-weight: 900;
+    line-height: 1; flex-shrink: 0;
+    width: 64px; text-align: center;
+  }
+
+  .layer-number.collect { color: var(--layer-collect); }
+  .layer-number.analyze { color: var(--layer-analyze); }
+  .layer-number.produce { color: var(--layer-produce); }
+  .layer-number.deliver { color: var(--layer-deliver); }
+
+  .layer-info { flex: 1; }
+
+  .layer-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.02em;
+  }
+
+  .layer-name .collect-color { color: #6ea8fe; }
+  .layer-name .analyze-color { color: #b794f4; }
+  .layer-name .produce-color { color: var(--red-light); }
+  .layer-name .deliver-color { color: #75b798; }
+
+  .layer-desc {
+    font-size: 15px; color: var(--white3);
+    font-weight: 300; margin-top: 4px;
+  }
+
+  .layer-auto {
+    display: flex; align-items: center; gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .auto-pct {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px; font-weight: 900;
+  }
+
+  .auto-pct.collect { color: var(--layer-collect); }
+  .auto-pct.analyze { color: var(--layer-analyze); }
+  .auto-pct.produce { color: var(--layer-produce); }
+  .auto-pct.deliver { color: var(--layer-deliver); }
+
+  .auto-bar-track {
+    width: 100px; height: 4px;
+    background: var(--gray2); border-radius: 2px; overflow: hidden;
+  }
+
+  .auto-bar-fill {
+    height: 100%; border-radius: 2px;
+    transition: width 1s ease;
+  }
+
+  .auto-bar-fill.collect { width: 100%; background: var(--layer-collect); }
+  .auto-bar-fill.analyze { width: 90%; background: var(--layer-analyze); }
+  .auto-bar-fill.produce { width: 100%; background: var(--layer-produce); }
+  .auto-bar-fill.deliver { width: 85%; background: var(--layer-deliver); }
+
+  /* ===== CODE BLOCKS ===== */
+  .code-block {
+    background: var(--black2);
+    border: 1px solid var(--gray);
+    padding: 24px 28px;
+    margin: 12px 0;
+    overflow-x: auto;
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--white2);
+  }
+
+  .code-block .kw { color: var(--red-light); }
+  .code-block .str { color: #6ea8fe; }
+  .code-block .cm { color: var(--text-muted); font-style: italic; }
+  .code-block .fn { color: #b794f4; }
+  .code-block .num { color: #75b798; }
+
+  /* ===== DECISION TREE ===== */
+  .decision-tree {
+    background: var(--black4);
+    border-left: 4px solid var(--red);
+    padding: 32px 36px;
+    margin-bottom: 24px;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .decision-tree .branch {
+    color: var(--white3);
+    font-weight: 300;
+    padding: 4px 0;
+  }
+
+  .decision-tree .branch strong { color: var(--white); font-weight: 600; }
+  .decision-tree .branch .arrow { color: var(--text-muted); margin: 0 6px; }
+
+  .decision-tree .leaf {
+    color: var(--white2);
+    padding: 3px 0 3px 24px;
+    font-size: 14px;
+    position: relative;
+  }
+
+  .decision-tree .leaf::before {
+    content: '→';
+    color: var(--red);
+    position: absolute;
+    left: 4px;
+    font-weight: 700;
+  }
+
+  .decision-tree .leaf .meta {
+    color: var(--text-muted);
+    font-size: 12px;
+    margin-left: 8px;
+  }
+
+  /* ===== ARCHITECTURE DIAGRAM SVG AREA ===== */
+  .arch-svg {
+    background: var(--black4);
+    border: 1px solid var(--gray);
+    padding: 32px;
+    margin: 24px 0;
+    overflow-x: auto;
+  }
+
+  .arch-svg pre {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--white2);
+  }
+
+  /* ===== METRIC BLOCK ===== */
+  .metric-block {
+    background: var(--black4);
+    border-left: 4px solid var(--red);
+    padding: 28px 32px;
+    margin-bottom: 2px;
+    transition: background 0.3s;
+  }
+
+  .metric-block:hover { background: var(--black5); }
+
+  .metric-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 8px;
+  }
+
+  .metric-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px; font-weight: 800;
+    text-transform: uppercase; flex: 1; line-height: 1.1;
+  }
+
+  .metric-badge {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 12px; white-space: nowrap; flex-shrink: 0;
+  }
+
+  .metric-badge.outcome { background: var(--red); color: var(--white); }
+  .metric-badge.leading { background: rgba(255,255,255,0.06); border: 1px solid var(--gray2); color: var(--white3); }
+
+  .metric-body {
+    font-size: 15px; color: var(--white3);
+    line-height: 1.6; font-weight: 300;
+  }
+
+  .metric-detail {
+    font-size: 14px; color: var(--text-muted); font-weight: 400;
+  }
+
+  .metric-detail strong { color: var(--white3); }
+
+  /* ===== TABLE ===== */
+  .data-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .data-table thead th {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 14px 20px; text-align: left;
+    border-bottom: 1px solid var(--gray);
+    background: var(--black2);
+  }
+
+  .data-table tbody tr { border-bottom: 1px solid var(--gray); transition: background 0.15s; }
+  .data-table tbody tr:hover { background: var(--black5); }
+
+  .data-table tbody td {
+    padding: 16px 20px; vertical-align: top;
+    color: var(--white3); font-weight: 300;
+  }
+
+  .data-table .cell-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px; font-weight: 800;
+    text-transform: uppercase; color: var(--white); white-space: nowrap;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    padding: 40px 56px;
+    border-top: 1px solid var(--gray);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  footer strong { color: var(--white3); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    .hero { padding: 60px 24px 40px; }
+    section { padding: 60px 24px; }
+    header { padding: 16px 24px; }
+    .topbar { padding: 8px 24px; font-size: 11px; }
+    .nav { gap: 16px; }
+    .nav a { font-size: 12px; }
+    .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+    .agent-grid { grid-template-columns: 1fr; }
+    .pipeline-flow { flex-wrap: wrap; }
+    .pipeline-step { flex: 1 1 45%; }
+    .pipeline-step .step-arrow { display: none; }
+    .layer-header { flex-wrap: wrap; }
+    .layer-auto { width: 100%; justify-content: flex-end; }
+    .hero-diagram { overflow-x: auto; }
+  }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 42px; }
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .hero-actions { flex-direction: column; }
+    .btn-primary { width: 100%; justify-content: center; }
+    header { flex-wrap: wrap; gap: 12px; }
+    .nav { flex-wrap: wrap; gap: 12px; }
+    footer { flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span>✦ V4 Company — Engine Room</span>
+  <span>v1.0 · Maio 2026</span>
+</div>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">⚙</div>
+    <div class="logo-text">Engine <span>Room</span></div>
+  </div>
+  <ul class="nav">
+    <li><a href="#trafego">Tráfego</a></li>
+    <li><a href="#evolucao">Evolução</a></li>
+    <li><a href="#conteudo">Conteúdo</a></li>
+    <li><a href="#arquitetura">Arquitetura</a></li>
+    <li><a href="#deploy" class="nav-cta">Deploy</a></li>
+  </ul>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">
+      <span class="hero-tag-dot"></span>
+      Infraestrutura de Agentes · Operação Automatizada
+    </div>
+    <h1>3 máquinas de<br>operação <span>automatizada</span></h1>
+    <p class="hero-sub">
+      3 agentes de IA + 3 scripts Python + 6 conectores de API = <strong>toda a operação de tráfego,
+      evolução de contas e produção de conteúdo</strong> rodando sem planilha, sem task manual,
+      sem esperar relatório de ferramenta.
+    </p>
+    <div class="hero-actions">
+      <a href="#trafego" class="btn-primary">Ver agentes →</a>
+      <a href="#arquitetura" class="btn-primary ghost">Arquitetura completa</a>
+    </div>
+
+    <div class="hero-diagram">
+      <div class="pipeline-flow">
+        <div class="pipeline-step">
+          <div class="step-num collect">CAMADA 1</div>
+          <div class="step-icon">📡</div>
+          <div class="step-name">Coleta</div>
+          <div class="step-tag collect">Google · Meta · Bing · GA4</div>
+          <div class="step-arrow">→</div>
+        </div>
+        <div class="pipeline-step">
+          <div class="step-num analyze">CAMADA 2</div>
+          <div class="step-icon">🔬</div>
+          <div class="step-name">Análise</div>
+          <div class="step-tag analyze">Consolida · Detecta · Calcula Score</div>
+          <div class="step-arrow">→</div>
+        </div>
+        <div class="pipeline-step">
+          <div class="step-num produce">CAMADA 3</div>
+          <div class="step-icon">🏭</div>
+          <div class="step-name">Produção</div>
+          <div class="step-tag produce">Claude · Calendário · Blog · Email</div>
+          <div class="step-arrow">→</div>
+        </div>
+        <div class="pipeline-step">
+          <div class="step-num deliver">CAMADA 4</div>
+          <div class="step-icon">🚚</div>
+          <div class="step-name">Entrega</div>
+          <div class="step-tag deliver">Drive · Email · JSON · HTML</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OVERVIEW STATS -->
+<section style="padding: 40px 56px; border-bottom: 1px solid var(--gray);">
+  <div class="section-inner">
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; background: var(--gray);">
+      <div style="background: var(--black4); padding: 28px 24px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;background:var(--red-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;">3</div>
+        <div style="font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin-top:6px;">Agentes de Operação</div>
+      </div>
+      <div style="background: var(--black4); padding: 28px 24px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;background:var(--red-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;">6</div>
+        <div style="font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin-top:6px;">Conectores de API</div>
+      </div>
+      <div style="background: var(--black4); padding: 28px 24px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;background:var(--red-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;">4</div>
+        <div style="font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin-top:6px;">Formatos de Saída</div>
+      </div>
+      <div style="background: var(--black4); padding: 28px 24px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;background:var(--red-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;">0</div>
+        <div style="font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin-top:6px;">Planilhas Manuais</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== AGENT 1: TRÁFEGO ===== -->
+<section id="trafego">
+  <div class="section-inner">
+    <div class="section-label animate">Agente 1</div>
+    <h2 class="section-title animate">Relatórios de <span>Tráfego</span></h2>
+    <p class="section-desc animate">
+      Consolidação automática de performance de mídia paga em <strong>3 plataformas</strong> simultaneamente.
+      Google Ads + Meta Ads + Bing Ads + contexto GA4. Um comando gera o relatório completo.
+    </p>
+
+    <div class="layer animate">
+      <div class="layer-header">
+        <div class="layer-number collect">1</div>
+        <div class="layer-info">
+          <div class="layer-name"><span class="collect-color">Coleta</span> · Extração Multicanal</div>
+          <div class="layer-desc">Dados brutos extraídos de todas as plataformas configuradas para o cliente</div>
+        </div>
+        <div class="layer-auto">
+          <span class="auto-pct collect">100%</span>
+          <div class="auto-bar-track"><div class="auto-bar-fill collect"></div></div>
+        </div>
+      </div>
+
+      <div class="agent-grid animate">
+        <div class="agent-card">
+          <div class="agent-top">
+            <div class="agent-icon collect">🔍</div>
+            <span class="agent-badge collect">Google Ads SDK</span>
+          </div>
+          <div class="agent-name">GoogleAdsConnector</div>
+          <div class="agent-role">google-ads (Google API)</div>
+          <div class="agent-what">
+            Puxa <strong>custo, conversões, receita, ROAS, CPC, CPA, cliques</strong> por campanha.
+            Suporta períodos customizados e cálculo de <strong>pace de verba</strong> (gasto real vs esperado no mês).
+          </div>
+          <div class="agent-detail">
+            <strong>Config:</strong> <code>google_ads_customer_id</code> em clientes.json ·
+            <strong>Auth:</strong> OAuth2 + Developer Token
+          </div>
+        </div>
+
+        <div class="agent-card">
+          <div class="agent-top">
+            <div class="agent-icon collect">📘</div>
+            <span class="agent-badge collect">Meta Marketing API</span>
+          </div>
+          <div class="agent-name">MetaConnector</div>
+          <div class="agent-role">facebook-business SDK</div>
+          <div class="agent-what">
+            Puxa <strong> investimento, ações de conversão, valor de conversão, CTR, CPM, frequência</strong>.
+            Suporta breakdown por <strong>plataforma, região, idade/gênero</strong>.
+          </div>
+          <div class="agent-detail">
+            <strong>Config:</strong> <code>meta_ad_account_id</code> (act_XXX) ·
+            <strong>Auth:</strong> User Access Token (long-lived)
+          </div>
+        </div>
+
+        <div class="agent-card">
+          <div class="agent-top">
+            <div class="agent-icon collect">🌐</div>
+            <span class="agent-badge collect">Microsoft Advertising</span>
+          </div>
+          <div class="agent-name">BingAdsConnector</div>
+          <div class="agent-role">bingads SDK (v13)</div>
+          <div class="agent-what">
+            Puxa <strong>spend, conversões, receita, ROAS, CPC</strong> via ReportingService.
+            Suporta relatório de campanha agregado por período customizado.
+          </div>
+          <div class="agent-detail">
+            <strong>Config:</strong> <code>bing_ads_customer_id</code> + <code>bing_ads_account_id</code> ·
+            <strong>SDK:</strong> <code>pip install bingads</code>
+          </div>
+        </div>
+
+        <div class="agent-card">
+          <div class="agent-top">
+            <div class="agent-icon collect">📊</div>
+            <span class="agent-badge collect">Google Analytics</span>
+          </div>
+          <div class="agent-name">GA4Connector</div>
+          <div class="agent-role">google-analytics-data (v1beta)</div>
+          <div class="agent-what">
+            Puxa <strong>sessões, conversões, taxa de conversão, bounce rate</strong>
+            por canal (Organic Search, Paid, Direct, Referral). Contexto para interpretar os dados de mídia.
+          </div>
+          <div class="agent-detail">
+            <strong>Config:</strong> <code>ga4_property_id</code> (properties/XXXXX) ·
+            <strong>Auth:</strong> OAuth2 (mesmo do Gmail/Drive)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layer animate">
+      <div class="layer-header">
+        <div class="layer-number analyze">2</div>
+        <div class="layer-info">
+          <div class="layer-name"><span class="analyze-color">Processamento</span> · Consolidação + Anomalias</div>
+          <div class="layer-desc">Dados viram métricas consolidadas com detecção automática de desvios</div>
+        </div>
+        <div class="layer-auto">
+          <span class="auto-pct analyze">100%</span>
+          <div class="auto-bar-track"><div class="auto-bar-fill analyze"></div></div>
+        </div>
+      </div>
+
+      <div class="grid-2 animate">
+        <div class="card">
+          <div class="card-icon">📐</div>
+          <div class="card-tag">Função Core</div>
+          <h3><code>totaliza_consolidado()</code></h3>
+          <div class="card-body">
+            Soma investimento, receita, conversões e cliques de <strong>todas as plataformas disponíveis</strong>.
+            Calcula ROAS geral e CPL geral. Alimenta os cards de KPI do relatório.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon">⚠️</div>
+          <div class="card-tag">Detecção Automática</div>
+          <h3>Anomalias & Alertas</h3>
+          <div class="card-body">
+            ROAS &lt; 1.5x → 🔴 Crítico (CHAS gerado automaticamente)<br>
+            ROAS 1.5x–3x → 🟡 Atenção · ROAS &gt; 3x → 🟢 Saudável<br>
+            Pace de verba &gt; 20% → Alerta de budget<br>
+            Queda de conversões &gt; 15% → Alerta de performance
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layer animate">
+      <div class="layer-header">
+        <div class="layer-number deliver">3</div>
+        <div class="layer-info">
+          <div class="layer-name"><span class="deliver-color">Entrega</span> · 3 Formatos + 4 Destinos</div>
+          <div class="layer-desc">HTML visual, JSON estruturado ou terminal. Email, Drive, arquivo local ou tela.</div>
+        </div>
+        <div class="layer-auto">
+          <span class="auto-pct deliver">100%</span>
+          <div class="auto-bar-track"><div class="auto-bar-fill deliver"></div></div>
+        </div>
+      </div>
+
+      <div class="grid-3 animate">
+        <div class="card">
+          <div class="card-icon">🖥️</div>
+          <h3>HTML</h3>
+          <div class="card-body">
+            Relatório visual com cards de KPI por cliente/plataforma. Cores por ROAS (verde/amarelo/vermelho).
+            Pronto para email ou web.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon">📋</div>
+          <h3>JSON</h3>
+          <div class="card-body">
+            Dados estruturados para consumo por sistemas, APIs ou armazenamento no Drive. Schema versionado (1.0.0).
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon">💬</div>
+          <h3>Terminal</h3>
+          <div class="card-body">
+            Preview rápido no console. Ideal para uso diário do GT. Mostra só o essencial sem poluição visual.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="decision-tree animate">
+      <div class="branch"><strong>Árvore de Decisão — Relatório de Tráfego</strong></div>
+      <div class="branch"><span class="arrow">└─</span> <strong>ESCOPO</strong> → --cliente "Nome" | --all</div>
+      <div class="branch"><span class="arrow">└─</span> <strong>PERÍODO</strong> → 7d (semanal) | 30d (mensal) | 90d (trimestral)</div>
+      <div class="branch"><span class="arrow">└─</span> <strong>PLATAFORMAS</strong> → Auto-detect por cliente (Google + Meta + Bing + GA4)</div>
+      <div class="branch"><span class="arrow">└─</span> <strong>FORMATO</strong> → --format html | json | terminal</div>
+      <div class="branch"><span class="arrow">└─</span> <strong>ANÁLISE IA</strong> → --claude (opcional, enriquece com análise qualitativa)</div>
+      <div class="branch"><span class="arrow">└─</span> <strong>ENTREGA</strong> → --email | --drive | --out ./reports/</div>
+    </div>
+
+    <div class="code-block animate">
+      <span class="cm"># Relatório semanal de todos os clientes com análise IA + Drive</span><br>
+      python3 relatorio_trafego.py <span class="str">--all</span> <span class="str">--days</span> <span class="num">7</span> <span class="str">--format</span> html <span class="str">--claude</span> <span class="str">--drive</span> <span class="str">--email</span> gt@v4company.com<br><br>
+      <span class="cm"># Relatório mensal de um cliente específico (JSON)</span><br>
+      python3 relatorio_trafego.py <span class="str">--cliente</span> <span class="str">"Cliente A"</span> <span class="str">--days</span> <span class="num">30</span> <span class="str">--format</span> json <span class="str">--out</span> ./reports/
+    </div>
+  </div>
+</section>
+
+<!-- ===== AGENT 2: EVOLUÇÃO CHECK-INS ===== -->
+<section id="evolucao">
+  <div class="section-inner">
+    <div class="section-label animate">Agente 2</div>
+    <h2 class="section-title animate">Evolução entre <span>Check-ins</span></h2>
+    <p class="section-desc animate">
+      Leitura纵向 de todo o histórico de relacionamento com o cliente. Não é sobre uma call isolada —
+      é sobre a <strong>trajetória</strong>. Score de Saúde composto, ciclo de vida das apostas,
+      taxa de cumprimento de combinados ao longo do tempo.
+    </p>
+
+    <div class="arch-svg animate">
+      <pre>
+<span style="color:var(--text-muted)">┌─ DADOS DE ENTRADA (Mission Control) ─────────────────────────────────┐</span>
+<span style="color:var(--white)">│</span>                                                                        <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>  <span style="color:#6ea8fe">📋 combinados.md</span>      <span style="color:#b794f4">🎯 apostas-vivas.md</span>    <span style="color:var(--red-light)}">👤 personas-call.md</span>   <span style="color:var(--white);">│</span>
+<span style="color:var(--white)">│</span>  <span style="color:var(--text-muted)">  Pendentes/Feitos        Vivas/Mortas/Novas     Gatilhos/Frases     </span>   <span style="color:var(--white);">│</span>
+<span style="color:var(--white)">│</span>                                                                        <span style="color:var(--white)">│</span>
+<span style="color:var(--text-muted)">│</span>  <span style="color:#75b798;">📜 historico-checkins.md</span>  <span style="color:var(--white3);">🗂️ checkins/*-review.md</span>                           <span style="color:var(--text-muted)">│</span>
+<span style="color:var(--text-muted)">│</span>  <span style="color:var(--text-muted)">  Calls reais              Diagnóstico ROPRE (Forte/Médio/Fraco)         </span>   <span style="color:var(--text-muted);">│</span>
+<span style="color:var(--text-muted)">└────────────────────────────────────────────────────────────────────────┘</span>
+                                            <span style="color:var(--text-muted)">↓</span>
+<span style="color:var(--text-muted)">┌─ PROCESSAMENTO ──────────────────────────────────────────────────────┐</span>
+<span style="color:var(--white)">│</span>                                                                        <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>  <span style="color:#6ea8fe">1. Combinados</span>  → Taxa de cumprimento (feitos/total)                  <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>                    → Tempo médio de resolução (dias)                    <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>                    → Top arrastados (3+ check-ins sem resolver)           <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>                                                                        <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>  <span style="color:#b794f4">2. Apostas</span>      → Ciclo de vida: vivas → confirmadas/mortas → novas   <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>                    → Aprendizado acumulado (extraído das apostas mortas)  <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>                                                                        <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>  <span style="color:var(--red-light);">3. Personas</span>     → Novos gatilhos registrados                          <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>                    → Mudança de comportamento dos stakeholders          <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>                                                                        <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>  <span style="color:#75b798;">4. ROPRE</span>        → Série temporal: call 1 → call N                       <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>                    → Padrões: "bloco R sempre cai", "combinados melhoram" <span style="color:var(--white)">│</span>
+<span style="color:var(--text-muted)">└────────────────────────────────────────────────────────────────────────┘</span>
+                                            <span style="color:var(--text-muted)">↓</span>
+<span style="color:var(--text-muted)">┌─ SCORE DE SAÚDE COMPOSTO ────────────────────────────────────────────┐</span>
+<span style="color:var(--white)">│</span>                                                                        <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>  <span style="color:#6ea8fe">Cumprimento (30%)</span>  +  <span style="color:#b794f4">Apostas (25%)</span>  +  <span style="color:var(--red-light);">ROPRE (25%)</span>  +  <span style="color:#75b798;">Ritmo (20%)</span>  =  <span style="color:var(--red-light);font-weight:bold;">SCORE 0-100</span>  <span style="color:var(--white);">│</span>
+<span style="color:var(--white)">│</span>                                                                        <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>  <span style="color:#75b798;">80-100:</span> 🟢 Saudável    <span style="color:#ffc107;">60-79:</span> 🟡 Atenção    <span style="color:var(--red-light);">&lt;60:</span> 🔴 Crítico               <span style="color:var(--white);">│</span>
+<span style="color:var(--text-muted)">└────────────────────────────────────────────────────────────────────────┘</span></pre>
+    </div>
+
+    <div style="margin-top: 48px;">
+      <h3 class="section-label animate" style="margin-bottom: 20px;">Métricas Extraídas</h3>
+      <div class="grid-2 animate">
+        <div class="metric-block">
+          <div class="metric-header">
+            <div class="metric-name">📋 Taxa de Cumprimento</div>
+            <span class="metric-badge outcome">30% do Score</span>
+          </div>
+          <div class="metric-body">
+            Percentual de combinados que saíram de "Pendente" para "Feito" no período.
+            <strong>Meta:</strong> &gt; 70%. Abaixo de 40% é alerta vermelho.
+          </div>
+          <div class="metric-detail">
+            <strong>Cálculo:</strong> combinados_feitos / total_combinados × 100
+          </div>
+        </div>
+        <div class="metric-block">
+          <div class="metric-header">
+            <div class="metric-name">🎯 Vitalidade das Apostas</div>
+            <span class="metric-badge outcome">25% do Score</span>
+          </div>
+          <div class="metric-body">
+            Quantas apostas estão ativas, testando teses, vs quantas estão paradas.
+            <strong>Meta:</strong> 3–5 apostas vivas simultâneas. Menos que 3 = não está testando nada.
+          </div>
+          <div class="metric-detail">
+            <strong>Cálculo:</strong> (apostas_confirmadas + novas) / total_apostas_no_periodo × 100
+          </div>
+        </div>
+        <div class="metric-block">
+          <div class="metric-header">
+            <div class="metric-name">📊 Qualidade ROPRE</div>
+            <span class="metric-badge outcome">25% do Score</span>
+          </div>
+          <div class="metric-body">
+            Média da qualidade dos blocos ROPRE nas últimas calls. Baseado nos diagnósticos
+            dos arquivos de review pós-check-in.
+          </div>
+          <div class="metric-detail">
+            <strong>Escala:</strong> Forte=3 · Médio=2 · Fraco=1 · Ausente=0
+          </div>
+        </div>
+        <div class="metric-block">
+          <div class="metric-header">
+            <div class="metric-name">⏱️ Ritmo de Check-ins</div>
+            <span class="metric-badge outcome">20% do Score</span>
+          </div>
+          <div class="metric-body">
+            Frequência real de check-ins vs a frequência esperada (ideal: 1x por mês).
+            Clientes com ritmo adequado têm score mais alto.
+          </div>
+          <div class="metric-detail">
+            <strong>Cálculo:</strong> calls_reais_no_periodo / calls_esperadas_no_periodo × 100
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block animate" style="margin-top: 48px;">
+      <span class="cm"># A análise é feita pelo agente @evolucao-checkins, que lê o Mission Control</span><br>
+      <span class="cm"># e gera o relatório completo em markdown + score de saúde</span><br><br>
+      <span class="kw">@evolucao-checkins</span> Analise a evolução do cliente Atlas Copco USA no último quarter
+    </div>
+  </div>
+</section>
+
+<!-- ===== AGENT 3: PIPELINE DE CONTEÚDO ===== -->
+<section id="conteudo">
+  <div class="section-inner">
+    <div class="section-label animate">Agente 3</div>
+    <h2 class="section-title animate">Pipeline de <span>Conteúdo</span></h2>
+    <p class="section-desc animate">
+      Ciclo completo: calendário editorial → produção (blog posts + email marketing via Claude) →
+      aprovação no Google Drive → JSON final. Sem planilha de calendário, sem email de "aprova aqui",
+      sem arquivo perdido.
+    </p>
+
+    <div class="layer animate">
+      <div class="layer-header">
+        <div class="layer-number produce">1</div>
+        <div class="layer-info">
+          <div class="layer-name"><span class="produce-color">Calendário</span> · Geração via Claude</div>
+          <div class="layer-desc">IA gera N semanas de tópicos com mistura de blog posts e email marketing</div>
+        </div>
+        <div class="layer-auto">
+          <span class="auto-pct produce">100%</span>
+          <div class="auto-bar-track"><div class="auto-bar-fill produce"></div></div>
+        </div>
+      </div>
+
+      <div class="code-block animate">
+        <span class="cm"># Gera calendário editorial de 4 semanas para o cliente</span><br>
+        python3 pipeline_conteudo.py <span class="str">--cliente</span> <span class="str">"Cliente A"</span> <span class="str">--calendario</span> <span class="str">--semanas</span> <span class="num">4</span> <span class="str">--drive</span>
+      </div>
+    </div>
+
+    <div class="layer animate">
+      <div class="layer-header">
+        <div class="layer-number analyze">2</div>
+        <div class="layer-info">
+          <div class="layer-name"><span class="analyze-color">Produção</span> · Blog Posts + Email Marketing</div>
+          <div class="layer-desc">Claude escreve o conteúdo completo, estrutura em JSON e salva no Drive</div>
+        </div>
+        <div class="layer-auto">
+          <span class="auto-pct analyze">90%</span>
+          <div class="auto-bar-track"><div class="auto-bar-fill analyze"></div></div>
+        </div>
+      </div>
+
+      <div class="grid-2 animate">
+        <div class="agent-card featured">
+          <div class="agent-top">
+            <div class="agent-icon produce">✍️</div>
+            <span class="agent-badge produce">Claude · Blog Post</span>
+          </div>
+          <div class="agent-name">JSON Output: Blog Post</div>
+          <div class="agent-what">
+            <strong>Schema:</strong><br>
+            <code>titulo</code> → Título do post<br>
+            <code>meta_description</code> → até 160 caracteres<br>
+            <code>introducao</code> → 2–3 parágrafos<br>
+            <code>secoes</code> → Array de {subtitulo, conteudo} (3–4 H2s)<br>
+            <code>conclusao</code> + <code>cta</code> + <code>tempo_leitura</code><br>
+            <code>status</code> → "para_aprovacao"
+          </div>
+        </div>
+        <div class="agent-card featured">
+          <div class="agent-top">
+            <div class="agent-icon produce">📧</div>
+            <span class="agent-badge produce">Claude · Email Marketing</span>
+          </div>
+          <div class="agent-name">JSON Output: Email Marketing</div>
+          <div class="agent-what">
+            <strong>Schema:</strong><br>
+            <code>subject_lines</code> → Array de 3 opções<br>
+            <code>preheader</code> → Texto de pré-visualização<br>
+            <code>corpo</code> → 2–3 parágrafos<br>
+            <code>cta</code> → {texto, hint}<br>
+            <code>ps</code> → PS line<br>
+            <code>status</code> → "para_aprovacao"
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layer animate">
+      <div class="layer-header">
+        <div class="layer-number deliver">3</div>
+        <div class="layer-info">
+          <div class="layer-name"><span class="deliver-color">Aprovação + Drive</span> · Fluxo Completo</div>
+          <div class="layer-desc">JSON no Drive → colaborador aprova → status vira "aprovado" → pronto para publicar</div>
+        </div>
+        <div class="layer-auto">
+          <span class="auto-pct deliver">85%</span>
+          <div class="auto-bar-track"><div class="auto-bar-fill deliver"></div></div>
+        </div>
+      </div>
+
+      <div class="arch-svg animate">
+        <pre>
+<span style="color:var(--text-muted)">┌─ ESTRUTURA NO GOOGLE DRIVE ──────────────────────────────────────────┐</span>
+<span style="color:var(--white)">│</span>                                                                        <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>  <span style="color:var(--white3)">📁 Conteudo V4/</span>                                                       <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>  ├── <span style="color:var(--white3)">📁 Cliente A/</span>                                                      <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>  │   ├── <span style="color:var(--white3)">📁 Calendarios/</span>                                                <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>  │   │   └── <span style="color:#6ea8fe">📄 calendario-editorial-2026-05-22.json</span>                     <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>  │   └── <span style="color:var(--white3)">📁 2026-05/</span>                                                     <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>  │       ├── <span style="color:#75b798;">📄 blog-post-como-reduzir-cpa-2026-05-22.json</span>  <span style="color:var(--red-light);">← aprovado</span>        <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>  │       └── <span style="color:#ffc107;">📄 email-newsletter-2026-05-22.json</span>           <span style="color:var(--red-light);">← para_aprovacao</span>  <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>  └── <span style="color:var(--white3)">📁 Cliente B/</span>                                                      <span style="color:var(--white)">│</span>
+<span style="color:var(--text-muted)">└────────────────────────────────────────────────────────────────────────┘</span>
+
+<span style="color:var(--text-muted)">┌─ CICLO DE STATUS ────────────────────────────────────────────────────┐</span>
+<span style="color:var(--white)">│</span>                                                                        <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>  <span style="color:var(--white3)">rascunho</span>  ──→  <span style="color:#ffc107;">para_aprovacao</span>  ──→  <span style="color:#75b798;">aprovado</span>                           <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>   (criado)       (JSON no Drive +     (humano revisou,              <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>                  email notifica)       status atualizado)             <span style="color:var(--white)">│</span>
+<span style="color:var(--text-muted)">└────────────────────────────────────────────────────────────────────────┘</span></pre>
+      </div>
+
+      <div class="code-block animate">
+        <span class="cm"># 1. Gerar calendário</span><br>
+        pipeline_conteudo.py <span class="str">--cliente</span> <span class="str">"Cliente A"</span> <span class="str">--calendario</span> <span class="str">--semanas</span> <span class="num">4</span> <span class="str">--drive</span><br><br>
+        <span class="cm"># 2. Produzir item do calendário (índice 0 = blog post, 1 = email...)</span><br>
+        pipeline_conteudo.py <span class="str">--cliente</span> <span class="str">"Cliente A"</span> <span class="str">--produzir</span> <span class="num">0</span> <span class="str">--drive</span> <span class="str">--email</span> aprovador@email.com<br><br>
+        <span class="cm"># 3. Aprovar (executado pelo colaborador após revisão no Drive)</span><br>
+        pipeline_conteudo.py <span class="str">--aprovar</span> &lt;fileId_do_Drive&gt;
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ARQUITETURA ===== -->
+<section id="arquitetura">
+  <div class="section-inner">
+    <div class="section-label animate">Arquitetura</div>
+    <h2 class="section-title animate">Diagrama de <span>Integração</span></h2>
+    <p class="section-desc animate">
+      Como os 3 agentes se conectam com a infraestrutura existente: Mission Control, conectores,
+      Google Drive, Gmail e Claude API.
+    </p>
+
+    <div class="arch-svg animate">
+      <pre>
+<span style="color:var(--text-muted)">┌─────────────────────────────────────────────────────────────────────────────────────────┐</span>
+<span style="color:var(--white)">│</span>                                                                                         <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>                              <span style="color:var(--red-light);font-weight:bold;">⚙ ENGINE ROOM · V4 COMPANY</span>                                   <span style="color:var(--white)">│</span>
+<span style="color:var(--white)">│</span>                                                                                         <span style="color:var(--white)">│</span>
+<span style="color:var(--text-muted)">└─────────────────────────────────────────────────────────────────────────────────────────┘</span>
+                                            <span style="color:var(--text-muted)">│</span>
+          <span style="color:var(--text-muted)">┌─────────────────────────┼─────────────────────────┐</span>
+          <span style="color:var(--text-muted)">│</span>                         <span style="color:var(--text-muted)">│</span>                         <span style="color:var(--text-muted)">│</span>
+<span style="color:var(--text-muted)">┌────────┴────────┐</span>  <span style="color:var(--text-muted)">┌────────┴────────┐</span>  <span style="color:var(--text-muted)">┌────────┴────────┐</span>
+<span style="color:var(--white)">│  @relatorios-   │</span>  <span style="color:var(--white)">│  @evolucao-     │</span>  <span style="color:var(--white)">│  @pipeline-     │</span>
+<span style="color:var(--white)">│  trafego        │</span>  <span style="color:var(--white)">│  checkins       │</span>  <span style="color:var(--white)">│  conteudo       │</span>
+<span style="color:var(--text-muted)">└────────┬────────┘</span>  <span style="color:var(--text-muted)">└────────┬────────┘</span>  <span style="color:var(--text-muted)">└────────┬────────┘</span>
+          <span style="color:var(--text-muted)">│</span>                         <span style="color:var(--text-muted)">│</span>                         <span style="color:var(--text-muted)">│</span>
+          <span style="color:var(--text-muted)">▼</span>                         <span style="color:var(--text-muted)">▼</span>                         <span style="color:var(--text-muted)">▼</span>
+<span style="color:var(--text-muted)">┌───────────────┐</span>  <span style="color:var(--text-muted)">┌─────────────────┐</span>  <span style="color:var(--text-muted)">┌──────────────────┐</span>
+<span style="color:#6ea8fe">│  connectors.py  │</span>  <span style="color:#b794f4">│  Mission Control  │</span>  <span style="color:#75b798">│  Claude API       │</span>
+<span style="color:#6ea8fe">│  Google·Meta·   │</span>  <span style="color:#b794f4">│  combinados.md    │</span>  <span style="color:#75b798">│  Geração de       │</span>
+<span style="color:#6ea8fe">│  Bing·GA4·Drive │</span>  <span style="color:#b794f4">│  apostas.md       │</span>  <span style="color:#75b798">│  conteúdo         │</span>
+<span style="color:#6ea8fe">│  ·Gmail         │</span>  <span style="color:#b794f4">│  personas.md      │</span>  <span style="color:#75b798">│  via system prompt│</span>
+<span style="color:var(--text-muted)">└───────┬───────┘</span>  <span style="color:var(--text-muted)">└────────┬────────┘</span>  <span style="color:var(--text-muted)">└────────┬────────┘</span>
+          <span style="color:var(--text-muted)">│</span>                         <span style="color:var(--text-muted)">│</span>                         <span style="color:var(--text-muted)">│</span>
+          <span style="color:var(--text-muted)">└─────────────────────────┼─────────────────────────┘</span>
+                            <span style="color:var(--text-muted)">│</span>
+                            <span style="color:var(--text-muted)">▼</span>
+          <span style="color:var(--text-muted)">┌─────────────────────────────────────────────────┐</span>
+          <span style="color:var(--white)">│           GOOGLE DRIVE + GMAIL                   │</span>
+          <span style="color:var(--text-muted)">│  Relatorios V4/  ·  Conteudo V4/  ·  Notificações │</span>
+          <span style="color:var(--text-muted)">└─────────────────────────────────────────────────┘</span>
+
+<span style="color:var(--text-muted)">═══ PLUGAVEL ═══  Bing Ads SDK (pip install bingads)  ·  V4mos API  ·  n8n workflows</span></pre>
+    </div>
+
+    <h3 class="section-label animate" style="margin-top: 56px;">Stack Tecnológico</h3>
+    <div class="grid-3 animate" style="margin-top: 20px;">
+      <div class="card">
+        <div class="card-icon">🐍</div>
+        <h3>Python 3.9+</h3>
+        <div class="card-body">
+          <strong>SDKs:</strong> google-ads, facebook-business, bingads, google-api-python-client, google-analytics-data<br>
+          <strong>Infra:</strong> dotenv, requests, pathlib, json
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔐</div>
+        <h3>Autenticação</h3>
+        <div class="card-body">
+          <strong>Google:</strong> OAuth2 Desktop App (token.json)<br>
+          <strong>Meta:</strong> User Access Token (long-lived)<br>
+          <strong>Bing:</strong> Developer Token + OAuth Azure AD<br>
+          <strong>Claude:</strong> API Key (sk-ant-...)
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-icon">☁️</div>
+        <h3>Infraestrutura</h3>
+        <div class="card-body">
+          <strong>Orquestração:</strong> OpenCode subagents (23 agentes)<br>
+          <strong>Agendamento:</strong> Cron (linux) · n8n (workflows)<br>
+          <strong>Armazenamento:</strong> Google Drive · Local filesystem
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONFIG / DEPLOY ===== -->
+<section id="deploy">
+  <div class="section-inner">
+    <div class="section-label animate">Setup</div>
+    <h2 class="section-title animate">Checklist de <span>Configuração</span></h2>
+    <p class="section-desc animate">
+      Tudo que precisa para colocar a Engine Room em operação. <strong>~2h de setup</strong> para um engenheiro familiarizado com as APIs.
+    </p>
+
+    <div class="grid-2 animate" style="margin-top: 32px;">
+      <div class="card">
+        <div class="card-icon">📝</div>
+        <div class="card-tag">Passo 1</div>
+        <h3>Credenciais (.env)</h3>
+        <div class="card-body">
+          Preencher <code>v4-automations/config/.env</code> com:<br><br>
+          <strong>Google:</strong> GOOGLE_ADS_DEVELOPER_TOKEN, GOOGLE_ADS_CLIENT_ID/SECRET/REFRESH_TOKEN<br>
+          <strong>Meta:</strong> META_APP_ID, META_APP_SECRET, META_ACCESS_TOKEN<br>
+          <strong>Bing:</strong> BING_ADS_DEVELOPER_TOKEN, BING_ADS_CLIENT_ID/SECRET/REFRESH_TOKEN<br>
+          <strong>Geral:</strong> ANTHROPIC_API_KEY, GMAIL_SENDER
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔑</div>
+        <div class="card-tag">Passo 2</div>
+        <h3>OAuth Google</h3>
+        <div class="card-body">
+          <code>console.cloud.google.com</code> → Projeto "v4-automations"<br><br>
+          <strong>APIs a ativar:</strong><br>
+          Google Ads API · Google Analytics Data API<br>
+          Gmail API · Google Drive API<br><br>
+          <strong>Setup:</strong><br>
+          <code>python3 setup/auth_google.py</code> (1x — gera token.json)
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📂</div>
+        <div class="card-tag">Passo 3</div>
+        <h3>clientes.json</h3>
+        <div class="card-body">
+          Configurar cada cliente com:<br><br>
+          <code>google_ads_customer_id</code> · <code>meta_ad_account_id</code><br>
+          <code>bing_ads_customer_id</code> · <code>bing_ads_account_id</code><br>
+          <code>ga4_property_id</code> · <code>verba_mensal</code><br>
+          <code>okrs</code> (para detecção de desvios)<br>
+          <code>drive_root_folder_id</code> (opcional)
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📦</div>
+        <div class="card-tag">Passo 4</div>
+        <h3>Instalação</h3>
+        <div class="card-body">
+          <code>pip install -r setup/requirements.txt</code><br><br>
+          <strong>Dependências:</strong><br>
+          google-ads &gt;=24.0 · facebook-business &gt;=19.0 · bingads &gt;=13.0<br>
+          google-api-python-client · google-analytics-data<br>
+          anthropic &gt;=0.25 · python-dotenv · requests
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block animate" style="margin-top: 48px;">
+      <span class="cm"># Instalação completa em 4 comandos</span><br><br>
+      <span class="fn">cd</span> v4-automations<br>
+      <span class="fn">pip install</span> -r setup/requirements.txt<br>
+      <span class="fn">python3</span> setup/auth_google.py<br>
+      <span class="fn">python3</span> setup/install_cron.py
+    </div>
+
+    <div class="decision-tree animate" style="margin-top: 48px;">
+      <div class="branch"><strong>Recursos que PRECISAM de setup externo</strong></div>
+      <div class="leaf">Bing Ads SDK — <span class="meta"><code>pip install bingads</code> + Developer Token em ads.microsoft.com</span></div>
+      <div class="leaf">Google Ads Developer Token — <span class="meta">Solicitar em ads.google.com → Centro de API (aprovação automática para test account)</span></div>
+      <div class="leaf">Meta Ads Access Token — <span class="meta">Gerar em developers.facebook.com → Marketing API → User Token (long-lived, 60 dias)</span></div>
+      <div class="leaf">Google Drive OAuth — <span class="meta">Gerar credentials.json em console.cloud.google.com</span></div>
+      <div class="branch" style="margin-top: 12px;"><strong>Recursos que JÁ FUNCIONAM</strong></div>
+      <div class="leaf">GA4Connector — <span class="meta">Já existe e funciona (BetaAnalyticsDataClient)</span></div>
+      <div class="leaf">GoogleAdsConnector — <span class="meta">Já existe e funciona (GoogleAdsService.search)</span></div>
+      <div class="leaf">MetaConnector — <span class="meta">Já existe e funciona (FacebookAdsApi + AdAccount)</span></div>
+      <div class="leaf">GmailConnector — <span class="meta">Já existe e funciona (Gmail API send)</span></div>
+      <div class="leaf">Claude API — <span class="meta">Já existe e funciona (claude() function)</span></div>
+      <div class="leaf">Mission Control — <span class="meta">Já existe nos clientes ativos (atlas-copco-usa, all-over, etc.)</span></div>
+      <div class="branch" style="margin-top: 12px;"><strong>Recursos CRIADOS (neste pacote)</strong></div>
+      <div class="leaf">BingAdsConnector — <span class="meta">Novo em connectors.py (depende de pip install bingads)</span></div>
+      <div class="leaf">DriveConnector — <span class="meta">Novo em connectors.py (create_folder, upload_json, ensure_folder)</span></div>
+      <div class="leaf">relatorio_trafego.py — <span class="meta">Script consolidado multicanal</span></div>
+      <div class="leaf">pipeline_conteudo.py — <span class="meta">Script de calendário + produção + aprovação</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div>
+    <strong>Engine Room</strong> — V4 Company · Open-Source Agent Infrastructure
+  </div>
+  <div>
+    23 subagentes · 65 skills · 3 novos agentes de operação · Maio 2026
+  </div>
+</footer>
+
+<script>
+  // Scroll animation
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+
+  // Header scroll effect
+  const header = document.querySelector('header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Smooth scroll for nav
+  document.querySelectorAll('.nav a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+</body>
+</html>

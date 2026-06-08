@@ -1,10 +1,10 @@
 ---
 name: novo-squad
-description: Cria uma nova pasta de squad em squads/ com README de membros e estrutura padrao. Pergunta nome do squad e quem e quem. Use quando o usuario rodar /novo-squad ou disser que quer criar um squad novo.
+description: Cria uma nova pasta de squad em squads/ com entry point e estrutura padrao. Pergunta nome do squad e quem e quem. Use quando o usuario rodar /novo-squad ou disser que quer criar um squad novo.
 aliases: [novo-squad]
 tags: [skill, area-base]
 ---
-Voce vai criar a pasta de um novo squad com a estrutura padrao, um README listando os membros e CLAUDE.md/AGENTS.md iniciais.
+Voce vai criar a pasta de um novo squad com a estrutura padrao, um entry point com os membros e CLAUDE.md/AGENTS.md iniciais.
 
 ## Contexto
 
@@ -14,7 +14,7 @@ Squads sao times fixos de pessoas (gestor, account, trafego, criativo, CS, etc.)
 squads/{squad}/
 ├── CLAUDE.md          ← contexto do squad
 ├── AGENTS.md          ← espelho do contexto para outros agentes
-├── README.md          ← quem e quem (formato livre)
+├── {squad}.md         ← entry point com membros
 ├── docs/              ← docs gerais do squad
 └── clientes/          ← clientes do squad (criados via /novo-cliente)
 ```
@@ -36,7 +36,7 @@ Guarde duas versoes do nome:
 cp -r bases/_template/_template-squad "squads/[nome-formatado]"
 ```
 
-Substitua `{NOME}` no `CLAUDE.md`, `AGENTS.md` e `README.md` da nova pasta pelo **nome digitado** (com capitalizacao preservada — nao pela versao em hifens).
+Substitua `{NOME}` no `CLAUDE.md` e `AGENTS.md` da nova pasta pelo **nome digitado** (com capitalizacao preservada — nao pela versao em hifens).
 
 ### Passo 3 — Coletar membros
 
@@ -46,32 +46,36 @@ Em loop, pergunte:
 A cada resposta nao-vazia, guarde a entrada na lista de membros.
 Quando o usuario apertar Enter sem digitar nada, encerra o loop.
 
-Se a lista ficar vazia (usuario pulou tudo), siga em frente — o README fica com placeholder.
+Se a lista ficar vazia (usuario pulou tudo), crie o entry point sem membros.
 
-### Passo 4 — Atualizar o README
+### Passo 4 — Criar entry point do grafo
 
-No `README.md` da nova pasta, substitua a linha:
-```
-- (preenchido por `/novo-squad`)
+Crie `squads/[nome-formatado]/[nome-formatado].md` (entry point para o grafo do Obsidian — nome visivel ao inves de "README"):
+
+```markdown
+---
+aliases: ["[Nome digitado]"]
+tags: [squad]
+---
+# [Nome digitado]
+
+## Membros
+[lista de membros ou "- (a preencher)"]
+
+## Clientes
+(Lista criada por `/novo-cliente`)
 ```
 
-Pela lista coletada, um membro por bullet:
-```
-- Joao Silva — Gestor de Trafego
-- Maria Souza — Account
-- ...
-```
-
-Se nenhum membro foi coletado, deixa o placeholder ou substitui por `- (a preencher)`.
+Substitua `[lista de membros ou "- (a preencher)"]` pelos bullets coletados no passo 3, ou deixe `- (a preencher)` se vazio.
 
 ### Passo 5 — Confirmar
 
 Mostre a estrutura criada:
 ```
 squads/[nome-formatado]/
+├── [nome-formatado].md  ← entry point do grafo Obsidian
 ├── CLAUDE.md
 ├── AGENTS.md
-├── README.md          ← com os membros
 ├── docs/
 └── clientes/          ← vazio, pronto pra receber clientes
 ```

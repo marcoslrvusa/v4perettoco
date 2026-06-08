@@ -81,9 +81,31 @@ Recursos recorrentes deste cliente. Atualize sempre que aparecer link novo.
 
 Itens nao informados ficam com `—`. A secao "Outros" recebe os itens do loop (passo 4.4).
 
-### Passo 6 — Escrever `CLAUDE.md` e `AGENTS.md` do cliente
+### Passo 6 — Escrever entry points da KB
 
-Crie `squads/[squad]/clientes/[cliente]/CLAUDE.md` e `squads/[squad]/clientes/[cliente]/AGENTS.md` com o mesmo conteudo:
+Crie `squads/[squad]/clientes/[cliente]/[cliente].md` (entry point para o grafo do Obsidian — nome visivel ao inves de "README"):
+
+```markdown
+---
+aliases: ["[Nome do Cliente]"]
+tags: [cliente, squad-[squad]]
+---
+# [Nome do Cliente]
+
+Cliente do squad **[Squad]**.
+
+## Pastas
+- `calls/` — Transcrições de reuniões
+- `checkins/` — Pautas, ensaios e reviews
+- `docs/` — Documentos
+- `campanhas/` — Dados de campanhas
+- `mission-control/` — Estado vivo da conta
+
+## Links
+Veja `links.md` para recursos recorrentes.
+```
+
+Depois crie `squads/[squad]/clientes/[cliente]/CLAUDE.md` e `squads/[squad]/clientes/[cliente]/AGENTS.md` com o mesmo conteudo:
 
 ```markdown
 # [Nome do Cliente]
@@ -105,6 +127,7 @@ Rode `/contexto` apos adicionar dados (calls, docs, campanhas) pra gerar o conte
 Mostre a estrutura criada:
 ```
 squads/[squad]/clientes/[cliente]/
+|-- [cliente].md     # entry point do grafo Obsidian
 |-- CLAUDE.md
 |-- AGENTS.md
 |-- links.md         # links uteis (NotebookLM, Drive, site, outros)

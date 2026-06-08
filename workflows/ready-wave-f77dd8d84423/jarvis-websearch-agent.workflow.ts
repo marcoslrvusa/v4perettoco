@@ -1,7 +1,7 @@
 import { workflow, node, links } from '@n8n-as-code/transformer';
 
 // <workflow-map>
-// Workflow : JARVIS - Web Search Agent
+// Workflow : Peretto AI Ops - Search
 // Nodes   : 5  |  Connections: 4
 //
 // NODE INDEX
@@ -28,12 +28,13 @@ import { workflow, node, links } from '@n8n-as-code/transformer';
 
 @workflow({
     id: '0rqMgaLLfOUiyFzG',
-    name: 'JARVIS - Web Search Agent',
-    active: false,
+    name: 'Peretto AI Ops - Search',
+    active: true,
     isArchived: false,
+    projectId: 'u3W65WbPCWTXrdjF',
     settings: { executionOrder: 'v1' },
 })
-export class JarvisWebSearchAgentWorkflow {
+export class PerettoAiOpsSearchWorkflow {
     // =====================================================================
     // CONFIGURATION DES NOEUDS
     // =====================================================================
@@ -48,7 +49,7 @@ export class JarvisWebSearchAgentWorkflow {
     })
     Webhook = {
         httpMethod: 'POST',
-        path: 'jarvis-websearch-agent',
+        path: 'peretto-search',
         authentication: 'none',
         responseMode: 'onReceived',
         responseCode: 200,

@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Orchestra V4 · Session 1 - Domain Experts</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #E31919;
+    --red-dark: #B80F0F;
+    --red-light: #FF2424;
+    --red-gradient: linear-gradient(135deg, #E31919 0%, #FF4D4D 100%);
+    --black: #0A0A0A;
+    --black2: #0E0E0E;
+    --black3: #141414;
+    --black4: #1C1C1C;
+    --black5: #252525;
+    --gray: #2A2A2A;
+    --gray2: #383838;
+    --gray3: #505050;
+    --gray4: #6B6B6B;
+    --white: #FFFFFF;
+    --white3: #B0B0B0;
+    --text-muted: #787878;
+    --green: #22C55E;
+    --amber: #D97706;
+    --purple: #A855F7;
+    --yellow: #EAB308;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-size: 18px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--red); color: var(--white); }
+
+  /* ===== TOPBAR ===== */
+  .topbar {
+    background: var(--red);
+    padding: 12px 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .topbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .topbar-logo img {
+    height: 75px; /* Adjusted from 75px to 40px for better dashboard fit */
+    width: auto;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    padding: 80px 56px 60px;
+    background: linear-gradient(160deg, var(--black2) 0%, var(--black) 40%, var(--black3) 100%);
+    border-bottom: 1px solid var(--gray);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 900px;
+    background: radial-gradient(circle, rgba(227,25,25,0.05) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(227,25,25,0.12);
+    border: 1px solid rgba(227,25,25,0.25);
+    color: var(--red-light);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(48px, 8vw, 90px);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 span { background: var(--red-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+  .hero-sub {
+    font-size: 21px;
+    color: var(--white3);
+    max-width: 700px;
+    margin: 0 auto 48px;
+    line-height: 1.65;
+  }
+
+  /* ===== SECTION ===== */
+  .section {
+    padding: 80px 56px;
+    border-bottom: 1px solid var(--gray);
+    position: relative;
+  }
+
+  .section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(42px, 5.5vw, 58px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+
+  .section-title span { background: var(--red-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+  .section-desc {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 640px;
+    margin: 14px auto 0;
+    line-height: 1.6;
+  }
+
+  /* ===== SUMMARY CARD ===== */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjusted for more flexible summary cards */
+    gap: 1px;
+    background: var(--gray);
+    margin-top: 60px;
+  }
+
+  .summary-item {
+    background: var(--black3);
+    padding: 32px;
+    text-align: center;
+    position: relative;
+  }
+
+  .summary-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .summary-item:hover::before { opacity: 1; }
+  .summary-item.total::before { background: var(--white3); }
+  .summary-item.success::before { background: var(--green); }
+  .summary-item.partial::before { background: var(--amber); }
+  .summary-item.skipped::before { background: var(--gray4); }
+
+
+  .summary-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .summary-item.total .summary-number { color: var(--white); }
+  .summary-item.success .summary-number { color: var(--green); }
+  .summary-item.partial .summary-number { color: var(--amber); }
+  .summary-item.skipped .summary-number { color: var(--gray4); }
+
+  .summary-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  .summary-detail {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 8px;
+    max-width: 220px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
+  }
+
+  /* ===== FILTERS & SEARCH ===== */
+  .filters-search {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+
+  .filter-button, .search-input, .export-button {
+    background: var(--black3);
+    border: 1px solid var(--gray);
+    color: var(--white);
+    padding: 10px 20px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .filter-button:hover, .export-button:hover {
+    background: var(--red-dark);
+    border-color: var(--red-light);
+  }
+
+  .filter-button.active {
+    background: var(--red);
+    border-color: var(--red-light);
+    color: var(--white);
+  }
+
+  .search-input {
+    flex-grow: 1;
+    max-width: 300px;
+    padding: 10px 15px;
+    border-radius: 0;
+  }
+
+  .search-input::placeholder {
+    color: var(--text-muted);
+  }
+
+  /* ===== AGENT GRID ===== */
+  .agent-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .agent-card {
+    background: var(--black3);
+    border: 1px solid var(--gray);
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+    cursor: pointer;
+  }
+
+  .agent-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .agent-card.status-SUCCESS { border-left: 3px solid var(--green); }
+  .agent-card.status-SUCCESS:hover { border-color: var(--green); }
+  .agent-card.status-PARTIAL { border-left: 3px solid var(--amber); }
+  .agent-card.status-PARTIAL:hover { border-color: var(--amber); }
+  .agent-card.status-SKIPPED { border-left: 3px solid var(--gray4); }
+  .agent-card.status-SKIPPED:hover { border-color: var(--gray4); }
+
+  .agent-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    opacity: 0.03;
+    pointer-events: none;
+  }
+
+  .agent-card.status-SUCCESS::before { background: var(--green); }
+  .agent-card.status-PARTIAL::before { background: var(--amber); }
+  .agent-card.status-SKIPPED::before { background: var(--gray4); }
+
+  .agent-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .agent-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .agent-icon.status-SUCCESS { background: rgba(34,197,94,0.12); }
+  .agent-icon.status-PARTIAL { background: rgba(217,119,6,0.12); }
+  .agent-icon.status-SKIPPED { background: rgba(107,107,107,0.12); }
+
+  .agent-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+  }
+
+  .agent-badge.status-SUCCESS { background: rgba(34,197,94,0.12); color: var(--green); border: 1px solid rgba(34,197,94,0.2); }
+  .agent-badge.status-PARTIAL { background: rgba(217,119,6,0.12); color: var(--amber); border: 1px solid rgba(217,119,6,0.2); }
+  .agent-badge.status-SKIPPED { background: rgba(107,107,107,0.12); color: var(--gray4); border: 1px solid rgba(107,107,107,0.2); }
+
+  .agent-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+
+  .agent-role {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    line-height: 1.4;
+  }
+
+  .agent-what {
+    font-size: 15px;
+    color: var(--white3);
+    margin-bottom: 14px;
+    line-height: 1.6;
+  }
+
+  .agent-what strong { color: var(--white); font-weight: 500; }
+
+  .agent-detail {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    padding-top: 12px;
+    border-top: 1px solid var(--gray);
+    display: none; /* Hidden by default */
+  }
+
+  .agent-card.expanded .agent-detail {
+    display: block; /* Show when expanded */
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    padding: 32px 56px;
+    background: var(--black3);
+    border-top: 1px solid var(--gray);
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  .footer-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  .footer-brand img {
+    height: 32px;
+    width: auto;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+  }
+
+  .footer-brand img:hover {
+    opacity: 1;
+  }
+
+  .footer-brand span {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--white3);
+  }
+
+  footer p {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    .topbar { padding-left: 28px; padding-right: 28px; }
+    .hero { padding: 60px 28px 40px; }
+    .hero h1 { font-size: clamp(40px, 8vw, 60px); }
+    .hero-sub { font-size: 19px; }
+    .section { padding: 60px 28px; }
+    .summary-grid { grid-template-columns: 1fr 1fr; }
+    .filters-search { justify-content: flex-start; }
+    .search-input { max-width: none; }
+  }
+
+  @media (max-width: 600px) {
+    .topbar { padding-left: 20px; padding-right: 20px; }
+    .hero { padding: 40px 20px 32px; }
+    .hero h1 { font-size: clamp(36px, 10vw, 48px); }
+    .hero-sub { font-size: 17px; }
+    .section { padding: 40px 20px; }
+    .agent-grid { grid-template-columns: 1fr; }
+    .summary-grid { grid-template-columns: 1fr; }
+    .filters-search { flex-direction: column; align-items: stretch; }
+    .filter-button, .search-input, .export-button { width: 100%; }
+    footer { padding: 32px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-logo">
+    <img src="https://v4company.com/wp-content/themes/v4-company/assets/images/logo-v4-white.svg" alt="Peretto & Co.">
+    <span>Peretto & Co.</span>
+  </div>
+  <span>Session 1</span>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">⚙︎ Dashboard de Agentes</div>
+  <h1>Agent Orchestra V4 · <span>Session 1</span></h1>
+  <p class="hero-sub">
+    Monitoramento e status dos 12 agentes de IA envolvidos na Session 1 de Domain Experts.
+    Acompanhe o progresso e a performance de cada especialista.
+  </p>
+</section>
+
+<!-- STATS SUMMARY -->
+<section class="section" style="padding-top: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--gray);">
+  <div class="section-inner">
+    <div class="summary-grid">
+      <div class="summary-item total">
+        <div class="summary-number" id="totalAgents">12</div>
+        <div class="summary-label">Total de Agentes</div>
+        <div class="summary-detail">Número total de agentes na sessão.</div>
+      </div>
+      <div class="summary-item success">
+        <div class="summary-number" id="successAgents">10</div>
+        <div class="summary-label">Sucesso</div>
+        <div class="summary-detail">Agentes que concluíram suas tarefas com sucesso.</div>
+      </div>
+      <div class="summary-item partial">
+        <div class="summary-number" id="partialAgents">1</div>
+        <div class="summary-label">Parcial</div>
+        <div class="summary-detail">Agentes com conclusão parcial ou avisos.</div>
+      </div>
+      <div class="summary-item skipped">
+        <div class="summary-number" id="skippedAgents">1</div>
+        <div class="summary-label">Ignorado</div>
+        <div class="summary-detail">Agentes que tiveram suas tarefas ignoradas.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FILTERS & SEARCH -->
+<section class="section" style="padding-top: 40px; padding-bottom: 40px; background: var(--black2);">
+  <div class="section-inner">
+    <div class="filters-search">
+      <button class="filter-button active" data-status="all">Todos</button>
+      <button class="filter-button" data-status="SUCCESS">Sucesso</button>
+      <button class="filter-button" data-status="PARTIAL">Parcial</button>
+      <button class="filter-button" data-status="SKIPPED">Ignorado</button>
+      <input type="text" id="agentSearch" class="search-input" placeholder="Buscar agente por nome ou handle...">
+      <button class="export-button" id="exportData">Exportar JSON</button>
+    </div>
+
+    <!-- AGENT GRID -->
+    <div class="agent-grid" id="agentGrid">
+      <!-- Agent cards will be injected here by JavaScript -->
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <img src="https://v4company.com/wp-content/themes/v4-company/assets/images/logo-v4-white.svg" alt="V4 Company">
+    <span>V4 Company</span>
+  </div>
+  <p>&copy; 2026 Peretto & Co. Todos os direitos reservados.</p>
+</footer>
+
+<script>
+  const agentsData = [
+    {
+      name: "Marketing Strategy Lead",
+      handle: "@estrategia-marketing",
+      status: "SUCCESS",
+      description: "Lidera a definição de estratégias de marketing digital.",
+      details: "Responsável por analisar o mercado, identificar oportunidades e traçar planos de ação para campanhas e posicionamento de marca."
+    },
+    {
+      name: "Copywriter/Content Producer",
+      handle: "@copy-content",
+      status: "SUCCESS",
+      description: "Cria textos persuasivos e conteúdo relevante para diversos canais.",
+      details: "Desenvolve copy para anúncios, landing pages, e-mails e artigos, garantindo a voz da marca e otimização para conversão."
+    },
+    {
+      name: "SEO + AI Visibility",
+      handle: "@seo-visibilidade",
+      status: "SUCCESS",
+      description: "Otimiza a presença online para motores de busca e IA generativa.",
+      details: "Implementa técnicas de SEO técnico e on-page, além de estratégias para visibilidade em respostas de IA (AI Overviews, ChatGPT, etc.)."
+    },
+    {
+      name: "Paid Media Strategist",
+      handle: "@midia-paga",
+      status: "SUCCESS",
+      description: "Planeja e executa campanhas de mídia paga em diversas plataformas.",
+      details: "Gerencia orçamentos, segmentação de público, otimização de lances e análise de performance em Google Ads, Meta Ads, LinkedIn, etc."
+    },
+    {
+      name: "Revenue/Growth Specialist",
+      handle: "@receita-crescimento",
+      status: "SUCCESS",
+      description: "Focado em identificar e implementar alavancas de crescimento de receita.",
+      details: "Analisa funis de vendas, identifica gargalos, propõe experimentos e otimiza processos para maximizar o LTV e a aquisição de clientes."
+    },
+    {
+      name: "Sales Enablement",
+      handle: "@vendas-account",
+      status: "SUCCESS",
+      description: "Desenvolve materiais e processos para apoiar a equipe de vendas.",
+      details: "Cria pitch decks, scripts de vendas, materiais de objeção e treinamentos para capacitar os accounts e aumentar a taxa de fechamento."
+    },
+    {
+      name: "Creative Director",
+      handle: "@criacao-design",
+      status: "SUCCESS",
+      description: "Lidera a visão criativa e a produção de ativos visuais.",
+      details: "Supervisiona a criação de peças gráficas, vídeos, layouts e identidade visual, garantindo alinhamento com a estratégia de marketing."
+    },
+    {
+      name: "Analytics Automation",
+      handle: "@automacao-analytics",
+      status: "SUCCESS",
+      description: "Automatiza a coleta, processamento e visualização de dados analíticos.",
+      details: "Configura ferramentas como GA4, GTM, e desenvolve scripts para integrar dados, criar dashboards e gerar relatórios automatizados."
+    },
+    {
+      name: "Strategy Advisor",
+      handle: "@estrategia-lideranca",
+      status: "SUCCESS",
+      description: "Oferece orientação estratégica e insights de alto nível.",
+      details: "Atua como um conselheiro, revisando planos, identificando riscos e oportunidades, e garantindo que as ações estejam alinhadas aos objetivos de negócio."
+    },
+    {
+      name: "Traffic Reports",
+      handle: "@relatorios-trafego",
+      status: "SUCCESS",
+      description: "Gera relatórios detalhados sobre o desempenho do tráfego.",
+      details: "Compila dados de diversas fontes de tráfego (orgânico, pago, social) e apresenta análises de tendências, anomalias e oportunidades de otimização."
+    },
+    {
+      name: "Content Pipeline",
+      handle: "@pipeline-conteudo",
+      status: "PARTIAL",
+      description: "Gerencia o fluxo de produção e distribuição de conteúdo.",
+      details: "Automatiza a criação de artigos, e-mails e posts sociais, mas a integração com LLM APIs está com exaustão de tokens, resultando em conclusão parcial."
+    },
+    {
+      name: "CRO Specialist",
+      handle: "@cro-otimizacao",
+      status: "SKIPPED",
+      description: "Otimiza a taxa de conversão de páginas e funis.",
+      details: "Identifica pontos de fricção, propõe testes A/B e implementa melhorias para aumentar a performance de conversão. Tarefa ignorada devido a processo interno."
+    }
+  ];
+
+  const agentGrid = document.getElementById('agentGrid');
+  const filterButtons = document.querySelectorAll('.filter-button');
+  const agentSearch = document.getElementById('agentSearch');
+  const exportButton = document.getElementById('exportData');
+
+  function renderAgents(filteredAgents) {
+    agentGrid.innerHTML = '';
+    filteredAgents.forEach(agent => {
+      const agentCard = document.createElement('div');
+      agentCard.classList.add('agent-card', `status-${agent.status}`);
+      agentCard.innerHTML = `
+        <div class="agent-top">
+          <div class="agent-icon status-${agent.status}">
+            ${agent.status === 'SUCCESS' ? '✅' : agent.status === 'PARTIAL' ? '⚠️' : '🚫'}
+          </div>
+          <span class="agent-badge status-${agent.status}">${agent.status}</span>
+        </div>
+        <div class="agent-name">${agent.name}</div>
+        <div class="agent-role">${agent.handle}</div>
+        <div class="agent-what">${agent.description}</div>
+        <div class="agent-detail">
+          <strong>Detalhes:</strong> ${agent.details}
+        </div>
+      `;
+      agentCard.addEventListener('click', () => {
+        agentCard.classList.toggle('expanded');
+      });
+      agentGrid.appendChild(agentCard);
+    });
+  }
+
+  function updateSummary(filteredAgents) {
+    document.getElementById('totalAgents').textContent = filteredAgents.length;
+    document.getElementById('successAgents').textContent = filteredAgents.filter(a => a.status === 'SUCCESS').length;
+    document.getElementById('partialAgents').textContent = filteredAgents.filter(a => a.status === 'PARTIAL').length;
+    document.getElementById('skippedAgents').textContent = filteredAgents.filter(a => a.status === 'SKIPPED').length;
+  }
+
+  function filterAndSearchAgents() {
+    const activeFilter = document.querySelector('.filter-button.active').dataset.status;
+    const searchTerm = agentSearch.value.toLowerCase();
+
+    let filtered = agentsData.filter(agent => {
+      const matchesStatus = activeFilter === 'all' || agent.status === activeFilter;
+      const matchesSearch = agent.name.toLowerCase().includes(searchTerm) ||
+                            agent.handle.toLowerCase().includes(searchTerm) ||
+                            agent.description.toLowerCase().includes(searchTerm) ||
+                            agent.details.toLowerCase().includes(searchTerm);
+      return matchesStatus && matchesSearch;
+    });
+
+    renderAgents(filtered);
+    updateSummary(filtered);
+  }
+
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      filterAndSearchAgents();
+    });
+  });
+
+  agentSearch.addEventListener('input', filterAndSearchAgents);
+
+  exportButton.addEventListener('click', () => {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(agentsData, null, 2));
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", "session1_domain_experts_report.json");
+    document.body.appendChild(downloadAnchorNode);
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+  });
+
+  // Initial render
+  filterAndSearchAgents();
+</script>
+
+</body>
+</html>

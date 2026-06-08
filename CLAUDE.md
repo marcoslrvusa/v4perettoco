@@ -7,8 +7,8 @@ Este repositorio e o hub open-source de skills de IA da V4. Funciona como base d
 - `.claude/skills/` e `.agents/skills/` — skills disponiveis (espelhadas pra funcionar no Claude Code e Anti-Gravity)
 - `squads/` e `bases/` — Knowledge Bases pessoais do usuario (gitignored, ficam locais)
   - **Padrao obrigatorio:** `squads/{squad}/clientes/{cliente}/`. Toda KB de cliente vive dentro de um squad. Cliente solto, fora de squad, NAO existe — [[novo-cliente]] recusa criar.
-  - `squads/{squad}/` — cada squad tem `README.md` com membros, `CLAUDE.md` com contexto e `docs/` com acordos do time. Crie squad com [[novo-squad]] antes do primeiro cliente.
-  - `squads/{squad}/clientes/{cliente}/` — cada cliente tem `calls/` (transcripts brutos), `checkins/` (pautas, ensaios e reviews), `docs/`, `campanhas/`, `mission-control/` (estado vivo), `links.md` (recursos recorrentes — NotebookLM, Drive, site, etc) e `CLAUDE.md`/`AGENTS.md` proprios.
+  - `squads/{squad}/` — cada squad tem `{squad}.md` (entry point do grafo Obsidian), `CLAUDE.md` com contexto e `docs/` com acordos do time. Crie squad com [[novo-squad]] antes do primeiro cliente.
+  - `squads/{squad}/clientes/{cliente}/` — cada cliente tem `{cliente}.md` (entry point do grafo Obsidian), `calls/` (transcripts brutos), `checkins/` (pautas, ensaios e reviews), `docs/`, `campanhas/`, `mission-control/` (estado vivo), `links.md` (recursos recorrentes — NotebookLM, Drive, site, etc) e `CLAUDE.md`/`AGENTS.md` proprios.
   - `bases/{projeto}/` — KBs de qualquer outra area (docs, dados, referencias) que nao sao cliente.
 - Cada KB pode ter um CLAUDE.md/AGENTS.md proprio (gerado por [[contexto]]). Leia ele primeiro quando trabalhar naquele contexto.
 - [[REGISTRY]] — catalogo auto-gerado de todas as skills compartilhadas, agrupado por papel
@@ -20,7 +20,7 @@ Este repositorio e o hub open-source de skills de IA da V4. Funciona como base d
 - [[compartilhar-skill]] — Empacota uma skill local e abre PR pro hub publico.
 - [[criador-de-skills]] — Cria skill nova com prefixo de papel obrigatorio.
 - [[contexto]] — Le tudo numa KB, gera CLAUDE.md/AGENTS.md e atualiza Mission Control quando for cliente.
-- [[novo-squad]] — Cria pasta de squad com README de membros (rode antes do primeiro cliente).
+- [[novo-squad]] — Cria pasta de squad com entry point e membros (rode antes do primeiro cliente).
 - [[novo-cliente]] · [[novo-projeto]] — Cria pasta de KB com estrutura padrao. [[novo-cliente]] agora pede o squad e coleta links uteis (NotebookLM, Drive, site, outros) que ficam em `links.md`.
 - [[geral-brainstormar-sobre-minha-funcao]] — Descobre onde IA agrega mais valor no dia a dia.
 - [[geral-sabatina]] — Stress-test de planos.

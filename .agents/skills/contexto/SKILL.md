@@ -8,7 +8,7 @@ Voce vai analisar uma Knowledge Base e gerar os arquivos `CLAUDE.md` e `AGENTS.m
 
 ## Estrutura esperada
 
-- `squads/{squad}/` — pasta de squad (tem `README.md` com membros, `docs/`, e subpasta `clientes/`)
+- `squads/{squad}/` — pasta de squad (tem `{squad}.md` com membros, `docs/`, e subpasta `clientes/`)
 - `squads/{squad}/clientes/{cliente}/` — pasta de cliente (tem `calls/`, `checkins/`, `docs/`, `campanhas/`, `links.md`, e pode ter `mission-control/`)
 - `bases/{projeto}/` — pasta de projeto/area (tem `docs/`, `dados/`, `referencias/`)
 
@@ -21,7 +21,7 @@ Voce vai analisar uma Knowledge Base e gerar os arquivos `CLAUDE.md` e `AGENTS.m
 Detecte o que rodar com base na pasta corrente do usuario:
 
 - **Pasta corrente e cliente** (tem `calls/`, `docs/`, `campanhas/`; `checkins/` pode existir ou ser criado; E nao tem subpasta `clientes/`): use ela direto.
-- **Pasta corrente e squad** (tem subpasta `clientes/` E `README.md`): use ela direto.
+- **Pasta corrente e squad** (tem subpasta `clientes/` E entry point `{squad}.md`): use ela direto.
 - **Pasta corrente e projeto** (`bases/{X}/`): use ela direto.
 - **Caso contrario:** liste todas as KBs disponiveis e pergunte:
   - Squads: `squads/*/` (ignorando `_template-*`)
@@ -31,7 +31,7 @@ Detecte o que rodar com base na pasta corrente do usuario:
 ### Passo 2 — Detectar o tipo
 
 - **CLIENTE** (operacao): tem `calls/`, `docs/`, `campanhas/`; `checkins/` e recomendado
-- **SQUAD**: tem subpasta `clientes/` e `README.md` com membros
+- **SQUAD**: tem subpasta `clientes/` e `{squad}.md` com membros
 - **PROJETO/AREA** (generico): tem `docs/`, `dados/`, `referencias/`
 
 ### Passo 3 — Ler tudo
@@ -39,7 +39,7 @@ Detecte o que rodar com base na pasta corrente do usuario:
 Leia TODOS os arquivos da pasta:
 
 - **Cliente**: leia tudo em `calls/`, `checkins/`, `docs/`, `campanhas/`, `links.md`, `mission-control/` se existir, e qualquer outro arquivo.
-- **Squad**: leia `README.md` e tudo em `docs/`. NAO leia o conteudo dos clientes filhos — so liste os nomes das pastas.
+- **Squad**: leia o entry point (`{squad}.md`) e tudo em `docs/`. NAO leia o conteudo dos clientes filhos — so liste os nomes das pastas.
 - **Projeto**: leia tudo recursivamente.
 
 Leia cada arquivo por completo. Nao pule nada.
@@ -163,7 +163,7 @@ Use `ND` para calls anteriores ao framework ROPRE V2 ou quando o modo nao estive
 
 **Se for SQUAD:**
 
-Extraia do `README.md`: nome do squad, membros (nome + funcao). Extraia de `docs/`: acordos do squad, processos, links uteis. Liste os clientes filhos (so os nomes das pastas).
+Extraia do entry point (`{squad}.md`): nome do squad, membros (nome + funcao). Extraia de `docs/`: acordos do squad, processos, links uteis. Liste os clientes filhos (so os nomes das pastas).
 
 Gere o `CLAUDE.md` e o `AGENTS.md` (mesmo conteudo) com:
 

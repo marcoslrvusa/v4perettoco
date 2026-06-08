@@ -1,17 +1,17 @@
 import { workflow, node, links } from '@n8n-as-code/transformer';
 
 // <workflow-map>
-// Workflow : Google Ads Report - Teste Automático
+// Workflow : Peretto AI Ops - Google Ads Report
 // Nodes   : 5  |  Connections: 4
 //
 // NODE INDEX
 // ──────────────────────────────────────────────────────────────────
 // Property name                    Node type (short)         Flags
 // ScheduleTrigger                    scheduleTrigger
-// GoogleAds                          googleAds
 // FormatReport                       code
 // BuildEmailHtml                     html
 // SendReport                         emailSend
+// GoogleAds                          googleAds
 //
 // ROUTING MAP
 // ──────────────────────────────────────────────────────────────────
@@ -28,12 +28,13 @@ import { workflow, node, links } from '@n8n-as-code/transformer';
 
 @workflow({
     id: 'xgeJMXgMhZ9nTep0',
-    name: 'Google Ads Report - Teste Automático',
+    name: 'Peretto AI Ops - Google Ads Report',
     active: false,
     isArchived: false,
-    settings: { executionOrder: 'v1' },
+    projectId: 'u3W65WbPCWTXrdjF',
+    settings: { executionOrder: 'v1', binaryMode: 'separate' },
 })
-export class GoogleAdsReportTesteAutomaticoWorkflow {
+export class PerettoAiOpsGoogleAdsReportWorkflow {
     // =====================================================================
     // CONFIGURATION DES NOEUDS
     // =====================================================================
@@ -43,34 +44,16 @@ export class GoogleAdsReportTesteAutomaticoWorkflow {
         name: 'Schedule Trigger',
         type: 'n8n-nodes-base.scheduleTrigger',
         version: 1.3,
-        position: [0, 0],
+        position: [-528, -480],
     })
     ScheduleTrigger = {
         rule: {
             interval: [
                 {
-                    field: 'days',
-                    daysInterval: 1,
                     triggerAtHour: 9,
-                    triggerAtMinute: 0,
                 },
             ],
         },
-    };
-
-    @node({
-        id: '0b72ce02-db24-44bb-86aa-5f7c8c1b0ac0',
-        name: 'Google Ads',
-        type: 'n8n-nodes-base.googleAds',
-        version: 1,
-        position: [0, 0],
-    })
-    GoogleAds = {
-        resource: 'campaign',
-        operation: 'getAll',
-        managerCustomerId: '',
-        clientCustomerId: '',
-        campaignId: '',
     };
 
     @node({
@@ -78,11 +61,9 @@ export class GoogleAdsReportTesteAutomaticoWorkflow {
         name: 'Format Report',
         type: 'n8n-nodes-base.code',
         version: 2,
-        position: [0, 0],
+        position: [16, -480],
     })
     FormatReport = {
-        mode: 'runOnceForAllItems',
-        language: 'javaScript',
         jsCode: `
 const items = $input.all();
 const now = new Date();
@@ -134,12 +115,9 @@ return [{
         name: 'Build Email HTML',
         type: 'n8n-nodes-base.html',
         version: 1.2,
-        position: [0, 0],
+        position: [336, -480],
     })
     BuildEmailHtml = {
-        operation: 'generateHtmlTemplate',
-        sourceData: 'json',
-        dataPropertyName: 'data',
         html: `<!DOCTYPE html>
 <html>
 <head>
@@ -224,16 +202,24 @@ return [{
         name: 'Send Report',
         type: 'n8n-nodes-base.emailSend',
         version: 2.1,
-        position: [0, 0],
+        position: [656, -480],
     })
     SendReport = {
-        resource: 'email',
-        operation: 'send',
         fromEmail: 'relatorio@seudominio.com.br',
-        toEmail: '',
         subject: '={{ "Relatório Google Ads - " + $json.generatedAt }}',
-        message: '',
-        emailFormat: 'html',
+        options: {},
+    };
+
+    @node({
+        id: '0b72ce02-db24-44bb-86aa-5f7c8c1b0ac0',
+        name: 'Google Ads',
+        type: 'n8n-nodes-base.googleAds',
+        version: 1,
+        position: [-304, -480],
+    })
+    GoogleAds = {
+        resource: '__CUSTOM_API_CALL__',
+        requestOptions: {},
     };
 
     // =====================================================================
@@ -243,8 +229,8 @@ return [{
     @links()
     defineRouting() {
         this.ScheduleTrigger.out(0).to(this.GoogleAds.in(0));
-        this.GoogleAds.out(0).to(this.FormatReport.in(0));
         this.FormatReport.out(0).to(this.BuildEmailHtml.in(0));
         this.BuildEmailHtml.out(0).to(this.SendReport.in(0));
+        this.GoogleAds.out(0).to(this.FormatReport.in(0));
     }
 }

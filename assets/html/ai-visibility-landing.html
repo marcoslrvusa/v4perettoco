@@ -1,0 +1,2566 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Visibility — Sua marca citada por Inteligências Artificiais</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #E31919;
+    --red-dark: #B80F0F;
+    --red-light: #FF2424;
+    --red-gradient: linear-gradient(135deg, #E31919 0%, #FF4D4D 100%);
+    --red-gradient-soft: linear-gradient(135deg, rgba(227,25,25,0.15) 0%, rgba(255,77,77,0.05) 100%);
+    --black: #0A0A0A;
+    --black2: #0E0E0E;
+    --black3: #141414;
+    --black4: #1C1C1C;
+    --black5: #252525;
+    --gray: #2A2A2A;
+    --gray2: #383838;
+    --gray3: #505050;
+    --gray4: #6B6B6B;
+    --white: #FFFFFF;
+    --white2: #E8E8E8;
+    --white3: #B0B0B0;
+    --text-muted: #787878;
+    --glass-bg: rgba(20,20,20,0.6);
+    --glass-border: rgba(255,255,255,0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  ::selection { background: var(--red); color: var(--white); }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-size: 18px;
+    line-height: 1.65;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== KEYFRAMES ===== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 20px rgba(227,25,25,0.1); }
+    50% { box-shadow: 0 0 40px rgba(227,25,25,0.25); }
+  }
+
+  @keyframes countUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ===== TOPBAR ===== */
+  .topbar {
+    background: var(--red);
+    padding: 10px 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    background: rgba(14,14,14,0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--gray);
+    padding: 22px 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    transition: border-color 0.3s;
+  }
+
+  header.scrolled {
+    border-color: var(--gray2);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--red-gradient);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--white);
+  }
+
+  .logo-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .logo-text span { color: var(--red); }
+
+  .nav {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--white3);
+    text-decoration: none;
+    transition: color 0.2s;
+    position: relative;
+  }
+
+  .nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--red-gradient);
+    transition: width 0.3s;
+  }
+
+  .nav a:hover { color: var(--white); }
+  .nav a:hover::after { width: 100%; }
+
+  .nav-cta {
+    background: var(--red);
+    padding: 10px 22px;
+    color: var(--white) !important;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .nav-cta:hover { opacity: 0.9; }
+  .nav-cta::after { display: none !important; }
+
+  /* ===== HERO ===== */
+  .hero {
+    padding: 100px 56px 80px;
+    background: linear-gradient(160deg, var(--black2) 0%, var(--black) 40%, var(--black3) 100%);
+    border-bottom: 1px solid var(--gray);
+    position: relative;
+    overflow: hidden;
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(227,25,25,0.06) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(227,25,25,0.04) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -40px;
+  }
+
+  .hero-visual img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 0 60px rgba(227,25,25,0.12), 0 0 120px rgba(227,25,25,0.06);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .hero-visual img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 80px rgba(227,25,25,0.2), 0 0 160px rgba(227,25,25,0.1);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(227,25,25,0.12);
+    border: 1px solid rgba(227,25,25,0.25);
+    color: var(--red-light);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 7px 16px;
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s ease;
+  }
+
+  .hero-tag-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--red);
+    border-radius: 50%;
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(64px, 10vw, 120px);
+    font-weight: 900;
+    line-height: 0.88;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s ease 0.1s both;
+  }
+
+  .hero h1 span { 
+    background: var(--red-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--white3);
+    max-width: 680px;
+    line-height: 1.6;
+    margin-bottom: 48px;
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+
+  .hero-sub strong { color: var(--white); font-weight: 500; }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--red-gradient);
+    color: var(--white);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 18px 36px;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    opacity: 0.92;
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    color: var(--white);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 18px 36px;
+    text-decoration: none;
+    border: 1px solid var(--gray);
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: pointer;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--red);
+    transform: translateY(-2px);
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--gray);
+    border: 1px solid var(--gray);
+    max-width: 960px;
+    margin-top: 64px;
+    animation: fadeUp 0.8s ease 0.4s both;
+  }
+
+  .hero-stat {
+    background: var(--black3);
+    padding: 28px 32px;
+    border-right: 1px solid var(--gray);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-stat::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--red-gradient);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .hero-stat:hover::before { opacity: 1; }
+
+  .hero-stat:last-child { border-right: none; }
+
+  .stat-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 52px;
+    font-weight: 900;
+    background: var(--red-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-number.pure { background: none; -webkit-text-fill-color: var(--red); }
+
+  .stat-label {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 8px;
+    display: block;
+  }
+
+  /* ===== SECTIONS ===== */
+  section {
+    padding: 100px 56px;
+    border-bottom: 1px solid var(--gray);
+    position: relative;
+  }
+
+  section:nth-child(even) { background: var(--black3); }
+
+  .section-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 2px;
+    background: var(--red-gradient);
+  }
+
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(44px, 6.5vw, 68px);
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .section-title span { 
+    background: var(--red-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .section-desc {
+    font-size: 20px;
+    color: var(--white3);
+    max-width: 760px;
+    line-height: 1.65;
+    margin-bottom: 56px;
+    font-weight: 300;
+  }
+
+  /* ===== PROBLEM CARDS ===== */
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--gray); }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--gray); }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; background: var(--gray); }
+
+  .card {
+    background: var(--black4);
+    padding: 40px 36px;
+    position: relative;
+    transition: background 0.3s, transform 0.3s;
+  }
+
+  .card:hover {
+    background: var(--black5);
+    transform: translateY(-4px);
+  }
+
+  .card-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--red-gradient-soft);
+    border: 1px solid rgba(227,25,25,0.15);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .card-tag {
+    display: inline-block;
+    background: rgba(227,25,25,0.1);
+    color: var(--red-light);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(227,25,25,0.2);
+  }
+
+  .card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 14px;
+    line-height: 1.1;
+  }
+
+  .card p, .card-body {
+    font-size: 16px;
+    color: var(--white3);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  .card-metric {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 42px;
+    font-weight: 900;
+    background: var(--red-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-top: 20px;
+    display: block;
+  }
+
+  .card-list {
+    list-style: none;
+    margin-top: 16px;
+  }
+
+  .card-list li {
+    font-size: 16px;
+    color: var(--white3);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    line-height: 1.45;
+    font-weight: 300;
+  }
+
+  .card-list li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--red);
+    flex-shrink: 0;
+    margin-top: 8px;
+    border-radius: 50%;
+  }
+
+  /* ===== ALERT BOX ===== */
+  .alert-box {
+    background: linear-gradient(135deg, rgba(227,25,25,0.1) 0%, rgba(227,25,25,0.02) 100%);
+    border-left: 4px solid var(--red);
+    padding: 40px 44px;
+    margin-bottom: 48px;
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+    border-radius: 0;
+  }
+
+  .alert-icon {
+    width: 64px;
+    height: 64px;
+    background: var(--red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32px;
+    font-weight: 900;
+    flex-shrink: 0;
+    color: var(--white);
+  }
+
+  .alert-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .alert-body { font-size: 17px; line-height: 1.7; opacity: 0.9; font-weight: 300; }
+
+  /* ===== PILLARS (AIO/GEO) ===== */
+  .pillar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--gray);
+  }
+
+  .pillar-block {
+    background: var(--black4);
+    padding: 48px 40px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+
+  .pillar-block:hover { background: var(--black5); }
+
+  .pillar-block::after {
+    content: attr(data-num);
+    position: absolute;
+    bottom: -10px;
+    right: 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 140px;
+    font-weight: 900;
+    color: rgba(227,25,25,0.06);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .pillar-icon {
+    width: 52px;
+    height: 52px;
+    background: var(--red-gradient-soft);
+    border: 1px solid rgba(227,25,25,0.15);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .pillar-block h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 26px;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .pillar-sub {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .pillar-body {
+    font-size: 16px;
+    color: var(--white3);
+    line-height: 1.65;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+    font-weight: 300;
+  }
+
+  .pillar-metrics {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .pillar-metric {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: rgba(227,25,25,0.08);
+    border: 1px solid rgba(227,25,25,0.15);
+    padding: 5px 12px;
+    color: var(--red-light);
+  }
+
+  .pillar-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .pillar-tag {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border: 1px solid var(--gray2);
+    color: var(--white3);
+  }
+
+  /* ===== COMPARISON AIO vs SEO ===== */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--gray);
+    margin-top: 48px;
+  }
+
+  .compare-col {
+    padding: 40px 36px;
+  }
+
+  .compare-col.seo {
+    background: var(--black4);
+  }
+
+  .compare-col.aio {
+    background: var(--black4);
+    border-left: 3px solid var(--red);
+    position: relative;
+  }
+
+  .compare-col.aio::before {
+    content: 'AI-FIRST';
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--red);
+    border: 1px solid rgba(227,25,25,0.3);
+    padding: 3px 10px;
+  }
+
+  .compare-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .compare-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+
+  .compare-list { list-style: none; }
+
+  .compare-list li {
+    font-size: 16px;
+    color: var(--white3);
+    padding: 12px 0;
+    border-bottom: 1px solid var(--gray);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    line-height: 1.4;
+    font-weight: 300;
+  }
+
+  .compare-list li::before {
+    font-weight: 900;
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .compare-col.seo .compare-list li::before {
+    content: '✕';
+    color: var(--gray3);
+  }
+
+  .compare-col.aio .compare-list li::before {
+    content: '✓';
+    color: var(--red);
+  }
+
+  /* ===== METRIC BLOCKS ===== */
+  .metric-block {
+    background: var(--black4);
+    border-left: 4px solid var(--red);
+    padding: 32px 36px;
+    margin-bottom: 2px;
+    transition: background 0.3s;
+  }
+
+  .metric-block:hover { background: var(--black5); }
+
+  .metric-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 10px;
+  }
+
+  .metric-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    text-transform: uppercase;
+    flex: 1;
+    line-height: 1.1;
+  }
+
+  .metric-badge {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    border-radius: 0;
+  }
+
+  .metric-badge.outcome {
+    background: var(--red);
+    color: var(--white);
+  }
+
+  .metric-badge.leading {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--gray2);
+    color: var(--white3);
+  }
+
+  .metric-body {
+    font-size: 16px;
+    color: var(--white3);
+    line-height: 1.65;
+    margin-bottom: 10px;
+    font-weight: 300;
+  }
+
+  .metric-detail {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  .metric-detail strong { color: var(--white3); }
+
+  /* ===== COMPETITOR TABLE ===== */
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+
+  .comp-table thead th {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 14px 24px;
+    text-align: left;
+    border-bottom: 1px solid var(--gray);
+    background: var(--black2);
+  }
+
+  .comp-table tbody tr {
+    border-bottom: 1px solid var(--gray);
+    transition: background 0.15s;
+  }
+
+  .comp-table tbody tr:hover { background: var(--black5); }
+
+  .comp-table tbody td {
+    padding: 18px 24px;
+    vertical-align: top;
+    color: var(--white3);
+    font-weight: 300;
+  }
+
+  .comp-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--white);
+    white-space: nowrap;
+  }
+
+  .comp-name.leader { color: var(--red); }
+
+  .dot-bar { display: flex; gap: 5px; align-items: center; }
+  .dot { width: 12px; height: 12px; border-radius: 0; }
+  .dot.filled { background: var(--red-gradient); }
+  .dot.empty { background: var(--gray2); }
+
+  /* ===== TIER CARDS ===== */
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--gray);
+  }
+
+  .tier-card {
+    background: var(--black4);
+    padding: 44px 40px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.3s;
+  }
+
+  .tier-card:hover { background: var(--black5); }
+
+  .tier-card.featured {
+    background: linear-gradient(180deg, var(--black4) 0%, rgba(227,25,25,0.04) 100%);
+    border-left: 2px solid var(--red);
+    border-right: 2px solid var(--red);
+    position: relative;
+  }
+
+  .tier-card.featured::before {
+    content: 'MAIOR ADESÃO';
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--red-gradient);
+    color: var(--white);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    padding: 5px 20px;
+  }
+
+  .tier-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 4px;
+  }
+
+  .tier-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32px;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .tier-subtitle {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    font-weight: 300;
+  }
+
+  .tier-price-block {
+    margin-bottom: 24px;
+  }
+
+  .tier-price {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 56px;
+    font-weight: 900;
+    background: var(--red-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    display: block;
+  }
+
+  .tier-price.pure {
+    background: none;
+    -webkit-text-fill-color: var(--red);
+  }
+
+  .tier-period {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 4px;
+  }
+
+  .tier-divider {
+    height: 1px;
+    background: var(--gray);
+    margin: 20px 0;
+  }
+
+  .tier-features {
+    list-style: none;
+    flex: 1;
+  }
+
+  .tier-features li {
+    font-size: 15px;
+    color: var(--white3);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    line-height: 1.45;
+    font-weight: 300;
+  }
+
+  .tier-features li::before {
+    content: '+';
+    color: var(--red);
+    font-weight: 700;
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+
+  .tier-features li strong { color: var(--white); font-weight: 500; }
+
+  .tier-cta {
+    display: block;
+    background: var(--red-gradient);
+    color: var(--white);
+    text-align: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 16px;
+    margin-top: 28px;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .tier-cta:hover { opacity: 0.92; transform: translateY(-2px); }
+
+  .tier-cta.outline {
+    background: transparent;
+    border: 1px solid var(--gray2);
+    color: var(--white3);
+  }
+
+  .tier-cta.outline:hover { border-color: var(--red); color: var(--red); }
+
+  /* ===== ADDONS TABLE ===== */
+  .addon-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    margin-top: 40px;
+  }
+
+  .addon-table thead th {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 14px 24px;
+    text-align: left;
+    border-bottom: 1px solid var(--gray);
+    background: var(--black2);
+  }
+
+  .addon-table tbody tr {
+    border-bottom: 1px solid var(--gray);
+    transition: background 0.15s;
+  }
+
+  .addon-table tbody tr:hover { background: var(--black5); }
+
+  .addon-table tbody td {
+    padding: 16px 24px;
+    color: var(--white3);
+    font-weight: 300;
+  }
+
+  .addon-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .addon-price {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 900;
+    background: var(--red-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .addon-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  /* ===== NRR EXPANSION ===== */
+  .expansao-flow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 40px;
+  }
+
+  .expansao-step {
+    background: var(--black4);
+    border: 1px solid var(--gray);
+    padding: 20px 24px;
+    text-align: center;
+    min-width: 180px;
+    transition: border-color 0.3s;
+  }
+
+  .expansao-step:hover { border-color: var(--red); }
+
+  .expansao-step .step-price {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    background: var(--red-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .expansao-step .step-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  .expansao-step .step-conv {
+    font-size: 12px;
+    color: var(--white3);
+    margin-top: 6px;
+    font-weight: 300;
+  }
+
+  .expansao-arrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--red);
+    flex-shrink: 0;
+  }
+
+  /* ===== METHODOLOGY SECTION ===== */
+  .method-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .method-step {
+    display: flex;
+    gap: 0;
+    background: var(--gray);
+  }
+
+  .method-num {
+    width: 72px;
+    background: var(--red-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    flex-shrink: 0;
+    color: var(--white);
+  }
+
+  .method-content {
+    flex: 1;
+    background: var(--black4);
+    padding: 28px 36px;
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .method-main { flex: 1; }
+
+  .method-phase {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 4px;
+  }
+
+  .method-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .method-desc {
+    font-size: 15px;
+    color: var(--white3);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .method-kpis {
+    flex-shrink: 0;
+    text-align: right;
+    min-width: 200px;
+  }
+
+  .method-kpi-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .method-kpi-vals {
+    font-size: 13px;
+    color: var(--white3);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ===== GEO RESEARCH RESULTS ===== */
+  .geo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--gray);
+    margin-top: 32px;
+  }
+
+  .geo-item {
+    background: var(--black4);
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .geo-boost {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 36px;
+    font-weight: 900;
+    background: var(--red-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    flex-shrink: 0;
+    min-width: 70px;
+  }
+
+  .geo-boost.negative {
+    -webkit-text-fill-color: var(--gray3);
+    color: var(--gray3);
+    background: none;
+  }
+
+  .geo-info h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .geo-info p {
+    font-size: 14px;
+    color: var(--white3);
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  /* ===== FAQ ===== */
+  .faq-block {
+    border-left: 4px solid var(--gray);
+    background: var(--black4);
+    padding: 32px 36px;
+    margin-bottom: 2px;
+    cursor: pointer;
+    transition: border-color 0.3s, background 0.3s;
+  }
+
+  .faq-block:hover { background: var(--black5); }
+  .faq-block.open { border-color: var(--red); }
+
+  .faq-question {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 0;
+    line-height: 1.3;
+    transition: color 0.3s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .faq-question::after {
+    content: '+';
+    font-size: 28px;
+    color: var(--red);
+    transition: transform 0.3s;
+    flex-shrink: 0;
+    margin-left: 16px;
+  }
+
+  .faq-block.open .faq-question::after {
+    content: '−';
+    transform: rotate(180deg);
+  }
+
+  .faq-answer {
+    font-size: 17px;
+    color: var(--white3);
+    line-height: 1.7;
+    margin-top: 16px;
+    display: none;
+    font-weight: 300;
+    max-width: 900px;
+  }
+
+  .faq-block.open .faq-answer { display: block; }
+  .faq-block.open .faq-question { color: var(--red); }
+
+  /* ===== CTA SECTION ===== */
+  .cta-section {
+    padding: 100px 56px;
+    background: linear-gradient(160deg, var(--black3) 0%, rgba(227,25,25,0.04) 100%);
+    text-align: center;
+    border-bottom: 1px solid var(--gray);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(227,25,25,0.04) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .cta-section h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(44px, 6vw, 64px);
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-section h2 span {
+    background: var(--red-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .cta-section p {
+    font-size: 19px;
+    max-width: 640px;
+    margin: 0 auto 36px;
+    opacity: 0.85;
+    font-weight: 300;
+    position: relative;
+    z-index: 1;
+    color: var(--white2);
+  }
+
+  .cta-button-group {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--red-gradient);
+    color: var(--white);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 18px 40px;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .cta-primary:hover {
+    opacity: 0.92;
+    transform: translateY(-2px);
+  }
+
+  .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    color: var(--white);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 18px 40px;
+    text-decoration: none;
+    border: 1px solid var(--gray2);
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: pointer;
+  }
+
+  .cta-secondary:hover { border-color: var(--red); transform: translateY(-2px); }
+
+  .cta-guarantee {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 20px;
+    font-weight: 300;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--black2);
+    border-top: 1px solid var(--gray);
+    padding: 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 32px;
+  }
+
+  .footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .footer-brand img {
+    height: 32px;
+    width: auto;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+  }
+
+  .footer-brand img:hover {
+    opacity: 1;
+  }
+
+  .footer-brand strong {
+    display: block;
+    font-size: 26px;
+    color: var(--white);
+    margin-bottom: 4px;
+    letter-spacing: 0.02em;
+  }
+
+  .footer-brand strong span { color: var(--red); }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--white3); }
+
+  .footer-note {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-align: right;
+    max-width: 400px;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* ===== TOOLTIP BADGES ===== */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 0;
+  }
+
+  .badge-red {
+    background: rgba(227,25,25,0.1);
+    border: 1px solid rgba(227,25,25,0.2);
+    color: var(--red-light);
+  }
+
+  .badge-gray {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--gray2);
+    color: var(--white3);
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1024px) {
+    .tier-grid { grid-template-columns: 1fr; }
+    .tier-card.featured { border-left: none; border-right: none; }
+    .tier-card.featured::before { top: -1px; }
+    .pillar-grid { grid-template-columns: 1fr; }
+    .expansao-flow { flex-direction: column; }
+    .expansao-arrow { transform: rotate(90deg); }
+    .compare-grid { grid-template-columns: 1fr; }
+    .compare-col.aio { border-left: none; border-top: 3px solid var(--red); }
+    .method-kpis { display: none; }
+  }
+
+  @media (max-width: 900px) {
+    header, .topbar, section, .hero, footer, .cta-section { padding-left: 28px; padding-right: 28px; }
+    .hero-stats, .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+    .grid-2, .geo-grid { grid-template-columns: 1fr; }
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-visual img { max-width: 400px; }
+    .hero::before { display: none; }
+    .hero-stats { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    body { font-size: 16px; }
+    header, .topbar, section, .hero, footer, .cta-section { padding-left: 20px; padding-right: 20px; }
+    .hero-stats, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .hero { min-height: auto; padding: 60px 20px 48px; }
+    .hero h1 { font-size: clamp(44px, 12vw, 60px); }
+    .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+    .hero-visual img { max-width: 320px; }
+    .stat-number { font-size: 40px; }
+    .nav { display: none; }
+    .comp-table { font-size: 13px; }
+    .comp-table thead th, .comp-table tbody td { padding: 10px 12px; }
+    .section-title { font-size: clamp(32px, 8vw, 40px); }
+    .tier-price { font-size: 44px; }
+    .pillar-block { padding: 36px 28px; }
+    .alert-box { flex-direction: column; gap: 16px; }
+    .alert-icon { width: 48px; height: 48px; font-size: 24px; }
+    .faq-question { font-size: 18px; }
+    .cta-section h2 { font-size: clamp(32px, 8vw, 40px); }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <span>✦ AI Visibility — Produto Oficial V4 Company</span>
+  <span>v1.0 · Maio 2026</span>
+</div>
+
+<!-- HEADER -->
+<header id="header">
+  <div class="logo">
+    <div class="logo-icon">V4</div>
+    <span class="logo-text">AI <span>Visibility</span></span>
+  </div>
+  <ul class="nav">
+    <li><a href="#problema">Problema</a></li>
+    <li><a href="#metodologia">Metodologia</a></li>
+    <li><a href="#metricas">Métricas</a></li>
+    <li><a href="#tiers">Planos</a></li>
+    <li><a href="#precos">Preços</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#" class="nav-cta">Diagnóstico Grátis</a></li>
+  </ul>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-grid">
+    <div class="hero-content">
+      <div class="hero-tag">
+        <span class="hero-tag-dot"></span>
+        AI Search Optimization (AIO) · Generative Engine Optimization (GEO)
+      </div>
+      <h1>Sua marca<br>citada por <span>Inteligências<br>Artificiais</span></h1>
+      <p class="hero-sub">
+        <strong>47% das buscas no Google já mostram AI Overviews.</strong> ChatGPT, Perplexity e Gemini 
+        estão substituindo a lista azul de 10 links. Quem não estiver otimizado para ser citado 
+        simplesmente <strong>desaparece do novo ecossistema de busca</strong>.
+      </p>
+      <div class="hero-actions">
+        <a href="#" class="btn-primary">✦ Solicitar Diagnóstico Gratuito</a>
+        <a href="#metodologia" class="btn-secondary">Ver Metodologia →</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <img src="ai-robot-hero.png" alt="AI Robot - Inteligência Artificial">
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="stat-number">47%</span>
+      <span class="stat-label">Das buscas Google têm AI Overviews</span>
+    </div>
+    <div class="hero-stat">
+      <span class="stat-number">6,5×</span>
+      <span class="stat-label">Mais citações via terceiros que site próprio</span>
+    </div>
+    <div class="hero-stat">
+      <span class="stat-number">+40%</span>
+      <span class="stat-label">Boost com estatísticas (Princeton GEO)</span>
+    </div>
+    <div class="hero-stat">
+      <span class="stat-number">−58%</span>
+      <span class="stat-label">Redução de cliques com AI Overviews</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMA -->
+<section id="problema">
+  <div class="section-inner">
+    <div class="section-label">O Problema</div>
+    <h2 class="section-title">O SEO que você conhece<br>está <span>morrendo.</span></h2>
+    <p class="section-desc">
+      O Google sempre foi uma lista de 10 links azuis. Você otimizava para ranquear no topo 
+      e colhia os cliques. Esse modelo está sendo desmantelado — e a velocidade da mudança 
+      vai pegar todo mundo desprevenido.
+    </p>
+
+    <div class="alert-box">
+      <div class="alert-icon">!</div>
+      <div>
+        <div class="alert-title">O tráfego está migrando para respostas geradas por IA</div>
+        <div class="alert-body">
+          Estudos do Princeton GEO Project (KDD 2024) mostram que AI Overviews reduzem os 
+          cliques em sites em até 58%. O tráfego restante não vai para o primeiro link 
+          orgânico — vai para quem é <strong>citado como fonte dentro da resposta</strong>. 
+          É um novo jogo com regras completamente diferentes. E seus concorrentes já estão jogando.
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-icon">📉</div>
+        <div class="card-tag">Realidade</div>
+        <h3>Tráfego orgânico em queda livre</h3>
+        <p>AI Overviews estão reduzindo CTR em até 58%. Quem depende de SEO tradicional está perdendo terreno mês a mês. O tráfego não volta — ele migra de canal.</p>
+        <span class="card-metric">−58% CTR</span>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <div class="card-tag">Ameaça</div>
+        <h3>Concorrentes ocupando seu espaço</h3>
+        <p>Enquanto sua marca está ausente das respostas de IA, concorrentes estão sendo citados. Cada citação é um contato gratuito com um comprador — sem CPC, sem custo, sem seu conhecimento.</p>
+        <span class="card-metric">+40% boost</span>
+      </div>
+      <div class="card">
+        <div class="card-icon">🚀</div>
+        <div class="card-tag">Oportunidade</div>
+        <h3>Mercado aberto · Primeiro-movente</h3>
+        <p>Menos de 5% das empresas estão otimizadas para AI SEO. Quem começa agora captura o espaço que concorrentes vão levar 12-18 meses para alcançar. A janela de oportunidade está se fechando.</p>
+        <span class="card-metric">95% vazio</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- O QUE É AIO/GEO -->
+<section>
+  <div class="section-inner">
+    <div class="section-label">A Nova Disciplina</div>
+    <h2 class="section-title">AI Search Optimization<br>+ <span>Generative Engine Optimization</span></h2>
+    <p class="section-desc">
+      AIO e GEO são as disciplinas que substituem o SEO tradicional. Enquanto o SEO otimiza 
+      para ranquear em uma lista de links, AIO/GEO otimiza para <strong>ser citado como fonte 
+      confiável dentro de respostas geradas por IA</strong>. Não é sobre posição — é sobre 
+      referência.
+    </p>
+
+    <div class="compare-grid">
+      <div class="compare-col seo">
+        <div class="compare-title">SEO Tradicional</div>
+        <div class="compare-sub">O que está morrendo</div>
+        <ul class="compare-list">
+          <li>Ranquear na posição #1 do Google</li>
+          <li>Otimizar para algoritmo de busca (PageRank)</li>
+          <li>CTR baseado em posição na lista azul</li>
+          <li>Palavras-chave exatas e correspondência</li>
+          <li>Backlinks como principal sinal de autoridade</li>
+          <li>Meta tags, headings, densidade de keyword</li>
+          <li>Concorre com 10 resultados na página</li>
+        </ul>
+      </div>
+      <div class="compare-col aio">
+        <div class="compare-title">AIO / GEO</div>
+        <div class="compare-sub">O novo padrão</div>
+        <ul class="compare-list">
+          <li>Ser citado como fonte em respostas de IA</li>
+          <li>Otimizar para extração semântica por LLMs</li>
+          <li>Citação baseada em qualidade e estrutura do conteúdo</li>
+          <li>Linguagem natural, perguntas completas, contexto</li>
+          <li>Expertise, freshness, dados citáveis como autoridade</li>
+          <li>Definition blocks, FAQ, comparison tables, statistics</li>
+          <li>Concorre com todas as fontes que a IA conhece</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OS 3 PILARES -->
+<section>
+  <div class="section-inner">
+    <div class="section-label">Framework V4</div>
+    <h2 class="section-title">3 pilares de<br><span>AI Visibility.</span></h2>
+    <p class="section-desc">
+      Baseado no Princeton GEO Study (KDD 2024) validado em 12.000+ consultas no Perplexity.ai. 
+      Cada pilar tem métricas próprias e entregáveis específicos.
+    </p>
+
+    <div class="pillar-grid">
+      <div class="pillar-block" data-num="01">
+        <div class="pillar-icon">📐</div>
+        <h3>Structure</h3>
+        <div class="pillar-sub">Torne seu conteúdo extraível por LLMs</div>
+        <div class="pillar-body">
+          IAs não leem páginas — extraem blocos. Cada seção precisa funcionar como uma 
+          unidade autossuficiente de informação. Definition blocks, comparison tables, 
+          FAQ sections, step-by-step guides, statistic blocks com fonte. Conteúdo que 
+          a IA consegue extrair sem precisar de contexto externo.
+        </div>
+        <div class="pillar-metrics">
+          <span class="pillar-metric">Extractability Score: 80%+</span>
+          <span class="pillar-metric">Schema Coverage: 100%</span>
+        </div>
+        <div class="pillar-tags">
+          <span class="pillar-tag">Definition blocks</span>
+          <span class="pillar-tag">Comparison tables</span>
+          <span class="pillar-tag">FAQ schema</span>
+          <span class="pillar-tag">HowTo schema</span>
+          <span class="pillar-tag">Statistic blocks</span>
+        </div>
+      </div>
+      <div class="pillar-block" data-num="02">
+        <div class="pillar-icon">🔬</div>
+        <h3>Authority</h3>
+        <div class="pillar-sub">Torne seu conteúdo citável</div>
+        <div class="pillar-body">
+          O Princeton GEO study ranqueou 9 métodos de otimização. Os 3 mais eficazes foram: 
+          citar fontes originais (+40% de boost), incluir estatísticas com fonte (+37%), 
+          e adicionar expert attribution com nome e credencial (+30%). IAs não citam 
+          conteúdo genérico — citam dados, pesquisas e autoridades reconhecidas.
+        </div>
+        <div class="pillar-metrics">
+          <span class="pillar-metric">Cite sources: +40%</span>
+          <span class="pillar-metric">Statistics: +37%</span>
+          <span class="pillar-metric">Expert quotes: +30%</span>
+        </div>
+        <div class="pillar-tags">
+          <span class="pillar-tag">Fonte original</span>
+          <span class="pillar-tag">Estatística com data</span>
+          <span class="pillar-tag">Expert attribution</span>
+          <span class="pillar-tag">Freshness</span>
+          <span class="pillar-tag">E-E-A-T</span>
+        </div>
+      </div>
+      <div class="pillar-block" data-num="03">
+        <div class="pillar-icon">🌐</div>
+        <h3>Presence</h3>
+        <div class="pillar-sub">Esteja onde a IA procura fontes</div>
+        <div class="pillar-body">
+          ChatGPT cita Wikipedia em 7,8% das respostas e Reddit em 1,8%. Marcas são 6,5× 
+          mais citadas via fontes de terceiros do que via site próprio. Não adianta só 
+          otimizar seu domínio — precisa estar presente onde as IAs realmente buscam 
+          referências. Wikipedia, Reddit, G2, YouTube, Quora, industry publications.
+        </div>
+        <div class="pillar-metrics">
+          <span class="pillar-metric">Wikipedia: 7,8% citações</span>
+          <span class="pillar-metric">Third-party: 6,5× mais</span>
+        </div>
+        <div class="pillar-tags">
+          <span class="pillar-tag">Wikipedia</span>
+          <span class="pillar-tag">Reddit</span>
+          <span class="pillar-tag">G2 / Capterra</span>
+          <span class="pillar-tag">YouTube</span>
+          <span class="pillar-tag">Quora</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRINCETON GEO RESEARCH -->
+<section>
+  <div class="section-inner">
+    <div class="section-label">Base Científica</div>
+    <h2 class="section-title">Princeton GEO Study<br><span>KDD 2024</span></h2>
+    <p class="section-desc">
+      O estudo vencedor do KDD 2024 testou 9 métodos de otimização em 12.000+ consultas 
+      no Perplexity.ai. Os resultados são o alicerce científico de toda nossa metodologia.
+    </p>
+
+    <div class="geo-grid">
+      <div class="geo-item">
+        <div class="geo-boost">+40%</div>
+        <div class="geo-info">
+          <h4>Citar fontes</h4>
+          <p>Adicionar referências autoritativas com links. O método mais eficaz isoladamente.</p>
+        </div>
+      </div>
+      <div class="geo-item">
+        <div class="geo-boost">+37%</div>
+        <div class="geo-info">
+          <h4>Adicionar estatísticas</h4>
+          <p>Números específicos com fonte e data. Original data > aggregated data.</p>
+        </div>
+      </div>
+      <div class="geo-item">
+        <div class="geo-boost">+30%</div>
+        <div class="geo-info">
+          <h4>Expert attribution</h4>
+          <p>Citações com nome, título e organização. "According to [expert]"</p>
+        </div>
+      </div>
+      <div class="geo-item">
+        <div class="geo-boost">+25%</div>
+        <div class="geo-info">
+          <h4>Tom autoritativo</h4>
+          <p>Demonstração de expertise no conteúdo. Específico, detalhado, não genérico.</p>
+        </div>
+      </div>
+      <div class="geo-item">
+        <div class="geo-boost">+20%</div>
+        <div class="geo-info">
+          <h4>Melhorar clareza</h4>
+          <p>Simplificar conceitos complexos sem perder precisão. Fluency optimization.</p>
+        </div>
+      </div>
+      <div class="geo-item">
+        <div class="geo-boost">−10%</div>
+        <div class="geo-info">
+          <h4>Keyword stuffing</h4>
+          <p>Repetição excessiva de palavras-chave <strong>reduz ativamente</strong> a visibilidade em IA.</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 36px; background: var(--black4); border-left: 4px solid var(--red); padding: 28px 36px;">
+      <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; text-transform: uppercase; margin-bottom: 8px;">
+        Fluency + Statistics = Boost Máximo
+      </div>
+      <div style="font-size: 16px; color: var(--white3); line-height: 1.65; font-weight: 300;">
+        A combinação mais poderosa identificada pelo estudo. Páginas com boa fluência de leitura 
+        combinada com estatísticas citadas tiveram <strong style="color: var(--white);">até 115% mais visibilidade</strong> 
+        em respostas de IA — especialmente para domínios de autoridade baixa ou média.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METODOLOGIA DE ENTREGA -->
+<section id="metodologia">
+  <div class="section-inner">
+    <div class="section-label">Como Entregamos</div>
+    <h2 class="section-title">Diagnóstico → Implantação<br>→ <span>Gestão Contínua</span></h2>
+    <p class="section-desc">
+      Um processo de 60 dias que transforma sua presença digital de invisível em IA para 
+      referência citada em 5 plataformas. Depois, monitoramento contínuo com métricas reais 
+      e otimização mensal.
+    </p>
+
+    <div class="method-steps">
+      <div class="method-step">
+        <div class="method-num">01</div>
+        <div class="method-content">
+          <div class="method-main">
+            <div class="method-phase">Dias 1-7</div>
+            <div class="method-title">Diagnóstico de Visibilidade em IA</div>
+            <div class="method-desc">
+              Testamos suas 20 queries mais importantes em ChatGPT, Perplexity e Google AI 
+              Overviews. Mapeamos quem está sendo citado no seu lugar. Auditamos robots.txt, 
+              schema markup, extractability do conteúdo e presença em fontes de terceiros. 
+              Entregamos um relatório executivo com priorização clara.
+            </div>
+          </div>
+          <div class="method-kpis">
+            <div class="method-kpi-label">Entregas</div>
+            <div class="method-kpi-vals">
+              20 queries testadas<br>
+              3 plataformas<br>
+              Relatório executivo<br>
+              Roadmap priorizado
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="method-step">
+        <div class="method-num">02</div>
+        <div class="method-content">
+          <div class="method-main">
+            <div class="method-phase">Sprint 1 · Dias 8-22</div>
+            <div class="method-title">Foundation — Base Técnica</div>
+            <div class="method-desc">
+              Liberamos AI crawlers no robots.txt (GPTBot, PerplexityBot, ClaudeBot, 
+              Google-Extended). Implementamos schema markup (Organization, Article, FAQPage, 
+              HowTo, Product). Criamos /pricing.md (pricing legível por agentes de IA) 
+              e /llms.txt (contexto para IAs). Adicionamos "last updated" e author attribution 
+              em todas as páginas críticas.
+            </div>
+          </div>
+          <div class="method-kpis">
+            <div class="method-kpi-label">Entregas</div>
+            <div class="method-kpi-vals">
+              robots.txt otimizado<br>
+              Schema markup implementado<br>
+              /pricing.md + /llms.txt<br>
+              Freshness auditado
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="method-step">
+        <div class="method-num">03</div>
+        <div class="method-content">
+          <div class="method-main">
+            <div class="method-phase">Sprint 2 · Dias 23-42</div>
+            <div class="method-title">Content — Otimização de Conteúdo</div>
+            <div class="method-desc">
+              Selecionamos 10 páginas críticas com base em relevância para queries-alvo, 
+              gap competitivo e tráfego orgânico. Aplicamos content blocks específicos 
+              para cada tipo de query: definition blocks (40-60 palavras), comparison tables, 
+              FAQ sections, step-by-step guides, statistic blocks com fontes. Validamos 
+              extractability score (target: 80%+).
+            </div>
+          </div>
+          <div class="method-kpis">
+            <div class="method-kpi-label">Entregas</div>
+            <div class="method-kpi-vals">
+              10 páginas otimizadas<br>
+              Content blocks aplicados<br>
+              Extractability 80%+<br>
+              Schema validado
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="method-step">
+        <div class="method-num">04</div>
+        <div class="method-content">
+          <div class="method-main">
+            <div class="method-phase">Sprint 3 · Dias 43-55</div>
+            <div class="method-title">Presence — Presença em Terceiros</div>
+            <div class="method-desc">
+              Estabelecemos ou fortalecemos presença do cliente onde as IAs buscam fontes: 
+              Wikipedia (verificação/atualização), Reddit (participação autêntica em 
+              subreddits do setor), G2/Capterra (perfil atualizado com reviews), YouTube 
+              (conteúdo para how-to queries), Quora (respostas para perguntas do nicho).
+            </div>
+          </div>
+          <div class="method-kpis">
+            <div class="method-kpi-label">Entregas</div>
+            <div class="method-kpi-vals">
+              5+ canais ativados<br>
+              Wikipedia verificada<br>
+              Reddit + G2 + Quora<br>
+              Calendário de presença
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="method-step">
+        <div class="method-num">05</div>
+        <div class="method-content">
+          <div class="method-main">
+            <div class="method-phase">Handoff · Dias 56-60</div>
+            <div class="method-title">Transição para Gestão Contínua</div>
+            <div class="method-desc">
+              Treinamento do time do cliente, entrega de documentação completa, transição 
+              para o modelo de gestão mensal. A partir daqui, o cliente recebe relatórios 
+              mensais com métricas de citação em IA, dashboard interativo e otimização 
+              recorrente de conteúdo.
+            </div>
+          </div>
+          <div class="method-kpis">
+            <div class="method-kpi-label">Entregas</div>
+            <div class="method-kpi-vals">
+              Time treinado<br>
+              Documentação entregue<br>
+              Dashboard configurado<br>
+              Baseline estabelecido
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MÉTRICAS -->
+<section id="metricas">
+  <div class="section-inner">
+    <div class="section-label">Framework de Métricas</div>
+    <h2 class="section-title">O que medimos é<br><span>o que importa.</span></h2>
+    <p class="section-desc">
+      AI Visibility introduz métricas que o SEO tradicional não captura. São 5 métricas de 
+      resultado (outcome) que medem diretamente sua presença em IA, e 5 métricas de 
+      implementação (leading) que garantem que estamos no caminho certo.
+    </p>
+
+    <div class="section-label" style="margin-bottom: 16px; margin-left: 0;">Outcome Metrics — Para seu negócio</div>
+
+    <div class="metric-block">
+      <div class="metric-header">
+        <div class="metric-name">AI Citation Count</div>
+        <span class="metric-badge outcome">Outcome</span>
+      </div>
+      <div class="metric-body">
+        Número total de vezes que sua marca ou domínio é citado como fonte em respostas de IA 
+        para suas queries-alvo. Medido mensalmente em ChatGPT, Perplexity, Google AI Overviews, 
+        Gemini, Claude e Copilot.
+      </div>
+      <div class="metric-detail">
+        <strong>Baseline:</strong> 0 · <strong>Meta mês 3:</strong> 5+ · <strong>Meta mês 6:</strong> 15+ · 
+        <strong>Ferramenta:</strong> SEMRush + checagem manual estruturada
+      </div>
+    </div>
+
+    <div class="metric-block">
+      <div class="metric-header">
+        <div class="metric-name">Share of AI Voice (SAIV)</div>
+        <span class="metric-badge outcome">Outcome</span>
+      </div>
+      <div class="metric-body">
+        Percentual de citações da sua marca dividido pelo total de citações (sua marca + top 5 
+        concorrentes) nas queries-alvo. Mede quem domina a narrativa nas respostas de IA do seu setor.
+      </div>
+      <div class="metric-detail">
+        <strong>Baseline:</strong> 0% · <strong>Meta mês 3:</strong> 15% · <strong>Meta mês 6:</strong> 30%+ · 
+        <strong>Ferramenta:</strong> Planilha padronizada + SEMRush
+      </div>
+    </div>
+
+    <div class="metric-block">
+      <div class="metric-header">
+        <div class="metric-name">Query Coverage Rate</div>
+        <span class="metric-badge outcome">Outcome</span>
+      </div>
+      <div class="metric-body">
+        Percentual das queries-alvo onde sua marca aparece em pelo menos uma resposta de IA. 
+        Quanto mais queries cobertas, maior sua presença no novo ecossistema de busca.
+      </div>
+      <div class="metric-detail">
+        <strong>Baseline:</strong> 0% · <strong>Meta mês 3:</strong> 40% · <strong>Meta mês 6:</strong> 70%+ · 
+        <strong>Ferramenta:</strong> Checagem cruzada por plataforma
+      </div>
+    </div>
+
+    <div class="metric-block">
+      <div class="metric-header">
+        <div class="metric-name">Citation Sentiment Score</div>
+        <span class="metric-badge outcome">Outcome</span>
+      </div>
+      <div class="metric-body">
+        Classificação do tom de cada citação: +1 (positiva — recomendação), 0 (neutra — menção), 
+        -1 (negativa — crítica). Monitoramos e agimos sobre cada citação negativa.
+      </div>
+      <div class="metric-detail">
+        <strong>Baseline:</strong> N/A · <strong>Meta:</strong> 90%+ positivas · 
+        <strong>Ferramenta:</strong> Revisão humana de cada citação
+      </div>
+    </div>
+
+    <div class="metric-block">
+      <div class="metric-header">
+        <div class="metric-name">AI Referral Traffic</div>
+        <span class="metric-badge outcome">Outcome</span>
+      </div>
+      <div class="metric-body">
+        Visitas ao site vindas de fontes de IA: chat.openai.com, perplexity.ai, 
+        copilot.microsoft.com, gemini.google.com. Medido via GA4 com segmentação por source/medium.
+      </div>
+      <div class="metric-detail">
+        <strong>Baseline:</strong> 0 · <strong>Meta mês 6:</strong> 10%+ do tráfego orgânico · 
+        <strong>Ferramenta:</strong> Google Analytics 4
+      </div>
+    </div>
+
+    <div style="margin-top: 48px;">
+      <div class="section-label" style="margin-bottom: 16px; margin-left: 0;">Leading Indicators — Para o time</div>
+
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Métrica</th>
+            <th>Definição</th>
+            <th>Target</th>
+            <th>Ferramenta</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="comp-name">Extractability Score</span></td>
+            <td>% de páginas críticas com content blocks adequados (definition, FAQ, comparison, stats)</td>
+            <td>80%+</td>
+            <td>Checklist interno</td>
+          </tr>
+          <tr>
+            <td><span class="comp-name">Schema Coverage</span></td>
+            <td>% de páginas críticas com schema markup correto</td>
+            <td>100%</td>
+            <td>SEMRush Site Audit</td>
+          </tr>
+          <tr>
+            <td><span class="comp-name">Bot Accessibility</span></td>
+            <td>AI crawlers liberados no robots.txt</td>
+            <td>100%</td>
+            <td>Checagem manual</td>
+          </tr>
+          <tr>
+            <td><span class="comp-name">Freshness Index</span></td>
+            <td>% de páginas com "last updated" visível < 6 meses</td>
+            <td>70%+</td>
+            <td>SEMRush + varredura</td>
+          </tr>
+          <tr>
+            <td><span class="comp-name">Citable Content Rate</span></td>
+            <td>% de páginas com dados originais, estatísticas ou citações externas</td>
+            <td>50%+</td>
+            <td>Auditoria de conteúdo</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- PLANOS -->
+<section id="tiers">
+  <div class="section-inner">
+    <div class="section-label">Planos</div>
+    <h2 class="section-title">3 formas de<br><span>começar.</span></h2>
+    <p class="section-desc">
+      Do diagnóstico rápido à gestão completa. Cada plano foi desenhado para um momento 
+      diferente da jornada — e todos se conectam: cliente que começa pelo Diagnóstico 
+      naturalmente evolui para Implantação e depois Gestão Contínua.
+    </p>
+
+    <div class="tier-grid">
+      <div class="tier-card">
+        <div class="tier-name">Tier 1 — Entry</div>
+        <div class="tier-title">Diagnóstico</div>
+        <div class="tier-subtitle">One-time · 5-7 dias úteis</div>
+        <div class="tier-price-block">
+          <span class="tier-price pure">R$ 4.900</span>
+          <div class="tier-period">Investimento único</div>
+        </div>
+        <div class="tier-divider"></div>
+        <ul class="tier-features">
+          <li>Auditoria de <strong>20 queries-alvo</strong> em ChatGPT, Perplexity e Google AI Overviews</li>
+          <li>Mapeamento completo de <strong>concorrentes</strong> que estão sendo citados no seu lugar</li>
+          <li>Auditoria técnica: <strong>robots.txt, schema markup, extractability</strong></li>
+          <li>Análise de <strong>third-party presence</strong> (Wikipedia, Reddit, G2, YouTube)</li>
+          <li><strong>Relatório executivo</strong> com priorização e estimativa de ROI</li>
+          <li>Deck de <strong>apresentação C-level</strong> (15min)</li>
+        </ul>
+        <a href="#" class="tier-cta outline">Quero diagnosticar →</a>
+      </div>
+
+      <div class="tier-card featured">
+        <div class="tier-name">Tier 2 — Core (Recomendado)</div>
+        <div class="tier-title">Implantação</div>
+        <div class="tier-subtitle">Projeto completo · 45-60 dias · 3 sprints</div>
+        <div class="tier-price-block">
+          <span class="tier-price">R$ 14.900</span>
+          <div class="tier-period">Ou 2× R$ 7.450</div>
+        </div>
+        <div class="tier-divider"></div>
+        <ul class="tier-features">
+          <li><strong>Tudo do Diagnóstico</strong> + execução completa</li>
+          <li><strong>Sprint 1:</strong> robots.txt, schema markup, /pricing.md, /llms.txt, freshness</li>
+          <li><strong>Sprint 2:</strong> Content optimization de <strong>10 páginas críticas</strong> com blocks adequados</li>
+          <li><strong>Sprint 3:</strong> Third-party presence (Wikipedia, Reddit, G2, YouTube, Quora)</li>
+          <li><strong>Validação</strong> com extractability score 80%+</li>
+          <li>Treinamento do time + <strong>handoff</strong> para gestão contínua</li>
+        </ul>
+        <a href="#" class="tier-cta">Quero implantar →</a>
+      </div>
+
+      <div class="tier-card">
+        <div class="tier-name">Tier 3 — Premium</div>
+        <div class="tier-title">Gestão Contínua</div>
+        <div class="tier-subtitle">Mensal recorrente · Mín. 6 meses</div>
+        <div class="tier-price-block">
+          <span class="tier-price pure">R$ 7.900</span>
+          <div class="tier-period">Por mês</div>
+        </div>
+        <div class="tier-divider"></div>
+        <ul class="tier-features">
+          <li><strong>Monitoramento mensal</strong> de citações em 5 plataformas de IA</li>
+          <li><strong>Relatório mensal</strong> com dashboard interativo e análise</li>
+          <li>Otimização de <strong>5 páginas por mês</strong></li>
+          <li><strong>Benchmark competitivo</strong> trimestral atualizado</li>
+          <li><strong>QBR trimestral</strong> com recomendações estratégicas</li>
+          <li>Suporte a emergências: <strong>Google updates, novos concorrentes</strong></li>
+        </ul>
+        <a href="#" class="tier-cta outline">Quero gestão →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREÇOS -->
+<section id="precos">
+  <div class="section-inner">
+    <div class="section-label">Investimento</div>
+    <h2 class="section-title">Tabela de<br><span>Preços.</span></h2>
+    <p class="section-desc">
+      Preço transparente, sem surpresas. Todos os tiers incluem acesso à nossa plataforma 
+      de monitoramento e suporte direto do time V4.
+    </p>
+
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th>Formato</th>
+          <th>Prazo</th>
+          <th>Investimento</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="comp-name">Diagnóstico</span></td>
+          <td>One-time</td>
+          <td>5-7 dias úteis</td>
+          <td><span class="tier-price" style="font-size: 24px; display: inline;">R$ 4.900</span></td>
+        </tr>
+        <tr>
+          <td><span class="comp-name leader">Implantação (recomendado)</span></td>
+          <td>Projeto — 3 sprints</td>
+          <td>45-60 dias</td>
+          <td><span class="tier-price" style="font-size: 24px; display: inline;">R$ 14.900</span></td>
+        </tr>
+        <tr>
+          <td><span class="comp-name">Gestão Contínua</span></td>
+          <td>Mensal recorrente</td>
+          <td>Mín. 6 meses</td>
+          <td><span class="tier-price" style="font-size: 24px; display: inline;">R$ 7.900/mês</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top: 48px;">
+      <div class="section-label" style="margin-bottom: 16px; margin-left: 0;">Add-ons Disponíveis</div>
+      <table class="addon-table">
+        <thead>
+          <tr>
+            <th>Add-on</th>
+            <th>Descrição</th>
+            <th>Investimento</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="addon-name">Domínio adicional</span></td>
+            <td class="addon-desc">Monitoramento + otimização de um segundo domínio do mesmo cliente</td>
+            <td><span class="addon-price">+ R$ 2.900/mês</span></td>
+          </tr>
+          <tr>
+            <td><span class="addon-name">Pacote de conteúdo</span></td>
+            <td class="addon-desc">+10 páginas/mês de otimização além das 5 do plano base</td>
+            <td><span class="addon-price">+ R$ 3.900/mês</span></td>
+          </tr>
+          <tr>
+            <td><span class="addon-name">Competitor Intelligence</span></td>
+            <td class="addon-desc">Monitoramento aprofundado de 5 concorrentes com relatório semanal</td>
+            <td><span class="addon-price">+ R$ 1.900/mês</span></td>
+          </tr>
+          <tr>
+            <td><span class="addon-name">Content Production</span></td>
+            <td class="addon-desc">Criação de conteúdo novo otimizado para IA (4 posts/mês)</td>
+            <td><span class="addon-price">+ R$ 2.900/mês</span></td>
+          </tr>
+          <tr>
+            <td><span class="addon-name">Technical Deep Dive</span></td>
+            <td class="addon-desc">Auditoria técnica completa + schema avançado + implementação</td>
+            <td><span class="addon-price">R$ 4.900 (one-time)</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--gray);">
+      <div style="background: var(--black4); padding: 36px;">
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; text-transform: uppercase; margin-bottom: 12px;">Desconto por Prazo</div>
+        <ul class="card-list" style="margin-top: 0;">
+          <li><strong style="color: var(--white);">12 meses:</strong> R$ 6.900/mês <span style="color: var(--red);">(economia de 30%)</span></li>
+          <li><strong style="color: var(--white);">6 meses:</strong> R$ 7.900/mês <span style="color: var(--red);">(economia de 20%)</span></li>
+          <li><strong style="color: var(--white);">Mensal:</strong> R$ 9.900/mês (preço cheio)</li>
+        </ul>
+      </div>
+      <div style="background: var(--black4); padding: 36px;">
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; text-transform: uppercase; margin-bottom: 12px;">Garantia de Resultado</div>
+        <ul class="card-list" style="margin-top: 0;">
+          <li>Se após <strong>3 meses</strong> não houver nenhuma citação em IA, você pode cancelar sem multa</li>
+          <li>Expansão natural do investimento: <strong style="color: var(--red);">NRR > 120%</strong> no ano 2</li>
+          <li>Relatórios mensais com <strong>métricas auditáveis</strong></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-inner">
+    <div class="section-label">FAQ</div>
+    <h2 class="section-title">Perguntas<br><span>Frequentes.</span></h2>
+
+    <div class="faq-block" onclick="this.classList.toggle('open')">
+      <div class="faq-question">Qual a diferença entre AI SEO (AIO) e SEO tradicional?</div>
+      <div class="faq-answer">
+        <strong>SEO tradicional</strong> otimiza para ranquear na posição #1 da lista azul do Google — 
+        você quer que o usuário clique no seu link entre 10 resultados. <strong>AI SEO / GEO</strong> 
+        otimiza para ser citado como fonte confiável dentro da resposta gerada por IA — você quer 
+        que o ChatGPT, Perplexity ou Google AI Overviews mencione sua marca como referência.<br><br>
+        A diferença prática: uma página no topo do Google pode ser <strong>ignorada pela IA</strong> 
+        se não tiver estrutura extraível. E uma página na página 3 pode ser <strong>citada</strong> 
+        se tiver definition blocks, dados com fonte e schema markup. São canais complementares — 
+        mas o AI SEO cresce enquanto o tráfego tradicional encolhe.
+      </div>
+    </div>
+
+    <div class="faq-block" onclick="this.classList.toggle('open')">
+      <div class="faq-question">Quanto tempo até ver resultados?</div>
+      <div class="faq-answer">
+        Resultados técnicos (liberação de bots, schema markup, ajustes de extractability) aparecem 
+        em <strong>2 semanas</strong>. As primeiras citações em IA começam entre <strong>30-60 dias</strong>. 
+        A curva completa de maturação — query coverage acima de 50% e share of voice relevante — 
+        leva de <strong>3 a 4 meses</strong>.<br><br>
+        O relatório mensal mostra evolução mês a mês desde o primeiro mês. Nenhum cliente foca 
+        sem saber exatamente onde está e para onde está indo.
+      </div>
+    </div>
+
+    <div class="faq-block" onclick="this.classList.toggle('open')">
+      <div class="faq-question">E se meu cliente não tem blog ou conteúdo próprio?</div>
+      <div class="faq-answer">
+        O serviço se adapta ao estágio de maturidade de cada cliente. Para clientes sem conteúdo, 
+        focamos mais em <strong>product pages, pricing pages, páginas de comparação</strong> e 
+        <strong>third-party presence</strong> (Wikipedia, Reddit, G2, YouTube).<br><br>
+        Também oferecemos o add-on de <strong>Content Production</strong> para criar conteúdo novo 
+        otimizado para IA desde o zero — incluindo blog posts, comparisons, landing pages e 
+        material para redes sociais com estrutura extraível.
+      </div>
+    </div>
+
+    <div class="faq-block" onclick="this.classList.toggle('open')">
+      <div class="faq-question">Como medimos o sucesso? Quais métricas?</div>
+      <div class="faq-answer">
+        Usamos <strong>5 métricas de outcome</strong> que medem diretamente sua presença em IA:
+        <br><br>
+        1. <strong>AI Citation Count</strong> — quantas vezes sua marca é citada/mês<br>
+        2. <strong>Share of AI Voice (SAIV)</strong> — sua fatia de citações vs concorrentes<br>
+        3. <strong>Query Coverage</strong> — % de queries-alvo com citação<br>
+        4. <strong>Citation Sentiment</strong> — tom das citações (positivo/neutro)<br>
+        5. <strong>AI Referral Traffic</strong> — visitas de fontes IA via GA4<br><br>
+        Cada cliente recebe <strong>relatório mensal</strong> com dashboard interativo, 
+        <strong>QBR trimestral</strong> com recomendações estratégicas e acesso ao nosso 
+        painel de monitoramento em tempo real.
+      </div>
+    </div>
+
+    <div class="faq-block" onclick="this.classList.toggle('open')">
+      <div class="faq-question">Precisa ter SEMRush? E se o cliente não tiver GA4?</div>
+      <div class="faq-answer">
+        <strong>Nós já temos SEMRush Enterprise</strong> integrado à nossa operação — o cliente 
+        não precisa ter conta própria. Usamos o SEMRush para AI Overview tracking, keyword research, 
+        content gap analysis e site audit.<br><br>
+        Para GA4, idealmente o cliente nos dá acesso de leitura. Se não tiver GA4 configurado, 
+        trabalhamos com <strong>proxies de medição</strong> (checklists manuais + SEMRush + 
+        ferramentas complementares) até que o GA4 esteja operacional.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Sua marca aparece<br>nas respostas de <span>IA?</span></h2>
+  <p>
+    Descubra em 5 dias. Fazemos um diagnóstico gratuito de 3 das suas queries mais importantes 
+    — você vê exatamente onde sua marca está e onde deveria estar.
+  </p>
+  <div class="cta-button-group">
+    <a href="#" class="cta-primary">✦ Solicitar Diagnóstico Gratuito</a>
+    <a href="#" class="cta-secondary">Falar com Consultor →</a>
+  </div>
+  <div class="cta-guarantee">
+    Sem compromisso. Diagnóstico entregue em 5 dias úteis.
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <img src="logo-peretto.png" alt="Peretto & Co.">
+    <span>Peretto &amp; Co.</span>
+  </div>
+  <div class="footer-note">
+    AI Visibility é um produto oficial V4 Company.<br>
+    v1.0 · Maio 2026 · Todos os direitos reservados.<br>
+    Baseado no Princeton GEO Study (KDD 2024).
+  </div>
+</footer>
+
+<script>
+// FAQ toggle
+document.querySelectorAll('.faq-block').forEach(function(el) {
+  el.addEventListener('click', function() {
+    this.classList.toggle('open');
+  });
+});
+
+// Scroll animation
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+// Header scroll effect
+window.addEventListener('scroll', function() {
+  const header = document.getElementById('header');
+  if (window.scrollY > 100) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+});
+
+// Smooth scroll for nav
+document.querySelectorAll('.nav a[href^="#"]').forEach(function(link) {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    var target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+
+</body>
+</html>

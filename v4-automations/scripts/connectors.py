@@ -23,6 +23,9 @@ from facebook_business.adobjects.adaccount import AdAccount
 
 BASE = Path(__file__).parent.parent
 load_dotenv(BASE / "config" / ".env")
+_ROOT_ENV = BASE.parent / ".env"
+if _ROOT_ENV.exists():
+    load_dotenv(_ROOT_ENV, override=False)
 
 TOKEN_FILE = BASE / "config" / "token.json"
 CREDS_FILE = BASE / "config" / "credentials.json"
@@ -274,15 +277,207 @@ class GmailConnector:
 import anthropic as _anthropic
 
 def claude(system: str, user: str, max_tokens: int = 2000) -> str:
-    """Chama Claude API com system + user prompt. Retorna texto."""
-    client = _anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
-    msg = client.messages.create(
-        model="claude-sonnet-4-20250514",
-        max_tokens=max_tokens,
-        system=system,
-        messages=[{"role": "user", "content": user}],
-    )
-    return msg.content[0].text
+    """Chama API LLM com system + user prompt. Retorna texto.
+    Tenta: OpenRouter → Anthropic Claude → Google Gemini, nessa ordem.
+    Cada fallback só é ativado se a API key correspondente existir.
+    """
+    errors = []
+
+    or_key = os.getenv("OPENROUTER_API_KEY")
+    if or_key:
+        try:
+            from openai import OpenAI
+            client = OpenAI(base_url="https://openrouter.ai/api/v1", api_key=or_key)
+            messages = [{"role": "system", "content": system}, {"role": "user", "content": user}]
+            resp = client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=messages,
+                max_tokens=max_tokens,
+            )
+            return resp.choices[0].message.content
+        except Exception as e:
+            errors.append(f"OpenRouter: {e}")
+
+    anthro_key = os.getenv("ANTHROPIC_API_KEY")
+    if anthro_key:
+        try:
+            client = _anthropic.Anthropic(api_key=anthro_key)
+            msg = client.messages.create(
+                model="claude-sonnet-4-20250514",
+                max_tokens=max_tokens,
+                system=system,
+                messages=[{"role": "user", "content": user}],
+            )
+            return msg.content[0].text
+        except Exception as e:
+            errors.append(f"Anthropic: {e}")
+
+    gemini_key = os.getenv("GEMINI_API_KEY")
+    if gemini_key:
+        try:
+            import google.generativeai as genai
+            genai.configure(api_key=gemini_key)
+            model = genai.GenerativeModel(
+                "gemini-2.0-flash",
+                system_instruction=system,
+            )
+            resp = model.generate_content(user, generation_config=genai.types.GenerationConfig(max_output_tokens=max_tokens))
+            return resp.text
+        except Exception as e:
+            errors.append(f"Gemini: {e}")
+
+    raise RuntimeError(f"Nenhuma API LLM respondeu. Erros: {'; '.join(errors)}")
+
+
+# ── BING ADS ────────────────────────────────────────────────────────────────
+
+class BingAdsConnector:
+    """Microsoft Advertising (Bing Ads) — usa Microsoft Advertising SDK."""
+
+    def __init__(self):
+        from bingads.service_client import ServiceClient
+        self.developer_token = os.getenv("BING_ADS_DEVELOPER_TOKEN")
+        self.client_id = os.getenv("BING_ADS_CLIENT_ID")
+        self.client_secret = os.getenv("BING_ADS_CLIENT_SECRET")
+        self.refresh_token = os.getenv("BING_ADS_REFRESH_TOKEN")
+        self.customer_id = os.getenv("BING_ADS_CUSTOMER_ID")
+        self.account_id = os.getenv("BING_ADS_ACCOUNT_ID")
+
+        authentication = {
+            "DeveloperToken": self.developer_token,
+            "ClientId": self.client_id,
+            "ClientSecret": self.client_secret,
+            "RefreshToken": self.refresh_token,
+        }
+        self.service = ServiceClient(
+            service="ReportingService",
+            version=13,
+            authentication=authentication,
+            environment="production",
+            customer_id=self.customer_id,
+            account_id=self.account_id,
+        )
+
+    def get_performance(self, days: int = 7) -> dict:
+        """Pega performance dos últimos N dias para a conta Bing."""
+        from bingads.v13.reporting import (
+            ReportAggregation, CampaignPerformanceReportRequest, ReportTime
+        )
+        from datetime import date, timedelta
+        hoje = date.today()
+        inicio = (hoje - timedelta(days=days))
+
+        report_request = CampaignPerformanceReportRequest(
+            format="Csv",
+            report_name="Bing Ads Performance",
+            return_only_complete_data=True,
+            aggregation=ReportAggregation.SUMMARY,
+            time=ReportTime(
+                custom_date_range_start=inicio.strftime("%Y-%m-%d"),
+                custom_date_range_end=hoje.strftime("%Y-%m-%d"),
+            ),
+            columns=[
+                "Spend", "Conversions", "Revenue", "Clicks",
+                "Impressions", "Ctr", "Cpc", "ReturnOnAdSpend",
+            ],
+        )
+        try:
+            result = self.service.download_report(report_request)
+            rows = result.strip().split("\n")[1:]  # Skip header
+            total_spend = 0.0
+            total_conversions = 0.0
+            total_revenue = 0.0
+            total_clicks = 0
+
+            for row in rows:
+                cols = row.split(",")
+                if len(cols) >= 8:
+                    total_spend += float(cols[0] or 0)
+                    total_conversions += float(cols[1] or 0)
+                    total_revenue += float(cols[2] or 0)
+                    total_clicks += int(float(cols[3] or 0))
+
+            roas = total_revenue / total_spend if total_spend > 0 else 0
+            cpc = total_spend / total_clicks if total_clicks > 0 else 0
+            cpa = total_spend / total_conversions if total_conversions > 0 else 0
+
+            return {
+                "canal": "Bing Ads",
+                "investimento": round(total_spend, 2),
+                "conversoes": round(total_conversions, 1),
+                "receita_atribuida": round(total_revenue, 2),
+                "roas": round(roas, 2),
+                "cpc": round(cpc, 2),
+                "cpa": round(cpa, 2),
+                "cliques": total_clicks,
+            }
+        except Exception as e:
+            return {"canal": "Bing Ads", "erro": str(e)}
+
+
+# ── GOOGLE DRIVE ────────────────────────────────────────────────────────────
+
+class DriveConnector:
+    """Google Drive — upload, create folders, list files."""
+
+    def __init__(self):
+        creds = _get_google_creds()
+        self.service = build("drive", "v1", credentials=creds)
+
+    def create_folder(self, name: str, parent_id: str | None = None) -> str:
+        """Cria uma pasta no Drive. Retorna o ID."""
+        metadata = {
+            "name": name,
+            "mimeType": "application/vnd.google-apps.folder",
+        }
+        if parent_id:
+            metadata["parents"] = [parent_id]
+        folder = self.service.files().create(body=metadata, fields="id").execute()
+        return folder["id"]
+
+    def upload_json(self, content: dict, filename: str, parent_id: str | None = None) -> str:
+        """Faz upload de um JSON para o Drive. Retorna o fileId."""
+        from googleapiclient.http import MediaIoBaseUpload
+        import io
+        json_bytes = json.dumps(content, ensure_ascii=False, indent=2, default=str).encode("utf-8")
+        media = MediaIoBaseUpload(io.BytesIO(json_bytes), mimetype="application/json", resumable=True)
+        metadata = {"name": filename, "mimeType": "application/json"}
+        if parent_id:
+            metadata["parents"] = [parent_id]
+        file = self.service.files().create(body=metadata, media_body=media, fields="id").execute()
+        return file["id"]
+
+    def upload_markdown(self, content: str, filename: str, parent_id: str | None = None) -> str:
+        """Faz upload de markdown como Google Doc."""
+        import io
+        from googleapiclient.http import MediaIoBaseUpload
+        md_bytes = content.encode("utf-8")
+        media = MediaIoBaseUpload(io.BytesIO(md_bytes), mimetype="text/markdown", resumable=True)
+        metadata = {"name": filename, "mimeType": "text/markdown"}
+        if parent_id:
+            metadata["parents"] = [parent_id]
+        file = self.service.files().create(body=metadata, media_body=media, fields="id").execute()
+        return file["id"]
+
+    def find_folder(self, name: str, parent_id: str | None = None) -> str | None:
+        """Busca uma pasta por nome. Retorna o ID ou None."""
+        q = f"name='{name}' and mimeType='application/vnd.google-apps.folder' and trashed=false"
+        if parent_id:
+            q += f" and '{parent_id}' in parents"
+        results = self.service.files().list(q=q, fields="files(id,name)", pageSize=10).execute()
+        files = results.get("files", [])
+        return files[0]["id"] if files else None
+
+    def ensure_folder(self, path: list[str], root_id: str | None = None) -> str:
+        """Garante que uma hierarquia de pastas existe. Cria o que faltar. Ex: ['Clientes', 'Cliente X', 'Relatorios']"""
+        current_id = root_id
+        for part in path:
+            found = self.find_folder(part, parent_id=current_id)
+            if found:
+                current_id = found
+            else:
+                current_id = self.create_folder(part, parent_id=current_id)
+        return current_id
 
 
 # ── CLIENTES ────────────────────────────────────────────────────────────────
