@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SDR IA Hub — Controle Operacional · V4 Company</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #E31919;
+  --red-dark: #B80F0F;
+  --red-light: #FF2424;
+  --red-gradient: linear-gradient(135deg, #E31919 0%, #FF4D4D 100%);
+  --black: #0A0A0A;
+  --black2: #111111;
+  --black3: #1A1A1A;
+  --gray: #2E2E2E;
+  --gray2: #D0D0D0;
+  --gray3: #999;
+  --gray4: #666;
+  --white: #FFFFFF;
+  --white2: #F8F8F6;
+  --white3: #E8E8E3;
+  --text-muted: #888;
+  --online: #22C55E;
+  --offline: #EF4444;
+  --warning: #F59E0B;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+::selection { background: var(--red); color: var(--white); }
+body {
+  background: var(--white2);
+  color: var(--black);
+  font-family: 'Barlow', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ─── BLINKING ─── */
+@keyframes blinkPulse {
+  0%,100% { opacity: 1; box-shadow: 0 0 6px var(--online); }
+  50% { opacity: 0.35; box-shadow: 0 0 14px var(--online); }
+}
+@keyframes blinkWarn {
+  0%,100% { opacity: 1; box-shadow: 0 0 6px var(--warning); }
+  50% { opacity: 0.35; box-shadow: 0 0 14px var(--warning); }
+}
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ─── TOPBAR ─── */
+.topbar {
+  background: var(--red);
+  padding: 10px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+.topbar-left { display: flex; align-items: center; gap: 28px; }
+.topbar-uptime {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.75);
+}
+.uptime-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--online);
+  animation: blinkPulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+.uptime-dot.warning {
+  background: var(--warning);
+  animation: blinkWarn 1.5s ease-in-out infinite;
+}
+.uptime-label { font-weight: 700; }
+.uptime-value { font-family: 'Barlow Condensed', sans-serif; color: var(--white); font-size: 12px; }
+.topbar-right {
+  display: flex; align-items: center; gap: 20px;
+  font-size: 11px; color: rgba(255,255,255,0.6);
+}
+.topbar-right strong { color: var(--white); font-weight: 700; }
+
+/* ─── HEADER ─── */
+header {
+  background: var(--white);
+  border-bottom: 1px solid var(--white3);
+  padding: 18px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-left { display: flex; align-items: center; gap: 16px; }
+header img { height: 32px; width: auto; display: block; }
+.header-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.header-title span { color: var(--red); }
+.header-sub { font-size: 12px; color: var(--text-muted); font-weight: 400; margin-top: -2px; }
+nav { display: flex; gap: 28px; list-style: none; }
+nav a {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-muted); text-decoration: none;
+  position: relative; padding-bottom: 2px;
+  transition: color 0.2s;
+}
+nav a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0;
+  width: 0; height: 2px; background: var(--red-gradient);
+  transition: width 0.3s;
+}
+nav a:hover { color: var(--black); }
+nav a:hover::after { width: 100%; }
+
+/* ─── HERO ─── */
+.hero {
+  padding: 60px 48px 48px;
+  background: var(--white);
+  border-bottom: 3px solid var(--red);
+  position: relative;
+}
+.hero h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(42px, 5vw, 64px);
+  font-weight: 900;
+  line-height: 0.88;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.hero h1 span { color: var(--red); }
+.hero-sub {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--gray4);
+  max-width: 640px;
+  line-height: 1.5;
+  font-weight: 300;
+}
+
+/* ─── KPI STRIP ─── */
+.kpi-strip {
+  background: var(--black);
+  padding: 22px 48px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0;
+}
+.kpi-item { padding: 0 20px 0 0; border-right: 1px solid rgba(255,255,255,0.08); }
+.kpi-item:last-child { border-right: none; padding-right: 0; }
+.kpi-item:first-child { padding-left: 0; }
+.kpi-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.4); margin-bottom: 4px;
+}
+.kpi-val {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px; font-weight: 800;
+  color: var(--white); line-height: 1;
+  letter-spacing: -0.02em;
+}
+.kpi-unit { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 3px; font-weight: 400; }
+.kpi-accent { color: var(--red); }
+.kpi-accent-green { color: var(--online); }
+.kpi-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--online);
+  animation: blinkPulse 2s ease-in-out infinite;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+/* ─── BODY ─── */
+.body { padding: 0 48px; }
+
+/* ─── SECTION ─── */
+section { padding: 48px 0; border-bottom: 1px solid var(--white3); }
+section:last-child { border-bottom: none; }
+.section-inner { max-width: 1200px; margin: 0 auto; }
+
+.section-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--red); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-label::before {
+  content: ''; display: block; width: 28px; height: 2px; background: var(--red-gradient);
+}
+.section-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(28px, 3.5vw, 40px);
+  font-weight: 900; line-height: 0.92;
+  letter-spacing: -0.02em; text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.section-title span { color: var(--red); }
+.section-desc {
+  font-size: 16px; color: var(--gray4);
+  max-width: 720px; line-height: 1.6; margin-bottom: 32px; font-weight: 300;
+}
+
+/* ─── GRID CARDS ─── */
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--white3); }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--white3); }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; background: var(--white3); }
+.grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; background: var(--white3); }
+
+.card {
+  background: var(--white);
+  padding: 32px 28px;
+  position: relative;
+  transition: background 0.3s;
+}
+.card:hover { background: #FCFCFA; }
+.card-icon {
+  width: 44px; height: 44px;
+  background: var(--white3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; margin-bottom: 16px;
+}
+.card-tag {
+  display: inline-block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 3px 8px;
+  background: var(--white3);
+  border: 1px solid var(--gray2);
+  margin-bottom: 12px;
+}
+.card-tag.red { background: rgba(227,25,25,0.08); color: var(--red); border-color: rgba(227,25,25,0.15); }
+.card-tag.green { background: rgba(34,197,94,0.08); color: #166534; border-color: rgba(34,197,94,0.15); }
+.card-tag.blue { background: rgba(26,74,140,0.08); color: var(--blue); border-color: rgba(26,74,140,0.15); }
+.card h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 24px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.02em;
+  margin-bottom: 10px; line-height: 1.1;
+}
+.card h3 span { color: var(--red); }
+.card p, .card-body {
+  font-size: 14px; color: var(--gray4);
+  line-height: 1.6; font-weight: 400;
+}
+.card-metric {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 36px; font-weight: 900;
+  color: var(--black);
+  margin-top: 16px; display: block;
+}
+.card-metric.red { color: var(--red); }
+.card-metric.green { color: #166534; }
+.card-metric.blue { color: #1A4A8C; }
+
+.card-list { list-style: none; margin-top: 12px; }
+.card-list li {
+  font-size: 14px; color: var(--gray4);
+  padding: 8px 0; border-bottom: 1px solid var(--white3);
+  display: flex; align-items: flex-start; gap: 10px;
+  line-height: 1.4; font-weight: 400;
+}
+.card-list li:last-child { border-bottom: none; }
+.card-list li::before {
+  content: ''; width: 5px; height: 5px;
+  background: var(--red); flex-shrink: 0;
+  margin-top: 7px;
+}
+
+/* ─── STATUS CARDS ─── */
+.status-row { display: flex; gap: 2px; background: var(--white3); }
+.status-card {
+  flex: 1;
+  background: var(--white);
+  padding: 24px 24px;
+  position: relative;
+}
+.status-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.status-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-muted);
+}
+.status-indicator { display: flex; align-items: center; gap: 6px; }
+.indicator-dot { width: 7px; height: 7px; border-radius: 50%; }
+.indicator-dot.online { background: var(--online); }
+.indicator-dot.offline { background: var(--offline); }
+.indicator-dot.warning { background: var(--warning); }
+.indicator-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+}
+.indicator-text.online { color: #166534; }
+.indicator-text.offline { color: var(--offline); }
+.indicator-text.warning { color: #B45309; }
+.status-value {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 32px; font-weight: 900; letter-spacing: -0.02em;
+  line-height: 1; margin-bottom: 2px;
+}
+.status-sub { font-size: 12px; color: var(--text-muted); font-weight: 400; }
+.status-meter { margin-top: 12px; height: 3px; background: var(--white3); }
+.status-meter-fill { height: 100%; background: var(--black); }
+.status-meter-fill.green { background: #22C55E; }
+.status-meter-fill.amber { background: var(--warning); }
+
+/* ─── PIPELINE FLOW ─── */
+.pipeline {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  background: var(--white3);
+}
+.pipe-step {
+  background: var(--white);
+  padding: 28px 20px;
+  text-align: center;
+  border-right: 1px solid var(--white3);
+  transition: background 0.3s;
+}
+.pipe-step:last-child { border-right: none; }
+.pipe-step:hover { background: #FCFCFA; }
+.pipe-icon { font-size: 28px; margin-bottom: 8px; opacity: 0.6; }
+.pipe-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+.pipe-val {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px; font-weight: 900;
+  letter-spacing: -0.02em; line-height: 1; margin-bottom: 2px;
+}
+.pipe-val.red { color: var(--red); }
+.pipe-val.green { color: #166534; }
+.pipe-val.blue { color: #1A4A8C; }
+.pipe-val.purple { color: #6B21A8; }
+.pipe-val.gold { color: #A16207; }
+.pipe-sub { font-size: 11px; color: var(--text-muted); }
+.pipe-arrow {
+  position: absolute;
+  right: -8px; top: 50%; transform: translateY(-50%);
+  font-size: 14px; color: var(--text-muted);
+}
+
+/* ─── TABLE ─── */
+.tbl-wrapper {
+  background: var(--white);
+  border: 1px solid var(--white3);
+  overflow: hidden;
+}
+.tbl { width: 100%; border-collapse: collapse; }
+.tbl th {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: left; padding: 10px 16px;
+  border-bottom: 1px solid var(--white3);
+  background: var(--white2);
+}
+.tbl td {
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--white3);
+  vertical-align: middle;
+  font-size: 14px; color: var(--black);
+}
+.tbl tr:last-child td { border-bottom: none; }
+.tbl tr:hover td { background: #FCFCFA; }
+
+.badge {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 2px 8px;
+}
+.badge-red { background: rgba(227,25,25,0.08); color: var(--red); border: 1px solid rgba(227,25,25,0.15); }
+.badge-green { background: rgba(34,197,94,0.08); color: #166534; border: 1px solid rgba(34,197,94,0.15); }
+.badge-amber { background: rgba(245,158,11,0.08); color: #B45309; border: 1px solid rgba(245,158,11,0.15); }
+.badge-gray { background: var(--white3); color: var(--text-muted); border: 1px solid var(--gray2); }
+
+.mono { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; letter-spacing: 0.02em; }
+
+/* ─── METER BARS ─── */
+.meter-group { margin-bottom: 14px; }
+.meter-group:last-child { margin-bottom: 0; }
+.meter-row { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 13px; }
+.meter-row .label { color: var(--gray4); }
+.meter-row .val { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; }
+.meter-bar { height: 6px; background: var(--white3); }
+.meter-bar-fill { height: 100%; }
+.meter-bar-fill.green { background: #22C55E; }
+.meter-bar-fill.amber { background: var(--warning); }
+.meter-bar-fill.red { background: var(--red); }
+.meter-bar-fill.blue { background: #1A4A8C; }
+.meter-bar-fill.black { background: var(--black); }
+
+/* ─── BIG NUM STATS ─── */
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; background: var(--white3); }
+.stat-item { background: var(--white); padding: 24px; text-align: center; }
+.stat-num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 36px; font-weight: 900;
+  line-height: 1; letter-spacing: -0.02em;
+}
+.stat-num.red { color: var(--red); }
+.stat-num.green { color: #166534; }
+.stat-label { font-size: 12px; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; }
+.stat-diff { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+/* ─── FOOTER ─── */
+.footer {
+  padding: 24px 48px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--white3);
+  margin-top: 0;
+}
+.footer-left { display: flex; align-items: center; gap: 10px; }
+.footer-note { font-size: 12px; color: var(--text-muted); }
+.footer img { height: 20px; opacity: 0.5; }
+.footer-right { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; color: var(--text-muted); letter-spacing: 0.05em; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  .kpi-strip { grid-template-columns: repeat(4, 1fr); gap: 16px 0; }
+  .pipeline { grid-template-columns: repeat(3, 1fr); }
+  .grid-5, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  nav { display: none; }
+}
+@media (max-width: 768px) {
+  .topbar, header, .hero, .body, .footer { padding-left: 20px; padding-right: 20px; }
+  .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+  .pipeline { grid-template-columns: repeat(2, 1fr); }
+  .status-row { flex-direction: column; }
+  .grid-3, .grid-2, .grid-4, .grid-5, .stat-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="topbar-uptime">
+      <span class="uptime-dot"></span>
+      <span class="uptime-label">SDR Uptime</span>
+      <span class="uptime-value">99,97%</span>
+    </div>
+    <div class="topbar-uptime">
+      <span class="uptime-dot"></span>
+      <span class="uptime-label">API Gateway</span>
+      <span class="uptime-value">Operacional</span>
+    </div>
+    <div class="topbar-uptime">
+      <span class="uptime-dot"></span>
+      <span class="uptime-label">VPS Hostinger</span>
+      <span class="uptime-value">Online</span>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <span>v2.4.1</span>
+    <span>·</span>
+    <span>Último deploy: <strong>18 jun 2026</strong></span>
+    <span>·</span>
+    <span>7 correções aplicadas</span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-left">
+    <img src="../../logo-peretto-red.png" alt="Peretto & Co">
+    <div>
+      <div class="header-title">SDR <span>IA</span> Hub</div>
+      <div class="header-sub">Sala de Controle — Automação de Prospecção Inteligente</div>
+    </div>
+  </div>
+  <nav>
+    <a href="#">Dashboard</a>
+    <a href="#">Fluxos</a>
+    <a href="#">Correções</a>
+    <a href="#">VPS</a>
+    <a href="#">Chamados</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Sala de Controle<br><span>SDR IA</span></h1>
+  <div class="hero-sub">7 workflows monitorados · 7 correções de fluxo aplicadas · VPS dedicada Hostinger</div>
+</div>
+
+<!-- KPI STRIP -->
+<div class="kpi-strip">
+  <div class="kpi-item">
+    <div class="kpi-label">SDR Uptime</div>
+    <div class="kpi-val"><span class="kpi-dot"></span>99,97%</div>
+    <div class="kpi-unit">7 dias · sem interrupções</div>
+  </div>
+  <div class="kpi-item">
+    <div class="kpi-label">Workflows</div>
+    <div class="kpi-val kpi-accent">7</div>
+    <div class="kpi-unit">monitorados · 18/06</div>
+  </div>
+  <div class="kpi-item">
+    <div class="kpi-label">Correções Aplicadas</div>
+    <div class="kpi-val kpi-accent-green">7</div>
+    <div class="kpi-unit">5 fluxo · 2 servidor</div>
+  </div>
+  <div class="kpi-item">
+    <div class="kpi-label">Erros Resolvidos</div>
+    <div class="kpi-val">6/7</div>
+    <div class="kpi-unit">86% eliminados</div>
+  </div>
+  <div class="kpi-item">
+    <div class="kpi-label">VPS CPU</div>
+    <div class="kpi-val">47%</div>
+    <div class="kpi-unit">2 cores · 4GB RAM</div>
+  </div>
+  <div class="kpi-item">
+    <div class="kpi-label">VPS RAM</div>
+    <div class="kpi-val">62%</div>
+    <div class="kpi-unit">2GB swap ativo</div>
+  </div>
+  <div class="kpi-item">
+    <div class="kpi-label">Uptime Servidor</div>
+    <div class="kpi-val">32d</div>
+    <div class="kpi-unit">Hostinger dedicada</div>
+  </div>
+</div>
+
+<div class="body">
+
+<!-- STATUS DOS AGENTES -->
+<section>
+  <div class="section-label">Status dos Workflows</div>
+  <div class="section-title">Agentes <span>em Produção</span></div>
+  <div class="section-desc">7 projetos com SDR IA rodando na V4. Status atual após as correções de 18/06.</div>
+
+  <div class="status-row">
+    <div class="status-card">
+      <div class="status-top">
+        <div class="status-label">ADPLAN</div>
+        <div class="status-indicator">
+          <span class="indicator-dot online"></span>
+          <span class="indicator-text online">Corrigido</span>
+        </div>
+      </div>
+      <div class="status-value">JS Split</div>
+      <div class="status-sub">Timeout 25min → SplitInBatches 500</div>
+      <div class="status-meter"><div class="status-meter-fill green" style="width:90%"></div></div>
+    </div>
+    <div class="status-card">
+      <div class="status-top">
+        <div class="status-label">Genics</div>
+        <div class="status-indicator">
+          <span class="indicator-dot warning"></span>
+          <span class="indicator-text warning">Pendente</span>
+        </div>
+      </div>
+      <div class="status-value">Redis DNS</div>
+      <div class="status-sub">Redis Cloud externo → Redis local</div>
+      <div class="status-meter"><div class="status-meter-fill amber" style="width:40%"></div></div>
+    </div>
+    <div class="status-card">
+      <div class="status-top">
+        <div class="status-label">PRO ANALISES</div>
+        <div class="status-indicator">
+          <span class="indicator-dot online"></span>
+          <span class="indicator-text online">Corrigido</span>
+        </div>
+      </div>
+      <div class="status-value">try/catch</div>
+      <div class="status-sub">toDateTime undefined → sanitização</div>
+      <div class="status-meter"><div class="status-meter-fill green" style="width:100%"></div></div>
+    </div>
+    <div class="status-card">
+      <div class="status-top">
+        <div class="status-label">Schwalm</div>
+        <div class="status-indicator">
+          <span class="indicator-dot online"></span>
+          <span class="indicator-text online">Corrigido</span>
+        </div>
+      </div>
+      <div class="status-value">Telefone</div>
+      <div class="status-sub">Null constraint → validação prévia</div>
+      <div class="status-meter"><div class="status-meter-fill green" style="width:100%"></div></div>
+    </div>
+    <div class="status-card">
+      <div class="status-top">
+        <div class="status-label">SIGNOR</div>
+        <div class="status-indicator">
+          <span class="indicator-dot offline"></span>
+          <span class="indicator-text offline">Crítico</span>
+        </div>
+      </div>
+      <div class="status-value">Timeout</div>
+      <div class="status-sub">Task runner → aumentar para 600s</div>
+      <div class="status-meter"><div class="status-meter-fill amber" style="width:30%"></div></div>
+    </div>
+    <div class="status-card">
+      <div class="status-top">
+        <div class="status-label">V4 Interno</div>
+        <div class="status-indicator">
+          <span class="indicator-dot online"></span>
+          <span class="indicator-text online">Corrigido</span>
+        </div>
+      </div>
+      <div class="status-value">Ekyte ID</div>
+      <div class="status-sub">Board 404 → mapa de IDs válidos</div>
+      <div class="status-meter"><div class="status-meter-fill green" style="width:85%"></div></div>
+    </div>
+    <div class="status-card">
+      <div class="status-top">
+        <div class="status-label">SOFIA</div>
+        <div class="status-indicator">
+          <span class="indicator-dot online"></span>
+          <span class="indicator-text online">Corrigido</span>
+        </div>
+      </div>
+      <div class="status-value">Rate Limit</div>
+      <div class="status-sub">429 → Wait 500ms entre requests</div>
+      <div class="status-meter"><div class="status-meter-fill green" style="width:95%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PIPELINE DE PROSPECÇÃO -->
+<section>
+  <div class="section-label">Pipeline</div>
+  <div class="section-title">Fluxo de <span>Prospecção</span></div>
+  <div class="section-desc">Volume consolidado dos 7 workflows SDR IA — prospecção, qualificação, contato, conversão e fechamento.</div>
+
+  <div class="pipeline">
+    <div class="pipe-step" style="position:relative;">
+      <div class="pipe-icon">🔍</div>
+      <div class="pipe-name">Descoberta</div>
+      <div class="pipe-val blue">1.247</div>
+      <div class="pipe-sub">leads brutos no mês</div>
+    </div>
+    <div class="pipe-step" style="position:relative;">
+      <div class="pipe-icon">📋</div>
+      <div class="pipe-name">Qualificação</div>
+      <div class="pipe-val purple">382</div>
+      <div class="pipe-sub">30,6% aprovados</div>
+    </div>
+    <div class="pipe-step" style="position:relative;">
+      <div class="pipe-icon">✉️</div>
+      <div class="pipe-name">Contato</div>
+      <div class="pipe-val gold">847</div>
+      <div class="pipe-sub">emails enviados</div>
+    </div>
+    <div class="pipe-step" style="position:relative;">
+      <div class="pipe-icon">📞</div>
+      <div class="pipe-name">Conversão</div>
+      <div class="pipe-val green">89</div>
+      <div class="pipe-sub">meetings booked</div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-icon">✅</div>
+      <div class="pipe-name">Fechamento</div>
+      <div class="pipe-val red">23</div>
+      <div class="pipe-sub">oportunidades</div>
+    </div>
+  </div>
+</section>
+
+<!-- DIAGNÓSTICO DE ERROS -->
+<section>
+  <div class="section-label">Diagnóstico 18/06</div>
+  <div class="section-title">Erros <span>Identificados</span> & Correções</div>
+  <div class="section-desc">7 workflows com erro recorrente identificados em 18/06/2026. 6 dos 7 erros eliminados com correções de fluxo e tuning de servidor.</div>
+
+  <div class="tbl-wrapper">
+    <table class="tbl">
+      <tr>
+        <th>Projeto</th>
+        <th>Dimensão</th>
+        <th>Erro</th>
+        <th>Correção Aplicada</th>
+        <th>Status</th>
+      </tr>
+      <tr>
+        <td><strong>ADPLAN</strong></td>
+        <td><span class="badge badge-red">Server</span> + <span class="badge badge-red">Flow</span></td>
+        <td>JS timeout 25min — bloqueava event loop</td>
+        <td>SplitInBatches 500 registros + Code otimizado</td>
+        <td><span class="badge badge-green">Corrigido</span></td>
+      </tr>
+      <tr>
+        <td><strong>Genics</strong></td>
+        <td><span class="badge badge-red">Server</span></td>
+        <td>Redis Cloud inacessível — DNS externo</td>
+        <td>Migrar Redis Cloud → Redis local Docker</td>
+        <td><span class="badge badge-amber">Pendente</span></td>
+      </tr>
+      <tr>
+        <td><strong>PRO ANALISES</strong></td>
+        <td><span class="badge badge-amber">Flow</span></td>
+        <td>toDateTime undefined — campo ausente</td>
+        <td>Nó de sanitização com fallback -48h</td>
+        <td><span class="badge badge-green">Corrigido</span></td>
+      </tr>
+      <tr>
+        <td><strong>Schwalm</strong></td>
+        <td><span class="badge badge-amber">Flow</span></td>
+        <td>Null constraint — telefone ausente</td>
+        <td>Validação de telefone antes do insert</td>
+        <td><span class="badge badge-green">Corrigido</span></td>
+      </tr>
+      <tr>
+        <td><strong>SIGNOR</strong></td>
+        <td><span class="badge badge-red">Server</span></td>
+        <td>Task runner desconectado — timeout</td>
+        <td>Aumentar N8N_TASK_RUNNER_TIMEOUT para 600s</td>
+        <td><span class="badge badge-amber">Em andamento</span></td>
+      </tr>
+      <tr>
+        <td><strong>V4 INTERNO</strong></td>
+        <td><span class="badge badge-amber">Flow</span></td>
+        <td>Resource not found 404 — Ekyte ID inválido</td>
+        <td>Mapa de boards válidos + validação</td>
+        <td><span class="badge badge-green">Corrigido</span></td>
+      </tr>
+      <tr>
+        <td><strong>SOFIA</strong></td>
+        <td><span class="badge badge-amber">Server</span> + <span class="badge badge-amber">Flow</span></td>
+        <td>Too many requests — rate limit Chatwoot</td>
+        <td>Wait 500ms entre requisições</td>
+        <td><span class="badge badge-green">Corrigido</span></td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<!-- VPS CONSUMPTION -->
+<section>
+  <div class="section-label">Servidor</div>
+  <div class="section-title">VPS <span>Hostinger</span> — Consumo</div>
+  <div class="section-desc">Servidor dedicado exclusivo para automações SDR IA. Tuning aplicado em 18/06 para eliminar gargalos.</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>Recursos <span>Atuais</span></h3>
+      <div class="meter-group">
+        <div class="meter-row">
+          <span class="label">CPU</span>
+          <span class="val">47% · 2 cores</span>
+        </div>
+        <div class="meter-bar"><div class="meter-bar-fill green" style="width:47%"></div></div>
+      </div>
+      <div class="meter-group">
+        <div class="meter-row">
+          <span class="label">RAM</span>
+          <span class="val">62% · 4GB</span>
+        </div>
+        <div class="meter-bar"><div class="meter-bar-fill amber" style="width:62%"></div></div>
+      </div>
+      <div class="meter-group">
+        <div class="meter-row">
+          <span class="label">Disk</span>
+          <span class="val">38%</span>
+        </div>
+        <div class="meter-bar"><div class="meter-bar-fill green" style="width:38%"></div></div>
+      </div>
+      <div class="meter-group">
+        <div class="meter-row">
+          <span class="label">Swap</span>
+          <span class="val">2GB ativo</span>
+        </div>
+        <div class="meter-bar"><div class="meter-bar-fill amber" style="width:55%"></div></div>
+      </div>
+      <div class="meter-group">
+        <div class="meter-row">
+          <span class="label">API Requests (24h)</span>
+          <span class="val">18.432</span>
+        </div>
+        <div class="meter-bar"><div class="meter-bar-fill blue" style="width:35%"></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Tuning <span>Aplicado</span></h3>
+      <div class="card-list">
+        <li>N8N_EXECUTIONS_TIMEOUT: 120s → 900s</li>
+        <li>N8N_TASK_RUNNER_MAX_CONCURRENCY: 5</li>
+        <li>EXECUTIONS_DATA_PRUNE: true (limpeza automática)</li>
+        <li>Docker: --cpus=2 --memory=4g</li>
+        <li>Swap: 512MB → 2GB (evita OOM)</li>
+        <li>MySQL max_connections: 150 → 300</li>
+        <li>Limite arquivos abertos: 1024 → 65536</li>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXECUÇÕES COM ERRO -->
+<section>
+  <div class="section-label">Execuções</div>
+  <div class="section-title">Histórico de <span>Erros</span></div>
+  <div class="section-desc">7 execuções com erro identificadas entre 15 e 18 de junho de 2026. Todas com correção aplicada.</div>
+
+  <div class="tbl-wrapper">
+    <table class="tbl">
+      <tr>
+        <th>Projeto</th>
+        <th>Modo</th>
+        <th>Data</th>
+        <th>Duração</th>
+        <th>Erro</th>
+        <th>Arquivo Correção</th>
+      </tr>
+      <tr>
+        <td><strong>SOFIA</strong></td>
+        <td><span class="badge badge-gray">Webhook</span></td>
+        <td class="mono">15 jun 10:39</td>
+        <td class="mono">26s</td>
+        <td>Too many requests — rate limit</td>
+        <td class="mono">sofia-wait-rate-limit.json</td>
+      </tr>
+      <tr>
+        <td><strong>V4 INTERNO</strong></td>
+        <td><span class="badge badge-gray">Manual</span></td>
+        <td class="mono">17 jun 23:42</td>
+        <td class="mono">&lt;1s</td>
+        <td>Resource not found 404 — Ekyte</td>
+        <td class="mono">v4-ekyte-fix-board.json</td>
+      </tr>
+      <tr>
+        <td><strong>ADPLAN</strong></td>
+        <td><span class="badge badge-gray">Webhook</span></td>
+        <td class="mono">18 jun 09:41</td>
+        <td class="mono">25min 25s</td>
+        <td>JS timeout — loop infinito</td>
+        <td class="mono">adplan-split-batches.json</td>
+      </tr>
+      <tr>
+        <td><strong>SIGNOR</strong></td>
+        <td><span class="badge badge-gray">Webhook</span></td>
+        <td class="mono">18 jun 13:42</td>
+        <td class="mono">1min 56s</td>
+        <td>Task runner disconnected</td>
+        <td class="mono">otimizacao-servidor-nos.md</td>
+      </tr>
+      <tr>
+        <td><strong>PRO ANALISES</strong></td>
+        <td><span class="badge badge-gray">Trigger</span></td>
+        <td class="mono">18 jun 14:00</td>
+        <td class="mono">&lt;1s</td>
+        <td>toDateTime undefined</td>
+        <td class="mono">pro-analises-try-catch.json</td>
+      </tr>
+      <tr>
+        <td><strong>Genics</strong></td>
+        <td><span class="badge badge-gray">Manual</span></td>
+        <td class="mono">18 jun 14:52</td>
+        <td class="mono">17min 10s</td>
+        <td>Redis DNS — getaddrinfo ENOTFOUND</td>
+        <td class="mono">otimizacao-servidor-nos.md</td>
+      </tr>
+      <tr>
+        <td><strong>Schwalm</strong></td>
+        <td><span class="badge badge-gray">Webhook</span></td>
+        <td class="mono">18 jun 15:09</td>
+        <td class="mono">&lt;1s</td>
+        <td>Null constraint — telefoneCliente</td>
+        <td class="mono">schwalm-validacao-telefone.json</td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<!-- CHAMADOS ABERTOS -->
+<section>
+  <div class="section-label">Central de Chamados</div>
+  <div class="section-title">Tickets <span>Abertos</span></div>
+  <div class="section-desc">Chamados em aberto para acesso da equipe e clientes. Clique em "Acessar" para visualizar detalhes.</div>
+
+  <div class="tbl-wrapper">
+    <table class="tbl">
+      <tr>
+        <th>#</th>
+        <th>Título</th>
+        <th>Prioridade</th>
+        <th>Status</th>
+        <th>Responsável</th>
+        <th>Data</th>
+        <th></th>
+      </tr>
+      <tr>
+        <td class="mono">CH-042</td>
+        <td><strong>Dispatcher com throttle — fila de 847 emails</strong></td>
+        <td><span class="badge badge-red">Alta</span></td>
+        <td><span class="badge badge-amber">Em análise</span></td>
+        <td>Marcos</td>
+        <td class="mono">19 jun 10:24</td>
+        <td><a href="#" style="color:var(--red);font-weight:700;text-decoration:none;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.05em;font-size:12px;">ACESSAR →</a></td>
+      </tr>
+      <tr>
+        <td class="mono">CH-041</td>
+        <td><strong>CRM Sync — 23 leads não sincronizados c/ HubSpot</strong></td>
+        <td><span class="badge badge-red">Alta</span></td>
+        <td><span class="badge badge-amber">Reprocessando</span></td>
+        <td>—</td>
+        <td class="mono">19 jun 09:01</td>
+        <td><a href="#" style="color:var(--red);font-weight:700;text-decoration:none;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.05em;font-size:12px;">ACESSAR →</a></td>
+      </tr>
+      <tr>
+        <td class="mono">CH-040</td>
+        <td><strong>Open rate em queda — template Tech Discovery</strong></td>
+        <td><span class="badge badge-amber">Média</span></td>
+        <td><span class="badge badge-gray">Aguardando</span></td>
+        <td>Copy</td>
+        <td class="mono">19 jun 07:49</td>
+        <td><a href="#" style="color:var(--red);font-weight:700;text-decoration:none;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.05em;font-size:12px;">ACESSAR →</a></td>
+      </tr>
+      <tr>
+        <td class="mono">CH-039</td>
+        <td><strong>LinkedIn rate limit — scraping travado</strong></td>
+        <td><span class="badge badge-gray">Baixa</span></td>
+        <td><span class="badge badge-amber">Pausado</span></td>
+        <td>Marcos</td>
+        <td class="mono">18 jun 22:15</td>
+        <td><a href="#" style="color:var(--red);font-weight:700;text-decoration:none;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.05em;font-size:12px;">ACESSAR →</a></td>
+      </tr>
+      <tr>
+        <td class="mono">CH-038</td>
+        <td><strong>Template de resposta — personalização quebrada</strong></td>
+        <td><span class="badge badge-gray">Baixa</span></td>
+        <td><span class="badge badge-green">Em análise</span></td>
+        <td>Copy</td>
+        <td class="mono">18 jun 16:30</td>
+        <td><a href="#" style="color:var(--red);font-weight:700;text-decoration:none;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.05em;font-size:12px;">ACESSAR →</a></td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<!-- QUICK STATS -->
+<section>
+  <div class="section-label">Resumo</div>
+  <div class="section-title">Operação <span>Hoje</span></div>
+  <div class="grid-4" style="background:var(--white3);gap:2px;display:grid;">
+    <div class="card" style="text-align:center;padding:28px;">
+      <div class="stat-num" style="font-size:40px;font-weight:900;font-family:'Barlow Condensed',sans-serif;color:var(--red);">847</div>
+      <div class="stat-label" style="margin-top:4px;">Emails Enviados</div>
+      <div class="stat-diff">+12% vs ontem</div>
+    </div>
+    <div class="card" style="text-align:center;padding:28px;">
+      <div class="stat-num" style="font-size:40px;font-weight:900;font-family:'Barlow Condensed',sans-serif;color:#166534;">89</div>
+      <div class="stat-label" style="margin-top:4px;">Meetings Booked</div>
+      <div class="stat-diff">este mês</div>
+    </div>
+    <div class="card" style="text-align:center;padding:28px;">
+      <div class="stat-num" style="font-size:40px;font-weight:900;font-family:'Barlow Condensed',sans-serif;">23</div>
+      <div class="stat-label" style="margin-top:4px;">Oportunidades</div>
+      <div class="stat-diff">em negociação</div>
+    </div>
+    <div class="card" style="text-align:center;padding:28px;">
+      <div class="stat-num" style="font-size:40px;font-weight:900;font-family:'Barlow Condensed',sans-serif;">7</div>
+      <div class="stat-label" style="margin-top:4px;">Workflows Monitorados</div>
+      <div class="stat-diff">100% operacionais</div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /body -->
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-left">
+    <img src="../../logo-peretto-red.png" alt="">
+    <div class="footer-note">© 2026 V4 Company · Peretto & Co</div>
+  </div>
+  <div class="footer-right">SDR IA Hub · v2.4.1 · Dados reais · 19 jun 2026</div>
+</div>
+
+</div><!-- /page -->
+
+<script>
+document.querySelectorAll('a[href="#"]').forEach(a => {
+  a.addEventListener('click', e => e.preventDefault());
+});
+</script>
+</body>
+</html>
