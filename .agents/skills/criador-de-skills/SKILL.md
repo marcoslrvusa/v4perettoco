@@ -15,6 +15,28 @@ Se o usuario quer rodar benchmarks, evals quantitativos, otimizacao de descricao
 
 ---
 
+## Princípios V4 (consulte antes de criar)
+
+Toda skill criada no Builders Hub deve estar alinhada com os princípios V4:
+- **Os 4 Vs**: Vender produto, mais vezes, mais pessoas, maior valor
+- **Os 4 Pilares**: Tráfego, Engajamento, Conversão, Retenção
+- **Doutrina Médico vs Garçom**: skills de atendimento investigam e diagnosticam, não anotam pedidos
+- **TOC**: skills de diagnóstico seguem o ciclo identificar → explorar → subordinar → elevar
+- **Cientista do Marketing**: toda skill deve responder "isso faz o cliente vender mais?"
+
+Consulte `docs/PRINCIPIOS-V4.md` para referência completa antes de criar ou refinar skills.
+
+## Princípios V4 (consulte antes de criar)
+
+Toda skill criada no Builders Hub deve estar alinhada com os princípios V4:
+- **Os 4 Vs**: Vender produto, mais vezes, mais pessoas, maior valor
+- **Os 4 Pilares**: Tráfego, Engajamento, Conversão, Retenção
+- **Doutrina Médico vs Garçom**: skills de atendimento investigam e diagnosticam, não anotam pedidos
+- **TOC**: skills de diagnóstico seguem o ciclo identificar → explorar → subordinar → elevar
+- **Cientista do Marketing**: toda skill deve responder "isso faz o cliente vender mais?"
+
+Consulte `docs/PRINCIPIOS-V4.md` para referência completa antes de criar ou refinar skills.
+
 ## Fluxo V4 — leia isso primeiro
 
 ### Passo 1 — Classificar e nomear a skill

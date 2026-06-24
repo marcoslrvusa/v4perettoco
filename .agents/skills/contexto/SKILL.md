@@ -6,6 +6,28 @@ tags: [skill, area-base]
 ---
 Voce vai analisar uma Knowledge Base e gerar os arquivos `CLAUDE.md` e `AGENTS.md` que funcionem como "memoria" pra qualquer trabalho futuro. Quando a KB for de CLIENTE, tambem crie/atualize `mission-control/`, que e o estado vivo usado por skills de check-in.
 
+## Alinhamento com princípios V4
+
+Ao gerar CLAUDE.md/AGENTS.md e Mission Control, incorpore os princípios V4:
+- **4 Pilares**: avalie onde o cliente está em Tráfego, Engajamento, Conversão, Retenção
+- **4 Vs**: diagnostique qual dos 4 Vs está subperformando
+- **Doutrina Médico vs Garçom**: o Mission Control deve refletir diagnóstico, não apenas tarefas
+- **TOC**: identifique o gargalo principal do cliente e registre no mission-control
+- **Cientista do Marketing**: priorize dados a opiniões. Se não tem dado, registre "sem dado"
+
+Consulte `docs/PRINCIPIOS-V4.md` para referência completa.
+
+## Alinhamento com princípios V4
+
+Ao gerar CLAUDE.md/AGENTS.md e Mission Control, incorpore os princípios V4:
+- **4 Pilares**: avalie onde o cliente está em Tráfego, Engajamento, Conversão, Retenção
+- **4 Vs**: diagnostique qual dos 4 Vs está subperformando
+- **Doutrina Médico vs Garçom**: o Mission Control deve refletir diagnóstico, não apenas tarefas
+- **TOC**: identifique o gargalo principal do cliente e registre no mission-control
+- **Cientista do Marketing**: priorize dados a opiniões. Se não tem dado, registre "sem dado"
+
+Consulte `docs/PRINCIPIOS-V4.md` para referência completa.
+
 ## Estrutura esperada
 
 - `squads/{squad}/` — pasta de squad (tem `{squad}.md` com membros, `docs/`, e subpasta `clientes/`)

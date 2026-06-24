@@ -19,7 +19,8 @@
 <a id="base"></a>
 
 | Skill | O que faz | Autor | v |
-|---|---|---|---|
+|---|---|---|---|---|
+| `dener-lippert` | Clone estrategico do CEO V4 — Dener Lippert, o Cientista do Marketing. Diagnostico TOC, analise de DRE, logical thinking, business strategy. Consulte `/dener-lippert` para consultoria CEO. | @DenerLippert | 1.0.0 |
 | `compartilhar-skill` | Empacota uma skill local e abre Pull Request no Builders Hub publico automaticamente. Use quando o usuario... | — | — |
 | `contexto` | Le todos os arquivos em uma KB (cliente, squad ou projeto), gera CLAUDE.md e AGENTS.md, e quando for client... | — | — |
 | `criador-de-skills` | Cria skills novas e melhora skills existentes no Builders Hub. Use quando o usuario quiser criar uma skill... | — | — |

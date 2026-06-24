@@ -25,6 +25,8 @@ Este repositório é o hub open-source de skills de IA da V4. Funciona como base
 - [[geral-brainstormar-sobre-minha-funcao]] — Descobre onde IA agrega mais valor no dia a dia.
 - [[geral-sabatina]] — Stress-test de planos.
 - [[geral-frontend-design]] — Gera interfaces frontend de alta qualidade (pra skills que produzem UI).
+- [[dener-lippert]] — Clone estratégico do CEO V4 — Dener Lippert, o Cientista do Marketing. Diagnóstico TOC, análise de DRE, logical thinking, business strategy. Use `/dener` ou `@dener-lippert` pra consultar o cérebro do CEO.
+- [[PRINCIPIOS-V4]] — Documento central de princípios V4 (4Vs, 4 Pilares, FPA, TOC, Médico vs Garçom). Consulte este documento ao refinar skills ou criar agentes para manter consistência metodológica.
 
 ## Skills compartilhadas (hub)
 
@@ -46,6 +48,7 @@ Consulte [[REGISTRY]] pra ver tudo que o time já compartilhou. Pra contribuir v
 - **Duplo-write obrigatório**: toda skill criada/editada deve existir idêntica em `.claude/skills/{nome}/` E `.agents/skills/{nome}/`. [[criador-de-skills]] faz isso automaticamente; se você editar manualmente, espelhe nos dois. [[sync-hub]] também re-espelha após pull.
 - **Prefixo obrigatório** em skills contribuídas: `{prefixo}-{nome}`. Prefixo pode ser de papel (geral/gt/designer/copy/account/coord) ou de fonte (v4mos/google/ga4/meta/hubspot/kommo/shopify/tray). Skills de base ([[onboarding]], [[contexto]], [[sync-hub]], [[criador-de-skills]], [[compartilhar-skill]], [[novo-squad]], [[novo-cliente]], [[novo-projeto]]) são exceção e ficam sem prefixo.
 - Se o fluxo git/gh quebrar em qualquer skill (sync, compartilhar, push), oriente rodar [[onboarding]] de novo — os checks de setup são a primeira coisa que ele faz.
+- **Princípios V4**: consulte `docs/PRINCIPIOS-V4.md` ao refinar skills ou criar agentes. Os frameworks V4 (4Vs, 4 Pilares, FPA, TOC, Médico vs Garçom, Logical Thinking) são o padrão metodológico do hub.
 
 <!-- n8n-as-code-start -->
 <!-- n8nac-version: 2.3.5 -->
