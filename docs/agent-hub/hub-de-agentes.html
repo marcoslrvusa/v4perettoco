@@ -60,7 +60,7 @@ body {
   padding: 24px 20px 20px; border-bottom: 1px solid var(--color-border);
   display: flex; flex-direction: column; align-items: center; text-align: center;
 }
-.sidebar-logo .logo-img { width: 120px; height: 120px; object-fit: contain; margin-bottom: 10px; }
+.sidebar-logo .logo-img { width: 150px; height: 150px; object-fit: contain; margin-bottom: 10px; }
 .sidebar-logo .version { font-size: 10.5px; color: var(--color-text-secondary); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
 .sidebar nav ul { list-style: none; padding: 0; margin: 0; }
 .sidebar nav ul li { margin: 0; }
@@ -160,6 +160,7 @@ body {
 <div class="header">
   <h1>Hub de Agentes V4 Peretto</h1>
   <span class="subtitle">37 agentes · 102 skills · 8 times · Opensquad · CEO @dener-lippert</span>
+  <a href="#" data-section="downloads" style="margin-left:auto;font-size:12px;font-weight:600;color:var(--color-text-secondary);text-decoration:none;border:1px solid var(--color-border);padding:4px 12px;border-radius:20px;transition:all 0.2s">Downloads</a>
   <span class="header-badge">v1.0 · Junho 2026</span>
 </div>
 
@@ -169,6 +170,8 @@ body {
     <div class="version">v1.0 · Hub de Agentes V4 Peretto</div>
   </div>
   <nav><ul>
+    <li><a class="nav-link level-0">Fundamentos</a></li>
+    <li><a class="nav-link" href="#" data-section="premissas">00 · Premissas</a></li>
     <li><a class="nav-link level-0">Visão Geral</a></li>
     <li><a class="nav-link" href="#" data-section="visao">01 · O Ecossistema</a></li>
     <li><a class="nav-link" href="#" data-section="ceo">02 · CEO @dener-lippert</a></li>
@@ -190,14 +193,92 @@ body {
     <li><a class="nav-link" href="#" data-section="agentes">05 · Catálogo Completo</a></li>
     <li><a class="nav-link" href="#" data-section="formacoes">06 · Formações de Time</a></li>
     <li><a class="nav-link" href="#" data-section="fontes">07 · Documentos Originais</a></li>
+    <li><a class="nav-link" href="#" data-section="governanca">08 · Governança</a></li>
     <li><a class="nav-link level-0">Evolução</a></li>
-    <li><a class="nav-link" href="#" data-section="validacao">08 · Validação pelo Time</a></li>
+    <li><a class="nav-link" href="#" data-section="validacao">09 · Validação pelo Time</a></li>
     <li><a class="nav-link level-0">Downloads</a></li>
-    <li><a class="nav-link" href="#" data-section="downloads">09 · Baixar Skills + Docs</a></li>
+    <li><a class="nav-link" href="#" data-section="downloads">10 · Baixar Skills + Docs</a></li>
   </ul></nav>
 </div>
 
 <div class="main">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- 00 · PREMISSAS -->
+<!-- ═══════════════════════════════════════════════ -->
+<section id="premissas">
+<h1 class="section-title">Premissas Arquiteturais</h1>
+
+<p>Estas 12 premissas guiaram cada decisao de design do Hub de Agentes — desde a estrutura de pastas ate a hierarquia de agentes. Nao sao regras arbitrarias: sao principios testados que garantem que o sistema escala sem quebrar.</p>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px;margin:12px 0">
+
+<div style="background:#fafafa;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:14px 18px;border-left:3px solid #b91c1c">
+<h3 style="font-size:13px;font-weight:700;margin-bottom:4px;color:#b91c1c">Duplo-Write Obrigatorio</h3>
+<p style="font-size:12px;color:var(--color-text-secondary);margin:0;line-height:1.5">Toda skill existe identica em <code>.agents/skills/</code> e <code>.claude/skills/</code>. Zero excecao. O Builders Hub roda em dois runtimes — se uma skill so vive num lado, ela nao existe para o outro runtime.</p>
+</div>
+
+<div style="background:#fafafa;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:14px 18px;border-left:3px solid #555">
+<h3 style="font-size:13px;font-weight:700;margin-bottom:4px;color:#555">Prefixo Obrigatorio</h3>
+<p style="font-size:12px;color:var(--color-text-secondary);margin:0;line-height:1.5"><code>{papel}-{nome}</code> ou <code>{fonte}-{nome}</code>. Sem prefixo, a skill nao e compartilhavel nem aparece no REGISTRY. Isso mantem o catalogo navegavel por funcao e por origem.</p>
+</div>
+
+<div style="background:#fafafa;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:14px 18px;border-left:3px solid #b91c1c">
+<h3 style="font-size:13px;font-weight:700;margin-bottom:4px;color:#b91c1c">Camadas Rígidas</h3>
+<p style="font-size:12px;color:var(--color-text-secondary);margin:0;line-height:1.5">CEO -> Opensquad -> Orquestradores -> Especialistas -> Skills -> MCPs. Cada camada se comunica apenas com a adjacente. Especialista nao fala com usuario. CEO nao executa — delega.</p>
+</div>
+
+<div style="background:#fafafa;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:14px 18px;border-left:3px solid #555">
+<h3 style="font-size:13px;font-weight:700;margin-bottom:4px;color:#555">Framework V4 como DNA</h3>
+<p style="font-size:12px;color:var(--color-text-secondary);margin:0;line-height:1.5">TOC, 4Vs, 4 Pilares, FPA, Medico vs Garcom, Logical Thinking estao embedados nas skills — nao como consulta externa, mas como logica interna de execucao.</p>
+</div>
+
+<div style="background:#fafafa;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:14px 18px;border-left:3px solid #b91c1c">
+<h3 style="font-size:13px;font-weight:700;margin-bottom:4px;color:#b91c1c">Contexto e Pre-requisito</h3>
+<p style="font-size:12px;color:var(--color-text-secondary);margin:0;line-height:1.5"><code>/contexto</code> antes de qualquer trabalho com cliente. Agente sem contexto e agente cego — nao sabe quem e o cliente, quais as apostas, qual o ultimo combinado.</p>
+</div>
+
+<div style="background:#fafafa;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:14px 18px;border-left:3px solid #555">
+<h3 style="font-size:13px;font-weight:700;margin-bottom:4px;color:#555">Agent-First</h3>
+<p style="font-size:12px;color:var(--color-text-secondary);margin:0;line-height:1.5">Skills sao instrucoes que agentes seguem. Nao sao scripts standalone. Uma skill sem um agente para executa-la e um livro sem leitor — conhecimento parado.</p>
+</div>
+
+<div style="background:#fafafa;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:14px 18px;border-left:3px solid #b91c1c">
+<h3 style="font-size:13px;font-weight:700;margin-bottom:4px;color:#b91c1c">Seguranca por Design</h3>
+<p style="font-size:12px;color:var(--color-text-secondary);margin:0;line-height:1.5">Tokens nunca versionados. Dados de cliente so no Google Drive e Ekyte. Logs de sessao em <code>log/</code> (gitignored, limpeza periodica). Cada recurso tem matriz de acesso definida.</p>
+</div>
+
+<div style="background:#fafafa;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:14px 18px;border-left:3px solid #555">
+<h3 style="font-size:13px;font-weight:700;margin-bottom:4px;color:#555">Custo Zero de Inferencia</h3>
+<p style="font-size:12px;color:var(--color-text-secondary);margin:0;line-height:1.5"><code>deepseek-v4-flash-free</code> como modelo padrao, <code>gemini-2.5-flash</code> para geracao HTML/PDF. Toda a operacao de 37 agentes roda com custo zero de API. Sem surpresa no fim do mes.</p>
+</div>
+
+<div style="background:#fafafa;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:14px 18px;border-left:3px solid #b91c1c">
+<h3 style="font-size:13px;font-weight:700;margin-bottom:4px;color:#b91c1c">Ekyte como Memoria Viva</h3>
+<p style="font-size:12px;color:var(--color-text-secondary);margin:0;line-height:1.5">Tasks, comentarios e historico = estado compartilhado entre agentes e squads. O que um agente aprendeu numa sessao fica registrado para o proximo que passar. Memoria de curto prazo: sessao. Longo prazo: Ekyte.</p>
+</div>
+
+<div style="background:#fafafa;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:14px 18px;border-left:3px solid #555">
+<h3 style="font-size:13px;font-weight:700;margin-bottom:4px;color:#555">Mission Control como Fonte da Verdade</h3>
+<p style="font-size:12px;color:var(--color-text-secondary);margin:0;line-height:1.5">OKRs, apostas vivas/mortas, combinados, personas, historico de check-ins. Tudo que importa sobre um cliente esta no Mission Control. Se nao esta la, nao aconteceu.</p>
+</div>
+
+<div style="background:#fafafa;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:14px 18px;border-left:3px solid #b91c1c">
+<h3 style="font-size:13px;font-weight:700;margin-bottom:4px;color:#b91c1c">CEO e a Camada Mais Alta</h3>
+<p style="font-size:12px;color:var(--color-text-secondary);margin:0;line-height:1.5"><code>@dener-lippert</code> diagnostica com TOC e delega para orquestradores. Nunca executa direto. CEO que executa tarefa de especialista e gargalo — esta premisa impede essa tentacao.</p>
+</div>
+
+<div style="background:#fafafa;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:14px 18px;border-left:3px solid #555">
+<h3 style="font-size:13px;font-weight:700;margin-bottom:4px;color:#555">Time Valida no Uso</h3>
+<p style="font-size:12px;color:var(--color-text-secondary);margin:0;line-height:1.5">Refinamento tecnico entregue. Ajustes vem do feedback real, nao de especulacao. Cada squad testa no dia a dia, e o uso real dita o que precisa mudar. Se a skill nao e usada, ela nao e util.</p>
+</div>
+
+</div>
+
+<div style="background:#f5f5f5;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:14px 18px;font-size:12.5px;color:var(--color-text-secondary);margin-top:8px">
+<strong>Documento relacional:</strong> <code>docs/PRINCIPIOS-V4.md</code> — metodologia central V4 (4Vs, 4 Pilares, FPA, TOC, Medico vs Garcom, Logical Thinking).
+</div>
+</section>
 
 <!-- ═══════════════════════════════════════════════ -->
 <!-- 01 · O ECOSSISTEMA -->
@@ -840,7 +921,53 @@ body {
 </section>
 
 <!-- ═══════════════════════════════════════════════ -->
-<!-- 08 · VALIDAÇÃO PELO TIME -->
+<!-- 08 · GOVERNANÇA -->
+<!-- ═══════════════════════════════════════════════ -->
+<section id="governanca">
+<h1 class="section-title">Governança do Sistema de Times</h1>
+
+<h2>Mecanismos de Quality Gate</h2>
+
+<table>
+<tr><th>Mecanismo</th><th>O Que Garante</th><th>Como Funciona</th></tr>
+<tr><td><code>@revisor</code> como quality gate</td><td>Nenhum output chega ao usuario sem validacao</td><td>Orquestrador sempre passa por <code>@revisor</code> antes de entregar</td></tr>
+<tr><td>Cadeia de orquestracao</td><td>Especialista nunca age sem contexto</td><td>Orquestrador passa briefing completo + expectativas</td></tr>
+<tr><td>Registro no Ekyte</td><td>Toda acao tem rastro</td><td><code>create_task</code> + <code>create_task_comment</code> documentam cada passo</td></tr>
+<tr><td>Flag automatica</td><td>Problemas detectados antes de virar crise</td><td><code>@flag-*</code> rodam periodicamente e disparam tickets</td></tr>
+<tr><td>n8n como backbone</td><td>Workflows criticos nunca dependem de humano</td><td>Briefing do comite, flags, relatorios — tudo automatico</td></tr>
+<tr><td>LiteLLM por squad</td><td>Cada squad gasta dentro do budget</td><td>Chave virtual com rate limit e teto mensal</td></tr>
+</table>
+
+<h2>Matriz de Responsabilidades</h2>
+
+<table>
+<tr><th>Quem</th><th>Pensa</th><th>Decide</th><th>Executa</th><th>Valida</th><th>Registra</th></tr>
+<tr><td>Humano</td><td>Direcao</td><td>Aprova</td><td>—</td><td>Final</td><td>—</td></tr>
+<tr><td>Orquestrador</td><td>Estrategia</td><td>Time ideal</td><td>—</td><td>—</td><td>Consolida</td></tr>
+<tr><td>Especialista</td><td>—</td><td>—</td><td>Tatica</td><td>—</td><td>—</td></tr>
+<tr><td>Revisor</td><td>—</td><td>—</td><td>—</td><td>Quality gate</td><td>—</td></tr>
+<tr><td>n8n</td><td>—</td><td>—</td><td>Rotina</td><td>—</td><td>Automatico</td></tr>
+</table>
+
+<h2>Regras de Engajamento</h2>
+
+<ol>
+<li><strong>Nunca pule o orquestrador.</strong> Usuario nao fala diretamente com especialista — o orquestrador monta o time certo.</li>
+<li><strong>Sempre passe contexto.</strong> Orquestrador nunca invoca especialista sem briefing claro do que precisa.</li>
+<li><strong>Sempre valide.</strong> <code>@revisor</code> antes de entregar para o usuario. Sem excecao.</li>
+<li><strong>Sempre registre.</strong> Toda acao no Ekyte. Comentario explicando origem. Link para artefato no Drive.</li>
+<li><strong>Um orquestrador por demanda.</strong> Se <code>@cmoorch</code> acionou <code>@content-studio</code>, o Content Studio orquestra os especialistas — o CMO nao micro-gerencia.</li>
+<li><strong>Flag e ticket.</strong> Toda flag detectada vira ticket no Ekyte com prioridade e responsavel.</li>
+<li><strong>Nunca duplique esforco.</strong> Antes de invocar, verifique se ja existe task/comentario sobre o assunto.</li>
+</ol>
+
+<div style="background:#f5f5f5;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:14px 18px;font-size:13px;color:var(--color-text-secondary);margin-top:16px">
+<strong>Documento completo:</strong> <code>docs/agent-hub/04-operacional/02-seguranca.md</code> — Matriz de acesso, politicas de token, dados de clientes e procedimentos de emergencia.
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- 09 · VALIDAÇÃO PELO TIME -->
 <!-- ═══════════════════════════════════════════════ -->
 <section id="validacao">
 <h1 class="section-title">Validação — Time Valida no Uso</h1>
@@ -917,7 +1044,7 @@ body {
 </section>
 
 <!-- ═══════════════════════════════════════════════ -->
-<!-- 09 · DOWNLOADS -->
+<!-- 10 · DOWNLOADS -->
 <!-- ═══════════════════════════════════════════════ -->
 <section id="downloads">
 <h1 class="section-title">Downloads — Skills Export + Documentos</h1>
@@ -969,7 +1096,7 @@ function toggleTeam(header) {
   var specs = header.nextElementSibling;
   if (specs) specs.classList.toggle('open');
 }
-document.querySelectorAll('.sidebar .nav-link[data-section]').forEach(function(link) {
+document.querySelectorAll('.sidebar .nav-link[data-section], .header a[data-section]').forEach(function(link) {
   link.addEventListener('click', function(e) {
     e.preventDefault();
     var section = document.getElementById(this.getAttribute('data-section'));
