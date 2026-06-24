@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Hub V4 — Ekyte no Centro da Arquitetura</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+  }
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+    color: #f8fafc;
+  }
+  .subtitle {
+    color: #94a3b8;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+  }
+  .diagram-wrapper {
+    max-width: 1100px;
+    width: 100%;
+    position: relative;
+  }
+  svg { width: 100%; height: auto; display: block; }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+    padding: 1rem 1.5rem;
+    background: #1e293b;
+    border-radius: 12px;
+    max-width: 1100px;
+    width: 100%;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: #cbd5e1;
+  }
+  .legend-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .legend-line {
+    width: 28px; height: 2px; flex-shrink: 0;
+  }
+
+  /* Tooltips */
+  .tooltip {
+    position: fixed;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    max-width: 320px;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+  .tooltip.visible { opacity: 1; }
+  .tooltip strong { color: #f8fafc; display: block; margin-bottom: 0.25rem; }
+  .tooltip .tag {
+    display: inline-block;
+    background: #334155;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    margin-top: 0.25rem;
+    color: #94a3b8;
+  }
+
+  @media (max-width: 640px) {
+    h1 { font-size: 1.1rem; }
+    .legend { flex-direction: column; gap: 0.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Agent Hub V4 — Arquitetura com Ekyte no Centro</h1>
+<p class="subtitle">Passe o mouse sobre cada componente para ver detalhes</p>
+
+<div class="diagram-wrapper">
+<svg viewBox="0 0 1000 700" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+    </filter>
+    <marker id="arrow-blue" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="#60a5fa"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="#4ade80"/>
+    </marker>
+    <marker id="arrow-purple" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="#c084fc"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="#fb923c"/>
+    </marker>
+    <marker id="arrow-cyan" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="#22d3ee"/>
+    </marker>
+    <marker id="arrow-gray" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="#64748b"/>
+    </marker>
+    <radialGradient id="ekyte-grad" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </radialGradient>
+    <radialGradient id="ekyte-glow" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background glow around Ekyte -->
+  <circle cx="500" cy="320" r="200" fill="url(#ekyte-glow)" pointer-events="none"/>
+
+  <!-- ============ CONNECTIONS ============ -->
+
+  <!-- Layer lines: Usuários → OpenCode -->
+  <path d="M500,60 L500,115" stroke="#64748b" stroke-width="2" stroke-dasharray="4,3" fill="none" marker-end="url(#arrow-gray)"/>
+  <path d="M360,60 L420,115" stroke="#64748b" stroke-width="2" stroke-dasharray="4,3" fill="none" marker-end="url(#arrow-gray)"/>
+  <path d="M640,60 L580,115" stroke="#64748b" stroke-width="2" stroke-dasharray="4,3" fill="none" marker-end="url(#arrow-gray)"/>
+
+  <!-- OpenCode → Ekyte -->
+  <path d="M500,175 L500,245" stroke="#60a5fa" stroke-width="2.5" fill="none" marker-end="url(#arrow-blue)"/>
+  <text x="510" y="215" fill="#60a5fa" font-size="11" font-weight="500">MCP (65 tools)</text>
+
+  <!-- Ekyte → n8n (bidirectional) -->
+  <path d="M320,380 L240,480" stroke="#22d3ee" stroke-width="2" fill="none" marker-end="url(#arrow-cyan)"/>
+  <path d="M245,490 L325,390" stroke="#22d3ee" stroke-width="2" fill="none" marker-end="url(#arrow-cyan)"/>
+  <text x="200" y="440" fill="#22d3ee" font-size="11" font-weight="500">Webhook</text>
+
+  <!-- Ekyte → Drive -->
+  <path d="M680,380 L760,480" stroke="#c084fc" stroke-width="2" fill="none" marker-end="url(#arrow-purple)"/>
+  <path d="M755,490 L675,390" stroke="#c084fc" stroke-width="2" fill="none" stroke-dasharray="5,3" marker-end="url(#arrow-purple)"/>
+  <text x="688" y="445" fill="#c084fc" font-size="11" font-weight="500">Eventos / Docs</text>
+
+  <!-- OpenCode → Drive (MCP) -->
+  <path d="M580,160 L760,260" stroke="#c084fc" stroke-width="2" fill="none" marker-end="url(#arrow-purple)"/>
+  <text x="650" y="200" fill="#c084fc" font-size="11" font-weight="500">Drive MCP</text>
+
+  <!-- OpenCode → LiteLLM -->
+  <path d="M420,160 L240,260" stroke="#4ade80" stroke-width="2" fill="none" marker-end="url(#arrow-green)"/>
+  <text x="290" y="200" fill="#4ade80" font-size="11" font-weight="500">LiteLLM API</text>
+
+  <!-- OpenCode → n8n -->
+  <path d="M460,175 L220,400" stroke="#22d3ee" stroke-width="1.5" fill="none" stroke-dasharray="4,3" marker-end="url(#arrow-cyan)"/>
+  <text x="320" y="310" fill="#22d3ee" font-size="10" font-weight="500">Webhook</text>
+
+  <!-- n8n → Drive -->
+  <path d="M300,560 L400,600" stroke="#c084fc" stroke-width="1.5" fill="none" marker-end="url(#arrow-purple)"/>
+  <text x="310" y="588" fill="#c084fc" font-size="10">Salva relatórios</text>
+
+  <!-- n8n → Ekyte (write back) -->
+  <path d="M280,560 L350,460" stroke="#22d3ee" stroke-width="1.5" fill="none" stroke-dasharray="4,3" marker-end="url(#arrow-cyan)"/>
+
+  <!-- Drive → OpenCode (MCP response) -->
+  <path d="M755,270 L580,175" stroke="#c084fc" stroke-width="1.5" fill="none" stroke-dasharray="3,3"/>
+
+  <!-- ============ LAYER 1: USERS ============ -->
+  <rect x="335" y="20" width="130" height="40" rx="20" fill="#334155" stroke="#64748b" stroke-width="1.5" filter="url(#shadow)" class="hover-trigger" data-tip="account"/>
+  <text x="400" y="45" fill="#f8fafc" font-size="13" font-weight="600" text-anchor="middle">👤 Squad Account</text>
+
+  <rect x="200" y="20" width="130" height="40" rx="20" fill="#334155" stroke="#64748b" stroke-width="1.5" filter="url(#shadow)" class="hover-trigger"/>
+  <text x="265" y="45" fill="#f8fafc" font-size="13" font-weight="600" text-anchor="middle">👤 Squad GT</text>
+
+  <rect x="470" y="20" width="130" height="40" rx="20" fill="#334155" stroke="#64748b" stroke-width="1.5" filter="url(#shadow)" class="hover-trigger"/>
+  <text x="535" y="45" fill="#f8fafc" font-size="13" font-weight="600" text-anchor="middle">👤 Squad Copy</text>
+
+  <rect x="610" y="20" width="150" height="40" rx="20" fill="#334155" stroke="#64748b" stroke-width="1.5" filter="url(#shadow)" class="hover-trigger"/>
+  <text x="685" y="45" fill="#f8fafc" font-size="13" font-weight="600" text-anchor="middle">👤 Coordenação</text>
+
+  <!-- ============ LAYER 2: OPENCODE WEB ============ -->
+  <rect x="370" y="115" width="260" height="60" rx="12" fill="#1e293b" stroke="#60a5fa" stroke-width="2" filter="url(#shadow)" class="hover-trigger" data-tip="opencode"/>
+  <text x="500" y="140" fill="#60a5fa" font-size="14" font-weight="700" text-anchor="middle">OpenCode Web</text>
+  <text x="500" y="160" fill="#94a3b8" font-size="11" text-anchor="middle">Interface de Agentes IA</text>
+
+  <!-- Agent tags inside OpenCode -->
+  <rect x="385" y="168" width="70" height="18" rx="9" fill="#60a5fa" opacity="0.2"/>
+  <text x="420" y="181" fill="#93c5fd" font-size="9" text-anchor="middle">@account</text>
+  <rect x="462" y="168" width="50" height="18" rx="9" fill="#60a5fa" opacity="0.2"/>
+  <text x="487" y="181" fill="#93c5fd" font-size="9" text-anchor="middle">@copy</text>
+  <rect x="520" y="168" width="40" height="18" rx="9" fill="#60a5fa" opacity="0.2"/>
+  <text x="540" y="181" fill="#93c5fd" font-size="9" text-anchor="middle">@gt</text>
+  <rect x="565" y="168" width="55" height="18" rx="9" fill="#60a5fa" opacity="0.2"/>
+  <text x="592" y="181" fill="#93c5fd" font-size="9" text-anchor="middle">@csm</text>
+
+  <!-- ============ LAYER 3: EKYTE (CENTER) ============ -->
+  <circle cx="500" cy="320" r="95" fill="url(#ekyte-grad)" stroke="#3b82f6" stroke-width="3" filter="url(#glow)" class="hover-trigger" data-tip="ekyte"/>
+  <text x="500" y="300" fill="#fff" font-size="20" font-weight="800" text-anchor="middle" filter="url(#shadow)">EKYTE</text>
+  <text x="500" y="320" fill="#bfdbfe" font-size="11" text-anchor="middle">♥ Coração da Operação</text>
+
+  <!-- Module badges around Ekyte -->
+  <rect x="410" y="395" width="80" height="20" rx="10" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1" opacity="0.9"/>
+  <text x="450" y="409" fill="#93c5fd" font-size="9" text-anchor="middle">📋 Tarefas</text>
+  <rect x="500" y="395" width="80" height="20" rx="10" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1" opacity="0.9"/>
+  <text x="540" y="409" fill="#93c5fd" font-size="9" text-anchor="middle">🎫 Tickets</text>
+  <rect x="420" y="240" width="80" height="20" rx="10" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1" opacity="0.9"/>
+  <text x="460" y="254" fill="#93c5fd" font-size="9" text-anchor="middle">🏗 Projetos</text>
+  <rect x="510" y="240" width="80" height="20" rx="10" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1" opacity="0.9"/>
+  <text x="550" y="254" fill="#93c5fd" font-size="9" text-anchor="middle">⏱ Horas</text>
+
+  <!-- ============ LAYER 4: PERIPHERAL COMPONENTS ============ -->
+
+  <!-- n8n (bottom left) -->
+  <rect x="145" y="495" width="190" height="60" rx="12" fill="#1e293b" stroke="#22d3ee" stroke-width="2" filter="url(#shadow)" class="hover-trigger" data-tip="n8n"/>
+  <text x="240" y="520" fill="#22d3ee" font-size="14" font-weight="700" text-anchor="middle">n8n</text>
+  <text x="240" y="540" fill="#94a3b8" font-size="11" text-anchor="middle">Motor de Automação</text>
+
+  <!-- Drive (bottom right) -->
+  <rect x="665" y="495" width="190" height="60" rx="12" fill="#1e293b" stroke="#c084fc" stroke-width="2" filter="url(#shadow)" class="hover-trigger" data-tip="drive"/>
+  <text x="760" y="520" fill="#c084fc" font-size="14" font-weight="700" text-anchor="middle">Google Drive</text>
+  <text x="760" y="540" fill="#94a3b8" font-size="11" text-anchor="middle">Knowledge Base</text>
+
+  <!-- LiteLLM (top left quadrant, below OpenCode) -->
+  <rect x="145" y="250" width="190" height="60" rx="12" fill="#1e293b" stroke="#4ade80" stroke-width="2" filter="url(#shadow)" class="hover-trigger" data-tip="litellm"/>
+  <text x="240" y="275" fill="#4ade80" font-size="14" font-weight="700" text-anchor="middle">LiteLLM</text>
+  <text x="240" y="295" fill="#94a3b8" font-size="11" text-anchor="middle">Gateway de Modelos</text>
+
+  <!-- Google People MCP (top right) -->
+  <rect x="665" y="250" width="190" height="60" rx="12" fill="#1e293b" stroke="#fbbf24" stroke-width="2" filter="url(#shadow)" class="hover-trigger" data-tip="people"/>
+  <text x="760" y="275" fill="#fbbf24" font-size="14" font-weight="700" text-anchor="middle">Google People MCP</text>
+  <text x="760" y="295" fill="#94a3b8" font-size="11" text-anchor="middle">Contatos e Perfis</text>
+
+  <!-- Ekyte → People -->
+  <path d="M590,320 L665,310" stroke="#fbbf24" stroke-width="1.5" fill="none" marker-end="url(#arrow-gray)"/>
+
+  <!-- ============ BOTTOM: AUTOMATION ROW ============ -->
+  <rect x="145" y="585" width="190" height="40" rx="10" fill="#1e293b" stroke="#22d3ee" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="240" y="610" fill="#22d3ee" font-size="10" text-anchor="middle">🔄 Meta Ads · Slack · Email</text>
+
+  <rect x="370" y="585" width="260" height="40" rx="10" fill="#1e293b" stroke="#c084fc" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="500" y="610" fill="#c084fc" font-size="10" text-anchor="middle">📁 Briefings · Relatórios · Templates</text>
+
+  <rect x="665" y="585" width="190" height="40" rx="10" fill="#1e293b" stroke="#4ade80" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="760" y="610" fill="#4ade80" font-size="10" text-anchor="middle">🤖 GPT · Claude · Gemini</text>
+
+  <!-- ============ INTEGRATION INFO BOXES ============ -->
+  <!-- MCP box -->
+  <rect x="130" y="130" width="120" height="35" rx="8" fill="transparent" stroke="#60a5fa" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="190" y="146" fill="#60a5fa" font-size="9" font-weight="600" text-anchor="middle">‍🔌 MCP Protocol</text>
+  <text x="190" y="158" fill="#64748b" font-size="8" text-anchor="middle">Tools sob demanda</text>
+
+  <!-- OAuth box -->
+  <rect x="750" y="130" width="120" height="35" rx="8" fill="transparent" stroke="#c084fc" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="810" y="146" fill="#c084fc" font-size="9" font-weight="600" text-anchor="middle">🔐 OAuth 2.0</text>
+  <text x="810" y="158" fill="#64748b" font-size="8" text-anchor="middle">Cada usuário autentica</text>
+
+</svg>
+</div>
+
+<!-- Legend -->
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div> Ekyte (centro)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#60a5fa"></div> OpenCode Web</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#4ade80"></div> LiteLLM</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#c084fc"></div> Google Drive MCP</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#22d3ee"></div> n8n</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#fbbf24"></div> Google People MCP</div>
+  <div class="legend-item"><div class="legend-line" style="background:#64748b"></div> Acesso do squad</div>
+  <div class="legend-item"><div class="legend-line" style="background:#60a5fa"></div> Integração via MCP</div>
+  <div class="legend-item"><div class="legend-line" style="background:#22d3ee"></div> Automação n8n</div>
+  <div class="legend-item"><div class="legend-line" style="background:#c084fc" style="stroke-dasharray:4,3"></div> Leitura de docs</div>
+</div>
+
+<!-- Tooltip -->
+<div class="tooltip" id="tooltip">
+  <strong id="tt-title">Componente</strong>
+  <p id="tt-desc">Descrição do componente</p>
+  <span class="tag" id="tt-tag">tag</span>
+</div>
+
+<script>
+const tooltips = {
+  ekyte: {
+    title: 'Ekyte — ♥ Coração da Operação',
+    desc: 'Tudo passa por aqui: tarefas, projetos, tickets, horas, workflows, squads. 65 tools MCP expostas para os agentes. O OpenCode lê e escreve no Ekyte via MCP. O n8n dispara e escuta eventos do Ekyte.',
+    tag: 'central'
+  },
+  opencode: {
+    title: 'OpenCode Web — Interface de Agentes',
+    desc: 'Browser-based. Cada squad acessa pelo navegador. Os agentes (@account, @copy, @gt, @csm) orquestram as tools do Ekyte MCP + Drive MCP + LiteLLM em um fluxo único.',
+    tag: 'agentes IA'
+  },
+  litellm: {
+    title: 'LiteLLM — Gateway de Modelos',
+    desc: 'Proxy que unifica OpenAI, Anthropic, DeepSeek, Gemini em uma API. Chaves virtuais por squad com rate limit e teto de gastos. Fallback automático entre modelos.',
+    tag: 'governança'
+  },
+  drive: {
+    title: 'Google Drive — Knowledge Base',
+    desc: 'Documentos, briefings, relatórios, planilhas. O agente acessa via Drive MCP (8 tools). É a fonte de contexto para as tarefas do Ekyte.',
+    tag: 'documentos'
+  },
+  n8n: {
+    title: 'n8n — Motor de Automação',
+    desc: 'Workflows headless: relatórios semanais, briefing do comitê, flags CSM, sync Drive. Escuta webhooks do Ekyte e escreve resultados de volta. Tudo em background.',
+    tag: 'automação'
+  },
+  people: {
+    title: 'Google People MCP',
+    desc: 'Consulta contatos e perfis de clientes direto do Google. Integra com tarefas do Ekyte para identificar responsáveis e stakeholders.',
+    tag: 'contatos'
+  }
+};
+
+const tooltipEl = document.getElementById('tooltip');
+const ttTitle = document.getElementById('tt-title');
+const ttDesc = document.getElementById('tt-desc');
+const ttTag = document.getElementById('tt-tag');
+
+document.querySelectorAll('.hover-trigger').forEach(el => {
+  el.addEventListener('mouseenter', e => {
+    const key = el.dataset.tip || 'opencode';
+    const data = tooltips[key];
+    if (!data) return;
+    ttTitle.textContent = data.title;
+    ttDesc.textContent = data.desc;
+    ttTag.textContent = '🔷 ' + data.tag;
+    tooltipEl.classList.add('visible');
+  });
+  el.addEventListener('mousemove', e => {
+    const x = e.clientX + 16;
+    const y = e.clientY + 16;
+    const maxX = window.innerWidth - 340;
+    const maxY = window.innerHeight - 140;
+    tooltipEl.style.left = Math.min(x, maxX) + 'px';
+    tooltipEl.style.top = Math.min(y, maxY) + 'px';
+  });
+  el.addEventListener('mouseleave', () => {
+    tooltipEl.classList.remove('visible');
+  });
+});
+</script>
+
+</body>
+</html>
