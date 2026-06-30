@@ -87,7 +87,7 @@
 
 | Skill | O que faz | Autor | v |
 |---|---|---|---|
-| `gt-media-buyer-completo` | >- | @marcoslrvusa | 1.0.0 |
+| `gt-gestor-de-trafego-completo` | >- | @marcoslrvusa | 1.0.0 |
 | `gt-relatorios-trafego` | Relatorio consolidado de trafego multicanal — Google Ads, Meta Ads, Bing Ads. Gera reports HTML/JSON, envia... | @v4team | 1.0.0 |
 
 ## ✍️ Copy

@@ -118,6 +118,6 @@ Se o usuario pediu analise, Claude processa os dados e entrega:
 ## Conexao com outras skills
 
 - **[[v4mos-dados-meta-ads]]** — alternativa quando V4mos esta disponivel para Meta Ads (mais granular)
-- **[[gt-media-buyer-completo]]** — consome este relatorio para analise preditiva e planejamento
+- **[[gt-gestor-de-trafego-completo]]** — consome este relatorio para analise preditiva e planejamento
 - **[[analytics-tracking]]** — valida se os eventos estao configurados corretamente
 - **[[account-checkin-review]]** — alimenta check-ins com dados de trafego reais
