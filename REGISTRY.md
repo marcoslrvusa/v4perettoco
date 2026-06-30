@@ -1,13 +1,13 @@
 # Builders Hub — Registry
 
-**62 skills** · última atualização: 2026-06-30
+**67 skills** · última atualização: 2026-06-30
 
 > Catálogo auto-gerado por `scripts/build-registry.py`. Não edite à mão — rode `/sync-hub` ou envie PR pela `/compartilhar-skill`.
 
 ## Índice
 
 - [🛠 Base (setup/fluxo)](#base) (7)
-- [🌐 Geral](#geral) (46)
+- [🌐 Geral](#geral) (50)
 - [🎯 Gestao de Trafego](#gt) (2)
 - [✍️ Copy](#copy) (2)
 - [🤝 Account](#account) (5)
@@ -19,7 +19,7 @@
 <a id="base"></a>
 
 | Skill | O que faz | Autor | v |
-|---|---|---|---|---|
+|---|---|---|---|
 | `compartilhar-skill` | Empacota uma skill local e abre Pull Request no Builders Hub publico automaticamente. Use quando o usuario... | — | — |
 | `contexto` | Le todos os arquivos em uma KB (cliente, squad ou projeto), gera CLAUDE.md e AGENTS.md, e quando for client... | — | — |
 | `criador-de-skills` | Cria skills novas e melhora skills existentes no Builders Hub. Use quando o usuario quiser criar uma skill... | — | — |
@@ -36,6 +36,7 @@
 |---|---|---|---|
 | `ab-test-setup` | When the user wants to plan, design, or implement an A/B test or experiment, or build a growth experimentat... | — | 1.2.0 |
 | `ad-creative` | When the user wants to generate, iterate, or scale ad creative — headlines, descriptions, primary text, or... | — | 1.1.0 |
+| `ai-search` | Setor completo de AI Search (AEO + GEO + AI SEO) — diagnose, implementa e gerencia a presenca de marcas em... | — | — |
 | `ai-seo` | When the user wants to optimize content for AI search engines, get cited by LLMs, or appear in AI-generated... | — | 1.2.0 |
 | `analytics-tracking` | When the user wants to set up, improve, or audit analytics tracking and measurement. Also use when the user... | — | 1.1.0 |
 | `aso-audit` | When the user wants to audit or optimize an App Store or Google Play listing. Also use when the user mentio... | — | 1.0.0 |
@@ -52,7 +53,7 @@
 | `email-sequence` | When the user wants to create or optimize an email sequence, drip campaign, automated email flow, or lifecy... | — | 1.1.0 |
 | `form-cro` | When the user wants to optimize any form that is NOT signup/registration — including lead capture forms, co... | — | 1.1.0 |
 | `free-tool-strategy` | When the user wants to plan, evaluate, or build a free tool for marketing purposes — lead generation, SEO v... | — | 1.1.0 |
-| `geral-ai-visibility` | Servico completo de AI Visibility (AI SEO / GEO) — diagnose, implementa e gere a presenca de marcas em resp... | — | — |
+| `geral-ai-visibility` | Skill migrada para ai-search. Use ai-search para acesso ao setor completo de AI Search (AEO + GEO + AI SEO). | — | — |
 | `geral-brainstormar-sobre-minha-funcao` | Entrevista o usuario sobre seu trabalho para descobrir como usar IA no dia a dia dele. Configura agenda, an... | — | — |
 | `geral-frontend-design` | Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the... | — | — |
 | `geral-log-sessoes` | >- | @Marcos Luciano Rodrigues Vieira | 1.0.0 |
@@ -62,8 +63,9 @@
 | `lead-magnets` | When the user wants to create, plan, or optimize a lead magnet for email capture or lead generation. Also u... | — | 1.0.0 |
 | `marketing-ideas` | When the user needs marketing ideas, inspiration, or strategies for their SaaS or software product. Also us... | — | 1.1.0 |
 | `marketing-psychology` | When the user wants to apply psychological principles, mental models, or behavioral science to marketing. A... | — | 1.1.0 |
-| `novo-squad` | Cria uma nova pasta de squad em squads/ com README de membros e estrutura padrao. Pergunta nome do squad e... | — | — |
+| `novo-squad` | Cria uma nova pasta de squad em squads/ com entry point e estrutura padrao. Pergunta nome do squad e quem e... | — | — |
 | `onboarding-cro` | When the user wants to optimize post-signup onboarding, user activation, first-run experience, or time-to-v... | — | 1.1.0 |
+| `opensquad` | Opensquad — Create and run AI agent squads for your business. Acione quando o usuário rodar /opensquad. | — | — |
 | `page-cro` | When the user wants to optimize, improve, or increase conversions on any marketing page — including homepag... | — | 1.1.0 |
 | `paid-ads` | When the user wants help with paid advertising campaigns on Google Ads, Meta (Facebook/Instagram), LinkedIn... | — | 1.2.0 |
 | `paywall-upgrade-cro` | When the user wants to create or optimize in-app paywalls, upgrade screens, upsell modals, or feature gates... | — | 1.1.0 |
@@ -79,6 +81,8 @@
 | `signup-flow-cro` | When the user wants to optimize signup, registration, account creation, or trial activation flows. Also use... | — | 1.1.0 |
 | `site-architecture` | When the user wants to plan, map, or restructure their website's page hierarchy, navigation, URL structure,... | — | 1.1.0 |
 | `social-content` | When the user wants help creating, scheduling, or optimizing social media content for LinkedIn, Twitter/X,... | — | 1.3.0 |
+| `supabase` | Use when doing ANY task involving Supabase. Triggers: Supabase products (Database, Auth, Edge Functions, Re... | @supabase | 0.1.2 |
+| `supabase-postgres-best-practices` | Postgres performance optimization and best practices from Supabase. Use this skill when writing, reviewing,... | @supabase | 1.1.1 |
 | `video` | When the user wants to create, generate, or produce video content using AI tools or programmatic frameworks... | — | 1.0.0 |
 
 ## 🎯 Gestao de Trafego
