@@ -25,7 +25,6 @@ Este repositório é o hub open-source de skills de IA da V4. Funciona como base
 - [[geral-brainstormar-sobre-minha-funcao]] — Descobre onde IA agrega mais valor no dia a dia.
 - [[geral-sabatina]] — Stress-test de planos.
 - [[geral-frontend-design]] — Gera interfaces frontend de alta qualidade (pra skills que produzem UI).
-- [[dener-lippert]] — Clone estratégico do CEO V4 — Dener Lippert, o Cientista do Marketing. Diagnóstico TOC, análise de DRE, logical thinking, business strategy. Use `/dener` ou `@dener-lippert` pra consultar o cérebro do CEO.
 - [[PRINCIPIOS-V4]] — Documento central de princípios V4 (4Vs, 4 Pilares, FPA, TOC, Médico vs Garçom). Consulte este documento ao refinar skills ou criar agentes para manter consistência metodológica.
 
 ## Skills compartilhadas (hub)
@@ -43,6 +42,7 @@ Consulte [[REGISTRY]] pra ver tudo que o time já compartilhou. Pra contribuir v
 
 - Sempre responda em português brasileiro.
 - Quando o usuário pedir pra trabalhar com um cliente, entre em `squads/{squad}/clientes/{cliente}/` (caminho obrigatório — cliente sempre dentro de squad). Pra projeto/área, use `bases/{projeto}/`.
+- **Para projetos tech (SEO, SDR IA, infraestrutura):** use `projetos/{funcao}/{projeto}/`. A organização segue as funções do job description do usuário, não a estrutura de squads.
 - Não invente dados. Se não tem a informação na KB, diga que não tem.
 - Quando o usuário fizer algo complexo, processual ou que ficou bom, sugira: "Isso ficou bom. Quer transformar em skill pra reutilizar? Roda [[criador-de-skills]]. Quando estiver redonda, roda [[compartilhar-skill]] pra o time usar também".
 - **Duplo-write obrigatório**: toda skill criada/editada deve existir idêntica em `.claude/skills/{nome}/` E `.agents/skills/{nome}/`. [[criador-de-skills]] faz isso automaticamente; se você editar manualmente, espelhe nos dois. [[sync-hub]] também re-espelha após pull.
@@ -113,6 +113,26 @@ Do not reconstruct `workflowsPath` from environment name/id, instance identifier
 
 Never write `n8nac-config.json`, `~/.n8n-manager`, or n8n-manager secret files by hand.
 <!-- n8n-as-code-end -->
+
+## Perfil do Usuário
+
+- **Função:** Tech Lead — integrações SDR IA (n8n), criação de agentes LLM, infraestrutura VPS/OpenCode, lidera SEO/AIO/GEO
+- **Background:** 12+ anos de SEO, ex-gestor de tráfego, cobriu account manager
+- **Projetos ativos:** `projetos/seo/` (SEO), `projetos/sdr-ia/` (SDR IA), `projetos/infraestrutura/` (tech), `projetos/ai-visibility-v4/` (AIO/GEO)
+- **Ferramentas:** n8n, OpenCode, VPS, WordPress/Elementor, Yoast, WooCommerce, Supabase
+- **Workflows principais:** infraestrutura n8n, agentes LLM, SEO/AIO/GEO, automações SDR
+
+### Mapa de pastas (organização por função)
+
+| Função | Pasta |
+|---|---|
+| SEO | `projetos/seo/clientes/{cliente}/` |
+| SDR IA | `projetos/sdr-ia/` |
+| Infraestrutura tech | `projetos/infraestrutura/` |
+| AI Visibility (AIO/GEO) | `projetos/ai-visibility-v4/` |
+| Squads de clientes (não tech) | `squads/{squad}/clientes/{cliente}/` |
+
+Ao trabalhar com este usuário, sempre busque os projetos em `projetos/` primeiro — a organização segue as funções do job description, não a estrutura de squads.
 
 ## Sistema de Log de Sessões
 
