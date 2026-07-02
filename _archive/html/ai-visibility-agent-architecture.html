@@ -1,0 +1,2787 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arquitetura de Agentes — AI Visibility</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #E31919;
+    --red-dark: #B80F0F;
+    --red-light: #FF2424;
+    --red-gradient: linear-gradient(135deg, #E31919 0%, #FF4D4D 100%);
+    --red-gradient-soft: linear-gradient(135deg, rgba(227,25,25,0.15) 0%, rgba(255,77,77,0.05) 100%);
+    --black: #0A0A0A;
+    --black2: #0E0E0E;
+    --black3: #141414;
+    --black4: #1C1C1C;
+    --black5: #252525;
+    --gray: #2A2A2A;
+    --gray2: #383838;
+    --gray3: #505050;
+    --gray4: #6B6B6B;
+    --white: #FFFFFF;
+    --white3: #B0B0B0;
+    --text-muted: #787878;
+    --glass-bg: rgba(20,20,20,0.6);
+    --glass-border: rgba(255,255,255,0.06);
+    --green: #22C55E;
+    --green-dark: #16A34A;
+    --amber: #D97706;
+    --yellow: #EAB308;
+    --purple: #A855F7;
+    --layer-collect: #92400E;
+    --layer-analyze: #3B1F5E;
+    --layer-validate: #1E5F3A;
+    --layer-deliver: #5F3A1E;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-size: 18px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--red); color: var(--white); }
+
+  /* ===== TOPBAR ===== */
+  .topbar {
+    background: var(--red);
+    padding: 12px 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .topbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .topbar-logo img {
+    height: 75px;
+    width: auto;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    padding: 80px 56px 60px;
+    background: linear-gradient(160deg, var(--black2) 0%, var(--black) 40%, var(--black3) 100%);
+    border-bottom: 1px solid var(--gray);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 900px;
+    background: radial-gradient(circle, rgba(227,25,25,0.05) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(227,25,25,0.12);
+    border: 1px solid rgba(227,25,25,0.25);
+    color: var(--red-light);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(48px, 8vw, 90px);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 span { background: var(--red-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+  .hero-sub {
+    font-size: 21px;
+    color: var(--white3);
+    max-width: 700px;
+    margin: 0 auto 48px;
+    line-height: 1.65;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 60px;
+    align-items: start;
+    position: relative;
+    z-index: 2;
+    text-align: left;
+  }
+
+  .hero-grid .hero-sub { margin: 0 0 36px; }
+
+  .hero-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-visual img {
+    max-width: 340px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 80px rgba(227,25,25,0.2)) drop-shadow(0 0 160px rgba(227,25,25,0.1));
+    transition: transform 0.5s ease, filter 0.5s ease;
+  }
+
+  .hero-visual img:hover {
+    transform: scale(1.05) rotate(-2deg);
+    filter: drop-shadow(0 0 100px rgba(227,25,25,0.3)) drop-shadow(0 0 200px rgba(227,25,25,0.15));
+  }
+
+  /* ===== ANALOGY SECTION ===== */
+  .analogy-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--gray);
+    margin-top: 32px;
+  }
+
+  .analogy-item {
+    background: var(--black3);
+    padding: 36px 32px;
+    position: relative;
+    transition: background 0.3s;
+  }
+
+  .analogy-item:hover { background: var(--black4); }
+
+  .analogy-icon-big {
+    font-size: 40px;
+    margin-bottom: 16px;
+  }
+
+  .analogy-agent {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 19px;
+    font-weight: 800;
+    margin-bottom: 2px;
+  }
+
+  .analogy-role {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .analogy-desc {
+    font-size: 15px;
+    color: var(--white3);
+    line-height: 1.6;
+  }
+
+  .analogy-desc strong { color: var(--white); font-weight: 500; }
+
+  /* ===== NARRATIVE ===== */
+  .narrative-step {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 24px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--gray);
+    align-items: start;
+  }
+
+  .narrative-step:last-child { border-bottom: none; }
+
+  .narrative-time {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--red);
+    text-align: right;
+    padding-top: 4px;
+  }
+
+  .narrative-content {
+    position: relative;
+    padding-left: 28px;
+  }
+
+  .narrative-content::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 12px;
+    width: 10px;
+    height: 10px;
+    background: var(--red);
+    border-radius: 50%;
+  }
+
+  .narrative-who {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    margin-bottom: 8px;
+  }
+
+  .narrative-who.agent { background: rgba(227,25,25,0.1); color: var(--red); border: 1px solid rgba(227,25,25,0.2); }
+  .narrative-who.human { background: rgba(217,119,6,0.1); color: var(--amber); border: 1px solid rgba(217,119,6,0.2); }
+
+  .narrative-what {
+    font-size: 16px;
+    color: var(--white3);
+    line-height: 1.65;
+  }
+
+  .narrative-what strong { color: var(--white); font-weight: 500; }
+
+  .narrative-tech {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 10px;
+    font-family: 'Courier New', monospace;
+    padding: 12px 16px;
+    background: var(--black);
+    border: 1px solid var(--gray);
+    display: inline-block;
+    line-height: 1.5;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  /* ===== TIMELINE VISUAL ===== */
+  .timeline-wrap {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 40px 0;
+  }
+
+  .timeline-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .timeline-label.before { color: var(--text-muted); }
+  .timeline-label.after { color: var(--red); }
+
+  .timeline-bar {
+    height: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .timeline-bar.before {
+    background: repeating-linear-gradient(45deg, var(--black5), var(--black5) 12px, var(--black4) 12px, var(--black4) 24px);
+    border: 1px solid var(--gray);
+    margin-bottom: 8px;
+  }
+
+  .timeline-bar.after { border: 1px solid rgba(227,25,25,0.25); }
+
+  .timeline-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .timeline-fill.before { background: var(--black3); color: var(--text-muted); width: 100%; }
+  .timeline-fill.after { background: var(--red-gradient); color: var(--white); width: 28.6%; }
+
+  .timeline-ticks {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  /* ===== UNDER THE HOOD ===== */
+  .tech-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--gray);
+    margin-top: 40px;
+  }
+
+  .tech-tab {
+    background: var(--black3);
+    padding: 32px;
+    position: relative;
+  }
+
+  .tech-tab-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .tech-tab-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  .tech-code {
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--white3);
+    background: var(--black);
+    padding: 16px 18px;
+    overflow-x: auto;
+    white-space: pre;
+    border: 1px solid var(--black5);
+  }
+
+  .tech-code .hl { color: var(--green); font-weight: 600; }
+  .tech-code .k { color: var(--amber); }
+  .tech-code .s { color: var(--yellow); }
+  .tech-code .c { color: var(--text-muted); font-style: italic; }
+
+  /* ===== HUMAN-AGENT PAIR ===== */
+  .pair-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--gray);
+    max-width: 700px;
+    margin: 32px auto 0;
+  }
+
+  .pair-item {
+    background: var(--black3);
+    padding: 28px;
+    text-align: center;
+  }
+
+  .pair-icon {
+    font-size: 36px;
+    margin-bottom: 10px;
+  }
+
+  .pair-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .pair-label.human { color: var(--amber); }
+  .pair-label.agent { color: var(--red); }
+
+  .pair-task {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+
+  .pair-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: var(--red);
+    background: var(--black3);
+    padding: 0 16px;
+  }
+
+  /* ===== AUTOMATION STAT ===== */
+  .auto-stat {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 28px 48px;
+    background: var(--black3);
+    border: 1px solid var(--gray);
+    position: relative;
+  }
+
+  .auto-stat::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(227,25,25,0.08) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .auto-stat-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 90px;
+    font-weight: 900;
+    background: var(--red-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+
+  .auto-stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  .auto-stat-sub {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin-top: 10px;
+    max-width: 460px;
+    line-height: 1.5;
+  }
+
+  /* ===== SECTION ===== */
+  .section {
+    padding: 80px 56px;
+    border-bottom: 1px solid var(--gray);
+    position: relative;
+  }
+
+  .section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    margin-bottom: 18px;
+  }
+
+  .section-tag.collect { background: rgba(217,119,6,0.12); border: 1px solid rgba(217,119,6,0.25); color: var(--amber); }
+  .section-tag.analyze { background: rgba(168,85,247,0.12); border: 1px solid rgba(168,85,247,0.25); color: var(--purple); }
+  .section-tag.validate { background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.25); color: var(--green); }
+  .section-tag.deliver { background: rgba(234,179,8,0.12); border: 1px solid rgba(234,179,8,0.25); color: var(--yellow); }
+
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(42px, 5.5vw, 58px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+
+  .section-title span { background: var(--red-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+  .section-desc {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 640px;
+    margin: 14px auto 0;
+    line-height: 1.6;
+  }
+
+  /* ===== LAYER ===== */
+  .layer {
+    margin-bottom: 80px;
+    position: relative;
+  }
+
+  .layer:last-child { margin-bottom: 0; }
+
+  .layer-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--gray);
+  }
+
+  .layer-number {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+
+  .layer-number.collect { background: rgba(217,119,6,0.15); color: var(--amber); border: 1px solid rgba(217,119,6,0.3); }
+  .layer-number.analyze { background: rgba(168,85,247,0.15); color: var(--purple); border: 1px solid rgba(168,85,247,0.3); }
+  .layer-number.validate { background: rgba(34,197,94,0.15); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+  .layer-number.deliver { background: rgba(234,179,8,0.15); color: var(--yellow); border: 1px solid rgba(234,179,8,0.3); }
+
+  .layer-info {
+    flex: 1;
+  }
+
+  .layer-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+
+  .layer-name .collect-color { color: var(--amber); }
+  .layer-name .analyze-color { color: var(--purple); }
+  .layer-name .validate-color { color: var(--green); }
+  .layer-name .deliver-color { color: var(--yellow); }
+
+  .layer-desc {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+
+  .layer-auto {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .auto-pct {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .auto-pct.collect { color: var(--amber); }
+  .auto-pct.analyze { color: var(--purple); }
+  .auto-pct.validate { color: var(--green); }
+  .auto-pct.deliver { color: var(--yellow); }
+
+  .auto-bar-track {
+    width: 100px;
+    height: 6px;
+    background: var(--black5);
+    overflow: hidden;
+  }
+
+  .auto-bar-fill {
+    height: 100%;
+    transition: width 1s ease;
+  }
+
+  .auto-bar-fill.collect { background: var(--amber); width: 100%; }
+  .auto-bar-fill.analyze { background: var(--purple); width: 90%; }
+  .auto-bar-fill.validate { background: var(--green); width: 80%; }
+  .auto-bar-fill.deliver { background: var(--yellow); width: 85%; }
+
+  .auto-pct-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* ===== AGENT GRID ===== */
+  .agent-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .agent-card {
+    background: var(--black3);
+    border: 1px solid var(--gray);
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .agent-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .agent-card.collect { border-left: 3px solid var(--amber); }
+  .agent-card.collect:hover { border-color: var(--amber); }
+  .agent-card.analyze { border-left: 3px solid var(--purple); }
+  .agent-card.analyze:hover { border-color: var(--purple); }
+  .agent-card.validate { border-left: 3px solid var(--green); }
+  .agent-card.validate:hover { border-color: var(--green); }
+  .agent-card.deliver { border-left: 3px solid var(--yellow); }
+  .agent-card.deliver:hover { border-color: var(--yellow); }
+
+  .agent-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    opacity: 0.03;
+    pointer-events: none;
+  }
+
+  .agent-card.collect::before { background: var(--amber); }
+  .agent-card.analyze::before { background: var(--purple); }
+  .agent-card.validate::before { background: var(--green); }
+  .agent-card.deliver::before { background: var(--yellow); }
+
+  .agent-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .agent-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .agent-icon.collect { background: rgba(217,119,6,0.12); }
+  .agent-icon.analyze { background: rgba(168,85,247,0.12); }
+  .agent-icon.validate { background: rgba(34,197,94,0.12); }
+  .agent-icon.deliver { background: rgba(234,179,8,0.12); }
+
+  .agent-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+  }
+
+  .agent-badge.automatic { background: rgba(34,197,94,0.12); color: var(--green); border: 1px solid rgba(34,197,94,0.2); }
+  .agent-badge.human { background: rgba(217,119,6,0.12); color: var(--amber); border: 1px solid rgba(217,119,6,0.2); }
+  .agent-badge.hybrid { background: rgba(234,179,8,0.12); color: var(--yellow); border: 1px solid rgba(234,179,8,0.2); }
+
+  .agent-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+
+  .agent-role {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    line-height: 1.4;
+  }
+
+  .agent-what {
+    font-size: 15px;
+    color: var(--white3);
+    margin-bottom: 14px;
+    line-height: 1.6;
+  }
+
+  .agent-what strong { color: var(--white); font-weight: 500; }
+
+  .agent-detail {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    padding-top: 12px;
+    border-top: 1px solid var(--gray);
+  }
+
+  .agent-detail strong { color: var(--white3); font-weight: 500; }
+
+  .agent-metric {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 4px 10px;
+    margin-right: 6px;
+    margin-bottom: 6px;
+  }
+
+  .agent-metric.collect { background: rgba(217,119,6,0.1); color: var(--amber); }
+  .agent-metric.analyze { background: rgba(168,85,247,0.1); color: var(--purple); }
+  .agent-metric.validate { background: rgba(34,197,94,0.1); color: var(--green); }
+  .agent-metric.deliver { background: rgba(234,179,8,0.1); color: var(--yellow); }
+
+  /* ===== FLOW ARROW (connector between layers) ===== */
+  .flow-connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 0;
+    position: relative;
+  }
+
+  .flow-connector::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--gray2), var(--gray2));
+  }
+
+  .flow-connector-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--black3);
+    border: 1px solid var(--gray);
+    padding: 10px 24px;
+    position: relative;
+    z-index: 2;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .flow-connector-inner .arrow {
+    font-size: 18px;
+    color: var(--red);
+  }
+
+  /* ===== SUMMARY CARD ===== */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--gray);
+    margin-top: 60px;
+  }
+
+  .summary-item {
+    background: var(--black3);
+    padding: 32px;
+    text-align: center;
+    position: relative;
+  }
+
+  .summary-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .summary-item:hover::before { opacity: 1; }
+  .summary-item:nth-child(1)::before { background: var(--amber); }
+  .summary-item:nth-child(2)::before { background: var(--purple); }
+  .summary-item:nth-child(3)::before { background: var(--green); }
+  .summary-item:nth-child(4)::before { background: var(--yellow); }
+
+  .summary-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .summary-item:nth-child(1) .summary-number { color: var(--amber); }
+  .summary-item:nth-child(2) .summary-number { color: var(--purple); }
+  .summary-item:nth-child(3) .summary-number { color: var(--green); }
+  .summary-item:nth-child(4) .summary-number { color: var(--yellow); }
+
+  .summary-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  .summary-detail {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 8px;
+    max-width: 220px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
+  }
+
+  /* ===== FOOTER ===== */
+footer {
+  padding: 32px 56px;
+  background: var(--black3);
+  border-top: 1px solid var(--gray);
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.footer-brand img {
+  height: 32px;
+  width: auto;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+.footer-brand img:hover {
+  opacity: 1;
+}
+
+.footer-brand span {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--white3);
+}
+
+  footer p {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    .topbar { padding-left: 28px; padding-right: 28px; }
+    .hero { padding: 60px 28px 40px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 32px; text-align: center; }
+    .hero-grid .hero-sub { margin: 0 auto 32px; }
+    .hero-visual { order: -1; }
+    .hero-visual img { max-width: 200px; }
+    .section { padding: 60px 28px; }
+    .summary-grid { grid-template-columns: 1fr 1fr; }
+    .layer-header { flex-wrap: wrap; }
+    .layer-auto { width: 100%; justify-content: flex-start; margin-top: 8px; }
+    .analogy-grid { grid-template-columns: 1fr 1fr; }
+    .tech-tabs { grid-template-columns: 1fr; }
+    .narrative-step { grid-template-columns: 1fr; gap: 8px; }
+    .narrative-time { text-align: left; }
+  }
+
+  @media (max-width: 600px) {
+    .topbar { padding-left: 20px; padding-right: 20px; }
+    .hero { padding: 40px 20px 32px; }
+    .hero h1 { font-size: clamp(40px, 10vw, 52px); }
+    .hero-grid { grid-template-columns: 1fr; gap: 24px; text-align: center; }
+    .hero-visual img { max-width: 160px; }
+    .hero-sub { font-size: 17px; }
+    .auto-stat-number { font-size: 60px; }
+    .section { padding: 40px 20px; }
+    .agent-grid { grid-template-columns: 1fr; }
+    .summary-grid { grid-template-columns: 1fr; }
+    .auto-bar-track { width: 60px; }
+    .auto-pct { font-size: 28px; }
+    .analogy-grid { grid-template-columns: 1fr; }
+    .pair-grid { grid-template-columns: 1fr; }
+    .pair-divider { display: none; }
+    .tech-tabs { grid-template-columns: 1fr; }
+    .narrative-step { grid-template-columns: 1fr; gap: 4px; }
+    .narrative-time { text-align: left; font-size: 17px; }
+    footer { padding: 32px 20px; }
+  }
+
+  /* ===== ANIMATIONS ===== */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .delay-1 { transition-delay: 0.1s; }
+  .delay-2 { transition-delay: 0.2s; }
+  .delay-3 { transition-delay: 0.3s; }
+  .delay-4 { transition-delay: 0.4s; }
+  .delay-5 { transition-delay: 0.5s; }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-logo">
+    <img src="logo-peretto.png" alt="Peretto & Co.">
+    <span>✦ AI Visibility — Fábrica de Agentes de Diagnóstico</span>
+  </div>
+  <span>v1.0 · Maio 2026</span>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-label">⚙︎ Engine Room · Por Dentro da Máquina</div>
+      <h1>A fábrica de<br>diagnóstico <span>automatizado</span></h1>
+      <p class="hero-sub">
+        12 agentes de IA trabalham em 4 camadas integradas para entregar um diagnóstico completo 
+        de visibilidade em Inteligência Artificial em <strong>até 2 dias úteis</strong> — 
+        sem planilhas, sem tarefa manual repetitiva, sem esperar relatório de ferramenta.
+      </p>
+      <div class="auto-stat">
+        <span class="auto-stat-number">85%</span>
+        <span class="auto-stat-label">Do processo automatizado</span>
+        <span class="auto-stat-sub">Dados coletados 100% automáticos · Análise 90% · Validação e entrega com supervisão humana estratégica</span>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <img src="ai-agent-icon.png" alt="3D AI Agent Icon">
+    </div>
+  </div>
+</section>
+
+<!-- OVERVIEW STATS -->
+<section class="section" style="padding-top: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--gray);">
+  <div class="section-inner">
+    <div class="summary-grid">
+      <div class="summary-item">
+        <div class="summary-number">7→2</div>
+        <div class="summary-label">Dias de diagnóstico</div>
+        <div class="summary-detail">De 7 dias manuais para até 2 dias com agentes</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-number">12</div>
+        <div class="summary-label">Agentes envolvidos</div>
+        <div class="summary-detail">Entre V4 agents, n8n workflows e scripts Python</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-number">20</div>
+        <div class="summary-label">Queries analisadas</div>
+        <div class="summary-detail">Por cliente, em 6 plataformas de IA simultaneamente</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-number">0</div>
+        <div class="summary-label">Planilhas manuais</div>
+        <div class="summary-detail">Toda coleta, análise e formatação é automatizada</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PATTERN BREAK 1: ANALOGY -->
+<section class="section" style="background: linear-gradient(160deg, var(--black) 0%, var(--black3) 100%); border-bottom: 1px solid var(--gray);">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <div class="section-tag" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); color: var(--white3);">Pra você entender sem ser engenheiro</div>
+      <h2 class="section-title">É como uma <span>linha de montagem</span></h2>
+      <p class="section-desc" style="max-width: 650px;">
+        Cada agente é uma estação de trabalho especializada. O diagnóstico entra cru de um lado 
+        e sai pronto do outro. O account é o supervisor de chão de fábrica — não o operário.
+      </p>
+    </div>
+
+    <div class="analogy-grid fade-up">
+      <div class="analogy-item">
+        <div class="analogy-icon-big">📦</div>
+        <div class="analogy-agent">Estação 1 · Recebimento</div>
+        <div class="analogy-role">Coleta de dados brutos</div>
+        <div class="analogy-desc">
+          Como caminhões descarregando matéria-prima. <strong>SEMRush, GA4 e Citation Checker</strong> 
+          despejam dados crus na esteira. Ninguém toca — é automático.
+        </div>
+      </div>
+      <div class="analogy-item">
+        <div class="analogy-icon-big">🔧</div>
+        <div class="analogy-agent">Estação 2 · Montagem</div>
+        <div class="analogy-role">Análise e processamento</div>
+        <div class="analogy-desc">
+          O <strong>@analista-dados</strong> é o montador-chefe. Pega as peças soltas (dados brutos) 
+          e transforma em algo com sentido — benchmark, gap analysis, roadmap.
+        </div>
+      </div>
+      <div class="analogy-item">
+        <div class="analogy-icon-big">🔍</div>
+        <div class="analogy-agent">Estação 3 · Controle</div>
+        <div class="analogy-role">Validação de qualidade</div>
+        <div class="analogy-desc">
+          <strong>@revisor</strong> é o inspetor: confere cada peça, mede, testa. Se passar, 
+          segue pra entrega. Se não, volta pra estação anterior com a lista do que corrigir.
+        </div>
+      </div>
+      <div class="analogy-item">
+        <div class="analogy-icon-big">🚚</div>
+        <div class="analogy-agent">Estação 4 · Expedição</div>
+        <div class="analogy-role">Empacotamento e entrega</div>
+        <div class="analogy-desc">
+          <strong>@gerar-pdf, @gerar-html, @gerar-ppt</strong> são a equipe de embalagem. 
+          Cada um empacota o diagnóstico no formato certo e manda pro cliente.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LAYER 1: COLLECT -->
+<section class="section">
+  <div class="section-inner">
+    <div class="layer">
+      <div class="layer-header fade-up">
+        <div class="layer-number collect">1</div>
+        <div class="layer-info">
+          <div class="layer-name"><span class="collect-color">Coleta</span> · Extração de Dados Brutos</div>
+          <div class="layer-desc">Dados brutos são extraídos de 8 fontes diferentes de forma 100% automática, sem intervenção humana. O account só precisa enviar o formulário de kickoff.</div>
+        </div>
+        <div class="layer-auto">
+          <span class="auto-pct collect">100%</span>
+          <div class="auto-bar-track"><div class="auto-bar-fill collect"></div></div>
+          <span class="auto-pct-label">Automático</span>
+        </div>
+      </div>
+
+      <div class="agent-grid">
+        <div class="agent-card collect fade-up delay-1">
+          <div class="agent-top">
+            <div class="agent-icon collect">📡</div>
+            <span class="agent-badge automatic">100% Auto</span>
+          </div>
+          <div class="agent-name">SEMRush API Connector</div>
+          <div class="agent-role">Interface programática com SEMRush Enterprise</div>
+          <div class="agent-what">
+            Puxa <strong>AI Overviews Position Tracking</strong> para 20 queries, 
+            <strong>Site Audit</strong> completo (schema, tech issues, extractability), 
+            <strong>Competitive Intelligence</strong> dos top 5 concorrentes, 
+            e <strong>Topic Research</strong> para gap analysis.
+          </div>
+          <div class="agent-detail">
+            <strong>Frequência:</strong> On demand + semanal (monitoring) · 
+            <strong>Dados:</strong> JSON estruturado → banco do cliente
+          </div>
+          <div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px;">
+            <span class="agent-metric collect">AI Overviews</span>
+            <span class="agent-metric collect">Site Audit</span>
+            <span class="agent-metric collect">Benchmark</span>
+          </div>
+        </div>
+
+        <div class="agent-card collect fade-up delay-2">
+          <div class="agent-top">
+            <div class="agent-icon collect">🤖</div>
+            <span class="agent-badge automatic">100% Auto</span>
+          </div>
+          <div class="agent-name">n8n · Citation Checker</div>
+          <div class="agent-role">Workflow automatizado de checagem multi-plataforma</div>
+          <div class="agent-what">
+            Roda as <strong>20 queries-alvo</strong> do cliente em <strong>ChatGPT, Perplexity, Gemini, Claude e Copilot</strong> 
+            via browser automation. Captura se a marca do cliente foi citada, em que posição, 
+            e qual fonte foi usada. Tudo em <strong>~8 minutos</strong> (vs 4h manuais).
+          </div>
+          <div class="agent-detail">
+            <strong>Frequência:</strong> On demand (diagnóstico) + mensal (monitoring) · 
+            <strong>Engine:</strong> Playwright + Python
+          </div>
+          <div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px;">
+            <span class="agent-metric collect">ChatGPT</span>
+            <span class="agent-metric collect">Perplexity</span>
+            <span class="agent-metric collect">Gemini</span>
+            <span class="agent-metric collect">Claude</span>
+            <span class="agent-metric collect">Copilot</span>
+          </div>
+        </div>
+
+        <div class="agent-card collect fade-up delay-3">
+          <div class="agent-top">
+            <div class="agent-icon collect">📊</div>
+            <span class="agent-badge automatic">100% Auto</span>
+          </div>
+          <div class="agent-name">GA4 + GSC Connector</div>
+          <div class="agent-role">Pipeline de dados de audiência e tráfego</div>
+          <div class="agent-what">
+            Puxa <strong>AI referral traffic</strong> do Google Analytics 4 (tráfego vindo de ChatGPT, 
+            Perplexity, Gemini), <strong>Search Console</strong> dados de impressões e cliques 
+            com tendência de queda em queries com AI Overviews, e <strong>taxa de click-through</strong> 
+            pós-AI Overviews.
+          </div>
+          <div class="agent-detail">
+            <strong>Frequência:</strong> On demand · 
+            <strong>Dados:</strong> Últimos 12 meses para baseline
+          </div>
+          <div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px;">
+            <span class="agent-metric collect">AI Traffic</span>
+            <span class="agent-metric collect">GSC Trends</span>
+            <span class="agent-metric collect">CTR</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONNECTOR -->
+    <div class="flow-connector fade-up">
+      <div class="flow-connector-inner">
+        <span>Dados brutos estruturados</span>
+        <span class="arrow">▼</span>
+        <span style="color: var(--text-muted);">JSON · CSV · API Response</span>
+      </div>
+    </div>
+
+    <!-- LAYER 2: ANALYZE -->
+    <div class="layer">
+      <div class="layer-header fade-up">
+        <div class="layer-number analyze">2</div>
+        <div class="layer-info">
+          <div class="layer-name"><span class="analyze-color">Análise</span> · Processamento e Geração de Insights</div>
+          <div class="layer-desc">Agentes de IA processam os dados brutos, cruzam referências, detectam padrões e produzem análises estruturadas. 90% automático com revisão inteligente.</div>
+        </div>
+        <div class="layer-auto">
+          <span class="auto-pct analyze">90%</span>
+          <div class="auto-bar-track"><div class="auto-bar-fill analyze"></div></div>
+          <span class="auto-pct-label">Automático</span>
+        </div>
+      </div>
+
+      <div class="agent-grid">
+        <div class="agent-card analyze fade-up delay-1">
+          <div class="agent-top">
+            <div class="agent-icon analyze">🧠</div>
+            <span class="agent-badge hybrid">90% Auto</span>
+          </div>
+          <div class="agent-name">@analista-dados</div>
+          <div class="agent-role">Agente V4 — Principal motor de análise</div>
+          <div class="agent-what">
+            Recebe os dados das 3 fontes da Camada 1 e produz: <strong>auditoria técnica</strong> 
+            (robots.txt, schema, extractability), <strong>benchmark competitivo</strong> 
+            (citações por concorrente, SAIV, query coverage), <strong>gap analysis</strong> 
+            (o que falta vs o que os concorrentes têm), e <strong>roadmap priorizado</strong> 
+            com recomendações por sprint.
+          </div>
+          <div class="agent-detail">
+            <strong>Modelo:</strong> Claude + Gemini · 
+            <strong>Input:</strong> JSON das 3 fontes · 
+            <strong>Output:</strong> Relatório analítico estruturado
+          </div>
+          <div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px;">
+            <span class="agent-metric analyze">Gap Analysis</span>
+            <span class="agent-metric analyze">Benchmark</span>
+            <span class="agent-metric analyze">Priorização</span>
+          </div>
+        </div>
+
+        <div class="agent-card analyze fade-up delay-2">
+          <div class="agent-top">
+            <div class="agent-icon analyze">🔍</div>
+            <span class="agent-badge automatic">100% Auto</span>
+          </div>
+          <div class="agent-name">n8n · Content Gap Analyzer</div>
+          <div class="agent-role">Workflow de comparação conteúdo vs concorrentes</div>
+          <div class="agent-what">
+            Compara o <strong>conteúdo existente do cliente</strong> com o dos concorrentes 
+            usando SEMRush Content Analyzer + Topic Research. Detecta <strong>páginas que faltam</strong> 
+            (definition blocks, comparison tables, pricing pages), <strong>oportunidades de conteúdo</strong> 
+            e <strong>termos de autoridade</strong> que o concorrente domina.
+          </div>
+          <div class="agent-detail">
+            <strong>Frequência:</strong> On demand + mensal · 
+            <strong>Output:</strong> Matriz de gaps vs concorrentes
+          </div>
+          <div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px;">
+            <span class="agent-metric analyze">Content Gap</span>
+            <span class="agent-metric analyze">Oportunidades</span>
+            <span class="agent-metric analyze">Termos</span>
+          </div>
+        </div>
+
+        <div class="agent-card analyze fade-up delay-3">
+          <div class="agent-top">
+            <div class="agent-icon analyze">📋</div>
+            <span class="agent-badge hybrid">85% Auto</span>
+          </div>
+          <div class="agent-name">@csm-orquestrador</div>
+          <div class="agent-role">Agente V4 — Orquestração e diagnóstico contínuo</div>
+          <div class="agent-what">
+            Consolida os outputs do @analista-dados e Content Gap Analyzer em um <strong>diagnóstico unificado</strong>. 
+            Gera alertas automáticos (flags) para desvios críticos: <strong>@flag-okr</strong> detecta 
+            se KR está abaixo de 60%, <strong>@flag-roi</strong> classifica ROAS abaixo da meta. 
+            Prepara o resumo executivo para o account apresentar ao cliente.
+          </div>
+          <div class="agent-detail">
+            <strong>Modelo:</strong> Multi-agente · 
+            <strong>Flags:</strong> OKR, ROI, Operação, Churn
+          </div>
+          <div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px;">
+            <span class="agent-metric analyze">Flags</span>
+            <span class="agent-metric analyze">Consolidação</span>
+            <span class="agent-metric analyze">Resumo</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONNECTOR -->
+    <div class="flow-connector fade-up">
+      <div class="flow-connector-inner">
+        <span>Diagnóstico estruturado + flags</span>
+        <span class="arrow">▼</span>
+        <span style="color: var(--text-muted);">Relatório analítico · Alertas · Recomendações</span>
+      </div>
+    </div>
+
+    <!-- LAYER 3: VALIDATE -->
+    <div class="layer">
+      <div class="layer-header fade-up">
+        <div class="layer-number validate">3</div>
+        <div class="layer-info">
+          <div class="layer-name"><span class="validate-color">Validação</span> · Controle de Qualidade Automatizado</div>
+          <div class="layer-desc">Antes de qualquer entrega ir para o cliente, um agente especializado valida dados, consistência e formato. 80% automático com revisão humana em pontos críticos.</div>
+        </div>
+        <div class="layer-auto">
+          <span class="auto-pct validate">80%</span>
+          <div class="auto-bar-track"><div class="auto-bar-fill validate"></div></div>
+          <span class="auto-pct-label">Automático</span>
+        </div>
+      </div>
+
+      <div class="agent-grid">
+        <div class="agent-card validate fade-up delay-1">
+          <div class="agent-top">
+            <div class="agent-icon validate">✓</div>
+            <span class="agent-badge hybrid">80% Auto</span>
+          </div>
+          <div class="agent-name">@revisor</div>
+          <div class="agent-role">Agente V4 — Validação de outputs</div>
+          <div class="agent-what">
+            Valida <strong>todos os outputs</strong> antes de irem para o cliente: confere 
+            consistência de números (benchmarks batem com dados brutos?), clareza do texto 
+            (está em português claro?), completude (todas as 10 seções do diagnóstico 
+            estão preenchidas?), e formatação (dentro do padrão V4).
+          </div>
+          <div class="agent-detail">
+            <strong>Regras:</strong> Checklist de 15 pontos · 
+            <strong>Output:</strong> Aprovado / Reprovado com correções
+          </div>
+          <div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px;">
+            <span class="agent-metric validate">Consistência</span>
+            <span class="agent-metric validate">Completude</span>
+            <span class="agent-metric validate">Formatação</span>
+          </div>
+        </div>
+
+        <div class="agent-card validate fade-up delay-2">
+          <div class="agent-top">
+            <div class="agent-icon validate">🔄</div>
+            <span class="agent-badge automatic">100% Auto</span>
+          </div>
+          <div class="agent-name">SEMRush Site Audit (validação)</div>
+          <div class="agent-role">Validação técnica automatizada</div>
+          <div class="agent-what">
+            Segunda passada de <strong>Site Audit</strong> para confirmar que as recomendações 
+            foram implementadas corretamente. Verifica: robots.txt libera todos os AI crawlers, 
+            schema markup está válido (sem erros de syntax), páginas têm "last updated" e 
+            "author attribution", e extractability score mínimo de 80%.
+          </div>
+          <div class="agent-detail">
+            <strong>Frequência:</strong> On demand · 
+            <strong>Engine:</strong> SEMRush API
+          </div>
+          <div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px;">
+            <span class="agent-metric validate">Schema</span>
+            <span class="agent-metric validate">Robots</span>
+            <span class="agent-metric validate">Extractability</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONNECTOR -->
+    <div class="flow-connector fade-up">
+      <div class="flow-connector-inner">
+        <span>Diagnóstico validado e aprovado</span>
+        <span class="arrow">▼</span>
+        <span style="color: var(--text-muted);">Relatório final · Sem erros · Pronto para entrega</span>
+      </div>
+    </div>
+
+    <!-- LAYER 4: DELIVER -->
+    <div class="layer">
+      <div class="layer-header fade-up">
+        <div class="layer-number deliver">4</div>
+        <div class="layer-info">
+          <div class="layer-name"><span class="deliver-color">Entrega</span> · Geração de Documentos e Dashboards</div>
+          <div class="layer-desc">Diagnóstico validado é transformado em múltiplos formatos de consumo. O account recebe tudo pronto para apresentar — sem montar slide, sem formatar PDF.</div>
+        </div>
+        <div class="layer-auto">
+          <span class="auto-pct deliver">85%</span>
+          <div class="auto-bar-track"><div class="auto-bar-fill deliver"></div></div>
+          <span class="auto-pct-label">Automático</span>
+        </div>
+      </div>
+
+      <div class="agent-grid">
+        <div class="agent-card deliver fade-up delay-1">
+          <div class="agent-top">
+            <div class="agent-icon deliver">📄</div>
+            <span class="agent-badge automatic">100% Auto</span>
+          </div>
+          <div class="agent-name">@gerar-pdf</div>
+          <div class="agent-role">Agente V4 — Geração de relatório diagnóstico</div>
+          <div class="agent-what">
+            Transforma o diagnóstico validado em um <strong>PDF profissional</strong> no padrão 
+            visual V4/Peretto & Co. com: capa, resumo executivo, metodologia, resultados 
+            por plataforma, benchmark, auditoria técnica, gap analysis, roadmap e ROI 
+            projetado. Pronto para imprimir ou enviar por e-mail.
+          </div>
+          <div class="agent-detail">
+            <strong>Formato:</strong> PDF · 
+            <strong>Padrão:</strong> Visual V4 (dark, red accent, Barlow)
+          </div>
+        </div>
+
+        <div class="agent-card deliver fade-up delay-2">
+          <div class="agent-top">
+            <div class="agent-icon deliver">📊</div>
+            <span class="agent-badge automatic">100% Auto</span>
+          </div>
+          <div class="agent-name">@gerar-html</div>
+          <div class="agent-role">Agente V4 — Dashboard interativo</div>
+          <div class="agent-what">
+            Gera um <strong>dashboard HTML interativo</strong> com gráficos de citações por 
+            plataforma, evolução temporal, benchmark vs concorrentes, SAIV score, 
+            query coverage map e AI referral traffic. O cliente pode navegar, filtrar 
+            e exportar. Atualizado automaticamente a cada ciclo.
+          </div>
+          <div class="agent-detail">
+            <strong>Formato:</strong> HTML · 
+            <strong>Interatividade:</strong> Gráficos, filtros, exportação
+          </div>
+        </div>
+
+        <div class="agent-card deliver fade-up delay-3">
+          <div class="agent-top">
+            <div class="agent-icon deliver">🎯</div>
+            <span class="agent-badge hybrid">70% Auto</span>
+          </div>
+          <div class="agent-name">@gerar-ppt</div>
+          <div class="agent-role">Agente V4 — Deck de apresentação</div>
+          <div class="agent-what">
+            Gera o <strong>deck de apresentação</strong> do diagnóstico no estilo V4: 
+            15-20 slides com os principais achados, benchmark visual, recomendações 
+            e proposta comercial. O account recebe pronto — só ajusta o tom da fala. 
+            A parte de <strong>estratégia de recomendação</strong> requer validação humana.
+          </div>
+          <div class="agent-detail">
+            <strong>Formato:</strong> PPT/HTML · 
+            <strong>Slides:</strong> 15-20 · 
+            <strong>Revisão:</strong> Account valida tom
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PATTERN BREAK 2: NARRATIVE WALKTHROUGH -->
+<section class="section" style="background: var(--black2); border-bottom: 1px solid var(--gray);">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <div class="section-tag" style="background: rgba(227,25,25,0.1); border-color: rgba(227,25,25,0.2); color: var(--red);">Na prática</div>
+      <h2 class="section-title">Uma segunda-feira na <span>fábrica de agentes</span></h2>
+      <p class="section-desc" style="max-width: 650px;">
+        O que acontece depois que o account aperta "enviar"? Cada minuto da jornada desde o formulário 
+        de kickoff até o diagnóstico pronto — contado em tempo real.
+      </p>
+    </div>
+
+    <div style="max-width: 780px; margin: 0 auto;">
+      <!-- Step 1 -->
+      <div class="narrative-step fade-up delay-1">
+        <div class="narrative-time">09:00</div>
+        <div class="narrative-content">
+          <span class="narrative-who human">Account</span>
+          <div class="narrative-what">
+            Envia o <strong>formulário de kickoff</strong> com as 20 queries-alvo do cliente 
+            e confirma os acessos (SEMRush, GA4, robots.txt). É a <strong>única ação manual</strong> 
+            de todo o processo.
+          </div>
+          <div class="narrative-tech">📋 Input: 20 queries · URL do site · Contas conectadas</div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="narrative-step fade-up delay-2">
+        <div class="narrative-time">09:05</div>
+        <div class="narrative-content">
+          <span class="narrative-who agent">n8n · SEMRush Connector</span>
+          <div class="narrative-what">
+            Dispara <strong>3 pipelines em paralelo</strong>: SEMRush Position Tracking (20 queries + AI Overviews), 
+            SEMRush Site Audit (schema + robots + extractability), SEMRush Competitive Intelligence 
+            (top 5 concorrentes). Cada pipeline retorna <strong>JSON estruturado</strong> em ~3 minutos.
+          </div>
+          <div class="narrative-tech">⚡ 3× APIs SEMRush · Paralelo · ~3min total</div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="narrative-step fade-up delay-3">
+        <div class="narrative-time">09:08</div>
+        <div class="narrative-content">
+          <span class="narrative-who agent">n8n · Citation Checker</span>
+          <div class="narrative-what">
+            Browser automation (Playwright) abre <strong>ChatGPT, Perplexity, Gemini, Claude e Copilot</strong> 
+            e pesquisa cada uma das 20 queries. Captura screenshot do resultado, identifica se a marca 
+            do cliente foi citada, qual posição e qual fonte. <strong>100 buscas em ~8 minutos.</strong>
+          </div>
+          <div class="narrative-tech">🤖 5 plataformas × 20 queries = 100 checks · Playwright · ~8min</div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="narrative-step fade-up delay-4">
+        <div class="narrative-time">09:16</div>
+        <div class="narrative-content">
+          <span class="narrative-who agent">@analista-dados</span>
+          <div class="narrative-what">
+            Recebe <strong>6 fontes de dados</strong> e processa em um relatório analítico unificado: 
+            auditoria técnica, benchmark competitivo (citações vs concorrentes), gap analysis 
+            (o que falta) e roadmap priorizado por sprint. Tudo em <strong>3 minutos de processamento</strong>.
+          </div>
+          <div class="narrative-tech">🧠 Input: 6 JSONs · Claude + Gemini · Output: Relatório estruturado</div>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="narrative-step fade-up delay-5">
+        <div class="narrative-time">09:19</div>
+        <div class="narrative-content">
+          <span class="narrative-who agent">@csm-orquestrador</span>
+          <div class="narrative-what">
+            Consolida o diagnóstico, <strong>dispara flags automáticas</strong> se detectar desvios 
+            (OKR &lt; 60%, ROAS abaixo da meta) e gera o resumo executivo para o account. 
+            Preparação do terreno para a revisão humana.
+          </div>
+          <div class="narrative-tech">📋 Flags: OKR · ROI · Operação · Churn · ~2min</div>
+        </div>
+      </div>
+
+      <!-- Step 6 -->
+      <div class="narrative-step fade-up">
+        <div class="narrative-time">09:21</div>
+        <div class="narrative-content">
+          <span class="narrative-who agent">@revisor + SEMRush</span>
+          <div class="narrative-what">
+            Dupla validação: <strong>@revisor</strong> confere consistência, completude e formatação 
+            (checklist de 15 pontos). <strong>SEMRush Site Audit</strong> faz segunda passada técnica. 
+            Se tudo OK → libera. Se não → retorna com correções apontadas.
+          </div>
+          <div class="narrative-tech">✓ 15-point checklist · Site Audit pass 2 · ~5min</div>
+        </div>
+      </div>
+
+      <!-- Step 7 -->
+      <div class="narrative-step fade-up">
+        <div class="narrative-time">09:26</div>
+        <div class="narrative-content">
+          <span class="narrative-who agent">@gerar-pdf + @gerar-html + @gerar-ppt</span>
+          <div class="narrative-what">
+            <strong>3 agentes em paralelo</strong> transformam o diagnóstico validado em entregáveis: 
+            PDF profissional (10 seções), dashboard HTML interativo (gráficos, filtros) e deck 
+            de 15-20 slides. Tudo no <strong>padrão visual V4</strong>, pronto para apresentar.
+          </div>
+          <div class="narrative-tech">📄 PDF · 📊 HTML · 🎯 PPT · Paralelo · ~10min</div>
+        </div>
+      </div>
+
+      <!-- Step 8 -->
+      <div class="narrative-step fade-up">
+        <div class="narrative-time">09:36</div>
+        <div class="narrative-content">
+          <span class="narrative-who human">Account</span>
+          <div class="narrative-what">
+            <strong>15 minutos de revisão</strong> — ajusta tom, personaliza recomendação, 
+            ensaia a apresentação. O diagnóstico está pronto. <strong>36 minutos depois do kickoff, 
+            tudo o que era manual foi substituído por agentes.</strong>
+          </div>
+          <div class="narrative-tech" style="color: var(--green);">✦ 7 dias → 36 minutos de processamento + 15min de revisão humana</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline visual -->
+    <div class="timeline-wrap fade-up">
+      <div class="timeline-label before">⬤ Processo manual (antes)</div>
+      <div class="timeline-bar before">
+        <div class="timeline-fill before">7 dias úteis · ~40h de trabalho humano</div>
+      </div>
+      <div class="timeline-ticks">
+        <span>Dia 1</span>
+        <span>Dia 2</span>
+        <span>Dia 3</span>
+        <span>Dia 4</span>
+        <span>Dia 5</span>
+        <span>Dia 6</span>
+        <span>Dia 7</span>
+      </div>
+
+      <div style="height: 24px;"></div>
+
+      <div class="timeline-label after">⬤ Com agentes (hoje)</div>
+      <div class="timeline-bar after">
+        <div class="timeline-fill after">~2 dias · ~2h de trabalho humano</div>
+      </div>
+      <div class="timeline-ticks">
+        <span>Kickoff</span>
+        <span style="color: var(--red);">36min ↓</span>
+        <span>Revisão</span>
+        <span>Entrega</span>
+      </div>
+    </div>
+
+    <!-- Human vs Agent pair -->
+    <div class="pair-grid fade-up">
+      <div class="pair-item">
+        <div class="pair-icon">🧑‍💼</div>
+        <div class="pair-label human">Humano</div>
+        <div class="pair-task">Estratégia · Relacionamento · Decisão</div>
+      </div>
+      <div class="pair-item" style="border-left: 3px solid var(--red);">
+        <div class="pair-icon">🤖</div>
+        <div class="pair-label agent">Agente</div>
+        <div class="pair-task">Coleta · Análise · Formatação · Validação</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON: BEFORE vs AFTER -->
+<section class="section" style="background: linear-gradient(160deg, var(--black2) 0%, var(--black) 100%);">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <div class="section-tag deliver">Antes × Depois</div>
+      <h2 class="section-title">O que muda com a <span>fábrica de agentes</span></h2>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--gray);">
+      <!-- BEFORE -->
+      <div style="background: var(--black3); padding: 40px;">
+        <h3 style="font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 24px;">Antes (Manual)</h3>
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="color: var(--red); font-size: 18px;">✗</span>
+            <div>
+              <div style="font-size: 15px; font-weight: 600; color: var(--white);">Account coleta queries manualmente</div>
+              <div style="font-size: 13px; color: var(--text-muted);">Formulário por e-mail, planilha manual</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="color: var(--red); font-size: 18px;">✗</span>
+            <div>
+              <div style="font-size: 15px; font-weight: 600; color: var(--white);">Pesquisa uma a uma em cada plataforma</div>
+              <div style="font-size: 13px; color: var(--text-muted);">20 queries × 5 plataformas = 100 buscas manuais (~4h)</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="color: var(--red); font-size: 18px;">✗</span>
+            <div>
+              <div style="font-size: 15px; font-weight: 600; color: var(--white);">Analista monta data lake no Excel</div>
+              <div style="font-size: 13px; color: var(--text-muted);">Planilhas desconectadas, versões conflitantes</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="color: var(--red); font-size: 18px;">✗</span>
+            <div>
+              <div style="font-size: 15px; font-weight: 600; color: var(--white);">Copy escreve relatório do zero</div>
+              <div style="font-size: 13px; color: var(--text-muted);">Cada diagnóstico = 8-12h de redação</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="color: var(--red); font-size: 18px;">✗</span>
+            <div>
+              <div style="font-size: 15px; font-weight: 600; color: var(--white);">Designer monta slides manualmente</div>
+              <div style="font-size: 13px; color: var(--text-muted);">Mais 4-6h de diagramação</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 12px; margin-top: 8px; padding-top: 16px; border-top: 1px solid var(--gray);">
+            <span style="color: var(--red); font-size: 18px;">⚠</span>
+            <div>
+              <div style="font-size: 18px; font-weight: 700; color: var(--red);">5-7 dias úteis</div>
+              <div style="font-size: 14px; color: var(--text-muted);">+ R$ 2.400 em horas de time por diagnóstico</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AFTER -->
+      <div style="background: var(--black4); padding: 40px; position: relative;">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--red-gradient);"></div>
+        <h3 style="font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; color: var(--red); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 24px;">Depois (Agentes)</h3>
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="color: var(--green); font-size: 18px;">✓</span>
+            <div>
+              <div style="font-size: 15px; font-weight: 600; color: var(--white);">Kickoff → formulário → agente dispara</div>
+              <div style="font-size: 13px; color: var(--text-muted);">Account só envia o form, o resto é automático</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="color: var(--green); font-size: 18px;">✓</span>
+            <div>
+              <div style="font-size: 15px; font-weight: 600; color: var(--white);">Citation checker roda em 8 minutos</div>
+              <div style="font-size: 13px; color: var(--text-muted);">20 queries × 5 plataformas = 100 buscas automatizadas</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="color: var(--green); font-size: 18px;">✓</span>
+            <div>
+              <div style="font-size: 15px; font-weight: 600; color: var(--white);">@analista-dados cruza tudo em segundos</div>
+              <div style="font-size: 13px; color: var(--text-muted);">Benchmark, gap analysis, roadmap em 1 execução</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="color: var(--green); font-size: 18px;">✓</span>
+            <div>
+              <div style="font-size: 15px; font-weight: 600; color: var(--white);">@gerar-pdf + @gerar-html geram entrega</div>
+              <div style="font-size: 13px; color: var(--text-muted);">PDF + dashboard + deck em paralelo, sem tocar em design</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="color: var(--green); font-size: 18px;">✓</span>
+            <div>
+              <div style="font-size: 15px; font-weight: 600; color: var(--white);">Account só valida e apresenta</div>
+              <div style="font-size: 13px; color: var(--text-muted);">15 minutos de revisão vs 6h de produção manual</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 12px; margin-top: 8px; padding-top: 16px; border-top: 1px solid var(--gray);">
+            <span style="color: var(--green); font-size: 18px;">✦</span>
+            <div>
+              <div style="font-size: 18px; font-weight: 700; color: var(--green);">Até 2 dias úteis</div>
+              <div style="font-size: 14px; color: var(--text-muted);">-71% do tempo · R$ 1.800 economizados por diagnóstico</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PATTERN BREAK 3: ENRICHED DIDATIC — A ANATOMIA DO DIAGNÓSTICO -->
+<section class="section" style="background: linear-gradient(160deg, var(--black2) 0%, var(--black) 100%); border-bottom: 1px solid var(--gray);">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <div class="section-tag" style="background: rgba(217,119,6,0.1); border-color: rgba(217,119,6,0.2); color: var(--amber);">A anatomia da automação</div>
+      <h2 class="section-title">Como cada agente <span>pensa e age</span></h2>
+      <p class="section-desc" style="max-width: 650px;">
+        Não é "IA mágica". Cada agente tem um papel, um método e uma saída específica. 
+        O que parece complexo é uma orquestração de passos individuais — cada um simples, 
+        juntos poderosos. A máquina faz o trabalho pesado; o ser humano, o que realmente importa.
+      </p>
+    </div>
+
+    <!-- Agent deep-dive grid -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--gray); margin-bottom: 48px;">
+      <!-- SEMRush API -->
+      <div style="background: var(--black3); padding: 36px 32px; border-left: 3px solid var(--amber);">
+        <div style="display: flex; align-items: flex-start; gap: 16px; margin-bottom: 14px;">
+          <span style="font-size: 28px; flex-shrink: 0;">📡</span>
+          <div>
+            <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 19px; font-weight: 800;">SEMRush API Connector</div>
+            <div style="font-size: 13px; color: var(--text-muted); font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;">Coleta · 100% automático</div>
+          </div>
+        </div>
+        <div style="font-size: 15px; color: var(--white3); line-height: 1.6; margin-bottom: 14px;">
+          <strong style="color: var(--white);">O que faz:</strong> Conecta-se à API do SEMRush Enterprise e baixa dados estruturados de <strong>3 fontes simultâneas</strong>: Position Tracking (rankings + AI Overviews por query), Site Audit (schema, crawlability, erros técnicos) e Competitive Intelligence (citações dos concorrentes, share of voice).
+        </div>
+        <div style="font-size: 14px; color: var(--text-muted); background: var(--black); padding: 12px 16px; font-family: 'Courier New', monospace; line-height: 1.6;">
+          <span style="color: var(--green);">✓</span> 20 queries posicionadas em 3 plataformas<br>
+          <span style="color: var(--green);">✓</span> Site audit completo (347 páginas, 12 erros)<br>
+          <span style="color: var(--green);">✓</span> Benchmark vs top 5 concorrentes
+        </div>
+      </div>
+
+      <!-- Citation Checker -->
+      <div style="background: var(--black3); padding: 36px 32px; border-left: 3px solid var(--amber);">
+        <div style="display: flex; align-items: flex-start; gap: 16px; margin-bottom: 14px;">
+          <span style="font-size: 28px; flex-shrink: 0;">🤖</span>
+          <div>
+            <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 19px; font-weight: 800;">n8n · Citation Checker</div>
+            <div style="font-size: 13px; color: var(--text-muted); font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;">Validação cruzada · 100% automático</div>
+          </div>
+        </div>
+        <div style="font-size: 15px; color: var(--white3); line-height: 1.6; margin-bottom: 14px;">
+          <strong style="color: var(--white);">O que faz:</strong> Um script Python com Playwright abre uma janela headless (invisível) do navegador, navega até <strong>ChatGPT, Perplexity, Gemini, Claude e Copilot</strong>, digita cada uma das 20 queries, captura a resposta em texto, e identifica se a marca do cliente foi citada. <strong>100 buscas em 8 minutos</strong> — o que um humano levaria 4 horas.
+        </div>
+        <div style="font-size: 14px; color: var(--text-muted); background: var(--black); padding: 12px 16px; font-family: 'Courier New', monospace; line-height: 1.6;">
+          <span style="color: var(--green);">✓</span> 20 queries × 5 plataformas = 100 checks<br>
+          <span style="color: var(--green);">✓</span> Captura: citado/não, posição, fonte usada<br>
+          <span style="color: var(--green);">✓</span> Screenshot de cada resultado (audit trail)
+        </div>
+      </div>
+
+      <!-- GA4 + GSC -->
+      <div style="background: var(--black3); padding: 36px 32px; border-left: 3px solid var(--amber);">
+        <div style="display: flex; align-items: flex-start; gap: 16px; margin-bottom: 14px;">
+          <span style="font-size: 28px; flex-shrink: 0;">📊</span>
+          <div>
+            <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 19px; font-weight: 800;">GA4 + GSC Connector</div>
+            <div style="font-size: 13px; color: var(--text-muted); font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;">Pipeline de audiência · 100% automático</div>
+          </div>
+        </div>
+        <div style="font-size: 15px; color: var(--white3); line-height: 1.6; margin-bottom: 14px;">
+          <strong style="color: var(--white);">O que faz:</strong> Conecta-se às APIs do Google Analytics 4 e Search Console para puxar o histórico de <strong>tráfego referido por IAs</strong> (ChatGPT, Perplexity, Gemini — cada um aparece como source separado), a <strong>evolução de cliques e impressões</strong> nas queries-alvo, e a <strong>taxa de CTR</strong> antes e depois da chegada dos AI Overviews.
+        </div>
+        <div style="font-size: 14px; color: var(--text-muted); background: var(--black); padding: 12px 16px; font-family: 'Courier New', monospace; line-height: 1.6;">
+          <span style="color: var(--green);">✓</span> AI referral traffic (12 meses de histórico)<br>
+          <span style="color: var(--green);">✓</span> GSC: queries com AI Overviews identificadas<br>
+          <span style="color: var(--green);">✓</span> CTR trend: antes vs depois dos AI Overviews
+        </div>
+      </div>
+
+      <!-- @analista-dados -->
+      <div style="background: var(--black3); padding: 36px 32px; border-left: 3px solid var(--purple);">
+        <div style="display: flex; align-items: flex-start; gap: 16px; margin-bottom: 14px;">
+          <span style="font-size: 28px; flex-shrink: 0;">🧠</span>
+          <div>
+            <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 19px; font-weight: 800;">@analista-dados</div>
+            <div style="font-size: 13px; color: var(--text-muted); font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;">Motor de análise · 90% automático</div>
+          </div>
+        </div>
+        <div style="font-size: 15px; color: var(--white3); line-height: 1.6; margin-bottom: 14px;">
+          <strong style="color: var(--white);">O que faz:</strong> É o cérebro da operação. Recebe todos os JSONs da camada de coleta e processa em <strong>4 entregáveis</strong>: (1) auditoria técnica com checklist de 15 pontos, (2) benchmark competitivo com SAIV score, (3) gap analysis priorizado por criticidade, (4) roadmap recomendado em 3 sprints. Usa <strong>Claude + Gemini</strong> como modelos de inferência, cada um validando o output do outro (cross-validation).
+        </div>
+        <div style="font-size: 14px; color: var(--text-muted); background: var(--black); padding: 12px 16px; font-family: 'Courier New', monospace; line-height: 1.6;">
+          <span style="color: var(--green);">✓</span> Consome 6 fontes de dados em paralelo<br>
+          <span style="color: var(--green);">✓</span> Cross-validation Claude ↔ Gemini<br>
+          <span style="color: var(--green);">✓</span> Gera 4 entregáveis em 3 minutos
+        </div>
+      </div>
+
+      <!-- @csm-orquestrador -->
+      <div style="background: var(--black3); padding: 36px 32px; border-left: 3px solid var(--purple);">
+        <div style="display: flex; align-items: flex-start; gap: 16px; margin-bottom: 14px;">
+          <span style="font-size: 28px; flex-shrink: 0;">📋</span>
+          <div>
+            <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 19px; font-weight: 800;">@csm-orquestrador</div>
+            <div style="font-size: 13px; color: var(--text-muted); font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;">Orquestração · 85% automático</div>
+          </div>
+        </div>
+        <div style="font-size: 15px; color: var(--white3); line-height: 1.6; margin-bottom: 14px;">
+          <strong style="color: var(--white);">O que faz:</strong> Consolida todos os outputs em um diagnóstico unificado. Dispara <strong>flags automáticas</strong> de desvio: @flag-okr (KR &lt; 60%), @flag-roi (ROAS abaixo da meta), @flag-churn (NPS + CSAT em queda), @flag-operacao (sprint atrasada). Gera o <strong>resumo executivo</strong> — 1 página que o account lê em 2 minutos e já sabe tudo que precisa.
+        </div>
+        <div style="font-size: 14px; color: var(--text-muted); background: var(--black); padding: 12px 16px; font-family: 'Courier New', monospace; line-height: 1.6;">
+          <span style="color: var(--green);">✓</span> 4 flags de desvio monitoradas<br>
+          <span style="color: var(--green);">✓</span> Resumo executivo em 1 página<br>
+          <span style="color: var(--green);">✓</span> Pronto para revisão do account
+        </div>
+      </div>
+
+      <!-- @revisor -->
+      <div style="background: var(--black3); padding: 36px 32px; border-left: 3px solid var(--green);">
+        <div style="display: flex; align-items: flex-start; gap: 16px; margin-bottom: 14px;">
+          <span style="font-size: 28px; flex-shrink: 0;">✓</span>
+          <div>
+            <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 19px; font-weight: 800;">@revisor</div>
+            <div style="font-size: 13px; color: var(--text-muted); font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;">Controle de qualidade · 80% automático</div>
+          </div>
+        </div>
+        <div style="font-size: 15px; color: var(--white3); line-height: 1.6; margin-bottom: 14px;">
+          <strong style="color: var(--white);">O que faz:</strong> Aplica um <strong>checklist de 15 pontos</strong> sobre o diagnóstico completo: consistência numérica (o benchmark bate com os dados brutos?), completude (todas as 10 seções existem?), formatação (padrão V4?), clareza (está em português claro e direto?). Se a taxa de aprovação for &ge; 90%, libera automaticamente. Se for menor, retorna com as correções apontadas.
+        </div>
+        <div style="font-size: 14px; color: var(--text-muted); background: var(--black); padding: 12px 16px; font-family: 'Courier New', monospace; line-height: 1.6;">
+          <span style="color: var(--green);">✓</span> 15-point checklist automático<br>
+          <span style="color: var(--green);">✓</span> Pass rate mínimo: 90%<br>
+          <span style="color: var(--green);">✓</span> Correções apontadas item a item
+        </div>
+      </div>
+
+      <!-- @gerar-pdf + @gerar-html + @gerar-ppt -->
+      <div style="background: var(--black3); padding: 36px 32px; border-left: 3px solid var(--yellow);">
+        <div style="display: flex; align-items: flex-start; gap: 16px; margin-bottom: 14px;">
+          <span style="font-size: 28px; flex-shrink: 0;">🚚</span>
+          <div>
+            <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 19px; font-weight: 800;">@gerar-pdf · @gerar-html · @gerar-ppt</div>
+            <div style="font-size: 13px; color: var(--text-muted); font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;">Entrega · 85% automático</div>
+          </div>
+        </div>
+        <div style="font-size: 15px; color: var(--white3); line-height: 1.6; margin-bottom: 14px;">
+          <strong style="color: var(--white);">O que fazem:</strong> Os 3 agentes de entrega trabalham em paralelo. <strong>@gerar-pdf</strong> compila o relatório completo (10 seções, capa + anexos) em PDF profissional. <strong>@gerar-html</strong> monta um dashboard interativo com gráficos dinâmicos (citações por plataforma, evolução temporal, SAIV score). <strong>@gerar-ppt</strong> prepara o deck de 15-20 slides para o account apresentar. Todos seguem o <strong>padrão visual V4</strong> — sem designer, sem diagramação manual.
+        </div>
+        <div style="font-size: 14px; color: var(--text-muted); background: var(--black); padding: 12px 16px; font-family: 'Courier New', monospace; line-height: 1.6;">
+          <span style="color: var(--green);">✓</span> 3 entregáveis em paralelo (~10min)<br>
+          <span style="color: var(--green);">✓</span> Padrão visual V4 automático<br>
+          <span style="color: var(--green);">✓</span> Account só revisa e apresenta
+        </div>
+      </div>
+    </div>
+
+    <!-- The big picture: how it all connects -->
+    <div class="fade-up" style="max-width: 800px; margin: 0 auto; padding: 32px; background: var(--black4); border: 1px solid var(--gray); position: relative;">
+      <div style="position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--red-gradient);"></div>
+      <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 17px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+        <span style="color: var(--red);">⟡</span> O fio que conecta tudo
+      </div>
+      <p style="font-size: 15px; color: var(--white3); line-height: 1.65;">
+        Cada agente é uma peça de um motor maior. O que torna o sistema poderoso não é nenhum 
+        agente individual — é a <strong style="color: var(--white);">orquestração entre eles</strong>. 
+        Os dados fluem sem intervenção humana da coleta → análise → validação → entrega. 
+        O account não precisa acompanhar, não precisa aprovar cada etapa, não precisa 
+        "passar o bastão". <strong style="color: var(--white);">O diagnóstico simplesmente acontece.</strong>
+        O ser humano entra no começo (estratégia, definição de queries) e no fim 
+        (revisão, apresentação). O meio — 85% do trabalho — é dos agentes.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING + EXPECTED RESULTS -->
+<section class="section" style="background: linear-gradient(160deg, var(--black) 0%, var(--black3) 100%); border-bottom: 1px solid var(--gray);">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <div class="section-tag" style="background: rgba(227,25,25,0.1); border-color: rgba(227,25,25,0.2); color: var(--red);">MVP · Pronto para rodar</div>
+      <h2 class="section-title">Investimento, resultados e <span>horas reais</span></h2>
+      <p class="section-desc" style="max-width: 650px;">
+        Tudo que você precisa saber para precificar, vender e entregar o AI Visibility. 
+        Sem margem escondida, sem hora inflada, sem promessa vazia.
+      </p>
+    </div>
+
+    <!-- 3-tier pricing -->
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--gray); margin-bottom: 48px;">
+      <!-- Tier 1: Diagnóstico -->
+      <div class="fade-up delay-1" style="background: var(--black3); padding: 40px 32px; position: relative;">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--amber); opacity: 0; transition: opacity 0.3s;" 
+             onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0'"></div>
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); margin-bottom: 16px;">Tier 1</div>
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 900; margin-bottom: 4px;">Diagnóstico</div>
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 52px; font-weight: 900; margin-bottom: 4px;"><span style="color: var(--white);">R$</span><span style="background: var(--red-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">4.900</span></div>
+        <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px;">One-time · 5-7 dias úteis</div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px;">
+          <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <span style="color: var(--green); font-size: 14px;">✓</span>
+            <div style="font-size: 14px; color: var(--white3); line-height: 1.4;">Diagnóstico de 20 queries em 5 plataformas</div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <span style="color: var(--green); font-size: 14px;">✓</span>
+            <div style="font-size: 14px; color: var(--white3); line-height: 1.4;">Benchmark vs top 5 concorrentes</div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <span style="color: var(--green); font-size: 14px;">✓</span>
+            <div style="font-size: 14px; color: var(--white3); line-height: 1.4;">Auditoria técnica + gap analysis</div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <span style="color: var(--green); font-size: 14px;">✓</span>
+            <div style="font-size: 14px; color: var(--white3); line-height: 1.4;">Roadmap de implantação priorizado</div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <span style="color: var(--green); font-size: 14px;">✓</span>
+            <div style="font-size: 14px; color: var(--white3); line-height: 1.4;">Relatório PDF + Dashboard HTML + Deck</div>
+          </div>
+        </div>
+
+        <div style="font-size: 13px; color: var(--text-muted); border-top: 1px solid var(--gray); padding-top: 16px;">
+          <strong style="color: var(--white);">Horas gastas:</strong> 6h humanas + 45min agentes<br>
+          <strong style="color: var(--white);">Breakdown:</strong> Account 2h · Analista 3h · Revisor 1h<br>
+          <strong style="color: var(--white);">Cobertura:</strong> 100% dos custos operacionais
+        </div>
+      </div>
+
+      <!-- Tier 2: Implantação -->
+      <div class="fade-up delay-2" style="background: var(--black4); padding: 40px 32px; position: relative; border: 1px solid rgba(227,25,25,0.15);">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--red-gradient);"></div>
+        <div style="display: inline-flex; background: rgba(227,25,25,0.1); color: var(--red); font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 10px; margin-bottom: 12px;">Mais contratado</div>
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); margin-bottom: 16px;">Tier 2</div>
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 900; margin-bottom: 4px;">Implantação</div>
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 52px; font-weight: 900; margin-bottom: 4px;"><span style="color: var(--white);">R$</span><span style="background: var(--red-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">14.900</span></div>
+        <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px;">Projeto · 45-60 dias (3 sprints)</div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px;">
+          <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <span style="color: var(--green); font-size: 14px;">✓</span>
+            <div style="font-size: 14px; color: var(--white3); line-height: 1.4;">Tudo do Diagnóstico + execução completa</div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <span style="color: var(--green); font-size: 14px;">✓</span>
+            <div style="font-size: 14px; color: var(--white3); line-height: 1.4;">Sprint 1: Foundation (robots, schema, llms.txt)</div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <span style="color: var(--green); font-size: 14px;">✓</span>
+            <div style="font-size: 14px; color: var(--white3); line-height: 1.4;">Sprint 2: Content (10 páginas otimizadas)</div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <span style="color: var(--green); font-size: 14px;">✓</span>
+            <div style="font-size: 14px; color: var(--white3); line-height: 1.4;">Sprint 3: Presence (Wikipedia, Reddit, G2)</div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <span style="color: var(--green); font-size: 14px;">✓</span>
+            <div style="font-size: 14px; color: var(--white3); line-height: 1.4;">Extractability score 80%+ em todas as páginas</div>
+          </div>
+        </div>
+
+        <div style="font-size: 13px; color: var(--text-muted); border-top: 1px solid var(--gray); padding-top: 16px;">
+          <strong style="color: var(--white);">Horas gastas:</strong> ~120h humanas no total<br>
+          <strong style="color: var(--white);">Breakdown:</strong> GT 40h · Copy 50h · Account 20h · Analista 10h<br>
+          <strong style="color: var(--white);">Resultado esperado:</strong> 3-8 citações em IA após 60 dias
+        </div>
+      </div>
+
+      <!-- Tier 3: Gestão -->
+      <div class="fade-up delay-3" style="background: var(--black3); padding: 40px 32px; position: relative;">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--yellow); opacity: 0; transition: opacity 0.3s;" 
+             onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0'"></div>
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--yellow); margin-bottom: 16px;">Tier 3</div>
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 900; margin-bottom: 4px;">Gestão Contínua</div>
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 52px; font-weight: 900; margin-bottom: 4px;"><span style="color: var(--white);">R$</span><span style="background: var(--red-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">7.900</span><span style="font-size: 20px; color: var(--text-muted);">/mês</span></div>
+        <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px;">Contrato 12 meses · Mínimo 6 meses</div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px;">
+          <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <span style="color: var(--green); font-size: 14px;">✓</span>
+            <div style="font-size: 14px; color: var(--white3); line-height: 1.4;">Monitoramento SEMRush semanal + mensal</div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <span style="color: var(--green); font-size: 14px;">✓</span>
+            <div style="font-size: 14px; color: var(--white3); line-height: 1.4;">Relatório mensal com dashboard interativo</div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <span style="color: var(--green); font-size: 14px;">✓</span>
+            <div style="font-size: 14px; color: var(--white3); line-height: 1.4;">Otimização contínua de conteúdo (4 páginas/mês)</div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <span style="color: var(--green); font-size: 14px;">✓</span>
+            <div style="font-size: 14px; color: var(--white3); line-height: 1.4;">Novas queries + plataformas (mercado muda)</div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <span style="color: var(--green); font-size: 14px;">✓</span>
+            <div style="font-size: 14px; color: var(--white3); line-height: 1.4;">QBR trimestral com recomendações estratégicas</div>
+          </div>
+        </div>
+
+        <div style="font-size: 13px; color: var(--text-muted); border-top: 1px solid var(--gray); padding-top: 16px;">
+          <strong style="color: var(--white);">Horas gastas:</strong> ~28h humanas/mês<br>
+          <strong style="color: var(--white);">Breakdown:</strong> Account 6h · GT 4h · Copy 10h · Analista 6h · Revisor 2h<br>
+          <strong style="color: var(--white);">Resultado esperado:</strong> +40% citações em 6 meses
+        </div>
+      </div>
+    </div>
+
+    <!-- Expected results table -->
+    <div class="fade-up" style="max-width: 900px; margin: 0 auto 48px;">
+      <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 16px; text-align: center;">Resultados esperados por fase</div>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--gray);">
+        <div style="background: var(--black4); padding: 20px; text-align: center;">
+          <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted);">Métrica</div>
+        </div>
+        <div style="background: var(--black4); padding: 20px; text-align: center;">
+          <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--amber);">Diagnóstico</div>
+        </div>
+        <div style="background: var(--black4); padding: 20px; text-align: center;">
+          <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--red);">Implantação</div>
+        </div>
+        <div style="background: var(--black4); padding: 20px; text-align: center;">
+          <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--yellow);">Gestão (12m)</div>
+        </div>
+
+        <div style="background: var(--black3); padding: 20px; text-align: center; font-size: 14px; color: var(--white3);">Citações em IA</div>
+        <div style="background: var(--black3); padding: 20px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 800; color: var(--white);">0 → diagnóstico</div>
+        <div style="background: var(--black3); padding: 20px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 800; color: var(--white);">3-8 citações</div>
+        <div style="background: var(--black3); padding: 20px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 800; color: var(--white);">15-40 citações</div>
+
+        <div style="background: var(--black3); padding: 20px; text-align: center; font-size: 14px; color: var(--white3);">SAIV Score</div>
+        <div style="background: var(--black3); padding: 20px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 800; color: var(--white);">0% (baseline)</div>
+        <div style="background: var(--black3); padding: 20px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 800; color: var(--white);">10-25%</div>
+        <div style="background: var(--black3); padding: 20px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 800; color: var(--white);">30-60%</div>
+
+        <div style="background: var(--black3); padding: 20px; text-align: center; font-size: 14px; color: var(--white3);">Query Coverage</div>
+        <div style="background: var(--black3); padding: 20px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 800; color: var(--white);">0% (baseline)</div>
+        <div style="background: var(--black3); padding: 20px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 800; color: var(--white);">3-5 queries</div>
+        <div style="background: var(--black3); padding: 20px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 800; color: var(--white);">12-18 queries</div>
+
+        <div style="background: var(--black3); padding: 20px; text-align: center; font-size: 14px; color: var(--white3);">AI Referral Traffic</div>
+        <div style="background: var(--black3); padding: 20px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 800; color: var(--white);">—</div>
+        <div style="background: var(--black3); padding: 20px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 800; color: var(--white);">Primeiros sinais</div>
+        <div style="background: var(--black3); padding: 20px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 800; color: var(--white);">5-15% do tráfego orgânico</div>
+
+        <div style="background: var(--black3); padding: 20px; text-align: center; font-size: 14px; color: var(--white3);">Extractability Score</div>
+        <div style="background: var(--black3); padding: 20px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 800; color: var(--white);">Medido (baseline)</div>
+        <div style="background: var(--black3); padding: 20px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 800; color: var(--green);">80%+</div>
+        <div style="background: var(--black3); padding: 20px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 800; color: var(--green);">85-95%</div>
+      </div>
+    </div>
+
+    <!-- Honest callout - EXPANDED WITH ORCHESTRATION BREAKDOWN -->
+    <div class="fade-up" style="max-width: 920px; margin: 0 auto; padding: 44px 40px; background: var(--black4); border: 1px solid var(--gray);">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 4px;">
+        <span style="font-size: 20px;">⚠</span>
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--red);">Os 15% que fazem a diferença</div>
+      </div>
+      <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 30px; font-weight: 900; margin-bottom: 14px; line-height: 1.2;">Onde o humano é <span style="color: var(--red);">insubstituível</span></div>
+      <p style="font-size: 15px; color: var(--white3); line-height: 1.6; margin-bottom: 28px;">
+        Os agentes automatizam <strong style="color: var(--white);">85% do diagnóstico</strong> e <strong style="color: var(--white);">~60% da gestão contínua</strong>. 
+        Mas orquestração — os <strong style="color: var(--white);">15% de trabalho humano</strong> — 
+        é onde o valor real é criado. Cada minuto abaixo é investido em algo que algoritmo nenhum faz.
+      </p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px;">
+        <!-- Column 1: Roles -->
+        <div>
+          <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--amber); margin-bottom: 12px;">Diagnóstico (6h)</div>
+          <div style="display: flex; flex-direction: column; gap: 1px; background: var(--gray); font-size: 14px;">
+            <div style="display: grid; grid-template-columns: 100px 50px 1fr; gap: 0; background: var(--black3); padding: 10px 14px;">
+              <span style="font-weight: 700; color: var(--white);">Account</span>
+              <span style="color: var(--amber); font-weight: 700;">2h</span>
+              <span style="color: var(--text-muted);">Kickoff, briefing estratégico, definição de queries, alinhamento de expectativas, revisão final do diagnóstico</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 100px 50px 1fr; gap: 0; background: var(--black3); padding: 10px 14px;">
+              <span style="font-weight: 700; color: var(--white);">Analista</span>
+              <span style="color: var(--amber); font-weight: 700;">3h</span>
+              <span style="color: var(--text-muted);">Interpretação de gaps no contexto do negócio, recomendações priorizadas, decisão de posicionamento, curadoria do benchmark</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 100px 50px 1fr; gap: 0; background: var(--black3); padding: 10px 14px;">
+              <span style="font-weight: 700; color: var(--white);">Revisor</span>
+              <span style="color: var(--amber); font-weight: 700;">1h</span>
+              <span style="color: var(--text-muted);">Validação crítica do output dos agentes, ajustes de tom e clareza, garantia de coerência estratégica</span>
+            </div>
+          </div>
+        </div>
+        <!-- Column 2: Why human -->
+        <div>
+          <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--red); margin-bottom: 12px;">Por que não é automatizado</div>
+          <div style="display: flex; flex-direction: column; gap: 1px; background: var(--gray); font-size: 14px;">
+            <div style="background: var(--black3); padding: 10px 14px; color: var(--white3);">
+              <strong style="color: var(--white);">Relacionamento:</strong> IA não conduz kickoff, não lê a sala, não sente se o cliente está cético ou animado. Quem faz o cliente confiar é o account.
+            </div>
+            <div style="background: var(--black3); padding: 10px 14px; color: var(--white3);">
+              <strong style="color: var(--white);">Estratégia:</strong> IA recomenda o óbvio dos dados. O analista conecta os pontos com o que sabe do mercado, do cliente e do histórico — isso não está em dataset nenhum.
+            </div>
+            <div style="background: var(--black3); padding: 10px 14px; color: var(--white3);">
+              <strong style="color: var(--white);">Julgamento:</strong> IA não sabe quando flexibilizar uma regra. O revisor aplica critério que nenhum checklist cobre: "isso aqui soa bem para este cliente específico?"
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px;">
+        <!-- Column 1: Implantação -->
+        <div>
+          <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--red); margin-bottom: 12px;">Implantação (~116h)</div>
+          <div style="display: flex; flex-direction: column; gap: 1px; background: var(--gray); font-size: 14px;">
+            <div style="display: grid; grid-template-columns: 100px 50px 1fr; gap: 0; background: var(--black3); padding: 10px 14px;">
+              <span style="font-weight: 700; color: var(--white);">GT</span>
+              <span style="color: var(--red); font-weight: 700;">36h</span>
+              <span style="color: var(--text-muted);">Implementação técnica no CMS, schema markup, robots.txt, validação SEMRush</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 100px 50px 1fr; gap: 0; background: var(--black3); padding: 10px 14px;">
+              <span style="font-weight: 700; color: var(--white);">Copy</span>
+              <span style="color: var(--red); font-weight: 700;">50h</span>
+              <span style="color: var(--text-muted);">Conteúdo criativo original, definition blocks, comparison tables, FAQ — IA gera rascunho, copy refina com voz de marca</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 100px 50px 1fr; gap: 0; background: var(--black3); padding: 10px 14px;">
+              <span style="font-weight: 700; color: var(--white);">Account</span>
+              <span style="color: var(--red); font-weight: 700;">20h</span>
+              <span style="color: var(--text-muted);">Gestão de aprovações, alinhamento com cliente, apresentação de entregas, resolução de impedimentos</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 100px 50px 1fr; gap: 0; background: var(--black3); padding: 10px 14px;">
+              <span style="font-weight: 700; color: var(--white);">Analista</span>
+              <span style="color: var(--red); font-weight: 700;">10h</span>
+              <span style="color: var(--text-muted);">Priorização de páginas, validação de extractability, ajuste de rota entre sprints</span>
+            </div>
+          </div>
+        </div>
+        <!-- Column 2: Gestão -->
+        <div>
+          <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--yellow); margin-bottom: 12px;">Gestão (~28h/mês)</div>
+          <div style="display: flex; flex-direction: column; gap: 1px; background: var(--gray); font-size: 14px;">
+            <div style="display: grid; grid-template-columns: 100px 50px 1fr; gap: 0; background: var(--black3); padding: 10px 14px;">
+              <span style="font-weight: 700; color: var(--white);">Account</span>
+              <span style="color: var(--yellow); font-weight: 700;">6h</span>
+              <span style="color: var(--text-muted);">Call mensal, apresentação de resultados, prospecção de upsell, relacionamento contínuo</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 100px 50px 1fr; gap: 0; background: var(--black3); padding: 10px 14px;">
+              <span style="font-weight: 700; color: var(--white);">GT</span>
+              <span style="color: var(--yellow); font-weight: 700;">4h</span>
+              <span style="color: var(--text-muted);">Ajustes técnicos pontuais, novas implementações de schema, monitoramento SEMRush</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 100px 50px 1fr; gap: 0; background: var(--black3); padding: 10px 14px;">
+              <span style="font-weight: 700; color: var(--white);">Copy</span>
+              <span style="color: var(--yellow); font-weight: 700;">10h</span>
+              <span style="color: var(--text-muted);">Otimização de 4 páginas/mês, nova content strategy, adaptação de tom conforme feedback do cliente</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 100px 50px 1fr; gap: 0; background: var(--black3); padding: 10px 14px;">
+              <span style="font-weight: 700; color: var(--white);">Analista</span>
+              <span style="color: var(--yellow); font-weight: 700;">6h</span>
+              <span style="color: var(--text-muted);">Análise mensal, recomendações estratégicas, detecção de novos gaps, preparação de QBR</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 100px 50px 1fr; gap: 0; background: var(--black3); padding: 10px 14px;">
+              <span style="font-weight: 700; color: var(--white);">Revisor</span>
+              <span style="color: var(--yellow); font-weight: 700;">2h</span>
+              <span style="color: var(--text-muted);">Validação de relatórios, consistência de dados, qualidade das entregas do mês</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center; padding: 20px 24px; background: var(--black); border: 1px solid var(--gray);">
+        <p style="font-size: 14px; color: var(--white3); line-height: 1.6; margin: 0;">
+          <strong style="color: var(--white);">A regra é simples:</strong> onde o ser humano é insubstituível, a gente coloca ser humano. 
+          Onde a máquina é mais rápida, a gente coloca máquina. 
+          <strong style="color: var(--green);">85% automatizado não é 100% abandonado</strong> — 
+          é 85% de ganho de velocidade para investir os 15% onde realmente importa.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADOPTION ROADMAP -->
+<section class="section" style="background: var(--black2); border-bottom: 1px solid var(--gray);">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <div class="section-tag" style="background: rgba(34,197,94,0.1); border-color: rgba(34,197,94,0.2); color: var(--green);">⟡ Pronto para rodar</div>
+      <h2 class="section-title">Roadmap de <span>adoção</span></h2>
+      <p class="section-desc" style="max-width: 650px;">
+        Da decisão de comprar ao primeiro resultado mensurável. O <strong>menor tempo 
+        possível sem ser irresponsável</strong> — cada fase tem duração justa, não acelerada.
+      </p>
+    </div>
+
+    <div style="max-width: 860px; margin: 0 auto;">
+      <!-- Roadmap phases -->
+      <div style="display: flex; flex-direction: column; gap: 0;">
+        <!-- Phase 1 -->
+        <div class="fade-up delay-1" style="display: grid; grid-template-columns: 120px 1fr; gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--gray);">
+          <div style="text-align: center;">
+            <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 900; color: var(--amber); line-height: 1;">Semana</div>
+            <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 52px; font-weight: 900; color: var(--amber); line-height: 0.9;">1</div>
+          </div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+              <span style="font-size: 22px;">📋</span>
+              <div>
+                <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800;">Kickoff + Diagnóstico</div>
+                <div style="font-size: 14px; color: var(--text-muted); font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;">Account + Agentes · 5-7 dias</div>
+              </div>
+            </div>
+            <div style="font-size: 15px; color: var(--white3); line-height: 1.6;">
+              Reunião de kickoff (60min), coleta das 20 queries-alvo, configuração de acessos. 
+              Agentes disparam: coleta 100% automática, análise em 3 minutos, diagnóstico pronto 
+              em até 2 dias. <strong style="color: var(--white);">Entregável:</strong> Relatório PDF + Dashboard + 
+              proposta de implantação.
+            </div>
+            <div style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">
+              <strong style="color: var(--white3);">Horas humanas:</strong> ~6h · 
+              <strong style="color: var(--white3);">Cliente precisa:</strong> Participar do kickoff, fornecer acessos
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 2 -->
+        <div class="fade-up delay-2" style="display: grid; grid-template-columns: 120px 1fr; gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--gray);">
+          <div style="text-align: center;">
+            <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 900; color: var(--red); line-height: 1;">Semanas</div>
+            <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 52px; font-weight: 900; color: var(--red); line-height: 0.9;">2-3</div>
+          </div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+              <span style="font-size: 22px;">🔧</span>
+              <div>
+                <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800;">Sprint 1 — Foundation</div>
+                <div style="font-size: 14px; color: var(--text-muted); font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;">GT + Copy · 2 semanas</div>
+              </div>
+            </div>
+            <div style="font-size: 15px; color: var(--white3); line-height: 1.6;">
+              <strong style="color: var(--white);">11 tarefas:</strong> Liberar AI crawlers no robots.txt, implementar schema markup 
+              (Organization, Article, FAQPage, Product, HowTo), criar <strong>/pricing.md</strong> e <strong>/llms.txt</strong>, 
+              adicionar "last updated" e author attribution em todas as páginas, validar com SEMRush 
+              Site Audit. <strong style="color: var(--white);">Cliente já vê resultado:</strong> site tecnicamente pronto para ser 
+              extraído por IAs.
+            </div>
+            <div style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">
+              <strong style="color: var(--white3);">Horas:</strong> ~30h (GT 20h · Copy 6h · Account 4h) · 
+              <strong style="color: var(--white3);">Cliente precisa:</strong> Aprovar implementações, liberar acesso ao CMS
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 3 -->
+        <div class="fade-up delay-3" style="display: grid; grid-template-columns: 120px 1fr; gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--gray);">
+          <div style="text-align: center;">
+            <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 900; color: var(--red); line-height: 1;">Semanas</div>
+            <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 52px; font-weight: 900; color: var(--red); line-height: 0.9;">4-6</div>
+          </div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+              <span style="font-size: 22px;">✍</span>
+              <div>
+                <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800;">Sprint 2 — Content</div>
+                <div style="font-size: 14px; color: var(--text-muted); font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;">Copy + GT · 3 semanas</div>
+              </div>
+            </div>
+            <div style="font-size: 15px; color: var(--white3); line-height: 1.6;">
+              Otimização de <strong style="color: var(--white);">10 páginas</strong> com content blocks específicos por tipo de query: 
+              definition blocks (perguntas "o que é"), comparison tables ("X vs Y"), step-by-step 
+              ("como fazer"), FAQ blocks, pricing blocks. Cada página ganha extractability score 
+              80%+. <strong style="color: var(--white);">Primeiras citações em IA começam a aparecer</strong> entre os dias 30-45.
+            </div>
+            <div style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">
+              <strong style="color: var(--white3);">Horas:</strong> ~60h (Copy 40h · GT 12h · Account 8h) · 
+              <strong style="color: var(--white3);">Cliente precisa:</strong> Revisar e aprovar conteúdo
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 4 -->
+        <div class="fade-up delay-4" style="display: grid; grid-template-columns: 120px 1fr; gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--gray);">
+          <div style="text-align: center;">
+            <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 900; color: var(--red); line-height: 1;">Semanas</div>
+            <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 52px; font-weight: 900; color: var(--red); line-height: 0.9;">7-8</div>
+          </div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+              <span style="font-size: 22px;">🌐</span>
+              <div>
+                <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800;">Sprint 3 — Presence</div>
+                <div style="font-size: 14px; color: var(--text-muted); font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;">Copy + Account · 2 semanas</div>
+              </div>
+            </div>
+            <div style="font-size: 15px; color: var(--white3); line-height: 1.6;">
+              Presença em <strong style="color: var(--white);">terceiros</strong>: Wikipedia (verificar/atualizar), 
+              Reddit (3 subreddits relevantes), G2/Capterra (perfil atualizado), YouTube (conteúdo 
+              vinculado). <strong style="color: var(--white);">Validação final:</strong> 20 queries testadas em ChatGPT + Perplexity, 
+              relatório de citações capturadas. <strong style="color: var(--white);">Cliente vê:</strong> relatório de conclusão 
+              com todas as citações mapeadas.
+            </div>
+            <div style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">
+              <strong style="color: var(--white3);">Horas:</strong> ~30h (Copy 14h · Account 12h · GT 4h) · 
+              <strong style="color: var(--white3);">Cliente precisa:</strong> Aprovar presença em terceiros
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 5 -->
+        <div class="fade-up delay-5" style="display: grid; grid-template-columns: 120px 1fr; gap: 24px; padding: 28px 0;">
+          <div style="text-align: center;">
+            <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 900; color: var(--green); line-height: 1;">Mês</div>
+            <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 52px; font-weight: 900; color: var(--green); line-height: 0.9;">3+</div>
+          </div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+              <span style="font-size: 22px;">🔄</span>
+              <div>
+                <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800;">Gestão Contínua</div>
+                <div style="font-size: 14px; color: var(--text-muted); font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;">Time completo · Mensal recorrente</div>
+              </div>
+            </div>
+            <div style="font-size: 15px; color: var(--white3); line-height: 1.6;">
+              A partir do mês 3, o cliente entra em <strong style="color: var(--white);">gestão contínua</strong>. 
+              Monitoramento SEMRush semanal, relatório mensal com dashboard, otimização de 
+              4 páginas/mês, novas queries conforme o mercado muda, QBR trimestral. 
+              <strong style="color: var(--white);">NRR esperado:</strong> 85% no ano 1, 120%+ no ano 2 (com add-ons).
+            </div>
+            <div style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">
+              <strong style="color: var(--white3);">Horas:</strong> ~28h/mês · 
+              <strong style="color: var(--white3);">Cliente precisa:</strong> 1h/mês de alinhamento + aprovações
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline summary -->
+      <div class="fade-up" style="margin-top: 40px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--gray);">
+        <div style="background: var(--black3); padding: 24px 16px; text-align: center;">
+          <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 900; color: var(--amber);">W1</div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Diagnóstico</div>
+        </div>
+        <div style="background: var(--black3); padding: 24px 16px; text-align: center;">
+          <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 900; color: var(--red);">W2-3</div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Foundation</div>
+        </div>
+        <div style="background: var(--black3); padding: 24px 16px; text-align: center;">
+          <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 900; color: var(--red);">W4-6</div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Content</div>
+        </div>
+        <div style="background: var(--black3); padding: 24px 16px; text-align: center;">
+          <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 900; color: var(--red);">W7-8</div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Presence</div>
+        </div>
+        <div style="background: var(--black4); padding: 24px 16px; text-align: center; border-left: 2px solid var(--red);">
+          <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 900; color: var(--green);">M3+</div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Gestão</div>
+        </div>
+      </div>
+
+      <div class="fade-up" style="text-align: center; margin-top: 32px;">
+        <div style="display: inline-flex; align-items: center; gap: 8px; font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted);">
+          <span style="color: var(--green);">⟡</span> 
+          Do kickoff ao primeiro resultado mensurável: <strong style="color: var(--white);">~60 dias</strong>
+          <span style="color: var(--green);">⟡</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUCCESS KPIS -->
+<section class="section" style="background: linear-gradient(160deg, var(--black2) 0%, var(--black) 100%); border-bottom: 1px solid var(--gray);">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <div class="section-tag" style="background: rgba(34,197,94,0.1); border-color: rgba(34,197,94,0.2); color: var(--green);">⟡ Como medir o sucesso</div>
+      <h2 class="section-title">Métricas que <span>importam</span></h2>
+      <p class="section-desc" style="max-width: 650px;">
+        Depois que o onboarding termina, não é achismo que define se deu certo. 
+        São <strong style="color: var(--white);">8 métricas objetivas</strong> que acompanhamos do dia 1 ao mês 12 — 
+        e que o cliente vê no dashboard todo mês sem precisar pedir.
+      </p>
+    </div>
+
+    <!-- Big number KPIs row -->
+    <div class="fade-up" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--gray); margin-bottom: 48px;">
+      <div style="background: var(--black4); padding: 36px 20px; text-align: center; position: relative;">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: var(--green);"></div>
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 48px; font-weight: 900; background: var(--red-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1;">+40%</div>
+        <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Citações em IA<Br><span style="font-size: 11px;">(6 meses de gestão)</span></div>
+      </div>
+      <div style="background: var(--black4); padding: 36px 20px; text-align: center; position: relative;">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: var(--red);"></div>
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 48px; font-weight: 900; color: var(--white); line-height: 1;">15-40</div>
+        <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Citações acumuladas<Br><span style="font-size: 11px;">(12 meses de gestão)</span></div>
+      </div>
+      <div style="background: var(--black4); padding: 36px 20px; text-align: center; position: relative;">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: var(--amber);"></div>
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 48px; font-weight: 900; background: var(--red-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1;">85-95%</div>
+        <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Extractability Score<Br><span style="font-size: 11px;">(gestão contínua)</span></div>
+      </div>
+      <div style="background: var(--black4); padding: 36px 20px; text-align: center; position: relative;">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: var(--purple);"></div>
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 48px; font-weight: 900; color: var(--white); line-height: 1;">60%</div>
+        <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Query Coverage<Br><span style="font-size: 11px;">(share of voice em IA)</span></div>
+      </div>
+    </div>
+
+    <!-- Detailed metrics table -->
+    <div class="fade-up" style="max-width: 1000px; margin: 0 auto;">
+      <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 16px; color: var(--white); display: flex; align-items: center; gap: 8px;">
+        <span style="color: var(--green);">⟡</span> As 8 métricas que definem sucesso
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr; gap: 1px; background: var(--gray); font-size: 14px;">
+        <!-- Header -->
+        <div style="display: grid; grid-template-columns: 220px 1fr 120px 120px 100px; gap: 0; background: var(--black4); padding: 14px 20px;">
+          <span style="font-weight: 700; color: var(--white); font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.04em; text-transform: uppercase;">Métrica</span>
+          <span style="font-weight: 700; color: var(--white); font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.04em; text-transform: uppercase;">O que mede</span>
+          <span style="font-weight: 700; color: var(--white); font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.04em; text-transform: uppercase;">Baseline</span>
+          <span style="font-weight: 700; color: var(--white); font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.04em; text-transform: uppercase;">Meta 6m</span>
+          <span style="font-weight: 700; color: var(--white); font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.04em; text-transform: uppercase;">Frequência</span>
+        </div>
+        <!-- Metric 1 -->
+        <div style="display: grid; grid-template-columns: 220px 1fr 120px 120px 100px; gap: 0; background: var(--black3); padding: 14px 20px;">
+          <span style="font-weight: 600; color: var(--white);">Citações em IA</span>
+          <span style="color: var(--white3);">Quantas vezes a marca aparece citada em respostas do ChatGPT, Perplexity, Gemini, Claude e Copilot</span>
+          <span style="color: var(--text-muted);">0</span>
+          <span style="color: var(--green); font-weight: 600;">8-15/mês</span>
+          <span style="color: var(--text-muted);">Semanal</span>
+        </div>
+        <!-- Metric 2 -->
+        <div style="display: grid; grid-template-columns: 220px 1fr 120px 120px 100px; gap: 0; background: var(--black3); padding: 14px 20px;">
+          <span style="font-weight: 600; color: var(--white);">SAIV Score</span>
+          <span style="color: var(--white3);">Search AI Visibility Score — % de presença da marca nas respostas de IA para as queries-alvo</span>
+          <span style="color: var(--text-muted);">0-5%</span>
+          <span style="color: var(--green); font-weight: 600;">30-60%</span>
+          <span style="color: var(--text-muted);">Mensal</span>
+        </div>
+        <!-- Metric 3 -->
+        <div style="display: grid; grid-template-columns: 220px 1fr 120px 120px 100px; gap: 0; background: var(--black3); padding: 14px 20px;">
+          <span style="font-weight: 600; color: var(--white);">Query Coverage</span>
+          <span style="color: var(--white3);">Quantidade de queries-alvo onde a marca aparece — cobertura sobre o total de 20 queries</span>
+          <span style="color: var(--text-muted);">0-2</span>
+          <span style="color: var(--green); font-weight: 600;">12-18</span>
+          <span style="color: var(--text-muted);">Mensal</span>
+        </div>
+        <!-- Metric 4 -->
+        <div style="display: grid; grid-template-columns: 220px 1fr 120px 120px 100px; gap: 0; background: var(--black3); padding: 14px 20px;">
+          <span style="font-weight: 600; color: var(--white);">AI Referral Traffic</span>
+          <span style="color: var(--white3);">% do tráfego orgânico total que chega via sources de IA (ChatGPT, Perplexity, Gemini, Copilot)</span>
+          <span style="color: var(--text-muted);">&lt;1%</span>
+          <span style="color: var(--green); font-weight: 600;">5-15%</span>
+          <span style="color: var(--text-muted);">Mensal</span>
+        </div>
+        <!-- Metric 5 -->
+        <div style="display: grid; grid-template-columns: 220px 1fr 120px 120px 100px; gap: 0; background: var(--black3); padding: 14px 20px;">
+          <span style="font-weight: 600; color: var(--white);">Extractability Score</span>
+          <span style="color: var(--white3);">% de páginas do site que atendem aos critérios de extração por IA (schema, blocks, freshness)</span>
+          <span style="color: var(--text-muted);">10-30%</span>
+          <span style="color: var(--green); font-weight: 600;">85-95%</span>
+          <span style="color: var(--text-muted);">Quinzenal</span>
+        </div>
+        <!-- Metric 6 -->
+        <div style="display: grid; grid-template-columns: 220px 1fr 120px 120px 100px; gap: 0; background: var(--black3); padding: 14px 20px;">
+          <span style="font-weight: 600; color: var(--white);">Net New Citations</span>
+          <span style="color: var(--white3);">Citações novas detectadas no período — mostra se a presença está crescendo ou estagnada</span>
+          <span style="color: var(--text-muted);">—</span>
+          <span style="color: var(--green); font-weight: 600;">+3-5/mês</span>
+          <span style="color: var(--text-muted);">Semanal</span>
+        </div>
+        <!-- Metric 7 -->
+        <div style="display: grid; grid-template-columns: 220px 1fr 120px 120px 100px; gap: 0; background: var(--black3); padding: 14px 20px;">
+          <span style="font-weight: 600; color: var(--white);">Share of Voice (IA)</span>
+          <span style="color: var(--white3);">% de menções da marca vs concorrentes nas respostas de IA para as queries-alvo</span>
+          <span style="color: var(--text-muted);">0-5%</span>
+          <span style="color: var(--green); font-weight: 600;">25-40%</span>
+          <span style="color: var(--text-muted);">Mensal</span>
+        </div>
+        <!-- Metric 8 -->
+        <div style="display: grid; grid-template-columns: 220px 1fr 120px 120px 100px; gap: 0; background: var(--black3); padding: 14px 20px;">
+          <span style="font-weight: 600; color: var(--white);">Time to Citation</span>
+          <span style="color: var(--white3);">Dias entre a otimização de uma página e sua primeira aparição em resposta de IA</span>
+          <span style="color: var(--text-muted);">—</span>
+          <span style="color: var(--green); font-weight: 600;">&lt;45 dias</span>
+          <span style="color: var(--text-muted);">Por página</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cadence callout -->
+    <div class="fade-up" style="max-width: 700px; margin: 32px auto 0; padding: 24px 28px; background: var(--black4); border: 1px solid var(--gray); text-align: center;">
+      <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--green); margin-bottom: 8px;">⟡ O cliente nunca está no escuro</div>
+      <p style="font-size: 14px; color: var(--white3); line-height: 1.6;">
+        Todas as métricas são <strong style="color: var(--white);">atualizadas automaticamente pelos agentes</strong> e aparecem no 
+        dashboard mensal. O cliente não precisa pedir relatório, não precisa acompanhar planilha, 
+        não precisa saber interpretar dados. <strong style="color: var(--white);">Cada número tem um contexto</strong> — 
+        "sua citação subiu 40% este mês porque otimizamos 4 páginas com FAQ blocks" — 
+        entregue em linguagem de negócio, não de analytics.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- TECHNICAL DETAIL -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <div class="section-tag deliver">Como Funciona</div>
+      <h2 class="section-title">O passo a passo da <span>automação</span></h2>
+      <p class="section-desc">Os 7 passos que transformam o kickoff em um diagnóstico completo — sem intervenção manual entre os passos 2 e 6.</p>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 0; max-width: 800px; margin: 0 auto;">
+      <!-- Step 1 -->
+      <div class="fade-up delay-1" style="display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--gray);">
+        <div style="width: 48px; height: 48px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--black4); font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 900; color: var(--text-muted); border: 1px solid var(--gray);">1</div>
+        <div>
+          <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; margin-bottom: 2px;">
+            Kickoff com o cliente <span style="color: var(--amber); font-weight: 400; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase;">Account + Cliente · 60min</span>
+          </div>
+          <div style="font-size: 14px; color: var(--text-muted);">Account coleta as 20 queries-alvo, valida acessos (SEMRush, GA4, site) e alinha expectativas.</div>
+          <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;"><strong style="color: var(--white3);">Input:</strong> Formulário de queries · <strong style="color: var(--white3);">Output:</strong> 20 queries + acessos configurados</div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="fade-up delay-2" style="display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--gray);">
+        <div style="width: 48px; height: 48px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: rgba(217,119,6,0.1); font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 900; color: var(--amber); border: 1px solid rgba(217,119,6,0.3);">2</div>
+        <div>
+          <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; margin-bottom: 2px;">
+            Coleta automática de dados <span style="color: var(--amber); font-weight: 400; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase;">100% automático · 15min</span>
+          </div>
+          <div style="font-size: 14px; color: var(--text-muted);">SEMRush API puxa AI Overviews, site audit e benchmark. Citation checker roda 100 buscas em 5 plataformas. GA4/GSC puxam dados de tráfego. Tudo em paralelo.</div>
+          <div style="display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap;">
+            <span class="agent-metric collect">SEMRush</span>
+            <span class="agent-metric collect">Citation Checker</span>
+            <span class="agent-metric collect">GA4 Connector</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="fade-up delay-3" style="display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--gray);">
+        <div style="width: 48px; height: 48px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: rgba(168,85,247,0.1); font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 900; color: var(--purple); border: 1px solid rgba(168,85,247,0.3);">3</div>
+        <div>
+          <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; margin-bottom: 2px;">
+            Análise e gap detection <span style="color: var(--purple); font-weight: 400; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase;">@analista-dados · 3min</span>
+          </div>
+          <div style="font-size: 14px; color: var(--text-muted);">@analista-dados processa todos os dados, gera auditoria técnica, benchmark competitivo, gap analysis e roadmap priorizado. Content Gap Analyzer complementa com oportunidades de conteúdo.</div>
+          <div style="display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap;">
+            <span class="agent-metric analyze">Auditoria</span>
+            <span class="agent-metric analyze">Benchmark</span>
+            <span class="agent-metric analyze">Gap Analysis</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="fade-up delay-4" style="display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--gray);">
+        <div style="width: 48px; height: 48px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: rgba(168,85,247,0.1); font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 900; color: var(--purple); border: 1px solid rgba(168,85,247,0.3);">4</div>
+        <div>
+          <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; margin-bottom: 2px;">
+            Orquestração e flags <span style="color: var(--purple); font-weight: 400; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase;">@csm-orquestrador · 2min</span>
+          </div>
+          <div style="font-size: 14px; color: var(--text-muted);">@csm-orquestrador consolida tudo em um diagnóstico unificado, dispara flags automáticas se detectar desvios (OKR abaixo de 60%, ROAS abaixo da meta) e prepara o resumo executivo.</div>
+          <div style="display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap;">
+            <span class="agent-metric analyze">Flags</span>
+            <span class="agent-metric analyze">Consolidação</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="fade-up delay-5" style="display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--gray);">
+        <div style="width: 48px; height: 48px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: rgba(34,197,94,0.1); font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 900; color: var(--green); border: 1px solid rgba(34,197,94,0.3);">5</div>
+        <div>
+          <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; margin-bottom: 2px;">
+            Validação automática <span style="color: var(--green); font-weight: 400; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase;">@revisor + SEMRush · 5min</span>
+          </div>
+          <div style="font-size: 14px; color: var(--text-muted);">@revisor valida consistência, completude e formatação contra checklist de 15 pontos. SEMRush faz segunda passada de validação técnica. Se tudo ok → libera para entrega. Se não → retorna com correções.</div>
+          <div style="display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap;">
+            <span class="agent-metric validate">@revisor</span>
+            <span class="agent-metric validate">Site Audit</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 6 -->
+      <div class="fade-up" style="display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--gray);">
+        <div style="width: 48px; height: 48px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: rgba(234,179,8,0.1); font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 900; color: var(--yellow); border: 1px solid rgba(234,179,8,0.3);">6</div>
+        <div>
+          <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; margin-bottom: 2px;">
+            Geração de entregáveis <span style="color: var(--yellow); font-weight: 400; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase;">3 agentes em paralelo · 10min</span>
+          </div>
+          <div style="font-size: 14px; color: var(--text-muted);">@gerar-pdf gera relatório diagnóstico (10 seções). @gerar-html gera dashboard interativo. @gerar-ppt gera deck de apresentação (15-20 slides). Tudo em paralelo, no padrão visual V4.</div>
+          <div style="display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap;">
+            <span class="agent-metric deliver">@gerar-pdf</span>
+            <span class="agent-metric deliver">@gerar-html</span>
+            <span class="agent-metric deliver">@gerar-ppt</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 7 -->
+      <div class="fade-up" style="display: flex; gap: 20px; padding: 20px 0;">
+        <div style="width: 48px; height: 48px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--black4); font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 900; color: var(--white); border: 1px solid var(--gray);">7</div>
+        <div>
+          <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; margin-bottom: 2px;">
+            Revisão do account + entrega <span style="color: var(--yellow); font-weight: 400; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase;">Account · 15min</span>
+          </div>
+          <div style="font-size: 14px; color: var(--text-muted);">Account revisa o diagnóstico (15 min), ajusta tom se necessário e apresenta ao cliente. Tudo que era manual (coleta, análise, formatação, design) foi absorvido pelos agentes.</div>
+          <div style="font-size: 13px; color: var(--green); margin-top: 4px; font-weight: 600;"><strong>Total do processo:</strong> ~2 horas de trabalho humano + ~45 minutos de processamento dos agentes</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PATTERN BREAK 4: UNDER THE HOOD -->
+<section class="section" style="background: var(--black); border-bottom: 1px solid var(--gray);">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <div class="section-tag" style="background: rgba(34,197,94,0.1); border-color: rgba(34,197,94,0.2); color: var(--green);">⎇ Under the Hood</div>
+      <h2 class="section-title">Por trás do <span>diagnóstico</span></h2>
+      <p class="section-desc" style="max-width: 600px;">
+        Para quem quer ver os <strong>dados reais</strong> que trafegam entre os agentes. 
+        Cada número, cada flag, cada recomendação nasce de dados concretos — não de chute.
+      </p>
+    </div>
+
+    <div class="tech-tabs fade-up">
+      <div class="tech-tab">
+        <div class="tech-tab-label">📡 Input da Coleta</div>
+        <div class="tech-tab-desc">O JSON bruto que o SEMRush API retorna após a auditoria — sem tratamento, sem interpretação. Dado puro.</div>
+        <div class="tech-code"><span class="c">// SEMRush Site Audit — amostra real</span>
+{
+  <span class="k">"domain"</span>: <span class="s">"cliente.com.br"</span>,
+  <span class="k">"total_pages"</span>: 347,
+  <span class="k">"schema_types"</span>: {
+    <span class="k">"organization"</span>: <span class="hl">false</span>,
+    <span class="k">"article"</span>: <span class="hl">true</span>,
+    <span class="k">"faq"</span>: <span class="hl">false</span>,
+    <span class="k">"product"</span>: <span class="hl">false</span>,
+    <span class="k">"howto"</span>: <span class="hl">false</span>
+  },
+  <span class="k">"crawlability"</span>: {
+    <span class="k">"gptbot"</span>: <span class="hl">false</span>,
+    <span class="k">"perplexity"</span>: <span class="hl">true</span>,
+    <span class="k">"claude"</span>: <span class="hl">false</span>,
+    <span class="k">"google_ext"</span>: <span class="hl">true</span>
+  },
+  <span class="k">"extractability"</span>: <span class="s">"34%"</span>,
+  <span class="k">"errors"</span>: 12
+}</div>
+      </div>
+      <div class="tech-tab">
+        <div class="tech-tab-label">🧠 Output da Análise</div>
+        <div class="tech-tab-desc">O que o @analista-dados produz depois de processar os dados brutos — gaps, benchmark, priorização.</div>
+        <div class="tech-code"><span class="c">// Gap Analysis — recomendação gerada</span>
+{
+  <span class="k">"critical_gaps"</span>: [
+    <span class="s">"robots.txt bloqueia GPTBot"</span>,
+    <span class="s">"Sem FAQ schema em 12 páginas"</span>,
+    <span class="s">"Definition block ausente na home"</span>
+  ],
+  <span class="k">"competitor_benchmark"</span>: {
+    <span class="k">"concorrente_a"</span>: { <span class="k">"citations"</span>: 14, <span class="k">"saiv"</span>: <span class="s">"42%"</span> },
+    <span class="k">"concorrente_b"</span>: { <span class="k">"citations"</span>: 8, <span class="k">"saiv"</span>: <span class="s">"23%"</span> },
+    <span class="k">"cliente"</span>: { <span class="k">"citations"</span>: 0, <span class="k">"saiv"</span>: <span class="s">"0%"</span> }
+  },
+  <span class="k">"priority_roadmap"</span>: [
+    { <span class="k">"sprint"</span>: 1, <span class="k">"tasks"</span>: 7, <span class="k">"impact"</span>: <span class="s">"foundation"</span> },
+    { <span class="k">"sprint"</span>: 2, <span class="k">"tasks"</span>: 10, <span class="k">"impact"</span>: <span class="s">"content"</span> },
+    { <span class="k">"sprint"</span>: 3, <span class="k">"tasks"</span>: 6, <span class="k">"impact"</span>: <span class="s">"presence"</span> }
+  ]
+}</div>
+      </div>
+      <div class="tech-tab">
+        <div class="tech-tab-label">✓ Resultado da Validação</div>
+        <div class="tech-tab-desc">O checklist do @revisor aprovando ou reprovando o diagnóstico antes de liberar para entrega. Cada item é verificado.</div>
+        <div class="tech-code"><span class="c">// @revisor — 15-point checklist output</span>
+{
+  <span class="k">"diagnostic_id"</span>: <span class="s">"D-2026-05-001"</span>,
+  <span class="k">"status"</span>: <span class="hl">"APPROVED"</span>,
+  <span class="k">"pass_rate"</span>: <span class="s">"93%"</span>,
+  <span class="k">"failures"</span>: [
+    {
+      <span class="k">"item"</span>: <span class="s">"benchmark.source"</span>,
+      <span class="k">"severity"</span>: <span class="s">"low"</span>,
+      <span class="k">"note"</span>: <span class="s">"Data do concorrente C desatualizada"</span>
+    }
+  ],
+  <span class="k">"validated_by"</span>: <span class="s">"@revisor v4.2"</span>,
+  <span class="k">"timestamp"</span>: <span class="s">"2026-05-21T09:22:00-03:00"</span>,
+  <span class="k">"next_action"</span>: <span class="s">"liberar para @gerar-pdf"</span>
+}</div>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 32px;" class="fade-up">
+      <p style="font-size: 14px; color: var(--text-muted);">
+        <strong style="color: var(--white3);">Cada diagnóstico</strong> passa por esse pipeline de dados. 
+        0 achismo. 0 planilha manual. <strong style="color: var(--green);">Dados reais, validação automática, entrega imediata.</strong>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="section" style="background: linear-gradient(160deg, var(--black3) 0%, var(--black) 100%); text-align: center; border-bottom: none;">
+  <div class="section-inner fade-up">
+    <div style="display: inline-flex; flex-direction: column; align-items: center; padding: 48px 56px; background: var(--black4); border: 1px solid var(--gray); position: relative;">
+      <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--red-gradient);"></div>
+      <span class="auto-stat-number" style="font-size: 60px;">85%</span>
+      <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin: 8px 0 4px;">Do diagnóstico é automatizado</div>
+      <p style="font-size: 15px; color: var(--text-muted); max-width: 500px; margin-top: 8px;">
+        O account deixa de ser operador de ferramenta e vira consultor estratégico. 
+        Os agentes fazem o trabalho pesado — o time faz o que realmente importa: 
+        <strong style="color: var(--white);">relacionamento com o cliente e estratégia</strong>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">
+    <img src="logo-peretto.png" alt="Peretto & Co.">
+    <span>Peretto &amp; Co.</span>
+  </div>
+  <p>AI Visibility — Produto Oficial V4 Company · Maio 2026</p>
+</footer>
+
+<script>
+  // Scroll animation
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

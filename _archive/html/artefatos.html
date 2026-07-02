@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agents Hub — Artefatos Produzidos</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #E31919; --red-gradient: linear-gradient(135deg, #E31919 0%, #FF4D4D 100%);
+  --white: #FFFFFF; --off-white: #F8F8F8;
+  --g50: #F2F2F2; --g100: #E0E0E0; --g200: #B0B0B0;
+  --g300: #808080; --g400: #606060; --g500: #404040; --g600: #303030; --g700: #202020;
+  --radius: 8px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+::selection { background: var(--red); color: var(--white); }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--white); color: var(--g600);
+  font-family: 'Barlow', sans-serif; font-size: 15px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== TOPBAR ===== */
+.topbar {
+  background: var(--g700); padding: 16px 56px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+}
+.topbar-l { display: flex; align-items: center; gap: 14px; }
+.topbar-l img { height: 28px; }
+.topbar-d { width: 1px; height: 22px; background: var(--g400); }
+.topbar-t {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--g200);
+}
+.topbar-t span { color: var(--red); }
+.topbar-r { display: flex; gap: 20px; align-items: center; }
+.topbar-r a {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--g200);
+  text-decoration: none; transition: color 0.2s;
+}
+.topbar-r a:hover { color: var(--white); }
+.topbar-cta {
+  background: var(--red-gradient); color: var(--white) !important;
+  padding: 7px 18px; font-size: 10px; letter-spacing: 0.12em;
+}
+
+/* ===== HERO ===== */
+.hero {
+  padding: 72px 56px 56px;
+  background: linear-gradient(180deg, var(--off-white) 0%, var(--white) 100%);
+  border-bottom: 1px solid var(--g100);
+}
+.hero-inner { max-width: 1120px; margin: 0 auto; }
+.hero-label {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--g300);
+  margin-bottom: 4px;
+}
+.hero h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(36px, 5vw, 56px); font-weight: 900;
+  line-height: 0.9; letter-spacing: -0.03em; text-transform: uppercase;
+  margin-bottom: 4px; color: var(--g700);
+}
+.hero h1 span { color: var(--red); }
+.hero-sub {
+  font-size: 15px; font-weight: 300; color: var(--g300);
+  max-width: 600px; line-height: 1.55; margin-top: 12px;
+}
+.hero-sub strong { color: var(--g500); font-weight: 500; }
+
+/* ===== SECTION ===== */
+section { padding: 52px 56px; border-bottom: 1px solid var(--g100); }
+.section-inner { max-width: 1120px; margin: 0 auto; }
+.section-alt { background: var(--off-white); }
+
+.stag {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--g300);
+  margin-bottom: 4px;
+}
+.stitle {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(26px, 3vw, 34px); font-weight: 900;
+  line-height: 0.92; letter-spacing: -0.02em; text-transform: uppercase;
+  margin-bottom: 24px; color: var(--g700);
+}
+.stitle span { color: var(--red); }
+
+/* ===== ARTIFACT GRID ===== */
+.artifact-grid { display: grid; gap: 1px; background: var(--g100); border-radius: var(--radius); overflow: hidden; }
+.artifact-card {
+  background: var(--white); padding: 20px 24px;
+  display: grid; grid-template-columns: 36px 1fr auto auto;
+  gap: 16px; align-items: center;
+  text-decoration: none; transition: background 0.15s;
+}
+.artifact-card:hover { background: var(--off-white); }
+
+.artifact-icon {
+  width: 36px; height: 36px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.artifact-icon svg { width: 28px; height: 28px; stroke: var(--g300); stroke-width: 1.5; fill: none; }
+
+.artifact-info { min-width: 0; }
+.artifact-name {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 800;
+  text-transform: uppercase; color: var(--g700); letter-spacing: 0.02em;
+  transition: color 0.15s;
+}
+.artifact-card:hover .artifact-name { color: var(--red); }
+.artifact-desc {
+  font-size: 13px; color: var(--g300); font-weight: 300;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.artifact-meta { text-align: right; flex-shrink: 0; }
+.artifact-type {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500;
+  color: var(--g400); letter-spacing: 0.04em;
+}
+.artifact-lines {
+  font-size: 11px; color: var(--g300); font-weight: 300;
+  white-space: nowrap;
+}
+
+.artifact-status {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; padding: 2px 10px; border-radius: 3px;
+  flex-shrink: 0;
+}
+.artifact-status.current { background: var(--g50); color: var(--g400); }
+.artifact-status.update { background: var(--off-white); color: var(--g300); }
+
+/* ===== SECTION DIVIDER ===== */
+.section-divider {
+  display: flex; align-items: center; gap: 14px;
+  margin: 36px 0 16px;
+}
+.section-divider span {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--g300);
+  white-space: nowrap;
+}
+.section-divider .line { flex: 1; height: 1px; background: var(--g100); }
+.section-divider .count {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--g200);
+}
+
+/* ===== FOOTER ===== */
+footer {
+  padding: 28px 56px; display: flex;
+  justify-content: space-between; align-items: center;
+  background: var(--off-white); border-top: 1px solid var(--g100);
+}
+.ft { font-size: 11px; color: var(--g300); font-weight: 300; }
+.ft-brand { display: flex; align-items: center; gap: 10px; }
+.ft-brand img { height: 22px; opacity: 0.4; }
+.ft-l a {
+  font-size: 10px; color: var(--g300); text-decoration: none;
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; margin-left: 14px;
+}
+.ft-l a:hover { color: var(--g600); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .topbar, .hero, section, footer { padding-left: 24px; padding-right: 24px; }
+  .artifact-card { grid-template-columns: 28px 1fr auto; gap: 12px; }
+  .artifact-meta { display: none; }
+  .artifact-icon svg { width: 22px; height: 22px; }
+}
+@media (max-width: 480px) {
+  .topbar-r a:not(.topbar-cta) { display: none; }
+  .artifact-desc { white-space: normal; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-l">
+    <img src="logo-peretto-red.png" alt="V4">
+    <div class="topbar-d"></div>
+    <span class="topbar-t">Agents <span>Hub</span></span>
+  </div>
+  <div class="topbar-r">
+    <a href="#planos">Planos</a>
+    <a href="#manuais">Manuais</a>
+    <a href="#paginas">Páginas</a>
+    <a href="tasks-executivo.html" class="topbar-cta">✦ Plano Executivo</a>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Biblioteca de artefatos · Junho 2026</div>
+    <h1>Artefatos <span>Produzidos</span></h1>
+    <p class="hero-sub">
+      <strong>11 artefatos</strong> — entre planos, manuais e páginas.
+      Todo o material produzido para a implantação do Agents Hub na V4.
+    </p>
+  </div>
+</section>
+
+<!-- ===== PLANOS E DOCUMENTOS ===== -->
+<section id="planos">
+  <div class="section-inner">
+    <div class="stag">Documentos Técnicos</div>
+    <h2 class="stitle">Planos e <span>documentos</span></h2>
+
+    <div class="artifact-grid">
+
+      <a href="docs/agents-hub/TASKS.md" class="artifact-card">
+        <div class="artifact-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+        </div>
+        <div class="artifact-info">
+          <div class="artifact-name">Plano de Execução</div>
+          <div class="artifact-desc">4 tasks detalhadas com roteiro de sessão, skills, comandos VPS e guia por squad</div>
+        </div>
+        <div class="artifact-meta">
+          <div class="artifact-type">MD</div>
+          <div class="artifact-lines">897 linhas</div>
+        </div>
+        <span class="artifact-status current">atual</span>
+      </a>
+
+      <a href="docs/AGENT-HUB-OPERACIONAL.md" class="artifact-card">
+        <div class="artifact-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+        </div>
+        <div class="artifact-info">
+          <div class="artifact-name">Manual Operacional</div>
+          <div class="artifact-desc">Stack completa, MCPs, fluxos, custos, segurança, onboarding, emergência</div>
+        </div>
+        <div class="artifact-meta">
+          <div class="artifact-type">MD</div>
+          <div class="artifact-lines">1.116 linhas</div>
+        </div>
+        <span class="artifact-status current">atual</span>
+      </a>
+
+      <a href="ORCHESTRA.md" class="artifact-card">
+        <div class="artifact-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+        </div>
+        <div class="artifact-info">
+          <div class="artifact-name">Orquestra de Agentes</div>
+          <div class="artifact-desc">23 subagentes, 65 skills, 8 formações de time, 5 padrões de orquestração</div>
+        </div>
+        <div class="artifact-meta">
+          <div class="artifact-type">MD</div>
+          <div class="artifact-lines">414 linhas</div>
+        </div>
+        <span class="artifact-status update">revisar</span>
+      </a>
+
+      <a href="plano-implantacao.html" class="artifact-card">
+        <div class="artifact-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+        </div>
+        <div class="artifact-info">
+          <div class="artifact-name">Arquitetura de Implantação</div>
+          <div class="artifact-desc">Design do sistema: 4 camadas, flags, modelos, governança, fluxos de orquestração</div>
+        </div>
+        <div class="artifact-meta">
+          <div class="artifact-type">HTML</div>
+          <div class="artifact-lines">—</div>
+        </div>
+        <span class="artifact-status current">atual</span>
+      </a>
+
+      <a href="docs/agents-hub/SKILLS-CATALOG.md" class="artifact-card">
+        <div class="artifact-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+        </div>
+        <div class="artifact-info">
+          <div class="artifact-name">Catálogo de Skills</div>
+          <div class="artifact-desc">Todas as skills listadas com caminho físico e descrição técnica</div>
+        </div>
+        <div class="artifact-meta">
+          <div class="artifact-type">MD</div>
+          <div class="artifact-lines">212 linhas</div>
+        </div>
+        <span class="artifact-status update">revisar</span>
+      </a>
+
+      <a href="docs/agents-hub/LOGICA-APRESENTACAO.md" class="artifact-card">
+        <div class="artifact-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+        </div>
+        <div class="artifact-info">
+          <div class="artifact-name">Lógica de Apresentação</div>
+          <div class="artifact-desc">Roteiro: métricas, análise de custo, objeções previstas, script de abertura</div>
+        </div>
+        <div class="artifact-meta">
+          <div class="artifact-type">MD</div>
+          <div class="artifact-lines">204 linhas</div>
+        </div>
+        <span class="artifact-status current">atual</span>
+      </a>
+
+      <a href="docs/agents-hub/index.md" class="artifact-card">
+        <div class="artifact-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+        </div>
+        <div class="artifact-info">
+          <div class="artifact-name">Central de Documentação</div>
+          <div class="artifact-desc">Navegação central entre todos os artefatos do Agents Hub</div>
+        </div>
+        <div class="artifact-meta">
+          <div class="artifact-type">MD</div>
+          <div class="artifact-lines">44 linhas</div>
+        </div>
+        <span class="artifact-status current">atual</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== PÁGINAS HTML ===== -->
+<section class="section-alt" id="paginas">
+  <div class="section-inner">
+    <div class="stag">Páginas Web</div>
+    <h2 class="stitle">Interfaces e <span>apresentações</span></h2>
+
+    <div class="artifact-grid">
+
+      <a href="tasks-executivo.html" class="artifact-card">
+        <div class="artifact-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+        </div>
+        <div class="artifact-info">
+          <div class="artifact-name">Plano Executivo</div>
+          <div class="artifact-desc">Diretriz da Diretoria de AI: pré-validação, skills, POP, guia de uso OpenCode</div>
+        </div>
+        <div class="artifact-meta">
+          <div class="artifact-type">HTML</div>
+          <div class="artifact-lines">803 linhas</div>
+        </div>
+        <span class="artifact-status current">atual</span>
+      </a>
+
+      <a href="agents-hub.html" class="artifact-card">
+        <div class="artifact-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+        </div>
+        <div class="artifact-info">
+          <div class="artifact-name">Site Institucional</div>
+          <div class="artifact-desc">Visão completa do Agents Hub: arquitetura, catálogo, 80/20, roadmap e filosofia</div>
+        </div>
+        <div class="artifact-meta">
+          <div class="artifact-type">HTML</div>
+          <div class="artifact-lines">—</div>
+        </div>
+        <span class="artifact-status current">atual</span>
+      </a>
+
+      <a href="assets/html/apresentacao-agents-hub.html" class="artifact-card">
+        <div class="artifact-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+        </div>
+        <div class="artifact-info">
+          <div class="artifact-name">Slide-Deck</div>
+          <div class="artifact-desc">11 slides interativos. Método Dale Carnegie: problema → solução → ação</div>
+        </div>
+        <div class="artifact-meta">
+          <div class="artifact-type">HTML</div>
+          <div class="artifact-lines">—</div>
+        </div>
+        <span class="artifact-status current">atual</span>
+      </a>
+
+      <a href="assets/html/engine-room.html" class="artifact-card">
+        <div class="artifact-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+        </div>
+        <div class="artifact-info">
+          <div class="artifact-name">Engine Room</div>
+          <div class="artifact-desc">A sala de máquinas: arquitetura técnica completa dos agentes de operação V4</div>
+        </div>
+        <div class="artifact-meta">
+          <div class="artifact-type">HTML</div>
+          <div class="artifact-lines">—</div>
+        </div>
+        <span class="artifact-status current">atual</span>
+      </a>
+
+      <a href="assets/html/agent-orchestra-landing.html" class="artifact-card">
+        <div class="artifact-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+        </div>
+        <div class="artifact-info">
+          <div class="artifact-name">Agent Orchestra</div>
+          <div class="artifact-desc">Catálogo completo dos agentes com skills, formações de time e padrões de orquestração</div>
+        </div>
+        <div class="artifact-meta">
+          <div class="artifact-type">HTML</div>
+          <div class="artifact-lines">—</div>
+        </div>
+        <span class="artifact-status current">atual</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== RESUMO ===== -->
+<section id="resumo" style="border-bottom:none">
+  <div class="section-inner">
+    <div class="stag">Resumo</div>
+    <h2 class="stitle">12 artefatos · <span>3.528+</span> linhas de documentação</h2>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:8px">
+      <div style="border:1px solid var(--g100);border-radius:var(--radius);padding:20px;text-align:center">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--g700);line-height:1">7</div>
+        <div style="font-size:11px;color:var(--g300);font-weight:300;margin-top:4px">Documentos MD</div>
+      </div>
+      <div style="border:1px solid var(--g100);border-radius:var(--radius);padding:20px;text-align:center">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--g700);line-height:1">6</div>
+        <div style="font-size:11px;color:var(--g300);font-weight:300;margin-top:4px">Páginas HTML</div>
+      </div>
+      <div style="border:1px solid var(--g100);border-radius:var(--radius);padding:20px;text-align:center">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--g700);line-height:1">3.528+</div>
+        <div style="font-size:11px;color:var(--g300);font-weight:300;margin-top:4px">Linhas de documentação</div>
+      </div>
+      <div style="border:1px solid var(--g100);border-radius:var(--radius);padding:20px;text-align:center">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--g700);line-height:1">2</div>
+        <div style="font-size:11px;color:var(--g300);font-weight:300;margin-top:4px">Aguardam revisão</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-brand">
+    <img src="logo-peretto-red.png" alt="V4">
+    <span class="ft">V4 Company · Diretoria de AI</span>
+  </div>
+  <div class="ft-l">
+    <a href="#planos">Planos</a>
+    <a href="#paginas">Páginas</a>
+    <a href="tasks-executivo.html">Executivo</a>
+  </div>
+  <span class="ft">Junho 2026</span>
+</footer>
+
+</body>
+</html>

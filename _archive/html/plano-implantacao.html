@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agents Hub — Arquitetura de Implantação</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #E31919; --red-gradient: linear-gradient(135deg, #E31919 0%, #FF4D4D 100%);
+  --white: #FFFFFF; --off-white: #F8F8F8;
+  --g50: #F2F2F2; --g100: #E0E0E0; --g200: #B0B0B0;
+  --g300: #808080; --g400: #606060; --g500: #404040; --g600: #303030; --g700: #202020;
+  --radius: 8px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+::selection { background: var(--red); color: var(--white); }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--white); color: var(--g600);
+  font-family: 'Barlow', sans-serif; font-size: 15px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.topbar {
+  background: var(--g700); padding: 16px 56px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+}
+.topbar-l { display: flex; align-items: center; gap: 14px; }
+.topbar-l img { height: 28px; }
+.topbar-d { width: 1px; height: 22px; background: var(--g400); }
+.topbar-t {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--g200);
+}
+.topbar-t span { color: var(--red); }
+.topbar-r { display: flex; gap: 20px; align-items: center; }
+.topbar-r a {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--g200);
+  text-decoration: none; transition: color 0.2s;
+}
+.topbar-r a:hover { color: var(--white); }
+.topbar-cta {
+  background: var(--red-gradient); color: var(--white) !important;
+  padding: 7px 18px; font-size: 10px; letter-spacing: 0.12em;
+}
+.hero {
+  padding: 72px 56px 56px;
+  background: linear-gradient(180deg, var(--off-white) 0%, var(--white) 100%);
+  border-bottom: 1px solid var(--g100);
+}
+.hero-inner { max-width: 1120px; margin: 0 auto; }
+.hero-label {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--g300);
+  margin-bottom: 4px;
+}
+.hero h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(36px, 5vw, 56px); font-weight: 900;
+  line-height: 0.9; letter-spacing: -0.03em; text-transform: uppercase;
+  margin-bottom: 4px; color: var(--g700);
+}
+.hero h1 span { color: var(--red); }
+.hero-sub {
+  font-size: 15px; font-weight: 300; color: var(--g300);
+  max-width: 700px; line-height: 1.55; margin-top: 12px;
+}
+.hero-sub strong { color: var(--g500); font-weight: 500; }
+section { padding: 52px 56px; border-bottom: 1px solid var(--g100); }
+.section-inner { max-width: 1120px; margin: 0 auto; }
+.section-alt { background: var(--off-white); }
+.stag {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--g300);
+  margin-bottom: 4px;
+}
+.stitle {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(26px, 3vw, 34px); font-weight: 900;
+  line-height: 0.92; letter-spacing: -0.02em; text-transform: uppercase;
+  margin-bottom: 24px; color: var(--g700);
+}
+.stitle span { color: var(--red); }
+
+/* Cards */
+.card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.card {
+  background: var(--white); border: 1px solid var(--g100); border-radius: var(--radius); padding: 24px;
+}
+.card-red { border-left: 3px solid var(--red); }
+.card h4 {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 17px; font-weight: 800;
+  text-transform: uppercase; margin-bottom: 8px; color: var(--g700);
+}
+.card p { font-size: 13px; color: var(--g300); font-weight: 300; line-height: 1.55; }
+.card ul { margin: 8px 0 0 16px; }
+.card li { font-size: 13px; color: var(--g400); font-weight: 300; line-height: 1.5; }
+.card li strong { color: var(--g600); }
+
+/* Table */
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead th {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--g300);
+  text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--g100);
+}
+tbody td { padding: 10px 12px; border-bottom: 1px solid var(--g50); color: var(--g500); font-weight: 300; }
+tbody tr:last-child td { border: none; }
+tbody td:first-child {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 800;
+  color: var(--g700); letter-spacing: 0.02em;
+}
+.tag {
+  display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; padding: 2px 8px; border-radius: 3px;
+  background: var(--g50); color: var(--g400);
+}
+.tag-red { background: var(--red); color: var(--white); }
+.tag-outline { background: transparent; border: 1px solid var(--g100); color: var(--g300); }
+
+/* Grid badges */
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500;
+  color: var(--g400); background: var(--g50); padding: 3px 10px; border-radius: 3px;
+}
+
+footer {
+  padding: 28px 56px; display: flex;
+  justify-content: space-between; align-items: center;
+  background: var(--off-white); border-top: 1px solid var(--g100);
+}
+.ft { font-size: 11px; color: var(--g300); font-weight: 300; }
+.ft-brand { display: flex; align-items: center; gap: 10px; }
+.ft-brand img { height: 22px; opacity: 0.4; }
+.ft-l a {
+  font-size: 10px; color: var(--g300); text-decoration: none;
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; margin-left: 14px;
+}
+.ft-l a:hover { color: var(--g600); }
+
+@media (max-width: 768px) {
+  .topbar, .hero, section, footer { padding-left: 24px; padding-right: 24px; }
+  .card-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-l">
+    <img src="logo-peretto-red.png" alt="V4">
+    <div class="topbar-d"></div>
+    <span class="topbar-t">Agents <span>Hub</span></span>
+  </div>
+  <div class="topbar-r">
+    <a href="#arquitetura">Arquitetura</a>
+    <a href="#modelos">Modelos</a>
+    <a href="#flags">Flags</a>
+    <a href="#governanca">Governança</a>
+    <a href="tasks-executivo.html" class="topbar-cta">✦ Plano Executivo</a>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Design de sistema · Junho 2026</div>
+    <h1>Arquitetura de <span>Agents Hub</span></h1>
+    <p class="hero-sub">
+      Blueprint arquitetural do sistema multi-agente.
+      <strong>Não é o plano de execução</strong> — é o design que guia a execução:
+      camadas, governança, modelos, flags, fluxos e pesos & contrapesos.
+    </p>
+  </div>
+</section>
+
+<!-- ===== ARQUITETURA ===== -->
+<section id="arquitetura">
+  <div class="section-inner">
+    <div class="stag">Camadas do sistema</div>
+    <h2 class="stitle">Arquitetura em <span>4 camadas</span></h2>
+    <p style="font-size:14px;color:var(--g300);font-weight:300;line-height:1.6;margin-bottom:20px;max-width:700px">
+      Cada camada tem permissões, modelos e responsabilidades específicas.
+      Nenhum agente atravessa camadas — a separação é o que garante controle.
+    </p>
+
+    <div class="card-grid">
+      <div class="card card-red">
+        <h4>Orquestradores</h4>
+        <p><strong>@csm-orquestrador · @account-orchestrator · @cmoorch · @growth-team · @launch-pad · @revenue-ops</strong></p>
+        <p>Planejam, invocam e consolidam. Têm visão do todo mas delegam análise e execução. Permissão total (Read/Write/Edit/Bash) mas com @revisor como contrapeso.</p>
+      </div>
+      <div class="card">
+        <h4>Análise & Pesquisa</h4>
+        <p><strong>@analista-dados · @pesquisador · @evolucao-checkins</strong></p>
+        <p>Processam dados, geram relatórios, identificam padrões. Não executam ações — só diagnosticam. Modelo Tier S para análise complexa.</p>
+      </div>
+      <div class="card">
+        <h4>Flags (Detecção)</h4>
+        <p><strong>@flag-churn · @flag-okr · @flag-operacao · @flag-roi</strong></p>
+        <p>Rodam em paralelo, cada um com critério de ativação específico. Detectam problema mas <strong>nunca executam</strong> — só diagnosticam e geram CHAS. Regra de ouro do sistema.</p>
+      </div>
+      <div class="card">
+        <h4>Entrega & Execução</h4>
+        <p><strong>@copy-content · @media-buyer · @relatorios-trafego · @criacao-design · @gerar-* · @sdr-tech</strong></p>
+        <p>Produzem trabalho final: copy, relatórios, imagens, automações. São os que mais usam skills. Têm edit/bash permitido mas tudo passa pelo revisor.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PESOS & CONTRAPESOS ===== -->
+<section class="section-alt" id="governanca">
+  <div class="section-inner">
+    <div class="stag">Governança</div>
+    <h2 class="stitle">Pesos & <span>Contrapesos</span></h2>
+    <p style="font-size:14px;color:var(--g300);font-weight:300;line-height:1.6;margin-bottom:20px;max-width:700px">
+      O sistema foi desenhado para dar autonomia sem perder controle.
+      Cada privilégio tem um contrapeso.
+    </p>
+
+    <div class="card-grid">
+      <div class="card card-red">
+        <h4>@revisor como gate</h4>
+        <p><strong>edit: deny · bash: deny</strong></p>
+        <p>O único agente que <em>nunca</em> escreve. Só reporta. Todo output gerado por qualquer outro agente passa por ele antes de chegar ao usuário. Se o revisor reprova, volta com feedback.</p>
+      </div>
+      <div class="card">
+        <h4>Flags não executam</h4>
+        <p>"Agente que detecta anomalia só diagnostica, não executa." Quem age é o humano ou um script agendado. Nada de ações autônomas não supervisionadas.</p>
+      </div>
+      <div class="card">
+        <h4>Matriz de permissões</h4>
+        <p>Nem todo agente tem acesso a tudo. Orquestradores têm leitura-geral; analistas têm só read + webfetch; executores têm edit limitado ao escopo; revisor tem edit:deny.</p>
+      </div>
+      <div class="card">
+        <h4>Vantagem composta</h4>
+        <p>Quanto mais tempo opera com agentes, maior a distância de quem não tem. O vault registra cada saída — o sistema fica mais inteligente a cada semana.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MODELOS ===== -->
+<section id="modelos">
+  <div class="section-inner">
+    <div class="stag">Seleção de modelos</div>
+    <h2 class="stitle">Model routing por <span>complexidade</span></h2>
+    <p style="font-size:14px;color:var(--g300);font-weight:300;line-height:1.6;margin-bottom:20px;max-width:700px">
+      Nem toda tarefa precisa do modelo mais forte. O sistema roteia cada chamada para o tier adequado — equilibrando qualidade, velocidade e custo zero.
+    </p>
+
+    <table>
+      <thead>
+        <tr><th style="width:40px">Tier</th><th>Modelo</th><th>Provider</th><th>Força</th><th>Agentes alvo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="tag tag-red">S</span></td><td>DeepSeek V4 Flash</td><td>Zen</td><td>Raciocínio, código, análise</td><td>@analista-dados, @revisor, @flag-*</td></tr>
+        <tr><td><span class="tag tag-red">S</span></td><td>Gemini 2.5 Flash</td><td>Google</td><td>Visual, HTML, CSS, multimodal</td><td>@gerar-html, @gerar-pdf, @gerar-ppt, @gerar-doc</td></tr>
+        <tr><td><span class="tag tag-outline">A</span></td><td>GPT-OSS 120B (OpenRouter)</td><td>OpenRouter</td><td>Escrita, planejamento, orquestração</td><td>@csm-orquestrador, @executor-comite</td></tr>
+        <tr><td><span class="tag tag-outline">B</span></td><td>MiniMax M2.5 / Nemotron 3</td><td>Zen</td><td>Velocidade, output estruturado</td><td>Parsing, classificação, quick checks</td></tr>
+        <tr><td><span class="tag tag-outline">C</span></td><td>Qwen 3.6+ / Llama 3.3 70B</td><td>Zen / OR</td><td>Backup, tarefas leves</td><td>Backup quando S/A rate-limitarem</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ===== FLAGS ===== -->
+<section class="section-alt" id="flags">
+  <div class="section-inner">
+    <div class="stag">Sistema de detecção</div>
+    <h2 class="stitle">Flags <span>paralelas</span></h2>
+    <p style="font-size:14px;color:var(--g300);font-weight:300;line-height:1.6;margin-bottom:20px;max-width:700px">
+      Todos os flags rodam simultaneamente a cada ciclo (tipicamente quinta 7h). Consolidados pelo orquestrador, detectam desvios antes do cliente sentir.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h4>@flag-churn</h4>
+        <p><strong>Ativação:</strong> NPS + CSAT caem juntos<br>
+        <strong>Saída:</strong> Diagnóstico de risco + plano de retenção<br>
+        <strong>Exemplo:</strong> Cliente com NPS caindo 2pts + CSAT negativo = aciona CSM em vez de esperar reunião.</p>
+      </div>
+      <div class="card">
+        <h4>@flag-okr</h4>
+        <p><strong>Ativação:</strong> KR &lt; 60% do esperado<br>
+        <strong>Saída:</strong> Diagnóstico de desvio + replanejamento<br>
+        <strong>Exemplo:</strong> KR de "reduzir CAC em 20%" está em 8% com 60% do prazo gasto = flag + recomenda correção.</p>
+      </div>
+      <div class="card">
+        <h4>@flag-operacao</h4>
+        <p><strong>Ativação:</strong> Sprint atrasada sem FCA ou timesheet zerado<br>
+        <strong>Saída:</strong> Alerta de operação travada<br>
+        <strong>Exemplo:</strong> Segunda sprint sem FCA registrado + 2 clientes com timesheet zerado = aciona coordenação.</p>
+      </div>
+      <div class="card">
+        <h4>@flag-roi</h4>
+        <p><strong>Ativação:</strong> ROAS abaixo da meta<br>
+        <strong>Saída:</strong> Classificação do tipo de desvio + CHAS para o GT<br>
+        <strong>Exemplo:</strong> ROAS de 1.2 vs meta 3.0 = classifica como "estrutural" (não conjuntural) e sugere reavaliação de campanha.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FLUXOS ===== -->
+<section id="fluxos">
+  <div class="section-inner">
+    <div class="stag">Ritmos do sistema</div>
+    <h2 class="stitle">Fluxos de <span>orquestração</span></h2>
+    <p style="font-size:14px;color:var(--g300);font-weight:300;line-height:1.6;margin-bottom:20px;max-width:700px">
+      O sistema não opera em tempo real o tempo todo — tem batidas semanais que geram valor nos momentos certos.
+    </p>
+
+    <div class="card-grid">
+      <div class="card card-red">
+        <h4>Flags semanais (qui 7h)</h4>
+        <p>Todos os 4 flags rodam em paralelo. Consolidados pelo @csm-orquestrador em 1 relatório. Antes levava 3-5 dias para detectar desvio. Agora &lt;24h.</p>
+      </div>
+      <div class="card">
+        <h4>Comitê (dom 20h → seg 7h)</h4>
+        <p>@executor-comite invoca @analista-dados (paralelo por cliente) → @revisor valida → executor consolida. O coordenador revisa às 7h de segunda. O que era 45-60min vira &lt;5min.</p>
+      </div>
+      <div class="card">
+        <h4>Check-in (pré/pós call)</h4>
+        <p>@account-orchestrator prepara roteiro pré-reunião com ROPRE e personas. Pós-call, lê o transcript e atualiza mission control, combinados e apostas.</p>
+      </div>
+      <div class="card">
+        <h4>Retenção (48-72h)</h4>
+        <p>Flag de churn → CSM recebe diagnóstico → ação em 48-72h. Antes levava semanas para perceber que o cliente estava insatisfeito.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-brand">
+    <img src="logo-peretto-red.png" alt="V4">
+    <span class="ft">V4 Company · Diretoria de AI</span>
+  </div>
+  <div class="ft-l">
+    <a href="#arquitetura">Arquitetura</a>
+    <a href="#modelos">Modelos</a>
+    <a href="#flags">Flags</a>
+    <a href="#governanca">Governança</a>
+    <a href="artefatos.html">Artefatos</a>
+    <a href="tasks-executivo.html">Executivo</a>
+  </div>
+  <span class="ft">Junho 2026</span>
+</footer>
+
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+</body>
+</html>

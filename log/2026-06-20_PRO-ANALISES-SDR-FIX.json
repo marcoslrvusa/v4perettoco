@@ -1,0 +1,53 @@
+{
+  "date": "2026-06-20",
+  "startTime": "~22:00",
+  "endTime": "23:47",
+  "title": "Pro Análises — SDR IA setup e correções",
+  "summary": "Sessão completa de configuração do [PRO ANALISES] SDR IA e [PRO ANALISES] Gerenciador MQL/Handoff + Follow up",
+  "workflows": [
+    "[PRO ANALISES] SDR IA (workflow ID: AlyAebDrKSuthrng, 95 nós)",
+    "[PRO ANALISES] Gerenciador MQL/Handoff + Follow up (workflow ID: i8VNBMCm1uHIFVTv, 50 nós)"
+  ],
+  "whatWasDone": [
+    "PDF briefing 'Construção do Briefing' extraído e analisado",
+    "Ambos workflows puxados do n8n fvmarketing via n8nac pull",
+    "Prompt completo de 210 linhas do Atendente1 lido e analisado",
+    "Comparação briefing vs prompt atual — conclusão: fiel mas expandido",
+    "Persona renomeada de 'Sofia' → 'Assistente Virtual' (neutro, sem nome) em 15 ocorrências nos 2 workflows",
+    "Tag <sofia> → <assistente_virtual>",
+    "Saudação alinhada com briefing ('paciente' → 'cliente', removeu 🔬)",
+    "WebhookIds duplicados corrigidos (UUIDs únicos para nós Wait)",
+    "Timezone padronizado para America/Maceio",
+    "UpdateLeadKommoMql: custom_field id=0 corrigido para IDs reais (1374751/3/5)",
+    "UpdateLeadKommoHandoff: adicionado campo data nos custom_fields",
+    "Prompts de follow-up (LLM/LLM2/LLM3) receberam identidade 'assistente virtual'",
+    "SQL DDL leads_mql gerado em proanalises-leads-mql.sql",
+    "SQL verification gerado em proanalises-verify-tables.sql",
+    "GRANTs SQL para schema proanalises gerado em proanalises-supabase-fix.sql",
+    "SQL Fix schema genics também gerado (genics-supabase-fix.sql)",
+    "n8n-automator fez auditoria completa: 8/8 credenciais OK, 130/130 conexões OK, 8/8 AI Dependencies OK",
+    "Revisão de copy-content: prompt 7.5/10 — operacional com 1 crítica (tag residual) e 4 ajustes médios"
+  ],
+  "pendingActions": [
+    "🔥 Rodar proanalises-leads-mql.sql no SQL Editor do Supabase",
+    "🔥 Rodar proanalises-supabase-fix.sql no SQL Editor do Supabase",
+    "🔥 Adicionar 'proanalises' e 'genics' nos Exposed schemas (Settings → Data API)",
+    "🔥 Rodar proanalises-verify-tables.sql para confirmar tabelas existentes",
+    "🔥 Verificar Kommo pipeline 13591375, status 104876823, tags 194925/194927",
+    "🔥 Verificar custom field IDs no Kommo (1374751/3/5/7)",
+    "Push dos workflows para o n8n via npx n8nac push"
+  ],
+  "filesAffected": [
+    "workflows/fvmarketing/[PRO ANALISES] SDR IA.workflow.ts",
+    "workflows/fvmarketing/[PRO ANALISES] Gerenciador MQL_Handoff + Follow up.workflow.ts",
+    "proanalises-supabase-fix.sql",
+    "proanalises-leads-mql.sql",
+    "proanalises-verify-tables.sql",
+    "genics-supabase-fix.sql"
+  ],
+  "sdrTechCommander": false,
+  "n8nAutomator": true,
+  "analistaDados": false,
+  "copyContent": false,
+  "estrategiaMarketing": false
+}

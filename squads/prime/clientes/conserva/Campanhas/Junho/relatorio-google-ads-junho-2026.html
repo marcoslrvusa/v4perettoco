@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conserva Irrigation — Google Ads Performance Report | June 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --v4-dark: #0f172a;
+    --v4-darker: #020617;
+    --v4-card: #1e293b;
+    --v4-card-hover: #253349;
+    --v4-border: #334155;
+    --v4-accent: #3b82f6;
+    --v4-accent-light: #60a5fa;
+    --v4-green: #22c55e;
+    --v4-green-bg: rgba(34,197,94,0.12);
+    --v4-red: #ef4444;
+    --v4-red-bg: rgba(239,68,68,0.12);
+    --v4-amber: #f59e0b;
+    --v4-amber-bg: rgba(245,158,11,0.12);
+    --v4-blue: #3b82f6;
+    --v4-blue-bg: rgba(59,130,246,0.12);
+    --v4-purple: #8b5cf6;
+    --v4-purple-bg: rgba(139,92,246,0.12);
+    --v4-cyan: #06b6d4;
+    --v4-cyan-bg: rgba(6,182,212,0.12);
+    --v4-text: #f1f5f9;
+    --v4-text-muted: #94a3b8;
+    --v4-text-dim: #64748b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--v4-darker);
+    color: var(--v4-text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* Top banner */
+  .top-banner {
+    background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 50%, #1a1a2e 100%);
+    border-bottom: 1px solid var(--v4-border);
+    padding: 0;
+  }
+  .top-banner-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 24px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .banner-left { display: flex; align-items: center; gap: 20px; }
+  .banner-logo {
+    width: 48px; height: 48px;
+    background: linear-gradient(135deg, var(--v4-accent), var(--v4-purple));
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 20px; color: white;
+  }
+  .banner-info h1 {
+    font-size: 22px; font-weight: 700;
+    letter-spacing: -0.3px;
+    background: linear-gradient(135deg, #fff 60%, var(--v4-accent-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .banner-info p { font-size: 13px; color: var(--v4-text-muted); margin-top: 2px; }
+  .banner-badge {
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(59,130,246,0.15);
+    border: 1px solid rgba(59,130,246,0.3);
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 12px; font-weight: 500; color: var(--v4-accent-light);
+  }
+
+  /* Main layout */
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 32px;
+  }
+
+  /* Stats row */
+  .stats-ribbon {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .stat-card {
+    background: var(--v4-card);
+    border: 1px solid var(--v4-border);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.2s;
+  }
+  .stat-card:hover { background: var(--v4-card-hover); }
+  .stat-card .label {
+    font-size: 11px; font-weight: 500; text-transform: uppercase;
+    letter-spacing: 0.6px; color: var(--v4-text-dim); margin-bottom: 6px;
+  }
+  .stat-card .value {
+    font-size: 28px; font-weight: 700; font-family: 'JetBrains Mono', monospace;
+    letter-spacing: -0.5px;
+  }
+  .stat-card .value.green { color: var(--v4-green); }
+  .stat-card .value.red { color: var(--v4-red); }
+  .stat-card .value.amber { color: var(--v4-amber); }
+  .stat-card .value.blue { color: var(--v4-accent-light); }
+  .stat-card .sub {
+    font-size: 12px; color: var(--v4-text-muted); margin-top: 4px;
+  }
+
+  /* Sections */
+  .section {
+    margin-bottom: 40px;
+  }
+  .section-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--v4-border);
+  }
+  .section-header .icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .section-header h2 {
+    font-size: 20px; font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+  .section-header .tag {
+    margin-left: auto;
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 12px;
+    border-radius: 100px;
+  }
+
+  /* Cards */
+  .card-grid {
+    display: grid;
+    gap: 16px;
+  }
+  .card-grid-2 { grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); }
+  .card-grid-3 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .card-grid-4 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .card {
+    background: var(--v4-card);
+    border: 1px solid var(--v4-border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .card-title {
+    font-size: 14px; font-weight: 600; margin-bottom: 8px;
+  }
+  .card-title .highlight {
+    color: var(--v4-accent-light);
+  }
+
+  /* Tables */
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid var(--v4-border);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead {
+    background: rgba(51,65,85,0.3);
+  }
+  th {
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--v4-text-muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--v4-border);
+  }
+  td {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(51,65,85,0.3);
+    white-space: nowrap;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(59,130,246,0.04); }
+  td.mono { font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+  td.num { text-align: right; }
+  td.green { color: var(--v4-green); }
+  td.red { color: var(--v4-red); }
+  td.amber { color: var(--v4-amber); }
+  td.blue { color: var(--v4-accent-light); }
+
+  /* Bars */
+  .bar-wrap {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .bar {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--v4-border);
+    flex: 1;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.4s;
+  }
+  .bar-fill.green { background: var(--v4-green); }
+  .bar-fill.red { background: var(--v4-red); }
+  .bar-fill.amber { background: var(--v4-amber); }
+  .bar-fill.blue { background: var(--v4-accent); }
+  .bar-fill.purple { background: var(--v4-purple); }
+
+  /* Metric rows */
+  .metric-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(51,65,85,0.2);
+  }
+  .metric-row:last-child { border-bottom: none; }
+  .metric-row .ml { font-size: 13px; color: var(--v4-text-muted); }
+  .metric-row .mr { font-weight: 600; font-family: 'JetBrains Mono', monospace; font-size: 14px; }
+
+  /* KPI comparison */
+  .kpi-compare {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .kpi-compare .current { font-size: 24px; font-weight: 700; }
+  .kpi-compare .change {
+    font-size: 13px; font-weight: 600;
+    padding: 2px 10px; border-radius: 100px;
+  }
+  .kpi-compare .change.up { background: var(--v4-green-bg); color: var(--v4-green); }
+  .kpi-compare .change.down { background: var(--v4-red-bg); color: var(--v4-red); }
+  .kpi-compare .change.warn { background: var(--v4-amber-bg); color: var(--v4-amber); }
+
+  /* Insight blocks */
+  .insight {
+    display: flex; gap: 16px;
+    padding: 16px 20px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    border-left: 3px solid;
+  }
+  .insight.green { background: var(--v4-green-bg); border-color: var(--v4-green); }
+  .insight.red { background: var(--v4-red-bg); border-color: var(--v4-red); }
+  .insight.amber { background: var(--v4-amber-bg); border-color: var(--v4-amber); }
+  .insight.blue { background: var(--v4-blue-bg); border-color: var(--v4-blue); }
+  .insight .i-icon { font-size: 18px; flex-shrink: 0; }
+  .insight .i-text { font-size: 13px; color: var(--v4-text-muted); line-height: 1.5; }
+  .insight .i-text strong { color: var(--v4-text); }
+
+  /* Rec card */
+  .rec-card {
+    background: var(--v4-card);
+    border: 1px solid var(--v4-border);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .rec-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 4px; height: 100%;
+  }
+  .rec-card.high::before { background: var(--v4-red); }
+  .rec-card.medium::before { background: var(--v4-amber); }
+  .rec-card.low::before { background: var(--v4-blue); }
+  .rec-card .rec-priority {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .rec-card.high .rec-priority { color: var(--v4-red); }
+  .rec-card.medium .rec-priority { color: var(--v4-amber); }
+  .rec-card.low .rec-priority { color: var(--v4-blue); }
+  .rec-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+  .rec-card p { font-size: 13px; color: var(--v4-text-muted); line-height: 1.5; }
+  .rec-card .rec-impact {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 12px; font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 100px;
+  }
+  .rec-card.high .rec-impact { background: var(--v4-green-bg); color: var(--v4-green); }
+  .rec-card.medium .rec-impact { background: var(--v4-amber-bg); color: var(--v4-amber); }
+  .rec-card.low .rec-impact { background: var(--v4-blue-bg); color: var(--v4-blue); }
+
+  /* Proj box */
+  .proj-box {
+    background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(139,92,246,0.08));
+    border: 1px solid rgba(59,130,246,0.2);
+    border-radius: 16px;
+    padding: 28px 32px;
+  }
+  .proj-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 16px;
+  }
+  .proj-item {
+    text-align: center;
+    padding: 16px;
+    background: rgba(15,23,42,0.5);
+    border-radius: 12px;
+  }
+  .proj-item .proj-label { font-size: 12px; color: var(--v4-text-dim); margin-bottom: 4px; }
+  .proj-item .proj-value { font-size: 26px; font-weight: 700; }
+  .proj-item .proj-value.green { color: var(--v4-green); }
+  .proj-item .proj-value.blue { color: var(--v4-accent-light); }
+  .proj-item .proj-sub { font-size: 11px; color: var(--v4-text-muted); margin-top: 4px; }
+
+  /* Footer */
+  .footer {
+    margin-top: 48px;
+    padding: 24px 0;
+    border-top: 1px solid var(--v4-border);
+    text-align: center;
+    font-size: 12px;
+    color: var(--v4-text-dim);
+  }
+  .footer strong { color: var(--v4-text-muted); }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .container { padding: 16px; }
+    .top-banner-inner { padding: 16px; }
+    .stats-ribbon { grid-template-columns: repeat(2, 1fr); }
+    .card-grid-2 { grid-template-columns: 1fr; }
+    .card-grid-3 { grid-template-columns: 1fr; }
+    .card-grid-4 { grid-template-columns: repeat(2, 1fr); }
+    .banner-left { flex-wrap: wrap; }
+    .stat-card .value { font-size: 22px; }
+    .proj-grid { grid-template-columns: repeat(2, 1fr); }
+    th, td { padding: 8px 10px; font-size: 12px; }
+  }
+
+  /* Progress bars inline */
+  .progress-group { margin: 16px 0; }
+  .progress-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+  .progress-row .p-label { font-size: 12px; width: 180px; flex-shrink: 0; color: var(--v4-text-muted); }
+  .progress-row .p-bar { flex: 1; height: 8px; background: var(--v4-border); border-radius: 4px; overflow: hidden; }
+  .progress-row .p-fill { height: 100%; border-radius: 4px; }
+  .progress-row .p-val { font-size: 12px; font-weight: 600; width: 60px; text-align: right; font-family: 'JetBrains Mono', monospace; }
+
+  /* Toggle tabs */
+  .tab-bar { display: flex; gap: 4px; margin-bottom: 20px; background: rgba(30,41,59,0.5); border-radius: 10px; padding: 4px; width: fit-content; }
+  .tab-bar .tab { padding: 8px 18px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: default; }
+  .tab-bar .tab.active { background: var(--v4-card); color: var(--v4-accent-light); }
+  .tab-bar .tab { color: var(--v4-text-dim); }
+
+  /* Subtitle */
+  .subtitle { font-size: 13px; color: var(--v4-text-muted); margin-bottom: 16px; }
+
+  .waste-list { list-style: none; }
+  .waste-list li {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 14px;
+    background: rgba(239,68,68,0.06);
+    border-radius: 8px;
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+  .waste-list li .wl-keyword { font-weight: 500; }
+  .waste-list li .wl-cost { font-family: 'JetBrains Mono', monospace; color: var(--v4-red); font-weight: 600; }
+
+  .pulse { animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BANNER ============ -->
+<div class="top-banner">
+  <div class="top-banner-inner">
+    <div class="banner-left">
+      <div class="banner-logo">C</div>
+      <div class="banner-info">
+        <h1>Conserva Irrigation — Google Ads Performance Report</h1>
+        <p>Scottsdale, AZ &bull; Residential & Commercial Irrigation &bull; Jun 1–30, 2026</p>
+      </div>
+    </div>
+    <div class="banner-badge">
+      <span>&#9679;</span> Report generated Jul 1, 2026
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ============ 1. EXECUTIVE SUMMARY / STATS RIBBON ============ -->
+<div class="stats-ribbon">
+  <div class="stat-card">
+    <div class="label">Total Spend</div>
+    <div class="value blue">$5,530</div>
+    <div class="sub">Across all campaigns</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Total Conversions</div>
+    <div class="value green">88</div>
+    <div class="sub">Account-level (incl. calls + forms)</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Overall CPA</div>
+    <div class="value amber">$62.85</div>
+    <div class="sub">Target: ~$55–60</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Overall CTR</div>
+    <div class="value" style="color: var(--v4-accent-light)">6.83%</div>
+    <div class="sub">Above industry avg (3–4%)</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Total Clicks</div>
+    <div class="value" style="color: var(--v4-text)">1,239</div>
+    <div class="sub">Avg CPC $4.46</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Phone Calls</div>
+    <div class="value" style="color: var(--v4-green)">24</div>
+    <div class="sub">19 PMAX · 5 Search</div>
+  </div>
+</div>
+
+<div class="stats-ribbon" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+  <div class="stat-card">
+    <div class="label">Search Campaign CPA</div>
+    <div class="value red">$138.60</div>
+    <div class="sub">5 conv · $692.99 spend</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">PMAX Campaign CPA</div>
+    <div class="value red">$140.07</div>
+    <div class="sub">13 conv · $1,820.60 spend</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">⭐ Search Best Performer</div>
+    <div class="value green">$24.93</div>
+    <div class="sub">Spring Startup Ad Group CPA</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Search Lost IS (Rank)</div>
+    <div class="value red">47.1%</div>
+    <div class="sub">Almost half of impressions lost to rank</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <div class="icon" style="background: var(--v4-purple-bg);">&#9888;</div>
+    <h2>Diagnóstico Instantâneo</h2>
+    <span class="tag" style="background: var(--v4-red-bg); color: var(--v4-red);">3 Constraints</span>
+  </div>
+  <div class="card-grid card-grid-3">
+    <div class="insight red">
+      <div class="i-icon">&#9888;</div>
+      <div class="i-text">
+        <strong>Constraint #1: Search Lost IS por Rank (47,1%)</strong><br>
+        Quase metade das impressões perdidas por posição no leilão. Keywords com QS 2-5 estão sendo superadas por concorrentes. Necessidade urgente de aumentar Quality Scores e/ou lances.
+      </div>
+    </div>
+    <div class="insight amber">
+      <div class="i-icon">&#9881;</div>
+      <div class="i-text">
+        <strong>Constraint #2: Keywords com QS 2-5 Queimando Budget</strong><br>
+        $203,13 em "irrigation repair" (Broad) sem conversão. $74,08 em "irrigation repair" (Phrase) sem conversão. "sprinkler repair" (Broad) com QS 2 — Limited by quality. Precisa de pausa/poda agressiva.
+      </div>
+    </div>
+    <div class="insight amber">
+      <div class="i-icon">&#9881;</div>
+      <div class="i-text">
+        <strong>Constraint #3: PMAX Limited by Budget</strong><br>
+        PMAX com $59/dia está limitado por orçamento, perdendo 57,31% das impressões por rank. CPA de $140,07 precisa cair pelo menos 30% para escalar sustentavelmente.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 2. CAMPAIGN PERFORMANCE ============ -->
+<div class="section">
+  <div class="section-header">
+    <div class="icon" style="background: var(--v4-blue-bg);">&#9776;</div>
+    <h2>Campaign Performance</h2>
+    <span class="tag" style="background: var(--v4-blue-bg); color: var(--v4-accent-light);">Search vs PMAX</span>
+  </div>
+
+  <div class="card-grid card-grid-2">
+    <!-- SEARCH -->
+    <div class="card">
+      <div class="card-title">V4 - SEARCH - SERVICES</div>
+      <div style="font-size: 12px; color: var(--v4-text-dim); margin-bottom: 16px;">Budget: $27/dia · Search Network</div>
+      <div class="metric-row">
+        <span class="ml">Impressions</span>
+        <span class="mr">1,346</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Clicks</span>
+        <span class="mr">62</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">CTR</span>
+        <span class="mr" style="color: var(--v4-amber);">4.61%</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Avg CPC</span>
+        <span class="mr" style="color: var(--v4-red);">$11.18</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Cost</span>
+        <span class="mr">$692.99</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Conversions</span>
+        <span class="mr" style="color: var(--v4-green);">5 (2 calls + 3 forms)</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">CPA</span>
+        <span class="mr" style="color: var(--v4-red);">$138.60</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Conv. Rate</span>
+        <span class="mr">8.06%</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Search Impr. Share</span>
+        <span class="mr" style="color: var(--v4-amber);">21.91%</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Lost IS (Rank)</span>
+        <span class="mr" style="color: var(--v4-red);">47.10%</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Lost IS (Budget)</span>
+        <span class="mr" style="color: var(--v4-amber);">31.05%</span>
+      </div>
+      <div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--v4-border);">
+        <div class="progress-row">
+          <span class="p-label">Search Top IS</span>
+          <div class="p-bar"><div class="p-fill" style="width:13.82%; background: var(--v4-red);"></div></div>
+          <span class="p-val" style="color: var(--v4-red);">13.8%</span>
+        </div>
+        <div class="progress-row">
+          <span class="p-label">Search Abs. Top IS</span>
+          <div class="p-bar"><div class="p-fill" style="width:10%; background: var(--v4-red);"></div></div>
+          <span class="p-val" style="color: var(--v4-red);">&lt;10%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PMAX -->
+    <div class="card">
+      <div class="card-title">[V4]_[MO]_[PMAX]_[GOO]_[GO]_core</div>
+      <div style="font-size: 12px; color: var(--v4-text-dim); margin-bottom: 16px;">Budget: $59/dia · Performance Max <span style="color: var(--v4-amber);">(Limited by budget)</span></div>
+      <div class="metric-row">
+        <span class="ml">Impressions</span>
+        <span class="mr">6,357</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Clicks</span>
+        <span class="mr">235</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">CTR</span>
+        <span class="mr" style="color: var(--v4-amber);">3.70%</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Avg CPC</span>
+        <span class="mr" style="color: var(--v4-amber);">$7.75</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Cost</span>
+        <span class="mr">$1,820.60</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Conversions</span>
+        <span class="mr" style="color: var(--v4-green);">13 (9 calls + 4 forms)</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">CPA</span>
+        <span class="mr" style="color: var(--v4-red);">$140.07</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Conv. Rate</span>
+        <span class="mr" style="color: var(--v4-amber);">3.41%</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Search Impr. Share</span>
+        <span class="mr" style="color: var(--v4-amber);">29.56%</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Optimization Score</span>
+        <span class="mr" style="color: var(--v4-green);">99.20%</span>
+      </div>
+      <div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--v4-border);">
+        <div class="progress-row">
+          <span class="p-label">Search Lost IS (Rank)</span>
+          <div class="p-bar"><div class="p-fill" style="width:57.31%; background: var(--v4-red);"></div></div>
+          <span class="p-val" style="color: var(--v4-red);">57.31%</span>
+        </div>
+        <div class="progress-row">
+          <span class="p-label">Click Share</span>
+          <div class="p-bar"><div class="p-fill" style="width:15.47%; background: var(--v4-amber);"></div></div>
+          <span class="p-val" style="color: var(--v4-amber);">15.47%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight blue" style="margin-top: 16px;">
+    <div class="i-icon">&#8505;</div>
+    <div class="i-text">
+      <strong>Comparativo:</strong> Search tem CPA similar ao PMAX ($138,60 vs $140,07), mas a Search gera leads mais qualificados (8,06% CVR vs 3,41% PMAX). O PMAX escala mais volume (13 vs 5 conversões) porém com CVR baixa. Ambos precisam de correção de rota — Search precisa recuperar IS perdido por rank; PMAX precisa melhorar a taxa de conversão via landing pages e sinais de audiência.
+    </div>
+  </div>
+
+  <!-- Budget allocation pie -->
+  <div style="margin-top: 20px;">
+    <div class="card">
+      <div class="card-title">Budget Allocation — Total Known: <span class="highlight">$2,513.60</span></div>
+      <div style="font-size:12px; color: var(--v4-text-dim); margin-bottom: 16px;">Account total is $5,530.75 — includes other campaigns/channels not detailed in this report (~$3,017 unaccounted)</div>
+      <div class="progress-row">
+        <span class="p-label">PMAX (72.4%)</span>
+        <div class="p-bar"><div class="p-fill" style="width:72.4%; background: var(--v4-purple);"></div></div>
+        <span class="p-val" style="color: var(--v4-purple);">$1,820.60</span>
+      </div>
+      <div class="progress-row">
+        <span class="p-label">Search (27.6%)</span>
+        <div class="p-bar"><div class="p-fill" style="width:27.6%; background: var(--v4-accent);"></div></div>
+        <span class="p-val" style="color: var(--v4-accent-light);">$692.99</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 3. AD GROUPS + KEYWORDS ============ -->
+<div class="section">
+  <div class="section-header">
+    <div class="icon" style="background: var(--v4-cyan-bg);">&#9000;</div>
+    <h2>Ad Groups & Keywords Analysis</h2>
+    <span class="tag" style="background: var(--v4-cyan-bg); color: var(--v4-cyan);">5 Ad Groups</span>
+  </div>
+
+  <!-- Ad Groups Table -->
+  <div class="table-wrap" style="margin-bottom: 24px;">
+    <table>
+      <thead>
+        <tr>
+          <th>Ad Group</th>
+          <th>Impr.</th>
+          <th>Clicks</th>
+          <th>CTR</th>
+          <th>Cost</th>
+          <th>Conv.</th>
+          <th>CPA</th>
+          <th>CVR</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>[Emergency] Precision Repair</strong></td>
+          <td class="mono">1,186</td>
+          <td class="mono">58</td>
+          <td class="mono">4.89%</td>
+          <td class="mono red">$643.13</td>
+          <td class="mono">3</td>
+          <td class="mono red">$214.38</td>
+          <td class="mono">5.17%</td>
+          <td><span style="color:var(--v4-red); font-weight:600;">&#9632; CRÍTICO</span></td>
+        </tr>
+        <tr>
+          <td><strong>[Seasonal] Spring Startup</strong></td>
+          <td class="mono">137</td>
+          <td class="mono">4</td>
+          <td class="mono">2.92%</td>
+          <td class="mono">$49.86</td>
+          <td class="mono green">2</td>
+          <td class="mono green">$24.93</td>
+          <td class="mono green">50.00%</td>
+          <td><span style="color:var(--v4-green); font-weight:600;">&#9632; STAR</span></td>
+        </tr>
+        <tr>
+          <td><strong>[New] Irrigation Installation</strong></td>
+          <td class="mono">18</td>
+          <td class="mono">0</td>
+          <td class="mono">0%</td>
+          <td class="mono">$0</td>
+          <td class="mono">0</td>
+          <td class="mono">—</td>
+          <td class="mono">0%</td>
+          <td><span style="color:var(--v4-amber); font-weight:600;">&#9632; INATIVO</span></td>
+        </tr>
+        <tr>
+          <td><strong>Smart Irrigation Efficiency</strong></td>
+          <td class="mono">3</td>
+          <td class="mono">0</td>
+          <td class="mono">0%</td>
+          <td class="mono">$0</td>
+          <td class="mono">0</td>
+          <td class="mono">—</td>
+          <td class="mono">0%</td>
+          <td><span style="color:var(--v4-text-dim);">&#9632; ZOMBIE</span></td>
+        </tr>
+        <tr>
+          <td><strong>[SIAG] B2B</strong></td>
+          <td class="mono">2</td>
+          <td class="mono">0</td>
+          <td class="mono">0%</td>
+          <td class="mono">$0</td>
+          <td class="mono">0</td>
+          <td class="mono">—</td>
+          <td class="mono">0%</td>
+          <td><span style="color:var(--v4-text-dim);">&#9632; ZOMBIE</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Keyword Winners & Losers -->
+  <div class="card-grid card-grid-2">
+    <div class="card">
+      <div class="card-title" style="color: var(--v4-green);">&#9650; Keywords Campeãs</div>
+      <table style="font-size: 12px;">
+        <thead>
+          <tr>
+            <th>Keyword</th>
+            <th>Match</th>
+            <th>Cost</th>
+            <th>Conv.</th>
+            <th>CPA</th>
+            <th>CVR</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>"irrigation repair near me"</td>
+            <td>Phrase</td>
+            <td>$5.31</td>
+            <td class="green">1</td>
+            <td class="green">$5.31</td>
+            <td class="green">100%</td>
+          </tr>
+          <tr>
+            <td>sprinkler system tune up</td>
+            <td>Broad</td>
+            <td>$49.86</td>
+            <td class="green">2</td>
+            <td class="green">$24.93</td>
+            <td class="green">50%</td>
+          </tr>
+          <tr>
+            <td>irrigation repair near me</td>
+            <td>Broad</td>
+            <td>$101.94</td>
+            <td class="green">1</td>
+            <td>$101.94</td>
+            <td>9.09%</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight green" style="margin-top: 12px;">
+        <div class="i-icon">&#9650;</div>
+        <div class="i-text">
+          <strong>"irrigation repair near me" (Phrase)</strong> é a keyword mais eficiente — $5,31 por lead com 100% CVR. Precisa de aumento de lance e monitoramento de IS.
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="color: var(--v4-red);">&#9660; Desperdícios Identificados</div>
+      <ul class="waste-list">
+        <li>
+          <span class="wl-keyword">irrigation repair (Broad)</span>
+          <span class="wl-cost">$203.13 · 0 conv.</span>
+        </li>
+        <li>
+          <span class="wl-keyword">"irrigation repair" (Phrase)</span>
+          <span class="wl-cost">$74.08 · 0 conv.</span>
+        </li>
+        <li>
+          <span class="wl-keyword">sprinkler repair (Broad) — QS 2</span>
+          <span class="wl-cost">$47.61 · 0 conv.</span>
+        </li>
+        <li>
+          <span class="wl-keyword">lawn sprinkler repair (Broad)</span>
+          <span class="wl-cost">$29.73 · 0 conv.</span>
+        </li>
+        <li>
+          <span class="wl-keyword">"sprinkler repair scottsdale" (Phrase) — QS 4</span>
+          <span class="wl-cost">$22.52 · 0 conv.</span>
+        </li>
+      </ul>
+      <div class="insight red" style="margin-top: 8px;">
+        <div class="i-icon">&#9888;</div>
+        <div class="i-text">
+          <strong>$377,07 queimados sem nenhuma conversão</strong> — 54% do budget total da Search ($692,99). Pausar essas 5 keywords salvaria mais da metade do budget Search imediatamente.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search Lost IS details -->
+  <div style="margin-top: 16px;">
+    <div class="card">
+      <div class="card-title">&#9888; Search Impression Share — Problema Crítico de Rank</div>
+      <div class="subtitle">Search campaign lost 47.1% of impressions due to rank. Multiple keywords with severe IS loss:</div>
+      <div class="card-grid card-grid-3" style="margin-top: 12px;">
+        <div class="insight red">
+          <div class="i-icon">&#9888;</div>
+          <div class="i-text">
+            <strong>"sprinkler system repair near me"</strong><br>
+            Search lost IS (rank): <strong>&gt;90%</strong><br>
+            QS: 5 · Landing Page: Above avg
+          </div>
+        </div>
+        <div class="insight red">
+          <div class="i-icon">&#9888;</div>
+          <div class="i-text">
+            <strong>"sprinkler repair near me"</strong><br>
+            Search lost IS (rank): <strong>&gt;90%</strong><br>
+            QS: 3 · "Below average" CTR
+          </div>
+        </div>
+        <div class="insight amber">
+          <div class="i-icon">&#9881;</div>
+          <div class="i-text">
+            <strong>"smart irrigation system"</strong><br>
+            Search lost IS (rank): <strong>&gt;90%</strong><br>
+            QS: 3 · Below avg LP & CTR
+          </div>
+        </div>
+      </div>
+      <div class="insight blue" style="margin-top: 12px;">
+        <div class="i-icon">&#8505;</div>
+        <div class="i-text">
+          <strong>Padrão claro:</strong> Keywords com QS 3-5 e "Below average" em Expected CTR estão perdendo 30-90%+ das impressões por rank. A correção estrutural passa por: (1) melhorar CTR esperada com headlines mais relevantes, (2) melhorar landing page experience, (3) aumentar lances onde o CPA permite.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Budget allocation within Search -->
+  <div style="margin-top: 16px;">
+    <div class="card">
+      <div class="card-title">Budget Allocation — Search Campaign ($692.99)</div>
+      <div class="progress-row">
+        <span class="p-label">[Emergency] Precision Repair</span>
+        <div class="p-bar"><div class="p-fill" style="width:92.8%; background: var(--v4-red);"></div></div>
+        <span class="p-val" style="color: var(--v4-red);">$643.13 (92.8%)</span>
+      </div>
+      <div class="progress-row">
+        <span class="p-label">[Seasonal] Spring Startup</span>
+        <div class="p-bar"><div class="p-fill" style="width:7.2%; background: var(--v4-green);"></div></div>
+        <span class="p-val" style="color: var(--v4-green);">$49.86 (7.2%)</span>
+      </div>
+      <div class="insight red" style="margin-top: 12px;">
+        <div class="i-icon">&#9888;</div>
+        <div class="i-text">
+          <strong>92,8% do budget Search vai para Precision Repair</strong> que tem o pior CPA ($214,38) e está abastecido de keywords de Broad Match sem performance. O Seasonal group (7,2% do budget) entrega CPA de $24,93 — 8,6x mais eficiente.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 4. AD PERFORMANCE ============ -->
+<div class="section">
+  <div class="section-header">
+    <div class="icon" style="background: var(--v4-green-bg);">&#9997;</div>
+    <h2>Ad Performance (RSAs)</h2>
+    <span class="tag" style="background: var(--v4-green-bg); color: var(--v4-green);">3 ads ativos</span>
+  </div>
+
+  <div class="card-grid card-grid-3">
+    <div class="card">
+      <div class="card-title">&#127942; Precision Repair Ad 1</div>
+      <div style="font-size: 12px; color: var(--v4-text-dim); margin-bottom: 8px;">Headline: "sprinkler system repair / emergency sprinkler fix"</div>
+      <div class="metric-row">
+        <span class="ml">Ad Strength</span>
+        <span class="mr" style="color: var(--v4-green);">Excellent</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Impr.</span>
+        <span class="mr">525</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">CTR</span>
+        <span class="mr" style="color: var(--v4-green);">5.52%</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Cost</span>
+        <span class="mr">$329.17</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">CPA</span>
+        <span class="mr" style="color: var(--v4-red);">$329.17</span>
+      </div>
+      <div class="insight amber" style="margin-top: 8px;">
+        <div class="i-text">CTR excelente mas CPA altíssimo — o anúncio atrai cliques mas a página de destino ou a oferta não convertem proporcionalmente.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#127942; Precision Repair Ad 2</div>
+      <div style="font-size: 12px; color: var(--v4-text-dim); margin-bottom: 8px;">Headline: "irrigation repair scottsdale"</div>
+      <div class="metric-row">
+        <span class="ml">Ad Strength</span>
+        <span class="mr" style="color: var(--v4-amber);">Good</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Impr.</span>
+        <span class="mr">661</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">CTR</span>
+        <span class="mr">4.39%</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Cost</span>
+        <span class="mr">$313.96</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">CPA</span>
+        <span class="mr" style="color: var(--v4-red);">$156.98</span>
+      </div>
+      <div class="insight amber" style="margin-top: 8px;">
+        <div class="i-text">Ad Strength "Good" — precisa de mais keywords nos headlines. Mas performa 2x melhor que Ad 1 em CPA ($156 vs $329).</div>
+      </div>
+    </div>
+
+    <div class="card" style="border-color: var(--v4-green);">
+      <div class="card-title" style="color: var(--v4-green);">&#11088; Spring Startup Ad</div>
+      <div style="font-size: 12px; color: var(--v4-text-dim); margin-bottom: 8px;">Headline: "Spring Sprinkler Startup / System Audit"</div>
+      <div class="metric-row">
+        <span class="ml">Ad Strength</span>
+        <span class="mr" style="color: var(--v4-green);">Excellent</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Impr.</span>
+        <span class="mr">137</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">CTR</span>
+        <span class="mr">2.92%</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Cost</span>
+        <span class="mr">$49.86</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">CPA</span>
+        <span class="mr" style="color: var(--v4-green); font-weight: 700;">$24.93</span>
+      </div>
+      <div class="insight green" style="margin-top: 8px;">
+        <div class="i-text">&#11088; <strong>Melhor ad do mês.</strong> CPA 5,5x menor que a média Search. CTR baixa (2,92%) mas CVR de 50% compensa. Precisa aumentar volume — mais keywords sazonais + budget.</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 12px;">
+    <div class="card">
+      <div class="card-title">PMAX Asset Groups</div>
+      <div class="subtitle">3 asset groups ativos — instalação (AG1/AG2) e sazonal (AG3)</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div>
+          <div style="font-weight:600; margin-bottom:8px;">Asset Group 1 & 2 (Instalação)</div>
+          <div style="font-size:13px; color:var(--v4-text-muted);">
+            Headlines de instalação de sistemas inteligentes. Sem breakdown individual de performance disponível no relatório, mas compartilham o pool de 13 conversões totais do PMAX.
+          </div>
+        </div>
+        <div>
+          <div style="font-weight:600; margin-bottom:8px;">Asset Group 3 (Summer Ready) &#11088;</div>
+          <div style="font-size:13px; color:var(--v4-text-muted);">
+            Foco sazonal "Summer Ready — Free Checkup", "Save 60% on Water Bills", "Beat the Arizona Heat". CPA estimado em ~$106 com base em ROPRE anterior. <strong>Recomendação: escalar este AG para Julho.</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 5. GEOGRAPHIC PERFORMANCE ============ -->
+<div class="section">
+  <div class="section-header">
+    <div class="icon" style="background: var(--v4-amber-bg);">&#128205;</div>
+    <h2>Geographic Performance</h2>
+    <span class="tag" style="background: var(--v4-amber-bg); color: var(--v4-amber);">33 locations</span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Location (CEP)</th>
+          <th>Campaign</th>
+          <th>Impr.</th>
+          <th>Clicks</th>
+          <th>Cost</th>
+          <th>Conv.</th>
+          <th>CPA</th>
+          <th>CVR</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>85260</strong> — Scottsdale</td>
+          <td>PMAX</td>
+          <td>325</td>
+          <td>19</td>
+          <td class="mono">$175.52</td>
+          <td class="mono green">1</td>
+          <td class="mono amber">$175.52</td>
+          <td>5.26%</td>
+        </tr>
+        <tr>
+          <td><strong>85260</strong> — Scottsdale</td>
+          <td>Search</td>
+          <td>105</td>
+          <td>5</td>
+          <td class="mono">$106.61</td>
+          <td class="mono">0</td>
+          <td class="mono">—</td>
+          <td>0%</td>
+        </tr>
+        <tr>
+          <td><strong>85016</strong> — Phoenix</td>
+          <td>PMAX</td>
+          <td>473</td>
+          <td>30</td>
+          <td class="mono red">$199.45</td>
+          <td class="mono">1</td>
+          <td class="mono red">$199.45</td>
+          <td>3.33%</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--v4-green);">85024</strong> — Phoenix</td>
+          <td>PMAX</td>
+          <td>163</td>
+          <td>5</td>
+          <td class="mono">$153.14</td>
+          <td class="mono green">3</td>
+          <td class="mono green">$51.05</td>
+          <td class="green">60%</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--v4-green);">85253</strong> — Paradise Valley</td>
+          <td>PMAX</td>
+          <td>111</td>
+          <td>8</td>
+          <td class="mono">$150.27</td>
+          <td class="mono green">2</td>
+          <td class="mono green">$75.14</td>
+          <td>25%</td>
+        </tr>
+        <tr>
+          <td><strong>85034</strong> — Phoenix</td>
+          <td>PMAX</td>
+          <td>549</td>
+          <td>25</td>
+          <td class="mono">$112.04</td>
+          <td class="mono">1</td>
+          <td class="mono">$112.29</td>
+          <td>3.99%</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--v4-green);">85085</strong> — Phoenix</td>
+          <td>PMAX</td>
+          <td>94</td>
+          <td>8</td>
+          <td class="mono">$39.45</td>
+          <td class="mono green">1</td>
+          <td class="mono green">$39.45</td>
+          <td class="green">12.50%</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--v4-green);">85250</strong> — Scottsdale</td>
+          <td>PMAX</td>
+          <td>46</td>
+          <td>4</td>
+          <td class="mono">$27.92</td>
+          <td class="mono green">1</td>
+          <td class="mono green">$27.92</td>
+          <td class="green">25%</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--v4-green);">85258</strong> — Scottsdale</td>
+          <td>PMAX</td>
+          <td>193</td>
+          <td>9</td>
+          <td class="mono">$62.06</td>
+          <td class="mono green">1</td>
+          <td class="mono green">$62.06</td>
+          <td>11.11%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card-grid card-grid-2" style="margin-top: 16px;">
+    <div class="card">
+      <div class="card-title" style="color: var(--v4-green);">&#9650; Top Geo Performers (melhor CPA)</div>
+      <div class="metric-row">
+        <span class="ml">85250 — Scottsdale</span>
+        <span class="mr green">$27.92 CPA</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">85085 — Phoenix</span>
+        <span class="mr green">$39.45 CPA</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">85024 — Phoenix</span>
+        <span class="mr green">$51.05 CPA</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">85258 — Scottsdale</span>
+        <span class="mr green">$62.06 CPA</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">85253 — Paradise Valley</span>
+        <span class="mr green">$75.14 CPA</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color: var(--v4-red);">&#9660; Bottom Geo Performers</div>
+      <div class="metric-row">
+        <span class="ml">85016 — Phoenix</span>
+        <span class="mr red">$199.45 CPA</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">85260 — Scottsdale (PMAX)</span>
+        <span class="mr red">$175.52 CPA (1 conv)</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">85034 — Phoenix</span>
+        <span class="mr">$112.29 CPA</span>
+      </div>
+      <div class="insight amber" style="margin-top: 12px;">
+        <i>85260 (sede do cliente) tem o maior investimento combinado ($282,13) com apenas 1 conversão no PMAX e 0 na Search. Precisa de revisão de landing page e oferta local.</i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 6. CALL ANALYSIS ============ -->
+<div class="section">
+  <div class="section-header">
+    <div class="icon" style="background: var(--v4-purple-bg);">&#128222;</div>
+    <h2>Call Analysis</h2>
+    <span class="tag" style="background: var(--v4-purple-bg); color: var(--v4-purple);">24 calls</span>
+  </div>
+
+  <div class="card-grid card-grid-3">
+    <div class="card">
+      <div class="card-title">Volume por Campanha</div>
+      <div class="metric-row">
+        <span class="ml">PMAX</span>
+        <span class="mr" style="color: var(--v4-purple);">19 calls (79%)</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Search</span>
+        <span class="mr" style="color: var(--v4-accent-light);">5 calls (21%)</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Total</span>
+        <span class="mr"><strong>24</strong></span>
+      </div>
+      <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--v4-border);">
+        <div class="metric-row">
+          <span class="ml">Qualified (&gt;60s)</span>
+          <span class="mr" style="color: var(--v4-green);"><strong>11 calls (46%)</strong></span>
+        </div>
+        <div class="metric-row">
+          <span class="ml">Short (&lt;30s)</span>
+          <span class="mr" style="color: var(--v4-red);">11 calls (46%)</span>
+        </div>
+        <div class="metric-row">
+          <span class="ml">Medium (30-60s)</span>
+          <span class="mr">2 calls (8%)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Origens das Chamadas</div>
+      <div class="metric-row">
+        <span class="ml">Mobile click-to-call (Ad)</span>
+        <span class="mr">21 calls</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Manually dialed</span>
+        <span class="mr">2 calls</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Website</span>
+        <span class="mr">1 call</span>
+      </div>
+      <div class="insight blue" style="margin-top: 12px;">
+        <div class="i-text"><strong>87,5%</strong> das chamadas vêm de Mobile click-to-call — celular é o canal dominante. Certifique-se que o site e landing pages são mobile-first.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Area Codes</div>
+      <div class="metric-row">
+        <span class="ml">480 (Scottsdale)</span>
+        <span class="mr">4 qualified calls</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">602 (Phoenix)</span>
+        <span class="mr">4 qualified calls</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">808 / 928 / 678</span>
+        <span class="mr">1 each</span>
+      </div>
+      <div class="insight green" style="margin-top: 12px;">
+        <div class="i-text"><strong>Scottsdale (480) + Phoenix (602)</strong> concentram 73% das chamadas qualificadas. Corrobora a estratégia de focar budget nessas regiões.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timeline of qualified calls -->
+  <div style="margin-top: 16px;">
+    <div class="card">
+      <div class="card-title">&#128337; Chamadas Qualificadas (&gt;60s) — Timeline</div>
+      <div class="card-grid card-grid-3" style="margin-top: 12px;">
+        <div class="insight green">
+          <div class="i-icon">&#128222;</div>
+          <div class="i-text">
+            <strong>Jun 5</strong> · 287s (4.8min)<br>
+            808 area code · PMAX · Manually dialed
+          </div>
+        </div>
+        <div class="insight green">
+          <div class="i-icon">&#128222;</div>
+          <div class="i-text">
+            <strong>Jun 8</strong> · 183s + 238s<br>
+            602-799-1736 · PMAX · 2 chamadas
+          </div>
+        </div>
+        <div class="insight green">
+          <div class="i-icon">&#128222;</div>
+          <div class="i-text">
+            <strong>Jun 16</strong> · 129s<br>
+            678 area code · SEARCH
+          </div>
+        </div>
+        <div class="insight green">
+          <div class="i-icon">&#128222;</div>
+          <div class="i-text">
+            <strong>Jun 19</strong> · 122s + 115s<br>
+            928 (Website) + 480 (Ad) · PMAX
+          </div>
+        </div>
+        <div class="insight green">
+          <div class="i-icon">&#128222;</div>
+          <div class="i-text">
+            <strong>Jun 21</strong> · 119s<br>
+            480-330-4039 · PMAX
+          </div>
+        </div>
+        <div class="insight green">
+          <div class="i-icon">&#128222;</div>
+          <div class="i-text">
+            <strong>Jun 23</strong> · 281s (4.7min)<br>
+            602-460-2220 · PMAX
+          </div>
+        </div>
+        <div class="insight green">
+          <div class="i-icon">&#128222;</div>
+          <div class="i-text">
+            <strong>Jun 24</strong> · 381s (6.4min)<br>
+            480-883-8758 · SEARCH · Manually dialed
+          </div>
+        </div>
+        <div class="insight green">
+          <div class="i-icon">&#128222;</div>
+          <div class="i-text">
+            <strong>Jun 25</strong> · 158s<br>
+            480-335-6369 · PMAX
+          </div>
+        </div>
+        <div class="insight green">
+          <div class="i-icon">&#128222;</div>
+          <div class="i-text">
+            <strong>Jun 26</strong> · 169s<br>
+            602-689-5868 · SEARCH
+          </div>
+        </div>
+      </div>
+      <div class="insight blue" style="margin-top: 12px;">
+        <div class="i-icon">&#8505;</div>
+        <div class="i-text">
+          <strong>Padrão de chamadas:</strong> Concentração de chamadas qualificadas nas semanas 2-4 do mês (8 a 26 de junho). Pico na semana de 16-26 com várias chamadas de 2-6 minutos. O 602-799-1736 ligou 2x no mesmo dia (183s + 238s) — lead de alto interesse.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 7. DIAGNÓSTICO & RECOMENDAÇÕES ============ -->
+<div class="section">
+  <div class="section-header">
+    <div class="icon" style="background: var(--v4-red-bg);">&#9888;</div>
+    <h2>Diagnóstico & Recomendações</h2>
+    <span class="tag" style="background: var(--v4-red-bg); color: var(--v4-red);">Prioritário</span>
+  </div>
+
+  <!-- Problem Summary -->
+  <div class="card-grid card-grid-3" style="margin-bottom: 24px;">
+    <div class="card">
+      <div class="card-title" style="color: var(--v4-red);">&#9888; Crítico (Ação Imediata)</div>
+      <ul style="list-style: none; font-size: 13px; color: var(--v4-text-muted); line-height: 1.8;">
+        <li>&#9679; <strong>$377</strong> em keywords sem conversão</li>
+        <li>&#9679; <strong>47%</strong> Search IS perdido por rank</li>
+        <li>&#9679; <strong>92,8%</strong> do budget Search no ad group de pior CPA</li>
+        <li>&#9679; <strong>QS 2</strong> em "sprinkler repair" (limited)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color: var(--v4-amber);">&#9881; Médio (Implementar em 7 dias)</div>
+      <ul style="list-style: none; font-size: 13px; color: var(--v4-text-muted); line-height: 1.8;">
+        <li>&#9679; <strong>3 ad groups</strong> zumbis sem atividade</li>
+        <li>&#9679; PMAX limited by budget ($59/dia)</li>
+        <li>&#9679; Landing page experience "Below average"</li>
+        <li>&#9679; Ad Strength "Good" precisa de mais keywords</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color: var(--v4-blue);">&#128200; Baixo (Oportunidade)</div>
+      <ul style="list-style: none; font-size: 13px; color: var(--v4-text-muted); line-height: 1.8;">
+        <li>&#9679; Seasonal AG com CPA $24,93 — escalar</li>
+        <li>&#9679; AG3 Summer Ready — aumentar budget</li>
+        <li>&#9679; Geo 85024 CPA $51,05 — replicar</li>
+        <li>&#9679; Call bid adjustment com CPA $52,75</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Detailed Recommendations -->
+  <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px;">
+
+    <div class="rec-card high">
+      <div class="rec-priority">Prioridade 1 — Crítico</div>
+      <h4>&#9888; Pausar 5 Keywords Desperdiçando $377/mês</h4>
+      <p><strong>Ação:</strong> Pausar imediatamente: "irrigation repair" (Broad, $203,13), "irrigation repair" (Phrase, $74,08), "sprinkler repair" (Broad QS2, $47,61), "lawn sprinkler repair" ($29,73), "sprinkler repair scottsdale" ($22,52).<br><br>
+      <strong>Justificativa:</strong> Essas 5 keywords consomem 54% do budget Search sem gerar conversão. O dinheiro pode ser redirecionado para keywords que convertem.</p>
+      <div class="rec-impact">Impacto: Redução de $377/mês em desperdício + CPA Search cai de $138 para ~$79</div>
+    </div>
+
+    <div class="rec-card high">
+      <div class="rec-priority">Prioridade 2 — Crítico</div>
+      <h4>&#9888; Recuperar Search Impression Share Perdido por Rank</h4>
+      <p><strong>Ações combinadas:</strong><br>
+      1. Aumentar lances em 15-20% nas keywords com IS &lt;30% mas que têm histórico de conversão ou CTR &gt;5%<br>
+      2. Melhorar Quality Scores: revisar landing pages para "Above average" em landing page experience (atualmente "Average" ou "Below average")<br>
+      3. Inserir keywords mais relevantes nos headlines dos RSAs (Ad Strength "Good" → "Excellent")<br><br>
+      <strong>Meta:</strong> Recuperar 15-20pp de IS perdido por rank</p>
+      <div class="rec-impact">Impacto: +15-20% impressões Search → +3-5 leads/mês só com o mesmo budget</div>
+    </div>
+
+    <div class="rec-card high">
+      <div class="rec-priority">Prioridade 3 — Crítico</div>
+      <h4>&#9888; Reestruturar Precision Repair Ad Group</h4>
+      <p>92,8% do budget Search está num único ad group com CPA de $214,38. Precisa de:<br>
+      - Separar Emergency Repair vs General Service em ad groups distintos<br>
+      - Trocar Broad Match keywords problemáticas por Phrase/Exact Match<br>
+      - Criar RSA específico para emergências com "emergency service available"<br>
+      - Rever landing page de repair — experiência "Average" ou "Below average"<br>
+      - Ajustar lance para calls (CPA atual de $52,75 via bid adjustment)</p>
+      <div class="rec-impact">Impacto: CPA Precision Repair cai de $214 para ~$120-140</div>
+    </div>
+
+    <div class="rec-card medium">
+      <div class="rec-priority">Prioridade 4 — Médio</div>
+      <h4>&#9881; Escalar Seasonal + Summer Ready para Julho</h4>
+      <p><strong>Ações:</strong><br>
+      1. Aumentar budget do Seasonal AG de ~$7/dia para $15-20/dia<br>
+      2. Adicionar keywords sazonais de julho: "summer sprinkler repair", "july 4th sprinkler special"<br>
+      3. Aumentar budget do PMAX Asset Group 3 (Summer Ready)<br>
+      4. Criar variante do RSA sazonal com "July 4th Special" e "Beat the July Heat"</p>
+      <div class="rec-impact">Impacto: Potencial de 8-12 leads/mês a CPA de $25-50 via Seasonal + Summer Ready AG</div>
+    </div>
+
+    <div class="rec-card medium">
+      <div class="rec-priority">Prioridade 5 — Médio</div>
+      <h4>&#9881; Otimizar Landing Pages para QS</h4>
+      <p>Múltiplas keywords com "Below average" em Landing Page Experience e Expected CTR. Ações:<br>
+      1. URL de repair: https://conservairrigationofgreaterscottsdale.com/irrigation-repair/ — garantir que o conteúdo corresponda exatamente ao intent de reparo emergencial<br>
+      2. Adicionar proofs (call to action visível, número de telefone em destaque)<br>
+      3. Velocidade mobile — crucial para click-to-call (87,5% das chamadas)<br>
+      4. Conteúdo sazonal na home para "Summer Ready"</p>
+      <div class="rec-impact">Impacto: QS médio sobe de 3-4 para 5-7 → CPC reduz 10-20% → mais impressões</div>
+    </div>
+
+    <div class="rec-card medium">
+      <div class="rec-priority">Prioridade 6 — Médio</div>
+      <h4>&#9881; Aumentar Budget PMAX + Segmentar Geo Vencedoras</h4>
+      <p><strong>Ações:</strong><br>
+      1. Aumentar PMAX de $59/dia para $75-80/dia (atualmente limited by budget)<br>
+      2. Criar signal de audiência baseado nas geos de melhor CPA: 85024 (Phoenix, CPA $51), 85253 (Paradise Valley, CPA $75), 85085 (Phoenix, CPA $39), 85250 (Scottsdale, CPA $28)<br>
+      3. Reduzir investimento em 85016 (Phoenix, CPA $199) e 85260 (Scottsdale PMAX, $175)</p>
+      <div class="rec-impact">Impacto: PMAX CPA cai de $140 para ~$100-110 com realocação geográfica</div>
+    </div>
+
+    <div class="rec-card low">
+      <div class="rec-priority">Prioridade 7 — Oportunidade</div>
+      <h4>&#128200; Limpar Ad Groups Zumbis</h4>
+      <p>3 ad groups (Smart Irrigation, B2B, Irrigation Installation) gastaram $0 com 0 conversões. Ou:<br>
+      - Pausar e realocar budget para os grupos que funcionam<br>
+      - Ou revisar completamente: novas keywords, novos ads, landing pages dedicadas<br>
+      - B2B pode ter potencial para contratos comerciais de alto valor (mas precisa de estratégia de funil longo)</p>
+      <div class="rec-impact">Impacto: Libera energia do account para o que funciona — impacto indireto no CPA geral</div>
+    </div>
+
+    <div class="rec-card low">
+      <div class="rec-priority">Prioridade 8 — Oportunidade</div>
+      <h4>&#128200; Call Bid Adjustment — Está Funcionando, Escalar</h4>
+      <p>O bid adjustment para calls na Search está com CPA de $52,75 e 66,67% CVR (2 conv de 3 interações). Isso é 2,6x mais eficiente que a média da Search ($138,60).<br><br>
+      <strong>Ações:</strong> Aumentar o bid adjustment de calls. Criar call-only ads para mobile. Garantir que a landing page de mobile tenha o número com destaque.</p>
+      <div class="rec-impact">Impacto: Escalar o canal mais eficiente — cada call qualificada a $52,75 vs $138 da Search</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ 8. PROJEÇÕES ============ -->
+<div class="section">
+  <div class="section-header">
+    <div class="icon" style="background: rgba(255,255,255,0.1);">&#128202;</div>
+    <h2>Projeção — Julho 2026</h2>
+    <span class="tag" style="background: var(--v4-green-bg); color: var(--v4-green);">Otimizado</span>
+  </div>
+
+  <div class="proj-box">
+    <div style="font-size: 14px; font-weight: 600; margin-bottom: 4px;">Cenário Pós-Otimizações</div>
+    <p style="font-size: 13px; color: var(--v4-text-muted); margin-bottom: 20px;">
+      Considerando: pausa de $377 em keywords sem conversão + Seasonal escalado + revisão de lances + ajuste geográfico + LP improvements
+    </p>
+    <div class="proj-grid">
+      <div class="proj-item">
+        <div class="proj-label">CPA Search (atual)</div>
+        <div class="proj-value red">$138.60</div>
+        <div class="proj-sub">Com todas as otimizações</div>
+      </div>
+      <div class="proj-item">
+        <div class="proj-label">CPA Search (projetado)</div>
+        <div class="proj-value green">$75–85</div>
+        <div class="proj-sub">Redução de 39-46%</div>
+      </div>
+      <div class="proj-item">
+        <div class="proj-label">CPA PMAX (atual)</div>
+        <div class="proj-value red">$140.07</div>
+        <div class="proj-sub">Com realocação geográfica</div>
+      </div>
+      <div class="proj-item">
+        <div class="proj-label">CPA PMAX (projetado)</div>
+        <div class="proj-value green">$95–110</div>
+        <div class="proj-sub">Redução de 21-32%</div>
+      </div>
+      <div class="proj-item">
+        <div class="proj-label">Leads Search (mensal)</div>
+        <div class="proj-value blue">5 → 8–10</div>
+        <div class="proj-sub">+60-100% com mesmo budget</div>
+      </div>
+      <div class="proj-item">
+        <div class="proj-label">Leads PMAX (mensal)</div>
+        <div class="proj-value blue">13 → 16–19</div>
+        <div class="proj-sub">+23-46% com budget maior</div>
+      </div>
+      <div class="proj-item">
+        <div class="proj-label">Search IS</div>
+        <div class="proj-value" style="color: var(--v4-amber);">21.9% → 32–38%</div>
+        <div class="proj-sub">Recuperado por rank + budget</div>
+      </div>
+      <div class="proj-item">
+        <div class="proj-label">Total Leads Projetado</div>
+        <div class="proj-value green">24–29</div>
+        <div class="proj-sub">vs 18 atuais (+33-61%)</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+    <div class="card">
+      <div class="card-title">Orçamento Recomendado — Julho</div>
+      <div class="metric-row">
+        <span class="ml">Search (atual $27/dia)</span>
+        <span class="mr" style="color: var(--v4-amber);">Manter $27/dia</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">PMAX (atual $59/dia)</span>
+        <span class="mr" style="color: var(--v4-green);">Aumentar para $75-80/dia</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Total Diário</span>
+        <span class="mr"><strong>$102-107/dia</strong></span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Total Mensal Estimado</span>
+        <span class="mr"><strong>$3,060-3,210</strong></span>
+      </div>
+      <div style="margin-top: 8px; font-size: 12px; color: var(--v4-text-dim);">+13-19% sobre o budget atual de junho (~$2,705)</div>
+    </div>
+    <div class="card">
+      <div class="card-title">ROAS / CPL Projetado</div>
+      <div class="metric-row">
+        <span class="ml">CPA Combinado Projetado</span>
+        <span class="mr" style="color: var(--v4-green);">$85-105</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">vs Junho (combinado)</span>
+        <span class="mr" style="color: var(--v4-green);">$139.66 → ~$95 (melhoria de 32%)</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Leads Mensais Estimados</span>
+        <span class="mr" style="color: var(--v4-green);">24-29 leads</span>
+      </div>
+      <div class="metric-row">
+        <span class="ml">Custo por Call Qualificada</span>
+        <span class="mr" style="color: var(--v4-amber);">~$90-110</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight green" style="margin-top: 16px;">
+    <div class="i-icon">&#128200;</div>
+    <div class="i-text">
+      <strong>Resumo da Projeção:</strong> Com a pausa de $377 em keywords sem conversão, reestruturação do Precision Repair AG, escalada do Seasonal AG ($24,93 CPA), ajuste geográfico e aumento do PMAX, é realista projetar <strong>24-29 leads em Julho a um CPA combinado de $85-105</strong> — uma melhoria de 32% vs o CPA combinado de Junho ($139,66) e 33-61% mais leads.
+    </div>
+  </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<div class="footer">
+  <strong>Conserva Irrigation</strong> — Google Ads Performance Report &bull; June 2026 &bull; Generated Jul 1, 2026<br>
+  Prepared by <strong>Peretto &amp; Co.</strong> &bull; V4 Media Buying &bull; Data from Google Ads CSV Export
+</div>
+
+</div>
+</body>
+</html>

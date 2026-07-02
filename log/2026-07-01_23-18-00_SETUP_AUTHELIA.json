@@ -1,0 +1,77 @@
+{
+  "session": {
+    "date": "2026-07-01",
+    "title": "Setup Authelia para OpenCode — Deploy simplificado",
+    "user": "Marcos Luciano (Tech Lead)"
+  },
+  "context": {
+    "goal": "Deploy Authelia como tela de login para OpenCode com isolamento de sessão por usuário, governança LiteLLM e seleção de modelos bloqueada.",
+    "constraints": [
+      "Usuário não escolhe modelos — LiteLLM controla quais modelos cada virtual key pode acessar",
+      "Deploy simples: imagem Docker única, compose no Dokploy",
+      "Sessões isoladas por usuário (containers opencode-web separados, workspaces separados)",
+      "Skills/agentes/repo compartilhados, conversas privadas por usuário",
+      "4 usuários: marcos.luciano (admin), fhelipe.aranha (coord), csm.2, csm.3",
+      "Supabase disponível mas não usado ainda",
+      "Dokploy com Traefik, domínio fvmarketing.com.br",
+      "Webhook endpoint: http://2.25.148.214:3000/api/deploy/compose/kzFVYo6tQOuOGEgmuxYuw"
+    ],
+    "architecture_decisions": [
+      "SQLite em vez de PostgreSQL+Redis (mais simples, sem containers extras)",
+      "Dockerfile builda em cima de authelia/authelia:latest e copia configs (sem volumes)",
+      "Sem env vars — configs fixas na imagem para simplicidade inicial",
+      "Folders: projetos/infraestrutura/authelia/"
+    ]
+  },
+  "progress": {
+    "done": [
+      "4 hashes Argon2 geradas para todos os usuários",
+      "configuration.yml simplificado (SQLite, sem Postgres/Redis)",
+      "users_database.yml com 4 usuários e hashes reais",
+      "Pasta projetos/infraestrutura/authelia/ limpa com 4 arquivos prontos",
+      "Arquivos antigos removidos (compose.authelia.yml, config/)"
+    ],
+    "blocked": [
+      "DNS auth.fvmarketing.com.br NÃO está apontando para a VPS — deploy via sslip.io ou ajuste de domínio pendente",
+      "Authelia ainda não foi deployado"
+    ],
+    "next_steps": [
+      "Deploy do Authelia no Dokploy (Git source apontando pro repo, ou upload dos arquivos)",
+      "Testar login na URL gerada pelo Dokploy (sslip.io ou auth.fvmarketing.com.br)",
+      "Depois do Authelia funcionar: deploy do opencode-login (proxy Node.js)",
+      "Criar containers OpenCode individuais por usuário",
+      "Configurar LiteLLM virtual keys por usuário e atualizar users.json",
+      "Adicionar middleware Traefik forward-auth pra proteger opencode-login com Authelia"
+    ],
+    "passwords": {
+      "marcos.luciano": {
+        "password": "P3r3tt0@Marcostech",
+        "hash": "$argon2id$v=19$m=65536,t=3,p=4$NLhKHecej4BW765POOwD1g$5e3S4ieTNIrcaOHtPrqGXzVSlAJkvk+U3qKMbiwIhks"
+      },
+      "fhelipe.aranha": {
+        "password": "(não definida)",
+        "hash": "$argon2id$v=19$m=65536,t=3,p=4$RpphIY6pDT0rNuMjcJvjKg$4E94yyK0ICS3XENpgQnzsnWkhML2aYEgQmbgLz4YYjc"
+      },
+      "csm.2": {
+        "password": "(não definida)",
+        "hash": "$argon2id$v=19$m=65536,t=3,p=4$cT9wpQNn3NRcwfXnDSSwlg$dyDRzELzj1OR5IseFmF//hWKF92jsNCitynX0o+nmmc"
+      },
+      "csm.3": {
+        "password": "(não definida)",
+        "hash": "$argon2id$v=19$m=65536,t=3,p=4$pkWuNDteWAssoTHaMVS1Wg$iKOPsB2960ZVGi7RgQc+Y/eW6rUloFP1/i/GpJgwNm8"
+      }
+    }
+  },
+  "key_files": [
+    "projetos/infraestrutura/authelia/Dockerfile",
+    "projetos/infraestrutura/authelia/configuration.yml",
+    "projetos/infraestrutura/authelia/users_database.yml",
+    "projetos/infraestrutura/authelia/docker-compose.yml",
+    "projetos/infraestrutura/opencode-login/server.js",
+    "projetos/infraestrutura/opencode-login/users.json"
+  ],
+  "user_requests_for_next_session": [
+    "Instanciar usuários dentro do código do Dokploy para separar as sessões deles",
+    "Continuar deploy do Authelia + opencode-login + containers individuais"
+  ]
+}

@@ -1,0 +1,4239 @@
+{
+  "name": "Genics - Gerenciador MQL/Handoff + Follow-up 30min",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Gerenciador MQL / Handoff\nInvocado via Execute Workflow pelo fluxo principal logo após a resposta da Vitória.\nRecebe: sessionID, telefone, nome.\n\nContrato: o registro em genics.leads_mql JÁ deve existir quando este workflow roda (criado pelo nó de entrada do workflow principal).",
+        "height": 2052,
+        "width": 4144,
+        "color": 4
+      },
+      "id": "5aad630d-bce6-4747-b9c1-5eb0794da5e1",
+      "name": "Sticky Gerenciador",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Follow-up 20 minutos\nSchedule a cada 5 minutos. Dispara 'manhã ou tarde?' para leads inativos há 20min, ainda não qualificados, dentro do horário comercial (seg-sex, 8h-19h).",
+        "height": 700,
+        "width": 2800,
+        "color": 3
+      },
+      "id": "61a52b72-1ca9-4bab-bc3a-ff6507082793",
+      "name": "Sticky Follow20",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        2112
+      ]
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "id": "9aee806e-bbba-471f-a116-17e3380fe33d",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        16,
+        816
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c0000001-0000-0000-0000-000000000001",
+              "name": "sessionID",
+              "type": "string",
+              "value": "={{ $json.sessionID }}"
+            },
+            {
+              "id": "c0000002-0000-0000-0000-000000000002",
+              "name": "telefoneCliente",
+              "type": "string",
+              "value": "={{ $json.telefone }}"
+            },
+            {
+              "id": "c0000003-0000-0000-0000-000000000003",
+              "name": "nomeCliente",
+              "type": "string",
+              "value": "={{ $json.nome }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9fdc4c0c-909e-4e22-8663-8fa3cd3b72c2",
+      "name": "camposIniciais",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        816
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT message FROM public.n8n_chat_histories WHERE session_id = '{{ $json.sessionID }}' ORDER BY id ASC LIMIT 40;",
+        "options": {}
+      },
+      "id": "09d4614e-d834-4ef3-8a58-62b9c17c3e6a",
+      "name": "Buscar Histórico",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        464,
+        816
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "SCCSMEbekWwbQPQM",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows = $input.all();\n\nconst lines = rows.map(r => {\n  const m = r.json.message;\n  if (!m) return null;\n\n  if (typeof m === 'string') {\n    return `Cliente: ${m}`;\n  }\n\n  if (typeof m === 'object') {\n    const type = m.type || m.role;\n    const content = (m.data && m.data.content) || m.content || '';\n    if (!content) return null;\n    if (type === 'human') return `Cliente: ${content}`;\n    if (type === 'ai') return `Vitória: ${content}`;\n  }\n\n  return null;\n}).filter(Boolean);\n\nreturn [{ json: { formattedHistory: lines.join('\\n') } }];"
+      },
+      "id": "d210ce8c-1fce-44fe-94ed-6c4431222d0b",
+      "name": "Formatar Histórico",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        688,
+        816
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Histórico da Conversa:\n{{ $json.formattedHistory }}\n\nDados do Lead:\nNome: {{ $('camposIniciais').first().json.nomeCliente }}\nTelefone: {{ $('camposIniciais').first().json.telefoneCliente }}",
+        "options": {
+          "systemMessage": "Você é um analista de dados rigoroso e cético, especialista em qualificação de leads de Reprodução Humana Assistida para a Clínica Genics. Sua única tarefa é analisar a conversa (fornecida como diálogo com Cliente: e Vitória:) e determinar, SEM FAZER SUPOSIÇÕES, a classificação do lead.\n\nREGRA FUNDAMENTAL:\nAo verificar cada critério, considere APENAS informações contidas nas linhas que começam com Cliente:. Informações mencionadas apenas nas linhas Vitória: NÃO SERVEM como confirmação de critério.\n\nSEIS CLASSIFICAÇÕES:\n\n1) HANDOFF - destino: Funil Recepção\nLead é HANDOFF em UM dos casos:\n  - Paciente atual com demanda administrativa (NF, reagendamento, resultado, segunda via).\n  - Médico solicitando parceria/Openlab.\n  - Solicita agendamento IMEDIATO e aceita encaminhamento humano.\n  - Urgência médica crítica.\n\n2) DOADORA - destino: Funil Ovodoação Doadora (atendimento Gabi)\nLead é DOADORA SOMENTE quando o Cliente expressou intenção de DOAR óvulos E confirmou data_nascimento.\nSe a intenção de doação existe mas data_nascimento ainda não foi informada pelo Cliente: classificar como nao_qualificado.\n\n3) RECEPTORA - destino: Funil Procedimentos, etapa Cris\nLead é RECEPTORA quando o Cliente expressou interesse em RECEBER óvulos de doadora (Ovodoação Receptora).\nNão exige número mínimo de variáveis além da intenção declarada.\n\n4) OUTROS_PROCEDIMENTOS - destino: Funil Procedimentos, etapa Qualificação Comercial (Tati e Diana)\nLead é OUTROS_PROCEDIMENTOS quando escolheu realizar um procedimento (FIV, Congelamento de Óvulos, ou Outro) dentro do menu de procedimentos, mas NÃO atinge os critérios de MQL (menos de 3 variáveis confirmadas).\n\n5) MQL - destino: Funil Vendas, etapa Qualificação\nLead é MQL quando o Cliente confirmou EXPLICITAMENTE pelo menos 3 das variáveis abaixo:\n  a) Tratamento de Interesse: FIV, Congelamento de Óvulos, Criopreservação de Sêmen, Investigação de Infertilidade, ICSI, PGT, ou equivalente direto.\n  b) Possui Médico Assistente: sim ou não de forma explícita.\n  c) Urgência: idade, tempo de tentativa, ou contexto urgente.\n  d) Turno Preferido: manhã, tarde, ou equivalente.\n\n6) NÃO QUALIFICADO - qualquer caso que não atenda as anteriores.\n   Ao classificar como nao_qualificado, defina motivo_desqualificacao: \"fora_icp\" (não atende perfil/momento/ICP), \"sem_interesse\" (apenas curioso, sem intenção real) ou \"contato_invalido\" (número/dados falsos). Nas demais classificações, motivo_desqualificacao = null.\n\nREGRAS DE DECISÃO (ordem de precedência):\n1. HANDOFF tem precedência sobre todas.\n2. DOADORA: exige intenção de doação + data_nascimento confirmada. Sem data_nascimento = nao_qualificado.\n3. RECEPTORA tem precedência sobre MQL, OUTROS_PROCEDIMENTOS e NÃO QUALIFICADO.\n4. MQL exige 3 das 4 variáveis confirmadas.\n5. OUTROS_PROCEDIMENTOS: interesse em procedimento (FIV/Congelamento/Outro) confirmado mas menos de 3 variáveis MQL.\n6. Na dúvida: nao_qualificado.\n- Não assuma implícitos.\n\nEXTRAÇÃO:\n- Use APENAS o que o Cliente disse.\n- Nome e telefone: dados do WhatsApp.\n- Use Não informado para qualquer variável não confirmada.\n\nFORMATO OBRIGATÓRIO - JSON puro, sem markdown:\n\n{\n  \"classification\": \"mql\" | \"handoff\" | \"doadora\" | \"receptora\" | \"outros_procedimentos\" | \"nao_qualificado\",\n  \"reason\": \"string objetiva\",\n  \"motivo_desqualificacao\": \"fora_icp\" | \"sem_interesse\" | \"contato_invalido\" | null,\n  \"lead_data\": {\n    \"name\": \"string\",\n    \"phone\": \"string\",\n    \"tratamento_interesse\": \"string\",\n    \"possui_medico\": \"string\",\n    \"urgencia\": \"string\",\n    \"turno_preferido\": \"string\",\n    \"handoff_motivo\": \"string\",\n    \"data_nascimento\": \"string\",\n    \"possui_exames\": \"string\"\n  }\n}\n\nEXEMPLO OUTROS_PROCEDIMENTOS:\nCliente: Quero fazer FIV\nCliente: Não tenho médico ainda\n{\n  \"classification\": \"outros_procedimentos\",\n  \"reason\": \"Interesse em FIV confirmado mas apenas 1 variável MQL. Encaminhar para Qualificação Comercial.\",\n  \"lead_data\": {\n    \"name\": \"...\", \"phone\": \"...\",\n    \"tratamento_interesse\": \"FIV\",\n    \"possui_medico\": \"Não\",\n    \"urgencia\": \"Não informado\",\n    \"turno_preferido\": \"Não informado\",\n    \"handoff_motivo\": \"Não informado\",\n    \"data_nascimento\": \"Não informado\",\n    \"possui_exames\": \"Não informado\"\n  }\n}\n\nEXEMPLO MQL:\nCliente: Quero saber sobre FIV\nCliente: Tenho 36 anos, tentando há 1 ano e meio\nCliente: Não tenho médico ainda\nCliente: Prefiro pela manhã\n{\n  \"classification\": \"mql\",\n  \"reason\": \"4 variáveis confirmadas.\",\n  \"lead_data\": {\n    \"name\": \"...\", \"phone\": \"...\",\n    \"tratamento_interesse\": \"FIV\",\n    \"possui_medico\": \"Não\",\n    \"urgencia\": \"36 anos, 1 ano e meio\",\n    \"turno_preferido\": \"Manhã\",\n    \"handoff_motivo\": \"Não informado\",\n    \"data_nascimento\": \"Não informado\",\n    \"possui_exames\": \"Não informado\"\n  }\n}\n\nEXEMPLO DOADORA COMPLETA:\nCliente: Quero ser doadora de óvulos\nCliente: Nasci em 15/03/1998\nCliente: Tenho exames recentes sim\n{\n  \"classification\": \"doadora\",\n  \"reason\": \"Intenção de doação confirmada com data_nascimento informada.\",\n  \"lead_data\": {\n    \"name\": \"...\", \"phone\": \"...\",\n    \"tratamento_interesse\": \"Doação de óvulos\",\n    \"possui_medico\": \"Não informado\",\n    \"urgencia\": \"Não informado\",\n    \"turno_preferido\": \"Não informado\",\n    \"handoff_motivo\": \"Não informado\",\n    \"data_nascimento\": \"15/03/1998\",\n    \"possui_exames\": \"Sim\"\n  }\n}\n\nEXEMPLO DOADORA SEM DATA:\nCliente: Quero ser doadora de óvulos\n{\n  \"classification\": \"nao_qualificado\",\n  \"reason\": \"Intenção de doação confirmada mas data_nascimento não informada.\",\n  \"lead_data\": {\n    \"name\": \"...\", \"phone\": \"...\",\n    \"tratamento_interesse\": \"Doação de óvulos\",\n    \"possui_medico\": \"Não informado\",\n    \"urgencia\": \"Não informado\",\n    \"turno_preferido\": \"Não informado\",\n    \"handoff_motivo\": \"Não informado\",\n    \"data_nascimento\": \"Não informado\",\n    \"possui_exames\": \"Não informado\"\n  }\n}\n\nEXEMPLO RECEPTORA:\nCliente: Quero receber óvulos de doadora\n{\n  \"classification\": \"receptora\",\n  \"reason\": \"Cliente expressou interesse em receber óvulos de doadora.\",\n  \"lead_data\": {\n    \"name\": \"...\", \"phone\": \"...\",\n    \"tratamento_interesse\": \"Ovodoação Receptora\",\n    \"possui_medico\": \"Não informado\",\n    \"urgencia\": \"Não informado\",\n    \"turno_preferido\": \"Não informado\",\n    \"handoff_motivo\": \"Não informado\",\n    \"data_nascimento\": \"Não informado\",\n    \"possui_exames\": \"Não informado\"\n  }\n}\n\nEXEMPLO HANDOFF:\nCliente: Sou paciente, preciso remarcar meu retorno\n{\n  \"classification\": \"handoff\",\n  \"reason\": \"Paciente atual solicitando reagendamento.\",\n  \"lead_data\": {\n    \"name\": \"...\", \"phone\": \"...\",\n    \"tratamento_interesse\": \"Não informado\",\n    \"possui_medico\": \"Não informado\",\n    \"urgencia\": \"Não informado\",\n    \"turno_preferido\": \"Não informado\",\n    \"handoff_motivo\": \"Paciente existente solicitando reagendamento\",\n    \"data_nascimento\": \"Não informado\",\n    \"possui_exames\": \"Não informado\"\n  }\n}\n\nEXEMPLO NÃO QUALIFICADO:\nCliente: Quero saber sobre FIV\nCliente: Obrigado\n{\n  \"classification\": \"nao_qualificado\",\n  \"reason\": \"Apenas tratamento confirmado. Faltam urgência, médico e turno.\",\n  \"lead_data\": {\n    \"name\": \"...\", \"phone\": \"...\",\n    \"tratamento_interesse\": \"FIV\",\n    \"possui_medico\": \"Não informado\",\n    \"urgencia\": \"Não informado\",\n    \"turno_preferido\": \"Não informado\",\n    \"handoff_motivo\": \"Não informado\",\n    \"data_nascimento\": \"Não informado\",\n    \"possui_exames\": \"Não informado\"\n  }\n}"
+        }
+      },
+      "id": "9bab577e-3e62-4dcd-af56-1ced4e27dcde",
+      "name": "Analisa Classificação",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        912,
+        816
+      ]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o",
+        "options": {
+          "temperature": 0
+        }
+      },
+      "id": "b3052cac-4b65-48d0-88a2-0dbb566436ec",
+      "name": "OpenAI Analista",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        976,
+        1040
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "0gfrMoNokOXtnvLg",
+          "name": "OpenAi Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $input.first().json.output;\nlet jsonStr = null;\ntry {\n  const s = raw.indexOf('{');\n  const e = raw.lastIndexOf('}');\n  if (s === -1 || e === -1) throw new Error('JSON não encontrado');\n  jsonStr = raw.substring(s, e + 1);\n  const p = JSON.parse(jsonStr);\n  return [{\n    json: {\n      classification: p.classification,\n      reason: p.reason,\n      motivo_desqualificacao: p.motivo_desqualificacao || 'fora_icp',\n      name: p.lead_data.name,\n      phone: p.lead_data.phone,\n      tratamento_interesse: p.lead_data.tratamento_interesse,\n      possui_medico: p.lead_data.possui_medico,\n      urgencia: p.lead_data.urgencia,\n      turno_preferido: p.lead_data.turno_preferido,\n      handoff_motivo: p.lead_data.handoff_motivo,\n      data_nascimento: p.lead_data.data_nascimento || 'Não informado',\n      possui_exames: p.lead_data.possui_exames || 'Não informado'\n    }\n  }];\n} catch (err) {\n  return [{ json: { error: err.message, rawOutput: raw, extracted: jsonStr } }];\n}"
+      },
+      "id": "84bacd46-16c2-4ac0-8ee8-7c230bbca751",
+      "name": "Parse JSON",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1264,
+        816
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d0000001",
+                    "leftValue": "={{ $('Parse JSON').item.json.classification }}",
+                    "rightValue": "mql",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "MQL"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d0000002",
+                    "leftValue": "={{ $('Parse JSON').item.json.classification }}",
+                    "rightValue": "handoff",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Handoff"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d0000003",
+                    "leftValue": "={{ $('Parse JSON').item.json.classification }}",
+                    "rightValue": "nao_qualificado",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "NaoQualificado"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d0000004",
+                    "leftValue": "={{ $('Parse JSON').item.json.classification }}",
+                    "rightValue": "doadora",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Doadora"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d0000005",
+                    "leftValue": "={{ $('Parse JSON').item.json.classification }}",
+                    "rightValue": "receptora",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Receptora"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d0000006",
+                    "leftValue": "={{ $('Parse JSON').item.json.classification }}",
+                    "rightValue": "outros_procedimentos",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "OutrosProcedimentos"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "47e2b91c-9425-4cc7-b9c7-3196031e6044",
+      "name": "Switch Classificação",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        2160,
+        752
+      ]
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "schema": "genics",
+        "operation": "getAll",
+        "tableId": "leads_mql",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "session_id",
+              "condition": "eq",
+              "keyValue": "={{ $('camposIniciais').first().json.sessionID }}"
+            }
+          ]
+        }
+      },
+      "id": "cc2ec357-b8d2-4d41-93eb-e778c3091ffb",
+      "name": "Get Lead Base",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1488,
+        816
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c6e14a77-ea01-4021-81d8-039f21160e2b",
+              "leftValue": "={{ $json.session_id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e22e183d-f2fa-4e39-91af-72a064020656",
+      "name": "Lead base existe?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1712,
+        816
+      ]
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "schema": "genics",
+        "tableId": "leads_mql",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "session_id",
+              "fieldValue": "={{ $('camposIniciais').first().json.sessionID }}"
+            },
+            {
+              "fieldId": "telefone",
+              "fieldValue": "={{ $('camposIniciais').first().json.telefoneCliente }}"
+            },
+            {
+              "fieldId": "nome",
+              "fieldValue": "={{ $('camposIniciais').first().json.nomeCliente }}"
+            },
+            {
+              "fieldId": "last_interaction_at",
+              "fieldValue": "={{ $now.toISO() }}"
+            },
+            {
+              "fieldId": "followup_20min_enabled",
+              "fieldValue": "true"
+            },
+            {
+              "fieldId": "followup_20min_sent",
+              "fieldValue": "false"
+            },
+            {
+              "fieldId": "mql",
+              "fieldValue": "false"
+            },
+            {
+              "fieldId": "handoff",
+              "fieldValue": "false"
+            },
+            {
+              "fieldId": "encerrado",
+              "fieldValue": "false"
+            },
+            {
+              "fieldId": "lead_created_in_kommo",
+              "fieldValue": "false"
+            }
+          ]
+        }
+      },
+      "id": "5717db20-ee4b-4ca8-b680-5ca02b63ac83",
+      "name": "Create Lead Base",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1936,
+        880
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "schema": "genics",
+        "operation": "update",
+        "tableId": "leads_mql",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "session_id",
+              "condition": "eq",
+              "keyValue": "={{ $('camposIniciais').first().json.sessionID }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "classification",
+              "fieldValue": "nao_qualificado"
+            },
+            {
+              "fieldId": "tratamento_interesse",
+              "fieldValue": "={{ $('Parse JSON').first().json.tratamento_interesse }}"
+            },
+            {
+              "fieldId": "possui_medico",
+              "fieldValue": "={{ $('Parse JSON').first().json.possui_medico }}"
+            },
+            {
+              "fieldId": "urgencia",
+              "fieldValue": "={{ $('Parse JSON').first().json.urgencia }}"
+            },
+            {
+              "fieldId": "turno_preferido",
+              "fieldValue": "={{ $('Parse JSON').first().json.turno_preferido }}"
+            },
+            {
+              "fieldId": "qualification_reason",
+              "fieldValue": "={{ $('Parse JSON').first().json.reason }}"
+            }
+          ]
+        }
+      },
+      "id": "ff8d86c7-6ec7-477a-bbb0-4de5c1563cec",
+      "name": "Update Parcial (NaoQualificado)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2384,
+        720
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "schema": "genics",
+        "operation": "getAll",
+        "tableId": "leads_mql",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "session_id",
+              "condition": "eq",
+              "keyValue": "={{ $('camposIniciais').first().json.sessionID }}"
+            }
+          ]
+        }
+      },
+      "id": "a220dcef-7d58-41b8-8c69-f0b6a79eb6da",
+      "name": "Get Lead MQL",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2384,
+        144
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "d0000010",
+              "leftValue": "={{ $json.lead_created_in_kommo }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8f3ec6bd-f2d6-4777-9c28-743735f6d574",
+      "name": "Ainda não criou no Kommo? (MQL)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2608,
+        144
+      ]
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "schema": "genics",
+        "operation": "update",
+        "tableId": "leads_mql",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "session_id",
+              "condition": "eq",
+              "keyValue": "={{ $('camposIniciais').first().json.sessionID }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "lead_created_in_kommo",
+              "fieldValue": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "172aadd7-8821-4c83-b5ba-3e3899f6f75f",
+      "name": "Lock Lead (evita duplicação)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2700,
+        144
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "contacts",
+        "filter": {
+          "query": "={{ $('camposIniciais').first().json.telefoneCliente }}"
+        },
+        "options": {}
+      },
+      "id": "3c78c5db-487b-4f6d-af0a-a795e6598001",
+      "name": "Buscar Contato MQL",
+      "type": "n8n-nodes-kommo.kommo",
+      "typeVersion": 1,
+      "position": [
+        2832,
+        48
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "or",
+          "conditions": [
+            {
+              "id": "d0000011",
+              "leftValue": "={{ $json._embedded.contacts.length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "87490006-a4fb-4c28-bc6a-8e26636f0fba",
+      "name": "Contato existe? (MQL)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3056,
+        48
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "contacts",
+        "operation": "createContacts",
+        "collection": {
+          "contact": [
+            {
+              "name": "={{ $('Parse JSON').first().json.name }}",
+              "custom_fields_values": {
+                "custom_field": [
+                  {
+                    "data": "{\"id\":393676,\"type\":\"multitext\"}",
+                    "value": "={{ $('camposIniciais').first().json.telefoneCliente }}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "id": "b33e3f3f-7877-4a3e-82b4-89d9462c11a1",
+      "name": "Criar Contato MQL",
+      "type": "n8n-nodes-kommo.kommo",
+      "typeVersion": 1,
+      "position": [
+        3280,
+        160
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "leads",
+        "operation": "createLeads",
+        "collection": {
+          "lead": [
+            {
+              "name": "={{ $('Parse JSON').first().json.name }}",
+              "pipeline_id": 13236792,
+              "status_id": 102068216,
+              "loss_reason_id": "={{ null }}",
+              "custom_fields_values": {
+                "custom_field": [
+                  {
+                    "data": "{\"id\":3029301,\"type\":\"text\"}",
+                    "value": "={{ $('Parse JSON').first().json.tratamento_interesse }}"
+                  },
+                  {
+                    "data": "{\"id\":3029303,\"type\":\"text\"}",
+                    "value": "={{ $('Parse JSON').first().json.possui_medico }}"
+                  },
+                  {
+                    "data": "{\"id\":3029305,\"type\":\"text\"}",
+                    "value": "={{ $('Parse JSON').first().json.urgencia }}"
+                  },
+                  {
+                    "data": "{\"id\":3029307,\"type\":\"text\"}",
+                    "value": "={{ $('Parse JSON').first().json.turno_preferido }}"
+                  }
+                ]
+              },
+              "_embedded": {
+                "tags": [
+                  {
+                    "id": [
+                      262603
+                    ]
+                  }
+                ],
+                "contacts": [
+                  {
+                    "id": {
+                      "contact": [
+                        {
+                          "id": "={{ $json._embedded.contacts[0].id || $('Buscar Contato MQL').first().json._embedded.contacts[0].id }}"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "id": "2f548114-0c12-4b16-8416-6da2b2c4f660",
+      "name": "Criar Lead MQL (Vendas-Qualificação)",
+      "type": "n8n-nodes-kommo.kommo",
+      "typeVersion": 1,
+      "position": [
+        3504,
+        48
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "schema": "genics",
+        "operation": "update",
+        "tableId": "leads_mql",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "session_id",
+              "condition": "eq",
+              "keyValue": "={{ $('camposIniciais').first().json.sessionID }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "classification",
+              "fieldValue": "mql"
+            },
+            {
+              "fieldId": "tratamento_interesse",
+              "fieldValue": "={{ $('Parse JSON').first().json.tratamento_interesse }}"
+            },
+            {
+              "fieldId": "possui_medico",
+              "fieldValue": "={{ $('Parse JSON').first().json.possui_medico }}"
+            },
+            {
+              "fieldId": "urgencia",
+              "fieldValue": "={{ $('Parse JSON').first().json.urgencia }}"
+            },
+            {
+              "fieldId": "turno_preferido",
+              "fieldValue": "={{ $('Parse JSON').first().json.turno_preferido }}"
+            },
+            {
+              "fieldId": "qualification_reason",
+              "fieldValue": "={{ $('Parse JSON').first().json.reason }}"
+            },
+            {
+              "fieldId": "mql",
+              "fieldValue": "true"
+            },
+            {
+              "fieldId": "handoff",
+              "fieldValue": "false"
+            },
+            {
+              "fieldId": "lead_created_in_kommo",
+              "fieldValue": "true"
+            },
+            {
+              "fieldId": "followup_20min_enabled",
+              "fieldValue": "false"
+            },
+            {
+              "fieldId": "stop_reason",
+              "fieldValue": "mql"
+            },
+            {
+              "fieldId": "kommo_lead_id",
+              "fieldValue": "={{ $('Criar Lead MQL (Vendas-Qualificação)').first().json._embedded.leads[0].id }}"
+            }
+          ]
+        }
+      },
+      "id": "890ea8e1-ee97-4c2a-a1ba-6063d027a81a",
+      "name": "Update Lead Supabase (MQL)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3952,
+        48
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "leads",
+        "operation": "updateLeads",
+        "collection": {
+          "lead": [
+            {
+              "id": "={{ $('Get Lead MQL').first().json.kommo_lead_id }}",
+              "pipeline_id": "={{ null }}",
+              "status_id": "={{ null }}",
+              "custom_fields_values": {
+                "custom_field": [
+                  {
+                    "data": "{\"id\":3029301,\"type\":\"text\"}",
+                    "value": "={{ $('Parse JSON').first().json.tratamento_interesse }}"
+                  },
+                  {
+                    "data": "{\"id\":3029303,\"type\":\"text\"}",
+                    "value": "={{ $('Parse JSON').first().json.possui_medico }}"
+                  },
+                  {
+                    "data": "{\"id\":3029305,\"type\":\"text\"}",
+                    "value": "={{ $('Parse JSON').first().json.urgencia }}"
+                  },
+                  {
+                    "data": "{\"id\":3029307,\"type\":\"text\"}",
+                    "value": "={{ $('Parse JSON').first().json.turno_preferido }}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "id": "cefd2060-5aa1-4ccd-b2b4-aed07b2600e0",
+      "name": "Update Lead Kommo (MQL)",
+      "type": "n8n-nodes-kommo.kommo",
+      "typeVersion": 1,
+      "position": [
+        2832,
+        240
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "schema": "genics",
+        "operation": "update",
+        "tableId": "leads_mql",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "session_id",
+              "condition": "eq",
+              "keyValue": "={{ $('camposIniciais').first().json.sessionID }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "tratamento_interesse",
+              "fieldValue": "={{ $('Parse JSON').first().json.tratamento_interesse }}"
+            },
+            {
+              "fieldId": "possui_medico",
+              "fieldValue": "={{ $('Parse JSON').first().json.possui_medico }}"
+            },
+            {
+              "fieldId": "urgencia",
+              "fieldValue": "={{ $('Parse JSON').first().json.urgencia }}"
+            },
+            {
+              "fieldId": "turno_preferido",
+              "fieldValue": "={{ $('Parse JSON').first().json.turno_preferido }}"
+            },
+            {
+              "fieldId": "qualification_reason",
+              "fieldValue": "={{ $('Parse JSON').first().json.reason }}"
+            },
+            {
+              "fieldId": "mql",
+              "fieldValue": "true"
+            },
+            {
+              "fieldId": "stop_reason",
+              "fieldValue": "mql"
+            },
+            {
+              "fieldId": "followup_20min_enabled",
+              "fieldValue": "false"
+            }
+          ]
+        }
+      },
+      "id": "669ca2c6-cdbd-4ea4-86bb-887a25eff8ed",
+      "name": "Update Supabase Existente (MQL)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3056,
+        240
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "schema": "genics",
+        "operation": "getAll",
+        "tableId": "leads_mql",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "session_id",
+              "condition": "eq",
+              "keyValue": "={{ $('camposIniciais').first().json.sessionID }}"
+            }
+          ]
+        }
+      },
+      "id": "59dafdcf-106e-4709-8e84-1146abd72ba7",
+      "name": "Get Lead Handoff",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2384,
+        528
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "d0000012",
+              "leftValue": "={{ $json.lead_created_in_kommo }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1e06e402-04ae-4c06-8e77-690a455d1b85",
+      "name": "Ainda não criou no Kommo? (Handoff)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2608,
+        528
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "contacts",
+        "filter": {
+          "query": "={{ $('camposIniciais').first().json.telefoneCliente }}"
+        },
+        "options": {}
+      },
+      "id": "2d7e38ae-be5c-4d71-a3d5-3d85cf99386e",
+      "name": "Buscar Contato Handoff",
+      "type": "n8n-nodes-kommo.kommo",
+      "typeVersion": 1,
+      "position": [
+        2832,
+        432
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "or",
+          "conditions": [
+            {
+              "id": "d0000013",
+              "leftValue": "={{ $json._embedded.contacts.length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2f1c4880-9bc4-428f-89de-4cd388fc69ba",
+      "name": "Contato existe? (Handoff)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3056,
+        432
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "contacts",
+        "operation": "createContacts",
+        "collection": {
+          "contact": [
+            {
+              "name": "={{ $('Parse JSON').first().json.name }}",
+              "custom_fields_values": {
+                "custom_field": [
+                  {
+                    "data": "{\"id\":393676,\"type\":\"multitext\"}",
+                    "value": "={{ $('camposIniciais').first().json.telefoneCliente }}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "id": "224155f3-1dd6-4812-88ff-99f7af918873",
+      "name": "Criar Contato Handoff",
+      "type": "n8n-nodes-kommo.kommo",
+      "typeVersion": 1,
+      "position": [
+        3280,
+        544
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "leads",
+        "operation": "createLeads",
+        "collection": {
+          "lead": [
+            {
+              "name": "={{ $('Parse JSON').first().json.name }}",
+              "pipeline_id": 13236788,
+              "status_id": 102068160,
+              "loss_reason_id": "={{ null }}",
+              "custom_fields_values": {
+                "custom_field": [
+                  {
+                    "data": "{\"id\":3029309,\"type\":\"text\"}",
+                    "value": "={{ $('Parse JSON').first().json.handoff_motivo }}"
+                  }
+                ]
+              },
+              "_embedded": {
+                "tags": [
+                  {
+                    "id": [
+                      248409
+                    ]
+                  }
+                ],
+                "contacts": [
+                  {
+                    "id": {
+                      "contact": [
+                        {
+                          "id": "={{ $json._embedded.contacts[0].id || $('Buscar Contato Handoff').first().json._embedded.contacts[0].id }}"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "id": "7657daab-0a3d-46c2-8b5f-51a2718db79a",
+      "name": "Criar Lead Handoff (Recepção)",
+      "type": "n8n-nodes-kommo.kommo",
+      "typeVersion": 1,
+      "position": [
+        3504,
+        432
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "schema": "genics",
+        "operation": "update",
+        "tableId": "leads_mql",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "session_id",
+              "condition": "eq",
+              "keyValue": "={{ $('camposIniciais').first().json.sessionID }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "classification",
+              "fieldValue": "handoff"
+            },
+            {
+              "fieldId": "handoff_motivo",
+              "fieldValue": "={{ $('Parse JSON').first().json.handoff_motivo }}"
+            },
+            {
+              "fieldId": "qualification_reason",
+              "fieldValue": "={{ $('Parse JSON').first().json.reason }}"
+            },
+            {
+              "fieldId": "mql",
+              "fieldValue": "false"
+            },
+            {
+              "fieldId": "handoff",
+              "fieldValue": "true"
+            },
+            {
+              "fieldId": "lead_created_in_kommo",
+              "fieldValue": "true"
+            },
+            {
+              "fieldId": "followup_20min_enabled",
+              "fieldValue": "false"
+            },
+            {
+              "fieldId": "stop_reason",
+              "fieldValue": "handoff"
+            },
+            {
+              "fieldId": "kommo_lead_id",
+              "fieldValue": "={{ $('Criar Lead Handoff (Recepção)').first().json._embedded.leads[0].id }}"
+            }
+          ]
+        }
+      },
+      "id": "3492e2bc-99fa-468c-982a-ec0d499e20ad",
+      "name": "Update Lead Supabase (Handoff)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3952,
+        432
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "leads",
+        "operation": "updateLeads",
+        "collection": {
+          "lead": [
+            {
+              "id": "={{ $('Get Lead Handoff').first().json.kommo_lead_id }}",
+              "pipeline_id": "={{ null }}",
+              "status_id": "={{ null }}",
+              "custom_fields_values": {
+                "custom_field": [
+                  {
+                    "data": "{\"id\":3029309,\"type\":\"text\"}",
+                    "value": "={{ $('Parse JSON').first().json.handoff_motivo }}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "id": "15e976c9-531a-46d3-bccf-1fcac9385421",
+      "name": "Update Lead Kommo (Handoff)",
+      "type": "n8n-nodes-kommo.kommo",
+      "typeVersion": 1,
+      "position": [
+        2832,
+        624
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "schema": "genics",
+        "operation": "update",
+        "tableId": "leads_mql",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "session_id",
+              "condition": "eq",
+              "keyValue": "={{ $('camposIniciais').first().json.sessionID }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "handoff_motivo",
+              "fieldValue": "={{ $('Parse JSON').first().json.handoff_motivo }}"
+            },
+            {
+              "fieldId": "qualification_reason",
+              "fieldValue": "={{ $('Parse JSON').first().json.reason }}"
+            },
+            {
+              "fieldId": "handoff",
+              "fieldValue": "true"
+            },
+            {
+              "fieldId": "stop_reason",
+              "fieldValue": "handoff"
+            },
+            {
+              "fieldId": "followup_20min_enabled",
+              "fieldValue": "false"
+            }
+          ]
+        }
+      },
+      "id": "1b857a16-71f5-45f3-8404-2b6f88c65178",
+      "name": "Update Supabase Existente (Handoff)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3056,
+        624
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "schema": "genics",
+        "operation": "getAll",
+        "tableId": "leads_mql",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "session_id",
+              "condition": "eq",
+              "keyValue": "={{ $('camposIniciais').first().json.sessionID }}"
+            }
+          ]
+        }
+      },
+      "id": "bed3da1f-4629-4369-a91f-0599b22374bd",
+      "name": "Get Lead Doadora",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2384,
+        912
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "aa-c1",
+              "leftValue": "={{ $json.lead_created_in_kommo }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "fea79329-4721-420c-865a-26cb366b7cef",
+      "name": "Ainda não criou no Kommo? (Doadora)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2608,
+        912
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "contacts",
+        "filter": {
+          "query": "={{ $('camposIniciais').first().json.telefoneCliente }}"
+        },
+        "options": {}
+      },
+      "id": "f45141ee-7999-4c74-9bf9-7c8c0339a124",
+      "name": "Buscar Contato Doadora",
+      "type": "n8n-nodes-kommo.kommo",
+      "typeVersion": 1,
+      "position": [
+        2832,
+        816
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "or",
+          "conditions": [
+            {
+              "id": "aa-c4",
+              "leftValue": "={{ $json._embedded.contacts.length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8a6e681c-e41c-4be0-b429-070c310929bc",
+      "name": "Contato existe? (Doadora)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3056,
+        816
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "contacts",
+        "operation": "createContacts",
+        "collection": {
+          "contact": [
+            {
+              "name": "={{ $('Parse JSON').first().json.name }}",
+              "custom_fields_values": {
+                "custom_field": [
+                  {
+                    "data": "{\"id\":393676,\"type\":\"multitext\"}",
+                    "value": "={{ $('camposIniciais').first().json.telefoneCliente }}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "id": "cc87e27a-239b-4dae-b7e2-e4e5ee60b732",
+      "name": "Criar Contato Doadora",
+      "type": "n8n-nodes-kommo.kommo",
+      "typeVersion": 1,
+      "position": [
+        3280,
+        928
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "leads",
+        "operation": "createLeads",
+        "collection": {
+          "lead": [
+            {
+              "name": "={{ $('Parse JSON').first().json.name }}",
+              "pipeline_id": 13542384,
+              "status_id": 104487552,
+              "loss_reason_id": "={{ null }}",
+              "custom_fields_values": {
+                "custom_field": [
+                  {
+                    "data": "{\"id\":3029301,\"type\":\"text\"}",
+                    "value": "={{ $('Parse JSON').first().json.tratamento_interesse }}"
+                  },
+                  {
+                    "data": "{\"id\":3030369,\"type\":\"text\"}",
+                    "value": "={{ $('Parse JSON').first().json.data_nascimento }}"
+                  },
+                  {
+                    "data": "{\"id\":3030363,\"type\":\"text\"}",
+                    "value": "={{ $('Parse JSON').first().json.possui_exames }}"
+                  }
+                ]
+              },
+              "_embedded": {
+                "tags": [
+                  {
+                    "id": [
+                      248407
+                    ]
+                  }
+                ],
+                "contacts": [
+                  {
+                    "id": {
+                      "contact": [
+                        {
+                          "id": "={{ $json._embedded.contacts[0].id || $('Buscar Contato Doadora').first().json._embedded.contacts[0].id }}"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "id": "2b9ff50c-084a-442b-af4d-7694cb9edabf",
+      "name": "Criar Lead Doadora (Ovodoação Doadora)",
+      "type": "n8n-nodes-kommo.kommo",
+      "typeVersion": 1,
+      "position": [
+        3504,
+        816
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "schema": "genics",
+        "operation": "update",
+        "tableId": "leads_mql",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "session_id",
+              "condition": "eq",
+              "keyValue": "={{ $('camposIniciais').first().json.sessionID }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "classification",
+              "fieldValue": "doadora"
+            },
+            {
+              "fieldId": "tratamento_interesse",
+              "fieldValue": "={{ $('Parse JSON').first().json.tratamento_interesse }}"
+            },
+            {
+              "fieldId": "qualification_reason",
+              "fieldValue": "={{ $('Parse JSON').first().json.reason }}"
+            },
+            {
+              "fieldId": "mql",
+              "fieldValue": "false"
+            },
+            {
+              "fieldId": "handoff",
+              "fieldValue": "false"
+            },
+            {
+              "fieldId": "lead_created_in_kommo",
+              "fieldValue": "true"
+            },
+            {
+              "fieldId": "kommo_lead_id",
+              "fieldValue": "={{ $('Criar Lead Doadora (Ovodoação Doadora)').first().json._embedded.leads[0].id }}"
+            },
+            {
+              "fieldId": "followup_20min_enabled",
+              "fieldValue": "false"
+            },
+            {
+              "fieldId": "stop_reason",
+              "fieldValue": "doadora"
+            }
+          ]
+        }
+      },
+      "id": "c28c2612-7c4e-4df8-bb51-3aa61332cde7",
+      "name": "Update Lead Supabase (Doadora)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3952,
+        816
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "leads",
+        "operation": "updateLeads",
+        "collection": {
+          "lead": [
+            {
+              "id": "={{ $('Get Lead Doadora').first().json.kommo_lead_id }}",
+              "pipeline_id": "={{ null }}",
+              "status_id": "={{ null }}",
+              "custom_fields_values": {
+                "custom_field": [
+                  {
+                    "data": "{\"id\":3029301,\"type\":\"text\"}",
+                    "value": "={{ $('Parse JSON').first().json.tratamento_interesse }}"
+                  },
+                  {
+                    "data": "{\"id\":3030369,\"type\":\"text\"}",
+                    "value": "={{ $('Parse JSON').first().json.data_nascimento }}"
+                  },
+                  {
+                    "data": "{\"id\":3030363,\"type\":\"text\"}",
+                    "value": "={{ $('Parse JSON').first().json.possui_exames }}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "id": "3f0e8a84-10e7-488d-8a3c-095016f89181",
+      "name": "Update Lead Kommo (Doadora)",
+      "type": "n8n-nodes-kommo.kommo",
+      "typeVersion": 1,
+      "position": [
+        2832,
+        1008
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "schema": "genics",
+        "operation": "update",
+        "tableId": "leads_mql",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "session_id",
+              "condition": "eq",
+              "keyValue": "={{ $('camposIniciais').first().json.sessionID }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "tratamento_interesse",
+              "fieldValue": "={{ $('Parse JSON').first().json.tratamento_interesse }}"
+            },
+            {
+              "fieldId": "qualification_reason",
+              "fieldValue": "={{ $('Parse JSON').first().json.reason }}"
+            },
+            {
+              "fieldId": "stop_reason",
+              "fieldValue": "doadora"
+            },
+            {
+              "fieldId": "followup_20min_enabled",
+              "fieldValue": "false"
+            }
+          ]
+        }
+      },
+      "id": "5a2ac1c9-4bc0-4bf9-b488-7fcc9e746625",
+      "name": "Update Supabase Existente (Doadora)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3056,
+        1008
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "schema": "genics",
+        "operation": "getAll",
+        "tableId": "leads_mql",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "session_id",
+              "condition": "eq",
+              "keyValue": "={{ $('camposIniciais').first().json.sessionID }}"
+            }
+          ]
+        }
+      },
+      "id": "22795314-e10a-441d-a912-05812ebeb5f1",
+      "name": "Get Lead Receptora",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2384,
+        1296
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "bb-c1",
+              "leftValue": "={{ $json.lead_created_in_kommo }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a244c2d0-19bc-417a-8b88-a22bd74be670",
+      "name": "Ainda não criou no Kommo? (Receptora)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2608,
+        1296
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "contacts",
+        "filter": {
+          "query": "={{ $('camposIniciais').first().json.telefoneCliente }}"
+        },
+        "options": {}
+      },
+      "id": "3d5b163e-fcdb-46bd-a986-9f2b0e8b72cb",
+      "name": "Buscar Contato Receptora",
+      "type": "n8n-nodes-kommo.kommo",
+      "typeVersion": 1,
+      "position": [
+        2832,
+        1200
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "or",
+          "conditions": [
+            {
+              "id": "bb-c4",
+              "leftValue": "={{ $json._embedded.contacts.length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0ccce001-053d-4c8f-92e5-e43812bc2735",
+      "name": "Contato existe? (Receptora)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3056,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "contacts",
+        "operation": "createContacts",
+        "collection": {
+          "contact": [
+            {
+              "name": "={{ $('Parse JSON').first().json.name }}",
+              "custom_fields_values": {
+                "custom_field": [
+                  {
+                    "data": "{\"id\":393676,\"type\":\"multitext\"}",
+                    "value": "={{ $('camposIniciais').first().json.telefoneCliente }}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "id": "acc202ec-cada-4926-bf89-7e3e452b677c",
+      "name": "Criar Contato Receptora",
+      "type": "n8n-nodes-kommo.kommo",
+      "typeVersion": 1,
+      "position": [
+        3280,
+        1312
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "leads",
+        "operation": "createLeads",
+        "collection": {
+          "lead": [
+            {
+              "name": "={{ $('Parse JSON').first().json.name }}",
+              "pipeline_id": 13520836,
+              "status_id": 104317568,
+              "loss_reason_id": "={{ null }}",
+              "custom_fields_values": {
+                "custom_field": [
+                  {
+                    "data": "{\"id\":3029301,\"type\":\"text\"}",
+                    "value": "={{ $('Parse JSON').first().json.tratamento_interesse }}"
+                  },
+                  {
+                    "data": "{\"id\":3029309,\"type\":\"text\"}",
+                    "value": "={{ $('Parse JSON').first().json.handoff_motivo }}"
+                  }
+                ]
+              },
+              "_embedded": {
+                "tags": [
+                  {
+                    "id": [
+                      248407
+                    ]
+                  }
+                ],
+                "contacts": [
+                  {
+                    "id": {
+                      "contact": [
+                        {
+                          "id": "={{ $json._embedded.contacts[0].id || $('Buscar Contato Receptora').first().json._embedded.contacts[0].id }}"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "id": "543c3641-3dfc-48bc-9c22-6f3bc3342716",
+      "name": "Criar Lead Receptora (Procedimentos)",
+      "type": "n8n-nodes-kommo.kommo",
+      "typeVersion": 1,
+      "position": [
+        3504,
+        1200
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "schema": "genics",
+        "operation": "update",
+        "tableId": "leads_mql",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "session_id",
+              "condition": "eq",
+              "keyValue": "={{ $('camposIniciais').first().json.sessionID }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "classification",
+              "fieldValue": "receptora"
+            },
+            {
+              "fieldId": "tratamento_interesse",
+              "fieldValue": "={{ $('Parse JSON').first().json.tratamento_interesse }}"
+            },
+            {
+              "fieldId": "qualification_reason",
+              "fieldValue": "={{ $('Parse JSON').first().json.reason }}"
+            },
+            {
+              "fieldId": "mql",
+              "fieldValue": "false"
+            },
+            {
+              "fieldId": "handoff",
+              "fieldValue": "false"
+            },
+            {
+              "fieldId": "lead_created_in_kommo",
+              "fieldValue": "true"
+            },
+            {
+              "fieldId": "kommo_lead_id",
+              "fieldValue": "={{ $('Criar Lead Receptora (Procedimentos)').first().json._embedded.leads[0].id }}"
+            },
+            {
+              "fieldId": "followup_20min_enabled",
+              "fieldValue": "false"
+            },
+            {
+              "fieldId": "stop_reason",
+              "fieldValue": "receptora"
+            }
+          ]
+        }
+      },
+      "id": "de13822d-d20c-4e38-bd0c-6aac62d89f1f",
+      "name": "Update Lead Supabase (Receptora)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3952,
+        1200
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "leads",
+        "operation": "updateLeads",
+        "collection": {
+          "lead": [
+            {
+              "id": "={{ $('Get Lead Receptora').first().json.kommo_lead_id }}",
+              "pipeline_id": "={{ null }}",
+              "status_id": "={{ null }}",
+              "custom_fields_values": {
+                "custom_field": [
+                  {
+                    "data": "{\"id\":3029301,\"type\":\"text\"}",
+                    "value": "={{ $('Parse JSON').first().json.tratamento_interesse }}"
+                  },
+                  {
+                    "data": "{\"id\":3029309,\"type\":\"text\"}",
+                    "value": "={{ $('Parse JSON').first().json.handoff_motivo }}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "id": "0dcfbe94-63f2-4375-baef-d0fcd4d2374e",
+      "name": "Update Lead Kommo (Receptora)",
+      "type": "n8n-nodes-kommo.kommo",
+      "typeVersion": 1,
+      "position": [
+        2832,
+        1392
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "schema": "genics",
+        "operation": "update",
+        "tableId": "leads_mql",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "session_id",
+              "condition": "eq",
+              "keyValue": "={{ $('camposIniciais').first().json.sessionID }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "tratamento_interesse",
+              "fieldValue": "={{ $('Parse JSON').first().json.tratamento_interesse }}"
+            },
+            {
+              "fieldId": "qualification_reason",
+              "fieldValue": "={{ $('Parse JSON').first().json.reason }}"
+            },
+            {
+              "fieldId": "stop_reason",
+              "fieldValue": "receptora"
+            },
+            {
+              "fieldId": "followup_20min_enabled",
+              "fieldValue": "false"
+            }
+          ]
+        }
+      },
+      "id": "117a7630-cfca-4a1b-9b1e-371585b6358f",
+      "name": "Update Supabase Existente (Receptora)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3056,
+        1392
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "schema": "genics",
+        "operation": "getAll",
+        "tableId": "leads_mql",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "session_id",
+              "condition": "eq",
+              "keyValue": "={{ $('camposIniciais').first().json.sessionID }}"
+            }
+          ]
+        }
+      },
+      "id": "fa56835c-34be-4613-a8ba-95f099b15d4c",
+      "name": "Get Lead Outros",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2384,
+        1680
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cc-c1",
+              "leftValue": "={{ $json.lead_created_in_kommo }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0c9b2cb1-032c-49dd-aed2-f6e63843cd00",
+      "name": "Ainda não criou no Kommo? (Outros)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2608,
+        1680
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "contacts",
+        "filter": {
+          "query": "={{ $('camposIniciais').first().json.telefoneCliente }}"
+        },
+        "options": {}
+      },
+      "id": "c64db649-b819-4b12-8b91-dd5cb04bb839",
+      "name": "Buscar Contato Outros",
+      "type": "n8n-nodes-kommo.kommo",
+      "typeVersion": 1,
+      "position": [
+        2832,
+        1584
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "or",
+          "conditions": [
+            {
+              "id": "cc-c4",
+              "leftValue": "={{ $json._embedded.contacts.length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7fd42bd0-5397-479a-b05a-fa7b2827b8ae",
+      "name": "Contato existe? (Outros)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3056,
+        1584
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "contacts",
+        "operation": "createContacts",
+        "collection": {
+          "contact": [
+            {
+              "name": "={{ $('Parse JSON').first().json.name }}",
+              "custom_fields_values": {
+                "custom_field": [
+                  {
+                    "data": "{\"id\":393676,\"type\":\"multitext\"}",
+                    "value": "={{ $('camposIniciais').first().json.telefoneCliente }}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "id": "3b231535-f5a3-4a5e-99b2-d71b797b889b",
+      "name": "Criar Contato Outros",
+      "type": "n8n-nodes-kommo.kommo",
+      "typeVersion": 1,
+      "position": [
+        3280,
+        1648
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "leads",
+        "operation": "createLeads",
+        "collection": {
+          "lead": [
+            {
+              "name": "={{ $('Parse JSON').first().json.name }}",
+              "pipeline_id": 13520836,
+              "status_id": 104486272,
+              "loss_reason_id": "={{ null }}",
+              "custom_fields_values": {
+                "custom_field": [
+                  {
+                    "data": "{\"id\":3029301,\"type\":\"text\"}",
+                    "value": "={{ $('Parse JSON').first().json.tratamento_interesse }}"
+                  },
+                  {
+                    "data": "{\"id\":3029303,\"type\":\"text\"}",
+                    "value": "={{ $('Parse JSON').first().json.possui_medico }}"
+                  },
+                  {
+                    "data": "{\"id\":3029305,\"type\":\"text\"}",
+                    "value": "={{ $('Parse JSON').first().json.urgencia }}"
+                  }
+                ]
+              },
+              "_embedded": {
+                "tags": [
+                  {
+                    "id": [
+                      248407
+                    ]
+                  }
+                ],
+                "contacts": [
+                  {
+                    "id": {
+                      "contact": [
+                        {
+                          "id": "={{ $json._embedded.contacts[0].id || $('Buscar Contato Outros').first().json._embedded.contacts[0].id }}"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "id": "1f824450-12af-4983-91b7-7be47f1f29e2",
+      "name": "Criar Lead Outros (Procedimentos Comercial)",
+      "type": "n8n-nodes-kommo.kommo",
+      "typeVersion": 1,
+      "position": [
+        3504,
+        1584
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "schema": "genics",
+        "operation": "update",
+        "tableId": "leads_mql",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "session_id",
+              "condition": "eq",
+              "keyValue": "={{ $('camposIniciais').first().json.sessionID }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "classification",
+              "fieldValue": "outros_procedimentos"
+            },
+            {
+              "fieldId": "tratamento_interesse",
+              "fieldValue": "={{ $('Parse JSON').first().json.tratamento_interesse }}"
+            },
+            {
+              "fieldId": "qualification_reason",
+              "fieldValue": "={{ $('Parse JSON').first().json.reason }}"
+            },
+            {
+              "fieldId": "mql",
+              "fieldValue": "false"
+            },
+            {
+              "fieldId": "handoff",
+              "fieldValue": "false"
+            },
+            {
+              "fieldId": "lead_created_in_kommo",
+              "fieldValue": "true"
+            },
+            {
+              "fieldId": "kommo_lead_id",
+              "fieldValue": "={{ $('Criar Lead Outros (Procedimentos Comercial)').first().json._embedded.leads[0].id }}"
+            },
+            {
+              "fieldId": "followup_20min_enabled",
+              "fieldValue": "false"
+            },
+            {
+              "fieldId": "stop_reason",
+              "fieldValue": "outros_procedimentos"
+            }
+          ]
+        }
+      },
+      "id": "0d84736b-02ae-4184-b67b-2e9f97b8ede2",
+      "name": "Update Lead Supabase (Outros)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3952,
+        1584
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "leads",
+        "operation": "updateLeads",
+        "collection": {
+          "lead": [
+            {
+              "id": "={{ $('Get Lead Outros').first().json.kommo_lead_id }}",
+              "pipeline_id": "={{ null }}",
+              "status_id": "={{ null }}",
+              "custom_fields_values": {
+                "custom_field": [
+                  {
+                    "data": "{\"id\":3029301,\"type\":\"text\"}",
+                    "value": "={{ $('Parse JSON').first().json.tratamento_interesse }}"
+                  },
+                  {
+                    "data": "{\"id\":3029303,\"type\":\"text\"}",
+                    "value": "={{ $('Parse JSON').first().json.possui_medico }}"
+                  },
+                  {
+                    "data": "{\"id\":3029305,\"type\":\"text\"}",
+                    "value": "={{ $('Parse JSON').first().json.urgencia }}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "id": "cf659ab9-b626-4602-a33e-59c8e1fe18b6",
+      "name": "Update Lead Kommo (Outros)",
+      "type": "n8n-nodes-kommo.kommo",
+      "typeVersion": 1,
+      "position": [
+        2832,
+        1776
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "schema": "genics",
+        "operation": "update",
+        "tableId": "leads_mql",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "session_id",
+              "condition": "eq",
+              "keyValue": "={{ $('camposIniciais').first().json.sessionID }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "tratamento_interesse",
+              "fieldValue": "={{ $('Parse JSON').first().json.tratamento_interesse }}"
+            },
+            {
+              "fieldId": "qualification_reason",
+              "fieldValue": "={{ $('Parse JSON').first().json.reason }}"
+            },
+            {
+              "fieldId": "stop_reason",
+              "fieldValue": "outros_procedimentos"
+            },
+            {
+              "fieldId": "followup_20min_enabled",
+              "fieldValue": "false"
+            }
+          ]
+        }
+      },
+      "id": "53af1012-66bb-4e99-a0c9-630858df32e6",
+      "name": "Update Supabase Existente (Outros)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3056,
+        1776
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
+      },
+      "id": "6eaf0b67-4c13-4cc9-8712-6d25d8cb5485",
+      "name": "Schedule 5min",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        64,
+        2464
+      ]
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "schema": "genics",
+        "operation": "getAll",
+        "tableId": "leads_mql",
+        "returnAll": true,
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "mql",
+              "condition": "eq",
+              "keyValue": "false"
+            },
+            {
+              "keyName": "handoff",
+              "condition": "eq",
+              "keyValue": "false"
+            },
+            {
+              "keyName": "encerrado",
+              "condition": "eq",
+              "keyValue": "false"
+            },
+            {
+              "keyName": "followup_20min_enabled",
+              "condition": "eq",
+              "keyValue": "true"
+            },
+            {
+              "keyName": "followup_20min_sent",
+              "condition": "eq",
+              "keyValue": "false"
+            }
+          ]
+        }
+      },
+      "id": "8c5ce91c-ca88-4551-9c59-ffbc554e5bda",
+      "name": "Pegar Leads Ativos",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        288,
+        2464
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "protect-exists-001",
+              "leftValue": "={{ $json.last_interaction_at }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "f0000001",
+              "leftValue": "={{ $now }}",
+              "rightValue": "={{ $json.last_interaction_at.toDateTime().plus({ minutes: 30 }) }}",
+              "operator": {
+                "type": "dateTime",
+                "operation": "after"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "542a7a73-6068-43bf-af34-b5ee820915a3",
+      "name": "Inativo há 30min",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        512,
+        2464
+      ],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "f0000002",
+              "leftValue": "={{ $now.setZone('America/Sao_Paulo').hour }}",
+              "rightValue": 8,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            },
+            {
+              "id": "f0000003",
+              "leftValue": "={{ $now.setZone('America/Sao_Paulo').hour }}",
+              "rightValue": 19,
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            },
+            {
+              "id": "f0000004",
+              "leftValue": "={{ $now.setZone('America/Sao_Paulo').weekday }}",
+              "rightValue": 5,
+              "operator": {
+                "type": "number",
+                "operation": "lte"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2a7305c5-f09b-4e03-be62-530a8a2dcec5",
+      "name": "Horário Comercial",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        736,
+        2368
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "ccd1c046-8ead-4184-b8f9-4a8af8baf83f",
+      "name": "Loop Follow20",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        960,
+        2368
+      ]
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "schema": "genics",
+        "operation": "update",
+        "tableId": "leads_mql",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "session_id",
+              "condition": "eq",
+              "keyValue": "={{ $json.session_id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "followup_20min_sent",
+              "fieldValue": "true"
+            },
+            {
+              "fieldId": "followup_20min_sent_at",
+              "fieldValue": "={{ $now.toISO() }}"
+            }
+          ]
+        }
+      },
+      "id": "5cdce866-52ad-42e9-a8de-6778423d636d",
+      "name": "Marcar Enviado",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1184,
+        2288
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "1021350191067848",
+        "recipientPhoneNumber": "={{ $('Loop Follow20').item.json.telefone }}",
+        "textBody": "Oi! 😊 Vi que nossa conversa pausou por aqui. Você ficou com alguma dúvida sobre as opções anteriores? Se precisar de ajuda, é só me avisar. Estou aqui para te ajudar a falar com o especialista certo!",
+        "additionalFields": {}
+      },
+      "id": "4cd3eda9-4ade-43b4-9aa1-77183bbf3a75",
+      "name": "Enviar Follow20",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        1408,
+        2288
+      ],
+      "webhookId": "a1a1a1a1-b2b2-c3c3-d4d4-e5e5e5e5e5e5",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "bRhIwnzxsmRU5RuS",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "id": "882d6217-c105-4e66-9dba-8b2ab09f1e3b",
+      "name": "Wait 2s",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1632,
+        2368
+      ],
+      "webhookId": "b2b2b2b2-c3c3-d4d4-e5e5-f6f6f6f6f6f6"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        736,
+        2560
+      ],
+      "id": "bb4ef4de-e196-473f-a5fa-3b42a5653828",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://genics.kommo.com/api/v4/leads/{{$('Criar Lead MQL (Vendas-Qualificação)').first().json._embedded.leads[0].id}}/notes",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "kommoOAuth2Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "=[\n  {\n    \"note_type\": \"common\",\n    \"params\": {\n      \"text\": \"RESUMO SDR IA:\\nInteresse: {{ $('Parse JSON').first().json.tratamento_interesse }}\\nMédico Assistente: {{ $('Parse JSON').first().json.possui_medico }}\\nUrgência: {{ $('Parse JSON').first().json.urgencia }}\\nStatus: Aguardando atendimento\"\n    }\n  }\n]",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "id": "aceaca0f-7769-4d19-b8ce-04a1aa4baab9",
+      "name": "Nota Interna (MQL)",
+      "position": [
+        3728,
+        48
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://genics.kommo.com/api/v4/leads/{{$('Criar Lead Handoff (Recepção)').first().json._embedded.leads[0].id}}/notes",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "kommoOAuth2Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "=[\n  {\n    \"note_type\": \"common\",\n    \"params\": {\n      \"text\": \"RESUMO SDR IA:\\nInteresse: {{ $('Parse JSON').first().json.tratamento_interesse }}\\nMédico Assistente: {{ $('Parse JSON').first().json.possui_medico }}\\nUrgência: {{ $('Parse JSON').first().json.urgencia }}\\nStatus: Aguardando atendimento\"\n    }\n  }\n]",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "id": "80fb3721-6444-437e-87b3-652a00b13914",
+      "name": "Nota Interna (Handoff)",
+      "position": [
+        3728,
+        432
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://genics.kommo.com/api/v4/leads/{{$('Criar Lead Doadora (Ovodoação Doadora)').first().json._embedded.leads[0].id}}/notes",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "kommoOAuth2Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "=[\n  {\n    \"note_type\": \"common\",\n    \"params\": {\n      \"text\": \"RESUMO SDR IA:\\nInteresse: {{ $('Parse JSON').first().json.tratamento_interesse }}\\nMédico Assistente: {{ $('Parse JSON').first().json.possui_medico }}\\nUrgência: {{ $('Parse JSON').first().json.urgencia }}\\nStatus: Aguardando atendimento\"\n    }\n  }\n]",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "id": "a27d749a-1e6a-47a3-bf65-a580d27ceeb9",
+      "name": "Nota Interna (Doadora)",
+      "position": [
+        3728,
+        816
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://genics.kommo.com/api/v4/leads/{{$('Criar Lead Receptora (Procedimentos)').first().json._embedded.leads[0].id}}/notes",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "kommoOAuth2Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "=[\n  {\n    \"note_type\": \"common\",\n    \"params\": {\n      \"text\": \"RESUMO SDR IA:\\nInteresse: {{ $('Parse JSON').first().json.tratamento_interesse }}\\nMédico Assistente: {{ $('Parse JSON').first().json.possui_medico }}\\nUrgência: {{ $('Parse JSON').first().json.urgencia }}\\nStatus: Aguardando atendimento\"\n    }\n  }\n]",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "id": "74091456-1f0b-4b87-8240-2c87838eefaf",
+      "name": "Nota Interna (Receptora)",
+      "position": [
+        3728,
+        1200
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://genics.kommo.com/api/v4/leads/{{ $('Criar Lead Outros (Procedimentos Comercial)').first().json._embedded.leads[0].id}}/notes",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "kommoOAuth2Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "=[\n  {\n    \"note_type\": \"common\",\n    \"params\": {\n      \"text\": \"RESUMO SDR IA:\\nInteresse: {{ $('Parse JSON').first().json.tratamento_interesse }}\\nMédico Assistente: {{ $('Parse JSON').first().json.possui_medico }}\\nUrgência: {{ $('Parse JSON').first().json.urgencia }}\\nStatus: Aguardando atendimento\"\n    }\n  }\n]",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "id": "1c172a32-8d35-47b8-91b3-28898d2d9dff",
+      "name": "Nota Interna (Outros)",
+      "position": [
+        3728,
+        1584
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "schema": "genics",
+        "operation": "getAll",
+        "tableId": "leads_mql",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "session_id",
+              "condition": "eq",
+              "keyValue": "={{ $('camposIniciais').first().json.sessionID }}"
+            }
+          ]
+        }
+      },
+      "id": "90fd861d-417a-4e34-94a2-65006859e834",
+      "name": "Get Lead NaoQualificado",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2464,
+        1296
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "d0000012",
+              "leftValue": "={{ $json.lead_created_in_kommo }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "63222d6d-c929-4ed4-ad40-6c3df58d1181",
+      "name": "Ainda não criou no Kommo? (NaoQualificado)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2688,
+        1296
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "contacts",
+        "filter": {
+          "query": "={{ $('camposIniciais').first().json.telefoneCliente }}"
+        },
+        "options": {}
+      },
+      "id": "3f41c707-3ca1-4dd4-9252-622c965c2ab1",
+      "name": "Buscar Contato NaoQualificado",
+      "type": "n8n-nodes-kommo.kommo",
+      "typeVersion": 1,
+      "position": [
+        2912,
+        1200
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "or",
+          "conditions": [
+            {
+              "id": "d0000013",
+              "leftValue": "={{ $json._embedded.contacts.length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "dc39ed0d-e562-44c3-b699-592fba21cd4f",
+      "name": "Contato existe? (NaoQualificado)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3136,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "contacts",
+        "operation": "createContacts",
+        "collection": {
+          "contact": [
+            {
+              "name": "={{ $('Parse JSON').first().json.name }}",
+              "custom_fields_values": {
+                "custom_field": [
+                  {
+                    "data": "{\"id\":393676,\"type\":\"multitext\"}",
+                    "value": "={{ $('camposIniciais').first().json.telefoneCliente }}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "id": "c41ccf47-3d0a-4b8a-a985-72fea4474acb",
+      "name": "Criar Contato NaoQualificado",
+      "type": "n8n-nodes-kommo.kommo",
+      "typeVersion": 1,
+      "position": [
+        3360,
+        1312
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "leads",
+        "operation": "createLeads",
+        "collection": {
+          "lead": [
+            {
+              "name": "={{ $('Parse JSON').first().json.name }}",
+              "pipeline_id": 13236788,
+              "status_id": 107785912,
+              "_embedded": {
+                "tags": [
+                  {
+                    "id": [
+                      "={{ ({fora_icp:261891, sem_interesse:261893, contato_invalido:261895})[$('Parse JSON').first().json.motivo_desqualificacao] || 261891 }}"
+                    ]
+                  }
+                ],
+                "contacts": [
+                  {
+                    "id": {
+                      "contact": [
+                        {
+                          "id": "={{ $json._embedded.contacts[0].id || $('Buscar Contato NaoQualificado').first().json._embedded.contacts[0].id }}"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "id": "b5f94809-3397-48d8-bbd9-362839f31868",
+      "name": "Criar Lead NaoQualificado (Perdido)",
+      "type": "n8n-nodes-kommo.kommo",
+      "typeVersion": 1,
+      "position": [
+        3584,
+        1200
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "leads",
+        "operation": "updateLeads",
+        "collection": {
+          "lead": [
+            {
+              "id": "={{ $('Get Lead NaoQualificado').first().json.kommo_lead_id }}",
+              "pipeline_id": 13236788,
+              "status_id": 107785912
+            }
+          ]
+        }
+      },
+      "id": "4a348b4f-d71c-4b32-a38f-7e8e1b7c2379",
+      "name": "Update Lead Kommo (NaoQualificado)",
+      "type": "n8n-nodes-kommo.kommo",
+      "typeVersion": 1,
+      "position": [
+        2912,
+        1392
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://genics.kommo.com/api/v4/leads/{{$('Criar Lead NaoQualificado (Perdido)').first().json._embedded.leads[0].id}}/notes",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "kommoOAuth2Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "=[\n  {\n    \"note_type\": \"common\",\n    \"params\": {\n      \"text\": \"RESUMO SDR IA - NÃO QUALIFICADO:\\nMotivo: {{ $('Parse JSON').first().json.motivo_desqualificacao }}\\nDetalhe: {{ $('Parse JSON').first().json.reason }}\\nInteresse: {{ $('Parse JSON').first().json.tratamento_interesse }}\\nStatus: Desqualificado pela IA - registrado para leitura de tráfego\"\n    }\n  }\n]",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "id": "5c58c5f7-d289-4ee7-9288-632863ba6220",
+      "name": "Nota Interna (NaoQualificado)",
+      "position": [
+        3808,
+        1200
+      ],
+      "credentials": {
+        "kommoOAuth2Api": {
+          "id": "Dc3RItGq1H8r8vHj",
+          "name": "Genics"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "schema": "genics",
+        "operation": "update",
+        "tableId": "leads_mql",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "session_id",
+              "condition": "eq",
+              "keyValue": "={{ $('camposIniciais').first().json.sessionID }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "classification",
+              "fieldValue": "nao_qualificado"
+            },
+            {
+              "fieldId": "qualification_reason",
+              "fieldValue": "={{ $('Parse JSON').first().json.reason }}"
+            },
+            {
+              "fieldId": "mql",
+              "fieldValue": "false"
+            },
+            {
+              "fieldId": "lead_created_in_kommo",
+              "fieldValue": "true"
+            },
+            {
+              "fieldId": "followup_20min_enabled",
+              "fieldValue": "false"
+            },
+            {
+              "fieldId": "stop_reason",
+              "fieldValue": "nao_qualificado"
+            },
+            {
+              "fieldId": "kommo_lead_id",
+              "fieldValue": "={{ $('Criar Lead NaoQualificado (Perdido)').first().json._embedded.leads[0].id }}"
+            },
+            {
+              "fieldId": "motivo_desqualificacao",
+              "fieldValue": "={{ $('Parse JSON').first().json.motivo_desqualificacao }}"
+            }
+          ]
+        }
+      },
+      "id": "3daa161e-1aa8-4ae2-a640-06603d3897ef",
+      "name": "Update Lead Supabase (NaoQualificado)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        4032,
+        1200
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "schema": "genics",
+        "operation": "update",
+        "tableId": "leads_mql",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "session_id",
+              "condition": "eq",
+              "keyValue": "={{ $('camposIniciais').first().json.sessionID }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "qualification_reason",
+              "fieldValue": "={{ $('Parse JSON').first().json.reason }}"
+            },
+            {
+              "fieldId": "stop_reason",
+              "fieldValue": "nao_qualificado"
+            },
+            {
+              "fieldId": "followup_20min_enabled",
+              "fieldValue": "false"
+            },
+            {
+              "fieldId": "classification",
+              "fieldValue": "nao_qualificado"
+            },
+            {
+              "fieldId": "motivo_desqualificacao",
+              "fieldValue": "={{ $('Parse JSON').first().json.motivo_desqualificacao }}"
+            }
+          ]
+        }
+      },
+      "id": "5076c0b3-ba02-4f20-a6e4-f620a652a07e",
+      "name": "Update Supabase Existente (NaoQualificado)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3136,
+        1392
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "type": "n8n-nodes-base.evaluationTrigger",
+      "typeVersion": 4.7,
+      "position": [
+        -752,
+        416
+      ],
+      "id": "54fd340c-029b-4922-a925-7aa58076b64f",
+      "name": "When fetching a dataset row"
+    }
+  ],
+  "pinData": {
+    "Execute Workflow Trigger": [
+      {
+        "json": {
+          "sessionID": "bc1f75ed-868a-421e-9396-986aeeda00ac",
+          "telefone": "555191628388",
+          "nome": "Guilherme Passos | V4 Company"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "camposIniciais",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "camposIniciais": {
+      "main": [
+        [
+          {
+            "node": "Buscar Histórico",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar Histórico": {
+      "main": [
+        [
+          {
+            "node": "Formatar Histórico",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formatar Histórico": {
+      "main": [
+        [
+          {
+            "node": "Analisa Classificação",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analisa Classificação": {
+      "main": [
+        [
+          {
+            "node": "Parse JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Analista": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Analisa Classificação",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse JSON": {
+      "main": [
+        [
+          {
+            "node": "Get Lead Base",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Lead Base": {
+      "main": [
+        [
+          {
+            "node": "Lead base existe?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lead base existe?": {
+      "main": [
+        [
+          {
+            "node": "Switch Classificação",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create Lead Base",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Lead Base": {
+      "main": [
+        [
+          {
+            "node": "Switch Classificação",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch Classificação": {
+      "main": [
+        [
+          {
+            "node": "Get Lead MQL",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Lead Handoff",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Lead NaoQualificado",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Lead Doadora",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Lead Receptora",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Lead Outros",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Lead MQL": {
+      "main": [
+        [
+          {
+            "node": "Ainda não criou no Kommo? (MQL)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ainda não criou no Kommo? (MQL)": {
+      "main": [
+        [
+          {
+            "node": "Lock Lead (evita duplicação)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update Lead Kommo (MQL)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lock Lead (evita duplicação)": {
+      "main": [
+        [
+          {
+            "node": "Buscar Contato MQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar Contato MQL": {
+      "main": [
+        [
+          {
+            "node": "Contato existe? (MQL)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Contato existe? (MQL)": {
+      "main": [
+        [
+          {
+            "node": "Criar Lead MQL (Vendas-Qualificação)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Criar Contato MQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Criar Contato MQL": {
+      "main": [
+        [
+          {
+            "node": "Criar Lead MQL (Vendas-Qualificação)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Criar Lead MQL (Vendas-Qualificação)": {
+      "main": [
+        [
+          {
+            "node": "Nota Interna (MQL)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Lead Kommo (MQL)": {
+      "main": [
+        [
+          {
+            "node": "Update Supabase Existente (MQL)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Lead Handoff": {
+      "main": [
+        [
+          {
+            "node": "Ainda não criou no Kommo? (Handoff)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ainda não criou no Kommo? (Handoff)": {
+      "main": [
+        [
+          {
+            "node": "Buscar Contato Handoff",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update Lead Kommo (Handoff)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar Contato Handoff": {
+      "main": [
+        [
+          {
+            "node": "Contato existe? (Handoff)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Contato existe? (Handoff)": {
+      "main": [
+        [
+          {
+            "node": "Criar Lead Handoff (Recepção)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Criar Contato Handoff",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Criar Contato Handoff": {
+      "main": [
+        [
+          {
+            "node": "Criar Lead Handoff (Recepção)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Criar Lead Handoff (Recepção)": {
+      "main": [
+        [
+          {
+            "node": "Nota Interna (Handoff)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Lead Kommo (Handoff)": {
+      "main": [
+        [
+          {
+            "node": "Update Supabase Existente (Handoff)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Lead Doadora": {
+      "main": [
+        [
+          {
+            "node": "Ainda não criou no Kommo? (Doadora)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ainda não criou no Kommo? (Doadora)": {
+      "main": [
+        [
+          {
+            "node": "Buscar Contato Doadora",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update Lead Kommo (Doadora)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar Contato Doadora": {
+      "main": [
+        [
+          {
+            "node": "Contato existe? (Doadora)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Contato existe? (Doadora)": {
+      "main": [
+        [
+          {
+            "node": "Criar Lead Doadora (Ovodoação Doadora)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Criar Contato Doadora",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Criar Contato Doadora": {
+      "main": [
+        [
+          {
+            "node": "Criar Lead Doadora (Ovodoação Doadora)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Criar Lead Doadora (Ovodoação Doadora)": {
+      "main": [
+        [
+          {
+            "node": "Nota Interna (Doadora)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Lead Kommo (Doadora)": {
+      "main": [
+        [
+          {
+            "node": "Update Supabase Existente (Doadora)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Lead Receptora": {
+      "main": [
+        [
+          {
+            "node": "Ainda não criou no Kommo? (Receptora)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ainda não criou no Kommo? (Receptora)": {
+      "main": [
+        [
+          {
+            "node": "Buscar Contato Receptora",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update Lead Kommo (Receptora)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar Contato Receptora": {
+      "main": [
+        [
+          {
+            "node": "Contato existe? (Receptora)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Contato existe? (Receptora)": {
+      "main": [
+        [
+          {
+            "node": "Criar Lead Receptora (Procedimentos)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Criar Contato Receptora",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Criar Contato Receptora": {
+      "main": [
+        [
+          {
+            "node": "Criar Lead Receptora (Procedimentos)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Criar Lead Receptora (Procedimentos)": {
+      "main": [
+        [
+          {
+            "node": "Nota Interna (Receptora)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Lead Kommo (Receptora)": {
+      "main": [
+        [
+          {
+            "node": "Update Supabase Existente (Receptora)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Lead Outros": {
+      "main": [
+        [
+          {
+            "node": "Ainda não criou no Kommo? (Outros)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ainda não criou no Kommo? (Outros)": {
+      "main": [
+        [
+          {
+            "node": "Buscar Contato Outros",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update Lead Kommo (Outros)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar Contato Outros": {
+      "main": [
+        [
+          {
+            "node": "Contato existe? (Outros)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Contato existe? (Outros)": {
+      "main": [
+        [
+          {
+            "node": "Criar Lead Outros (Procedimentos Comercial)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Criar Contato Outros",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Criar Contato Outros": {
+      "main": [
+        [
+          {
+            "node": "Criar Lead Outros (Procedimentos Comercial)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Criar Lead Outros (Procedimentos Comercial)": {
+      "main": [
+        [
+          {
+            "node": "Nota Interna (Outros)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Lead Kommo (Outros)": {
+      "main": [
+        [
+          {
+            "node": "Update Supabase Existente (Outros)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule 5min": {
+      "main": [
+        [
+          {
+            "node": "Pegar Leads Ativos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pegar Leads Ativos": {
+      "main": [
+        [
+          {
+            "node": "Inativo há 30min",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Horário Comercial": {
+      "main": [
+        [
+          {
+            "node": "Loop Follow20",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Follow20": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Marcar Enviado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Marcar Enviado": {
+      "main": [
+        [
+          {
+            "node": "Enviar Follow20",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar Follow20": {
+      "main": [
+        [
+          {
+            "node": "Wait 2s",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 2s": {
+      "main": [
+        [
+          {
+            "node": "Loop Follow20",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Nota Interna (MQL)": {
+      "main": [
+        [
+          {
+            "node": "Update Lead Supabase (MQL)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Nota Interna (Handoff)": {
+      "main": [
+        [
+          {
+            "node": "Update Lead Supabase (Handoff)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Nota Interna (Doadora)": {
+      "main": [
+        [
+          {
+            "node": "Update Lead Supabase (Doadora)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Nota Interna (Receptora)": {
+      "main": [
+        [
+          {
+            "node": "Update Lead Supabase (Receptora)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Nota Interna (Outros)": {
+      "main": [
+        [
+          {
+            "node": "Update Lead Supabase (Outros)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Inativo há 30min": {
+      "main": [
+        [
+          {
+            "node": "Horário Comercial",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Lead NaoQualificado": {
+      "main": [
+        [
+          {
+            "node": "Ainda não criou no Kommo? (NaoQualificado)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ainda não criou no Kommo? (NaoQualificado)": {
+      "main": [
+        [
+          {
+            "node": "Buscar Contato NaoQualificado",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update Lead Kommo (NaoQualificado)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar Contato NaoQualificado": {
+      "main": [
+        [
+          {
+            "node": "Contato existe? (NaoQualificado)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Contato existe? (NaoQualificado)": {
+      "main": [
+        [
+          {
+            "node": "Criar Lead NaoQualificado (Perdido)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Criar Contato NaoQualificado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Criar Contato NaoQualificado": {
+      "main": [
+        [
+          {
+            "node": "Criar Lead NaoQualificado (Perdido)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Criar Lead NaoQualificado (Perdido)": {
+      "main": [
+        [
+          {
+            "node": "Nota Interna (NaoQualificado)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Lead Kommo (NaoQualificado)": {
+      "main": [
+        [
+          {
+            "node": "Update Supabase Existente (NaoQualificado)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Nota Interna (NaoQualificado)": {
+      "main": [
+        [
+          {
+            "node": "Update Lead Supabase (NaoQualificado)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "1398d1b3-6925-42a6-a2bf-4b239e1a798e",
+  "meta": {
+    "instanceId": "1d6d827779e7517486e88d7e136d0005d3301d4d1c169c2fd5ba78a1950c000b"
+  },
+  "nodeGroups": [],
+  "id": "7A1XGNNmm9nwY26n",
+  "tags": []
+}

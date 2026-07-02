@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium Cleaning Services — Correção de Rotas · Jun 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0A0A0A;color:#fff;font-family:'Barlow',sans-serif;font-size:18px;line-height:1.7;overflow-x:hidden}
+
+.topbar{background:#E31919;padding:14px 80px;display:flex;align-items:center;justify-content:space-between;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+.topbar span:last-child{opacity:.75;font-size:12px}
+
+header{background:#111;border-bottom:1px solid #2E2E2E;padding:20px 80px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo-bar img{height:36px;width:auto;display:block;object-fit:contain}
+.nav{display:flex;gap:48px;list-style:none}
+.nav a{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#C8C8C8;text-decoration:none;transition:color .2s;position:relative}
+.nav a:hover{color:#E31919}
+.nav a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:#E31919;transition:width .2s}
+.nav a:hover::after{width:100%}
+
+.hero{padding:120px 80px 90px;background:linear-gradient(135deg,#0D0D0D 0%,#0A0A0A 100%);border-bottom:4px solid #E31919;position:relative;overflow:hidden}
+.hero::before{content:'PREMIUM CLEANING';position:absolute;right:-40px;top:50%;transform:translateY(-50%);font-family:'Barlow Condensed',sans-serif;font-size:280px;font-weight:900;color:rgba(227,25,25,.035);line-height:1;pointer-events:none;white-space:nowrap;letter-spacing:-.03em}
+.hero::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 80% 50%,rgba(227,25,25,.1) 0%,transparent 60%);pointer-events:none}
+.hero-tag{display:inline-block;background:#E31919;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:8px 20px;margin-bottom:32px}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(56px,9vw,110px);font-weight:900;line-height:.85;letter-spacing:-.03em;text-transform:uppercase;margin-bottom:24px;position:relative;z-index:1}
+.hero h1 span{color:#E31919}
+.hero-sub{font-size:20px;color:#C8C8C8;max-width:820px;line-height:1.55;margin-bottom:48px;position:relative;z-index:1}
+
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:#2E2E2E;max-width:1000px;position:relative;z-index:1}
+.hero-stat{background:#1A1A1A;padding:32px 36px;position:relative;overflow:hidden}
+.hero-stat:not(:last-child){border-right:1px solid #2E2E2E}
+.hero-stat::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:#E31919;opacity:0;transition:opacity .3s}
+.hero-stat:hover::before{opacity:1}
+.stat-number{font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:900;color:#E31919;line-height:1;display:block}
+.stat-label{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#C8C8C8;margin-top:8px;display:block}
+.stat-desc{font-size:13px;color:#888;margin-top:4px}
+
+section{padding:100px 80px;border-bottom:1px solid #2E2E2E}
+section:nth-child(even){background:#111}
+
+.section-label{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#E31919;margin-bottom:16px;display:flex;align-items:center;gap:14px}
+.section-label::before{content:'';display:block;width:32px;height:2px;background:#E31919}
+.section-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(44px,6vw,68px);font-weight:900;line-height:.9;letter-spacing:-.02em;text-transform:uppercase;margin-bottom:48px}
+.section-title span{color:#E31919}
+.section-sub{font-size:19px;color:#C8C8C8;max-width:820px;line-height:1.65;margin-bottom:48px}
+
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+
+.card{background:#1A1A1A;padding:44px;position:relative;transition:all .3s;cursor:default}
+.card:hover{background:#222;transform:translateY(-3px)}
+.card-number{font-family:'Barlow Condensed',sans-serif;font-size:90px;font-weight:900;color:rgba(227,25,25,.1);position:absolute;top:12px;right:28px;line-height:1;pointer-events:none}
+.card-tag{display:inline-block;background:#E31919;color:#fff;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;margin-bottom:20px}
+.card-tag.gray{background:#2E2E2E;color:#C8C8C8}
+.card-tag.green{background:#1A7D36}
+.card-tag.blue{background:#3B82F6}
+.card h3{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;text-transform:uppercase;letter-spacing:.02em;margin-bottom:16px;line-height:1.1}
+.card p{font-size:16px;color:#C8C8C8;line-height:1.65}
+.card-metric{font-family:'Barlow Condensed',sans-serif;font-size:44px;font-weight:900;color:#E31919;margin-top:20px;display:block}
+
+.camp-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.camp-card{background:#1A1A1A;border-top:4px solid #E31919;padding:40px;position:relative;transition:all .3s}
+.camp-card:hover{background:#222;transform:translateY(-2px)}
+.camp-card.green{border-top-color:#22C55E}
+.camp-card.blue{border-top-color:#3B82F6}
+.camp-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px}
+.camp-header h3{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:900;text-transform:uppercase;letter-spacing:.02em}
+.camp-badge{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:6px 16px}
+.camp-badge.green{background:#22C55E;color:#fff}
+.camp-badge.blue{background:#3B82F6;color:#fff}
+.camp-body{font-size:16px;color:#C8C8C8;line-height:1.65;margin-bottom:20px}
+.camp-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:#2E2E2E;margin-top:16px}
+.camp-metric{background:#222;padding:18px 22px}
+.camp-metric-val{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:#fff;display:block}
+.camp-metric-label{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-top:4px}
+
+.timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:#2E2E2E;margin-top:48px}
+.phase{background:#1A1A1A;padding:44px;position:relative}
+.phase-label{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#E31919;margin-bottom:4px}
+.phase-title{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:900;text-transform:uppercase;margin-bottom:6px;line-height:1.1}
+.phase-period{font-size:14px;color:#888;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:24px}
+.phase ul{list-style:none;padding:0}
+.phase ul li{font-size:16px;color:#C8C8C8;padding:10px 0;border-bottom:1px solid #2E2E2E;display:flex;align-items:flex-start;gap:12px;line-height:1.45}
+.phase ul li::before{content:'—';color:#E31919;font-weight:700;flex-shrink:0;margin-top:1px}
+.phase ul li:last-child{border-bottom:none}
+
+.chain{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:#2E2E2E;margin:48px 0}
+.chain-link{background:#1A1A1A;padding:36px 28px;position:relative;text-align:center;transition:all .3s}
+.chain-link:hover{background:#222}
+.chain-link.passive{opacity:.4}
+.chain-arrow{font-size:28px;color:#E31919;margin-bottom:12px;display:block}
+.chain-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:.02em;margin-bottom:8px}
+.chain-desc{font-size:14px;color:#C8C8C8;line-height:1.45}
+.chain-status{display:inline-block;margin-top:12px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px}
+.chain-status.ok{background:#22C55E;color:#fff}
+.chain-status.pending{background:#F59E0B;color:#fff}
+.chain-status.missing{background:#2E2E2E;color:#666}
+
+.insight-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:48px}
+.insight-card{background:#1A1A1A;border-left:5px solid #E31919;padding:40px;position:relative;overflow:hidden;transition:all .3s}
+.insight-card:hover{background:#222;transform:translateY(-2px)}
+.insight-card.green{border-left-color:#22C55E}
+.insight-card.blue{border-left-color:#3B82F6}
+.insight-card.amber{border-left-color:#F59E0B}
+.insight-num{position:absolute;bottom:-8px;right:20px;font-family:'Barlow Condensed',sans-serif;font-size:110px;font-weight:900;color:rgba(255,255,255,.03);line-height:1;pointer-events:none}
+.insight-card h3{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;text-transform:uppercase;margin-bottom:10px;color:#fff}
+.insight-card .sub{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#E31919;margin-bottom:16px;display:block}
+.insight-card.green .sub{color:#22C55E}
+.insight-card.blue .sub{color:#3B82F6}
+.insight-card.amber .sub{color:#F59E0B}
+.insight-card p{font-size:16px;color:#C8C8C8;line-height:1.65;margin-bottom:14px}
+.insight-tags{display:flex;flex-wrap:wrap;gap:8px}
+.insight-tag{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:6px 14px;border:1px solid #2E2E2E;color:#C8C8C8;border-radius:2px}
+.insight-tag.red{border-color:#E31919;color:#E31919}
+.insight-tag.green{border-color:#22C55E;color:#22C55E}
+.insight-tag.blue{border-color:#3B82F6;color:#3B82F6}
+.insight-tag.amber{border-color:#F59E0B;color:#F59E0B}
+
+.summary-box{background:#1A1A1A;border:1px solid #2E2E2E;padding:44px;margin-top:48px;border-left:5px solid #E31919;position:relative}
+.summary-box h3{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;text-transform:uppercase;margin-bottom:16px}
+.summary-box p{font-size:17px;color:#C8C8C8;line-height:1.65;margin-bottom:10px}
+.summary-box .kpi{font-size:13px;color:#888;margin-top:16px}
+.summary-box .kpi strong{color:#C8C8C8}
+
+.changes-list{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:#2E2E2E;margin:32px 0}
+.change-item{background:#1A1A1A;padding:36px 40px;display:flex;gap:20px;align-items:flex-start;transition:all .2s}
+.change-item:hover{background:#222}
+.change-icon{width:48px;height:48px;border-radius:50%;background:#E31919;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:#fff}
+.change-icon.green{background:#22C55E}
+.change-icon.blue{background:#3B82F6}
+.change-content h4{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;text-transform:uppercase;margin-bottom:6px}
+.change-content p{font-size:15px;color:#C8C8C8;line-height:1.55}
+.change-meta{font-size:12px;color:#888;margin-top:8px;font-weight:600;letter-spacing:.04em}
+
+footer{padding:56px 80px;background:#111;border-top:1px solid #2E2E2E;display:flex;justify-content:space-between;align-items:center}
+footer p{font-size:14px;color:#888;line-height:1.5}
+
+@media(max-width:900px){
+  .hero{padding:60px 24px 50px}
+  header{padding:16px 24px}
+  section{padding:60px 24px}
+  .hero-stats{grid-template-columns:repeat(2,1fr)}
+  .grid-4{grid-template-columns:repeat(2,1fr)}
+  .grid-3{grid-template-columns:1fr}
+  .camp-grid{grid-template-columns:1fr}
+  .insight-grid{grid-template-columns:1fr}
+  .timeline{grid-template-columns:1fr}
+  .chain{grid-template-columns:1fr 1fr}
+  .changes-list{grid-template-columns:1fr}
+  footer{padding:32px 24px;flex-direction:column;gap:12px;text-align:center}
+  .nav{gap:20px}
+  .nav a{font-size:12px}
+  .topbar{padding:10px 24px;font-size:11px}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span>RELATÓRIO DE CORREÇÃO DE ROTAS · BING ADS</span>
+  <span>PREMIUM CLEANING SERVICES · JUN 2026</span>
+</div>
+
+<header>
+  <div class="logo-bar"><img src="../../../../../v4-logo-principal.png" alt="V4 Company"></div>
+  <ul class="nav">
+    <li><a href="#tese">Tese</a></li>
+    <li><a href="#setup">Setup</a></li>
+    <li><a href="#cadeia">Cadeia de Conversão</a></li>
+    <li><a href="#correcao">Correção</a></li>
+    <li><a href="#proximo">Próximo Ciclo</a></li>
+  </ul>
+</header>
+
+<section class="hero">
+  <div class="hero-tag">Correção de Rotas · Junho 2026</div>
+  <h1>Premium Cleaning<br><span>Services</span></h1>
+  <p class="hero-sub">Este relatório documenta a reestruturação completa da operação de mídia paga. Da fase de setup técnico à correção de rotas que reposiciona as campanhas para performance real. Uma análise transparente das condições necessárias para gerar conversões — e por que, até agora, essas condições estavam em construção, não em operação.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="stat-number">2</span>
+      <span class="stat-label">Campanhas Ativas</span>
+      <span class="stat-desc">Search + Audience</span>
+    </div>
+    <div class="hero-stat">
+      <span class="stat-number">100%</span>
+      <span class="stat-label">Optimization Score</span>
+      <span class="stat-desc">Tag calibrada</span>
+    </div>
+    <div class="hero-stat">
+      <span class="stat-number">1</span>
+      <span class="stat-label">Site Único</span>
+      <span class="stat-desc">premiumcleaningnj.com</span>
+    </div>
+    <div class="hero-stat">
+      <span class="stat-number">2x</span>
+      <span class="stat-label">Lances Otimizados</span>
+      <span class="stat-desc">Budget consistente</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SEÇÃO 1: A TESE — Por que não houve conversões -->
+<!-- ============================================ -->
+<section id="tese">
+  <div class="section-label">Tese Central</div>
+  <h2 class="section-title">Por que não houve<br><span>conversões?</span></h2>
+  <p class="section-sub">A resposta é direta e técnica: conversões em mídia paga não acontecem por acaso. Elas são o resultado de uma <strong>cadeia de condições</strong> que precisa estar 100% operacional. Até agora, estávamos construindo essa cadeia — não colhendo frutos dela.</p>
+
+  <div class="chain">
+    <div class="chain-link passive">
+      <span class="chain-arrow">①</span>
+      <div class="chain-title">Tag UET</div>
+      <div class="chain-desc">Rastreamento de conversões<br>operacional no domínio</div>
+      <span class="chain-status missing">66% — Parcial</span>
+    </div>
+    <div class="chain-link passive">
+      <span class="chain-arrow">②</span>
+      <div class="chain-title">Domínio Único</div>
+      <div class="chain-desc">Todas as conversões<br>concentradas no site</div>
+      <span class="chain-status missing">Fragmentado</span>
+    </div>
+    <div class="chain-link passive">
+      <span class="chain-arrow">③</span>
+      <div class="chain-title">Volume Consistente</div>
+      <div class="chain-desc">Orçamento contínuo para<br>o algoritmo aprender</div>
+      <span class="chain-status missing">Intermitente</span>
+    </div>
+    <div class="chain-link passive">
+      <span class="chain-arrow">④</span>
+      <div class="chain-title">Maturação</div>
+      <div class="chain-desc">Janela de aprendizado<br>do modelo de lances</div>
+      <span class="chain-status missing">Não iniciada</span>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin:-1px 0 0;padding:16px;background:#2E2E2E;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#666">
+    ✦ NENHUMA DAS 4 CONDIÇÕES ESTAVA SATISFEITA ✦
+  </div>
+
+  <div class="chain" style="margin-top:0">
+    <div class="chain-link">
+      <span class="chain-arrow" style="color:#22C55E">①</span>
+      <div class="chain-title">Tag UET</div>
+      <div class="chain-desc">Rastreamento em 100%<br>no premiumcleaningnj.com</div>
+      <span class="chain-status ok">100% ✓</span>
+    </div>
+    <div class="chain-link">
+      <span class="chain-arrow" style="color:#22C55E">②</span>
+      <div class="chain-title">Domínio Único</div>
+      <div class="chain-desc">Site único com tag<br>em todas as páginas</div>
+      <span class="chain-status ok">Consolidado ✓</span>
+    </div>
+    <div class="chain-link">
+      <span class="chain-arrow" style="color:#F59E0B">③</span>
+      <div class="chain-title">Volume Consistente</div>
+      <div class="chain-desc">Budget dividido em<br>2 campanhas otimizadas</div>
+      <span class="chain-status pending">Em operação</span>
+    </div>
+    <div class="chain-link">
+      <span class="chain-arrow" style="color:#F59E0B">④</span>
+      <div class="chain-title">Maturação</div>
+      <div class="chain-desc">Algoritmo calibrando<br>com dados reais</div>
+      <span class="chain-status pending">24-48h</span>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:12px;padding:14px;background:#1A1A1A;border:1px solid #2E2E2E;font-size:15px;color:#888">
+    ANTES: 0 de 4 condições → <strong style="color:#E31919">Zero conversões (esperado)</strong> &nbsp;|&nbsp; AGORA: 4 de 4 condições → <strong style="color:#22C55E">Pipeline pronto para conversões</strong>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SEÇÃO 2: O Setup — O que foi construído -->
+<!-- ============================================ -->
+<section id="setup">
+  <div class="section-label">Infraestrutura</div>
+  <h2 class="section-title">O que foi<br><span>construído</span></h2>
+  <p class="section-sub">A fase de setup foi deliberadamente focada em infraestrutura de performance — não em geração de leads. Cada investimento de tempo e recurso foi direcionado a eliminar as fragilidades que impediriam conversões consistentes no futuro.</p>
+
+  <div class="grid-4">
+    <div class="card">
+      <span class="card-number">01</span>
+      <span class="card-tag gray">Setup</span>
+      <h3>Conta Bing Ads</h3>
+      <p>Criação e estruturação completa da conta. Configuração de campanhas, grupos de anúncios, palavras-chave e segmentação geográfica NY + NJ. Validação de funcionamento da plataforma.</p>
+    </div>
+    <div class="card">
+      <span class="card-number">02</span>
+      <span class="card-tag gray">Segmentação</span>
+      <h3>Property Managers</h3>
+      <p>Mapeamento e ativação de segmentação por job title B2B: Property Managers, Facilities Managers, Building Managers, Directors of Operations. Público de alto valor validado.</p>
+    </div>
+    <div class="card">
+      <span class="card-number">03</span>
+      <span class="card-tag gray">Rastreio</span>
+      <h3>Tag UET + LP</h3>
+      <p>Implementação da tag Universal Event Tracking no domínio premiumcleaningnj.com. Otimização de 66% para 100%. Consolidação de todos os anúncios no site único.</p>
+    </div>
+    <div class="card">
+      <span class="card-number">04</span>
+      <span class="card-tag gray">Estrutura</span>
+      <h3>2 Campanhas</h3>
+      <p>Reorganização do budget em duas frentes complementares: Search (intenção imediata) e Audience (construção de recall). Ambas com lances otimizados e objetivos independentes.</p>
+    </div>
+  </div>
+
+  <div class="summary-box" style="margin-top:48px">
+    <h3>Por que isso explica a ausência de conversões</h3>
+    <p>O Bing Ads — assim como qualquer plataforma de mídia paga — depende de um <strong>ecossistema de rastreamento completo e consistente</strong> para otimizar lances e atribuir conversões. Até que a tag UET estivesse em 100%, o domínio consolidado e o fluxo de dados estabelecido, a plataforma simplesmente não tinha visibilidade para gerar e reportar conversões de forma confiável.</p>
+    <p style="margin-top:12px">Não se trata de "falta de resultados". Trata-se de <strong>resultados impossíveis sem infraestrutura</strong>. Não se mede performance de um motor enquanto ele está sendo montado — mede-se depois que a ignição é ligada. A ignição foi ligada agora.</p>
+    <div class="kpi"><strong>Condições anteriores:</strong> Tag parcial (66%) · Domínios fragmentados · Sem base de dados para lances · Zero maturação de algoritmo</div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SEÇÃO 3: A Cadeia de Conversão Explicada -->
+<!-- ============================================ -->
+<section id="cadeia">
+  <div class="section-label">Fundamento Técnico</div>
+  <h2 class="section-title">A Cadeia de<br><span>Conversão</span></h2>
+  <p class="section-sub">Converter não é um evento isolado. É o resultado de uma corrente de elos que precisam estar todos engatados. Se um único elo falha, a corrente inteira se rompe. Veja como funciona — e por que até agora a corrente estava aberta.</p>
+
+  <div class="insight-grid">
+    <div class="insight-card">
+      <span class="insight-num">①</span>
+      <h3>Elo 1: Rastreamento</h3>
+      <span class="sub">O olho da plataforma</span>
+      <p>Sem tag UET em 100%, o Bing Ads não consegue enxergar o que acontece depois do clique. É como dirigir de olhos fechados: você pode acelerar, mas não sabe se está na direção certa. Com a tag em 66%, a plataforma perdia ⅓ dos sinais de conversão — e sem sinal completo, não há otimização possível.</p>
+      <div class="insight-tags"><span class="insight-tag red">Antes: 66% (cega parcial)</span><span class="insight-tag green">Agora: 100%</span></div>
+    </div>
+    <div class="insight-card">
+      <span class="insight-num">②</span>
+      <h3>Elo 2: Domínio</h3>
+      <span class="sub">O endereço da conversão</span>
+      <p>Anúncios espalhados por múltiplos destinos fragmentam o sinal de qualidade. O algoritmo não consegue associar relevância a um domínio específico porque os visitantes chegam por URLs diferentes. Direcionar tudo para <strong>premiumcleaningnj.com</strong> concentra o Quality Score, a relevância e os dados de conversão em um único domínio.</p>
+      <div class="insight-tags"><span class="insight-tag red">Antes: sem direcionamento único</span><span class="insight-tag green">Agora: site único</span></div>
+    </div>
+    <div class="insight-card">
+      <span class="insight-num">③</span>
+      <h3>Elo 3: Consistência</h3>
+      <span class="sub">O combustível do algoritmo</span>
+      <p>Lances otimizados são modelos de machine learning. Eles aprendem com padrões — e padrões exigem volume contínuo. Se o orçamento falta ou oscila, o algoritmo não tem dados suficientes para estabelecer correlações entre audiência, horário, dispositivo e conversão. O aprendizado é resetado, e a campanha nunca sai do lugar.</p>
+      <div class="insight-tags"><span class="insight-tag amber">Antes: fluxo intermitente</span><span class="insight-tag green">Agora: 2 campanhas estáveis</span></div>
+    </div>
+    <div class="insight-card">
+      <span class="insight-num">④</span>
+      <h3>Elo 4: Maturação</h3>
+      <span class="sub">O tempo do modelo</span>
+      <p>Mesmo com todos os elos anteriores engatados, o algoritmo precisa de uma janela de aprendizado para calibrar. É o que chamamos de <strong>período de maturação</strong>: as primeiras 24-48h com a tag em 100% e o orçamento estável são o ponto de partida real da operação. Antes disso, qualquer expectativa de conversão é tecnicamente infundada.</p>
+      <div class="insight-tags"><span class="insight-tag amber">Janela: 24-48h</span><span class="insight-tag blue">Em andamento</span></div>
+    </div>
+  </div>
+
+  <div class="summary-box">
+    <h3>O que isso significa na prática</h3>
+    <p>A ausência de conversões até agora não é um desvio. É o <strong>comportamento esperado</strong> de uma operação que estava em fase de construção de infraestrutura. Não havia like no motor porque estávamos montando a engenharia. Começamos a dar a partida agora.</p>
+    <p style="margin-top:12px">Esse entendimento é essencial porque evita que se tirem conclusões erradas dos dados. Se olharmos para o período anterior como "falta de performance", vamos tomar decisões equivocadas. Se olharmos como o que ele realmente foi — <strong>setup técnico deliberado</strong> —, temos clareza para avaliar o que vem a seguir com o rigor que o momento exige.</p>
+    <div class="kpi"><strong>Marco zero da operação real:</strong> Data da consolidação técnica (tag 100% + site único + campanhas estruturadas + budget estável)</div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SEÇÃO 4: A Correção de Rotas -->
+<!-- ============================================ -->
+<section id="correcao">
+  <div class="section-label">Correção Aplicada</div>
+  <h2 class="section-title">Correção de<br><span>Rotas</span></h2>
+  <p class="section-sub">Com a infraestrutura no lugar, aplicamos as correções estruturais que transformam a operação. Cada ajuste ataca um dos elos que antes estavam quebrados.</p>
+
+  <div class="changes-list">
+    <div class="change-item">
+      <div class="change-icon">T</div>
+      <div class="change-content">
+        <h4>Tag UET: 66% → 100%</h4>
+        <p>Correção do maior gargalo técnico da conta. A tag passou a operar em capacidade total, eliminando a perda de ⅓ dos sinais de conversão que antes cegavam o algoritmo. O Bing Ads agora enxerga 100% dos eventos no domínio.</p>
+        <div class="change-meta">Sinal completo · Otimização por dados reais</div>
+      </div>
+    </div>
+    <div class="change-item">
+      <div class="change-icon blue">L</div>
+      <div class="change-content">
+        <h4>Site Único: premiumcleaningnj.com</h4>
+        <p>Direcionamento de todos os anúncios para o site comercial único premiumcleaningnj.com. Concentração de Quality Score, dados de conversão e relevância em um domínio que a plataforma aprende a reconhecer como autoridade em commercial cleaning.</p>
+        <div class="change-meta">Domínio único · V4 Pages · Tag embarcada</div>
+      </div>
+    </div>
+    <div class="change-item">
+      <div class="change-icon green">÷</div>
+      <div class="change-content">
+        <h4>Budget Estruturado em 2 Campanhas</h4>
+        <p>Distribuição do orçamento em duas frentes com objetivos complementares. Search captura intenção imediata; Audience constrói recall e remarketing. Cada campanha com lances otimizados independentes, permitindo que o algoritmo aprenda padrões específicos de cada audiência.</p>
+        <div class="change-meta">2 campanhas · Lances independentes · Cobertura complementar</div>
+      </div>
+    </div>
+    <div class="change-item">
+      <div class="change-icon green">≥</div>
+      <div class="change-content">
+        <h4>Consistência como Prioridade</h4>
+        <p>A principal variável que separa campanhas que convertem de campanhas que patinam é a consistência orçamentária. Um fluxo contínuo e previsível permite que o algoritmo de lances estabeleça correlações, calibre lances e otimize em tempo real sem interrupções que forçam reinícios de aprendizado.</p>
+        <div class="change-meta">Prioridade #1: consistência > volume</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="camp-grid" style="margin-top:48px">
+    <div class="camp-card green">
+      <div class="camp-header">
+        <h3>Search · Commercial Cleaning</h3>
+        <span class="camp-badge green">Lances Otimizados</span>
+      </div>
+      <div class="camp-body">
+        Campanha de busca com palavras-chave segmentadas por intenção comercial B2B. Foco em decisores de facilities management em NY e NJ buscando ativamente por serviços de limpeza comercial. Lances otimizados alimentados pela tag UET em 100%.
+      </div>
+      <div class="camp-metrics">
+        <div class="camp-metric"><span class="camp-metric-val">Busca</span><span class="camp-metric-label">Tipo</span></div>
+        <div class="camp-metric"><span class="camp-metric-val">Otimizado</span><span class="camp-metric-label">Lance</span></div>
+        <div class="camp-metric"><span class="camp-metric-val">100%</span><span class="camp-metric-label">Tag</span></div>
+      </div>
+    </div>
+    <div class="camp-card blue">
+      <div class="camp-header">
+        <h3>Audience · Property Mgmt</h3>
+        <span class="camp-badge blue">Segmentação B2B</span>
+      </div>
+      <div class="camp-body">
+        Campanha de audiência segmentando profissionais de property management por cargo. Remarketing de visitantes do site + prospecção de perfis similares. Aproveita a base de dados da UET para construir audiências qualificadas.
+      </div>
+      <div class="camp-metrics">
+        <div class="camp-metric"><span class="camp-metric-val">Job Title</span><span class="camp-metric-label">Segmentação</span></div>
+        <div class="camp-metric"><span class="camp-metric-val">Otimizado</span><span class="camp-metric-label">Lance</span></div>
+        <div class="camp-metric"><span class="camp-metric-val">24-48h</span><span class="camp-metric-label">Maturação</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SEÇÃO 5: Próximo Ciclo -->
+<!-- ============================================ -->
+<section id="proximo">
+  <div class="section-label">Avanço</div>
+  <h2 class="section-title">Próximo<br><span>Ciclo</span></h2>
+  <p class="section-sub">Com a correção de rotas concluída e todos os elos da cadeia de conversão engatados, o foco agora é manter as condições que permitem ao algoritmo aprender, calibrar e entregar. O próximo ciclo não é sobre "torcer para converter" — é sobre dar ao sistema o que ele precisa para operar.</p>
+
+  <div class="timeline">
+    <div class="phase">
+      <div class="phase-label">Fase 1</div>
+      <div class="phase-title">Maturação</div>
+      <div class="phase-period">24-48h</div>
+      <ul>
+        <li>Tag UET em 100% calibrando sinais</li>
+        <li>Algoritmo de lances absorvendo dados reais</li>
+        <li>Primeiros eventos de conversão registrados</li>
+        <li>Sem alterações na estrutura — estabilidade</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <div class="phase-label">Fase 2</div>
+      <div class="phase-title">Aprendizado</div>
+      <div class="phase-period">Semana 1-2</div>
+      <ul>
+        <li>Monitoramento de CPA emergente</li>
+        <li>Identificação de palavras de alta tração</li>
+        <li>Refinamento de segmentação por cargo</li>
+        <li>Avaliação de search impression share</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <div class="phase-label">Fase 3</div>
+      <div class="phase-title">Escala</div>
+      <div class="phase-period">Semana 3-4</div>
+      <ul>
+        <li>Consolidação de dados de performance</li>
+        <li>Decisão sobre elasticidade orçamentária</li>
+        <li>Expansão geográfica ou por audiência</li>
+        <li>Novo ciclo de reporting e ajustes</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="summary-box">
+    <h3>Condições para o sucesso do próximo ciclo</h3>
+    <p>O fator crítico neste momento é a <strong>consistência</strong>. O algoritmo de lances otimizados precisa de um fluxo contínuo e ininterrupto de dados para estabelecer padrões e calibrar lances. Cada interrupção no orçamento significa um reset parcial no aprendizado — e o relógio da maturação volta a zero.</p>
+    <p style="margin-top:12px">A decisão de estruturar o budget em duas campanhas, em vez de uma, não foi por acaso: campanhas com lances otimizados operam melhor com volumes dedicados do que com orçamentos consolidados. A divisão permite que cada algoritmo se especialize no seu funil — busca direta vs. construção de audiência — sem canibalizar o aprendizado uma da outra.</p>
+    <p style="margin-top:12px">A fase experimental cumpriu seu papel. A infraestrutura está no lugar. O que vier daqui para frente é consequência direta da solidez dessa base.</p>
+    <div class="kpi"><strong>Fator crítico de sucesso:</strong> Consistência orçamentária para maturação do modelo de lances</div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <p><strong>Premium Cleaning Services</strong> — Relatório de Correção de Rotas</p>
+    <p style="margin-top:4px;opacity:.6">Período: Junho de 2026 · Bing Ads · V4 Company</p>
+  </div>
+  <p style="text-align:right;">V4 Company · Peretto<br>Gerado em Junho de 2026</p>
+</footer>
+
+</body>
+</html>

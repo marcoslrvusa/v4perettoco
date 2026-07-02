@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task 02 — Refinamento dos SKILL.md | Agents Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #E31919; --red-gradient: linear-gradient(135deg, #E31919 0%, #FF4D4D 100%);
+  --white: #FFFFFF; --off-white: #F8F8F8;
+  --g50: #F2F2F2; --g100: #E0E0E0; --g200: #B0B0B0;
+  --g300: #808080; --g400: #606060; --g500: #404040; --g600: #303030; --g700: #202020;
+  --green: #22C55E; --amber: #D97706; --red-status: #DC2626;
+  --radius: 8px;
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body: 'Barlow', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+::selection { background: var(--red); color: var(--white); }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--white); color: var(--g600);
+  font-family: var(--font-body); font-size: 15px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.topbar {
+  background: var(--g700); padding: 14px 56px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+}
+.topbar-l { display: flex; align-items: center; gap: 14px; }
+.topbar-l img { height: 28px; }
+.topbar-d { width: 1px; height: 20px; background: var(--g400); }
+.topbar-t {
+  font-family: var(--font-display); font-size: 14px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--g200);
+}
+.topbar-t span { color: var(--red); }
+.topbar-r { display: flex; gap: 20px; align-items: center; }
+.topbar-r a {
+  font-family: var(--font-display); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--g200);
+  text-decoration: none; transition: color 0.2s;
+}
+.topbar-r a:hover { color: var(--white); }
+.topbar-cta {
+  background: var(--red-gradient); color: var(--white) !important;
+  padding: 7px 16px; font-size: 10px; letter-spacing: 0.12em;
+}
+.hero {
+  padding: 60px 56px 48px;
+  background: linear-gradient(180deg, var(--off-white) 0%, var(--white) 100%);
+  border-bottom: 1px solid var(--g100);
+}
+.hero-inner { max-width: 1120px; margin: 0 auto; }
+.hero-meta {
+  font-family: var(--font-display); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--g300);
+  margin-bottom: 4px;
+}
+.hero-meta strong { color: var(--g600); }
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 5vw, 52px); font-weight: 900;
+  line-height: 0.9; letter-spacing: -0.03em; text-transform: uppercase;
+  margin-bottom: 4px; color: var(--g700);
+}
+.hero h1 span { color: var(--red); }
+.hero-sub {
+  font-size: 15px; font-weight: 300; color: var(--g300);
+  max-width: 700px; line-height: 1.55; margin: 12px 0 28px;
+}
+.hero-sub strong { color: var(--g500); font-weight: 500; }
+.score-hero {
+  display: flex; align-items: center; gap: 24px;
+  background: var(--white); border: 1px solid var(--g100);
+  border-radius: var(--radius); padding: 20px 28px;
+  max-width: 1120px; margin: 0 auto 0;
+}
+.score-circle {
+  width: 72px; height: 72px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 28px; font-weight: 900;
+  color: var(--white);
+}
+.score-circle.amber { background: linear-gradient(135deg, #D97706, #F59E0B); }
+.score-info { flex: 1; }
+.score-label {
+  font-size: 10px; color: var(--g300); text-transform: uppercase;
+  letter-spacing: 0.08em; font-weight: 600;
+}
+.score-title {
+  font-family: var(--font-display); font-size: 18px; font-weight: 800;
+  text-transform: uppercase; color: var(--g700);
+}
+.score-bar-bg {
+  height: 8px; background: var(--g100); border-radius: 4px;
+  margin-top: 8px; overflow: hidden;
+}
+.score-bar-fill {
+  height: 100%; border-radius: 4px;
+  background: linear-gradient(90deg, #D97706, #F59E0B);
+}
+.score-stats { display: flex; gap: 20px; flex-shrink: 0; }
+.score-stat { text-align: center; }
+.score-stat-n {
+  font-family: var(--font-display); font-size: 22px; font-weight: 900;
+  color: var(--g700); line-height: 1;
+}
+.score-stat-l {
+  font-size: 9px; color: var(--g300); text-transform: uppercase;
+  letter-spacing: 0.06em; font-weight: 600;
+}
+section { padding: 48px 56px; border-bottom: 1px solid var(--g100); }
+.section-inner { max-width: 1120px; margin: 0 auto; }
+.section-alt { background: var(--off-white); }
+.stag {
+  font-family: var(--font-display); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--g300);
+  margin-bottom: 4px;
+}
+.stitle {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 32px); font-weight: 900;
+  line-height: 0.92; letter-spacing: -0.02em; text-transform: uppercase;
+  margin-bottom: 20px; color: var(--g700);
+}
+.stitle span { color: var(--red); }
+.sdesc {
+  font-size: 14px; color: var(--g300); font-weight: 300;
+  max-width: 660px; line-height: 1.55; margin-bottom: 24px;
+}
+.metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 32px; }
+.metric-card {
+  background: var(--white); border: 1px solid var(--g100);
+  border-radius: var(--radius); padding: 20px; text-align: center;
+}
+.metric-n {
+  font-family: var(--font-display); font-size: 28px; font-weight: 900;
+  color: var(--red); line-height: 1;
+}
+.metric-l {
+  font-size: 9px; color: var(--g300); text-transform: uppercase;
+  letter-spacing: 0.06em; font-weight: 600; margin-top: 4px;
+}
+.metric-d {
+  font-size: 12px; color: var(--g400); font-weight: 300; margin-top: 4px;
+}
+.dim-grid { display: grid; gap: 14px; margin-bottom: 28px; }
+.dim-item { 
+  background: var(--white); border: 1px solid var(--g100);
+  border-radius: var(--radius); padding: 16px 20px;
+  display: grid; grid-template-columns: 1fr 60px;
+  gap: 12px; align-items: center;
+}
+.dim-name {
+  font-family: var(--font-display); font-size: 14px; font-weight: 800;
+  text-transform: uppercase; color: var(--g700);
+}
+.dim-desc {
+  font-size: 12px; color: var(--g400); font-weight: 300;
+  margin-top: 2px;
+}
+.dim-score { text-align: center; }
+.dim-score-n {
+  font-family: var(--font-display); font-size: 22px; font-weight: 900;
+  line-height: 1;
+}
+.dim-bar { 
+  height: 5px; background: var(--g100); border-radius: 3px;
+  margin-top: 4px; overflow: hidden;
+}
+.dim-bar-fill { height: 100%; border-radius: 3px; }
+.impact-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 24px; }
+.impact-table th {
+  text-align: left; font-family: var(--font-display); font-size: 10px;
+  font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--g300); padding: 10px 14px;
+  border-bottom: 1px solid var(--g100);
+}
+.impact-table td {
+  padding: 12px 14px; border-bottom: 1px solid var(--g50);
+  color: var(--g500); font-weight: 300;
+}
+.impact-table td:first-child { font-weight: 500; color: var(--g700); }
+.impact-table tr:last-child td { border: none; }
+.impact-table .gain {
+  font-family: var(--font-display); font-weight: 800; color: var(--green);
+}
+.step-list { list-style: none; padding: 0; }
+.step-list li {
+  padding: 12px 0 12px 28px; position: relative;
+  border-bottom: 1px solid var(--g50);
+  font-size: 14px; color: var(--g500); font-weight: 300;
+}
+.step-list li::before {
+  content: ''; position: absolute; left: 6px; top: 18px;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--red);
+}
+.step-list li:last-child { border: none; }
+.step-list li strong { color: var(--g700); font-weight: 500; }
+.badge {
+  display: inline-block; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 2px 10px; border-radius: 3px;
+}
+.badge-red { background: rgba(227,25,25,0.08); color: var(--red); }
+.badge-green { background: rgba(34,197,94,0.08); color: var(--green); }
+.badge-amber { background: rgba(217,119,6,0.08); color: var(--amber); }
+.badge-gray { background: var(--g50); color: var(--g400); }
+.link-block {
+  background: var(--white); border: 1px solid var(--g100);
+  border-radius: var(--radius); padding: 20px 24px; margin-bottom: 10px;
+  text-decoration: none; display: block; transition: border-color 0.15s;
+}
+.link-block:hover { border-color: var(--red); }
+.link-h {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 2px;
+}
+.link-arrow {
+  font-family: var(--font-mono); font-size: 12px; color: var(--red);
+  font-weight: 500;
+}
+.link-title {
+  font-family: var(--font-display); font-size: 14px; font-weight: 800;
+  text-transform: uppercase; color: var(--g700);
+}
+.link-block:hover .link-title { color: var(--red); }
+.link-desc { font-size: 12px; color: var(--g300); font-weight: 300; margin-left: 22px; }
+footer {
+  padding: 28px 56px; display: flex;
+  justify-content: space-between; align-items: center;
+  background: var(--off-white); border-top: 1px solid var(--g100);
+}
+.ft { font-size: 11px; color: var(--g300); font-weight: 300; }
+.ft-brand { display: flex; align-items: center; gap: 10px; }
+.ft-brand img { height: 22px; opacity: 0.4; }
+.ft-l a {
+  font-size: 10px; color: var(--g300); text-decoration: none;
+  font-family: var(--font-display); font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; margin-left: 14px;
+}
+.ft-l a:hover { color: var(--g600); }
+@media (max-width: 768px) {
+  .topbar, .hero, section, footer { padding-left: 24px; padding-right: 24px; }
+  .score-hero { flex-direction: column; text-align: center; }
+  .score-stats { width: 100%; justify-content: center; }
+  .metric-grid { grid-template-columns: 1fr 1fr; }
+  .dim-item { grid-template-columns: 1fr 50px; }
+}
+@media (max-width: 480px) {
+  .metric-grid { grid-template-columns: 1fr; }
+  .topbar-r a:not(.topbar-cta) { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-l">
+    <img src="logo-peretto-red.png" alt="V4">
+    <div class="topbar-d"></div>
+    <span class="topbar-t">Agents <span>Hub</span></span>
+  </div>
+  <div class="topbar-r">
+    <a href="task-01-validacao-cargos.html">Task 01</a>
+    <a href="task-03-agentes-opencode.html">Task 03</a>
+    <a href="task-04-scaffold-vps.html">Task 04</a>
+    <a href="tasks-executivo.html" class="topbar-cta">✦ Executivo</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-meta">Task 02 · <strong>Semanas 2-3</strong> · Junho 2026</div>
+    <h1>Refinamento dos <span>SKILL.md</span></h1>
+    <p class="hero-sub">
+      <strong>Ajustar a lógica de cada skill</strong> com base no feedback das sessões de validação.
+      Descrições, trigger phrases, workflows e integrações — tudo falando a língua da área.
+    </p>
+  </div>
+</section>
+
+<!-- SCORE HERO -->
+<div style="max-width:1120px;margin:0 auto;padding:0 56px">
+  <div class="score-hero">
+    <div class="score-circle amber">5.0</div>
+    <div class="score-info">
+      <div class="score-label">Score geral da task</div>
+      <div class="score-title">Depende da Task 01 — não pode avançar sem validação</div>
+      <div class="score-bar-bg"><div class="score-bar-fill" style="width:50%"></div></div>
+    </div>
+    <div class="score-stats">
+      <div class="score-stat"><div class="score-stat-n">22</div><div class="score-stat-l">Skills-alvo</div></div>
+      <div class="score-stat"><div class="score-stat-n">6</div><div class="score-stat-l">Dimensões</div></div>
+      <div class="score-stat"><div class="score-stat-n">7%</div><div class="score-stat-l">Concluído</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- OBJETIVO -->
+<section>
+  <div class="section-inner">
+    <div class="stag">Objetivo</div>
+    <h2 class="stitle">Transformar SKILL.md genéricos em <span>instruções vivas</span></h2>
+    <p class="sdesc">
+      Hoje os SKILL.md têm a estrutura correta e estão em duplo-write, mas usam linguagem genérica.
+      Precisam refletir o vocabulário real de cada área — as palavras que Accounts, GTs, Copys e Designers
+      usam no dia a dia — para que o OpenCode invoque a skill certa na hora certa.
+    </p>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-n">22</div>
+        <div class="metric-l">Skills a refinar</div>
+        <div class="metric-d">5 ACC + 5 GT + 8 CPY + 4 DSG</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-n">6</div>
+        <div class="metric-l">Dimensões cada</div>
+        <div class="metric-d">Descrição, triggers, workflow, input, output, integrações</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-n">4</div>
+        <div class="metric-l">Áreas impactadas</div>
+        <div class="metric-d">Account · GT · Copy · Design</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-n">132</div>
+        <div class="metric-l">Ajustes potenciais</div>
+        <div class="metric-d">22 skills × 6 dimensões</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCORE POR DIMENSÃO -->
+<section class="section-alt">
+  <div class="section-inner">
+    <div class="stag">Score por dimensão</div>
+    <h2 class="stitle">O que está bom e o que <span>precisa melhorar</span></h2>
+    <p class="sdesc">
+      Avaliação pré-validação da qualidade atual dos SKILL.md. Os scores vão mudar
+      após o refinamento com feedback das áreas.
+    </p>
+
+    <div class="dim-grid">
+      <div class="dim-item">
+        <div class="dim-info">
+          <div class="dim-name">Estrutura SKILL.md</div>
+          <div class="dim-desc">Frontmatter, seções, duplo-write — tudo no padrão do Builders Hub</div>
+        </div>
+        <div class="dim-score">
+          <div class="dim-score-n" style="color:var(--green)">9</div>
+          <div class="dim-bar"><div class="dim-bar-fill" style="width:90%;background:linear-gradient(90deg,var(--green),#4ADE80)"></div></div>
+        </div>
+      </div>
+      <div class="dim-item">
+        <div class="dim-info">
+          <div class="dim-name">Cobertura de triggers</div>
+          <div class="dim-desc">Trigger phrases existem mas são genéricas — não usam o jargão da área</div>
+        </div>
+        <div class="dim-score">
+          <div class="dim-score-n" style="color:var(--amber)">6</div>
+          <div class="dim-bar"><div class="dim-bar-fill" style="width:60%;background:linear-gradient(90deg,var(--amber),#F59E0B)"></div></div>
+        </div>
+      </div>
+      <div class="dim-item">
+        <div class="dim-info">
+          <div class="dim-name">Workflow validity</div>
+          <div class="dim-desc">Passo-a-passo documentado mas não validado pelas áreas — precisa do feedback</div>
+        </div>
+        <div class="dim-score">
+          <div class="dim-score-n" style="color:var(--red-status)">5</div>
+          <div class="dim-bar"><div class="dim-bar-fill" style="width:50%;background:linear-gradient(90deg,var(--red-status),#EF4444)"></div></div>
+        </div>
+      </div>
+      <div class="dim-item">
+        <div class="dim-info">
+          <div class="dim-name">Duplo-write</div>
+          <div class="dim-desc">Skills espelhadas em .agents/ e .claude/ — verificado e consistente</div>
+        </div>
+        <div class="dim-score">
+          <div class="dim-score-n" style="color:var(--green)">9</div>
+          <div class="dim-bar"><div class="dim-bar-fill" style="width:90%;background:linear-gradient(90deg,var(--green),#4ADE80)"></div></div>
+        </div>
+      </div>
+      <div class="dim-item">
+        <div class="dim-info">
+          <div class="dim-name">Integrações MCP</div>
+          <div class="dim-desc">MCPs mapeados (Ekyte, Drive) mas sem validação de conectividade real</div>
+        </div>
+        <div class="dim-score">
+          <div class="dim-score-n" style="color:var(--red-status)">5</div>
+          <div class="dim-bar"><div class="dim-bar-fill" style="width:50%;background:linear-gradient(90deg,var(--red-status),#EF4444)"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANTES / DEPOIS -->
+<section>
+  <div class="section-inner">
+    <div class="stag">Impacto esperado</div>
+    <h2 class="stitle">Antes <span>vs</span> Depois</h2>
+    <p class="sdesc">
+      Skills mais precisas significam menos invocações erradas, maior adoção pelo time,
+      e agentes que realmente entendem o que o usuário pede.
+    </p>
+
+    <table class="impact-table">
+      <thead>
+        <tr><th style="width:34%">Métrica</th><th style="width:22%">Antes</th><th style="width:22%">Depois</th><th style="width:22%">Ganho</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Precisão de invocação</td><td>Trigger genérico</td><td>Linguagem da área</td><td class="gain">+40%</td></tr>
+        <tr><td>Skills com workflow validado</td><td>0</td><td>22</td><td class="gain">100%</td></tr>
+        <tr><td>Descrição alinhada ao time</td><td>Genérica</td><td>Específica por cargo</td><td class="gain">Alta</td></tr>
+        <tr><td>Integrações documentadas</td><td>Superficial</td><td>MCPs + APIs detalhados</td><td class="gain">Completo</td></tr>
+        <tr><td>Duplo-write consistente</td><td>✓</td><td>✓ verificado</td><td class="gain">9/10</td></tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:13px;color:var(--g300);font-weight:300">
+      <strong style="color:var(--g500)">Valor gerado:</strong> Cada skill refinada reduz em ~30% a chance de invocação errada.
+      Para 22 skills, significa ~7 invocações incorretas evitadas por semana.
+    </p>
+  </div>
+</section>
+
+<!-- SKILLS A REFINAR -->
+<section class="section-alt">
+  <div class="section-inner">
+    <div class="stag">Skills-alvo</div>
+    <h2 class="stitle">22 skills para <span>refinar</span></h2>
+    <p class="sdesc">
+      Distribuídas por área. Cada uma passará pelos 6 pontos de refinamento
+      assim que o feedback da Task 01 estiver disponível.
+    </p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px">
+      <div style="background:var(--white);border:1px solid var(--g100);border-radius:var(--radius);padding:16px 20px">
+        <div style="font-family:var(--font-display);font-size:13px;font-weight:800;text-transform:uppercase;color:var(--red);margin-bottom:8px">Account (5)</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px">
+          <span class="badge badge-red">account-checkin-roleplay</span>
+          <span class="badge badge-red">account-checkin-review</span>
+          <span class="badge badge-red">account-evolucao-checkins</span>
+          <span class="badge badge-red">account-handoff</span>
+          <span class="badge badge-red">account-pesquisa-profunda-cliente</span>
+        </div>
+      </div>
+      <div style="background:var(--white);border:1px solid var(--g100);border-radius:var(--radius);padding:16px 20px">
+        <div style="font-family:var(--font-display);font-size:13px;font-weight:800;text-transform:uppercase;color:var(--amber);margin-bottom:8px">GT / Tráfego (5)</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px">
+          <span class="badge badge-amber">gt-media-buyer-completo</span>
+          <span class="badge badge-amber">gt-relatorios-trafego</span>
+          <span class="badge badge-amber">v4mos-dados-meta-ads</span>
+          <span class="badge badge-amber">analytics-tracking</span>
+          <span class="badge badge-amber">paid-ads</span>
+        </div>
+      </div>
+      <div style="background:var(--white);border:1px solid var(--g100);border-radius:var(--radius);padding:16px 20px">
+        <div style="font-family:var(--font-display);font-size:13px;font-weight:800;text-transform:uppercase;color:var(--green);margin-bottom:8px">Copy (8)</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px">
+          <span class="badge badge-green">copywriting</span>
+          <span class="badge badge-green">copy-editing</span>
+          <span class="badge badge-green">copy-pipeline-conteudo</span>
+          <span class="badge badge-green">content-strategy</span>
+          <span class="badge badge-green">email-sequence</span>
+          <span class="badge badge-green">social-content</span>
+          <span class="badge badge-green">seo-audit</span>
+          <span class="badge badge-green">ai-seo</span>
+        </div>
+      </div>
+      <div style="background:var(--white);border:1px solid var(--g100);border-radius:var(--radius);padding:16px 20px">
+        <div style="font-family:var(--font-display);font-size:13px;font-weight:800;text-transform:uppercase;color:var(--g500);margin-bottom:8px">Design (4)</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px">
+          <span class="badge badge-gray">geral-frontend-design</span>
+          <span class="badge badge-gray">image</span>
+          <span class="badge badge-gray">video</span>
+          <span class="badge badge-gray">ad-creative</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;font-size:12px;color:var(--g300);font-weight:300">
+      + 5 skills de Account que estão no fluxo 01-account.md ·
+      + 8 skills de Copy no fluxo 02-copy.md ·
+      + 5 skills de GT no fluxo 03-gt.md
+    </div>
+  </div>
+</section>
+
+<!-- DEPENDÊNCIAS -->
+<section>
+  <div class="section-inner">
+    <div class="stag">Dependências</div>
+    <h2 class="stitle">Bloqueada pela <span>Task 01</span></h2>
+    <p class="sdesc">
+      Esta task não pode começar sem as sessões de validação. O refinamento
+      transforma feedback cru em mudanças concretas nos SKILL.md.
+    </p>
+
+    <div style="background:var(--white);border:1px solid var(--g100);border-radius:var(--radius);padding:20px 24px">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <a href="task-01-validacao-cargos.html" style="text-decoration:none"><span class="badge badge-red">Task 01</span></a>
+        <span style="font-size:13px;color:var(--g300)">→ fornece feedback →</span>
+        <span class="badge badge-amber"><strong>Task 02</strong></span>
+        <span style="font-size:13px;color:var(--g300)">→ gera skills refinadas →</span>
+        <a href="task-03-agentes-opencode.html" style="text-decoration:none"><span class="badge badge-green">Task 03</span></a>
+        <span style="font-size:13px;color:var(--g300)">→ e →</span>
+        <a href="task-04-scaffold-vps.html" style="text-decoration:none"><span class="badge badge-gray">Task 04</span></a>
+      </div>
+      <div style="font-size:12px;color:var(--g400);font-weight:300;margin-top:12px">
+        Sem validação, refinamos no escuro. O score 5.0 vai subir para 8+ após o ciclo completo.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRÓXIMOS PASSOS -->
+<section style="border-bottom:none">
+  <div class="section-inner">
+    <div class="stag">Próximos passos</div>
+    <h2 class="stitle">Fluxo de <span>refinamento</span></h2>
+
+    <ul class="step-list">
+      <li><strong>Aguardar Task 01</strong> — Coletar atas das 4 sessões de validação com feedback por skill.</li>
+      <li><strong>Refinar descrições</strong> — Ajustar texto de cada SKILL.md para usar linguagem da área.</li>
+      <li><strong>Mapear trigger phrases</strong> — Adicionar termos reais que o time usa no dia a dia.</li>
+      <li><strong>Ajustar workflows</strong> — Corrigir passo-a-passo conforme feedback da validação.</li>
+      <li><strong>Detalhar input/output</strong> — Especificar formato exato que cada skill espera e entrega.</li>
+      <li><strong>Mapear integrações</strong> — Detalhar quais MCPs/APIs cada skill precisa acessar.</li>
+      <li><strong>Verificar duplo-write</strong> — Garantir que .agents/ ↔ .claude/ estão espelhados.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-brand">
+    <img src="logo-peretto-red.png" alt="V4">
+    <span class="ft">V4 Company · Diretoria de AI</span>
+  </div>
+  <div class="ft-l">
+    <a href="tasks-executivo.html">Executivo</a>
+    <a href="task-01-validacao-cargos.html">Task 01</a>
+    <a href="task-03-agentes-opencode.html">Task 03</a>
+    <a href="task-04-scaffold-vps.html">Task 04</a>
+    <a href="artefatos.html">Artefatos</a>
+  </div>
+  <span class="ft">Score 5.0/10 · Junho 2026</span>
+</footer>
+
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+</body>
+</html>

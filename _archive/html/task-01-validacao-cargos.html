@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task 01 — Sessões de Validação por Cargo | Agents Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #E31919; --red-gradient: linear-gradient(135deg, #E31919 0%, #FF4D4D 100%);
+  --white: #FFFFFF; --off-white: #F8F8F8;
+  --g50: #F2F2F2; --g100: #E0E0E0; --g200: #B0B0B0;
+  --g300: #808080; --g400: #606060; --g500: #404040; --g600: #303030; --g700: #202020;
+  --green: #22C55E; --amber: #D97706; --red-status: #DC2626;
+  --radius: 8px;
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body: 'Barlow', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+::selection { background: var(--red); color: var(--white); }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--white); color: var(--g600);
+  font-family: var(--font-body); font-size: 15px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Topbar */
+.topbar {
+  background: var(--g700); padding: 14px 56px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+}
+.topbar-l { display: flex; align-items: center; gap: 14px; }
+.topbar-l img { height: 28px; }
+.topbar-d { width: 1px; height: 20px; background: var(--g400); }
+.topbar-t {
+  font-family: var(--font-display); font-size: 14px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--g200);
+}
+.topbar-t span { color: var(--red); }
+.topbar-r { display: flex; gap: 20px; align-items: center; }
+.topbar-r a {
+  font-family: var(--font-display); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--g200);
+  text-decoration: none; transition: color 0.2s;
+}
+.topbar-r a:hover { color: var(--white); }
+.topbar-cta {
+  background: var(--red-gradient); color: var(--white) !important;
+  padding: 7px 16px; font-size: 10px; letter-spacing: 0.12em;
+}
+
+/* Hero */
+.hero {
+  padding: 60px 56px 48px;
+  background: linear-gradient(180deg, var(--off-white) 0%, var(--white) 100%);
+  border-bottom: 1px solid var(--g100);
+}
+.hero-inner { max-width: 1120px; margin: 0 auto; }
+.hero-meta {
+  font-family: var(--font-display); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--g300);
+  margin-bottom: 4px;
+}
+.hero-meta strong { color: var(--g600); }
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 5vw, 52px); font-weight: 900;
+  line-height: 0.9; letter-spacing: -0.03em; text-transform: uppercase;
+  margin-bottom: 4px; color: var(--g700);
+}
+.hero h1 span { color: var(--red); }
+.hero-sub {
+  font-size: 15px; font-weight: 300; color: var(--g300);
+  max-width: 700px; line-height: 1.55; margin: 12px 0 28px;
+}
+.hero-sub strong { color: var(--g500); font-weight: 500; }
+
+/* Score Bar */
+.score-hero {
+  display: flex; align-items: center; gap: 24px;
+  background: var(--white); border: 1px solid var(--g100);
+  border-radius: var(--radius); padding: 20px 28px;
+  max-width: 1120px; margin: 0 auto 0;
+}
+.score-circle {
+  width: 72px; height: 72px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 28px; font-weight: 900;
+  color: var(--white);
+}
+.score-circle.yellow { background: linear-gradient(135deg, #D97706, #F59E0B); }
+.score-info { flex: 1; }
+.score-label {
+  font-size: 10px; color: var(--g300); text-transform: uppercase;
+  letter-spacing: 0.08em; font-weight: 600;
+}
+.score-title {
+  font-family: var(--font-display); font-size: 18px; font-weight: 800;
+  text-transform: uppercase; color: var(--g700);
+}
+.score-bar-bg {
+  height: 8px; background: var(--g100); border-radius: 4px;
+  margin-top: 8px; overflow: hidden;
+}
+.score-bar-fill {
+  height: 100%; border-radius: 4px;
+  background: linear-gradient(90deg, #D97706, #F59E0B);
+  width: 65%;
+}
+.score-stats { display: flex; gap: 20px; flex-shrink: 0; }
+.score-stat { text-align: center; }
+.score-stat-n {
+  font-family: var(--font-display); font-size: 22px; font-weight: 900;
+  color: var(--g700); line-height: 1;
+}
+.score-stat-l {
+  font-size: 9px; color: var(--g300); text-transform: uppercase;
+  letter-spacing: 0.06em; font-weight: 600;
+}
+
+/* Section */
+section { padding: 48px 56px; border-bottom: 1px solid var(--g100); }
+.section-inner { max-width: 1120px; margin: 0 auto; }
+.section-alt { background: var(--off-white); }
+
+.stag {
+  font-family: var(--font-display); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--g300);
+  margin-bottom: 4px;
+}
+.stitle {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 32px); font-weight: 900;
+  line-height: 0.92; letter-spacing: -0.02em; text-transform: uppercase;
+  margin-bottom: 20px; color: var(--g700);
+}
+.stitle span { color: var(--red); }
+.sdesc {
+  font-size: 14px; color: var(--g300); font-weight: 300;
+  max-width: 660px; line-height: 1.55; margin-bottom: 24px;
+}
+
+/* Metric Cards */
+.metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 32px; }
+.metric-card {
+  background: var(--white); border: 1px solid var(--g100);
+  border-radius: var(--radius); padding: 20px; text-align: center;
+}
+.metric-n {
+  font-family: var(--font-display); font-size: 28px; font-weight: 900;
+  color: var(--red); line-height: 1;
+}
+.metric-l {
+  font-size: 9px; color: var(--g300); text-transform: uppercase;
+  letter-spacing: 0.06em; font-weight: 600; margin-top: 4px;
+}
+.metric-d {
+  font-size: 12px; color: var(--g400); font-weight: 300; margin-top: 4px;
+}
+
+/* Dimension Scores */
+.dim-grid { display: grid; gap: 14px; margin-bottom: 28px; }
+.dim-item { 
+  background: var(--white); border: 1px solid var(--g100);
+  border-radius: var(--radius); padding: 16px 20px;
+  display: grid; grid-template-columns: 1fr 60px;
+  gap: 12px; align-items: center;
+}
+.dim-info {}
+.dim-name {
+  font-family: var(--font-display); font-size: 14px; font-weight: 800;
+  text-transform: uppercase; color: var(--g700);
+}
+.dim-desc {
+  font-size: 12px; color: var(--g400); font-weight: 300;
+  margin-top: 2px;
+}
+.dim-score { text-align: center; }
+.dim-score-n {
+  font-family: var(--font-display); font-size: 22px; font-weight: 900;
+  line-height: 1;
+}
+.dim-bar { 
+  height: 5px; background: var(--g100); border-radius: 3px;
+  margin-top: 4px; overflow: hidden;
+}
+.dim-bar-fill { height: 100%; border-radius: 3px; }
+
+/* Impact Table */
+.impact-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 24px; }
+.impact-table th {
+  text-align: left; font-family: var(--font-display); font-size: 10px;
+  font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--g300); padding: 10px 14px;
+  border-bottom: 1px solid var(--g100);
+}
+.impact-table td {
+  padding: 12px 14px; border-bottom: 1px solid var(--g50);
+  color: var(--g500); font-weight: 300;
+}
+.impact-table td:first-child { font-weight: 500; color: var(--g700); }
+.impact-table tr:last-child td { border: none; }
+.impact-table .gain {
+  font-family: var(--font-display); font-weight: 800; color: var(--green);
+}
+
+/* Link Block */
+.link-block {
+  background: var(--white); border: 1px solid var(--g100);
+  border-radius: var(--radius); padding: 20px 24px; margin-bottom: 10px;
+  text-decoration: none; display: block; transition: border-color 0.15s;
+}
+.link-block:hover { border-color: var(--red); }
+.link-h {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 2px;
+}
+.link-arrow {
+  font-family: var(--font-mono); font-size: 12px; color: var(--red);
+  font-weight: 500;
+}
+.link-title {
+  font-family: var(--font-display); font-size: 14px; font-weight: 800;
+  text-transform: uppercase; color: var(--g700);
+}
+.link-block:hover .link-title { color: var(--red); }
+.link-desc { font-size: 12px; color: var(--g300); font-weight: 300; margin-left: 22px; }
+
+/* Next Steps */
+.step-list { list-style: none; padding: 0; }
+.step-list li {
+  padding: 12px 0 12px 28px; position: relative;
+  border-bottom: 1px solid var(--g50);
+  font-size: 14px; color: var(--g500); font-weight: 300;
+}
+.step-list li::before {
+  content: ''; position: absolute; left: 6px; top: 18px;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--red);
+}
+.step-list li:last-child { border: none; }
+.step-list li strong { color: var(--g700); font-weight: 500; }
+
+/* Badge */
+.badge {
+  display: inline-block; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 2px 10px; border-radius: 3px;
+}
+.badge-red { background: rgba(227,25,25,0.08); color: var(--red); }
+.badge-green { background: rgba(34,197,94,0.08); color: var(--green); }
+.badge-amber { background: rgba(217,119,6,0.08); color: var(--amber); }
+.badge-gray { background: var(--g50); color: var(--g400); }
+
+/* Footer */
+footer {
+  padding: 28px 56px; display: flex;
+  justify-content: space-between; align-items: center;
+  background: var(--off-white); border-top: 1px solid var(--g100);
+}
+.ft { font-size: 11px; color: var(--g300); font-weight: 300; }
+.ft-brand { display: flex; align-items: center; gap: 10px; }
+.ft-brand img { height: 22px; opacity: 0.4; }
+.ft-l a {
+  font-size: 10px; color: var(--g300); text-decoration: none;
+  font-family: var(--font-display); font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; margin-left: 14px;
+}
+.ft-l a:hover { color: var(--g600); }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .topbar, .hero, section, footer { padding-left: 24px; padding-right: 24px; }
+  .score-hero { flex-direction: column; text-align: center; }
+  .score-stats { width: 100%; justify-content: center; }
+  .metric-grid { grid-template-columns: 1fr 1fr; }
+  .dim-item { grid-template-columns: 1fr 50px; }
+}
+@media (max-width: 480px) {
+  .metric-grid { grid-template-columns: 1fr; }
+  .topbar-r a:not(.topbar-cta) { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-l">
+    <img src="logo-peretto-red.png" alt="V4">
+    <div class="topbar-d"></div>
+    <span class="topbar-t">Agents <span>Hub</span></span>
+  </div>
+  <div class="topbar-r">
+    <a href="task-02-refinamento-skills.html">Task 02</a>
+    <a href="task-03-agentes-opencode.html">Task 03</a>
+    <a href="task-04-scaffold-vps.html">Task 04</a>
+    <a href="tasks-executivo.html" class="topbar-cta">✦ Executivo</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-meta">Task 01 · <strong>Semanas 1-2</strong> · Junho 2026</div>
+    <h1>Sessões de <span>Validação</span> por Cargo</h1>
+    <p class="hero-sub">
+      <strong>30 minutos com cada área</strong> — Account, GT, Copy e Design.
+      Roteiro pronto. Skills mapeadas. Pendente: agendar e rodar as sessões.
+    </p>
+  </div>
+</section>
+
+<!-- SCORE HERO -->
+<div style="max-width:1120px;margin:0 auto;padding:0 56px">
+  <div class="score-hero">
+    <div class="score-circle yellow">6.5</div>
+    <div class="score-info">
+      <div class="score-label">Score geral da task</div>
+      <div class="score-title">Maturidade: validação pendente de agendamento</div>
+      <div class="score-bar-bg"><div class="score-bar-fill" style="width:65%"></div></div>
+    </div>
+    <div class="score-stats">
+      <div class="score-stat"><div class="score-stat-n">4</div><div class="score-stat-l">Áreas</div></div>
+      <div class="score-stat"><div class="score-stat-n">22</div><div class="score-stat-l">Skills</div></div>
+      <div class="score-stat"><div class="score-stat-n">30</div><div class="score-stat-l">Min/sessão</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- OBJETIVO -->
+<section>
+  <div class="section-inner">
+    <div class="stag">Objetivo</div>
+    <h2 class="stitle">Validar fluxos, skills e <span>outputs</span> com cada área</h2>
+    <p class="sdesc">
+      Cada squad opera hoje no escuro — sem saber quais agentes existem, o que cada um faz,
+      e quando usar. O objetivo desta task é sentar com cada cargo por 30 minutos,
+      mostrar o fluxo proposto, validar se as skills certas estão mapeadas,
+      e capturar o que cada área realmente precisa.
+    </p>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-n">4</div>
+        <div class="metric-l">Sessões</div>
+        <div class="metric-d">Account · GT · Copy · Design</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-n">30</div>
+        <div class="metric-l">Minutos cada</div>
+        <div class="metric-d">Roteiro fechado, só validar</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-n">22</div>
+        <div class="metric-l">Skills mapeadas</div>
+        <div class="metric-d">5 ACC + 5 GT + 8 CPY + 4 DSG</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-n">2h</div>
+        <div class="metric-l">Investimento total</div>
+        <div class="metric-d">Desbloqueia 40+ skills</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATUS ATUAL -->
+<section class="section-alt">
+  <div class="section-inner">
+    <div class="stag">Status atual</div>
+    <h2 class="stitle">Pronto para rodar · <span>falta agendar</span></h2>
+    <p class="sdesc">
+      Todo o material de suporte está produzido: fluxos documentados, skills mapeadas,
+      roteiro de sessão escrito, perguntas-chave definidas. O que falta é marcar
+      os 30 minutos com cada área.
+    </p>
+
+    <div class="dim-grid">
+      <div class="dim-item">
+        <div class="dim-info">
+          <div class="dim-name">Fluxo proposto</div>
+          <div class="dim-desc">Macro fluxo documentado e validado internamente para cada cargo</div>
+        </div>
+        <div class="dim-score">
+          <div class="dim-score-n" style="color:var(--green)">8</div>
+          <div class="dim-bar"><div class="dim-bar-fill" style="width:80%;background:linear-gradient(90deg,var(--green),#4ADE80)"></div></div>
+        </div>
+      </div>
+      <div class="dim-item">
+        <div class="dim-info">
+          <div class="dim-name">Skills mapeadas</div>
+          <div class="dim-desc">22 skills identificadas por cargo com caminhos físicos no repositório</div>
+        </div>
+        <div class="dim-score">
+          <div class="dim-score-n" style="color:var(--green)">9</div>
+          <div class="dim-bar"><div class="dim-bar-fill" style="width:90%;background:linear-gradient(90deg,var(--green),#4ADE80)"></div></div>
+        </div>
+      </div>
+      <div class="dim-item">
+        <div class="dim-info">
+          <div class="dim-name">Fontes de dados</div>
+          <div class="dim-desc">APIs e MCPs mapeados: Ekyte, Google Drive, V4mos, GA4, Meta Ads</div>
+        </div>
+        <div class="dim-score">
+          <div class="dim-score-n" style="color:var(--amber)">7</div>
+          <div class="dim-bar"><div class="dim-bar-fill" style="width:70%;background:linear-gradient(90deg,var(--amber),#F59E0B)"></div></div>
+        </div>
+      </div>
+      <div class="dim-item">
+        <div class="dim-info">
+          <div class="dim-name">Output esperado</div>
+          <div class="dim-desc">Entregáveis por cargo definidos, mas precisam de confirmação do time</div>
+        </div>
+        <div class="dim-score">
+          <div class="dim-score-n" style="color:var(--amber)">7</div>
+          <div class="dim-bar"><div class="dim-bar-fill" style="width:70%;background:linear-gradient(90deg,var(--amber),#F59E0B)"></div></div>
+        </div>
+      </div>
+      <div class="dim-item">
+        <div class="dim-info">
+          <div class="dim-name">Adesão do time</div>
+          <div class="dim-desc">Nenhuma sessão realizada ainda — pendente de aprovação do coordenador</div>
+        </div>
+        <div class="dim-score">
+          <div class="dim-score-n" style="color:var(--red-status)">4</div>
+          <div class="dim-bar"><div class="dim-bar-fill" style="width:40%;background:linear-gradient(90deg,var(--red-status),#EF4444)"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACTO / VALOR GERADO -->
+<section>
+  <div class="section-inner">
+    <div class="stag">Impacto esperado</div>
+    <h2 class="stitle">Antes <span>vs</span> Depois</h2>
+    <p class="sdesc">
+      O ganho não está na task em si — está no que ela desbloqueia. Cada sessão de 30 minutos
+      valida de 5 a 8 skills, que o time inteiro passa a usar no dia seguinte.
+    </p>
+
+    <table class="impact-table">
+      <thead>
+        <tr><th style="width:34%">Métrica</th><th style="width:22%">Antes</th><th style="width:22%">Depois</th><th style="width:22%">Ganho</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Conhecimento dos agentes</td><td>Cada squad no escuro</td><td>4 fluxos validados</td><td class="gain">100%</td></tr>
+        <tr><td>Skills prontas pra uso</td><td>65 skills subutilizadas</td><td>22 skills ativadas</td><td class="gain">+22 skills</td></tr>
+        <tr><td>Tempo por sessão de descoberta</td><td>—</td><td>30 min por área</td><td class="gain">2h total</td></tr>
+        <tr><td>Trigger phrases alinhadas</td><td>Genéricas</td><td>Linguagem da área</td><td class="gain">Alta</td></tr>
+        <tr><td>Roteiro de validação</td><td>Não existe</td><td>Documentado em TASKS.md</td><td class="gain">✓</td></tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:13px;color:var(--g300);font-weight:300">
+      <strong style="color:var(--g500)">Valor gerado:</strong> Desbloqueia 40+ skills (22 específicas + 18 de base/growth).
+      Sem esta task, as Tasks 2, 3 e 4 não têm direção.
+    </p>
+  </div>
+</section>
+
+<!-- CONEXÕES -->
+<section class="section-alt" style="border-bottom:none">
+  <div class="section-inner">
+    <div class="stag">Conexões</div>
+    <h2 class="stitle">Fluxos <span>relacionados</span></h2>
+    <p class="sdesc">
+      Cada cargo tem seu fluxo documentado em <code style="font-family:var(--font-mono);font-size:12px;background:var(--g50);padding:1px 6px;border-radius:3px">docs/agent-hub/03-fluxos/</code>.
+      As sessões de validação conferem se esses fluxos refletem a realidade.
+    </p>
+
+    <a href="docs/agent-hub/03-fluxos/01-account.md" class="link-block">
+      <div class="link-h"><span class="link-arrow">▸</span><span class="link-title">Fluxo Account</span></div>
+      <div class="link-desc">Check-in com Ekyte no centro — pré-call, call, pós-call. 5 skills, 8 tools Ekyte.</div>
+    </a>
+    <a href="docs/agent-hub/03-fluxos/02-copy.md" class="link-block">
+      <div class="link-h"><span class="link-arrow">▸</span><span class="link-title">Fluxo Copy</span></div>
+      <div class="link-desc">Conteúdo do briefing à aprovação — 5 agentes, 8 skills, ciclo de revisão.</div>
+    </a>
+    <a href="docs/agent-hub/03-fluxos/03-gt.md" class="link-block">
+      <div class="link-h"><span class="link-arrow">▸</span><span class="link-title">Fluxo GT</span></div>
+      <div class="link-desc">Tráfego — análise, ação, reporte. 5 skills, V4mos API, flag ROI.</div>
+    </a>
+    <a href="docs/agent-hub/03-fluxos/04-coordenacao.md" class="link-block">
+      <div class="link-h"><span class="link-arrow">▸</span><span class="link-title">Fluxo Coordenação</span></div>
+      <div class="link-desc">Comitê de P&EG — briefing semanal com n8n, Ekyte como fonte única.</div>
+    </a>
+
+    <div style="margin-top:24px;padding:16px 20px;background:var(--white);border:1px solid var(--g100);border-radius:var(--radius)">
+      <div style="font-family:var(--font-display);font-size:12px;font-weight:700;text-transform:uppercase;color:var(--g400);margin-bottom:8px">Dependências entre tasks</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <span class="badge badge-red">Task 01</span>
+        <span style="font-size:13px;color:var(--g300);font-weight:300;line-height:1.8">→ desbloqueia →</span>
+        <a href="task-02-refinamento-skills.html" style="text-decoration:none"><span class="badge badge-amber">Task 02</span></a>
+        <span style="font-size:13px;color:var(--g300);font-weight:300;line-height:1.8">→ alimenta →</span>
+        <a href="task-03-agentes-opencode.html" style="text-decoration:none"><span class="badge badge-green">Task 03</span></a>
+        <span style="font-size:13px;color:var(--g300);font-weight:300;line-height:1.8">→ escala com →</span>
+        <a href="task-04-scaffold-vps.html" style="text-decoration:none"><span class="badge badge-gray">Task 04</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRÓXIMOS PASSOS -->
+<section style="border-bottom:none">
+  <div class="section-inner">
+    <div class="stag">Próximos passos</div>
+    <h2 class="stitle">O que <span>falta</span> para concluir</h2>
+
+    <ul class="step-list">
+      <li><strong>Agendar sessões</strong> — 30 min com Account, GT, Copy, Design. Roteiro já está em <code>TASKS.md</code>.</li>
+      <li><strong>Rodar validação Account</strong> — Validar fluxo pré-call → call → pós-call com Ekyte. Confirmar 5 skills.</li>
+      <li><strong>Rodar validação GT</strong> — Confirmar fontes de dados (Meta Ads, Google Ads, GA4). Validar flag ROI.</li>
+      <li><strong>Rodar validação Copy</strong> — Validar pipeline briefing → produção → aprovação. Priorizar tipos de conteúdo.</li>
+      <li><strong>Rodar validação Design</strong> — Validar fluxo de briefing via Ekyte. Priorizar tipos de asset.</li>
+      <li><strong>Gerar atas</strong> — Cada sessão produz 1 ata com ajustes validados, que alimenta a Task 02.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-brand">
+    <img src="logo-peretto-red.png" alt="V4">
+    <span class="ft">V4 Company · Diretoria de AI</span>
+  </div>
+  <div class="ft-l">
+    <a href="tasks-executivo.html">Executivo</a>
+    <a href="task-02-refinamento-skills.html">Task 02</a>
+    <a href="task-03-agentes-opencode.html">Task 03</a>
+    <a href="task-04-scaffold-vps.html">Task 04</a>
+    <a href="artefatos.html">Artefatos</a>
+  </div>
+  <span class="ft">Score 6.5/10 · Junho 2026</span>
+</footer>
+
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+</body>
+</html>

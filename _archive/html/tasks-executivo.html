@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agents Hub — Diretriz Executiva</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #E31919; --red-dark: #B80F0F; --red-light: #FF2424;
+  --red-gradient: linear-gradient(135deg, #E31919 0%, #FF4D4D 100%);
+  --white: #FFFFFF; --off-white: #F8F8F8;
+  --g50: #F5F5F5; --g100: #E8E8E8; --g200: #D0D0D0;
+  --g300: #A0A0A0; --g400: #707070; --g500: #505050;
+  --g600: #383838; --g700: #282828; --g800: #181818;
+  --green: #22C55E; --amber: #D97706;
+  --radius: 6px;
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body: 'Barlow', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+::selection { background: var(--red); color: var(--white); }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--white); color: var(--g800);
+  font-family: var(--font-body); font-size: 15px; line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+.topbar {
+  background: var(--g800); padding: 12px 56px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+}
+.topbar-l { display: flex; align-items: center; gap: 12px; }
+.topbar-l img { height: 28px; }
+.topbar-d { width: 1px; height: 20px; background: var(--g500); }
+.topbar-t {
+  font-family: var(--font-display); font-size: 14px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--g200);
+}
+.topbar-t span { color: var(--red); }
+.topbar-r { display: flex; align-items: center; gap: 20px; }
+.topbar-r a {
+  font-family: var(--font-display); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--g400);
+  text-decoration: none;
+}
+.topbar-r a:hover { color: var(--white); }
+.topbar-cta {
+  background: var(--red-gradient); color: var(--white) !important;
+  padding: 6px 16px; font-size: 10px;
+}
+
+/* ===== HERO / DIRECTIVE ===== */
+.hero {
+  padding: 72px 56px 56px;
+  background: linear-gradient(180deg, var(--off-white) 0%, var(--white) 100%);
+  border-bottom: 1px solid var(--g100);
+}
+.hero-inner { max-width: 1200px; margin: 0 auto; }
+.hero-meta {
+  font-family: var(--font-display); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--g400);
+  margin-bottom: 4px;
+}
+.hero-meta strong { color: var(--g800); }
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5.5vw, 64px); font-weight: 900;
+  line-height: 0.9; letter-spacing: -0.03em; text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.hero h1 span { color: var(--red); }
+.hero-sub {
+  font-size: 16px; font-weight: 300; color: var(--g400);
+  max-width: 700px; line-height: 1.55; margin: 16px 0 36px;
+}
+.hero-sub strong { color: var(--g700); font-weight: 500; }
+
+/* ===== STAT BAR ===== */
+.stat-bar {
+  display: flex; gap: 0; max-width: 1200px; margin: 0 auto;
+  border: 1px solid var(--g100); border-radius: var(--radius);
+  overflow: hidden;
+}
+.stat-item {
+  flex: 1; padding: 18px 24px; background: var(--white);
+  border-right: 1px solid var(--g100);
+}
+.stat-item:last-child { border-right: none; }
+.stat-n {
+  font-family: var(--font-display); font-size: 32px; font-weight: 900;
+  color: var(--red); line-height: 1;
+}
+.stat-l { font-size: 10px; color: var(--g300); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; margin-top: 2px; }
+.stat-d { font-size: 12px; color: var(--g400); font-weight: 300; margin-top: 4px; }
+
+/* ===== SECTION ===== */
+section { padding: 56px 56px; border-bottom: 1px solid var(--g100); }
+.section-inner { max-width: 1200px; margin: 0 auto; }
+.section-alt { background: var(--off-white); }
+
+.stag {
+  font-family: var(--font-display); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--red);
+  margin-bottom: 6px;
+}
+.stitle {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.5vw, 40px); font-weight: 900;
+  line-height: 0.92; letter-spacing: -0.02em; text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.stitle span { color: var(--red); }
+.sdesc {
+  font-size: 15px; color: var(--g400); max-width: 640px;
+  line-height: 1.55; font-weight: 300; margin-bottom: 32px;
+}
+
+/* ===== ROLE VALIDATION CARDS ===== */
+.role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.role-card {
+  background: var(--white); border: 1px solid var(--g100);
+  border-radius: var(--radius); padding: 24px;
+}
+.role-h {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px;
+}
+.role-name {
+  font-family: var(--font-display); font-size: 18px; font-weight: 800;
+  text-transform: uppercase;
+}
+.role-pill {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; padding: 2px 10px; border-radius: 3px;
+}
+.role-pill.r { background: rgba(227,25,25,0.08); color: var(--red); }
+.role-pill.g { background: rgba(34,197,94,0.08); color: var(--green); }
+.role-pill.a { background: rgba(217,119,6,0.08); color: var(--amber); }
+.role-pill.b { background: var(--g50); color: var(--g500); }
+.role-agent {
+  font-family: var(--font-mono); font-size: 11px; color: var(--red);
+  margin-bottom: 10px;
+}
+.role-skills { margin-bottom: 10px; }
+.role-skill {
+  display: inline-block; font-size: 10px; font-weight: 600;
+  letter-spacing: 0.04em; background: var(--g50); color: var(--g500);
+  padding: 2px 8px; border-radius: 3px; margin: 2px 3px 2px 0;
+  font-family: var(--font-mono);
+}
+.role-outcome { font-size: 13px; color: var(--g500); font-weight: 300; }
+.role-outcome strong { color: var(--g700); font-weight: 500; }
+
+/* ===== SKILLS TABLE ===== */
+.skill-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.skill-table th {
+  text-align: left; font-family: var(--font-display); font-size: 11px;
+  font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--g300); padding: 10px 12px;
+  border-bottom: 1px solid var(--g100);
+}
+.skill-table td {
+  padding: 10px 12px; border-bottom: 1px solid var(--g50);
+  color: var(--g500); font-weight: 300;
+}
+.skill-table td:first-child { font-family: var(--font-mono); font-size: 11px; color: var(--g800); font-weight: 400; }
+.skill-table tr:hover td { background: var(--off-white); }
+.skill-tag {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; padding: 1px 8px; border-radius: 3px;
+}
+.skill-tag.r { background: rgba(227,25,25,0.08); color: var(--red); }
+.skill-tag.g { background: rgba(34,197,94,0.08); color: var(--green); }
+.skill-tag.a { background: rgba(217,119,6,0.08); color: var(--amber); }
+.skill-tag.b { background: var(--g50); color: var(--g500); }
+
+/* ===== TIMELINE ===== */
+.tl { position: relative; padding-left: 32px; }
+.tl::before {
+  content: ''; position: absolute; left: 10px; top: 4px; bottom: 4px;
+  width: 2px; background: var(--g100);
+}
+.tl-item { position: relative; margin-bottom: 20px; }
+.tl-item::before {
+  content: ''; position: absolute; left: -26px; top: 6px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--white); border: 2px solid var(--g300);
+}
+.tl-item.done::before { background: var(--green); border-color: var(--green); }
+.tl-item.now::before { background: var(--red); border-color: var(--red); box-shadow: 0 0 0 4px rgba(227,25,25,0.12); }
+.tl-item.next::before { border-color: var(--g200); }
+.tl-week {
+  font-family: var(--font-display); font-size: 12px; font-weight: 700;
+  color: var(--g400); letter-spacing: 0.06em; text-transform: uppercase;
+}
+.tl-title { font-family: var(--font-display); font-size: 16px; font-weight: 800; text-transform: uppercase; }
+.tl-desc { font-size: 13px; color: var(--g400); font-weight: 300; line-height: 1.5; }
+.tl-item.now .tl-title { color: var(--red); }
+
+/* ===== POP STEPS ===== */
+.pop-block {
+  background: var(--white); border: 1px solid var(--g100);
+  border-radius: var(--radius); padding: 24px; margin-bottom: 10px;
+}
+.pop-h {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 6px;
+}
+.pop-n {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--red); color: var(--white); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 13px; font-weight: 900;
+}
+.pop-title { font-family: var(--font-display); font-size: 15px; font-weight: 800; text-transform: uppercase; }
+.pop-d { font-size: 13px; color: var(--g400); font-weight: 300; }
+.pop-code {
+  background: var(--off-white); border: 1px solid var(--g100);
+  border-radius: 4px; padding: 10px 14px; margin: 8px 0 0;
+  font-family: var(--font-mono); font-size: 11px; color: var(--g500);
+  overflow-x: auto; white-space: pre; line-height: 1.5;
+}
+
+/* ===== USAGE CARDS ===== */
+.usage-card {
+  background: var(--white); border: 1px solid var(--g100);
+  border-radius: var(--radius); padding: 20px;
+}
+.usage-agent {
+  font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+  color: var(--red); margin-bottom: 6px;
+}
+.usage-when { font-size: 11px; color: var(--g300); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; margin-bottom: 2px; }
+.usage-do { font-size: 13px; color: var(--g500); font-weight: 300; }
+.usage-example {
+  background: var(--off-white); border: 1px solid var(--g100);
+  border-radius: 3px; padding: 8px 12px; margin: 6px 0 0;
+  font-family: var(--font-mono); font-size: 11px; color: var(--g500);
+  line-height: 1.4;
+}
+
+/* ===== REQUIREMENTS BOX ===== */
+.req-box {
+  border: 2px solid var(--red); border-radius: var(--radius);
+  padding: 32px; background: linear-gradient(135deg, rgba(227,25,25,0.03) 0%, transparent 100%);
+}
+.req-title {
+  font-family: var(--font-display); font-size: 20px; font-weight: 900;
+  text-transform: uppercase; margin-bottom: 16px;
+}
+.req-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+.req-item {
+  background: var(--white); border: 1px solid var(--g100);
+  border-radius: var(--radius); padding: 18px;
+}
+.req-n {
+  font-family: var(--font-display); font-size: 24px; font-weight: 900;
+  color: var(--red); line-height: 1; margin-bottom: 4px;
+}
+.req-item h5 { font-family: var(--font-display); font-size: 14px; font-weight: 800; text-transform: uppercase; margin-bottom: 4px; }
+.req-item p { font-size: 12px; color: var(--g400); font-weight: 300; line-height: 1.5; }
+
+/* ===== LINK GRID ===== */
+.link-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.link-card {
+  background: var(--white); border: 1px solid var(--g100);
+  border-radius: var(--radius); padding: 18px 20px;
+  text-decoration: none; display: block;
+}
+.link-card:hover { border-color: var(--red); }
+.link-icon { font-size: 18px; margin-bottom: 4px; display: block; }
+.link-card h4 {
+  font-family: var(--font-display); font-size: 14px; font-weight: 800;
+  text-transform: uppercase; color: var(--g800); margin-bottom: 2px;
+}
+.link-card:hover h4 { color: var(--red); }
+.link-card p { font-size: 11px; color: var(--g300); font-weight: 300; }
+
+/* ===== FOOTER ===== */
+footer {
+  padding: 28px 56px; display: flex;
+  justify-content: space-between; align-items: center;
+  border-top: 1px solid var(--g100); background: var(--off-white);
+}
+.footer-brand { display: flex; align-items: center; gap: 10px; }
+.footer-brand img { height: 22px; opacity: 0.5; }
+.ft { font-size: 11px; color: var(--g300); font-weight: 300; }
+.ft-l a {
+  font-size: 10px; color: var(--g300); text-decoration: none;
+  font-family: var(--font-display); font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; margin-left: 14px;
+}
+.ft-l a:hover { color: var(--g600); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .role-grid { grid-template-columns: 1fr; }
+  .req-grid { grid-template-columns: 1fr; }
+  .link-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 900px) {
+  .topbar, .hero, section, footer { padding-left: 28px; padding-right: 28px; }
+  .stat-bar { flex-direction: column; }
+  .stat-item { border-right: none; border-bottom: 1px solid var(--g100); }
+  .link-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .topbar, .hero, section, footer { padding-left: 20px; padding-right: 20px; }
+  .topbar-r a:not(.topbar-cta) { display: none; }
+  .hero h1 { font-size: clamp(28px, 6vw, 34px); }
+  .stitle { font-size: clamp(22px, 4.5vw, 28px); }
+  .skill-table { font-size: 11px; }
+  .skill-table td, .skill-table th { padding: 6px 8px; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-l">
+    <img src="logo-peretto-red.png" alt="V4">
+    <div class="topbar-d"></div>
+    <span class="topbar-t">Agents <span>Hub</span></span>
+  </div>
+  <div class="topbar-r">
+    <a href="#cargos">Cargos</a>
+    <a href="#skills">Skills</a>
+    <a href="#caminho">POP</a>
+    <a href="#usar">Usar</a>
+    <a href="artefatos.html" class="topbar-cta">✦ Artefatos</a>
+  </div>
+</div>
+
+<!-- ===== DIRECTIVE ===== -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-meta">Diretriz · <strong>Diretoria de AI</strong> · Junho 2026</div>
+    <h1>Agents <span>Hub</span></h1>
+    <p class="hero-sub">
+      <strong>Decisão:</strong> implantar infraestrutura multi-agente de IA nos squads V4.
+      Stack rodando: LiteLLM + OpenCode Web na VPS + 36 agentes + 65+ skills.
+      <strong>O que falta é colocar os agentes nas mãos das áreas.</strong>
+    </p>
+    <div class="stat-bar">
+      <div class="stat-item"><span class="stat-n">65+</span><span class="stat-l">Skills</span><span class="stat-d">duplo-write .agents + .claude</span></div>
+      <div class="stat-item"><span class="stat-n">36</span><span class="stat-l">Agentes</span><span class="stat-d">.opencode/agents/ configurados</span></div>
+      <div class="stat-item"><span class="stat-n">4</span><span class="stat-l">Áreas</span><span class="stat-d">Account · GT · Copy · Design</span></div>
+      <div class="stat-item"><span class="stat-n">80</span><span class="stat-l">Usuários</span><span class="stat-d">na VPS via browser</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRE-VALIDAÇÃO POR CARGO ===== -->
+<section id="cargos">
+  <div class="section-inner">
+    <div class="stag">Pré-validação por cargo</div>
+    <h2 class="stitle">O que cada área <span>já tem</span> e o que vai ganhar</h2>
+    <p class="sdesc">
+      Baseado na análise do repositório, fluxos documentados e skills existentes,
+      abaixo está o mapeamento completo por cargo. Cada área precisa de 30 min
+      para confirmar ou ajustar — o roteiro já está pronto.
+    </p>
+
+    <div class="role-grid">
+      <div class="role-card">
+        <div class="role-h">
+          <span class="role-name">Account / CSM</span>
+          <span class="role-pill r">Piloto</span>
+        </div>
+        <div class="role-agent">@account-orchestrator · @csm-orquestrador</div>
+        <div class="role-skills">
+          <span class="role-skill">account-checkin-roleplay</span>
+          <span class="role-skill">account-checkin-review</span>
+          <span class="role-skill">account-evolucao-checkins</span>
+          <span class="role-skill">account-handoff</span>
+          <span class="role-skill">account-pesquisa-profunda-cliente</span>
+        </div>
+        <div class="role-outcome">
+          <strong>Antes:</strong> preparar check-in leva 30-45min, pós-call mais 30min, relatório manual.<br>
+          <strong>Depois:</strong> roleplay em 2min, review automático, flags em 48h, comitê em 5min.
+        </div>
+      </div>
+
+      <div class="role-card">
+        <div class="role-h">
+          <span class="role-name">GT / Tráfego</span>
+          <span class="role-pill a">Paralelo</span>
+        </div>
+        <div class="role-agent">@media-buyer · @midia-paga · @relatorios-trafego</div>
+        <div class="role-skills">
+          <span class="role-skill">gt-media-buyer-completo</span>
+          <span class="role-skill">gt-relatorios-trafego</span>
+          <span class="role-skill">v4mos-dados-meta-ads</span>
+          <span class="role-skill">analytics-tracking</span>
+          <span class="role-skill">paid-ads</span>
+        </div>
+        <div class="role-outcome">
+          <strong>Antes:</strong> relatório semanal consome 2-3h, dados dispersos em 3 plataformas.<br>
+          <strong>Depois:</strong> relatório consolidado em 5min, detecção de anomalias automática.
+        </div>
+      </div>
+
+      <div class="role-card">
+        <div class="role-h">
+          <span class="role-name">Copy / Conteúdo</span>
+          <span class="role-pill b">Sequencial</span>
+        </div>
+        <div class="role-agent">@copy-content · @content-studio · @pipeline-conteudo</div>
+        <div class="role-skills">
+          <span class="role-skill">copywriting</span>
+          <span class="role-skill">copy-editing</span>
+          <span class="role-skill">copy-pipeline-conteudo</span>
+          <span class="role-skill">content-strategy</span>
+          <span class="role-skill">email-sequence</span>
+          <span class="role-skill">social-content</span>
+          <span class="role-skill">seo-audit</span>
+          <span class="role-skill">ai-seo</span>
+        </div>
+        <div class="role-outcome">
+          <strong>Antes:</strong> produção manual, revisão sem critério, calendário no papel.<br>
+          <strong>Depois:</strong> pipeline completo com aprovação, SEO data-driven, calendário automático.
+        </div>
+      </div>
+
+      <div class="role-card">
+        <div class="role-h">
+          <span class="role-name">Design / Criação</span>
+          <span class="role-pill g">Básico</span>
+        </div>
+        <div class="role-agent">@criacao-design · @gerar-html · @gerar-pdf · @gerar-ppt</div>
+        <div class="role-skills">
+          <span class="role-skill">geral-frontend-design</span>
+          <span class="role-skill">image</span>
+          <span class="role-skill">video</span>
+          <span class="role-skill">ad-creative</span>
+        </div>
+        <div class="role-outcome">
+          <strong>Antes:</strong> briefing incompleto, retrabalho, ferramentas diferentes.<br>
+          <strong>Depois:</strong> geração de assets por briefing no Ekyte, revisão no Drive.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SKILLS CATALOG ===== -->
+<section class="section-alt" id="skills">
+  <div class="section-inner">
+    <div class="stag">Catálogo de Skills</div>
+    <h2 class="stitle">65+ skills · <span>22 por área</span> + 13 de base + 3 fontes</h2>
+    <p class="sdesc">
+      Skills organizadas por papel. Cada uma com descrição, trigger phrases e allowed-tools.
+      Todas em duplo-write (.agents/ + .claude/). Prontas para uso.
+    </p>
+
+    <table class="skill-table">
+      <thead>
+        <tr><th style="width:30%">Skill</th><th>Descrição</th><th style="width:60px">Área</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>account-checkin-roleplay</td><td>Prepara account pra check-in com ROPRE + roleplay com personas reais</td><td><span class="skill-tag r">ACC</span></td></tr>
+        <tr><td>account-checkin-review</td><td>Processa transcript, atualiza Mission Control, registra combinados</td><td><span class="skill-tag r">ACC</span></td></tr>
+        <tr><td>account-evolucao-checkins</td><td>Relatório de progressão entre check-ins com score de saúde</td><td><span class="skill-tag r">ACC</span></td></tr>
+        <tr><td>account-handoff</td><td>Setup inicial: form + transcript → KB + Mission Control + deck kickoff</td><td><span class="skill-tag r">ACC</span></td></tr>
+        <tr><td>account-pesquisa-profunda-cliente</td><td>Pesquisa Gemini Deep Research: cliente, produto, consumidor, concorrência</td><td><span class="skill-tag r">ACC</span></td></tr>
+        <tr><td>gt-media-buyer-completo</td><td>Arquitetura de contas, análise preditiva, otimização ROAS/CPA</td><td><span class="skill-tag a">GT</span></td></tr>
+        <tr><td>gt-relatorios-trafego</td><td>Relatório consolidado multicanal com detecção de anomalias</td><td><span class="skill-tag a">GT</span></td></tr>
+        <tr><td>v4mos-dados-meta-ads</td><td>Puxa dados de Meta Ads via API V4mos</td><td><span class="skill-tag a">GT</span></td></tr>
+        <tr><td>analytics-tracking</td><td>Setup e auditoria de tracking (GA4, GTM, eventos)</td><td><span class="skill-tag a">GT</span></td></tr>
+        <tr><td>paid-ads</td><td>Estratégia de campanhas Google/Meta/LinkedIn</td><td><span class="skill-tag a">GT</span></td></tr>
+        <tr><td>copywriting</td><td>Escreve copy para páginas, LPs, emails, anúncios</td><td><span class="skill-tag g">CPY</span></td></tr>
+        <tr><td>copy-editing</td><td>Edita e revisa copy existente</td><td><span class="skill-tag g">CPY</span></td></tr>
+        <tr><td>copy-pipeline-conteudo</td><td>Pipeline editorial: calendário → produção → aprovação → Drive</td><td><span class="skill-tag g">CPY</span></td></tr>
+        <tr><td>content-strategy</td><td>Planejamento de conteúdo, tópicos, calendário editorial</td><td><span class="skill-tag g">CPY</span></td></tr>
+        <tr><td>email-sequence</td><td>Sequências de email: nutrição, onboarding, re-engajamento</td><td><span class="skill-tag g">CPY</span></td></tr>
+        <tr><td>social-content</td><td>Conteúdo para redes sociais, threads, scripts de vídeo</td><td><span class="skill-tag g">CPY</span></td></tr>
+        <tr><td>seo-audit</td><td>Auditoria SEO técnica e on-page</td><td><span class="skill-tag g">CPY</span></td></tr>
+        <tr><td>ai-seo</td><td>Otimização para AI Search (AEO, GEO, LLMO)</td><td><span class="skill-tag g">CPY</span></td></tr>
+        <tr><td>geral-frontend-design</td><td>Cria interfaces frontend de alta qualidade</td><td><span class="skill-tag b">DSG</span></td></tr>
+        <tr><td>image</td><td>Cria, edita e otimiza imagens para marketing</td><td><span class="skill-tag b">DSG</span></td></tr>
+        <tr><td>video</td><td>Produz vídeos com IA (Remotion, HeyGen, Runway)</td><td><span class="skill-tag b">DSG</span></td></tr>
+        <tr><td>ad-creative</td><td>Gera variações de criativos para anúncios</td><td><span class="skill-tag b">DSG</span></td></tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:12px;font-size:12px;color:var(--g300);font-weight:300">
+      + 13 skills de base (onboarding, sync-hub, contexto, criador-de-skills, novo-squad/cliente/projeto, etc.)
+      · + 3 skills de fonte (n8n-architect, supabase, opensquad)
+      · + skills de marketing/growth (cold-email, lead-magnets, referral-program, churn-prevention, etc.)
+    </div>
+  </div>
+</section>
+
+<!-- ===== CAMINHO TÉCNICO ===== -->
+<section id="caminho">
+  <div class="section-inner">
+    <div class="stag">Caminho técnico</div>
+    <h2 class="stitle">2 tracks paralelas · <span>4 semanas</span></h2>
+    <p class="sdesc">
+      Track A (validação → piloto) e Track B (infra → escala) rodam simultaneamente.
+      Skills já estão no repositório — o caminho é: instalar, conectar, testar.
+    </p>
+
+    <!-- TRACK A TIMELINE -->
+    <div style="margin-bottom:8px">
+      <span style="font-family:var(--font-display);font-size:12px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);background:rgba(227,25,25,0.08);padding:3px 12px;border-radius:3px">TRACK A</span>
+      <span style="font-size:12px;color:var(--g300);margin-left:10px">Descoberta + Piloto · sequencial</span>
+    </div>
+
+    <div class="tl">
+      <div class="tl-item now">
+        <div class="tl-week">Semanas 1-2</div>
+        <div class="tl-title">Discovery com as áreas</div>
+        <div class="tl-desc">30 min com Account, GT, Copy, Design. Roteiro pronto. Validar fluxos reais, dores, skills. Entregável: 1 doc por cargo.</div>
+      </div>
+      <div class="tl-item next">
+        <div class="tl-week">Semanas 3-4</div>
+        <div class="tl-title">Piloto Account/CSM</div>
+        <div class="tl-desc">@account-orchestrator + @csm-orquestrador rodando com 1 squad real. Ciclo completo: roleplay → call → review → flag. Entregável: relatório de aprendizado.</div>
+      </div>
+    </div>
+
+    <!-- TRACK B TIMELINE -->
+    <div style="margin:28px 0 8px">
+      <span style="font-family:var(--font-display);font-size:12px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--g600);background:var(--g50);padding:3px 12px;border-radius:3px">TRACK B</span>
+      <span style="font-size:12px;color:var(--g300);margin-left:10px">Infraestrutura · paralelo</span>
+    </div>
+
+    <div class="tl">
+      <div class="tl-item now">
+        <div class="tl-week">Semanas 1-3</div>
+        <div class="tl-title">Stack VPS + LiteLLM + n8n</div>
+        <div class="tl-desc">OpenCode Web via browser. LiteLLM gateway. n8n crons. Ekyte MCP como integração primária. Entregável: stack rodando com SSL.</div>
+      </div>
+      <div class="tl-item next">
+        <div class="tl-week">Semanas 3-4</div>
+        <div class="tl-title">Funções, rotinas e escala</div>
+        <div class="tl-desc">Operacionalizar: agente por cargo, crons, dashboards, onboarding para 80 usuários. Entregável: guia de uso + templates por cargo.</div>
+      </div>
+    </div>
+
+    <!-- POP: AGENTES NO OPENCODE WEB -->
+    <div style="margin-top:36px">
+      <div class="stag">POP · Agentes no OpenCode Web</div>
+      <h2 class="stitle" style="font-size:22px;margin-bottom:4px">Procedimento para ativar agentes na <span>VPS</span></h2>
+      <p class="sdesc" style="font-size:13px;margin-bottom:16px">
+        OpenCode Web já está rodando na VPS. Ambientes e ferramentas configurados.
+        Seguir o POP abaixo para garantir que os agentes estejam disponíveis.
+      </p>
+
+      <div class="pop-block">
+        <div class="pop-h">
+          <span class="pop-n">1</span>
+          <span class="pop-title">Sincronizar repositório na VPS</span>
+        </div>
+        <div class="pop-d">Puxar a versão mais recente do Builders Hub com as skills e agentes atualizados.</div>
+        <div class="pop-code">ssh root@vps-hostinger
+cd /home/opencode/hub
+git pull origin main
+# Verificar se há novos agentes em .opencode/agents/
+ls .opencode/agents/</div>
+      </div>
+
+      <div class="pop-block">
+        <div class="pop-h">
+          <span class="pop-n">2</span>
+          <span class="pop-title">Configurar modelos no LiteLLM</span>
+        </div>
+        <div class="pop-d">Garantir que o gateway de modelos tenha as chaves corretas e os rate limits por agente.</div>
+        <div class="pop-code"># litellm-config.yaml — já existe na VPS
+# Verificar se as chaves estão no .env:
+#   GEMINI_API_KEY, OPENROUTER_API_KEY
+# Modelos configurados: deepseek-v4-flash, gemini-2.5-flash, gpt-oss-120b
+docker restart litellm
+docker logs litellm --tail 10</div>
+      </div>
+
+      <div class="pop-block">
+        <div class="pop-h">
+          <span class="pop-n">3</span>
+          <span class="pop-title">Conectar MCPs (Ekyte + Google Drive)</span>
+        </div>
+        <div class="pop-d">Agentes precisam dos MCPs para acessar dados reais. Ekyte é a integração primária.</div>
+        <div class="pop-code"># Verificar opencode.json na VPS:
+# "mcp": {
+#   "ekyte": { "type": "remote", "url": "...token...", "enabled": true },
+#   "google-drive": { "type": "remote", "url": "...", "enabled": true }
+# }
+# Testar conectividade:
+curl -X POST https://api.ekyte.com/mcp/ping \
+  -H "Authorization: Bearer ${EKYTE_MCP_TOKEN}"</div>
+      </div>
+
+      <div class="pop-block">
+        <div class="pop-h">
+          <span class="pop-n">4</span>
+          <span class="pop-title">Carregar e testar agentes</span>
+        </div>
+        <div class="pop-d">OpenCode Web descobre agentes automaticamente de .opencode/agents/. Validar com um teste real.</div>
+        <div class="pop-code"># Listar agentes disponíveis:
+opencode agents list
+
+# Testar agente Account (ciclo completo):
+opencode run @account-orchestrator "status do squad piloto"
+
+# Testar flag de churn:
+opencode run @flag-churn "analisar cliente X"
+
+# Verificar se skills estão sendo carregadas:
+opencode run @copy-content "quais skills voce tem disponiveis"</div>
+      </div>
+
+      <div class="pop-block">
+        <div class="pop-h">
+          <span class="pop-n">5</span>
+          <span class="pop-title">Liberar acesso aos usuários</span>
+        </div>
+        <div class="pop-d">Cada squad recebe a URL, a senha e o guia rápido de uso. Nada de setup local.</div>
+        <div class="pop-code"># URL de acesso:
+https://opencode.v4.company.com
+
+# Senha compartilhada (definida em OPENCODE_SERVER_PASSWORD)
+# Cada usuário acessa pelo browser — zero instalação
+
+# Guia rápido enviado junto com o acesso:
+# "Use @nome-do-agente + o que voce precisa"</div>
+      </div>
+    </div>
+
+    <!-- USAGE GUIDE -->
+    <div id="usar" style="margin-top:44px;scroll-margin-top:80px">
+      <div class="stag">Guia de uso · OpenCode Web</div>
+      <h2 class="stitle" style="font-size:22px;margin-bottom:4px">Como as pessoas <span>usam</span></h2>
+      <p class="sdesc" style="font-size:13px;margin-bottom:16px">
+        Não precisa instalar nada. Não precisa configurar modelo. Não precisa de chave de API.
+        Abre o navegador, digita @ e o nome do agente, faz o pedido em português.
+      </p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+
+        <div class="usage-card">
+          <div class="usage-agent">@account-orchestrator</div>
+          <div class="usage-when">Pré check-in · Pós call · Diagnóstico</div>
+          <div class="usage-do">Prepara reunião, processa transcript, atualiza mission control</div>
+          <div class="usage-example">"@account-orchestrator Vou ter check-in com o cliente X amanhã. Me prepara."</div>
+        </div>
+
+        <div class="usage-card">
+          <div class="usage-agent">@csm-orquestrador</div>
+          <div class="usage-when">Setup · Flags · Comitê</div>
+          <div class="usage-do">Orquestra a saúde do cliente, detecta flags, prepara comitê</div>
+          <div class="usage-example">"@csm-orquestrador Roda detecção de flags do squad Prime."</div>
+        </div>
+
+        <div class="usage-card">
+          <div class="usage-agent">@media-buyer</div>
+          <div class="usage-when">Análise de performance · Otimização</div>
+          <div class="usage-do">Analisa ROAS, sugere otimizações, projeta cenários</div>
+          <div class="usage-example">"@media-buyer Analisa ROAS do cliente X nos últimos 30 dias."</div>
+        </div>
+
+        <div class="usage-card">
+          <div class="usage-agent">@relatorios-trafego</div>
+          <div class="usage-when">Relatório semanal · Detecção de anomalias</div>
+          <div class="usage-do">Gera relatório consolidado multicanal com alertas</div>
+          <div class="usage-example">"@relatorios-trafego Gera relatório do cliente X essa semana."</div>
+        </div>
+
+        <div class="usage-card">
+          <div class="usage-agent">@copy-content</div>
+          <div class="usage-when">Produção · Revisão · Calendário</div>
+          <div class="usage-do">Escreve copy, revisa conteúdo, sugere pautas</div>
+          <div class="usage-example">"@copy-content Produz LP para campanha do cliente X. Briefing no Drive."</div>
+        </div>
+
+        <div class="usage-card">
+          <div class="usage-agent">@criacao-design</div>
+          <div class="usage-when">Interfaces · Assets · Apresentações</div>
+          <div class="usage-do">Gera HTML/CSS, imagens, PDFs, slides</div>
+          <div class="usage-example">"@criacao-design Cria landing page para campanha do cliente X."</div>
+        </div>
+
+        <div class="usage-card">
+          <div class="usage-agent">@flag-churn</div>
+          <div class="usage-when">NPS/CSAT em queda</div>
+          <div class="usage-do">Diagnostica risco, sugere plano de retenção</div>
+          <div class="usage-example">"@flag-churn Analisa cliente X. NPS caiu 15 pontos."</div>
+        </div>
+
+        <div class="usage-card">
+          <div class="usage-agent">@executor-comite</div>
+          <div class="usage-when">Semanal · Comitê de P&amp;EG</div>
+          <div class="usage-do">Gera briefing automático com dados reais de OKRs e sprints</div>
+          <div class="usage-example">"@executor-comite Gera briefing do comitê dessa semana."</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== RECURSOS ===== -->
+<section class="section-alt" id="recursos">
+  <div class="section-inner">
+    <div class="stag">Recursos necessários</div>
+    <h2 class="stitle">3 itens para <span>executar</span></h2>
+    <p class="sdesc">
+      Não é orçamento. Não é compra. São acessos e validação.
+      O código, as skills, os agentes e o manual já existem.
+    </p>
+
+    <div class="req-box">
+      <div class="req-title">▸ O que precisa ser liberado</div>
+      <div class="req-grid">
+        <div class="req-item">
+          <div class="req-n">01</div>
+          <h5>Validar com as áreas</h5>
+          <p>30 min com Account, GT, Copy e Design. Roteiro pronto, só agendar. Cada sessão confirmar ou ajustar o fluxo proposto.</p>
+        </div>
+        <div class="req-item">
+          <div class="req-n">02</div>
+          <h5>Acesso às APIs</h5>
+          <p>Credenciais: Google Ads, Meta Ads, GA4, Ekyte (MCP token). Os agentes precisam de dados reais para funcionar.</p>
+        </div>
+        <div class="req-item">
+          <div class="req-n">03</div>
+          <h5>Validar setup VPS</h5>
+          <p>OpenCode Web já está no ar. Apenas sincronizar skills + configurar MCPs (Ekyte, Google Drive). 1h.</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:36px">
+      <div class="stag">Documentos</div>
+      <h2 class="stitle" style="font-size:22px;margin-bottom:4px">Artefatos <span>produzidos</span></h2>
+      <p class="sdesc" style="font-size:13px;margin-bottom:16px">Todo o material de suporte para apresentação e execução.</p>
+
+      <div class="link-grid">
+        <a href="artefatos.html" class="link-card">
+          <span class="link-icon">▸</span>
+          <h4>Biblioteca de Artefatos</h4>
+          <p>Página dedicada com todos os 12 artefatos, metadados, status e links diretos.</p>
+        </a>
+        <a href="docs/agents-hub/TASKS.md" class="link-card">
+          <span class="link-icon">▸</span>
+          <h4>Plano de Tasks</h4>
+          <p>897 linhas. 4 tasks detalhadas com roteiro, skills, comandos VPS e guia por squad.</p>
+        </a>
+        <a href="docs/AGENT-HUB-OPERACIONAL.md" class="link-card">
+          <span class="link-icon">▸</span>
+          <h4>Manual Operacional</h4>
+          <p>1.116 linhas. Stack, MCPs, fluxos, custos, segurança, onboarding, emergência.</p>
+        </a>
+        <a href="ORCHESTRA.md" class="link-card">
+          <span class="link-icon">▸</span>
+          <h4>Orquestra de Agentes</h4>
+          <p>414 linhas. 36 agentes, 8 formações, 5 padrões de orquestração, cenários reais.</p>
+        </a>
+        <a href="agents-hub.html" class="link-card">
+          <span class="link-icon">▸</span>
+          <h4>Site Institucional</h4>
+          <p>Visão completa: arquitetura, catálogo, 80/20, roadmap e filosofia do projeto.</p>
+        </a>
+        <a href="assets/html/engine-room.html" class="link-card">
+          <span class="link-icon">▸</span>
+          <h4>Engine Room</h4>
+          <p>"Sala de máquinas" — arquitetura técnica completa dos agentes de operação V4.</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">
+    <img src="logo-peretto-red.png" alt="V4">
+    <span class="ft">V4 Company · Diretoria de AI</span>
+  </div>
+  <div class="ft-l">
+    <a href="#">Início</a>
+    <a href="#cargos">Cargos</a>
+    <a href="#skills">Skills</a>
+    <a href="#caminho">POP</a>
+    <a href="#usar">Usar</a>
+    <a href="#recursos">Recursos</a>
+  </div>
+  <span class="ft">Junho 2026 · v3.0</span>
+</footer>
+
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+</body>
+</html>

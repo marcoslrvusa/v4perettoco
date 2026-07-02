@@ -1,0 +1,66 @@
+{
+  "name": "Brinks - Form1 Telefone para Planilha",
+  "nodes": [
+    {
+      "id": "webhook-form1",
+      "name": "Webhook Form1",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [250, 300],
+      "webhookId": "brinks-form1-webhook",
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "brinks-form1",
+        "responseMode": "onReceived",
+        "responseData": "firstEntryJson",
+        "options": {}
+      }
+    },
+    {
+      "id": "normalizar-form1",
+      "name": "Normalizar Dados",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [500, 300],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "const item = $input.first().json;\nreturn {\n  timestamp: new Date().toISOString(),\n  telefone: item.telefone || '',\n  consentimento_lgpd: item.consentimento_lgpd || '',\n  url: item.url || ''\n};"
+      }
+    },
+    {
+      "id": "sheets-form1",
+      "name": "Salvar na Planilha",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [750, 300],
+      "parameters": {
+        "resource": "sheet",
+        "operation": "appendOrUpdate",
+        "documentId": { "mode": "list", "value": "COLE_O_ID_DA_PLANILHA" },
+        "sheetName": { "mode": "list", "value": "Sheet1" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": [
+            { "column": "timestamp", "value": "={{ $json.timestamp }}" },
+            { "column": "telefone", "value": "={{ $json.telefone }}" },
+            { "column": "consentimento_lgpd", "value": "={{ $json.consentimento_lgpd }}" },
+            { "column": "url", "value": "={{ $json.url }}" }
+          ]
+        },
+        "options": { "cellFormat": "USER_ENTERED", "handlingExtraData": "insertInNewColumn" }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook Form1": {
+      "main": [[{ "node": "Normalizar Dados", "type": "main", "index": 0 }]]
+    },
+    "Normalizar Dados": {
+      "main": [[{ "node": "Salvar na Planilha", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "active": false,
+  "tags": []
+}

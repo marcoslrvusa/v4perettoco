@@ -1,0 +1,32 @@
+{
+  "date": "2026-06-22",
+  "time": "18:00",
+  "title": "SDR IA ADPLAN — Auditoria e Correção de Nós",
+  "workflowId": "23VCGqmdeVhbHukI",
+  "environment": "fvmarketing",
+  "analysis": "Comparação entre ADPLAN__SDR_IA__ORIGINAL_16jun.json e SDR IA - ADPLAN (for review).json",
+  "findings": [
+    "Switch — last() on null: regras sem safe access",
+    "HTTP Request — webhook deletado retornando 404",
+    "Responde texto x4 — Invalid expression em $json.output e camposIniciais sem ?.",
+    "Code in JavaScript2 + 3 — timeout 300s por falta de batch iteration + retryOnFail excessivo"
+  ],
+  "fixesApplied": [
+    "Switch: safe access ?. + guarda ternária em left/right values",
+    "HTTP Request: continueOnFail: true + safe access no phone",
+    "Responde texto: ?. em toda cadeia + fallbacks || ''",
+    "Responde texto1: mesmo padrão com whatsapp.evo.apikey",
+    "Responde texto2: ?. + first() + fallbacks",
+    "Responde texto3: mesmo padrão com whatsapp.evo.apikey",
+    "Code JS2: batch iteration com $input.all() + safe access + removeu retryOnFail",
+    "Code JS3: batch iteration com $input.all() + safe access"
+  ],
+  "pendingActions": [
+    "Switch Regra 2 rightValue ainda pendente de safe access manual",
+    "Push do JSON corrigido para n8n (npx n8nac push)",
+    "Testar execução com lead real",
+    "Decidir futuro do HTTP Request (PATCH Kommo original vs continueOnFail)"
+  ],
+  "reportGenerated": "bases/fluxos-n8n/SDR_IA/reporte-auditoria-adplan-2026-06-22.md",
+  "createdAt": "2026-06-22T18:00:00-03:00"
+}
