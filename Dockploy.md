@@ -6,6 +6,21 @@ version: '3.8'
 # Domínios:
 #   auth.fvmarketing.com.br         → Authelia (tela de login)
 #   opencode.fvmarketing.com.br     → opencode-login → roteia pro user
+#   litellm.fvmarketing.com.br      → LiteLLM Admin UI (gateway de modelos)
+#
+# Arquitetura:
+#   User → Authelia → opencode-login → opencode-web-{user} → LiteLLM → Modelos
+#   Cada usuário tem seu container OpenCode Web com chave virtual LiteLLM
+#   própria → sessões isoladas + rate limits por squad + tracking de gastos
+#
+# Setup inicial:
+#   1. Configure .env com as chaves (use .env.example como base)
+#   2. Crie os usuários em users.json e gere os hashes:
+#        node gerar-senha.js <senha>
+#   3. Suba a stack: litellm-db + litellm primeiro
+#   4. Gere as virtual keys no LiteLLM:
+#        bash gerar-keys-litellm.sh
+#   5. Suba o resto dos containers
 #
 # FASE 1: Só subir authelia-redis + authelia + opencode-login
 #         (opencode-web containers sobem depois)
@@ -72,35 +87,37 @@ services:
       - authelia
     restart: unless-stopped
 
-  # ─── OpenCode Web — marcos.luciano ───
+  # ─── OpenCode Web — marcos.luciano (Tech Lead) ───
   opencode-web-marcos-luciano:
     image: node:22-bookworm
     container_name: opencode-web-marcos-luciano
-    command: >
-      bash -c "apt-get update && apt-get install -y git curl sudo && 
-      npm install -g opencode-ai && 
-      opencode web --hostname 0.0.0.0 --port 4096"
+    command: bash /entrypoint.sh
+    environment:
+      - LITELLM_VIRTUAL_KEY=${LITELLM_KEY_MARCOS}
+      - OPENCODE_PORT=4096
     networks:
       - dokploy-network
     volumes:
       - opencode_workspace_marcos_luciano:/workspace
       - opencode_config_marcos_luciano:/root/.config/opencode
+      - ./projetos/infraestrutura/opencode-login/entrypoint.sh:/entrypoint.sh:ro
     working_dir: /workspace
     restart: unless-stopped
 
-  # ─── OpenCode Web — fhelipe.aranha ───
+  # ─── OpenCode Web — fhelipe.aranha (Account) ───
   opencode-web-fhelipe-aranha:
     image: node:22-bookworm
     container_name: opencode-web-fhelipe-aranha
-    command: >
-      bash -c "apt-get update && apt-get install -y git curl sudo && 
-      npm install -g opencode-ai && 
-      opencode web --hostname 0.0.0.0 --port 4096"
+    command: bash /entrypoint.sh
+    environment:
+      - LITELLM_VIRTUAL_KEY=${LITELLM_KEY_FHELIPE}
+      - OPENCODE_PORT=4096
     networks:
       - dokploy-network
     volumes:
       - opencode_workspace_fhelipe_aranha:/workspace
       - opencode_config_fhelipe_aranha:/root/.config/opencode
+      - ./projetos/infraestrutura/opencode-login/entrypoint.sh:/entrypoint.sh:ro
     working_dir: /workspace
     restart: unless-stopped
 
@@ -108,15 +125,16 @@ services:
   opencode-web-csm-2:
     image: node:22-bookworm
     container_name: opencode-web-csm-2
-    command: >
-      bash -c "apt-get update && apt-get install -y git curl sudo && 
-      npm install -g opencode-ai && 
-      opencode web --hostname 0.0.0.0 --port 4096"
+    command: bash /entrypoint.sh
+    environment:
+      - LITELLM_VIRTUAL_KEY=${LITELLM_KEY_CSM2}
+      - OPENCODE_PORT=4096
     networks:
       - dokploy-network
     volumes:
       - opencode_workspace_csm_2:/workspace
       - opencode_config_csm_2:/root/.config/opencode
+      - ./projetos/infraestrutura/opencode-login/entrypoint.sh:/entrypoint.sh:ro
     working_dir: /workspace
     restart: unless-stopped
 
@@ -124,15 +142,16 @@ services:
   opencode-web-csm-3:
     image: node:22-bookworm
     container_name: opencode-web-csm-3
-    command: >
-      bash -c "apt-get update && apt-get install -y git curl sudo && 
-      npm install -g opencode-ai && 
-      opencode web --hostname 0.0.0.0 --port 4096"
+    command: bash /entrypoint.sh
+    environment:
+      - LITELLM_VIRTUAL_KEY=${LITELLM_KEY_CSM3}
+      - OPENCODE_PORT=4096
     networks:
       - dokploy-network
     volumes:
       - opencode_workspace_csm_3:/workspace
       - opencode_config_csm_3:/root/.config/opencode
+      - ./projetos/infraestrutura/opencode-login/entrypoint.sh:/entrypoint.sh:ro
     working_dir: /workspace
     restart: unless-stopped
 
@@ -140,6 +159,8 @@ services:
   litellm:
     image: ghcr.io/berriai/litellm:main-latest
     container_name: litellm
+    depends_on:
+      - litellm-db
     networks:
       - dokploy-network
     labels:
@@ -157,11 +178,29 @@ services:
       - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
       - GEMINI_API_KEY=${GEMINI_API_KEY}
       - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
-    command: ["--config=/app/config.yaml", "--port=4000"]
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - DATABASE_URL=postgresql://litellm:${LITELLM_DB_PASSWORD}@litellm-db:5432/litellm
+      - LITELLM_DB_URL=postgresql://litellm:${LITELLM_DB_PASSWORD}@litellm-db:5432/litellm
+    command: ["--config=/app/config.yaml", "--port=4000", "--detailed_debug"]
+    restart: unless-stopped
+
+  # ─── LiteLLM Database (para persistir virtual keys) ───
+  litellm-db:
+    image: postgres:16-alpine
+    container_name: litellm-db
+    networks:
+      - dokploy-network
+    volumes:
+      - litellm_db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: litellm
+      POSTGRES_PASSWORD: ${LITELLM_DB_PASSWORD}
+      POSTGRES_DB: litellm
     restart: unless-stopped
 
 volumes:
   authelia_redis_data:
+  litellm_db_data:
   opencode_workspace_marcos_luciano:
   opencode_workspace_fhelipe_aranha:
   opencode_workspace_csm_2:

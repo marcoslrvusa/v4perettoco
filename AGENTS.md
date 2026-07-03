@@ -5,6 +5,7 @@ Este repositório é o hub open-source de skills de IA da V4. Funciona como base
 ## Como funciona
 
 - `.claude/skills/` e `.agents/skills/` — skills disponíveis (espelhadas pra funcionar no Claude Code e Anti-Gravity)
+  - `privado/` dentro de cada pasta — skills pessoais do desenvolvedor (ML/LLM, OpenCode tooling, Supabase, testes). Não poluem a lista do usuário comum. Use `/developer` para acessá-las.
 - `squads/` e `bases/` — Knowledge Bases pessoais do usuário (gitignored, ficam locais)
   - **Padrão obrigatório:** `squads/{squad}/clientes/{cliente}/`. Toda KB de cliente vive dentro de um squad. Cliente solto, fora de squad, NÃO existe — [[novo-cliente]] recusa criar.
   - `squads/{squad}/` — cada squad tem `{squad}.md` (entry point do grafo Obsidian), `CLAUDE.md` com contexto e `docs/` com acordos do time. Crie squad com [[novo-squad]] antes do primeiro cliente.
@@ -45,7 +46,7 @@ Consulte [[REGISTRY]] pra ver tudo que o time já compartilhou. Pra contribuir v
 - **Para projetos tech (SEO, SDR IA, infraestrutura):** use `projetos/{funcao}/{projeto}/`. A organização segue as funções do job description do usuário, não a estrutura de squads.
 - Não invente dados. Se não tem a informação na KB, diga que não tem.
 - Quando o usuário fizer algo complexo, processual ou que ficou bom, sugira: "Isso ficou bom. Quer transformar em skill pra reutilizar? Roda [[criador-de-skills]]. Quando estiver redonda, roda [[compartilhar-skill]] pra o time usar também".
-- **Duplo-write obrigatório**: toda skill criada/editada deve existir idêntica em `.claude/skills/{nome}/` E `.agents/skills/{nome}/`. [[criador-de-skills]] faz isso automaticamente; se você editar manualmente, espelhe nos dois. [[sync-hub]] também re-espelha após pull.
+- **Duplo-write obrigatório**: toda skill criada/editada deve existir idêntica em `.claude/skills/{nome}/` E `.agents/skills/{nome}/`. [[criador-de-skills]] faz isso automaticamente; se você editar manualmente, espelhe nos dois. [[sync-hub]] também re-espelha após pull. Skills pessoais em `privado/` seguem a mesma regra — mantenha espelhadas em ambas as pastas.
 - **Prefixo obrigatório** em skills contribuídas: `{prefixo}-{nome}`. Prefixo pode ser de papel (geral/gt/designer/copy/account/coord) ou de fonte (v4mos/google/ga4/meta/hubspot/kommo/shopify/tray). Skills de base ([[onboarding]], [[contexto]], [[sync-hub]], [[criador-de-skills]], [[compartilhar-skill]], [[novo-squad]], [[novo-cliente]], [[novo-projeto]]) são exceção e ficam sem prefixo.
 - Se o fluxo git/gh quebrar em qualquer skill (sync, compartilhar, push), oriente rodar [[onboarding]] de novo — os checks de setup são a primeira coisa que ele faz.
 - **Princípios V4**: consulte `docs/PRINCIPIOS-V4.md` ao refinar skills ou criar agentes. Os frameworks V4 (4Vs, 4 Pilares, FPA, TOC, Médico vs Garçom, Logical Thinking) são o padrão metodológico do hub.

@@ -1,0 +1,259 @@
+Agents Hub — Arquitetura e Governança
+	🌐 Fase 1 — Fundação (Concluído)
+		Repositório Builders Hub
+			squads/ — Clientes dentro de squads
+			projetos/ — SEO, SDR IA, Infraestrutura
+			bases/ — KBs genéricas
+			skills/ — .agents/skills + .claude/skills
+		Skills de Setup (8)
+			onboarding
+			sync-hub
+			contexto (apenas local)
+			criador-de-skills
+			compartilhar-skill
+			novo-squad
+			novo-cliente
+			novo-projeto
+		Skills de Papel (40+)
+			geral-* — uso geral
+			account-* — account
+			gt-* — gestão de tráfego
+			copy-* — copywriting
+			designer-* — design
+		Infraestrutura na VPS
+			OpenCode Web — opencode.v4.company.com
+			LiteLLM — gateway de modelos
+			n8n — automação
+			Supabase — pgvector + auth
+		Supabase — Já existe
+			client_context — fatos do cliente
+			agent_memories — memória semântica
+			pgvector — busca por similaridade
+		Agentes OpenCode (36)
+			account-orchestrator
+			csm-orquestrador
+			flag-roi
+			flag-churn
+			flag-okr
+			flag-operacao
+			revisor
+			analista-dados
+			executor-comite
+			media-buyer
+			midia-paga
+			relatorios-trafego
+			content-studio
+			copy-content
+			pipeline-conteudo
+			criacao-design
+			gerar-html
+			gerar-pdf
+			gerar-ppt
+			n8n-automator
+			sdr-tech
+			seo-visibilidade
+			estrategia-marketing
+			estrategia-lideranca
+			cro-lab
+			cro-otimizacao
+			customer-research
+			growth-team
+			launch-pad
+			revenue-ops
+			vendas-account
+			evolucao-checkins
+			automacao-analytics
+			cmoorch
+			explore
+			general
+	🟡 Fase 2 — Contexto ↔ Supabase (11h)
+		Problema
+			/contexto só escreve em disco local
+			Quebra o loop de contexto entre agentes
+		Solução
+			Modificar /contexto para chamar context.py push ao final
+			Campos extraídos: tom_de_voz, histórico, oferta, facts
+			Flag --auto-sync on/off
+		Validação
+			Rodar /contexto → context.py pull retorna mesmos dados
+		Dependências
+			Nenhuma (já tem schema + script)
+	🟡 Fase 3 — Copy: Briefing + Produção (28h)
+		3.1 — Skill de Briefing (copy-briefing)
+			O que faz
+				Puxa contexto do cliente
+				Busca memórias similares
+				Gera brief estruturado
+				Salva em docs/briefings/
+			Input: demanda de conteúdo
+			Output: brief com objetivo, tom, referências, formato
+		3.2 — Skill de Produção (copy-producao)
+			O que faz
+				Lê brief estruturado
+				Puxa contexto do cliente
+				Gera rascunho completo
+				Registra memória do que foi produzido
+			Input: brief markdown
+			Output: copy pronta (LP, email, anúncio, blog)
+		Fluxo completo
+			Demanda → Briefing → Produção → Entrega
+		Depende: Fase 2
+	🟡 Fase 4 — LiteLLM Gateway (19h)
+		Objetivo
+			Todo agente chama modelo pelo gateway
+			Não mais direto em cada provider
+		Componentes
+			LiteLLM como systemd na VPS
+			Roteamento por task-type
+				Copy → Gemini
+				Análise → DeepSeek
+				Código → GPT-OSS
+				Estratégia → DeepSeek
+				Design → Gemini
+			Fallback automático
+			Rate limiting centralizado
+			Dashboard de custo/uso
+		Configuração
+			opencode.json aponta para LiteLLM
+			Skill geral-gateway-modelos
+		Depende: Fase 1 (LiteLLM já instalado)
+	🟢 Fase 5 — Testes e Qualidade (24h)
+		Casos reais
+			fips-nautica
+			atlas-copco
+			conserva
+		Ciclo de teste
+			Rodar /contexto → context.py pull
+			Rodar copy briefing + produção
+			Rodar search de memórias
+		Checklist de qualidade (10 critérios)
+			Tom de voz respeitado?
+			Informações factuais corretas?
+			Oferta considerada?
+			Histórico levado em conta?
+			Output acionável?
+			Tempo aceitável?
+			Formato correto?
+			Ajuste manual necessário?
+			Memória registrada?
+			Custo aceitável?
+		Ajustes
+			Refinar prompts/SKILL.md
+			Segunda rodada de testes
+			Documentar critérios
+		Depende: Fases 2, 3
+	🔵 Fase 6 — Agente Copy (13h)
+		Criar @copy-orchestrator
+			Orquestra briefing + produção
+			Modelo via LiteLLM
+		Sub-agentes
+			@copy-briefing
+			@copy-producao
+		Teste com copywriters reais
+		Depende: Fases 3, 4
+	🟣 Fase 7 — Escalabilidade (25h)
+		RLS no Supabase
+			Cada squad vê só seus clientes
+		CI/CD para skills
+			PR → valida → deploy automático
+		Dashboard de saúde
+			Agentes, skills, modelos, Supabase
+		Playbook de onboarding
+			Novo squad → setup completo
+		Documentação
+			Arquitetura completa
+		Depende: Todas as fases anteriores
+
+Arquitetura em Camadas
+	🏗️ Infraestrutura (VPS)
+		Hostinger 4vCPU 16GB
+		Docker
+		Nginx + SSL
+		Systemd services
+	🔄 Gateway (LiteLLM)
+		OpenRouter
+		Google Gemini
+		Rate Limit
+		Fallback
+		Logs
+	⚡ Runtime (OpenCode Web)
+		Agent System
+		36 agentes
+		Skill System
+		65+ skills
+		MCP Connectors
+			Ekyte
+			Google Drive
+		Session Log
+	🧠 Contexto e Memória (Supabase)
+		client_context
+			client (unique)
+			squad
+			tom_de_voz
+			historico
+			oferta
+			facts (JSONB)
+			embedding (VECTOR 1536)
+		agent_memories
+			summary
+			content
+			client, niche, task_type
+			strategy, result
+			success_score
+			embedding (VECTOR 1536)
+		Funções RPC
+			match_client_context
+			match_agent_memories
+			upsert_client_context
+	🛠️ Skills Layer
+		Leitura de Contexto
+			geral-contexto-cliente (pull/push/sync)
+			contexto (KB → disco + Supabase)
+		Memória por Similaridade
+			geral-memoria-agentes (search/record)
+		Copy
+			copy-briefing (novo)
+			copy-producao (novo)
+		Demais papéis
+			account-*, gt-*, designer-*, geral-*
+	🤖 Agentes Layer
+		Orquestradores
+			account-orchestrator
+			csm-orquestrador
+			cmoorch
+			growth-team
+			launch-pad
+			revenue-ops
+			content-studio
+		Especialistas
+			copy-content
+			criacao-design
+			media-buyer
+			seo-visibilidade
+			sdr-tech
+			n8n-automator
+			analista-dados
+		Flags
+			flag-roi
+			flag-churn
+			flag-okr
+			flag-operacao
+		Suporte
+			revisor
+			explore
+			general
+	✅ Qualidade e Governança
+		Testes manuais com casos reais
+		Checklist de 10 critérios
+		Ajuste de prompts
+		Registro de memória pós-tarefa
+		RLS por squad
+		CI/CD
+		Dashboard de saúde
+
+Legenda
+	🔴 Fase 1 — Concluído
+	🟡 Fases 2-4 — Em planejamento
+	🟢 Fase 5 — Próxima
+	🔵 Fase 6 — Pendente
+	🟣 Fase 7 — Futuro
