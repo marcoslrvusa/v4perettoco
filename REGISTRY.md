@@ -1,14 +1,14 @@
 # Builders Hub — Registry
 
-**102 skills** · última atualização: 2026-07-02
+**106 skills** · última atualização: 2026-07-06
 
 > Catálogo auto-gerado por `scripts/build-registry.py`. Não edite à mão — rode `/sync-hub` ou envie PR pela `/compartilhar-skill`.
 
 ## Índice
 
 - [🛠 Base (setup/fluxo)](#base) (7)
-- [🌐 Geral](#geral) (85)
-- [🎯 Gestao de Trafego](#gt) (2)
+- [🌐 Geral](#geral) (88)
+- [🎯 Gestao de Trafego](#gt) (3)
 - [✍️ Copy](#copy) (2)
 - [🤝 Account](#account) (5)
 - [🔌 Integrações / Fontes](#fontes) (1)
@@ -59,6 +59,7 @@
 | `create-opencode-plugin` | Create OpenCode plugins using the @opencode-ai/plugin SDK. Use for building custom tools, event hooks, auth... | — | — |
 | `creating-opencode-agents` | Use when creating OpenCode agents - provides markdown format with YAML frontmatter, mode/tools/permission c... | — | — |
 | `customer-research` | When the user wants to conduct, analyze, or synthesize customer research. Use when the user mentions "custo... | — | 1.0.0 |
+| `developer` | Portal de skills pessoais do desenvolvedor. Use /developer para acessar ferramentas técnicas (ML/LLM, OpenC... | — | — |
 | `directory-submissions` | When the user wants to submit their product to startup, SaaS, AI, agent, MCP, no-code, or review directorie... | — | 1.0.0 |
 | `email-sequence` | When the user wants to create or optimize an email sequence, drip campaign, automated email flow, or lifecy... | — | 1.1.0 |
 | `evaluating-llms-harness` | Evaluates LLMs across 60+ academic benchmarks (MMLU, HumanEval, GSM8K, TruthfulQA, HellaSwag). Use when ben... | @davila7 | 1.0.0 |
@@ -71,6 +72,7 @@
 | `geral-agents-hub` | (sem descrição) | — | — |
 | `geral-ai-visibility` | Skill migrada para ai-search. Use ai-search para acesso ao setor completo de AI Search (AEO + GEO + AI SEO). | — | — |
 | `geral-brainstormar-sobre-minha-funcao` | Entrevista o usuario sobre seu trabalho para descobrir como usar IA no dia a dia dele. Configura agenda, an... | — | — |
+| `geral-contexto-cliente` | Puxa, registra e sincroniza fatos exatos do cliente (tom de voz, histórico, oferta) no Supabase pra aliment... | — | 1.0.0 |
 | `geral-frontend-design` | Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the... | — | — |
 | `geral-log-sessoes` | >- | @Marcos Luciano Rodrigues Vieira | 1.0.0 |
 | `geral-memoria-agentes` | > | @Marcos Luciano Rodrigues Vieira | 1.0.0 |
@@ -85,6 +87,7 @@
 | `m12-lifecycle` | Use when designing resource lifecycles. Keywords: RAII, Drop, resource lifecycle, connection pool, lazy ini... | — | — |
 | `marketing-ideas` | When the user needs marketing ideas, inspiration, or strategies for their SaaS or software product. Also us... | — | 1.1.0 |
 | `marketing-psychology` | When the user wants to apply psychological principles, mental models, or behavioral science to marketing. A... | — | 1.1.0 |
+| `n8n-architect` | Use when the user explicitly wants to create, edit, validate, sync, or troubleshoot n8n workflows, asks abo... | — | — |
 | `new-agent-creation` | Provides step-by-step templates and guidance for creating new AI agents in Unite-Hub with proper registrati... | — | — |
 | `novo-squad` | Cria uma nova pasta de squad em squads/ com entry point e estrutura padrao. Pergunta nome do squad e quem e... | — | — |
 | `onboarding-cro` | When the user wants to optimize post-signup onboarding, user activation, first-run experience, or time-to-v... | — | 1.1.0 |
@@ -126,6 +129,7 @@
 
 | Skill | O que faz | Autor | v |
 |---|---|---|---|
+| `gt-gestor-de-trafego-completo` | >- | @marcoslrvusa | 1.0.0 |
 | `gt-media-buyer-completo` | >- | @marcoslrvusa | 1.0.0 |
 | `gt-relatorios-trafego` | Relatorio consolidado de trafego multicanal — Google Ads, Meta Ads, Bing Ads. Gera reports HTML/JSON, envia... | @v4team | 1.0.0 |
 
