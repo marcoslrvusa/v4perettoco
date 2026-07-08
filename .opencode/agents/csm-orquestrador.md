@@ -1,6 +1,6 @@
 ---
-model: openrouter/openai/gpt-oss-120b:free
 description: CSM Orquestrador — setup inicial da unidade, triagem de flags, acionamento de areas, QBR, fechamento de loop
+mode: subagent
 permission:
   read: allow
   edit: allow

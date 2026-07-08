@@ -1,7 +1,6 @@
 ---
 description: Comandante técnico das SDRs IA — implementa, customiza, deploya e monitora automacoes n8n + Supabase + Lovable + dashboards
 mode: subagent
-model: opencode/deepseek-v4-flash-free
 temperature: 0.2
 permission:
   read: allow

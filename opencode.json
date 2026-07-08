@@ -2,7 +2,19 @@
   "$schema": "https://opencode.ai/config.json",
   "model": "opencode/deepseek-v4-flash-free",
   "small_model": "opencode/minimax-m2.5-free",
+  "enabled_providers": [
+    "opencode",
+    "litellm",
+    "gemini",
+    "openrouter"
+  ],
   "provider": {
+    "litellm": {
+      "name": "Sofia AI (LiteLLM)",
+      "type": "openai-compatible",
+      "apiKey": "{env:LITELLM_VIRTUAL_KEY}",
+      "baseURL": "https://litellm.fvmarketing.com.br/v1"
+    },
     "gemini": {
       "apiKey": "{env:GEMINI_API_KEY}"
     },
