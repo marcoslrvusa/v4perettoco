@@ -1,0 +1,21 @@
+FROM node:20-bookworm-slim
+
+RUN apt-get update && apt-get install -y git xdg-utils && rm -rf /var/lib/apt/lists/*
+
+RUN npm install -g opencode-ai@latest
+
+RUN mkdir -p /home/node/.config/opencode /home/node/.local/share/opencode /workspace && chown -R node:node /home/node/.config /home/node/.local /workspace
+
+ENV OPENCODE_HOSTNAME=0.0.0.0
+ENV OPENCODE_PORT=4096
+
+COPY --chown=node:node opencode-login/scripts/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+USER node
+WORKDIR /workspace
+
+EXPOSE 4096
+
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["opencode", "web", "--hostname", "0.0.0.0", "--port", "4096"]
