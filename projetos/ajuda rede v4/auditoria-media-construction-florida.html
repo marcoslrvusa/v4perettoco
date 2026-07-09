@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auditoria de Mídia Paga — Construction Florida</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --red: rgb(229, 9, 20);
+    --red-dark: rgb(180, 7, 16);
+    --red-light: rgb(255, 60, 70);
+    --gold: #c9a96e;
+    --gold-light: #f5f0e6;
+    --gold-border: #e8dcc8;
+    --gray-50: #fafafa;
+    --gray-100: #f5f5f5;
+    --gray-200: #eeeeee;
+    --gray-300: #e0e0e0;
+    --gray-400: #bdbdbd;
+    --gray-500: #9e9e9e;
+    --gray-600: #757575;
+    --gray-700: #616161;
+    --gray-800: #424242;
+    --gray-900: #212121;
+  }
+
+  body {
+    font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f8f7f4;
+    color: var(--gray-900);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  .cover {
+    background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #2a2a2a 100%);
+    color: #fff;
+    padding: 64px 40px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(201,169,110,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .cover-content { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
+  .cover-content::before {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .cover-content::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin: 28px auto 0;
+    border-radius: 1px;
+  }
+
+  .cover .label {
+    display: inline-block;
+    background: rgba(201,169,110,0.12);
+    border: 1px solid rgba(201,169,110,0.3);
+    padding: 6px 20px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    color: var(--gold);
+  }
+  .cover h1 {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 14px;
+    letter-spacing: -0.5px;
+    font-family: 'Plus Jakarta Sans', serif;
+  }
+  .cover p {
+    font-size: 18px;
+    opacity: 0.85;
+    margin-bottom: 24px;
+    font-weight: 300;
+    letter-spacing: 0.2px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 14px;
+    opacity: 0.7;
+    letter-spacing: 0.5px;
+  }
+
+  .container { max-width: 960px; margin: -36px auto 48px; position: relative; z-index: 2; }
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+    margin-bottom: 28px;
+    overflow: hidden;
+    border: 1px solid var(--gray-300);
+    position: relative;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 40px;
+    right: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-border), var(--gold), var(--gold-border), transparent);
+    opacity: 0.6;
+  }
+  .card-body { padding: 44px 52px; }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--gold-border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -0.3px;
+    position: relative;
+  }
+  h2::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 1px;
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin: 36px 0 18px;
+    letter-spacing: -0.2px;
+  }
+  h4 { font-size: 16px; font-weight: 700; color: var(--gray-800); margin: 22px 0 12px; }
+  p { font-size: 16px; color: var(--gray-700); margin-bottom: 16px; line-height: 1.8; }
+  p:last-child { margin-bottom: 0; }
+
+  .badge {
+    display: inline-block;
+    padding: 5px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .badge-critico { background: #fef2f2; color: var(--red); border: 1px solid #fecaca; }
+  .badge-alto { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+  .badge-medio { background: #fefce8; color: #a16207; border: 1px solid #fef08a; }
+  .badge-baixo { background: var(--gold-light); color: #8b7a4a; border: 1px solid var(--gold-border); }
+  .badge-info { background: #f5f5f5; color: #616161; border: 1px solid #d4d4d4; }
+
+  .severity { display: inline-block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .sev-critico { color: var(--red); }
+  .sev-alto { color: #c2410c; }
+  .sev-medio { color: #a16207; }
+  .sev-baixo { color: #8b7a4a; }
+  .sev-info { color: #616161; }
+
+  table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 15px; }
+  th, td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--gray-100); }
+  th {
+    background: linear-gradient(135deg, var(--gray-50), #f8f7f4);
+    font-weight: 700;
+    color: var(--gray-700);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 2px solid var(--gold-border);
+    position: relative;
+  }
+  tr:hover td { background: #fcfaf7; }
+  tr:last-child td { border-bottom: none; }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .kpi-card {
+    background: #f2f0ec;
+    border-radius: 10px;
+    padding: 20px 12px 18px;
+    text-align: center;
+    border: 1px solid var(--gold-border);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .kpi-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 2px 12px rgba(201,169,110,0.1);
+  }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--red), var(--gold));
+  }
+  .kpi-card .value {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--red);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+  .kpi-card .label {
+    font-size: 12px;
+    color: var(--gray-600);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 8px;
+  }
+  .kpi-card .sub { font-size: 12px; color: var(--gray-600); margin-top: 4px; }
+
+  .risk-box {
+    background: linear-gradient(135deg, #fcfaf7, #f8f7f4);
+    border-left: 4px solid var(--red);
+    padding: 22px 26px;
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 18px;
+  }
+  .risk-box h4 { margin: 0 0 10px; color: var(--red); font-size: 16px; letter-spacing: -0.2px; }
+  .risk-box p { font-size: 15px; color: var(--gray-700); margin: 0; line-height: 1.7; }
+
+  .finding {
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 26px 30px;
+    margin-bottom: 18px;
+    background: #fcfcfc;
+    transition: box-shadow 0.2s, border-color 0.2s;
+    border-left: 3px solid transparent;
+  }
+  .finding:hover {
+    box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+    border-color: var(--gold-border);
+    border-left-color: var(--gold);
+  }
+  .finding-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    gap: 12px;
+  }
+  .finding-title { font-weight: 700; font-size: 17px; color: var(--gray-900); letter-spacing: -0.2px; }
+  .finding-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 32px;
+    font-size: 15px;
+  }
+  .finding-grid .field { font-weight: 600; color: var(--gray-800); }
+  .finding-grid .value { color: var(--gray-700); }
+  .finding-grid .full { grid-column: 1 / -1; }
+
+  .bar-container { margin: 22px 0; }
+  .bar-row { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+  .bar-label { width: 160px; font-size: 14px; font-weight: 700; color: var(--gray-700); text-align: right; flex-shrink: 0; letter-spacing: -0.2px; }
+  .bar-track { flex: 1; height: 30px; background: var(--gray-100); border-radius: 6px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding-right: 14px; font-size: 13px; font-weight: 700; color: #fff; letter-spacing: 0.3px; }
+  .bar-fill.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .bar-fill.orange { background: linear-gradient(90deg, #c2410c, #ea580c); }
+  .bar-fill.gold { background: linear-gradient(90deg, #b8963a, #d4b96a); }
+  .bar-fill.gray { background: linear-gradient(90deg, #616161, #9e9e9e); }
+
+  .timeline {
+    display: flex;
+    gap: 0;
+    margin: 32px 0 16px;
+    position: relative;
+    padding: 0 0 20px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 5%;
+    right: 5%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold-border), var(--gold), var(--gold-border));
+    border-radius: 2px;
+  }
+  .timeline-phase {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    padding: 0 8px;
+  }
+  .timeline-phase .dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    position: relative;
+    z-index: 1;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px var(--gold);
+  }
+  .timeline-phase .dot.red { background: var(--red); }
+  .timeline-phase .dot.orange { background: #c2410c; }
+  .timeline-phase .dot.gold { background: var(--gold); }
+  .timeline-phase .dot.gray { background: #757575; }
+  .timeline-phase .phase-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 2px;
+  }
+  .timeline-phase .phase-hours {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--red);
+    letter-spacing: -0.5px;
+  }
+  .timeline-phase .phase-pct {
+    font-size: 12px;
+    color: var(--gray-500);
+    font-weight: 600;
+  }
+  .timeline-phase .phase-bar {
+    height: 8px;
+    border-radius: 4px;
+    margin: 8px auto 6px;
+    max-width: 80%;
+  }
+  .timeline-phase .phase-bar.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .timeline-phase .phase-bar.orange { background: linear-gradient(90deg, #c2410c, #ea580c); }
+  .timeline-phase .phase-bar.gold { background: linear-gradient(90deg, #b8963a, #d4b96a); }
+  .timeline-phase .phase-bar.gray { background: linear-gradient(90deg, #616161, #9e9e9e); }
+  .timeline-deliverables {
+    display: flex;
+    gap: 0;
+    margin-top: 4px;
+  }
+  .timeline-deliverables .deliv {
+    flex: 1;
+    text-align: center;
+    padding: 0 6px;
+    font-size: 12px;
+    color: var(--gray-600);
+    line-height: 1.4;
+  }
+  .timeline-deliverables .deliv strong {
+    display: block;
+    color: var(--gray-700);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 2px;
+  }
+
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--gray-100);
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 14px;
+    color: var(--red);
+  }
+
+  .glossary-row { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--gray-100); }
+  .glossary-row:last-child { border: none; }
+  .glossary-row span:last-child { font-size: 15px; color: var(--gray-700); }
+
+  .footer {
+    text-align: center;
+    padding: 36px;
+    font-size: 14px;
+    color: var(--gray-500);
+    border-top: 1px solid var(--gold-border);
+    letter-spacing: 0.3px;
+    position: relative;
+  }
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 2px;
+  }
+
+  @media print {
+    body { background: #fff; padding: 0; font-size: 12px; }
+    .cover { padding: 40px 30px; }
+    .container { max-width: 100%; margin: 0; }
+    .card { box-shadow: none; border: 1px solid var(--gray-200); page-break-inside: avoid; }
+    .card-body { padding: 20px 24px; }
+    .finding { page-break-inside: avoid; }
+    table { page-break-inside: avoid; }
+    @page { margin: 1.5cm 1cm; }
+  }
+
+  @media (max-width: 640px) {
+    .cover h1 { font-size: 26px; }
+    .cover { padding: 40px 20px 32px; }
+    .card-body { padding: 20px; }
+    .finding-grid { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .bar-label { width: 90px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-content">
+    <img src="../../logo-peretto-red.png" alt="Peretto &amp; Co." style="height:50px; width:auto; margin-bottom:24px; filter:brightness(0) invert(1);">
+    <div class="label">Confidencial &bull; Julho 2026</div>
+    <h1>Auditoria de M&iacute;dia Paga</h1>
+    <p>Construction &amp; Remodeling &mdash; Florida (EUA)</p>
+    <div class="cover-meta">
+      <span>&bull; Google Ads</span>
+      <span>&bull; 26 campanhas auditadas</span>
+      <span>&bull; 6 CSVs analisados</span>
+      <span>&bull; $73.656 gastos</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Sum&aacute;rio Executivo</h2>
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="value">$73.656</div>
+          <div class="label">Gasto Total</div>
+          <div class="sub">Todo o hist&oacute;rico</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">$433</div>
+          <div class="label">CPA M&eacute;dio</div>
+          <div class="sub">Custo por convers&atilde;o</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">170</div>
+          <div class="label">Convers&otilde;es</div>
+          <div class="sub">Em todo o per&iacute;odo</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">1,23%</div>
+          <div class="label">CTR</div>
+          <div class="sub">M&eacute;dia geral</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">$5,59</div>
+          <div class="label">CPC M&eacute;dio</div>
+          <div class="sub">Custo por clique</div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:36px;">
+        <h2>Diagn&oacute;stico por Teoria das Restri&ccedil;&otilde;es (TOC)</h2>
+        <p style="margin-bottom:20px; color:var(--gray-700);">Aplicamos a Teoria das Restri&ccedil;&otilde;es de Eliyahu Goldratt para identificar o gargalo &uacute;nico que limita o sistema como um todo. Em uma conta de Google Ads, o sistema s&oacute; pode performar t&atilde;o bem quanto seu elo mais fraco.</p>
+
+        <div class="timeline">
+          <div class="timeline-phase">
+            <div class="dot red"></div>
+            <div class="phase-bar red" style="width:100%;"></div>
+            <div class="phase-hours">Gargalo #1</div>
+            <div class="phase-name">Estrutura de Conta</div>
+            <div class="phase-pct">Raiz do problema</div>
+          </div>
+          <div class="timeline-phase">
+            <div class="dot orange"></div>
+            <div class="phase-bar orange" style="width:80%;"></div>
+            <div class="phase-hours">Gargalo #2</div>
+            <div class="phase-name">Palavras-chave</div>
+            <div class="phase-pct">Match types errados</div>
+          </div>
+          <div class="timeline-phase">
+            <div class="dot gold"></div>
+            <div class="phase-bar gold" style="width:60%;"></div>
+            <div class="phase-hours">Gargalo #3</div>
+            <div class="phase-name">Convers&atilde;o</div>
+            <div class="phase-pct">ROAS = 0</div>
+          </div>
+        </div>
+
+        <div class="risk-box">
+          <h4>GARGALO PRIM&Aacute;RIO: Caos Estrutural &mdash; 26 campanhas sem hierarquia, 90% pausadas, sem aprendizado cont&iacute;nuo</h4>
+          <p>A conta tem <strong>26 campanhas</strong>, das quais <strong>23 est&atilde;o pausadas ou removidas</strong>. As 3 ativas est&atilde;o em aprendizado ou encerradas. Isso significa que <strong>99,8% do gasto ($73.655) foi queimado em campanhas que j&aacute; morreram</strong> sem gerar aprendizado replic&aacute;vel. O sistema n&atilde;o tem continuidade &mdash; cada campanha &eacute; um experimento isolado que n&atilde;o alimenta a pr&oacute;xima. O or&ccedil;amento foi pulverizado em m&uacute;ltiplas tentativas sem nunca consolidar o que funciona.</p>
+        </div>
+        <div class="risk-box" style="border-left-color:#c2410c;">
+          <h4>GARGALO SECUND&Aacute;RIO: Estrat&eacute;gia de Palavras-chave &mdash; 51 keywords, match types amplos demais, sem inten&ccedil;&atilde;o de compra</h4>
+          <p>51 palavras-chave no total, com <strong>correspond&ecirc;ncia ampla em v&aacute;rias delas</strong> (ex: "kitchen remodel fort myers" ampla gastou $5.974 com CTR de apenas 4,27%). Keywords amplas em contas pequenas queimam or&ccedil;amento em tr&aacute;fego irrelevante. A palavra "Rent Apartment in Fort Myers" gastou $428 com 0 convers&otilde;es &mdash; um erro grave de segmenta&ccedil;&atilde;o para uma empresa de remodeling.</p>
+        </div>
+        <div class="risk-box" style="border-left-color:#a16207;">
+          <h4>GARGALO TERCI&Aacute;RIO: Zero Rastreamento de Receita &mdash; ROAS = 0 em todas as linhas</h4>
+          <p>O campo "Valor da convers&atilde;o / custo" (ROAS) est&aacute; <strong>zerado em absolutamente todas as campanhas</strong>. Isso significa que n&atilde;o h&aacute; tracking de receita implementado. O Google Ads n&atilde;o sabe quanto cada lead vale. Sem esse dado, a otimiza&ccedil;&atilde;o autom&aacute;tica (Maximizar Convers&otilde;es, CPA Desejado) opera cega &mdash; n&atilde;o h&aacute; sinal de valor para o algoritmo aprender.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:24px; background:linear-gradient(135deg, #fcfaf7, #f8f7f4); border-radius:10px; padding:18px 22px; border:1px solid var(--gold-border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+        <div>
+          <div style="font-size:12px; color:var(--gray-500); font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Gasto Total Queimado</div>
+          <div style="font-size:28px; font-weight:700; color:var(--red); letter-spacing:-0.5px;">$73.655,67</div>
+        </div>
+        <div style="flex:1; max-width:400px;">
+          <div style="height:6px; background:var(--gray-200); border-radius:3px; overflow:hidden; margin-bottom:6px;">
+            <div style="height:100%; width:100%; background:linear-gradient(90deg, var(--red), var(--gold)); border-radius:3px;"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--gray-500);">
+            <span>Primeira campanha</span>
+            <span style="font-weight:600; color:var(--gray-700);">26 campanhas &bull; 0 aprendizado replic&aacute;vel</span>
+            <span>Hoje</span>
+          </div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:12px; color:var(--gray-500); font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">ROAS Atual</div>
+          <div style="font-size:16px; font-weight:700; color:var(--red);">0,00</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Perfil da Conta</h2>
+      <table>
+        <tr><th>Caracter&iacute;stica</th><th>Detalhe</th></tr>
+        <tr><td><strong>Segmento</strong></td><td>Construction &amp; Remodeling &mdash; Florida (EUA)</td></tr>
+        <tr><td><strong>Total de campanhas</strong></td><td>26 (23 pausadas/removidas, 3 ativas sem hist&oacute;rico)</td></tr>
+        <tr><td><strong>Gasto total</strong></td><td>$73.655,67</td></tr>
+        <tr><td><strong>Impress&otilde;es</strong></td><td>571.040</td></tr>
+        <tr><td><strong>Cliques</strong></td><td>13.173</td></tr>
+        <tr><td><strong>CTR m&eacute;dio</strong></td><td>1,23%</td></tr>
+        <tr><td><strong>CPC m&eacute;dio</strong></td><td>$5,59</td></tr>
+        <tr><td><strong>Convers&otilde;es</strong></td><td>170</td></tr>
+        <tr><td><strong>Taxa de convers&atilde;o</strong></td><td>1,23%</td></tr>
+        <tr><td><strong>CPA m&eacute;dio</strong></td><td>$433,27</td></tr>
+        <tr><td><strong>ROAS</strong></td><td><strong style="color:var(--red)">0 (zero)</strong> &mdash; sem tracking de receita</td></tr>
+        <tr><td><strong>Or&ccedil;amento m&eacute;dio di&aacute;rio</strong></td><td>$15 a $150/dia por campanha</td></tr>
+        <tr><td><strong>Estrat&eacute;gia de lances</strong></td><td>Maximizar Convers&otilde;es / CPA Desejado / Maximizar Cliques (misturado)</td></tr>
+        <tr><td><strong>A&ccedil;&otilde;es de convers&atilde;o</strong></td><td>7 configuradas: formul&aacute;rio, liga&ccedil;&atilde;o, agendamento, sess&otilde;es de 35-45s</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>An&aacute;lise Detalhada de Campanhas</h2>
+
+      <h3><span class="badge badge-critico">Cr&iacute;ticos</span> &mdash; Impedem Performance e Escala</h3>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">C-01. 23 de 26 Campanhas Pausadas ou Removidas (88,5%)</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Das 26 campanhas, 21 pausadas, 2 removidas, 2 ativas sem hist&oacute;rico (aprendizado/pendente), 1 encerrada. Apenas [V4] Search | Leads | Kitchen gerou 101 conv. a CPA $312.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">$73.655 gastos em campanhas que n&atilde;o geraram aprendizado replic&aacute;vel. Cada campanha foi criada, queimou or&ccedil;amento e foi pausada sem nunca extrair insights. A conta &eacute; um cemit&eacute;rio de experimentos abandonados.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Arquivar todas as campanhas pausadas. (2) Manter APENAS 3-4 campanhas vivas com estrutura clara. (3) Criar ciclo de aprendizado: 2 semanas de teste &rarr; an&aacute;lise &rarr; decis&atilde;o (escala/mata/itera).</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">4 h (Estrutura&ccedil;&atilde;o de conta)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">C-02. ROAS Zero em 100% das Campanhas &mdash; Sem Tracking de Receita</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">"Valor da conv./custo" = 0 em todas as 26 campanhas. Nenhuma linha do CSV tem valor de receita registrado.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Google Ads n&atilde;o sabe qual lead vale mais. Estrat&eacute;gias de CPA Desejado e Maximizar Convers&otilde;es operam cegas. Imposs&iacute;vel calcular ROAS real. O cliente pode estar gerando leads de $50 ou $5.000 &mdash; n&atilde;o h&aacute; como saber.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Implementar Google Ads Conversion Tracking com valor din&acirc;mico via GTM. (2) Conectar CRM (se houver) para importar receita offline. (3) Definir valor m&eacute;dio por lead baseado em hist&oacute;rico de fechamento.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">8 h (Dev + GTM + CRM)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">C-03. Campanha "Rent Apartment in Fort Myers" Gastou $428 com Zero Convers&otilde;es</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Campanha Smart com 162.891 impress&otilde;es, 3.254 cliques, $428,95 gastos, 0 convers&otilde;es. CTR de 2,0% mas zero leads.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Uma empresa de remodeling gastando dinheiro para anunciar "aluguel de apartamento em Fort Myers" &mdash; erro crasso de segmenta&ccedil;&atilde;o. O pior: essa campanha estava ativa enquanto outras com keywords corretas estavam pausadas.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">Remover imediatamente. Revisar todas as campanhas Smart para garantir que n&atilde;o h&aacute; mais erros de segmenta&ccedil;&atilde;o.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">1 h (Revis&atilde;o de segmenta&ccedil;&atilde;o)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">C-04. Estrat&eacute;gia de Lances Inconsistente &mdash; 3 Tipos Diferentes sem Crit&eacute;rio</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Campanhas misturam "Maximizar Convers&otilde;es", "CPA Desejado" e "Maximizar Cliques" sem padr&atilde;o claro. [V4] Search | Leads | Kitchen usa Maximizar Convers&otilde;es com CPA real de $312. Leads-Search-5 tamb&eacute;m usa Maximizar Convers&otilde;es mas com CPA de $580.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Sem consist&ecirc;ncia na estrat&eacute;gia de lances, o algoritmo do Google n&atilde;o acumula aprendizado. Cada campanha come&ccedil;a do zero. "Maximizar Cliques" em campanhas de lead gen &eacute; particularmente prejudicial &mdash; otimiza para cliques baratos, n&atilde;o para convers&otilde;es.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Definir estrat&eacute;gia &uacute;nica: Maximizar Convers&otilde;es com CPA Desejado como meta secund&aacute;ria. (2) Nunca usar Maximizar Cliques em campanhas de lead gen. (3) Definir CPA alvo realista baseado em hist&oacute;rico ($300-350).</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">2 h (Revis&atilde;o de lances)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">C-05. 7 A&ccedil;&otilde;es de Convers&atilde;o Diferentes &mdash; Dilui&ccedil;&atilde;o de Sinal</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">A conta tem 7 a&ccedil;&otilde;es de convers&atilde;o: "V4 - Envio de Formul&aacute;rio", "Calls from Smart Campaign Ads", "Clique no Bot&atilde;o de Liga&ccedil;&atilde;o", "Envio de Formul&aacute;rio - Site", "Agendamento | Site", "Sess&atilde;o 45seg/40seg/35seg", "Calls from ads".</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Sess&otilde;es de 35 segundos N&Atilde;O s&atilde;o convers&otilde;es. Inclu&iacute;-las como a&ccedil;&atilde;o de convers&atilde;o polui o sinal que o algoritmo de lances usa para otimizar. O Google Ads passa a otimizar para "qualquer intera&ccedil;&atilde;o" em vez de "lead qualificado".</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Manter APENAS 2 a&ccedil;&otilde;es de convers&atilde;o prim&aacute;rias: Envio de Formul&aacute;rio e Liga&ccedil;&atilde;o Telef&ocirc;nica. (2) Remover todas as "sess&atilde;o X segundos" como convers&otilde;es. (3) Criar a&ccedil;&atilde;o secund&aacute;ria "Agendamento" como "convers&atilde;o secund&aacute;ria" (n&atilde;o prim&aacute;ria).</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">2 h (GTM + Google Ads)</span></div>
+        </div>
+      </div>
+
+      <h3><span class="badge badge-alto">Alto</span> &mdash; Impactam Diretamente Efici&ecirc;ncia e CPA</h3>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">A-01. Or&ccedil;amento Pulverizado em 26 Campanhas &mdash; Nenhuma com Volume Cr&iacute;tico</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Or&ccedil;amentos variam de $15/dia (Rent Apartment) a $150/dia (Leads-Search-5, Campanha 1). A campanha que mais converteu ([V4] Kitchen) tinha apenas $50/dia.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Com $50/dia, uma campanha de remodeling na Florida competitiva n&atilde;o atinge volume cr&iacute;tico para o algoritmo aprender. O ideal seria $100-200/dia em uma &uacute;nica campanha bem estruturada.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">1 h (Realoca&ccedil;&atilde;o de or&ccedil;amento)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">A-02. Impress&otilde;es em Domingos e Madrugadas com Zero Convers&atilde;o</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Domingos geraram impress&otilde;es mas 0 convers&otilde;es na campanha [V4] | Search | Leads | Contractors. Madrugadas tamb&eacute;m sem convers&atilde;o.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Or&ccedil;amento desperdi&ccedil;ado em hor&aacute;rios de baixa inten&ccedil;&atilde;o. Donos de casa n&atilde;o contratam remodela&ccedil;&atilde;o de cozinha &agrave;s 3h da manh&atilde; de domingo.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">1 h (ad schedule)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">A-03. CPC Elevado ($5,59) para o Segmento de Construction</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">CPC m&eacute;dio de $5,59. Palavras como "kitchen remodel company" t&ecirc;m CPC de $17,88 (gasto $5.935 / 332 cliques).</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">CPC elevado combinado com baixa taxa de convers&atilde;o (1,23%) resulta em CPA de $433. Para um setor onde o ticket m&eacute;dio de remodela&ccedil;&atilde;o &eacute; $15.000-50.000, um CPA de $433 poderia ser aceit&aacute;vel &mdash; se o tracking de receita existisse para confirmar.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">Cont&iacute;nuo (otimiza&ccedil;&atilde;o de QS + palavras-chave)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">A-04. Campanha YouTube Demand Gen com An&uacute;ncios Reprovados</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">[V4] YouTube | Leads: status "a maioria dos an&uacute;ncios foi reprovada". $401,95 gastos, 0 convers&otilde;es.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Campanha de v&iacute;deo com an&uacute;ncios reprovados &eacute; dinheiro queimado. Demand Gen para construction &eacute; vi&aacute;vel, mas precisa de criativos aprovados e segmenta&ccedil;&atilde;o correta.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">3 h (criativos + revis&atilde;o de pol&iacute;ticas)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">A-05. Ajuste de +50% em Ter&ccedil;a e Quarta sem Justificativa</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Ter&ccedil;as e Quartas t&ecirc;m ajuste de lance +50% na campanha [V4] | Search | Leads | Contractors. Geraram 2 convers&otilde;es a CPA $275-345.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">O ajuste pode at&eacute; fazer sentido se esses dias realmente convertem melhor, mas com apenas 2 convers&otilde;es a amostra &eacute; insignificante estatisticamente. O ajuste de +50% pode estar inflando o CPC sem benef&iacute;cio comprovado.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">1 h (revis&atilde;o de ad schedule)</span></div>
+        </div>
+      </div>
+
+      <h3><span class="badge badge-medio">M&eacute;dio</span> &mdash; Oportunidades de Melhoria</h3>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">M-01. Pontua&ccedil;&atilde;o de Otimiza&ccedil;&atilde;o Zerada em Todas as Campanhas</span></div>
+          <div><span class="severity sev-medio">M&eacute;dio</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">O campo "Pontua&ccedil;&atilde;o de otimiza&ccedil;&atilde;o" est&aacute; vazio em todas as linhas do CSV.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">A conta n&atilde;o est&aacute; seguindo as recomenda&ccedil;&otilde;es do Google Ads. An&uacute;ncios sem extens&otilde;es, sem sitelinks, sem callouts.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">2 h (implementar recomenda&ccedil;&otilde;es)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">M-02. Campanha "Institucional | Concorrentes" com Gasto Irrelevante</span></div>
+          <div><span class="severity sev-medio">M&eacute;dio</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">$40,04 gastos em campanha de concorrentes. 0 convers&otilde;es.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Estrat&eacute;gia de concorrentes pode funcionar, mas precisa de criativos e landing pages espec&iacute;ficos. Gasto t&atilde;o baixo n&atilde;o gera dados significativos.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">1 h (decis&atilde;o: escalar ou matar)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">M-03. Campanhas com Nomes Duplicados e Inconsistentes</span></div>
+          <div><span class="severity sev-medio">M&eacute;dio</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">"Leads-Search-Mike", "Leads-Search-MIKE", "Search - Mike Renovations" &mdash; tr&ecirc;s campanhas diferentes para o mesmo tema. "[V4] | Kitchen l Campeões" e "[V4] | Kitchen l Campeões #2".</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Dificulta gest&atilde;o, an&aacute;lise e otimiza&ccedil;&atilde;o. Cria duplicidade e canibaliza&ccedil;&atilde;o de or&ccedil;amento.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">2 h (padroniza&ccedil;&atilde;o de nomenclatura)</span></div>
+        </div>
+      </div>
+
+      <h3><span class="badge badge-info">Informativo</span> &mdash; Observa&ccedil;&otilde;es</h3>
+
+      <div class="finding" style="padding:14px 24px;">
+        <div class="finding-header" style="margin-bottom:6px;">
+          <div><span class="finding-title" style="font-size:16px;">I-01. Campanha [V4] Kitchen &eacute; a &uacute;nica com Performance M&iacute;nima Aceit&aacute;vel</span></div>
+          <div><span class="severity sev-info">Info</span></div>
+        </div>
+        <p style="font-size:15px; margin:0; color:var(--gray-700);">$31.544 gastos, 101 convers&otilde;es, CPA $312,32. &Eacute; a campanha que mais se aproxima de um CPA aceit&aacute;vel. CTR de 5,95% e taxa de convers&atilde;o de 4,12% &mdash; muito acima da m&eacute;dia da conta. Esta campanha deveria ser o ponto de partida para escala.</p>
+      </div>
+      <div class="finding" style="padding:14px 24px;">
+        <div class="finding-header" style="margin-bottom:6px;">
+          <div><span class="finding-title" style="font-size:16px;">I-02. Fort Myers 15mi Tem o Melhor CPA ($163) mas Baixo Volume</span></div>
+          <div><span class="severity sev-info">Info</span></div>
+        </div>
+        <div style="font-size:15px; margin:0; color:var(--gray-700);">39 convers&otilde;es a CPA $163 &mdash; melhor performance geogr&aacute;fica. Sugere que a segmenta&ccedil;&atilde;o local funciona, mas precisa de mais or&ccedil;amento para escalar.</p>
+      </div>
+      <div class="finding" style="padding:14px 24px;">
+        <div class="finding-header" style="margin-bottom:6px;">
+          <div><span class="finding-title" style="font-size:16px;">I-03. CPC Baixo em Smart Campaigns ($0,13-0,51) mas Convers&atilde;o Zero</span></div>
+          <div><span class="severity sev-info">Info</span></div>
+        </div>
+        <p style="font-size:15px; margin:0; color:var(--gray-700);">Smart campaigns t&ecirc;m CPC muito baixo mas n&atilde;o convertem. Isso sugere tr&aacute;fego de baixa inten&ccedil;&atilde;o. A Smart Campaign "Rent Apartment" &eacute; o exemplo extremo: CPC de $0,13 mas zero leads.</p>
+      </div>
+      <div class="finding" style="padding:14px 24px;">
+        <div class="finding-header" style="margin-bottom:6px;">
+          <div><span class="finding-title" style="font-size:16px;">I-04. Parcela de Impress&otilde;es Perdida por Rank &gt; 60% na Maioria das Campanhas</span></div>
+          <div><span class="severity sev-info">Info</span></div>
+        </div>
+        <p style="font-size:15px; margin:0; color:var(--gray-700);">Campanhas como [V4] Kitchen t&ecirc;m 51,73% de IS perdida por classifica&ccedil;&atilde;o e 22,41% por or&ccedil;amento. Isso indica que h&aacute; demanda n&atilde;o capturada por rank baixo (QS) e or&ccedil;amento insuficiente.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>An&aacute;lise de Palavras-chave</h2>
+
+      <h3>Top 10 por Gasto</h3>
+      <table>
+        <tr><th>Palavra-chave</th><th>Match Type</th><th>Gasto</th><th>Cliques</th><th>CTR</th><th>Status</th></tr>
+        <tr><td>"Kitchen Remodel"</td><td>Frase</td><td>$6.347</td><td>508</td><td>9,96%</td><td><span class="badge badge-baixo">Ativado/Pausado</span></td></tr>
+        <tr><td>"kitchen remodel fort myers"</td><td><strong style="color:var(--red)">Ampla</strong></td><td>$5.974</td><td>448</td><td>4,27%</td><td><span class="badge badge-critico">Removido</span></td></tr>
+        <tr><td>"kitchen remodel company"</td><td>Frase</td><td>$5.935</td><td>332</td><td>6,84%</td><td><span class="badge badge-baixo">Ativado/Pausado</span></td></tr>
+        <tr><td>"remodeling contractors"</td><td><strong style="color:var(--red)">Ampla</strong></td><td>$3.772</td><td>669</td><td>5,93%</td><td><span class="badge badge-critico">Removido</span></td></tr>
+        <tr><td>"Kitchen Remodel" (dup.)</td><td>Frase</td><td>$2.999</td><td>139</td><td>7,56%</td><td><span class="badge badge-medio">Pausado</span></td></tr>
+        <tr><td>"kitchen remodel company" (dup.)</td><td>Frase</td><td>$2.480</td><td>67</td><td>5,64%</td><td><span class="badge badge-medio">Pausado</span></td></tr>
+        <tr><td>"home renovation contractors"</td><td><strong style="color:var(--red)">Ampla</strong></td><td>$2.479</td><td>245</td><td>6,07%</td><td><span class="badge badge-medio">Pausado</span></td></tr>
+        <tr><td>"home contractor near me"</td><td>Frase</td><td>$2.206</td><td>77</td><td>8,10%</td><td><span class="badge badge-medio">Pausado</span></td></tr>
+        <tr><td>"remodeling contractors"</td><td>Frase</td><td>$2.073</td><td>88</td><td>3,38%</td><td><span class="badge badge-medio">Pausado</span></td></tr>
+        <tr><td>"general contractor naples fl"</td><td>Frase</td><td>$2.039</td><td>104</td><td>4,11%</td><td><span class="badge badge-medio">Pausado</span></td></tr>
+      </table>
+
+      <h3>An&aacute;lise de Match Types</h3>
+      <div class="bar-container">
+        <div class="bar-row">
+          <div class="bar-label">Corresp. Frase</div>
+          <div class="bar-track"><div class="bar-fill gold" style="width:65%;">65% do gasto</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Corresp. Ampla</div>
+          <div class="bar-track"><div class="bar-fill red" style="width:35%;">35% do gasto</div></div>
+        </div>
+      </div>
+      <p style="font-size:15px; color:var(--gray-700);">35% do gasto total foi em correspond&ecirc;ncia ampla &mdash; a configura&ccedil;&atilde;o mais arriscada para contas sem hist&oacute;rico de dados. Keywords amplas como "kitchen remodel fort myers" (ampla) gastaram $5.974 com CTR de apenas 4,27% e foram removidas. O uso de ampla sem negativas robustas &eacute; uma das principais causas de desperd&iacute;cio.</p>
+
+      <h3>Problemas Identificados</h3>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">KW-02. Aus&ecirc;ncia de Keywords de Cauda Longa e Inten&ccedil;&atilde;o Local</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">51 keywords, a maioria gen&eacute;rica ("kitchen remodel", "remodeling contractors"). Quase nenhuma keyword de cauda longa como "cost to remodel kitchen in fort myers", "best kitchen contractor naples fl 2026".</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Keywords gen&eacute;ricas t&ecirc;m CPC alto e concorr&ecirc;ncia alta. Cauda longa tem CPC menor e inten&ccedil;&atilde;o de compra maior.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">4 h (pesquisa de keywords + expans&atilde;o)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">KW-03. Nenhuma Keyword Negativa Configurada</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">N&atilde;o h&aacute; evid&ecirc;ncia de lista de palavras-chave negativas nos CSVs. A campanha "Rent Apartment" confirma a aus&ecirc;ncia de controle.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Sem negativas, o Google mostra an&uacute;ncios para "rent apartment", "DIY kitchen remodel", "free estimate" &mdash; tr&aacute;fego irrelevante queima or&ccedil;amento.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">2 h (criar lista de negativas)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>An&aacute;lise de Leil&atilde;o &amp; M&eacute;tricas Competitivas</h2>
+
+      <p style="margin-bottom:20px; color:var(--gray-700);">Os dados de leil&atilde;o revelam por que a conta n&atilde;o converte: o Google Ads est&aacute; mostrando os an&uacute;ncios para as pessoas erradas, na hora errada, e quando mostra, o an&uacute;ncio aparece na posi&ccedil;&atilde;o errada. Abaixo, os n&uacute;meros da conta como um todo e das principais campanhas.</p>
+
+      <h3>Macro da Conta &mdash; Painel de Leil&atilde;o</h3>
+
+      <div class="kpi-grid" style="grid-template-columns:repeat(4, 1fr);">
+        <div class="kpi-card">
+          <div class="value" style="font-size:24px;">15,6%</div>
+          <div class="label">Impression Share</div>
+          <div class="sub">Apenas 1 em cada 6 impress&otilde;es</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value" style="font-size:24px; color:#c2410c;">60,7%</div>
+          <div class="label">Perdido por Rank</div>
+          <div class="sub">Qualidade/Relev&acirc;ncia do an&uacute;ncio</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value" style="font-size:24px;">23,7%</div>
+          <div class="label">Perdido por Budget</div>
+          <div class="sub">Or&ccedil;amento insuficiente</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value" style="font-size:24px;">39,4%</div>
+          <div class="label">Exact Match IS</div>
+          <div class="sub">Correspond&ecirc;ncia exata</div>
+        </div>
+      </div>
+
+      <div class="risk-box" style="border-left-color:var(--red);">
+        <h4>&#x26a0;&#xfe0f; Diagn&oacute;stico: 60,7% Perdido por Rank &mdash; O Gargalo Invis&iacute;vel</h4>
+        <p>O principal motivo de perda de impress&otilde;es <strong>n&atilde;o &eacute; or&ccedil;amento</strong> (23,7%). &Eacute; <strong>qualidade do an&uacute;ncio e relev&acirc;ncia</strong> (60,7%). Isso significa que o Google avalia que os an&uacute;ncios desta conta t&ecirc;m Quality Score baixo, CTR esperada baixa, ou landing page irrelevante. Mesmo que o or&ccedil;amento fosse triplicado, a conta continuaria perdendo 6 em cada 10 impress&otilde;es por causa da qualidade. &Eacute; um problema de <strong>funda&ccedil;&atilde;o</strong>, n&atilde;o de verba.</p>
+      </div>
+
+      <h3>Leil&atilde;o por Campanha</h3>
+
+      <table>
+        <tr>
+          <th>Campanha</th>
+          <th>IS</th>
+          <th>Perdido Rank</th>
+          <th>Perdido Budget</th>
+          <th>Top IS</th>
+          <th>Abs. Top IS</th>
+        </tr>
+        <tr>
+          <td>[V4] Search | Leads | Services Exp1</td>
+          <td><strong>44,3%</strong></td>
+          <td><span class="severity sev-alto">47,7%</span></td>
+          <td class="sev-baixo">8,0%</td>
+          <td>26,0%</td>
+          <td>12,4%</td>
+        </tr>
+        <tr>
+          <td>[V4] | Search | Leads | Kitchen</td>
+          <td><strong>25,9%</strong></td>
+          <td><span class="severity sev-critico">51,7%</span></td>
+          <td><span class="severity sev-medio">22,4%</span></td>
+          <td>17,0%</td>
+          <td>&lt; 10%</td>
+        </tr>
+        <tr>
+          <td>[V4] | Search | Leads | Kitchen (CPA)</td>
+          <td><strong>54,5%</strong></td>
+          <td><span class="severity sev-medio">28,5%</span></td>
+          <td><span class="severity sev-medio">17,1%</span></td>
+          <td>38,5%</td>
+          <td>31,6%</td>
+        </tr>
+        <tr>
+          <td>[V4] | Search | Leads | Contractors</td>
+          <td><strong>33,1%</strong></td>
+          <td><span class="severity sev-critico">46,3%</span></td>
+          <td><span class="severity sev-medio">20,6%</span></td>
+          <td>20,8%</td>
+          <td>12,6%</td>
+        </tr>
+        <tr>
+          <td>[V4] | Search | Leads | Full Home</td>
+          <td><strong>50,3%</strong></td>
+          <td><span class="severity sev-medio">26,5%</span></td>
+          <td><span class="severity sev-medio">23,2%</span></td>
+          <td>35,8%</td>
+          <td>28,0%</td>
+        </tr>
+        <tr>
+          <td>[V4] | Kitchen l Campe&otilde;es #2</td>
+          <td><strong>29,4%</strong></td>
+          <td><span class="severity sev-medio">29,9%</span></td>
+          <td><span class="severity sev-critico">40,7%</span></td>
+          <td>20,4%</td>
+          <td>11,2%</td>
+        </tr>
+        <tr>
+          <td>[V4] Institucional | Mike Renovations</td>
+          <td><strong style="color:#22c55e;">81,8%</strong></td>
+          <td>6,1%</td>
+          <td>12,1%</td>
+          <td><strong style="color:#22c55e;">63,6%</strong></td>
+          <td><strong style="color:#22c55e;">63,6%</strong></td>
+        </tr>
+        <tr>
+          <td>[V4] Institucional | Concorrentes</td>
+          <td><strong>14,6%</strong></td>
+          <td>6,7%</td>
+          <td><span class="severity sev-critico">78,7%</span></td>
+          <td>10,5%</td>
+          <td>&lt; 10%</td>
+        </tr>
+      </table>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">LEIL&Atilde;O-01. 60,7% das Impress&otilde;es Perdidas por Rank &mdash; O Pior Indicador da Conta</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Na m&eacute;dia da conta, 60,71% das impress&otilde;es s&atilde;o perdidas por rank (qualidade). Apenas 23,73% por or&ccedil;amento. Nas campanhas de kitchen e contractors, o IS perdido por rank chega a 51-52%. A campanha [V4] | Kitchen l Campe&otilde;es perde 83,33% por rank.</span></div>
+          <div class="full"><span class="field">O que isso significa:</span> <span class="value">O Quality Score m&eacute;dio deve estar entre 3-5/10. An&uacute;ncios gen&eacute;ricos ("Kitchen Remodel") sem extens&otilde;es, sem relev&acirc;ncia com a landing page, e CTR baixa. O Google pune com posi&ccedil;&otilde;es baixas e CPM alto.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">CPC m&eacute;dio de $5,59 &mdash; muito acima do benchmark do setor de construction ($2-4). Se o QS subisse de 4 para 7, o CPC poderia cair 30-50%.</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">LEIL&Atilde;O-02. Apenas 15,6% do Mercado Potencial Est&aacute; Sendo Alcan&ccedil;ado</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">IS geral de 15,56% significa que para cada 100 pessoas pesquisando por "kitchen remodel fort myers" no Google, a conta s&oacute; aparece para 15-16. O resto &eacute; concorr&ecirc;ncia.</span></div>
+          <div class="full"><span class="field">Top IS &lt; 10%:</span> <span class="value">Menos de 10% das impress&otilde;es aparecem no topo da p&aacute;gina. Quando o an&uacute;ncio aparece, est&aacute; na parte inferior ou lateral &mdash; posi&ccedil;&otilde;es com CTR 5-10x menor.</span></div>
+          <div class="full"><span class="field">Abs. Top IS:</span> <span class="value">A maioria das campanhas tem Absolute Top IS &lt; 12% &mdash; quase nunca na 1&ordf; posi&ccedil;&atilde;o.</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">LEIL&Atilde;O-03. Excess&atilde;o Reveladora: Campanha Institucional com 81,8% IS</span></div>
+          <div><span class="severity sev-baixo">Informativo</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">A campanha "[V4] Institucional | Mike Renovations" tem IS de 81,8%, Top IS de 63,6% e Absolute Top IS de 63,6% &mdash; a melhor performance de leil&atilde;o da conta inteira. Por qu&ecirc;? Provavelmente porque usa palavras-chave de marca ou termos muito espec&iacute;ficos com baixa concorr&ecirc;ncia.</span></div>
+          <div class="full"><span class="field">Insight:</span> <span class="value">Isso prova que a conta <strong>pode</strong> ter bom IS quando segmenta corretamente. O problema n&atilde;o &eacute; a conta, &eacute; a estrat&eacute;gia de keywords e an&uacute;ncios nas campanhas principais.</span></div>
+        </div>
+      </div>
+
+      <h3>Estrat&eacute;gia Poss&iacute;vel &mdash; Como Virar o Leil&atilde;o</h3>
+
+      <div class="risk-box" style="border-left-color:var(--gold);">
+        <h4>Plano de A&ccedil;&atilde;o para Aumentar IS e Reduzir CPC</h4>
+        <p><strong>1. ATACAR O RANK PRIMEIRO (semanas 1-4):</strong> 60,7% perdido por rank &eacute; o maior gargalo. Antes de aumentar verba, resolva a qualidade:
+<br>&bull; <strong>RSA com relev&acirc;ncia local:</strong> Criar Responsive Search Ads com headlines contendo "Fort Myers", "Naples", "Cape Coral" + servi&ccedil;o + CTA. Ex: "Kitchen Remodel in Fort Myers | Free Estimate | 20+ Years Experience".
+<br>&bull; <strong>Extens&otilde;es:</strong> Adicionar sitelinks (Portfolio, Gallery, Reviews, Free Quote), callouts (Licensed, Insured, 5-Star Rated), e structured snippets (Services: Kitchen, Bathroom, Full Home).
+<br>&bull; <strong>Landing Pages:</strong> Criar p&aacute;ginas dedicadas por servi&ccedil;o+local (ex: /kitchen-remodel-fort-myers/) em vez de uma p&aacute;gina gen&eacute;rica. O Quality Score penaliza landing pages irrelevantes.</p>
+        <p><strong>2. DEPOIS AJUSTAR BUDGET (semanas 5-6):</strong> Com QS melhorado, o CPC cai naturalmente. A&iacute; sim, aumentar budgets:
+<br>&bull; Realocar o que est&aacute; em Cape Coral, Lehigh Acres (zero conv) para Fort Myers 15mi (CPA $163).
+<br>&bull; Aumentar or&ccedil;amento nas campanhas que j&aacute; t&ecirc;m IS &gt; 44% (Services Exp1, Kitchen CPA, Full Home) &mdash; s&atilde;o as mais pr&oacute;ximas de escalar.</p>
+        <p><strong>3. ESTRAT&Eacute;GIA DE LANCE (semana 1 em diante):</strong>
+<br>&bull; Sair de "Maximizar Convers&otilde;es" sem dados hist&oacute;ricos. Usar <strong>CPA Desejado</strong> com meta realista ($200-250) baseada no CPA hist&oacute;rico de Fort Myers.
+<br>&bull; Para campanhas com IS &lt; 30%, considerar <strong>Maximizar Cliques</strong> com CPC m&aacute;ximo controlado para gerar dados de CTR primeiro.
+<br>&bull; Usar <strong>Target Impression Share</strong> para a campanha de Fort Myers 15mi com meta de aparecer no topo (Absolute Top IS &gt; 30%).</p>
+        <p><strong>4. SEGMENTA&Ccedil;&Atilde;O POR DISPOSITIVO E HOR&Aacute;RIO (semana 2):</strong>
+<br>&bull; Analisar se mobile ou desktop converte melhor (dados n&atilde;o dispon&iacute;veis nos CSVs atuais &mdash; preciso puxar).
+<br>&bull; Ajustar bid adjustments por hora-dia. Ter&ccedil;a e Quarta com +50% bid geraram as &uacute;nicas 2 conv da campanha Contractors &mdash; pode ser um padr&atilde;o.</p>
+      </div>
+
+      <div style="margin-top:24px; padding:20px 24px; background:#f0fdf4; border:1px solid #bbf7d0; border-radius:12px;">
+        <h4 style="color:#16a34a; margin-bottom:8px;">&#x2705; Proje&ccedil;&atilde;o: Impacto das Melhorias de Leil&atilde;o</h4>
+        <div class="bar-container">
+          <div class="bar-row">
+            <div class="bar-label" style="width:200px; font-size:12px;">IS Atual (15,6%)</div>
+            <div class="bar-track"><div class="bar-fill red" style="width:16%;">15,6%</div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label" style="width:200px; font-size:12px;">IS P&oacute;s-QS (est.)</div>
+            <div class="bar-track"><div class="bar-fill orange" style="width:35%;">30-40%</div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label" style="width:200px; font-size:12px;">IS P&oacute;s-Budget (est.)</div>
+            <div class="bar-track"><div class="bar-fill gold" style="width:55%;">45-55%</div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label" style="width:200px; font-size:12px;">Top IS Atual (&lt;10%)</div>
+            <div class="bar-track"><div class="bar-fill gray" style="width:10%;">&lt;10%</div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label" style="width:200px; font-size:12px;">Top IS Meta (60d)</div>
+            <div class="bar-track"><div class="bar-fill gold" style="width:40%;">35-45%</div></div>
+          </div>
+        </div>
+        <p style="font-size:14px; color:var(--gray-600); margin-top:8px;">Com QS 7+ e IS &gt; 40%, estimativa de CPC caindo de $5,59 para $2,50-3,50 e CPA saindo de $433 para $200-250.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>An&aacute;lise Geogr&aacute;fica</h2>
+
+      <h3>Gasto por Regi&atilde;o</h3>
+      <div class="bar-container">
+        <div class="bar-row">
+          <div class="bar-label">15mi Fort Myers</div>
+          <div class="bar-track"><div class="bar-fill gold" style="width:100%;">$6.372 &bull; 39 conv &bull; CPA $163</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Condado Lee</div>
+          <div class="bar-track"><div class="bar-fill red" style="width:103%;">$6.570 &bull; 3 conv &bull; CPA $2.190</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">10mi Naples</div>
+          <div class="bar-track"><div class="bar-fill gold" style="width:76%;">$4.821 &bull; 24 conv &bull; CPA $200</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Condado Sarasota</div>
+          <div class="bar-track"><div class="bar-fill orange" style="width:64%;">$4.069 &bull; 7 conv &bull; CPA $581</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Condado Collier</div>
+          <div class="bar-track"><div class="bar-fill red" style="width:37%;">$2.382 &bull; 2 conv &bull; CPA $1.191</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Cape Coral</div>
+          <div class="bar-track"><div class="bar-fill gray" style="width:29%;">$1.841 &bull; 0 conv</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Condado Charlotte</div>
+          <div class="bar-track"><div class="bar-fill gold" style="width:28%;">$1.795 &bull; 6 conv &bull; CPA $299</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Lehigh Acres</div>
+          <div class="bar-track"><div class="bar-fill gray" style="width:18%;">$1.132 &bull; 0 conv</div></div>
+        </div>
+      </div>
+
+      <h3>Findings Geogr&aacute;ficos</h3>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">GEO-01. Fort Myers 15mi Tem o Melhor CPA ($163) mas Est&aacute; Subfinanciado</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">39 convers&otilde;es a CPA $163 &mdash; a melhor performance geogr&aacute;fica da conta. Mas o gasto de $6.372 &eacute; apenas 8,6% do total.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">Aumentar or&ccedil;amento em Fort Myers 15mi. Criar campanha dedicada com budget de $100-150/dia.</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">GEO-02. Condado de Lee: Maior Gasto ($6.570) com Pior CPA ($2.190)</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">$6.570 gastos para apenas 3 convers&otilde;es. CPA de $2.190 &mdash; 5x pior que Fort Myers 15mi.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">Reduzir drasticamente ou pausar. Revisar segmenta&ccedil;&atilde;o dentro do condado. Pode ser que a segmenta&ccedil;&atilde;o ampla esteja capturando &aacute;reas de baixa renda ou baixa inten&ccedil;&atilde;o.</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">GEO-03. Cape Coral e Lehigh Acres: $2.973 Gastos, Zero Convers&otilde;es</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Cape Coral gastou $1.841 com 0 conv. Lehigh Acres gastou $1.132 com 0 conv. Total de $2.973 queimados.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">Pausar imediatamente. Se houver interesse nessas regi&otilde;es, criar campanha separada com criativos e landing pages espec&iacute;ficos.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Hip&oacute;teses &mdash; Por Que a Conta N&atilde;o Performa</h2>
+
+      <div class="finding" style="border-left:3px solid var(--red);">
+        <div class="finding-header">
+          <div><span class="finding-title">H-01. Falta de Estrutura de Conta &mdash; O Problema Raiz</span></div>
+          <div><span class="severity sev-critico">Probabilidade: 95%</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Tese:</span> <span class="value">A conta foi criada sem arquitetura definida. Cada nova campanha foi um "teste" isolado que nunca gerou aprendizado. O gestor anterior criava campanhas, queimava or&ccedil;amento, pausava e criava outra. Sem ciclo de otimiza&ccedil;&atilde;o, sem documenta&ccedil;&atilde;o, sem consist&ecirc;ncia.</span></div>
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">26 campanhas, 23 pausadas/removidas. Nomes inconsistentes. Or&ccedil;amentos pulverizados. 3 estrat&eacute;gias de lance diferentes.</span></div>
+        </div>
+      </div>
+
+      <div class="finding" style="border-left:3px solid var(--red);">
+        <div class="finding-header">
+          <div><span class="finding-title">H-02. Aus&ecirc;ncia de Tracking de Receita Impede Otimiza&ccedil;&atilde;o Inteligente</span></div>
+          <div><span class="severity sev-critico">Probabilidade: 90%</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Tese:</span> <span class="value">Sem valor de convers&atilde;o, o Google Ads n&atilde;o consegue otimizar para ROAS. As estrat&eacute;gias de CPA Desejado e Maximizar Convers&otilde;es operam cegas. O cliente pode estar gerando leads de alto valor sem saber, ou leads de baixo valor sem conseguir corrigir.</span></div>
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">ROAS = 0 em 100% das campanhas. Nenhum valor de convers&atilde;o registrado.</span></div>
+        </div>
+      </div>
+
+      <div class="finding" style="border-left:3px solid #c2410c;">
+        <div class="finding-header">
+          <div><span class="finding-title">H-03. Palavras-chave Amplas em Conta Pequena Queimam Or&ccedil;amento</span></div>
+          <div><span class="severity sev-alto">Probabilidade: 85%</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Tese:</span> <span class="value">35% do gasto foi em correspond&ecirc;ncia ampla. Em contas com menos de $100k de gasto, ampla sem negativas robustas &eacute; uma m&aacute;quina de queimar dinheiro. O Google interpreta "kitchen remodel fort myers" (ampla) como "qualquer coisa relacionada a cozinha, reforma ou Fort Myers".</span></div>
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">"kitchen remodel fort myers" (ampla): $5.974, CTR 4,27%, removida. "remodeling contractors" (ampla): $3.772, CTR 5,93%, removida.</span></div>
+        </div>
+      </div>
+
+      <div class="finding" style="border-left:3px solid #c2410c;">
+        <div class="finding-header">
+          <div><span class="finding-title">H-04. Landing Page e Site N&atilde;o Est&atilde;o Otimizados para Convers&atilde;o</span></div>
+          <div><span class="severity sev-alto">Probabilidade: 80%</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Tese:</span> <span class="value">Com 170 convers&otilde;es em 13.173 cliques (1,23%), a taxa de convers&atilde;o &eacute; baixa para o setor de construction. O normal para remodeling &eacute; 2-5%. A landing page pode n&atilde;o estar alinhada com a inten&ccedil;&atilde;o de busca, ter formul&aacute;rio muito longo, ou n&atilde;o transmitir confian&ccedil;a (licen&ccedil;as, certifica&ccedil;&otilde;es, fotos de projetos anteriores).</span></div>
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Taxa de convers&atilde;o de 1,23% &mdash; abaixo do benchmark do setor. N&atilde;o h&aacute; dados de qualidade da landing page nos CSVs.</span></div>
+        </div>
+      </div>
+
+      <div class="finding" style="border-left:3px solid #a16207;">
+        <div class="finding-header">
+          <div><span class="finding-title">H-05. Segmenta&ccedil;&atilde;o Geogr&aacute;fica Muito Ampla e Mal Calibrada</span></div>
+          <div><span class="severity sev-medio">Probabilidade: 75%</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Tese:</span> <span class="value">A conta mistura raios de 2km, 10mi, 15mi, 20mi e condados inteiros sem crit&eacute;rio claro. Condado de Lee (inteiro) gastou $6.570 com CPA de $2.190. Fort Myers 15mi (dentro do condado) gastou $6.372 com CPA de $163. A diferen&ccedil;a &eacute; brutal &mdash; a segmenta&ccedil;&atilde;o ampla do condado est&aacute; capturando &aacute;reas de baixa performance.</span></div>
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Condado de Lee: CPA $2.190 vs Fort Myers 15mi: CPA $163. Cape Coral e Lehigh Acres (dentro do condado de Lee): zero convers&otilde;es.</span></div>
+        </div>
+      </div>
+
+      <div class="finding" style="border-left:3px solid #a16207;">
+        <div class="finding-header">
+          <div><span class="finding-title">H-06. An&uacute;ncios sem Extens&otilde;es e sem Diferencia&ccedil;&atilde;o Competitiva</span></div>
+          <div><span class="severity sev-medio">Probabilidade: 70%</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Tese:</span> <span class="value">Pontua&ccedil;&atilde;o de otimiza&ccedil;&atilde;o zerada sugere que os an&uacute;ncios n&atilde;o t&ecirc;m extens&otilde;es (sitelinks, callouts, structured snippets). Em um mercado competitivo como construction na Florida, an&uacute;ncios sem extens&otilde;es perdem CTR e Quality Score.</span></div>
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Campo "Pontua&ccedil;&atilde;o de otimiza&ccedil;&atilde;o" vazio em todas as campanhas.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Plano de A&ccedil;&atilde;o &mdash; 90 Dias</h2>
+
+      <h3 style="margin-top:0;">Fase 1 &mdash; Ressuscita&ccedil;&atilde;o e Funda&ccedil;&atilde;o (Dias 1-14)</h3>
+      <table>
+        <tr><th>#</th><th>A&ccedil;&atilde;o</th><th>Resp.</th><th>Horas</th><th>Priod.</th></tr>
+        <tr><td>1</td><td>C-03: Remover campanha "Rent Apartment" e revisar todas as Smart campaigns</td><td>Media Buyer</td><td>1</td><td>1</td></tr>
+        <tr><td>2</td><td>C-05: Limpar a&ccedil;&otilde;es de convers&atilde;o (manter s&oacute; formul&aacute;rio + liga&ccedil;&atilde;o)</td><td>Media Buyer</td><td>2</td><td>2</td></tr>
+        <tr><td>3</td><td>C-02: Implementar Google Tag Manager + tracking de convers&atilde;o com valor</td><td>Dev + GTM</td><td>6</td><td>3</td></tr>
+        <tr><td>4</td><td>C-01: Arquivar todas as campanhas pausadas. Manter s&oacute; [V4] Kitchen ativa.</td><td>Media Buyer</td><td>2</td><td>4</td></tr>
+        <tr><td>5</td><td>KW-03: Criar lista de palavras-chave negativas (200+ termos)</td><td>Media Buyer</td><td>2</td><td>5</td></tr>
+        <tr><td>6</td><td>GEO-03: Pausar Cape Coral e Lehigh Acres</td><td>Media Buyer</td><td>1</td><td>6</td></tr>
+        <tr><td>7</td><td>A-02: Configurar ad schedule (seg-sex, 8h-20h)</td><td>Media Buyer</td><td>1</td><td>7</td></tr>
+        <tr><td>8</td><td>C-04: Padronizar estrat&eacute;gia de lances (Maximizar Convers&otilde;es)</td><td>Media Buyer</td><td>1</td><td>8</td></tr>
+      </table>
+
+      <h3>Fase 2 &mdash; Estrutura&ccedil;&atilde;o e Expans&atilde;o (Dias 15-45)</h3>
+      <table>
+        <tr><th>#</th><th>A&ccedil;&atilde;o</th><th>Resp.</th><th>Horas</th><th>Priod.</th></tr>
+        <tr><td>1</td><td>Criar nova arquitetura de conta: 3 campanhas (Kitchen, Full Home, Contractors)</td><td>Media Buyer</td><td>4</td><td>1</td></tr>
+        <tr><td>2</td><td>KW-02: Pesquisar e adicionar 50+ keywords de cauda longa</td><td>Media Buyer</td><td>4</td><td>2</td></tr>
+        <tr><td>3</td><td>GEO-01: Criar campanha dedicada Fort Myers 15mi com $100/dia</td><td>Media Buyer</td><td>2</td><td>3</td></tr>
+        <tr><td>4</td><td>GEO-02: Refinar segmenta&ccedil;&atilde;o do Condado de Lee (excluir Cape Coral + Lehigh)</td><td>Media Buyer</td><td>1</td><td>4</td></tr>
+        <tr><td>5</td><td>H-06: Adicionar extens&otilde;es de an&uacute;ncio (sitelinks, callouts, snippets)</td><td>Media Buyer</td><td>2</td><td>5</td></tr>
+        <tr><td>6</td><td>H-04: Auditar landing pages e criar 3 vers&otilde;es otimizadas para convers&atilde;o</td><td>Copy + Dev</td><td>8</td><td>6</td></tr>
+        <tr><td>7</td><td>Consolidar or&ccedil;amento: realocar $150/dia para as 3 campanhas principais</td><td>Media Buyer</td><td>1</td><td>7</td></tr>
+      </table>
+
+      <h3>Fase 3 &mdash; Escala e Otimiza&ccedil;&atilde;o (Dias 46-90)</h3>
+      <table>
+        <tr><th>#</th><th>A&ccedil;&atilde;o</th><th>Resp.</th><th>Horas</th><th>Priod.</th></tr>
+        <tr><td>1</td><td>Ativar campanha de Remarketing para visitantes do site</td><td>Media Buyer</td><td>2</td><td>1</td></tr>
+        <tr><td>2</td><td>Criar campanha Performance Max para capturar demanda em v&aacute;rios canais</td><td>Media Buyer</td><td>3</td><td>2</td></tr>
+        <tr><td>3</td><td>Testar 3 criativos de v&iacute;deo para YouTube (Demand Gen)</td><td>Creative + Media</td><td>6</td><td>3</td></tr>
+        <tr><td>4</td><td>Implementar otimiza&ccedil;&atilde;o de Quality Score (CTR, relev&acirc;ncia, LP)</td><td>Media Buyer</td><td>4</td><td>4</td></tr>
+        <tr><td>5</td><td>Configurar dashboard de performance (GA4 + Google Ads + CRM)</td><td>Analytics</td><td>4</td><td>5</td></tr>
+        <tr><td>6</td><td>Relat&oacute;rio de 90 dias com ROAS real e recomenda&ccedil;&otilde;es Fase 2</td><td>Media Buyer</td><td>3</td><td>6</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Resumo de Esfor&ccedil;o Consolidado</h2>
+      <table>
+        <tr><th>Especialidade</th><th>Fase 1 (14d)</th><th>Fase 2 (30d)</th><th>Fase 3 (45d)</th><th>Total</th></tr>
+        <tr><td>Media Buyer</td><td>10 h</td><td>14 h</td><td>12 h</td><td>36 h</td></tr>
+        <tr><td>Dev + GTM</td><td>6 h</td><td>&mdash;</td><td>&mdash;</td><td>6 h</td></tr>
+        <tr><td>Copywriter + Dev LP</td><td>&mdash;</td><td>8 h</td><td>&mdash;</td><td>8 h</td></tr>
+        <tr><td>Creative (v&iacute;deo)</td><td>&mdash;</td><td>&mdash;</td><td>6 h</td><td>6 h</td></tr>
+        <tr><td>Analytics</td><td>&mdash;</td><td>&mdash;</td><td>4 h</td><td>4 h</td></tr>
+        <tr style="background:var(--red); color:#fff; font-weight:700;"><td>Total</td><td>16 h</td><td>22 h</td><td>22 h</td><td>~60 h</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Proje&ccedil;&atilde;o de Impacto &mdash; 90 Dias</h2>
+      <table>
+        <tr><th>M&eacute;trica</th><th>Atual</th><th>30 dias</th><th>60 dias</th><th>90 dias (Cons.)</th><th>90 dias (Otim.)</th></tr>
+        <tr><td>CPA m&eacute;dio</td><td>$433</td><td>$350</td><td>$300</td><td>$280</td><td>$250</td></tr>
+        <tr><td>Convers&otilde;es/m&ecirc;s</td><td>~20</td><td>~30</td><td>~45</td><td>~60</td><td>~80</td></tr>
+        <tr><td>CTR m&eacute;dio</td><td>1,23%</td><td>1,5%</td><td>2,0%</td><td>2,5%</td><td>3,0%</td></tr>
+        <tr><td>ROAS (com tracking)</td><td>0</td><td>2:1</td><td>3:1</td><td>4:1</td><td>6:1</td></tr>
+        <tr><td>Gasto mensal</td><td>~$3.000</td><td>$4.500</td><td>$6.000</td><td>$7.500</td><td>$10.000</td></tr>
+        <tr><td>Campanhas ativas</td><td>3</td><td>3</td><td>5</td><td>6</td><td>8</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>KPIs para Acompanhamento Semanal</h2>
+      <table>
+        <tr><th>KPI</th><th>Meta Fase 1</th><th>Meta Fase 2</th><th>Meta Fase 3</th></tr>
+        <tr><td>CPA m&eacute;dio</td><td>$433 &rarr; $350</td><td>$350 &rarr; $300</td><td>$300 &rarr; $250</td></tr>
+        <tr><td>Convers&otilde;es/semana</td><td>5 &rarr; 8</td><td>8 &rarr; 12</td><td>12 &rarr; 18</td></tr>
+        <tr><td>CTR m&eacute;dio</td><td>1,23% &rarr; 1,5%</td><td>1,5% &rarr; 2,0%</td><td>2,0% &rarr; 2,5%</td></tr>
+        <tr><td>Keywords ativas</td><td>51 &rarr; 30 (dedup)</td><td>30 &rarr; 80</td><td>80 &rarr; 120</td></tr>
+        <tr><td>Palavras negativas</td><td>0 &rarr; 200</td><td>200 &rarr; 400</td><td>400 &rarr; 600</td></tr>
+        <tr><td>Campanhas ativas</td><td>1 &rarr; 3</td><td>3 &rarr; 5</td><td>5 &rarr; 8</td></tr>
+        <tr><td>ROAS (com tracking)</td><td>0 &rarr; 2:1</td><td>2:1 &rarr; 3:1</td><td>3:1 &rarr; 5:1</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Gloss&aacute;rio de Issues por Abrang&ecirc;ncia</h2>
+      <table>
+        <tr><th>Issue</th><th>Campanhas Afetadas</th><th>%</th><th>Severidade</th></tr>
+        <tr><td>Campanhas pausadas/removidas</td><td>23</td><td>88,5%</td><td><span class="badge badge-critico">Cr&iacute;tico</span></td></tr>
+        <tr><td>ROAS zero (sem tracking)</td><td>26</td><td>100%</td><td><span class="badge badge-critico">Cr&iacute;tico</span></td></tr>
+        <tr><td>Segmenta&ccedil;&atilde;o errada (Rent Apartment)</td><td>1</td><td>3,8%</td><td><span class="badge badge-critico">Cr&iacute;tico</span></td></tr>
+        <tr><td>Estrat&eacute;gia de lances inconsistente</td><td>26</td><td>100%</td><td><span class="badge badge-critico">Cr&iacute;tico</span></td></tr>
+        <tr><td>A&ccedil;&otilde;es de convers&atilde;o polu&iacute;das</td><td>26</td><td>100%</td><td><span class="badge badge-critico">Cr&iacute;tico</span></td></tr>
+        <tr><td>Keywords duplicadas entre campanhas</td><td>~10</td><td>~20%</td><td><span class="badge badge-critico">Cr&iacute;tico</span></td></tr>
+        <tr><td>Or&ccedil;amento pulverizado</td><td>26</td><td>100%</td><td><span class="badge badge-alto">Alto</span></td></tr>
+        <tr><td>Impress&otilde;es em hor&aacute;rios ruins</td><td>~5</td><td>~19%</td><td><span class="badge badge-alto">Alto</span></td></tr>
+        <tr><td>CPC elevado ($5,59)</td><td>26</td><td>100%</td><td><span class="badge badge-alto">Alto</span></td></tr>
+        <tr><td>YouTube com an&uacute;ncios reprovados</td><td>1</td><td>3,8%</td><td><span class="badge badge-alto">Alto</span></td></tr>
+        <tr><td>Ajuste de lance +50% sem dados</td><td>1</td><td>3,8%</td><td><span class="badge badge-alto">Alto</span></td></tr>
+        <tr><td>Keywords amplas sem negativas</td><td>~15</td><td>~29%</td><td><span class="badge badge-alto">Alto</span></td></tr>
+        <tr><td>Aus&ecirc;ncia de cauda longa</td><td>51</td><td>100%</td><td><span class="badge badge-alto">Alto</span></td></tr>
+        <tr><td>Pontua&ccedil;&atilde;o de otimiza&ccedil;&atilde;o zerada</td><td>26</td><td>100%</td><td><span class="badge badge-medio">M&eacute;dio</span></td></tr>
+        <tr><td>Nomenclatura inconsistente</td><td>~8</td><td>~31%</td><td><span class="badge badge-medio">M&eacute;dio</span></td></tr>
+        <tr><td>GEO: Cape Coral + Lehigh sem conv.</td><td>2</td><td>7,7%</td><td><span class="badge badge-alto">Alto</span></td></tr>
+        <tr><td>GEO: Condado Lee CPA $2.190</td><td>1</td><td>3,8%</td><td><span class="badge badge-critico">Cr&iacute;tico</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Riscos e Mitiga&ccedil;&otilde;es</h2>
+      <table>
+        <tr><th>Risco</th><th>Prob.</th><th>Impacto</th><th>Mitiga&ccedil;&atilde;o</th></tr>
+        <tr><td>Cliente n&atilde;o tem acesso ao GTM ou ao c&oacute;digo do site</td><td>Alta</td><td>Alto</td><td>Verificar acesso antes de iniciar Fase 1. Se necess&aacute;rio, contratar dev local.</td></tr>
+        <tr><td>CRM n&atilde;o exporta dados de receita por lead</td><td>M&eacute;dia</td><td>Alto</td><td>Implementar valor fixo por tipo de lead (ex: formul&aacute;rio = $200, liga&ccedil;&atilde;o = $500).</td></tr>
+        <tr><td>Cliente quer resultados imediatos (30 dias)</td><td>M&eacute;dia</td><td>M&eacute;dio</td><td>Gerenciar expectativa: 90 dias para turnaround completo. Quick wins em 14 dias.</td></tr>
+        <tr><td>Concorr&ecirc;ncia local agressiva (Home Depot, Lowe's, franchise)</td><td>Alta</td><td>M&eacute;dio</td><td>Focar em cauda longa e inten&ccedil;&atilde;o local. Evitar termos gen&eacute;ricos de alto custo.</td></tr>
+        <tr><td>Or&ccedil;amento insuficiente para escala</td><td>M&eacute;dia</td><td>M&eacute;dio</td><td>Validar com cliente or&ccedil;amento m&iacute;nimo de $150/dia para campanhas principais.</td></tr>
+        <tr><td>Cliente n&atilde;o tem landing pages dedicadas</td><td>Alta</td><td>Alto</td><td>Criar landing pages simples (uma p&aacute;gina) para cada campanha antes de escalar.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Pr&oacute;ximos Passos</h2>
+      <div class="kpi-grid" style="grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));">
+        <div class="kpi-card" style="text-align:left; padding:18px;">
+          <div class="label" style="text-align:left; margin-bottom:4px;">1. Apresentar relat&oacute;rio ao cliente</div>
+          <p style="font-size:15px; margin:0; color:var(--gray-700);">Validar prioridades, or&ccedil;amento e cronograma de 90 dias. Obter acesso ao GTM e CRM.</p>
+        </div>
+        <div class="kpi-card" style="text-align:left; padding:18px;">
+          <div class="label" style="text-align:left; margin-bottom:4px;">2. Iniciar Fase 1 &mdash; Ressuscita&ccedil;&atilde;o</div>
+          <p style="font-size:15px; margin:0; color:var(--gray-700);">16 h de corre&ccedil;&otilde;es cr&iacute;ticas: limpar campanhas, tracking, negativas, ad schedule.</p>
+        </div>
+        <div class="kpi-card" style="text-align:left; padding:18px;">
+          <div class="label" style="text-align:left; margin-bottom:4px;">3. Implementar tracking de receita</div>
+          <p style="font-size:15px; margin:0; color:var(--gray-700);">6 h. GTM + Google Ads + CRM. Sem isso, qualquer otimiza&ccedil;&atilde;o &eacute; especula&ccedil;&atilde;o.</p>
+        </div>
+        <div class="kpi-card" style="text-align:left; padding:18px;">
+          <div class="label" style="text-align:left; margin-bottom:4px;">4. Estruturar conta para escala</div>
+          <p style="font-size:15px; margin:0; color:var(--gray-700);">Arquitetura limpa: 3 campanhas principais, or&ccedil;amento consolidado, ciclo de aprendizado.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Gloss&aacute;rio de Severidade</h2>
+      <div class="glossary-row"><span class="badge badge-critico">Cr&iacute;tico</span> <span>Impede performance e escala. Impacto direto em receita. Requer a&ccedil;&atilde;o imediata.</span></div>
+      <div class="glossary-row"><span class="badge badge-alto">Alto</span> <span>Impacta CPA, CTR ou efici&ecirc;ncia. Requer a&ccedil;&atilde;o na Fase 1 ou 2.</span></div>
+      <div class="glossary-row"><span class="badge badge-medio">M&eacute;dio</span> <span>Oportunidade de melhoria com impacto moderado. Fase 2 ou 3.</span></div>
+      <div class="glossary-row"><span class="badge badge-baixo">Baixo</span> <span>Ajuste de polimento. Baixo impacto individual.</span></div>
+      <div class="glossary-row"><span class="badge badge-info">Info</span> <span>Observa&ccedil;&atilde;o ou boa pr&aacute;tica. Nenhuma a&ccedil;&atilde;o requerida.</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Sobre Esta Auditoria</h2>
+      <table>
+        <tr><td><strong>Ferramenta</strong></td><td>Google Ads Editor + CSVs exportados + An&aacute;lise TOC</td></tr>
+        <tr><td><strong>Per&iacute;odo dos dados</strong></td><td>Todo o hist&oacute;rico da conta (2024-2026)</td></tr>
+        <tr><td><strong>Fontes de dados</strong></td><td>6 CSVs: campanhas, palavras-chave, locais, programa&ccedil;&atilde;o de an&uacute;ncios</td></tr>
+        <tr><td><strong>Revis&atilde;o t&eacute;cnica</strong></td><td>Media Buying Squad V4 Company (media-buyer, analista-dados, estrategista-marketing)</td></tr>
+        <tr><td><strong>Escopo</strong></td><td>Auditoria estrutural de conta Google Ads baseada em dados exportados. Ferramentas de analytics (GA4, GSC, CRM) n&atilde;o estavam dispon&iacute;veis para esta auditoria.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer">
+    Documento gerado em Julho de 2026 pela equipe de Media Buying da <strong>V4 Company</strong> &mdash; Teoria das Restri&ccedil;&otilde;es aplicada a M&iacute;dia Paga
+  </div>
+</div>
+
+</body>
+</html>
