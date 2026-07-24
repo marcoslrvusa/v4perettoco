@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Passaporte POA — Peretto Friends Experience</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',sans-serif;background:#0f0f0f;color:#fff;overflow-x:hidden;min-height:100vh}
+  .bg{position:fixed;inset:0;z-index:0}
+  .bg-ball{position:absolute;border-radius:50%;filter:blur(120px);opacity:.3}
+  .bg-ball:nth-child(1){width:600px;height:600px;background:#e63946;top:-200px;left:-200px}
+  .bg-ball:nth-child(2){width:500px;height:500px;background:#1d3557;bottom:-150px;right:-150px}
+  .bg-ball:nth-child(3){width:300px;height:300px;background:#e63946;bottom:50%;right:30%;opacity:.15}
+
+  .screen{display:none;position:relative;z-index:1;min-height:100vh;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center}
+  .screen.active{display:flex}
+
+  .logo{font-size:14px;letter-spacing:4px;text-transform:uppercase;color:#e63946;font-weight:600;margin-bottom:8px}
+  h1{font-size:clamp(2rem,6vw,4rem);font-weight:900;line-height:1.1;margin-bottom:16px}
+  h1 span{background:linear-gradient(135deg,#e63946,#ff6b6b);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  h2{font-size:clamp(1.3rem,3vw,2rem);font-weight:800;margin-bottom:12px}
+  p.sub{color:#aaa;font-size:1.1rem;max-width:600px;line-height:1.6;margin-bottom:32px}
+
+  .btn{display:inline-block;padding:16px 48px;border-radius:60px;border:none;font-family:'Inter',sans-serif;font-size:1.1rem;font-weight:700;cursor:pointer;transition:all .2s;background:linear-gradient(135deg,#e63946,#ff6b6b);color:#fff;text-decoration:none}
+  .btn:hover{transform:scale(1.05);box-shadow:0 8px 32px rgba(230,57,70,.4)}
+  .btn-outline{background:transparent;border:2px solid #e63946;color:#fff}
+  .btn-outline:hover{background:#e63946;box-shadow:none}
+  .btn-sm{padding:10px 24px;font-size:.9rem}
+  .btn-dark{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:#fff}
+  .btn-dark:hover{background:rgba(255,255,255,.2);transform:none;box-shadow:none}
+
+  .card{background:rgba(255,255,255,.06);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:40px;max-width:720px;width:100%;margin:0 auto}
+  .card-sm{padding:24px}
+
+  .wheel-container{position:relative;width:280px;height:280px;margin:0 auto 24px}
+  .wheel{width:100%;height:100%;border-radius:50%;background:conic-gradient(#e63946 0deg 45deg,#ff6b6b 45deg 90deg,#1d3557 90deg 135deg,#457b9d 135deg 180deg,#e63946 180deg 225deg,#ff6b6b 225deg 270deg,#1d3557 270deg 315deg,#457b9d 315deg 360deg);position:relative;transition:transform 3s cubic-bezier(.17,.67,.12,.99);box-shadow:0 0 60px rgba(230,57,70,.3)}
+  .wheel-pointer{position:absolute;top:-18px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:18px solid transparent;border-right:18px solid transparent;border-top:30px solid #ffd700;filter:drop-shadow(0 4px 12px rgba(255,215,0,.5));z-index:2}
+  .wheel-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60px;height:60px;border-radius:50%;background:#0f0f0f;border:3px solid #ffd700;z-index:2;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;color:#ffd700}
+  .wheel-labels{position:absolute;inset:0;z-index:1}
+  .wheel-label{position:absolute;width:100%;height:100%;left:0;top:0;display:flex;align-items:flex-start;justify-content:center;padding-top:12px;font-size:11px;font-weight:700;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.5);text-transform:uppercase;letter-spacing:.5px}
+
+  .timer-ring{width:120px;height:120px;border-radius:50%;border:6px solid rgba(255,255,255,.1);position:relative;margin:0 auto 16px}
+  .timer-ring svg{transform:rotate(-90deg);width:120px;height:120px}
+  .timer-ring circle{fill:none;stroke:#e63946;stroke-width:6;stroke-dasharray:314;stroke-dashoffset:0;stroke-linecap:round;transition:stroke-dashoffset 1s linear}
+  .timer-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:3rem;font-weight:900}
+
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%}
+  .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;width:100%}
+  .grid-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;width:100%}
+
+  .player-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:16px;text-align:center;transition:all .2s;cursor:pointer}
+  .player-card:hover{background:rgba(255,255,255,.1)}
+  .player-card.selected{border-color:#e63946;background:rgba(230,57,70,.15);box-shadow:0 0 24px rgba(230,57,70,.2)}
+  .player-card .name{font-weight:700;font-size:1.1rem;margin-bottom:4px}
+  .player-card .stamps{color:#ffd700;font-size:.9rem}
+  .player-card .passport-badge{display:inline-block;background:#ffd700;color:#0f0f0f;border-radius:20px;padding:2px 10px;font-size:.75rem;font-weight:700;margin-top:4px}
+
+  .challenge-box{min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px}
+  .challenge-box .challenge-text{font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:600;line-height:1.5;margin-bottom:8px}
+  .challenge-box .challenge-extra{color:#aaa;font-size:.9rem;margin-bottom:16px}
+
+  .prize-wheel{width:320px;height:320px;margin:0 auto 24px;position:relative}
+  .prize-wheel canvas{width:100%;height:100%;border-radius:50%;box-shadow:0 0 60px rgba(255,215,0,.2)}
+  .prize-pointer{position:absolute;top:-18px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:18px solid transparent;border-right:18px solid transparent;border-top:30px solid #ffd700;filter:drop-shadow(0 4px 12px rgba(255,215,0,.5));z-index:2}
+
+  .confetti-container{position:fixed;inset:0;pointer-events:none;z-index:100;overflow:hidden}
+  .confetti{position:absolute;width:10px;height:10px;top:-20px;animation:confettiFall linear forwards}
+  @keyframes confettiFall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+
+  .badge-finalista{display:inline-block;background:linear-gradient(135deg,#ffd700,#ffaa00);color:#0f0f0f;padding:6px 16px;border-radius:30px;font-weight:800;font-size:.85rem;text-transform:uppercase;letter-spacing:1px}
+
+  .fade-in{animation:fadeIn .5s ease forwards}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  .pulse{animation:pulse 1.5s ease infinite}
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+  .shake{animation:shake .5s ease}
+  @keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-10deg)}75%{transform:rotate(10deg)}}
+
+  .rules-list{text-align:left;margin:0 auto 24px;max-width:500px;display:flex;flex-direction:column;gap:12px}
+  .rules-list li{display:flex;align-items:flex-start;gap:12px;list-style:none;color:#ccc;font-size:.95rem;line-height:1.5}
+  .rules-list li .num{background:rgba(230,57,70,.2);color:#e63946;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;flex-shrink:0}
+
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:50;display:none;align-items:center;justify-content:center;padding:20px}
+  .modal-overlay.active{display:flex}
+  .modal{background:rgba(20,20,20,.95);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:40px;max-width:500px;width:100%;text-align:center}
+  .modal h3{font-size:1.5rem;margin-bottom:8px}
+  .modal .prize-name{font-size:2rem;font-weight:900;color:#ffd700;margin:16px 0}
+  .modal p{color:#aaa;margin-bottom:24px}
+
+  .small-text{font-size:.8rem;color:#666;margin-top:8px}
+
+  .stamp-row{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:8px 0}
+  .stamp{font-size:1.3rem;animation:stampPop .4s ease}
+  @keyframes stampPop{0%{transform:scale(0) rotate(-30deg)}60%{transform:scale(1.3) rotate(10deg)}100%{transform:scale(1) rotate(0deg)}}
+
+  .input-group{display:flex;flex-direction:column;gap:8px;width:100%}
+  .input-group input{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:14px 18px;color:#fff;font-family:'Inter',sans-serif;font-size:1rem;outline:none;transition:border .2s}
+  .input-group input:focus{border-color:#e63946}
+
+  .player-list-area{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0;min-height:40px}
+  .player-list-area .pill{background:rgba(255,255,255,.1);padding:6px 14px;border-radius:20px;font-size:.9rem;display:flex;align-items:center;gap:8px}
+  .player-list-area .pill .remove{background:none;border:none;color:#e63946;cursor:pointer;font-size:1.1rem;padding:0;line-height:1}
+
+  .resultado-ingresso{font-size:2.5rem;font-weight:900;margin:16px 0}
+  .resultado-ingresso span{display:block;font-size:1rem;font-weight:400;color:#aaa;margin-top:4px}
+
+  @media(max-width:600px){
+    .card{padding:20px}
+    .grid-2,.grid-3,.grid-4{grid-template-columns:1fr 1fr}
+    .wheel-container{width:200px;height:200px}
+    .prize-wheel{width:240px;height:240px}
+  }
+</style>
+</head>
+<body>
+
+<div class="bg">
+  <div class="bg-ball"></div>
+  <div class="bg-ball"></div>
+  <div class="bg-ball"></div>
+</div>
+
+<!-- ===== SCREEN 1: INÍCIO ===== -->
+<div class="screen active" id="s-start">
+  <div class="logo">Peretto e Co</div>
+  <h1><span>Passaporte POA</span></h1>
+  <p class="sub">O jogo onde você encara um desafio, ganha um carimbo no passaporte e concorre a <strong>prêmios reais de Porto Alegre</strong> — cinema, parques, cafés e mais.</p>
+  <div class="card card-sm" style="max-width:500px;text-align:left;margin-bottom:24px">
+    <div style="font-weight:700;margin-bottom:12px;text-align:center">🎯 Como funciona</div>
+    <ul class="rules-list">
+      <li><span class="num">1</span> Adiciona o nome de todo mundo que vai jogar</li>
+      <li><span class="num">2</span> A roleta sorteia quem enfrenta o desafio</li>
+      <li><span class="num">3</span> 30 segundos no cronômetro pra cumprir a missão</li>
+      <li><span class="num">4</span> Se o grupo aprovar, você ganha <strong>1 doce + carimbo</strong></li>
+      <li><span class="num">5</span> Na final, quem tem carimbo gira a <strong>Roleta dos Prêmios POA</strong>!</li>
+    </ul>
+  </div>
+  <button class="btn" onclick="showScreen('s-players')">🔥 Quero Jogar</button>
+  <p class="small-text" style="margin-top:12px">Funciona no projetor, só abrir o navegador</p>
+</div>
+
+<!-- ===== SCREEN 2: PLAYERS ===== -->
+<div class="screen" id="s-players">
+  <h2 style="margin-bottom:8px">👥 Quem vai jogar?</h2>
+  <p class="sub" style="margin-bottom:20px">Adiciona geral — dá pra colocar o time todo</p>
+  <div class="card card-sm" style="max-width:480px">
+    <div class="input-group" style="margin-bottom:12px">
+      <div style="display:flex;gap:8px;width:100%">
+        <input type="text" id="playerInput" placeholder="Digite um nome..." style="flex:1" onkeydown="if(event.key==='Enter')addPlayer()">
+        <button class="btn btn-sm" onclick="addPlayer()">+</button>
+      </div>
+    </div>
+    <div class="player-list-area" id="playerList"></div>
+    <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center">
+      <button class="btn btn-sm" onclick="quickFill()" style="background:rgba(255,255,255,.1)">⚡ Time Rápido</button>
+      <button class="btn btn-sm btn-dark" onclick="if(players.length)showScreen('s-wheel')">🎯 Jogar →</button>
+    </div>
+    <p class="small-text" style="margin-top:8px">Mínimo 2 jogadores</p>
+  </div>
+</div>
+
+<!-- ===== SCREEN 3: ROLETA ===== -->
+<div class="screen" id="s-wheel">
+  <div class="logo">Round <span id="roundNum">1</span></div>
+  <h2 style="margin-bottom:4px">🎰 Quem vai encarar?</h2>
+  <p style="color:#aaa;margin-bottom:20px"><span id="remainingPlayers">X</span> jogadores ainda sem carimbo</p>
+  <div class="card card-sm" style="max-width:400px;padding:32px 24px">
+    <div class="wheel-container" id="wheelContainer">
+      <div class="wheel-pointer"></div>
+      <div class="wheel" id="wheel"></div>
+      <div class="wheel-center" id="wheelCenter">?</div>
+    </div>
+    <div id="wheelResult" style="font-size:1.3rem;font-weight:800;min-height:40px;display:flex;align-items:center;justify-content:center"></div>
+    <div style="margin-top:12px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-sm" id="spinBtn" onclick="spinWheel()">🎡 Girar!</button>
+      <button class="btn btn-sm btn-dark" id="challengeBtn" style="display:none" onclick="goChallenge()">🎯 Ver Desafio</button>
+    </div>
+  </div>
+  <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:16px;justify-content:center">
+    <div id="stampCounter" style="color:#aaa;font-size:.9rem"></div>
+    <div id="roundCounter" style="color:#aaa;font-size:.9rem"></div>
+  </div>
+</div>
+
+<!-- ===== SCREEN 4: DESAFIO ===== -->
+<div class="screen" id="s-challenge">
+  <div class="logo">Desafio para <span id="challengerName" style="color:#fff;font-weight:800"></span></div>
+  <div class="card" style="max-width:600px">
+    <div class="challenge-box">
+      <div class="challenge-text" id="challengeText">Carregando...</div>
+      <div class="challenge-extra" id="challengeExtra"></div>
+    </div>
+    <div class="timer-ring">
+      <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" id="timerCircle"/></svg>
+      <div class="timer-text" id="timerText">30</div>
+    </div>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-sm" id="startTimerBtn" onclick="startTimer()">⏱️ Começar!</button>
+      <button class="btn btn-sm btn-dark" id="approveBtn" style="display:none" onclick="approveChallenge()">✅ Cumpriu 🍬 + 🕹️</button>
+      <button class="btn btn-sm btn-dark" id="failBtn" style="display:none" onclick="failChallenge()" style="background:rgba(100,0,0,.3);border-color:#c0392b;color:#ccc">❌ Não rolou</button>
+    </div>
+    <p class="small-text" id="challengeHint" style="margin-top:12px"></p>
+  </div>
+  <button class="btn btn-sm btn-dark" style="margin-top:12px" onclick="showScreen('s-wheel')">← Voltar pra roleta</button>
+</div>
+
+<!-- ===== SCREEN 5: RESULTADO RODADA ===== -->
+<div class="screen" id="s-round-result">
+  <div id="roundResultContent">
+    <h2 style="margin-bottom:8px" id="resultTitle">✅ Cumpriu!</h2>
+    <p class="sub" style="margin-bottom:16px" id="resultMsg">Ganhou 1 doce + 1 carimbo 🎉</p>
+    <div class="stamp-row" id="resultStamps"></div>
+    <div style="margin-top:16px;display:flex;gap:8px;justify-content:center">
+      <button class="btn" onclick="showScreen('s-wheel')">🔄 Próxima rodada</button>
+      <button class="btn btn-sm btn-dark" id="goFinalBtn" style="display:none" onclick="showScreen('s-final')">🏆 Final!</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SCREEN 6: FINAL - ROLETA DOS PRÊMIOS ===== -->
+<div class="screen" id="s-final">
+  <div class="logo">🏆 Grande Final</div>
+  <h2 style="margin-bottom:4px">Roleta dos <span>Prêmios POA</span></h2>
+  <p class="sub" style="margin-bottom:16px">Só quem tem carimbo pode girar. Boa sorte!</p>
+  
+  <div id="finalPlayers" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:16px"></div>
+  
+  <div class="card card-sm" style="max-width:480px">
+    <div id="finalistInfo" style="margin-bottom:12px;font-size:1.1rem;font-weight:700">Vez de: <span id="currentFinalist">—</span></div>
+    <div class="prize-wheel" id="prizeWheelContainer">
+      <div class="prize-pointer"></div>
+      <canvas id="prizeCanvas" width="640" height="640"></canvas>
+    </div>
+    <div id="prizeResult" style="font-size:1.2rem;font-weight:700;min-height:40px;display:flex;align-items:center;justify-content:center"></div>
+    <div style="margin-top:12px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-sm" id="prizeSpinBtn" onclick="spinPrizeWheel()">🎡 Girar!</button>
+      <button class="btn btn-sm btn-dark" id="prizeNextBtn" style="display:none" onclick="nextFinalist()">⏭️ Próximo</button>
+    </div>
+  </div>
+  <button class="btn btn-sm btn-dark" style="margin-top:12px" onclick="showScreen('s-final-results')">📋 Ver resultados</button>
+</div>
+
+<!-- ===== SCREEN 7: RESULTADOS FINAIS ===== -->
+<div class="screen" id="s-final-results">
+  <h2>🏁 Resultados da Noite</h2>
+  <p class="sub">Quem levou o quê</p>
+  <div class="card card-sm" style="max-width:500px;margin-bottom:20px">
+    <div id="finalResultsList"></div>
+  </div>
+  <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+    <button class="btn" onclick="resetGame()">🔄 Novo Jogo</button>
+    <button class="btn btn-sm btn-dark" onclick="showScreen('s-final')">← Voltar</button>
+  </div>
+</div>
+
+<!-- ===== MODAL ===== -->
+<div class="modal-overlay" id="prizeModal">
+  <div class="modal">
+    <div style="font-size:3rem;margin-bottom:8px" id="modalEmoji">🎉</div>
+    <h3 id="modalTitle">Parabéns!</h3>
+    <div class="prize-name" id="modalPrize">—</div>
+    <p id="modalDesc">Agradeça aos colegas e aproveite seu prêmio em Porto Alegre!</p>
+    <button class="btn btn-sm" onclick="document.getElementById('prizeModal').classList.remove('active')">🎊 Fechar</button>
+  </div>
+</div>
+
+<script>
+// ===== GAME STATE =====
+let players = [];
+let stamps = {}; // player -> count
+let prizes = {}; // player -> prize
+let currentRound = 0;
+let challenger = null;
+let challengeIndex = 0;
+let usedChallenges = [];
+let timerInterval = null;
+let timeLeft = 30;
+let timerRunning = false;
+let finalistIndex = 0;
+let finalOrder = [];
+let wheelSpinning = false;
+let prizeWheelSpinning = false;
+let prizeMap = [];
+
+// ===== CHALLENGES =====
+const challenges = [
+  {text:'Fale por 30 segundos sobre {tema} sem repetir palavra.',tema:true,hint:'Se repetir, a plateia gritou — não valeu'},
+  {text:'Imite 3 colegas/celebridades em 15 segundos. A galera tem que acertar pelo menos 1.',hint:'Vale exagerar, quanto pior melhor'},
+  {text:'Faça 10 polichinelos enquanto canta o hino do Grêmio OU do Inter.',hint:'A plateia canta junto ou atrapalha? Decidam'},
+  {text:'Desenhe {alvo} de olhos fechados no papel. A turma vota se parece.',tema:'alvo',hint:'Vale desenhar o chefe, um colega ou até um cliente'},
+  {text:'Trava-língua 3x sem errar: "O rato roeu a roupa do rei de Roma e a rainha rachou o rosto".',hint:'Errou, começa de novo'},
+  {text:'Jogue 3 bolas de papel no lixo de costas — acertou 1, já valeu.',hint:'Todo mundo torce contra, obviamente'},
+  {text:'Conte uma história de 20s começando com: "Naquela vez que eu errei feio no trabalho..."',hint:'Vale história real, não invenção'},
+  {text:'Dance por 15 segundos no ritmo que a plateia escolher. A galera dá nota 0-10.',hint:'Pode ser funk, sertanejo, forró — eles escolhem'},
+  {text:'Faça alguém da plateia rir em 20s. Sem tocar na pessoa.',hint:'Vale cara feia, piada, imitação. Sem cócegas'},
+  {text:'Complete a frase: "Se eu fosse cliente da Peretto, eu seria [CLIENTE] porque..." A galera vota se fez sentido.',hint:'Tem que convencer o grupo'},
+  {text:'Fique 15s numa pose de super-herói que o grupo escolher.',hint:'Quanto mais vergonha alheia, melhor'},
+  {text:'Mande um áudio de 10s no grupo da empresa fingindo ser {personagem}.',tema:'personagem',hint:'Vale chefe, narrador esportivo, autoridade'},
+  {text:'Faça uma propaganda de 20s deste objeto como se fosse infomercial.',tema:'objeto',hint:'Pegue o objeto MAIS sem graça que você achar'},
+  {text:'Fale 15s sem parar sobre {tema2}. Se pausar, volto ao normal.',tema:true,hint:'Inspira e não para'},
+  {text:'Mande um stories (foto ou vídeo) de 5s fazendo uma declaração de amor para a Peretto.',hint:'Pode ser melhor amigo, mas tem que postar'},
+];
+const temas = ['abacaxi na pizza','café com leite','SEO em 2026','vaselina','trem bala','dor de cotovelo','pão de queijo','churrasco vegano','o jogo do Grêmio','Instagram vs TikTok','trabalhar de pijama'];
+const alvos = ['seu chefe','um colega','seu cliente preferido','o Dono da Peretto','Mario Quintana'];
+const personagens = ['seu chefe','um narrador da Globo','um político','um vendedor de banca','a Tati (do Zap)'];
+const objetos = ['um clips','uma borracha','um post-it','uma caneta sem tampa','um carregador','um pedaço de barbante','um copo descartável'];
+
+const places = [
+  {name:'🎬 Cinema duplo — Cinemark',desc:'Ingresso para 2 pessoas no Cinemark do BarraShoppingSul ou Praia de Belas',est:'R$ 60-80'},
+  {name:'🍦 Vale sorvete na Sorveteria do Parque',desc:'Sorvete artesanal na Sorveteria do Parque Moinhos de Vento',est:'R$ 25-40'},
+  {name:'🌿 Ingresso Parque Zoológico',desc:'Entrada no Zoológico de Sapucaia do Sul — dia com a família',est:'R$ 24'},
+  {name:'☕ Café + pastel no Mercado Público',desc:'Vale consumo no Mercado Público Central de POA',est:'R$ 25-40'},
+  {name:'🌌 Ingresso Planetário UFRGS',desc:'Sessão no Planetário Prof. José Baptista Pereira',est:'R$ 10-30'},
+  {name:'📚 Vale livro — Feira do Livro / Livraria',desc:'Vale-compras em livraria de Porto Alegre',est:'R$ 50'},
+  {name:'🏟️ Tour Arena do Grêmio',desc:'Visita guiada à Arena do Grêmio',est:'R$ 50'},
+  {name:'🌈 Ingresso MARGS',desc:'Entrada no Museu de Arte do Rio Grande do Sul (exposições incríveis)',est:'Gratuito — mas vale o rolê'},
+  {name:'🎡 Roda-gigante Praia de Belas',desc:'Vale passeio na roda-gigante do shopping Praia de Belas',est:'R$ 30-50'},
+  {name:'🧭 Roteiro Centro Histórico',desc:'Caminhada guiada pelo Centro Histórico de Porto Alegre',est:'R$ 30-50'},
+  {name:'🎭 Ingresso Teatro São Pedro',desc:'Ingresso para espetáculo no Theatro São Pedro',est:'R$ 40-80'},
+  {name:'🍕 Voucher jantar — Cidade Baixa',desc:'Vale-consumo em restaurante/bar na Cidade Baixa',est:'R$ 40-60'},
+];
+
+// ===== PLAYERS =====
+function addPlayer(){
+  const inp=document.getElementById('playerInput');
+  const name=inp.value.trim();
+  if(!name)return;
+  if(players.includes(name))return;
+  players.push(name);
+  stamps[name]=0;
+  prizes[name]=null;
+  inp.value='';
+  renderPlayerList();
+}
+function removePlayer(name){
+  players=players.filter(p=>p!==name);
+  delete stamps[name];
+  delete prizes[name];
+  renderPlayerList();
+}
+function renderPlayerList(){
+  const el=document.getElementById('playerList');
+  el.innerHTML=players.map(p=>`<span class="pill">${p} <button class="remove" onclick="removePlayer('${p}')">✕</button></span>`).join('');
+}
+function quickFill(){
+  const names=['Marcos','Fhelipe','Lucas','Paolo','Bruno','Ítalo','Luciano'];
+  names.forEach(n=>{if(!players.includes(n)){players.push(n);stamps[n]=0;prizes[n]=null;}});
+  renderPlayerList();
+}
+
+// ===== NAV =====
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  // Reset timer if leaving challenge
+  if(id!=='s-challenge' && timerInterval){clearInterval(timerInterval);timerInterval=null;timerRunning=false;}
+  if(id==='s-wheel')initWheelScreen();
+  if(id==='s-final')initFinal();
+  if(id==='s-final-results')renderFinalResults();
+}
+
+// ===== WHEEL =====
+function initWheelScreen(){
+  const eligible=players.filter(p=>stamps[p]===0);
+  document.getElementById('remainingPlayers').textContent=eligible.length;
+  document.getElementById('roundNum').textContent=currentRound+1;
+  document.getElementById('stampCounter').textContent='🏅 Com carimbo: '+players.filter(p=>stamps[p]>0).length+'/'+players.length;
+  document.getElementById('roundCounter').textContent='🎯 Rodada: '+(currentRound+1);
+  // Reset wheel display
+  document.getElementById('wheelResult').textContent='';
+  document.getElementById('spinBtn').style.display='inline-block';
+  document.getElementById('challengeBtn').style.display='none';
+  document.getElementById('wheelCenter').textContent='?';
+  document.getElementById('wheel').style.transform='rotate(0deg)';
+}
+
+function spinWheel(){
+  if(wheelSpinning)return;
+  const eligible=players.filter(p=>stamps[p]===0);
+  if(!eligible.length){showScreen('s-final');return;}
+  
+  wheelSpinning=true;
+  document.getElementById('spinBtn').style.display='none';
+  document.getElementById('wheelResult').textContent='🎡 Girando...';
+  
+  const idx=Math.floor(Math.random()*eligible.length);
+  challenger=eligible[idx];
+  challengeIndex=Math.floor(Math.random()*challenges.length);
+  
+  // Calculate rotation
+  const sectionAngle=360/players.length;
+  const targetDegree=idx*sectionAngle+sectionAngle/2;
+  const extraSpins=5+Math.floor(Math.random()*4);
+  const totalRotation=extraSpins*360+targetDegree;
+  
+  const wheel=document.getElementById('wheel');
+  wheel.style.transform=`rotate(${totalRotation}deg)`;
+  
+  setTimeout(()=>{
+    document.getElementById('wheelCenter').textContent='🎯';
+    document.getElementById('wheelResult').innerHTML=`🔥 <strong>${challenger}</strong> foi sorteado!`;
+    document.getElementById('challengeBtn').style.display='inline-block';
+    wheelSpinning=false;
+  },3500);
+}
+
+// ===== CHALLENGE =====
+function goChallenge(){
+  showScreen('s-challenge');
+  document.getElementById('challengerName').textContent=challenger;
+  
+  // Pick challenge
+  let ch;
+  let attempts=0;
+  do{
+    ch=challenges[Math.floor(Math.random()*challenges.length)];
+    attempts++;
+  }while(usedChallenges.includes(ch) && attempts<20);
+  
+  usedChallenges.push(ch);
+  let text=ch.text;
+  if(ch.tema===true)text=text.replace('{tema}',temas[Math.floor(Math.random()*temas.length)]);
+  if(ch.tema==='alvo')text=text.replace('{alvo}',alvos[Math.floor(Math.random()*alvos.length)]);
+  if(ch.tema==='personagem')text=text.replace('{personagem}',personagens[Math.floor(Math.random()*personagens.length)]);
+  if(ch.tema==='objeto')text=text.replace('{objeto}',objetos[Math.floor(Math.random()*objetos.length)]);
+  
+  document.getElementById('challengeText').textContent=text;
+  document.getElementById('challengeExtra').textContent='🎯 '+challenger;
+  document.getElementById('challengeHint').textContent='💡 '+ch.hint;
+  
+  // Reset timer
+  timeLeft=30;
+  document.getElementById('timerText').textContent='30';
+  document.getElementById('timerCircle').style.strokeDashoffset='0';
+  document.getElementById('startTimerBtn').style.display='inline-block';
+  document.getElementById('approveBtn').style.display='none';
+  document.getElementById('failBtn').style.display='none';
+  if(timerInterval){clearInterval(timerInterval);timerInterval=null;timerRunning=false;}
+}
+
+function startTimer(){
+  if(timerRunning)return;
+  timerRunning=true;
+  timeLeft=30;
+  document.getElementById('startTimerBtn').style.display='none';
+  document.getElementById('timerText').textContent='30';
+  const circumference=314;
+  document.getElementById('timerCircle').style.strokeDashoffset='0';
+  document.getElementById('timerCircle').style.stroke='#e63946';
+  
+  timerInterval=setInterval(()=>{
+    timeLeft--;
+    document.getElementById('timerText').textContent=timeLeft;
+    const offset=circumference*(1-timeLeft/30);
+    document.getElementById('timerCircle').style.strokeDashoffset=offset;
+    
+    if(timeLeft<=5){document.getElementById('timerCircle').style.stroke='#ffd700';}
+    if(timeLeft<=3){document.getElementById('timerCircle').style.stroke='#ff6b6b';}
+    
+    if(timeLeft<=0){
+      clearInterval(timerInterval);
+      timerInterval=null;
+      timerRunning=false;
+      document.getElementById('timerText').textContent='⏰';
+      document.getElementById('approveBtn').style.display='inline-block';
+      document.getElementById('failBtn').style.display='inline-block';
+      document.getElementById('startTimerBtn').style.display='none';
+    }
+  },1000);
+}
+
+function approveChallenge(){
+  stamps[challenger]=(stamps[challenger]||0)+1;
+  currentRound++;
+  showRoundResult(true);
+}
+
+function failChallenge(){
+  currentRound++;
+  showRoundResult(false);
+}
+
+function showRoundResult(success){
+  showScreen('s-round-result');
+  if(success){
+    document.getElementById('resultTitle').textContent='✅ Cumpriu! 🎉';
+    document.getElementById('resultMsg').textContent=`${challenger} ganhou 1 🍬 + 1 🕹️ (${stamps[challenger]} carimbos ao todo)`;
+    document.getElementById('resultStamps').innerHTML=
+      Array.from({length:stamps[challenger]},(_,i)=>`<span class="stamp">🕹️</span>`).join('');
+  }else{
+    document.getElementById('resultTitle').textContent='❌ Não foi dessa vez';
+    document.getElementById('resultMsg').textContent=`${challenger} não conseguiu — sem carimbo essa rodada`;
+    document.getElementById('resultStamps').innerHTML='😅';
+  }
+  
+  const eligible=players.filter(p=>stamps[p]===0);
+  document.getElementById('goFinalBtn').style.display=eligible.length===0?'inline-block':'none';
+}
+
+// ===== FINAL =====
+function initFinal(){
+  const finalists=players.filter(p=>stamps[p]>0);
+  if(!finalists.length){
+    document.getElementById('finalPlayers').innerHTML='<p style="color:#aaa">Ninguém conquistou carimbo 😅 Rodem de novo!</p>';
+    return;
+  }
+  finalOrder=[...finalists];
+  finalistIndex=0;
+  document.getElementById('finalPlayers').innerHTML=finalists.map(p=>`<span class="badge-finalista">🕹️ ${p} (${stamps[p]})</span>`).join(' ');
+  drawPrizeWheel();
+  updateFinalist();
+}
+
+function updateFinalist(){
+  if(finalistIndex>=finalOrder.length){
+    document.getElementById('currentFinalist').textContent='🎉 Todos já giraram!';
+    document.getElementById('prizeSpinBtn').style.display='none';
+    document.getElementById('prizeNextBtn').style.display='none';
+    document.getElementById('prizeResult').textContent='Vem ver os resultados!';
+    return;
+  }
+  document.getElementById('currentFinalist').textContent=finalOrder[finalistIndex];
+  document.getElementById('prizeResult').textContent='';
+  document.getElementById('prizeSpinBtn').style.display='inline-block';
+  document.getElementById('prizeNextBtn').style.display='none';
+  prizeWheelSpinning=false;
+}
+
+function drawPrizeWheel(){
+  const canvas=document.getElementById('prizeCanvas');
+  const ctx=canvas.getContext('2d');
+  const w=canvas.width,h=canvas.height;
+  const cx=w/2,cy=h/2,r=w/2-10;
+  
+  const prizes=places.length;
+  const sectionAngle=2*Math.PI/prizes;
+  
+  ctx.clearRect(0,0,w,h);
+  
+  const colors=['#e63946','#1d3557','#e63946','#457b9d','#e63946','#1d3557','#e63946','#457b9d','#e63946','#1d3557','#e63946','#457b9d'];
+  
+  prizeMap=[];
+  for(let i=0;i<prizes;i++){
+    const startAngle=i*sectionAngle-Math.PI/2;
+    const endAngle=startAngle+sectionAngle;
+    
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,r,startAngle,endAngle);
+    ctx.closePath();
+    ctx.fillStyle=colors[i%colors.length];
+    ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,.15)';
+    ctx.lineWidth=2;
+    ctx.stroke();
+    
+    // Text
+    ctx.save();
+    ctx.translate(cx,cy);
+    ctx.rotate(startAngle+sectionAngle/2);
+    ctx.fillStyle='#fff';
+    ctx.font='bold 18px Inter, sans-serif';
+    ctx.textAlign='right';
+    const label=places[i].name.split(' ').slice(0,2).join(' ');
+    ctx.fillText(label,r-20,6);
+    ctx.restore();
+    
+    prizeMap.push(places[i]);
+  }
+  
+  // Center circle
+  ctx.beginPath();
+  ctx.arc(cx,cy,40,0,2*Math.PI);
+  ctx.fillStyle='#0f0f0f';
+  ctx.fill();
+  ctx.strokeStyle='#ffd700';
+  ctx.lineWidth=3;
+  ctx.stroke();
+  
+  ctx.fillStyle='#ffd700';
+  ctx.font='bold 14px Inter, sans-serif';
+  ctx.textAlign='center';
+  ctx.textBaseline='middle';
+  ctx.fillText('PRÊMIOS',cx,cy);
+}
+
+function spinPrizeWheel(){
+  if(prizeWheelSpinning)return;
+  if(finalistIndex>=finalOrder.length)return;
+  
+  prizeWheelSpinning=true;
+  document.getElementById('prizeSpinBtn').style.display='none';
+  document.getElementById('prizeResult').textContent='🎡 Girando...';
+  
+  const canvas=document.getElementById('prizeCanvas');
+  const ctx=canvas.getContext('2d');
+  const player=finalOrder[finalistIndex];
+  
+  // Pick random prize
+  const prizeIdx=Math.floor(Math.random()*places.length);
+  const sectionAngle=2*Math.PI/places.length;
+  const targetAngle=(prizeIdx*sectionAngle+sectionAngle/2)+2*Math.PI;
+  const extraSpins=8+Math.floor(Math.random()*4);
+  const totalAngle=extraSpins*2*Math.PI+targetAngle;
+  
+  // Animate
+  const duration=4000;
+  const startTime=Date.now();
+  const startAngle=0;
+  
+  function animate(){
+    const elapsed=Date.now()-startTime;
+    const progress=Math.min(elapsed/duration,1);
+    // Easing out
+    const eased=1-Math.pow(1-progress,3);
+    const currentAngle=startAngle+totalAngle*eased;
+    
+    ctx.save();
+    ctx.translate(canvas.width/2,canvas.height/2);
+    ctx.rotate(currentAngle);
+    ctx.translate(-canvas.width/2,-canvas.height/2);
+    drawPrizeWheelContent(ctx);
+    ctx.restore();
+    
+    // Redraw
+    drawPrizeWheelContent(ctx);
+    ctx.save();
+    ctx.translate(canvas.width/2,canvas.height/2);
+    ctx.rotate(currentAngle);
+    ctx.translate(-canvas.width/2,-canvas.height/2);
+    
+    drawPrizeWheelContent(ctx);
+    ctx.restore();
+    
+    if(progress<1){
+      requestAnimationFrame(animate);
+    }else{
+      prizeWheelSpinning=false;
+      const prize=places[prizeIdx];
+      prizes[player]=prize;
+      
+      document.getElementById('prizeResult').textContent=`🎉 ${prize.name}`;
+      document.getElementById('prizeNextBtn').style.display='inline-block';
+      
+      // Show modal
+      document.getElementById('modalEmoji').textContent='🎊';
+      document.getElementById('modalTitle').textContent=`${player} ganhou!`;
+      
+      let prizeDisplay=prize.name;
+      let estText=prize.est;
+      document.getElementById('modalPrize').innerHTML=`${prizeDisplay}<br><span style="font-size:1rem;font-weight:400;color:#aaa">${estText}</span>`;
+      document.getElementById('modalDesc').textContent=prize.desc+' — Aproveite em Porto Alegre!';
+      document.getElementById('prizeModal').classList.add('active');
+      
+      spawnConfetti();
+    }
+  }
+  
+  animate();
+}
+
+function drawPrizeWheelContent(ctx){
+  const canvas=document.getElementById('prizeCanvas');
+  const w=canvas.width,h=canvas.height;
+  const cx=w/2,cy=h/2,r=w/2-10;
+  
+  const sectionAngle=2*Math.PI/places.length;
+  const colors=['#e63946','#1d3557','#e63946','#457b9d','#e63946','#1d3557','#e63946','#457b9d','#e63946','#1d3557','#e63946','#457b9d'];
+  
+  ctx.clearRect(0,0,w,h);
+  
+  for(let i=0;i<places.length;i++){
+    const startAngle=i*sectionAngle-Math.PI/2;
+    const endAngle=startAngle+sectionAngle;
+    
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,r,startAngle,endAngle);
+    ctx.closePath();
+    ctx.fillStyle=colors[i%colors.length];
+    ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,.15)';
+    ctx.lineWidth=2;
+    ctx.stroke();
+    
+    ctx.save();
+    ctx.translate(cx,cy);
+    ctx.rotate(startAngle+sectionAngle/2);
+    ctx.fillStyle='#fff';
+    ctx.font='bold 18px Inter, sans-serif';
+    ctx.textAlign='right';
+    const label=places[i].name.split(' ').slice(0,2).join(' ');
+    ctx.fillText(label,r-20,6);
+    ctx.restore();
+  }
+  
+  ctx.beginPath();
+  ctx.arc(cx,cy,40,0,2*Math.PI);
+  ctx.fillStyle='#0f0f0f';
+  ctx.fill();
+  ctx.strokeStyle='#ffd700';
+  ctx.lineWidth=3;
+  ctx.stroke();
+  
+  ctx.fillStyle='#ffd700';
+  ctx.font='bold 14px Inter, sans-serif';
+  ctx.textAlign='center';
+  ctx.textBaseline='middle';
+  ctx.fillText('PRÊMIOS',cx,cy);
+}
+
+function nextFinalist(){
+  finalistIndex++;
+  if(finalistIndex>=finalOrder.length){
+    document.getElementById('currentFinalist').textContent='🏁 Todos já giraram!';
+    document.getElementById('prizeSpinBtn').style.display='none';
+    document.getElementById('prizeNextBtn').style.display='none';
+    document.getElementById('prizeResult').textContent='Vem ver os resultados!';
+    return;
+  }
+  updateFinalist();
+}
+
+function renderFinalResults(){
+  const finalists=players.filter(p=>prizes[p]);
+  const el=document.getElementById('finalResultsList');
+  if(!finalists.length){
+    el.innerHTML='<p style="color:#aaa">Ninguém ganhou prêmio ainda</p>';
+    return;
+  }
+  el.innerHTML=finalists.map(p=>`
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06)">
+      <div><strong>${p}</strong><br><span style="color:#aaa;font-size:.85rem">${stamps[p]} carimbo${stamps[p]>1?'s':''}</span></div>
+      <div style="text-align:right"><span style="color:#ffd700;font-weight:700">${prizes[p].name}</span><br><span style="color:#666;font-size:.8rem">${prizes[p].est}</span></div>
+    </div>
+  `).join('');
+}
+
+// ===== RESET =====
+function resetGame(){
+  players.forEach(p=>{stamps[p]=0;prizes[p]=null;});
+  currentRound=0;
+  finalistIndex=0;
+  finalOrder=[];
+  usedChallenges=[];
+  showScreen('s-start');
+}
+
+// ===== CONFETTI =====
+function spawnConfetti(){
+  const container=document.createElement('div');
+  container.className='confetti-container';
+  document.body.appendChild(container);
+  const colors=['#e63946','#ffd700','#ff6b6b','#457b9d','#fff','#ffaa00'];
+  for(let i=0;i<80;i++){
+    const el=document.createElement('div');
+    el.className='confetti';
+    el.style.left=Math.random()*100+'%';
+    el.style.background=colors[Math.floor(Math.random()*colors.length)];
+    el.style.width=(5+Math.random()*8)+'px';
+    el.style.height=(5+Math.random()*8)+'px';
+    el.style.borderRadius=Math.random()>.5?'50%':'2px';
+    el.style.animationDuration=(2+Math.random()*3)+'s';
+    el.style.animationDelay=Math.random()*1.5+'s';
+    container.appendChild(el);
+  }
+  setTimeout(()=>container.remove(),6000);
+}
+</script>
+</body>
+</html>

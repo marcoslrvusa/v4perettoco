@@ -4,7 +4,7 @@ description: Conteudo Squad — producao rapida de artigos e conteudo editorial
 
 Ative o Conteudo Squad completo:
 
-1. @copy-content (líder) — producao do conteudo
+1. @copy-orchestrator (líder) — orquestra o pipeline de copy com sub-agentes especializados
 2. @estrategia-marketing — pesquisa de topicos e palavras-chave
 3. @seo-visibilidade — otimizacao SEO + AEO/GEO
 4. @revisor — quality gate e revisao final

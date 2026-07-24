@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auditoria AIO + GEO — Lola Aviamentos</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --red: rgb(229, 9, 20);
+    --red-dark: rgb(180, 7, 16);
+    --red-light: rgb(255, 60, 70);
+    --gold: #c9a96e;
+    --gold-light: #f5f0e6;
+    --gold-border: #e8dcc8;
+    --gray-50: #fafafa;
+    --gray-100: #f5f5f5;
+    --gray-200: #eeeeee;
+    --gray-300: #e0e0e0;
+    --gray-400: #bdbdbd;
+    --gray-500: #9e9e9e;
+    --gray-600: #757575;
+    --gray-700: #616161;
+    --gray-800: #424242;
+    --gray-900: #212121;
+  }
+
+  body {
+    font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f8f7f4;
+    color: var(--gray-900);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  .cover {
+    background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #2a2a2a 100%);
+    color: #fff;
+    padding: 64px 40px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(201,169,110,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .cover-content { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
+  .cover-content::before {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .cover-content::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin: 28px auto 0;
+    border-radius: 1px;
+  }
+
+  .cover .label {
+    display: inline-block;
+    background: rgba(201,169,110,0.12);
+    border: 1px solid rgba(201,169,110,0.3);
+    padding: 6px 20px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    color: var(--gold);
+  }
+  .cover h1 {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 14px;
+    letter-spacing: -0.5px;
+    font-family: 'Plus Jakarta Sans', serif;
+  }
+  .cover p {
+    font-size: 18px;
+    opacity: 0.85;
+    margin-bottom: 24px;
+    font-weight: 300;
+    letter-spacing: 0.2px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 14px;
+    opacity: 0.7;
+    letter-spacing: 0.5px;
+  }
+
+  .container { max-width: 960px; margin: -36px auto 48px; position: relative; z-index: 2; }
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+    margin-bottom: 28px;
+    overflow: hidden;
+    border: 1px solid var(--gray-300);
+    position: relative;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 40px;
+    right: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-border), var(--gold), var(--gold-border), transparent);
+    opacity: 0.6;
+  }
+  .card-body { padding: 44px 52px; }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--gold-border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -0.3px;
+    position: relative;
+  }
+  h2::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 1px;
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin: 36px 0 18px;
+    letter-spacing: -0.2px;
+  }
+  h4 { font-size: 16px; font-weight: 700; color: var(--gray-800); margin: 22px 0 12px; }
+  p { font-size: 16px; color: var(--gray-700); margin-bottom: 16px; line-height: 1.8; }
+  p:last-child { margin-bottom: 0; }
+
+  .badge {
+    display: inline-block;
+    padding: 5px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .badge-critico { background: #fef2f2; color: var(--red); border: 1px solid #fecaca; }
+  .badge-alto { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+  .badge-medio { background: #fefce8; color: #a16207; border: 1px solid #fef08a; }
+  .badge-baixo { background: var(--gold-light); color: #8b7a4a; border: 1px solid var(--gold-border); }
+  .badge-info { background: #f5f5f5; color: #616161; border: 1px solid #d4d4d4; }
+
+  .severity { display: inline-block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .sev-critico { color: var(--red); }
+  .sev-alto { color: #c2410c; }
+  .sev-medio { color: #a16207; }
+  .sev-baixo { color: #8b7a4a; }
+  .sev-info { color: #616161; }
+
+  table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 15px; }
+  th, td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--gray-100); }
+  th {
+    background: linear-gradient(135deg, var(--gray-50), #f8f7f4);
+    font-weight: 700;
+    color: var(--gray-700);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 2px solid var(--gold-border);
+    position: relative;
+  }
+  tr:hover td { background: #fcfaf7; }
+  tr:last-child td { border-bottom: none; }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .kpi-card {
+    background: #f2f0ec;
+    border-radius: 10px;
+    padding: 20px 12px 18px;
+    text-align: center;
+    border: 1px solid var(--gold-border);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .kpi-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 2px 12px rgba(201,169,110,0.1);
+  }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--red), var(--gold));
+  }
+  .kpi-card .value {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--red);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+  .kpi-card .label {
+    font-size: 12px;
+    color: var(--gray-600);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 8px;
+  }
+  .kpi-card .sub { font-size: 12px; color: var(--gray-600); margin-top: 4px; }
+
+  .risk-box {
+    background: linear-gradient(135deg, #fcfaf7, #f8f7f4);
+    border-left: 4px solid var(--red);
+    padding: 22px 26px;
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 18px;
+  }
+  .risk-box h4 { margin: 0 0 10px; color: var(--red); font-size: 16px; letter-spacing: -0.2px; }
+  .risk-box p { font-size: 15px; color: var(--gray-700); margin: 0; line-height: 1.7; }
+
+  .finding {
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 26px 30px;
+    margin-bottom: 18px;
+    background: #fcfcfc;
+    transition: box-shadow 0.2s, border-color 0.2s;
+    border-left: 3px solid transparent;
+  }
+  .finding:hover {
+    box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+    border-color: var(--gold-border);
+    border-left-color: var(--gold);
+  }
+  .finding-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    gap: 12px;
+  }
+  .finding-title { font-weight: 700; font-size: 17px; color: var(--gray-900); letter-spacing: -0.2px; }
+  .finding-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 32px;
+    font-size: 15px;
+  }
+  .finding-grid .field { font-weight: 600; color: var(--gray-800); }
+  .finding-grid .value { color: var(--gray-700); }
+  .finding-grid .full { grid-column: 1 / -1; }
+
+  .bar-container { margin: 22px 0; }
+  .bar-row { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+  .bar-label { width: 160px; font-size: 14px; font-weight: 700; color: var(--gray-700); text-align: right; flex-shrink: 0; letter-spacing: -0.2px; }
+  .bar-track { flex: 1; height: 30px; background: var(--gray-100); border-radius: 6px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding-right: 14px; font-size: 13px; font-weight: 700; color: #fff; letter-spacing: 0.3px; }
+  .bar-fill.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .bar-fill.orange { background: linear-gradient(90deg, #c2410c, #ea580c); }
+  .bar-fill.gold { background: linear-gradient(90deg, #b8963a, #d4b96a); }
+  .bar-fill.gray { background: linear-gradient(90deg, #616161, #9e9e9e); }
+
+  .timeline {
+    display: flex;
+    gap: 0;
+    margin: 32px 0 16px;
+    position: relative;
+    padding: 0 0 20px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 5%;
+    right: 5%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold-border), var(--gold), var(--gold-border));
+    border-radius: 2px;
+  }
+  .timeline-phase {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    padding: 0 8px;
+  }
+  .timeline-phase .dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    position: relative;
+    z-index: 1;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px var(--gold);
+  }
+  .timeline-phase .dot.red { background: var(--red); }
+  .timeline-phase .dot.orange { background: #c2410c; }
+  .timeline-phase .dot.gold { background: var(--gold); }
+  .timeline-phase .dot.gray { background: #757575; }
+  .timeline-phase .phase-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 2px;
+  }
+  .timeline-phase .phase-hours {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--red);
+    letter-spacing: -0.5px;
+  }
+  .timeline-phase .phase-pct {
+    font-size: 12px;
+    color: var(--gray-500);
+    font-weight: 600;
+  }
+  .timeline-phase .phase-bar {
+    height: 8px;
+    border-radius: 4px;
+    margin: 8px auto 6px;
+    max-width: 80%;
+  }
+  .timeline-phase .phase-bar.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .timeline-phase .phase-bar.orange { background: linear-gradient(90deg, #c2410c, #ea580c); }
+  .timeline-phase .phase-bar.gold { background: linear-gradient(90deg, #b8963a, #d4b96a); }
+  .timeline-phase .phase-bar.gray { background: linear-gradient(90deg, #616161, #9e9e9e); }
+  .timeline-deliverables {
+    display: flex;
+    gap: 0;
+    margin-top: 4px;
+  }
+  .timeline-deliverables .deliv {
+    flex: 1;
+    text-align: center;
+    padding: 0 6px;
+    font-size: 12px;
+    color: var(--gray-600);
+    line-height: 1.4;
+  }
+  .timeline-deliverables .deliv strong {
+    display: block;
+    color: var(--gray-700);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 2px;
+  }
+
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--gray-100);
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 14px;
+    color: var(--red);
+  }
+  pre {
+    background: var(--gray-900);
+    color: #e2e8f0;
+    border-radius: 12px;
+    padding: 24px 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    overflow-x: auto;
+    line-height: 1.6;
+    margin: 18px 0;
+  }
+  pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-size: 13px;
+  }
+
+  .glossary-row { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--gray-100); }
+  .glossary-row:last-child { border: none; }
+  .glossary-row span:last-child { font-size: 15px; color: var(--gray-700); }
+
+  .footer {
+    text-align: center;
+    padding: 36px;
+    font-size: 14px;
+    color: var(--gray-500);
+    border-top: 1px solid var(--gold-border);
+    letter-spacing: 0.3px;
+    position: relative;
+  }
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 2px;
+  }
+
+  .status {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .status.ok { background: rgba(34,197,94,0.1); color: #16a34a; }
+  .status.warn { background: rgba(217,119,6,0.1); color: #c2410c; }
+  .status.fail { background: rgba(229,9,20,0.1); color: var(--red); }
+
+  @media print {
+    body { background: #fff; padding: 0; font-size: 12px; }
+    .cover { padding: 40px 30px; }
+    .container { max-width: 100%; margin: 0; }
+    .card { box-shadow: none; border: 1px solid var(--gray-200); page-break-inside: avoid; }
+    .card-body { padding: 20px 24px; }
+    .finding { page-break-inside: avoid; }
+    table { page-break-inside: avoid; }
+    @page { margin: 1.5cm 1cm; }
+  }
+
+  @media (max-width: 640px) {
+    .cover h1 { font-size: 26px; }
+    .cover { padding: 40px 20px 32px; }
+    .card-body { padding: 20px; }
+    .finding-grid { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .bar-label { width: 90px; font-size: 12px; }
+    .timeline { flex-wrap: wrap; gap: 16px; }
+    .timeline::before { display: none; }
+    .timeline-deliverables { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-content">
+    <div style="display:flex; align-items:center; justify-content:center; gap:24px; margin-bottom:24px;">
+      <img src="../assets/logo-v4-white.png" alt="V4 Company" style="height:28px; width:auto; opacity:0.9;">
+      <span style="color:var(--gold); font-size:18px; opacity:0.4;">✦</span>
+      <img src="../assets/logo-lola.webp" alt="Lola Aviamentos" style="height:36px; width:auto; opacity:0.95;">
+    </div>
+    <div class="label">Confidencial &bull; Julho 2026</div>
+    <h1>Auditoria AIO + GEO</h1>
+    <p>Lola Aviamentos &mdash; Otimiza&ccedil;&atilde;o para Mecanismos de Resposta</p>
+    <div class="cover-meta">
+      <span>&bull; AI Search Diagnostic</span>
+      <span>&bull; Extractability Score: 0.2 / 10</span>
+      <span>&bull; 0 cita&ccedil;&otilde;es em LLMs</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Resumo Executivo AIO + GEO</h2>
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="value">0.2 / 10</div>
+          <div class="label">Maturidade AIO</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">0</div>
+          <div class="label">Cita&ccedil;&otilde;es em LLMs</div>
+          <div class="sub">ChatGPT &bull; Perplexity &bull; Gemini</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">0%</div>
+          <div class="label">P&aacute;ginas C&iacute;t&aacute;veis</div>
+          <div class="sub">Definition blocks</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">159 h</div>
+          <div class="label">Esfor&ccedil;o AIO/GEO</div>
+          <div class="sub">69% do total da auditoria</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">5-15+</div>
+          <div class="label">Proje&ccedil;&atilde;o Cita&ccedil;&otilde;es</div>
+          <div class="sub">90 dias p&oacute;s-implanta&ccedil;&atilde;o</div>
+        </div>
+      </div>
+
+      <p>Diagn&oacute;stico: a Lola Aviamentos tem <strong>invisibilidade total em AI Search</strong>. Zero cita&ccedil;&otilde;es em ChatGPT, Perplexity, Gemini, Claude, Copilot ou Google AI Overviews. Zero structured data. Zero definition blocks. Zero conte&uacute;do informacional. Zero dom&iacute;nio de refer&ecirc;ncia.</p>
+
+      <p>O setor de aviamentos tem baix&iacute;ssima maturidade AIO/GEO no Brasil. A empresa que primeiro estruturar conte&uacute;do para cita&ccedil;&atilde;o em LLMs domina o pr&oacute;ximo ciclo de descoberta digital. A janela de oportunidade &eacute; de <strong>3 a 6 meses</strong> antes que concorrentes ocupem esse espa&ccedil;o.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>O que &eacute; AIO + GEO?</h2>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:18px;">
+        <div style="background:#fcfaf7; border-radius:12px; padding:20px; border:1px solid var(--gold-border);">
+          <h4 style="color:var(--red); margin:0 0 8px; font-size:15px;">AIO &mdash; AI Optimization</h4>
+          <p style="font-size:14px; margin:0;">Otimiza&ccedil;&atilde;o para que LLMs (ChatGPT, Gemini, Claude) extraiam, compreendam e citem o conte&uacute;do da marca em respostas generativas. Envolve structured data, definition blocks, extractability score e formato de resposta direta.</p>
+        </div>
+        <div style="background:#fcfaf7; border-radius:12px; padding:20px; border:1px solid var(--gold-border);">
+          <h4 style="color:var(--red); margin:0 0 8px; font-size:15px;">GEO &mdash; Generative Engine Optimization</h4>
+          <p style="font-size:14px; margin:0;">Otimiza&ccedil;&atilde;o da presen&ccedil;a da marca em mecanismos de resposta generativa: Google AI Overviews, Perplexity, ChatGPT Search, Copilot. Diferente de SEO (links azuis), GEO busca ser citado como fonte confi&aacute;vel dentro da resposta gerada pela IA.</p>
+        </div>
+      </div>
+
+      <div class="risk-box" style="border-left-color:var(--gold);">
+        <h4 style="color:var(--gold);">Diferen&ccedil;a cr&iacute;tica: SEO vs AIO/GEO</h4>
+        <p>SEO tradicional busca ranquear no topo dos resultados de busca (link azul). AIO/GEO busca <strong>ser citado dentro da resposta que a IA gera</strong> — sem cliques, sem CTR tradicional. &Eacute; um novo canal de descoberta: o usu&aacute;rio pergunta, a IA responde citando sua marca, e o usu&aacute;rio decide clicar ou n&atilde;o. Quem n&atilde;o estiver nos dados de treinamento e nas fontes preferidas dos LLMs, simplesmente n&atilde;o existe nesse novo ecossistema.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Diagn&oacute;stico de Presen&ccedil;a em AI Search</h2>
+      <table>
+        <tr><th>Canal de AI Search</th><th>Presen&ccedil;a da Lola</th><th>Status</th></tr>
+        <tr><td>ChatGPT (GPT-4o / GPT-4.1)</td><td>Zero cita&ccedil;&otilde;es em respostas sobre aviamentos</td><td><span class="status fail">Invis&iacute;vel</span></td></tr>
+        <tr><td>Perplexity</td><td>Zero cita&ccedil;&otilde;es em respostas sobre entretelas</td><td><span class="status fail">Invis&iacute;vel</span></td></tr>
+        <tr><td>Gemini / Google AI Overviews</td><td>Zero apari&ccedil;&otilde;es em AI Overviews</td><td><span class="status fail">Invis&iacute;vel</span></td></tr>
+        <tr><td>Claude (Anthropic)</td><td>Zero cita&ccedil;&otilde;es</td><td><span class="status fail">Invis&iacute;vel</span></td></tr>
+        <tr><td>Microsoft Copilot</td><td>Zero cita&ccedil;&otilde;es</td><td><span class="status fail">Invis&iacute;vel</span></td></tr>
+        <tr><td>Google Business Profile</td><td>N&atilde;o otimizado para cita&ccedil;&atilde;o em AI Search local</td><td><span class="status warn">N&atilde;o otimizado</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Gargalos de Extractability</h2>
+      <p style="margin-bottom:20px;"><strong>Extractability Score: 0.2 / 10</strong> &mdash; o site da Lola oferece m&iacute;nimas condi&ccedil;&otilde;es para que LLMs extraiam e citem seu conte&uacute;do.</p>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">AG-01. Zero Structured Data em 100% das P&aacute;ginas</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">142/142 p&aacute;ginas HTML sem qualquer JSON-LD. Zero Organization, Product, Store, BreadcrumbList, FAQPage, HowTo ou ItemList schema.</span></div>
+          <div class="full"><span class="field">Impacto AIO:</span> <span class="value">LLMs (ChatGPT, Perplexity) n&atilde;o conseguem extrair dados estruturados para cita&ccedil;&atilde;o. O conhecimento da Lola sobre produtos, pre&ccedil;os e categorias n&atilde;o existe no grafo de conhecimento das IAs.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Organization + Store schema na homepage. (2) Product schema em 78 p&aacute;ginas de produto. (3) BreadcrumbList schema em todas as p&aacute;ginas. (4) FAQPage + HowTo schema em conte&uacute;do futuro.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">8 h (Dev Nuvemshop + SEO)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">AG-02. Zero Definition Blocks (Conte&uacute;do no Formato Preferido por LLMs)</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Nenhuma p&aacute;gina do site possui blocos de 50-80 palavras que definam o que &eacute; o produto/categoria. LLMs preferem esse formato conciso para cita&ccedil;&atilde;o direta.</span></div>
+          <div class="full"><span class="field">Impacto AIO:</span> <span class="value">Quando uma IA responde "o que &eacute; entretela de mem&oacute;ria?", ela n&atilde;o encontra uma defini&ccedil;&atilde;o pronta, concisa e autoritativa no site da Lola &mdash; cita concorrentes gen&eacute;ricos ou fontes internacional.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Adicionar definition blocks de 50-80 palavras em 5+ p&aacute;ginas de categoria. (2) Usar linguagem direta, termo principal em negrito, 1-2 fatos objetivos. (3) Ver tabela de blocks propostos na se&ccedil;&atilde;o abaixo.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">4 h (Copywriter)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">AG-03. Zero FAQPage / HowTo Schema</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Nenhuma p&aacute;gina com FAQPage schema ou HowTo schema. Esses s&atilde;o os formatos preferidos por Google AI Overviews e ChatGPT para featured snippets de IA.</span></div>
+          <div class="full"><span class="field">Impacto AIO:</span> <span class="value">Perde oportunidades de aparecer em respostas para perguntas frequentes ("como aplicar entretela termocolante?", "qual entretela usar para bordado?").</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) FAQPage schema com 10+ perguntas sobre entretelas. (2) HowTo schema para "Como aplicar entretela termocolante". (3) HowTo schema para "Como usar filme hidrossol&uacute;vel no bordado".</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">10 h (Copywriter + Dev)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">AG-04. Zero Conte&uacute;do Informacional (Blog, FAQ, Guias, Gloss&aacute;rio)</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">O site n&atilde;o tem nenhuma p&aacute;gina de conte&uacute;do editorial. Apenas p&aacute;ginas de produto e categoria. Zero blog posts, zero FAQ, zero guias, zero gloss&aacute;rio t&eacute;cnico.</span></div>
+          <div class="full"><span class="field">Impacto AIO:</span> <span class="value">Zero autoridade tem&aacute;tica para LLMs referenciarem. Zero captura de demanda informacional ("o que &eacute; entretela de mem&oacute;ria" = 320/m&ecirc;s, "patchwork" = 2.600/m&ecirc;s). LLMs n&atilde;o t&ecirc;m conte&uacute;do da Lola para citar em respostas informacionais.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Produzir 6 guias pilares de 2.000-3.000 palavras cada. (2) Criar 2 gloss&aacute;rios t&eacute;cnicos (entretelas + insumos). (3) Implementar headless blog com 12+ artigos. (4) Adicionar FAQPage + HowTo schema em todo conte&uacute;do novo.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">100 h+ (Copywriter + SEO)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">AG-05. Zero Dom&iacute;nio de Refer&ecirc;ncia (Backlinks + Cita&ccedil;&otilde;es Externas)</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">LLMs priorizam fontes com credibilidade externalizada (backlinks, cita&ccedil;&otilde;es em sites relevantes). A Lola n&atilde;o tem perfil de backlinks significativo no setor.</span></div>
+          <div class="full"><span class="field">Impacto AIO:</span> <span class="value">Mesmo com conte&uacute;do excelente, LLMs podem pontuar a Lola como fonte de baixa autoridade vs concorrentes mencionados em m&uacute;ltiplas fontes.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Estrat&eacute;gia de backlinks em diretórios do setor t&ecirc;xtil. (2) Guest posts em blogs de moda e confec&ccedil;&atilde;o. (3) Google Business Profile otimizado. (4) Presen&ccedil;a ativa em LinkedIn e Instagram t&eacute;cnico.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">24 h (SEO, distribu&iacute;do entre M&ecirc;ses 2 e 3)</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Definition Blocks Propostos</h2>
+      <p style="margin-bottom:18px;">Blocos de 50-80 palavras para adicionar como texto vis&iacute;vel nas p&aacute;ginas de categoria. Este &eacute; o formato preferido por LLMs para cita&ccedil;&atilde;o direta em respostas.</p>
+
+      <div class="finding" style="border-left-color: var(--gold);">
+        <div class="finding-header">
+          <div><span class="finding-title">Entretela de Mem&oacute;ria</span></div>
+          <div><span class="severity sev-baixo">Prioridade: Imediata</span></div>
+        </div>
+        <p style="font-size:15px; color:var(--gray-700);">Entretela de mem&oacute;ria &eacute; um tipo de entretela termocolante fabricada em n&atilde;o tecido (TNT) com resina termofus&iacute;vel em um dos lados. Tamb&eacute;m conhecida como entretela cavalinho, &eacute; utilizada na fabrica&ccedil;&atilde;o de bon&eacute;s, viseiras e acess&oacute;rios estruturados. Dispon&iacute;vel em 220g a 330g, nas cores branca, cinza e preta.</p>
+      </div>
+
+      <div class="finding" style="border-left-color: var(--gold);">
+        <div class="finding-header">
+          <div><span class="finding-title">Entretela Rasg&aacute;vel</span></div>
+          <div><span class="severity sev-baixo">Prioridade: Imediata</span></div>
+        </div>
+        <p style="font-size:15px; color:var(--gray-700);">Entretela rasg&aacute;vel (ou de rasgo f&aacute;cil) &eacute; um tipo de entretela n&atilde;o tecido descart&aacute;vel utilizada como base para bordado computadorizado. Ap&oacute;s o bordado, &eacute; removida manualmente puxando-a da pe&ccedil;a, sem necessidade de &aacute;gua ou produtos qu&iacute;micos. Gramaturas comuns: 30g, 40g e 50g.</p>
+      </div>
+
+      <div class="finding" style="border-left-color: var(--gold);">
+        <div class="finding-header">
+          <div><span class="finding-title">Entretela Hidrossol&uacute;vel</span></div>
+          <div><span class="severity sev-baixo">Prioridade: Imediata</span></div>
+        </div>
+        <p style="font-size:15px; color:var(--gray-700);">Entretela hidrossol&uacute;vel &eacute; um filme pl&aacute;stico &agrave; base de PVA (&aacute;lcool polivin&iacute;lico) que se dissolve em &aacute;gua. Utilizada como base para bordados onde o tecido n&atilde;o pode ser danificado por remo&ccedil;&atilde;o mec&acirc;nica &mdash; ideal para toalhas, tecidos felpudos e pe&ccedil;as com aviamentos delicados. Dissolu&ccedil;&atilde;o em &aacute;gua a partir de 40&deg;C.</p>
+      </div>
+
+      <div class="finding" style="border-left-color: var(--gold);">
+        <div class="finding-header">
+          <div><span class="finding-title">Insumos para Bon&eacute;s</span></div>
+          <div><span class="severity sev-baixo">Prioridade: Imediata</span></div>
+        </div>
+        <p style="font-size:15px; color:var(--gray-700);">Insumos para bon&eacute;s s&atilde;o todos os componentes necess&aacute;rios para a fabrica&ccedil;&atilde;o de bon&eacute;s personalizados ou prontos. Incluem aba pl&aacute;stica (curva ou reta), regulador pl&aacute;stico (snapback ou proflex), tela de poli&eacute;ster (mesh ou fechada), vi&eacute;s de carneira, tecido suede, bot&atilde;o de forrar e case para bon&eacute;s.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Oportunidades de Keywords Informacionais</h2>
+      <p style="margin-bottom:18px;">Demandas informacionais n&atilde;o atendidas pelo site da Lola &mdash; cada uma representa uma oportunidade de conte&uacute;do cit&aacute;vel por LLMs.</p>
+      <table>
+        <tr><th>Keyword</th><th>Volume/m&ecirc;s</th><th>Tipo de Conte&uacute;do</th><th>Formato LLM</th></tr>
+        <tr><td>patchwork</td><td>2.600</td><td>Guia / Gloss&aacute;rio</td><td>Definition block</td></tr>
+        <tr><td>entretela para bordado</td><td>2.400</td><td>Guia Pilar</td><td>HowTo + FAQPage</td></tr>
+        <tr><td>aviamentos para confec&ccedil;&atilde;o</td><td>1.100</td><td>Guia Pilar</td><td>Definition block</td></tr>
+        <tr><td>bordado computadorizado</td><td>990</td><td>Guia / Gloss&aacute;rio</td><td>Definition block + HowTo</td></tr>
+        <tr><td>entretela para alfaiataria</td><td>880</td><td>Guia Pilar</td><td>FAQPage</td></tr>
+        <tr><td>entretela cavalinho</td><td>400</td><td>Gloss&aacute;rio</td><td>Definition block</td></tr>
+        <tr><td>como fazer bainha sem costura</td><td>400</td><td>How-To</td><td>HowTo schema</td></tr>
+        <tr><td>o que &eacute; entretela de mem&oacute;ria</td><td>320</td><td>Definition Block</td><td>FAQPage + Definition</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Plano de A&ccedil;&atilde;o AIO + GEO</h2>
+      <p style="margin-bottom:20px;">Distribu&iacute;do em 3 fases, totalizando ~159 horas de esfor&ccedil;o AIO/GEO dedicado.</p>
+
+      <div class="timeline">
+        <div class="timeline-phase">
+          <div class="dot gray"></div>
+          <div class="phase-bar gray" style="width:30%;"></div>
+          <div class="phase-hours">13 h</div>
+          <div class="phase-name">Fase 1</div>
+          <div class="phase-pct">8%</div>
+        </div>
+        <div class="timeline-phase">
+          <div class="dot orange"></div>
+          <div class="phase-bar orange" style="width:75%;"></div>
+          <div class="phase-hours">56 h</div>
+          <div class="phase-name">Fase 2</div>
+          <div class="phase-pct">35%</div>
+        </div>
+        <div class="timeline-phase">
+          <div class="dot gold"></div>
+          <div class="phase-bar gold" style="width:90%;"></div>
+          <div class="phase-hours">90 h</div>
+          <div class="phase-name">Fase 3</div>
+          <div class="phase-pct">57%</div>
+        </div>
+      </div>
+
+      <div class="timeline-deliverables">
+        <div class="deliv"><strong>Funda&ccedil;&atilde;o</strong>Schemas globais<br>Definition blocks<br>Produtos com schema</div>
+        <div class="deliv"><strong>Conte&uacute;do AEO</strong>3 guias pilares<br>FAQPage + HowTo<br>Gloss&aacute;rios t&eacute;cnicos</div>
+        <div class="deliv"><strong>Expans&atilde;o</strong>+3 guias pilares<br>Blog + backlinks<br>GBP + redes sociais</div>
+      </div>
+
+      <h3>Fase 1 — Funda&ccedil;&atilde;o de Extractability (~13 h)</h3>
+      <table>
+        <tr><th>#</th><th>A&ccedil;&atilde;o</th><th>Horas</th><th>Impacto AIO</th></tr>
+        <tr><td>1</td><td>Organization + Store schema (homepage + empresa)</td><td>1</td><td>Entidade da Lola no grafo de conhecimento</td></tr>
+        <tr><td>2</td><td>Product schema em 78 p&aacute;ginas de produto</td><td>4</td><td>LLMs extraem dados de produto estruturados</td></tr>
+        <tr><td>3</td><td>BreadcrumbList schema em todas as p&aacute;ginas</td><td>2</td><td>Contexto hier&aacute;rquico para LLMs</td></tr>
+        <tr><td>4</td><td>Definition blocks em 5+ p&aacute;ginas de categoria</td><td>4</td><td>Conte&uacute;do cit&aacute;vel de 50-80 palavras</td></tr>
+        <tr><td>5</td><td>FAQPage schema (template base)</td><td>2</td><td>Formato de resposta direta para IAs</td></tr>
+      </table>
+
+      <h3>Fase 2 — Conte&uacute;do AEO (56 h) &mdash; <span class="badge badge-critico">N&uacute;cleo da estrat&eacute;gia</span></h3>
+      <table>
+        <tr><th>#</th><th>A&ccedil;&atilde;o</th><th>Horas</th><th>Impacto AIO</th></tr>
+        <tr><td>6</td><td>Guia Pilar: "Tipos de Entretela para Bordado" (2.500+ palavras)</td><td>12</td><td>Autoridade tem&aacute;tica + cita&ccedil;&atilde;o em LLMs</td></tr>
+        <tr><td>7</td><td>Guia Pilar: "Entretela de Mem&oacute;ria: Guia Completo" (2.000+)</td><td>10</td><td>Autoridade tem&aacute;tica + cita&ccedil;&atilde;o em LLMs</td></tr>
+        <tr><td>8</td><td>Guia Pilar: "Insumos para Bon&eacute;s: Guia Completo" (3.000+)</td><td>14</td><td>Autoridade tem&aacute;tica + cita&ccedil;&atilde;o em LLMs</td></tr>
+        <tr><td>9</td><td>FAQ Page: 10 perguntas sobre entretelas (FAQPage schema)</td><td>4</td><td>Respostas diretas para extra&ccedil;&atilde;o de LLMs</td></tr>
+        <tr><td>10</td><td>How-To: "Como aplicar entretela termocolante" (HowTo schema)</td><td>3</td><td>Passo-a-passo para LLMs citarem</td></tr>
+        <tr><td>11</td><td>How-To: "Como usar filme hidrossol&uacute;vel no bordado"</td><td>3</td><td>Passo-a-passo para LLMs citarem</td></tr>
+        <tr><td>12</td><td>Gloss&aacute;rio de Entretelas (20+ termos t&eacute;cnicos)</td><td>6</td><td>Definition blocks em escala</td></tr>
+        <tr><td>13</td><td>Gloss&aacute;rio de Insumos para Bon&eacute;s (15+ termos)</td><td>4</td><td>Definition blocks em escala</td></tr>
+      </table>
+
+      <h3>Fase 3 — Expans&atilde;o de Autoridade (90 h)</h3>
+      <table>
+        <tr><th>#</th><th>A&ccedil;&atilde;o</th><th>Horas</th><th>Impacto AIO</th></tr>
+        <tr><td>14</td><td>Guia Pilar 4: "Rasg&aacute;vel vs Hidrossol&uacute;vel" (1.500+)</td><td>8</td><td>Conte&uacute;do comparativo para LLMs</td></tr>
+        <tr><td>15</td><td>Guia Pilar 5: "Entretela para Alfaiataria" (2.000+)</td><td>10</td><td>Novo cluster tem&aacute;tico</td></tr>
+        <tr><td>16</td><td>Guia Pilar 6: "Como Montar uma F&aacute;brica de Bon&eacute;s" (2.500+)</td><td>12</td><td>Conte&uacute;do de alto valor para LLMs</td></tr>
+        <tr><td>17</td><td>Headless blog operacional com 12+ artigos (1/semana)</td><td>60</td><td>Conte&uacute;do fresco para LLMs revisitarem</td></tr>
+        <tr><td>18</td><td>Estrat&eacute;gia de backlinks (diretórios, guest posts)</td><td>20</td><td>Dom&iacute;nio de refer&ecirc;ncia para LLMs</td></tr>
+        <tr><td>19</td><td>Google Business Profile otimizado</td><td>2</td><td>Cita&ccedil;&atilde;o em AI Search local</td></tr>
+        <tr><td>20</td><td>LinkedIn + Instagram com conte&uacute;do t&eacute;cnico</td><td>8</td><td>Presen&ccedil;a digital = sinais para LLMs</td></tr>
+      </table>
+
+      <div style="margin-top:24px; background:linear-gradient(135deg, #fcfaf7, #f8f7f4); border-radius:10px; padding:18px 22px; border:1px solid var(--gold-border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+        <div>
+          <div style="font-size:12px; color:var(--gray-500); font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Esfor&ccedil;o AIO/GEO Total</div>
+          <div style="font-size:28px; font-weight:700; color:var(--red); letter-spacing:-0.5px;">~159 h</div>
+          <div style="font-size:13px; color:var(--gray-600);">69% do esfor&ccedil;o total da auditoria</div>
+        </div>
+        <div style="flex:1; max-width:400px;">
+          <div style="height:6px; background:var(--gray-200); border-radius:3px; overflow:hidden; margin-bottom:6px;">
+            <div style="height:100%; width:100%; background:linear-gradient(90deg, var(--red), var(--gold)); border-radius:3px;"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--gray-500);">
+            <span>Fase 1</span>
+            <span style="font-weight:600; color:var(--gray-700);">13h &rarr; 56h &rarr; 90h</span>
+            <span>Go-Live</span>
+          </div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:12px; color:var(--gray-500); font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Proje&ccedil;&atilde;o</div>
+          <div style="font-size:16px; font-weight:700; color:var(--gold);">5-15+ cita&ccedil;&otilde;es em LLMs</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>KPIs de AIO + GEO</h2>
+      <table>
+        <tr><th>KPI</th><th>Atual</th><th>Fase 1</th><th>Fase 2</th><th>Fase 3</th></tr>
+        <tr><td>AI Citation Count (ChatGPT + Perplexity + Gemini)</td><td>0</td><td>0</td><td>3+</td><td>10+</td></tr>
+        <tr><td>P&aacute;ginas com structured data</td><td>0%</td><td>60%</td><td>100%</td><td>100%</td></tr>
+        <tr><td>P&aacute;ginas com definition blocks</td><td>0</td><td>5</td><td>10</td><td>20+</td></tr>
+        <tr><td>P&aacute;ginas com FAQPage schema</td><td>0</td><td>0</td><td>3</td><td>5+</td></tr>
+        <tr><td>P&aacute;ginas com HowTo schema</td><td>0</td><td>0</td><td>2</td><td>6+</td></tr>
+        <tr><td>Guias pilares AEO publicados</td><td>0</td><td>0</td><td>3</td><td>6</td></tr>
+        <tr><td>Gloss&aacute;rios t&eacute;cnicos publicados</td><td>0</td><td>0</td><td>2</td><td>3+</td></tr>
+        <tr><td>Google Business Profile otimizado</td><td>N&atilde;o</td><td>N&atilde;o</td><td>N&atilde;o</td><td>Sim</td></tr>
+        <tr><td>Conte&uacute;do editorial (guias + blog)</td><td>0</td><td>0</td><td>3+</td><td>15+</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Proje&ccedil;&atilde;o de Impacto AIO + GEO</h2>
+      <table>
+        <tr><th>M&eacute;trica</th><th>Conservador (90 dias)</th><th>Otimista (90 dias)</th></tr>
+        <tr><td><strong>AI Citation Count</strong></td><td>5+ cita&ccedil;&otilde;es</td><td>15+ cita&ccedil;&otilde;es</td></tr>
+        <tr><td><strong>Tr&aacute;fego informacional incremental</strong></td><td>+5% a +10%</td><td>+15% a +25%</td></tr>
+        <tr><td><strong>P&aacute;ginas com conte&uacute;do cit&aacute;vel</strong></td><td>10+</td><td>25+</td></tr>
+        <tr><td><strong>Featured snippets em AI Overviews</strong></td><td>3+</td><td>10+</td></tr>
+        <tr><td><strong>Dom&iacute;nio de refer&ecirc;ncia (DR)</strong></td><td>+3 a +5</td><td>+8 a +12</td></tr>
+      </table>
+
+      <h3>Fatores de Acelera&ccedil;&atilde;o</h3>
+      <ul style="font-size:15px; color:var(--gray-700); line-height:1.8; padding-left:20px;">
+        <li>Setor de aviamentos tem <strong>baix&iacute;ssima maturidade AIO/GEO</strong> no Brasil. Primeiro a estruturar domina.</li>
+        <li>Definition blocks + FAQPage schema geram cita&ccedil;&atilde;o imediata em respostas de IA para perguntas frequentes.</li>
+        <li>Product schema abre possibilidade de cita&ccedil;&atilde;o em respostas de compra ("onde comprar entretela de mem&oacute;ria").</li>
+        <li>Conte&uacute;do pilar de 2.000+ palavras em formato de guia completo &eacute; o formato mais citado por LLMs.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Riscos e Urg&ecirc;ncia</h2>
+      <table>
+        <tr><th>Risco</th><th>Prob.</th><th>Impacto</th><th>Mitiga&ccedil;&atilde;o</th></tr>
+        <tr><td>Concorrentes ocuparem AI Search primeiro</td><td>Alta</td><td>Alto</td><td>Agir r&aacute;pido. Mercado tem baixa maturidade &mdash; primeiro a publicar domina as cita&ccedil;&otilde;es.</td></tr>
+        <tr><td>LLMs mudarem crit&eacute;rios de cita&ccedil;&atilde;o</td><td>M&eacute;dia</td><td>M&eacute;dio</td><td>Manter conte&uacute;do fresco e diversificado. N&atilde;o depender de um &uacute;nico formato.</td></tr>
+        <tr><td>Depend&ecirc;ncia de dev Nuvemshop</td><td>Alta</td><td>M&eacute;dio</td><td>Schema via GTM como fallback imediato. Definition blocks s&atilde;o texto puro, sem depend&ecirc;ncia.</td></tr>
+        <tr><td>Google n&atilde;o revisitar rapidamente</td><td>M&eacute;dia</td><td>M&eacute;dio</td><td>Sitemap + Solicitar Indexa&ccedil;&atilde;o + conte&uacute;do novo frequente.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Sobre Esta Auditoria</h2>
+      <table>
+        <tr><th>Escopo</th><th>Auditoria focada em AI Optimization (AIO) e Generative Engine Optimization (GEO)</th></tr>
+        <tr><th>Ferramentas</th><th>Screaming Frog SEO Spider + avalia&ccedil;&atilde;o manual de presen&ccedil;a em ChatGPT, Perplexity, Gemini, Claude, Copilot e Google AI Overviews</th></tr>
+        <tr><th>Dados-base</th><th>153 URLs HTML rastreadas + an&aacute;lise de extractability + structured data audit + pesquisa de keywords informacionais</th></tr>
+        <tr><th>Data</th><th>Julho 2026</th></tr>
+        <tr><th>Metodologia</th><th>V4 Company &mdash; Padr&atilde;o BuiltVisible / Moz / Searchmetrics + frameworks pr&oacute;prios de AI Search</th></tr>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div style="display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:8px;">
+    <img src="../assets/logo-v4-white.png" alt="V4 Company" style="height:24px; width:auto; opacity:0.7;">
+    <span style="color:var(--gray-500); font-size:14px; opacity:0.5;">+</span>
+    <img src="../assets/logo-lola.webp" alt="Lola Aviamentos" style="height:28px; width:auto; opacity:0.8;">
+  </div>
+  <p>Auditoria AIO + GEO &bull; V4 Company &bull; peretto.co</p>
+  <p style="margin-top:4px;">Confidencial &mdash; preparada para Lola Aviamentos em Julho de 2026</p>
+  <p style="margin-top:4px;">slug: lola-seo-aiogeo-audit &bull; v1.0</p>
+</div>
+
+</body>
+</html>

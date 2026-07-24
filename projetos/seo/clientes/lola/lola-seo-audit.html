@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auditoria Completa — SEO + AIO + GEO | Lola Aviamentos</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --red: rgb(229, 9, 20);
+    --red-dark: rgb(180, 7, 16);
+    --red-light: rgb(255, 60, 70);
+    --gold: #c9a96e;
+    --gold-light: #f5f0e6;
+    --gold-border: #e8dcc8;
+    --green: #16a34a;
+    --blue: #2563eb;
+    --purple: #7c3aed;
+    --gray-50: #fafafa;
+    --gray-100: #f5f5f5;
+    --gray-200: #eeeeee;
+    --gray-300: #e0e0e0;
+    --gray-400: #bdbdbd;
+    --gray-500: #9e9e9e;
+    --gray-600: #757575;
+    --gray-700: #616161;
+    --gray-800: #424242;
+    --gray-900: #212121;
+  }
+
+  body {
+    font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f8f7f4;
+    color: var(--gray-900);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  .cover {
+    background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #2a2a2a 100%);
+    color: #fff;
+    padding: 64px 40px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(201,169,110,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .cover-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+  .cover-content::before {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .cover-content::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin: 28px auto 0;
+    border-radius: 1px;
+  }
+  .cover .label {
+    display: inline-block;
+    background: rgba(201,169,110,0.12);
+    border: 1px solid rgba(201,169,110,0.3);
+    padding: 6px 20px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    color: var(--gold);
+  }
+  .cover h1 {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 14px;
+    letter-spacing: -0.5px;
+    font-family: 'Plus Jakarta Sans', serif;
+  }
+  .cover p {
+    font-size: 18px;
+    opacity: 0.85;
+    margin-bottom: 24px;
+    font-weight: 300;
+    letter-spacing: 0.2px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 14px;
+    opacity: 0.7;
+    letter-spacing: 0.5px;
+  }
+  .pillar-badges {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin: 24px 0 8px;
+    flex-wrap: wrap;
+  }
+  .pillar-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .pillar-badge.seo { background: rgba(37,99,235,0.15); border: 1px solid rgba(37,99,235,0.3); color: #93c5fd; }
+  .pillar-badge.aio { background: rgba(229,9,20,0.15); border: 1px solid rgba(229,9,20,0.3); color: #fca5a5; }
+  .pillar-badge.geo { background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3); color: #c4b5fd; }
+
+  .container { max-width: 960px; margin: -36px auto 48px; position: relative; z-index: 2; }
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+    margin-bottom: 28px;
+    overflow: hidden;
+    border: 1px solid var(--gray-300);
+    position: relative;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 40px;
+    right: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-border), var(--gold), var(--gold-border), transparent);
+    opacity: 0.6;
+  }
+  .card-body { padding: 44px 52px; }
+
+  .card-pillar {
+    border-top: 3px solid var(--gray-300);
+    position: relative;
+  }
+  .card-pillar.seo { border-top-color: var(--blue); }
+  .card-pillar.aio { border-top-color: var(--red); }
+  .card-pillar.geo { border-top-color: var(--purple); }
+
+  .pillar-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .pillar-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 800;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .pillar-icon.seo { background: linear-gradient(135deg, var(--blue), #60a5fa); }
+  .pillar-icon.aio { background: linear-gradient(135deg, var(--red), var(--red-light)); }
+  .pillar-icon.geo { background: linear-gradient(135deg, var(--purple), #a78bfa); }
+  .pillar-title { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+  .pillar-title.seo { color: var(--blue); }
+  .pillar-title.aio { color: var(--red); }
+  .pillar-title.geo { color: var(--purple); }
+  .pillar-subtitle { font-size: 13px; color: var(--gray-500); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 1px; }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--gold-border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -0.3px;
+    position: relative;
+  }
+  h2::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 1px;
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin: 36px 0 18px;
+    letter-spacing: -0.2px;
+  }
+  h4 { font-size: 16px; font-weight: 700; color: var(--gray-800); margin: 22px 0 12px; }
+  p { font-size: 16px; color: var(--gray-700); margin-bottom: 16px; line-height: 1.8; }
+  p:last-child { margin-bottom: 0; }
+
+  .badge {
+    display: inline-block;
+    padding: 5px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .badge-critico { background: #fef2f2; color: var(--red); border: 1px solid #fecaca; }
+  .badge-alto { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+  .badge-medio { background: #fefce8; color: #a16207; border: 1px solid #fef08a; }
+  .badge-baixo { background: var(--gold-light); color: #8b7a4a; border: 1px solid var(--gold-border); }
+  .badge-info { background: #f5f5f5; color: #616161; border: 1px solid #d4d4d4; }
+
+  .severity { display: inline-block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .sev-critico { color: var(--red); }
+  .sev-alto { color: #c2410c; }
+  .sev-medio { color: #a16207; }
+  .sev-baixo { color: #8b7a4a; }
+  .sev-info { color: #616161; }
+
+  table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 15px; }
+  th, td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--gray-100); }
+  th {
+    background: linear-gradient(135deg, var(--gray-50), #f8f7f4);
+    font-weight: 700;
+    color: var(--gray-700);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 2px solid var(--gold-border);
+    position: relative;
+  }
+  tr:hover td { background: #fcfaf7; }
+  tr:last-child td { border-bottom: none; }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .kpi-group {
+    background: #f2f0ec;
+    border-radius: 10px;
+    padding: 18px 10px 16px;
+    text-align: center;
+    border: 1px solid var(--gold-border);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .kpi-group:hover {
+    border-color: var(--gold);
+    box-shadow: 0 2px 12px rgba(201,169,110,0.1);
+  }
+  .kpi-group .group-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--gold-border);
+  }
+  .kpi-group .group-label.seo { color: var(--blue); }
+  .kpi-group .group-label.aio { color: var(--red); }
+  .kpi-group .group-label.geo { color: var(--purple); }
+  .kpi-group .value {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--red);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+  .kpi-group .label {
+    font-size: 11px;
+    color: var(--gray-600);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-top: 4px;
+  }
+  .kpi-group .sub { font-size: 11px; color: var(--gray-600); margin-top: 2px; }
+  .kpi-group::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+  }
+  .kpi-group.seo::before { background: linear-gradient(90deg, var(--blue), #60a5fa); }
+  .kpi-group.aio::before { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .kpi-group.geo::before { background: linear-gradient(90deg, var(--purple), #a78bfa); }
+
+  .risk-box {
+    background: linear-gradient(135deg, #fcfaf7, #f8f7f4);
+    border-left: 4px solid var(--red);
+    padding: 22px 26px;
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 18px;
+  }
+  .risk-box h4 { margin: 0 0 10px; color: var(--red); font-size: 16px; letter-spacing: -0.2px; }
+  .risk-box p { font-size: 15px; color: var(--gray-700); margin: 0; line-height: 1.7; }
+
+  .finding {
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 26px 30px;
+    margin-bottom: 18px;
+    background: #fcfcfc;
+    transition: box-shadow 0.2s, border-color 0.2s;
+    border-left: 3px solid transparent;
+  }
+  .finding:hover {
+    box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+    border-color: var(--gold-border);
+    border-left-color: var(--gold);
+  }
+  .finding.seo-finding { border-left-color: var(--blue); }
+  .finding.aio-finding { border-left-color: var(--red); }
+  .finding.geo-finding { border-left-color: var(--purple); }
+  .finding-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    gap: 12px;
+  }
+  .finding-title { font-weight: 700; font-size: 17px; color: var(--gray-900); letter-spacing: -0.2px; }
+  .finding-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 32px;
+    font-size: 15px;
+  }
+  .finding-grid .field { font-weight: 600; color: var(--gray-800); }
+  .finding-grid .value { color: var(--gray-700); }
+  .finding-grid .full { grid-column: 1 / -1; }
+
+  .product-blocks {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .product-block {
+    border-radius: 14px;
+    padding: 28px 22px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .product-block:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+  .product-block.seo { background: linear-gradient(180deg, #eff6ff 0%, #fafafa 100%); border: 1px solid #bfdbfe; }
+  .product-block.aio { background: linear-gradient(180deg, #fef2f2 0%, #fafafa 100%); border: 1px solid #fecaca; }
+  .product-block.geo { background: linear-gradient(180deg, #f5f3ff 0%, #fafafa 100%); border: 1px solid #ddd6fe; }
+  .product-block .p-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+  .product-block .p-icon.seo { background: linear-gradient(135deg, var(--blue), #60a5fa); }
+  .product-block .p-icon.aio { background: linear-gradient(135deg, var(--red), var(--red-light)); }
+  .product-block .p-icon.geo { background: linear-gradient(135deg, var(--purple), #a78bfa); }
+  .product-block .p-name {
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: -0.2px;
+    margin-bottom: 8px;
+  }
+  .product-block .p-name.seo { color: var(--blue); }
+  .product-block .p-name.aio { color: var(--red); }
+  .product-block .p-name.geo { color: var(--purple); }
+  .product-block .p-score {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 2px;
+  }
+  .product-block .p-score-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .product-block .p-metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    text-align: center;
+  }
+  .product-block .p-metrics .m-value { font-weight: 700; font-size: 16px; color: var(--gray-900); }
+  .product-block .p-metrics .m-label { font-size: 10px; color: var(--gray-500); font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; }
+  .product-block .p-quickwin {
+    background: rgba(0,0,0,0.03);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 12px;
+    color: var(--gray-700);
+    line-height: 1.4;
+  }
+  .product-block .p-quickwin strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; }
+  .product-block .p-quickwin.seo strong { color: var(--blue); }
+  .product-block .p-quickwin.aio strong { color: var(--red); }
+  .product-block .p-quickwin.geo strong { color: var(--purple); }
+
+  .bar-container { margin: 22px 0; }
+  .bar-row { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+  .bar-label { width: 200px; font-size: 14px; font-weight: 700; color: var(--gray-700); text-align: right; flex-shrink: 0; letter-spacing: -0.2px; }
+  .bar-track { flex: 1; height: 30px; background: var(--gray-100); border-radius: 6px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding-right: 14px; font-size: 13px; font-weight: 700; color: #fff; letter-spacing: 0.3px; }
+  .bar-fill.blue { background: linear-gradient(90deg, var(--blue), #60a5fa); }
+  .bar-fill.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .bar-fill.purple { background: linear-gradient(90deg, var(--purple), #a78bfa); }
+  .bar-fill.orange { background: linear-gradient(90deg, #c2410c, #ea580c); }
+  .bar-fill.gold { background: linear-gradient(90deg, #b8963a, #d4b96a); }
+  .bar-fill.gray { background: linear-gradient(90deg, #616161, #9e9e9e); }
+
+  .timeline {
+    display: flex;
+    gap: 0;
+    margin: 32px 0 16px;
+    position: relative;
+    padding: 0 0 20px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 5%;
+    right: 5%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold-border), var(--gold), var(--gold-border));
+    border-radius: 2px;
+  }
+  .timeline-phase {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    padding: 0 8px;
+  }
+  .timeline-phase .dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    position: relative;
+    z-index: 1;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px var(--gold);
+  }
+  .timeline-phase .dot.blue { background: var(--blue); }
+  .timeline-phase .dot.red { background: var(--red); }
+  .timeline-phase .dot.purple { background: var(--purple); }
+  .timeline-phase .dot.orange { background: #c2410c; }
+  .timeline-phase .dot.gold { background: var(--gold); }
+  .timeline-phase .dot.gray { background: #757575; }
+  .timeline-phase .phase-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 2px;
+  }
+  .timeline-phase .phase-hours {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--red);
+    letter-spacing: -0.5px;
+  }
+  .timeline-phase .phase-pct {
+    font-size: 12px;
+    color: var(--gray-500);
+    font-weight: 600;
+  }
+  .timeline-phase .phase-pillar {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+  }
+  .timeline-phase .phase-pillar.blue { color: var(--blue); }
+  .timeline-phase .phase-pillar.red { color: var(--red); }
+  .timeline-phase .phase-pillar.purple { color: var(--purple); }
+  .timeline-phase .phase-pillar.gold { color: var(--gold); }
+  .timeline-phase .phase-bar {
+    height: 8px;
+    border-radius: 4px;
+    margin: 8px auto 6px;
+    max-width: 80%;
+  }
+  .timeline-phase .phase-bar.blue { background: linear-gradient(90deg, var(--blue), #60a5fa); }
+  .timeline-phase .phase-bar.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .timeline-phase .phase-bar.purple { background: linear-gradient(90deg, var(--purple), #a78bfa); }
+  .timeline-phase .phase-bar.orange { background: linear-gradient(90deg, #c2410c, #ea580c); }
+  .timeline-phase .phase-bar.gold { background: linear-gradient(90deg, #b8963a, #d4b96a); }
+  .timeline-phase .phase-bar.gray { background: linear-gradient(90deg, #616161, #9e9e9e); }
+  .timeline-deliverables {
+    display: flex;
+    gap: 0;
+    margin-top: 4px;
+  }
+  .timeline-deliverables .deliv {
+    flex: 1;
+    text-align: center;
+    padding: 0 6px;
+    font-size: 12px;
+    color: var(--gray-600);
+    line-height: 1.4;
+  }
+  .timeline-deliverables .deliv strong {
+    display: block;
+    color: var(--gray-700);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 2px;
+  }
+
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--gray-100);
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 14px;
+    color: var(--red);
+  }
+  pre {
+    background: var(--gray-900);
+    color: #e2e8f0;
+    border-radius: 12px;
+    padding: 24px 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    overflow-x: auto;
+    line-height: 1.6;
+    margin: 18px 0;
+  }
+  pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-size: 13px;
+  }
+
+  .glossary-row { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--gray-100); }
+  .glossary-row:last-child { border: none; }
+  .glossary-row span:last-child { font-size: 15px; color: var(--gray-700); }
+
+  .status {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .status.ok { background: rgba(34,197,94,0.1); color: #16a34a; }
+  .status.warn { background: rgba(217,119,6,0.1); color: #c2410c; }
+  .status.fail { background: rgba(229,9,20,0.1); color: var(--red); }
+
+  .footer {
+    text-align: center;
+    padding: 36px;
+    font-size: 14px;
+    color: var(--gray-500);
+    border-top: 1px solid var(--gold-border);
+    letter-spacing: 0.3px;
+    position: relative;
+  }
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 2px;
+  }
+
+  .effort-table th:first-child, .effort-table td:first-child { text-align: left; }
+  .effort-table th, .effort-table td { text-align: center; }
+
+  @media print {
+    body { background: #fff; padding: 0; font-size: 12px; }
+    .cover { padding: 40px 30px; }
+    .container { max-width: 100%; margin: 0; }
+    .card { box-shadow: none; border: 1px solid var(--gray-200); page-break-inside: avoid; }
+    .card-body { padding: 20px 24px; }
+    .finding { page-break-inside: avoid; }
+    table { page-break-inside: avoid; }
+    @page { margin: 1.5cm 1cm; }
+  }
+
+  @media (max-width: 640px) {
+    .cover h1 { font-size: 26px; }
+    .cover { padding: 40px 20px 32px; }
+    .card-body { padding: 20px; }
+    .finding-grid, .finding-grid-3 { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .product-blocks { grid-template-columns: 1fr; gap: 12px; }
+    .pillar-grid { grid-template-columns: 1fr; gap: 24px; }
+    .bar-label { width: 100px; font-size: 12px; }
+    .timeline { flex-wrap: wrap; gap: 16px; }
+    .timeline::before { display: none; }
+    .timeline-deliverables { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-content">
+    <div style="display:flex; align-items:center; justify-content:center; gap:24px; margin-bottom:24px;">
+      <img src="../assets/logo-v4-white.png" alt="V4 Company" style="height:28px; width:auto; opacity:0.9;">
+      <span style="color:var(--gold); font-size:18px; opacity:0.4;">&#10022;</span>
+      <img src="../assets/logo-lola.webp" alt="Lola Aviamentos" style="height:36px; width:auto; opacity:0.95;">
+    </div>
+    <div class="label">Confidencial &bull; Julho 2026</div>
+    <h1>Pacote Completo de Auditoria</h1>
+    <p>Lola Aviamentos &mdash; Diagn&oacute;stico e Plano de A&ccedil;&atilde;o Integrado</p>
+
+    <div class="pillar-badges">
+      <span class="pillar-badge seo">&#9679; SEO T&eacute;cnico</span>
+      <span class="pillar-badge aio">&#9679; AI Optimization</span>
+      <span class="pillar-badge geo">&#9679; Generative Engine Opt.</span>
+    </div>
+
+    <div class="cover-meta">
+      <span>&bull; Screaming Frog SEO Spider</span>
+      <span>&bull; 153 URLs rastreadas</span>
+      <span>&bull; 36 CSVs analisados</span>
+      <span>&bull; Extractability + AI Search</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="card">
+    <div class="card-body">
+      <h2>3 Produtos &mdash; 1 Relat&oacute;rio</h2>
+      <p style="margin-bottom:20px; font-size:15px;">Cada produto abaixo tem diagn&oacute;stico pr&oacute;prio, score independente e plano de a&ccedil;&atilde;o dedicado. Funcionam separadamente ou integrados &mdash; o cliente escolhe.</p>
+
+      <div class="product-blocks">
+
+        <div class="product-block seo">
+          <div class="p-icon seo">S</div>
+          <div class="p-name seo">SEO T&eacute;cnico</div>
+          <div class="p-score" style="color:var(--blue);">0.9 / 10</div>
+          <div class="p-score-label" style="color:var(--blue);">Sa&uacute;de T&eacute;cnica</div>
+          <div class="p-metrics">
+            <div><div class="m-value">15</div><div class="m-label">Problemas</div></div>
+            <div><div class="m-value">7</div><div class="m-label">Cr&iacute;ticos</div></div>
+          </div>
+          <div class="p-quickwin seo">
+            <strong>6 Quick Wins &mdash; 48h</strong>
+            Redirect 301 &bull; Sitemap limpo &bull; Schemas globais &bull; Alt text &bull; Titles &bull; 4xx
+          </div>
+        </div>
+
+        <div class="product-block aio">
+          <div class="p-icon aio">AI</div>
+          <div class="p-name aio">AI Optimization</div>
+          <div class="p-score" style="color:var(--red);">0.2 / 10</div>
+          <div class="p-score-label" style="color:var(--red);">Extractability Score</div>
+          <div class="p-metrics">
+            <div><div class="m-value">0%</div><div class="m-label">Definition Blocks</div></div>
+            <div><div class="m-value">0</div><div class="m-label">P&aacute;ginas Cit&aacute;veis</div></div>
+          </div>
+          <div class="p-quickwin aio">
+            <strong>3 Quick Wins &mdash; 1&ordf; semana</strong>
+            Definition blocks (5 cats) &bull; FAQPage schema &bull; Organization schema
+          </div>
+        </div>
+
+        <div class="product-block geo">
+          <div class="p-icon geo">G</div>
+          <div class="p-name geo">Generative Engine Opt.</div>
+          <div class="p-score" style="color:var(--purple);">0 / 6</div>
+          <div class="p-score-label" style="color:var(--purple);">AI Search Presence</div>
+          <div class="p-metrics">
+            <div><div class="m-value">0</div><div class="m-label">Cita&ccedil;&otilde;es em LLMs</div></div>
+            <div><div class="m-value">0%</div><div class="m-label">AI Overviews</div></div>
+          </div>
+          <div class="p-quickwin geo">
+            <strong>3 Quick Wins &mdash; 2&ordf; semana</strong>
+            GBP otimizado &bull; Definition blocks p/ LLM &bull; Guia pilar r&aacute;pido
+          </div>
+        </div>
+
+      </div>
+
+      <p style="margin-bottom:20px;">A Lola Aviamentos tem <strong>0% de structured data, 0 cita&ccedil;&otilde;es em LLMs e 0 conte&uacute;do informacional</strong>. Os 3 produtos compartilham execu&ccedil;&atilde;o integrada &mdash; structured data serve SEO e AIO, conte&uacute;do pilar serve SEO e GEO, definition blocks servem AIO e GEO. Mas cada um entrega valor pr&oacute;prio, mensur&aacute;vel e vend&aacute;vel separadamente.</p>
+
+      <p style="margin-bottom:0;">O setor de aviamentos tem <strong>baix&iacute;ssima maturidade digital</strong> no Brasil. Quem agir primeiro domina tanto a busca tradicional quanto a descoberta por IA nos pr&oacute;ximos 3 a 6 meses. Este relat&oacute;rio entrega os 3 diagn&oacute;sticos com planos de a&ccedil;&atilde;o sincronizados &mdash; mas cada produto pode ser contratado e executado de forma independente.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Perfil do Site</h2>
+      <table>
+        <tr><th>Caracter&iacute;stica</th><th>Detalhe</th></tr>
+        <tr><td><strong>Dom&iacute;nio</strong></td><td>lolaaviamentos.com.br / www.lolaaviamentos.com.br (dupla vers&atilde;o sem redirect 301)</td></tr>
+        <tr><td><strong>Segmento</strong></td><td>Aviamentos, Entretelas e Insumos para Confec&ccedil;&atilde;o</td></tr>
+        <tr><td><strong>CMS/Plataforma</strong></td><td>Nuvemshop (Loja Integrada)</td></tr>
+        <tr><td><strong>Idioma</strong></td><td>pt-BR (sem vers&otilde;es multil&iacute;ngue)</td></tr>
+        <tr><td><strong>Total URLs rastreadas</strong></td><td>407 (153 HTML + 254 n&atilde;o-HTML)</td></tr>
+        <tr><td><strong>URLs HTML index&aacute;veis</strong></td><td>112 (www)</td></tr>
+        <tr><td><strong>Mobile</strong></td><td>Responsivo (Nuvemshop tema padr&atilde;o)</td></tr>
+        <tr><td><strong>Structured Data</strong></td><td>0% &mdash; nenhuma p&aacute;gina com schema markup</td></tr>
+        <tr><td><strong>Imagens</strong></td><td>255 total &mdash; 90,6% WebP &mdash; 0% com alt text</td></tr>
+        <tr><td><strong>Sitemap</strong></td><td>151 URLs &mdash; 27,2% non-indexable</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card card-pillar seo">
+    <div class="card-body">
+      <div class="pillar-header">
+        <div class="pillar-icon seo">S</div>
+        <div>
+          <div class="pillar-title seo">Produto 1: SEO T&eacute;cnico</div>
+          <div class="pillar-subtitle">Diagn&oacute;stico de Sa&uacute;de T&eacute;cnica &bull; On-page &bull; Structured Data &bull; Keywords</div>
+        </div>
+      </div>
+
+      <p style="margin-bottom:24px;">Score: <strong style="color:var(--blue); font-size:22px;">0.9 / 10</strong> &mdash; 15 problemas estruturais, sendo <strong style="color:var(--red);">7 cr&iacute;ticos</strong> que impedem indexa&ccedil;&atilde;o e ranqueamento.</p>
+
+      <h3 style="margin-top:0;"><span class="badge badge-critico">Cr&iacute;ticos</span> &mdash; Impedem Indexa&ccedil;&atilde;o e Ranqueamento</h3>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-title">C-01. Zero Structured Data em Todas as P&aacute;ginas</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">142/142 p&aacute;ginas HTML (100%) sem qualquer JSON-LD ou Microdata. Zero rich snippets. Zero Product schema em site com 78 p&aacute;ginas de produto.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Perda total de diferencia&ccedil;&atilde;o no SERP. CTR estimado 20-40% inferior. LLMs (ChatGPT, Perplexity) n&atilde;o conseguem extrair dados estruturados para cita&ccedil;&atilde;o.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Organization + Store schema global. (2) Product schema em 78 p&aacute;ginas de produto. (3) BreadcrumbList schema em todas as p&aacute;ginas. (4) ItemList schema em categorias.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">8 h (Dev Nuvemshop + SEO)</span></div>
+        </div>
+      </div>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-title">C-02. 41 URLs Non-Indexable no Sitemap</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">151 URLs no sitemap, das quais 41 (27,2%) s&atilde;o non-indexable: 32 canonical non-www, 7 bloqueadas por robots.txt, 2 com erro 4xx.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Google desperdi&ccedil;a 27% do or&ccedil;amento de rastreio. Retarda a descoberta de p&aacute;ginas v&aacute;lidas.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Remover URLs non-www do sitemap. (2) Remover URLs bloqueadas por robots.txt. (3) Corrigir ou remover as 2 URLs com 4xx. (4) Implementar redirect 301 de non-www para www.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">2 h (SEO / Dev Nuvemshop)</span></div>
+        </div>
+      </div>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-title">C-03. 255 Imagens Sem Atributo Alt (100%)</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">255 imagens no site &mdash; zero com atributo alt. 90,6% em WebP, mas nenhuma acess&iacute;vel para leitores de tela ou Google Imagens.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Perda de canal de tr&aacute;fego do Google Imagens. Violac&atilde;o de acessibilidade (WCAG).</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Template de alt text por categoria. (2) Priorizar 78 imagens de produto. (3) Completar as 255 imagens em lote.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">8 h (Copywriter)</span></div>
+        </div>
+      </div>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-title">C-04. 35 T&iacute;tulos com &lt; 30 Caracteres (24,6%)</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">35 p&aacute;ginas com t&iacute;tulos muito curtos. Ex: "Cinza", "Branca", "Preta", "Bordado", "Tela". O tema Nuvemshop usa o nome da variante como title.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">T&iacute;tulos gen&eacute;ricos destroem CTR no SERP. Perda de oportunidade de ranqueamento para termos relevantes.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Template de title: "Produto + Categoria + Marca". (2) Renomear 10 cr&iacute;ticos em semana 1. (3) Corrigir os 35 em 15 dias.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">2 h (SEO, 10 cr&iacute;ticos) + 6 h (Copy, restante)</span></div>
+        </div>
+      </div>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-title">C-05. 45 Meta Descriptions Duplicadas (31,7%)</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">45 p&aacute;ginas com meta description id&ecirc;ntica, herdada do template Nuvemshop.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Google ignora meta descriptions duplicadas e gera snippet autom&aacute;tico. Perda de controle sobre a mensagem no SERP.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Template de meta description por categoria. (2) Revisar 45 p&aacute;ginas. (3) Priorizar 20 p&aacute;ginas de maior volume.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">6 h (Copywriter)</span></div>
+        </div>
+      </div>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-title">C-06. 109 P&aacute;ginas com H1/H2 Non-Sequential</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">109 p&aacute;ginas (76,8%) com heading structure incorreta. Tema renderiza carrinho e pre&ccedil;os como &lt;h2&gt;.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Confunde crawlers e leitores de tela. Hierarquia sem&acirc;ntica polu&iacute;da.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">Customizar tema Nuvemshop para usar &lt;span&gt; ou &lt;div&gt; em vez de &lt;h2&gt; para pre&ccedil;o e carrinho.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">6 h (Dev Nuvemshop)</span></div>
+        </div>
+      </div>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-title">C-07. 12 T&iacute;tulos Duplicados em URLs Diferentes</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">12 p&aacute;ginas compartilham o mesmo title tag, confundindo o Google sobre qual URL ranquear.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Canibaliza&ccedil;&atilde;o de palavras-chave. Google pode desindexar as vers&otilde;es duplicadas.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Identificar inten&ccedil;&atilde;o de cada URL. (2) Diferenciar titles com palavras-chave complementares.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">2 h (SEO)</span></div>
+        </div>
+      </div>
+
+      <h3><span class="badge badge-alto">Alto</span> &mdash; Impactam Diretamente CTR e Experi&ecirc;ncia</h3>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-title">A-01. Dupla Vers&atilde;o do Site sem Redirect</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">www.lolaaviamentos.com.br e lolaaviamentos.com.br servem conte&uacute;do duplicado sem redirect 301.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">Implementar redirect 301 de non-www para www.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">1 h (Dev)</span></div>
+        </div>
+      </div>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-title">A-02. 129 Imagens sem Width/Height Attributes</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Cumulative Layout Shift (CLS) elevado. Impacta Core Web Vitals.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">Adicionar width/height nas imagens sem atributos de dimens&atilde;o.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">4 h (Dev)</span></div>
+        </div>
+      </div>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-title">A-03. 48 Imagens &gt; 100 KB sem Compress&atilde;o</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Tempo de carregamento elevado. Impacta LCP e experi&ecirc;ncia m&oacute;vel.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">Comprimir 48 imagens com target &lt; 100 KB. Ferramenta: TinyPNG ou Squoosh.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">3 h (Dev)</span></div>
+        </div>
+      </div>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-title">A-04. Zero BreadcrumbList Schema</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Google n&atilde;o exibe breadcrumbs rich no SERP. Perda de CTR e contexto de navega&ccedil;&atilde;o.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">Adicionar BreadcrumbList schema em todas as p&aacute;ginas.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">2 h (Dev)</span></div>
+        </div>
+      </div>
+
+      <h3><span class="badge badge-medio">M&eacute;dio</span> &mdash; Oportunidades de Melhoria</h3>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-title">M-01. Security Headers Ausentes (92-100%)</span></div>
+          <div><span class="severity sev-medio">M&eacute;dio</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">X-Frame-Options ausente em 92,8%. Referrer-Policy ausente em 94,1%. Unsafe cross-origin links em 100%.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">Implementar headers de seguran&ccedil;a via Nuvemshop ou CDN.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">2 h (Dev / Infra)</span></div>
+        </div>
+      </div>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-title">M-02. Gap Cr&iacute;tico de Keywords Informacionais</span></div>
+          <div><span class="severity sev-medio">M&eacute;dio</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">"patchwork" (2.600/m&ecirc;s), "entretela para bordado" (2.400/m&ecirc;s), "aviamentos para confec&ccedil;&atilde;o" (1.100/m&ecirc;s) &mdash; todas sem conte&uacute;do no site.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">Produzir conte&uacute;do editorial para capturar demanda informacional.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">Inline com produ&ccedil;&atilde;o de guias AIO (ver Produto 2).</span></div>
+        </div>
+      </div>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-title">M-03. M&eacute;dia Flesch ~72 (Fairly Easy)</span></div>
+          <div><span class="severity sev-medio">M&eacute;dio</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">97,2% das p&aacute;ginas s&atilde;o "Fairly Easy" ou melhor. Adequado para e-commerce B2B.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">Manter. Para conte&uacute;do informacional futuro, buscar equil&iacute;brio entre acessibilidade e profundidade t&eacute;cnica.</span></div>
+        </div>
+      </div>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-title">M-04. Sitemap com 27,2% de URLs Non-Indexable</span></div>
+          <div><span class="severity sev-medio">M&eacute;dio</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">Limpar sitemap peri&oacute;dico. Implementar monitoramento mensal de sa&uacute;de do sitemap.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">1 h/m&ecirc;s (SEO)</span></div>
+        </div>
+      </div>
+
+      <div class="risk-box" style="border-left-color:var(--blue);">
+        <h4 style="color:var(--blue);">6 Quick Wins para 48 horas (P0 Imediato)</h4>
+        <ul style="font-size:15px; color:var(--gray-700); line-height:1.8; padding-left:20px;">
+          <li>Remover 41 URLs non-indexable do sitemap</li>
+          <li>Adicionar Organization + Store schema na homepage</li>
+          <li>Renomear 10 t&iacute;tulos cr&iacute;ticos (&lt; 30 chars)</li>
+          <li>Corrigir 2 p&aacute;ginas com erro 4xx</li>
+          <li>Redirect 301 non-www &rarr; www</li>
+          <li>Adicionar Product schema em 10 produtos mais vendidos</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-pillar aio">
+    <div class="card-body">
+      <div class="pillar-header">
+        <div class="pillar-icon aio">AI</div>
+        <div>
+          <div class="pillar-title aio">Produto 2: AI Optimization (AIO)</div>
+          <div class="pillar-subtitle">Extractability &bull; Definition Blocks &bull; Structured Data para LLMs &bull; Conte&uacute;do Cit&aacute;vel</div>
+        </div>
+      </div>
+
+      <p style="margin-bottom:24px;">Score: <strong style="color:var(--red); font-size:22px;">0.2 / 10</strong> &mdash; o site oferece m&iacute;nimas condi&ccedil;&otilde;es para LLMs extra&iacute;rem e citarem seu conte&uacute;do.</p>
+
+      <div class="risk-box" style="border-left-color:var(--red);">
+        <h4>O que &eacute; AIO?</h4>
+        <p>Otimiza&ccedil;&atilde;o para que LLMs (ChatGPT, Gemini, Claude) extraiam, compreendam e citem o conte&uacute;do da marca em respostas generativas. Envolve <strong>structured data como fonte para o grafo de conhecimento</strong>, <strong>definition blocks de 50-80 palavras</strong> no formato preferido por LLMs, e conte&uacute;do em formato de resposta direta (FAQPage, HowTo). Diferente de SEO (que busca o link azul), AIO busca <strong>ser citado dentro da resposta que a IA gera</strong>.</p>
+      </div>
+
+      <h3 style="margin-top:24px;"><span class="badge badge-critico">Cr&iacute;ticos</span> &mdash; Impedem Cita&ccedil;&atilde;o em LLMs</h3>
+
+      <div class="finding aio-finding">
+        <div class="finding-header">
+          <div><span class="finding-title">AG-01. Zero Structured Data em 100% das P&aacute;ginas</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">142/142 p&aacute;ginas HTML sem qualquer JSON-LD. Zero Organization, Product, Store, BreadcrumbList, FAQPage, HowTo ou ItemList schema.</span></div>
+          <div class="full"><span class="field">Impacto AIO:</span> <span class="value">LLMs (ChatGPT, Perplexity) n&atilde;o conseguem extrair dados estruturados para cita&ccedil;&atilde;o. O conhecimento da Lola sobre produtos, pre&ccedil;os e categorias n&atilde;o existe no grafo de conhecimento das IAs.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Organization + Store schema na homepage. (2) Product schema em 78 p&aacute;ginas de produto. (3) BreadcrumbList schema em todas as p&aacute;ginas. (4) FAQPage + HowTo schema em conte&uacute;do futuro.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">8 h (Dev Nuvemshop + SEO)</span></div>
+        </div>
+      </div>
+
+      <div class="finding aio-finding">
+        <div class="finding-header">
+          <div><span class="finding-title">AG-02. Zero Definition Blocks (Conte&uacute;do no Formato Preferido por LLMs)</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Nenhuma p&aacute;gina do site possui blocos de 50-80 palavras que definam o que &eacute; o produto/categoria. LLMs preferem esse formato conciso para cita&ccedil;&atilde;o direta.</span></div>
+          <div class="full"><span class="field">Impacto AIO:</span> <span class="value">Quando uma IA responde "o que &eacute; entretela de mem&oacute;ria?", ela n&atilde;o encontra uma defini&ccedil;&atilde;o pronta, concisa e autoritativa no site da Lola &mdash; cita concorrentes gen&eacute;ricos ou fontes internacionais.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Adicionar definition blocks de 50-80 palavras em 5+ p&aacute;ginas de categoria. (2) Usar linguagem direta, termo principal em negrito, 1-2 fatos objetivos.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">4 h (Copywriter)</span></div>
+        </div>
+      </div>
+
+      <div class="finding aio-finding">
+        <div class="finding-header">
+          <div><span class="finding-title">AG-03. Zero FAQPage / HowTo Schema</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Nenhuma p&aacute;gina com FAQPage schema ou HowTo schema. Esses s&atilde;o os formatos preferidos por Google AI Overviews e ChatGPT para featured snippets de IA.</span></div>
+          <div class="full"><span class="field">Impacto AIO:</span> <span class="value">Perde oportunidades de aparecer em respostas para perguntas frequentes ("como aplicar entretela termocolante?", "qual entretela usar para bordado?").</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) FAQPage schema com 10+ perguntas sobre entretelas. (2) HowTo schema para "Como aplicar entretela termocolante". (3) HowTo schema para "Como usar filme hidrossol&uacute;vel no bordado".</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">10 h (Copywriter + Dev)</span></div>
+        </div>
+      </div>
+
+      <div class="finding aio-finding">
+        <div class="finding-header">
+          <div><span class="finding-title">AG-04. Zero Conte&uacute;do Informacional (Blog, FAQ, Guias, Gloss&aacute;rio)</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">O site n&atilde;o tem nenhuma p&aacute;gina de conte&uacute;do editorial. Apenas p&aacute;ginas de produto e categoria. Zero blog posts, zero FAQ, zero guias, zero gloss&aacute;rio t&eacute;cnico.</span></div>
+          <div class="full"><span class="field">Impacto AIO:</span> <span class="value">Zero autoridade tem&aacute;tica para LLMs referenciarem. Zero captura de demanda informacional ("o que &eacute; entretela de mem&oacute;ria" = 320/m&ecirc;s, "patchwork" = 2.600/m&ecirc;s). LLMs n&atilde;o t&ecirc;m conte&uacute;do da Lola para citar em respostas informacionais.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Produzir 6 guias pilares de 2.000-3.000 palavras cada. (2) Criar 2 gloss&aacute;rios t&eacute;cnicos (entretelas + insumos). (3) Implementar headless blog com 12+ artigos. (4) Adicionar FAQPage + HowTo schema em todo conte&uacute;do novo.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">100 h+ (Copywriter + SEO)</span></div>
+        </div>
+      </div>
+
+      <div class="finding aio-finding">
+        <div class="finding-header">
+          <div><span class="finding-title">AG-05. Zero Dom&iacute;nio de Refer&ecirc;ncia (Backlinks + Cita&ccedil;&otilde;es Externas)</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">LLMs priorizam fontes com credibilidade externalizada (backlinks, cita&ccedil;&otilde;es em sites relevantes). A Lola n&atilde;o tem perfil de backlinks significativo no setor.</span></div>
+          <div class="full"><span class="field">Impacto AIO:</span> <span class="value">Mesmo com conte&uacute;do excelente, LLMs podem pontuar a Lola como fonte de baixa autoridade vs concorrentes mencionados em m&uacute;ltiplas fontes.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Estrat&eacute;gia de backlinks em diret&oacute;rios do setor t&ecirc;xtil. (2) Guest posts em blogs de moda e confec&ccedil;&atilde;o. (3) Google Business Profile otimizado. (4) Presen&ccedil;a ativa em LinkedIn e Instagram t&eacute;cnico.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">24 h (SEO, distribu&iacute;do entre Fases 2 e 3)</span></div>
+        </div>
+      </div>
+
+      <h3>Definition Blocks Propostos</h3>
+      <p style="margin-bottom:18px;">Blocos de 50-80 palavras para adicionar como texto vis&iacute;vel nas p&aacute;ginas de categoria. Formato preferido por LLMs para cita&ccedil;&atilde;o direta.</p>
+
+      <div class="finding" style="border-left-color: var(--gold);">
+        <div class="finding-header">
+          <div><span class="finding-title">Entretela de Mem&oacute;ria</span></div>
+          <div><span class="severity sev-baixo">Prioridade: Imediata</span></div>
+        </div>
+        <p style="font-size:15px; color:var(--gray-700);">Entretela de mem&oacute;ria &eacute; um tipo de entretela termocolante fabricada em n&atilde;o tecido (TNT) com resina termofus&iacute;vel em um dos lados. Tamb&eacute;m conhecida como entretela cavalinho, &eacute; utilizada na fabrica&ccedil;&atilde;o de bon&eacute;s, viseiras e acess&oacute;rios estruturados. Dispon&iacute;vel em 220g a 330g, nas cores branca, cinza e preta.</p>
+      </div>
+
+      <div class="finding" style="border-left-color: var(--gold);">
+        <div class="finding-header">
+          <div><span class="finding-title">Entretela Rasg&aacute;vel</span></div>
+          <div><span class="severity sev-baixo">Prioridade: Imediata</span></div>
+        </div>
+        <p style="font-size:15px; color:var(--gray-700);">Entretela rasg&aacute;vel (ou de rasgo f&aacute;cil) &eacute; um tipo de entretela n&atilde;o tecido descart&aacute;vel utilizada como base para bordado computadorizado. Ap&oacute;s o bordado, &eacute; removida manualmente puxando-a da pe&ccedil;a, sem necessidade de &aacute;gua ou produtos qu&iacute;micos. Gramaturas comuns: 30g, 40g e 50g.</p>
+      </div>
+
+      <div class="finding" style="border-left-color: var(--gold);">
+        <div class="finding-header">
+          <div><span class="finding-title">Entretela Hidrossol&uacute;vel</span></div>
+          <div><span class="severity sev-baixo">Prioridade: Imediata</span></div>
+        </div>
+        <p style="font-size:15px; color:var(--gray-700);">Entretela hidrossol&uacute;vel &eacute; um filme pl&aacute;stico &agrave; base de PVA (&aacute;lcool polivin&iacute;lico) que se dissolve em &aacute;gua. Utilizada como base para bordados onde o tecido n&atilde;o pode ser danificado por remo&ccedil;&atilde;o mec&acirc;nica &mdash; ideal para toalhas, tecidos felpudos e pe&ccedil;as com aviamentos delicados. Dissolu&ccedil;&atilde;o em &aacute;gua a partir de 40&deg;C.</p>
+      </div>
+
+      <div class="finding" style="border-left-color: var(--gold);">
+        <div class="finding-header">
+          <div><span class="finding-title">Insumos para Bon&eacute;s</span></div>
+          <div><span class="severity sev-baixo">Prioridade: Imediata</span></div>
+        </div>
+        <p style="font-size:15px; color:var(--gray-700);">Insumos para bon&eacute;s s&atilde;o todos os componentes necess&aacute;rios para a fabrica&ccedil;&atilde;o de bon&eacute;s personalizados ou prontos. Incluem aba pl&aacute;stica (curva ou reta), regulador pl&aacute;stico (snapback ou proflex), tela de poli&eacute;ster (mesh ou fechada), vi&eacute;s de carneira, tecido suede, bot&atilde;o de forrar e case para bon&eacute;s.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-pillar geo">
+    <div class="card-body">
+      <div class="pillar-header">
+        <div class="pillar-icon geo">G</div>
+        <div>
+          <div class="pillar-title geo">Produto 3: Generative Engine Optimization (GEO)</div>
+          <div class="pillar-subtitle">AI Search Presence &bull; Cita&ccedil;&otilde;es em LLMs &bull; Google AI Overviews &bull; Perplexity &bull; ChatGPT Search</div>
+        </div>
+      </div>
+
+      <p style="margin-bottom:24px;">Presen&ccedil;a em AI Search: <strong style="color:var(--purple); font-size:22px;">0 / 6</strong> &mdash; a Lola &eacute; completamente invis&iacute;vel nos mecanismos de resposta generativa.</p>
+
+      <div class="risk-box" style="border-left-color:var(--purple);">
+        <h4 style="color:var(--purple);">O que &eacute; GEO?</h4>
+        <p>Otimiza&ccedil;&atilde;o da presen&ccedil;a da marca em mecanismos de resposta generativa: <strong>Google AI Overviews, Perplexity, ChatGPT Search, Copilot</strong>. Diferente de SEO (links azuis) e AIO (extractability), GEO busca <strong>ser citado como fonte confi&aacute;vel dentro da resposta gerada pela IA</strong>. &Eacute; um novo canal de descoberta: o usu&aacute;rio pergunta, a IA responde citando sua marca, e o usu&aacute;rio decide clicar ou n&atilde;o. Quem n&atilde;o estiver nos dados de treinamento e nas fontes preferidas dos LLMs, simplesmente n&atilde;o existe nesse novo ecossistema.</p>
+      </div>
+
+      <h3 style="margin-top:24px;"><span class="badge badge-critico">Invisibilidade Total</span> &mdash; Diagn&oacute;stico de Presen&ccedil;a</h3>
+
+      <table>
+        <tr><th>Canal de AI Search</th><th>Presen&ccedil;a da Lola</th><th>Status</th></tr>
+        <tr><td>ChatGPT (GPT-4o / GPT-4.1)</td><td>Zero cita&ccedil;&otilde;es em respostas sobre aviamentos</td><td><span class="status fail">Invis&iacute;vel</span></td></tr>
+        <tr><td>Perplexity</td><td>Zero cita&ccedil;&otilde;es em respostas sobre entretelas</td><td><span class="status fail">Invis&iacute;vel</span></td></tr>
+        <tr><td>Gemini / Google AI Overviews</td><td>Zero apari&ccedil;&otilde;es em AI Overviews</td><td><span class="status fail">Invis&iacute;vel</span></td></tr>
+        <tr><td>Claude (Anthropic)</td><td>Zero cita&ccedil;&otilde;es</td><td><span class="status fail">Invis&iacute;vel</span></td></tr>
+        <tr><td>Microsoft Copilot</td><td>Zero cita&ccedil;&otilde;es</td><td><span class="status fail">Invis&iacute;vel</span></td></tr>
+        <tr><td>Google Business Profile</td><td>N&atilde;o otimizado para cita&ccedil;&atilde;o em AI Search local</td><td><span class="status warn">N&atilde;o otimizado</span></td></tr>
+      </table>
+
+      <h3>Oportunidades de Keywords Informacionais (GEO)</h3>
+      <p style="margin-bottom:18px;">Demandas informacionais n&atilde;o atendidas. Cada uma representa uma oportunidade de ser citado por LLMs.</p>
+      <table>
+        <tr><th>Keyword</th><th>Volume/m&ecirc;s</th><th>Tipo de Conte&uacute;do</th><th>Formato LLM</th></tr>
+        <tr><td>patchwork</td><td>2.600</td><td>Guia / Gloss&aacute;rio</td><td>Definition block</td></tr>
+        <tr><td>entretela para bordado</td><td>2.400</td><td>Guia Pilar</td><td>HowTo + FAQPage</td></tr>
+        <tr><td>aviamentos para confec&ccedil;&atilde;o</td><td>1.100</td><td>Guia Pilar</td><td>Definition block</td></tr>
+        <tr><td>bordado computadorizado</td><td>990</td><td>Guia / Gloss&aacute;rio</td><td>Definition block + HowTo</td></tr>
+        <tr><td>entretela para alfaiataria</td><td>880</td><td>Guia Pilar</td><td>FAQPage</td></tr>
+        <tr><td>entretela cavalinho</td><td>400</td><td>Gloss&aacute;rio</td><td>Definition block</td></tr>
+        <tr><td>como fazer bainha sem costura</td><td>400</td><td>How-To</td><td>HowTo schema</td></tr>
+        <tr><td>o que &eacute; entretela de mem&oacute;ria</td><td>320</td><td>Definition Block</td><td>FAQPage + Definition</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Plano de A&ccedil;&atilde;o Integrado</h2>
+      <p style="margin-bottom:20px;">Os 3 produtos combinados em uma &uacute;nica rota de execu&ccedil;&atilde;o. Cada fase tem seu pilar l&iacute;der, mas o escopo &eacute; integrado: structured data serve SEO e AIO, conte&uacute;do pilar serve SEO e GEO, definition blocks servem AIO e GEO.</p>
+
+      <div class="timeline">
+        <div class="timeline-phase">
+          <div class="dot blue"></div>
+          <div class="phase-bar blue" style="width:30%;"></div>
+          <div class="phase-hours">46 h</div>
+          <div class="phase-name">M&ecirc;s 1</div>
+          <div class="phase-pct">20%</div>
+          <div class="phase-pillar blue">SEO</div>
+        </div>
+        <div class="timeline-phase">
+          <div class="dot red"></div>
+          <div class="phase-bar red" style="width:50%;"></div>
+          <div class="phase-hours">70 h</div>
+          <div class="phase-name">M&ecirc;s 2</div>
+          <div class="phase-pct">30%</div>
+          <div class="phase-pillar red">AIO</div>
+        </div>
+        <div class="timeline-phase">
+          <div class="dot purple"></div>
+          <div class="phase-bar purple" style="width:80%;"></div>
+          <div class="phase-hours">114 h</div>
+          <div class="phase-name">M&ecirc;s 3</div>
+          <div class="phase-pct">50%</div>
+          <div class="phase-pillar purple">GEO</div>
+        </div>
+      </div>
+
+      <div class="timeline-deliverables">
+        <div class="deliv"><strong>SEO T&eacute;cnico</strong>Schemas globais<br>Redirect 301<br>Sitemap limpo<br>Alt text em lote</div>
+        <div class="deliv"><strong>Conte&uacute;do AIO</strong>3 guias pilares<br>FAQPage + HowTo<br>Gloss&aacute;rios t&eacute;cnicos<br>Definition blocks</div>
+        <div class="deliv"><strong>Expans&atilde;o GEO</strong>+3 guias pilares<br>Blog 12+ artigos<br>Backlinks + GBP<br>Redes sociais</div>
+      </div>
+
+      <h3>M&ecirc;s 1 — Funda&ccedil;&atilde;o T&eacute;cnica (SEO) &mdash; 40-50 h</h3>
+      <p style="font-size:14px; color:var(--gray-500); margin-bottom:12px;">Pilar l&iacute;der: <span style="color:var(--blue); font-weight:700;">SEO</span> &bull; Escopo: corrigir impedimentos t&eacute;cnicos que bloqueiam indexa&ccedil;&atilde;o e ranqueamento</p>
+      <table>
+        <tr><th>#</th><th>A&ccedil;&atilde;o</th><th>Horas</th><th>Resp.</th><th>Produto</th></tr>
+        <tr><td>1</td><td>Remover 41 URLs non-indexable do sitemap</td><td>1</td><td>SEO</td><td><span style="color:var(--blue);font-weight:700;">SEO</span></td></tr>
+        <tr><td>2</td><td>Implementar Product schema em 78 p&aacute;ginas de produto</td><td>4</td><td>Dev</td><td><span style="color:var(--blue);font-weight:700;">SEO</span> + <span style="color:var(--red);font-weight:700;">AIO</span></td></tr>
+        <tr><td>3</td><td>Adicionar Organization + Store schema (homepage + empresa)</td><td>1</td><td>Dev</td><td><span style="color:var(--blue);font-weight:700;">SEO</span> + <span style="color:var(--red);font-weight:700;">AIO</span></td></tr>
+        <tr><td>4</td><td>Renomear 10 t&iacute;tulos cr&iacute;ticos (&lt; 30 chars)</td><td>2</td><td>SEO</td><td><span style="color:var(--blue);font-weight:700;">SEO</span></td></tr>
+        <tr><td>5</td><td>Adicionar alt text em 255 imagens</td><td>8</td><td>Copy</td><td><span style="color:var(--blue);font-weight:700;">SEO</span></td></tr>
+        <tr><td>6</td><td>Corrigir 2 p&aacute;ginas com erro 4xx</td><td>1</td><td>Dev</td><td><span style="color:var(--blue);font-weight:700;">SEO</span></td></tr>
+        <tr><td>7</td><td>Escrever descri&ccedil;&otilde;es editoriais para 5 categorias-pilar</td><td>4</td><td>Copy</td><td><span style="color:var(--blue);font-weight:700;">SEO</span> + <span style="color:var(--red);font-weight:700;">AIO</span></td></tr>
+        <tr><td>8</td><td>Corrigir 12 t&iacute;tulos duplicados</td><td>2</td><td>SEO</td><td><span style="color:var(--blue);font-weight:700;">SEO</span></td></tr>
+        <tr><td>9</td><td>Corrigir 45 meta descriptions duplicadas</td><td>6</td><td>Copy</td><td><span style="color:var(--blue);font-weight:700;">SEO</span></td></tr>
+        <tr><td>10</td><td>Adicionar BreadcrumbList schema em todas as p&aacute;ginas</td><td>2</td><td>Dev</td><td><span style="color:var(--blue);font-weight:700;">SEO</span> + <span style="color:var(--red);font-weight:700;">AIO</span></td></tr>
+        <tr><td>11</td><td>Implementar redirect 301 non-www &rarr; www</td><td>1</td><td>Dev</td><td><span style="color:var(--blue);font-weight:700;">SEO</span></td></tr>
+        <tr><td>12</td><td>Corrigir headings H1/H2 (109 p&aacute;ginas non-sequential)</td><td>6</td><td>Dev</td><td><span style="color:var(--blue);font-weight:700;">SEO</span></td></tr>
+        <tr><td>13</td><td>Definition blocks em 5+ p&aacute;ginas de categoria</td><td>4</td><td>Copy</td><td><span style="color:var(--red);font-weight:700;">AIO</span> + <span style="color:var(--purple);font-weight:700;">GEO</span></td></tr>
+        <tr><td>14</td><td>FAQPage schema (template base)</td><td>2</td><td>Copy</td><td><span style="color:var(--red);font-weight:700;">AIO</span> + <span style="color:var(--purple);font-weight:700;">GEO</span></td></tr>
+      </table>
+
+      <h3>M&ecirc;s 2 — Extractability &amp; Conte&uacute;do Cit&aacute;vel (AIO) &mdash; 50-65 h</h3>
+      <p style="font-size:14px; color:var(--gray-500); margin-bottom:12px;">Pilar l&iacute;der: <span style="color:var(--red); font-weight:700;">AIO</span> &bull; Escopo: criar conte&uacute;do cit&aacute;vel por LLMs e estruturar extractability</p>
+      <table>
+        <tr><th>#</th><th>A&ccedil;&atilde;o</th><th>Horas</th><th>Resp.</th><th>Produto</th></tr>
+        <tr><td>15</td><td>Criar p&aacute;gina "Empresa" com conte&uacute;do completo (200-300 palavras)</td><td>3</td><td>Copy</td><td><span style="color:var(--blue);font-weight:700;">SEO</span> + <span style="color:var(--red);font-weight:700;">AIO</span></td></tr>
+        <tr><td>16</td><td>Guia Pilar: "Tipos de Entretela para Bordado" (2.500+ palavras)</td><td>12</td><td>Copy</td><td><span style="color:var(--red);font-weight:700;">AIO</span> + <span style="color:var(--purple);font-weight:700;">GEO</span></td></tr>
+        <tr><td>17</td><td>Guia Pilar: "Entretela de Mem&oacute;ria: Guia Completo" (2.000+)</td><td>10</td><td>Copy</td><td><span style="color:var(--red);font-weight:700;">AIO</span> + <span style="color:var(--purple);font-weight:700;">GEO</span></td></tr>
+        <tr><td>18</td><td>Guia Pilar: "Insumos para Bon&eacute;s: Guia Completo" (3.000+)</td><td>14</td><td>Copy</td><td><span style="color:var(--red);font-weight:700;">AIO</span> + <span style="color:var(--purple);font-weight:700;">GEO</span></td></tr>
+        <tr><td>19</td><td>FAQ Page: 10 perguntas sobre entretelas (FAQPage schema)</td><td>4</td><td>Copy</td><td><span style="color:var(--red);font-weight:700;">AIO</span> + <span style="color:var(--purple);font-weight:700;">GEO</span></td></tr>
+        <tr><td>20</td><td>How-To: "Como aplicar entretela termocolante" (HowTo schema)</td><td>3</td><td>Copy</td><td><span style="color:var(--red);font-weight:700;">AIO</span> + <span style="color:var(--purple);font-weight:700;">GEO</span></td></tr>
+        <tr><td>21</td><td>How-To: "Como usar filme hidrossol&uacute;vel no bordado"</td><td>3</td><td>Copy</td><td><span style="color:var(--red);font-weight:700;">AIO</span> + <span style="color:var(--purple);font-weight:700;">GEO</span></td></tr>
+        <tr><td>22</td><td>Gloss&aacute;rio de Entretelas (20+ termos t&eacute;cnicos)</td><td>6</td><td>Copy</td><td><span style="color:var(--red);font-weight:700;">AIO</span> + <span style="color:var(--purple);font-weight:700;">GEO</span></td></tr>
+        <tr><td>23</td><td>Gloss&aacute;rio de Insumos para Bon&eacute;s (15+ termos)</td><td>4</td><td>Copy</td><td><span style="color:var(--red);font-weight:700;">AIO</span> + <span style="color:var(--purple);font-weight:700;">GEO</span></td></tr>
+        <tr><td>24</td><td>Adicionar width/height em 129 imagens sem size attributes</td><td>4</td><td>Dev</td><td><span style="color:var(--blue);font-weight:700;">SEO</span></td></tr>
+        <tr><td>25</td><td>Otimizar 48 imagens &gt; 100 KB</td><td>3</td><td>Dev</td><td><span style="color:var(--blue);font-weight:700;">SEO</span></td></tr>
+      </table>
+
+      <h3>M&ecirc;s 3 — Expans&atilde;o de Autoridade &amp; AI Search (GEO) &mdash; 60-80 h</h3>
+      <p style="font-size:14px; color:var(--gray-500); margin-bottom:12px;">Pilar l&iacute;der: <span style="color:var(--purple); font-weight:700;">GEO</span> &bull; Escopo: construir dom&iacute;nio de refer&ecirc;ncia para cita&ccedil;&atilde;o em mecanismos generativos</p>
+      <table>
+        <tr><th>#</th><th>A&ccedil;&atilde;o</th><th>Horas</th><th>Resp.</th><th>Produto</th></tr>
+        <tr><td>26</td><td>Headless blog operacional com 12+ artigos (1/semana)</td><td>60</td><td>Copy</td><td><span style="color:var(--red);font-weight:700;">AIO</span> + <span style="color:var(--purple);font-weight:700;">GEO</span> + <span style="color:var(--blue);font-weight:700;">SEO</span></td></tr>
+        <tr><td>27</td><td>Estrat&eacute;gia de backlinks (diret&oacute;rios, guest posts, parcerias)</td><td>20</td><td>SEO</td><td><span style="color:var(--blue);font-weight:700;">SEO</span> + <span style="color:var(--purple);font-weight:700;">GEO</span></td></tr>
+        <tr><td>28</td><td>Google Business Profile otimizado</td><td>2</td><td>SEO</td><td><span style="color:var(--blue);font-weight:700;">SEO</span> + <span style="color:var(--purple);font-weight:700;">GEO</span></td></tr>
+        <tr><td>29</td><td>LinkedIn da Lola ativo (conte&uacute;do t&eacute;cnico)</td><td>4/m&ecirc;s</td><td>Copy</td><td><span style="color:var(--purple);font-weight:700;">GEO</span></td></tr>
+        <tr><td>30</td><td>Instagram com conte&uacute;do educativo</td><td>4/m&ecirc;s</td><td>Copy</td><td><span style="color:var(--purple);font-weight:700;">GEO</span></td></tr>
+        <tr><td>31</td><td>Guia Pilar 4: "Rasg&aacute;vel vs Hidrossol&uacute;vel" (1.500+)</td><td>8</td><td>Copy</td><td><span style="color:var(--red);font-weight:700;">AIO</span> + <span style="color:var(--purple);font-weight:700;">GEO</span></td></tr>
+        <tr><td>32</td><td>Guia Pilar 5: "Entretela para Alfaiataria" (2.000+)</td><td>10</td><td>Copy</td><td><span style="color:var(--red);font-weight:700;">AIO</span> + <span style="color:var(--purple);font-weight:700;">GEO</span></td></tr>
+        <tr><td>33</td><td>Guia Pilar 6: "Como Montar uma F&aacute;brica de Bon&eacute;s" (2.500+)</td><td>12</td><td>Copy</td><td><span style="color:var(--red);font-weight:700;">AIO</span> + <span style="color:var(--purple);font-weight:700;">GEO</span></td></tr>
+        <tr><td>34</td><td>Ferramenta: Calculadora de Gramatura de Entretela</td><td>8</td><td>Dev</td><td><span style="color:var(--blue);font-weight:700;">SEO</span> + <span style="color:var(--purple);font-weight:700;">GEO</span></td></tr>
+        <tr><td>35</td><td>Avalia&ccedil;&atilde;o de performance (90 dias)</td><td>2</td><td>SEO</td><td>Todos</td></tr>
+      </table>
+
+      <div style="margin-top:24px; background:linear-gradient(135deg, #fcfaf7, #f8f7f4); border-radius:10px; padding:18px 22px; border:1px solid var(--gold-border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+        <div>
+          <div style="font-size:12px; color:var(--gray-500); font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Esfor&ccedil;o Total Consolidado</div>
+          <div style="font-size:28px; font-weight:700; color:var(--red); letter-spacing:-0.5px;">~230 h</div>
+          <div style="font-size:13px; color:var(--gray-600);">46 h SEO + 70 h AIO + 114 h GEO</div>
+        </div>
+        <div style="display:flex; gap:16px; text-align:center;">
+          <div><div style="font-size:12px; color:var(--blue); font-weight:700; text-transform:uppercase;">SEO</div><div style="font-size:20px; font-weight:700; color:var(--blue);">46 h</div><div style="font-size:11px; color:var(--gray-500);">20%</div></div>
+          <div><div style="font-size:12px; color:var(--red); font-weight:700; text-transform:uppercase;">AIO</div><div style="font-size:20px; font-weight:700; color:var(--red);">70 h</div><div style="font-size:11px; color:var(--gray-500);">30%</div></div>
+          <div><div style="font-size:12px; color:var(--purple); font-weight:700; text-transform:uppercase;">GEO</div><div style="font-size:20px; font-weight:700; color:var(--purple);">114 h</div><div style="font-size:11px; color:var(--gray-500);">50%</div></div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:12px; color:var(--gray-500); font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Proje&ccedil;&atilde;o Combinada</div>
+          <div style="font-size:16px; font-weight:700; color:var(--gold);">+15% a +30% tr&aacute;fego &bull; 5-15+ cita&ccedil;&otilde;es LLMs</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Resumo de Esfor&ccedil;o por Produto</h2>
+      <table class="effort-table">
+        <tr><th>Produto</th><th>M&ecirc;s 1</th><th>M&ecirc;s 2</th><th>M&ecirc;s 3</th><th>Total</th></tr>
+        <tr><td><strong style="color:var(--blue);">SEO T&eacute;cnico</strong></td><td>32 h</td><td>7 h</td><td>7 h</td><td><strong>46 h</strong></td></tr>
+        <tr><td><strong style="color:var(--red);">AIO (AI Optimization)</strong></td><td>6 h</td><td>59 h</td><td>30 h</td><td><strong>95 h</strong></td></tr>
+        <tr><td><strong style="color:var(--purple);">GEO (Generative Engine Opt.)</strong></td><td>6 h</td><td>59 h</td><td>89 h</td><td><strong>154 h</strong></td></tr>
+        <tr><td><strong>Total (deduplicado)</strong></td><td><strong>44 h</strong></td><td><strong>66 h</strong></td><td><strong>120 h</strong></td><td><strong>~230 h</strong></td></tr>
+      </table>
+      <p style="font-size:13px; color:var(--gray-500); margin-top:12px;">* A IO (AIO+GEO) compartilha ~64 h de esfor&ccedil;o (guias pilares, gloss&aacute;rios, blog, definition blocks). O total deduplicado considera a execu&ccedil;&atilde;o integrada.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Proje&ccedil;&atilde;o de Impacto — 90 Dias</h2>
+      <table>
+        <tr><th>Produto</th><th>M&eacute;trica</th><th>Atual</th><th>Conservador</th><th>Otimista</th></tr>
+        <tr><td><strong style="color:var(--blue);">SEO</strong></td><td>Tr&aacute;fego org&acirc;nico</td><td>Base</td><td>+15%</td><td>+30%</td></tr>
+        <tr><td><strong style="color:var(--blue);">SEO</strong></td><td>P&aacute;ginas indexadas</td><td>112</td><td>130+</td><td>150+</td></tr>
+        <tr><td><strong style="color:var(--blue);">SEO</strong></td><td>CTR m&eacute;dio no SERP</td><td>Baixo</td><td>+10%</td><td>+20%</td></tr>
+        <tr><td><strong style="color:var(--blue);">SEO</strong></td><td>Rich snippets implementados</td><td>0</td><td>80+</td><td>142</td></tr>
+        <tr><td><strong style="color:var(--red);">AIO</strong></td><td>P&aacute;ginas com structured data</td><td>0%</td><td>100%</td><td>100%</td></tr>
+        <tr><td><strong style="color:var(--red);">AIO</strong></td><td>Definition blocks publicados</td><td>0</td><td>10+</td><td>25+</td></tr>
+        <tr><td><strong style="color:var(--red);">AIO</strong></td><td>FAQPage + HowTo schema</td><td>0</td><td>5+</td><td>11+</td></tr>
+        <tr><td><strong style="color:var(--red);">AIO</strong></td><td>Guias pilares AIO</td><td>0</td><td>3</td><td>6</td></tr>
+        <tr><td><strong style="color:var(--purple);">GEO</strong></td><td>AI Citation Count</td><td>0</td><td>5+</td><td>15+</td></tr>
+        <tr><td><strong style="color:var(--purple);">GEO</strong></td><td>Featured snippets em AI Overviews</td><td>0</td><td>3+</td><td>10+</td></tr>
+        <tr><td><strong style="color:var(--purple);">GEO</strong></td><td>Dom&iacute;nio de refer&ecirc;ncia (DR)</td><td>Baixo</td><td>+3 a +5</td><td>+8 a +12</td></tr>
+        <tr><td><strong style="color:var(--purple);">GEO</strong></td><td>Tr&aacute;fego informacional incremental</td><td>0</td><td>+5% a +10%</td><td>+15% a +25%</td></tr>
+      </table>
+
+      <h3>Fatores de Acelera&ccedil;&atilde;o</h3>
+      <ul style="font-size:15px; color:var(--gray-700); line-height:1.8; padding-left:20px;">
+        <li>Setor de aviamentos tem <strong>baix&iacute;ssima maturidade SEO + AIO + GEO</strong> no Brasil. Primeiro a estruturar domina.</li>
+        <li>Product schema pode gerar ganho imediato de CTR de <strong>20-40%</strong> nas p&aacute;ginas de produto.</li>
+        <li>Definition blocks + FAQPage schema geram cita&ccedil;&atilde;o imediata em respostas de IA para perguntas frequentes.</li>
+        <li>Corrigir 35 t&iacute;tulos gen&eacute;ricos pode gerar <strong>+10% a +15%</strong> de tr&aacute;fego apenas com este ajuste.</li>
+        <li>Alt text em 255 imagens abre canal de tr&aacute;fego zero de <strong>Google Imagens</strong>.</li>
+        <li>Conte&uacute;do pilar de 2.000+ palavras em formato de guia completo &eacute; o formato mais citado por LLMs.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>KPIs para Acompanhamento Mensal</h2>
+      <table>
+        <tr><th>Produto</th><th>KPI</th><th>Atual</th><th>M&ecirc;s 1</th><th>M&ecirc;s 2</th><th>M&ecirc;s 3</th></tr>
+        <tr><td><span style="color:var(--blue);font-weight:700;">SEO</span></td><td>P&aacute;ginas com structured data</td><td>0%</td><td>60%</td><td>100%</td><td>100%</td></tr>
+        <tr><td><span style="color:var(--blue);font-weight:700;">SEO</span></td><td>URLs non-indexable no sitemap</td><td>27,2%</td><td>0%</td><td>0%</td><td>0%</td></tr>
+        <tr><td><span style="color:var(--blue);font-weight:700;">SEO</span></td><td>Imagens com alt text</td><td>0%</td><td>50%</td><td>100%</td><td>100%</td></tr>
+        <tr><td><span style="color:var(--blue);font-weight:700;">SEO</span></td><td>T&iacute;tulos &lt; 30 chars</td><td>24,6%</td><td>&lt; 10%</td><td>&lt; 5%</td><td>&lt; 5%</td></tr>
+        <tr><td><span style="color:var(--blue);font-weight:700;">SEO</span></td><td>Meta descriptions duplicadas</td><td>31,7%</td><td>&lt; 15%</td><td>0%</td><td>0%</td></tr>
+        <tr><td><span style="color:var(--red);font-weight:700;">AIO</span></td><td>P&aacute;ginas com definition blocks</td><td>0</td><td>5</td><td>10</td><td>20+</td></tr>
+        <tr><td><span style="color:var(--red);font-weight:700;">AIO</span></td><td>P&aacute;ginas com FAQPage schema</td><td>0</td><td>0</td><td>3</td><td>5+</td></tr>
+        <tr><td><span style="color:var(--red);font-weight:700;">AIO</span></td><td>P&aacute;ginas com HowTo schema</td><td>0</td><td>0</td><td>2</td><td>6+</td></tr>
+        <tr><td><span style="color:var(--red);font-weight:700;">AIO</span></td><td>Guias pilares AIO publicados</td><td>0</td><td>0</td><td>3</td><td>6</td></tr>
+        <tr><td><span style="color:var(--red);font-weight:700;">AIO</span></td><td>Gloss&aacute;rios t&eacute;cnicos publicados</td><td>0</td><td>0</td><td>2</td><td>3+</td></tr>
+        <tr><td><span style="color:var(--purple);font-weight:700;">GEO</span></td><td>AI Citation Count</td><td>0</td><td>0</td><td>3+</td><td>10+</td></tr>
+        <tr><td><span style="color:var(--purple);font-weight:700;">GEO</span></td><td>Google Business Profile otimizado</td><td>N&atilde;o</td><td>N&atilde;o</td><td>N&atilde;o</td><td>Sim</td></tr>
+        <tr><td><span style="color:var(--purple);font-weight:700;">GEO</span></td><td>Conte&uacute;do editorial (guias + blog)</td><td>0</td><td>0</td><td>3+</td><td>15+</td></tr>
+        <tr><td>Todos</td><td>Artigos de blog publicados</td><td>0</td><td>0</td><td>0</td><td>12+</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Riscos e Mitiga&ccedil;&otilde;es</h2>
+      <table>
+        <tr><th>Risco</th><th>Prob.</th><th>Impacto</th><th>Mitiga&ccedil;&atilde;o</th></tr>
+        <tr><td>Depend&ecirc;ncia do dev Nuvemshop</td><td>Alta</td><td>Alto</td><td>Briefings claros. Schema via GTM como fallback. Definition blocks s&atilde;o texto puro, sem depend&ecirc;ncia.</td></tr>
+        <tr><td>Nuvemshop limitar customiza&ccedil;&atilde;o de schema</td><td>M&eacute;dia</td><td>Alto</td><td>Usar GTM para inject JSON-LD. Se necess&aacute;rio, plugin pago.</td></tr>
+        <tr><td>Google n&atilde;o revisitar rapidamente</td><td>M&eacute;dia</td><td>M&eacute;dio</td><td>Sitemap + Solicitar Indexa&ccedil;&atilde;o + novo conte&uacute;do frequente.</td></tr>
+        <tr><td>Concorrentes ocuparem AI Search primeiro</td><td>M&eacute;dia</td><td>M&eacute;dio</td><td>Agir r&aacute;pido. Mercado tem baixa maturidade &mdash; primeiro a publicar domina cita&ccedil;&otilde;es em LLMs.</td></tr>
+        <tr><td>LLMs mudarem crit&eacute;rios de cita&ccedil;&atilde;o</td><td>M&eacute;dia</td><td>M&eacute;dio</td><td>Manter conte&uacute;do fresco e diversificado. N&atilde;o depender de um &uacute;nico formato.</td></tr>
+        <tr><td>Volume de alt text (255 imagens)</td><td>M&eacute;dia</td><td>M&eacute;dio</td><td>Automatizar com template + revis&atilde;o humana. Priorizar imagens de produto.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Gloss&aacute;rio de Severidade</h2>
+      <div class="glossary-row"><span class="badge badge-critico">Cr&iacute;tico</span> <span>Impede indexa&ccedil;&atilde;o, ranqueamento ou cita&ccedil;&atilde;o em LLMs. Impacto direto em receita.</span></div>
+      <div class="glossary-row"><span class="badge badge-alto">Alto</span> <span>Impacta CTR, experi&ecirc;ncia do usu&aacute;rio, extractability ou autoridade.</span></div>
+      <div class="glossary-row"><span class="badge badge-medio">M&eacute;dio</span> <span>Oportunidade de melhoria com impacto moderado.</span></div>
+      <div class="glossary-row"><span class="badge badge-baixo">Baixo</span> <span>Ajuste de polimento. Baixo impacto individual.</span></div>
+      <div class="glossary-row"><span class="badge badge-info">Info</span> <span>Observa&ccedil;&atilde;o ou boa pr&aacute;tica. Nenhuma a&ccedil;&atilde;o requerida.</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Sobre Esta Auditoria</h2>
+      <table>
+        <tr><th>Ferramenta</th><th>Screaming Frog SEO Spider v20.x</th></tr>
+        <tr><th>Data do crawl</th><th>Julho 2026</th></tr>
+        <tr><th>Produtos inclu&iacute;dos</th><th><span style="color:var(--blue);font-weight:700;">SEO T&eacute;cnico</span> · <span style="color:var(--red);font-weight:700;">AI Optimization (AIO)</span> · <span style="color:var(--purple);font-weight:700;">Generative Engine Optimization (GEO)</span></th></tr>
+        <tr><th>Fontes de dados</th><th>153 URLs HTML rastreadas + 36 CSVs de crawl + an&aacute;lise de conte&uacute;do + pesquisa de keywords + avalia&ccedil;&atilde;o manual de AIO/GEO (ChatGPT, Perplexity, Gemini, Claude, Copilot, Google AI Overviews)</th></tr>
+        <tr><th>Escopo</th><th>Auditoria completa: SEO t&eacute;cnico, on-page, structured data, extractability (AIO) e presen&ccedil;a em AI Search (GEO)</th></tr>
+        <tr><th>Metodologia</th><th>V4 Company &mdash; Padr&atilde;o BuiltVisible / Moz / Searchmetrics + frameworks pr&oacute;prios de AI Search</th></tr>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div style="display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:8px;">
+    <img src="../assets/logo-v4-white.png" alt="V4 Company" style="height:24px; width:auto; opacity:0.7;">
+    <span style="color:var(--gray-500); font-size:14px; opacity:0.5;">+</span>
+    <img src="../assets/logo-lola.webp" alt="Lola Aviamentos" style="height:28px; width:auto; opacity:0.8;">
+  </div>
+  <p>Auditoria Completa &bull; SEO + AIO + GEO &bull; V4 Company &bull; peretto.co</p>
+  <p style="margin-top:4px;">Confidencial &mdash; preparada para Lola Aviamentos em Julho de 2026</p>
+  <p style="margin-top:4px;">slug: lola-seo-audit &bull; v3.0 &bull; 3 produtos em 1 relat&oacute;rio</p>
+</div>
+
+</body>
+</html>

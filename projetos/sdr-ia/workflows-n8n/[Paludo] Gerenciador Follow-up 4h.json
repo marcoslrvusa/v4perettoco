@@ -1,0 +1,376 @@
+{
+  "name": "[PALUDO] Gerenciador Follow-up 4h",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 5
+            }
+          ]
+        }
+      },
+      "id": "node-schedule",
+      "name": "Schedule Trigger (5min)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -2416,
+        1424
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "paludo_leads",
+        "returnAll": true,
+        "filterType": "none"
+      },
+      "id": "node-get-leads",
+      "name": "Buscar Todos Leads",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -1984,
+        1216
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "filter-timestamp",
+              "leftValue": "={{ $json.last_interaction_at }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "node-filter-timestamp",
+      "name": "Filtrar com Timestamp",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        -1856,
+        1408
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "filter-4h",
+              "leftValue": "={{ $json.last_interaction_at }}",
+              "rightValue": "={{ $now.minus(4, 'hours').toISO() }}",
+              "operator": {
+                "type": "dateTime",
+                "operation": "before"
+              }
+            },
+            {
+              "id": "filter-nao-enviado",
+              "leftValue": "={{ $json.followup_enviado }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "notTrue"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "node-filter-4h",
+      "name": "Filtrar >4h sem followup",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        -1696,
+        1248
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "assign-followup",
+              "name": "followup",
+              "value": "true",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-set-followup",
+      "name": "Set Followup Flag",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1520,
+        1232
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=<instrucao>\nGere uma mensagem de follow-up curta e profissional para um lead da Paludo & Paschoal Advogados.\n\nContexto:\n- O lead demonstrou interesse em solucoes de direito tributario mas parou de responder\n- Nome: {{ $json.nomeCliente }}\n- Empresa boutique juridica especializada em tributario, +14 anos de mercado\n- Tom formal e profissional\n- Objetivo: Reengajar o lead sem ser insistente\n\nMensagem deve:\n- Ser curta (max 200 caracteres)\n- Lembrar do contato anterior de forma sutil\n- Oferecer um novo gancho de valor\n- Nao mencionar precos\n</instrucao>",
+        "options": {}
+      },
+      "id": "node-ai-followup",
+      "name": "AI Follow-up",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        -1328,
+        1232
+      ]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {
+          "temperature": 0.5
+        }
+      },
+      "id": "node-modelo-followup",
+      "name": "GPT-4o-mini Follow-up",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -1152,
+        1408
+      ]
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.sessionID }}",
+        "contextWindowLength": 5
+      },
+      "id": "node-memory-followup",
+      "name": "Redis Memory Follow-up",
+      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+      "typeVersion": 1.4,
+      "position": [
+        -992,
+        1408
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('camposIniciais').item.json.whatsapp.evo.server_url }}/message/sendText/{{ $('camposIniciais').item.json.whatsapp.evo.nomeInstancia }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $('camposIniciais').item.json.whatsapp.evo.apikey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $json.telefoneCliente }}"
+            },
+            {
+              "name": "text",
+              "value": "={{ $json.output }}"
+            },
+            {
+              "name": "delay",
+              "value": 2000
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-send-followup",
+      "name": "Enviar Follow-up WhatsApp",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1152,
+        1232
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "paludo_leads",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "telefoneCliente",
+              "condition": "eq",
+              "keyValue": "={{ $json.telefoneCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "followup_enviado",
+              "fieldValue": "true"
+            },
+            {
+              "fieldId": "followup_enviado_at",
+              "fieldValue": "={{ $now.toISO() }}"
+            }
+          ]
+        }
+      },
+      "id": "node-update-followup",
+      "name": "Marcar Follow-up Enviado",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -960,
+        1232
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### Follow-up Autom\u00e1tico 4h\n\nVerifica a cada 5min leads sem intera\u00e7\u00e3o h\u00e1 mais de 4h e envia mensagem de reengajamento.",
+        "height": 680,
+        "width": 1882,
+        "color": 7
+      },
+      "id": "node-sticky-followup",
+      "name": "Sticky Note - Follow-up",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -2448,
+        1136
+      ]
+    }
+  ],
+  "connections": {
+    "Schedule Trigger (5min)": {
+      "main": [
+        [
+          {
+            "node": "Buscar Todos Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar Todos Leads": {
+      "main": [
+        [
+          {
+            "node": "Filtrar com Timestamp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtrar com Timestamp": {
+      "main": [
+        [
+          {
+            "node": "Filtrar >4h sem followup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtrar >4h sem followup": {
+      "main": [
+        [
+          {
+            "node": "Set Followup Flag",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Followup Flag": {
+      "main": [
+        [
+          {
+            "node": "AI Follow-up",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GPT-4o-mini Follow-up": {
+      "main": [
+        [
+          {
+            "node": "AI Follow-up",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis Memory Follow-up": {
+      "main": [
+        [
+          {
+            "node": "AI Follow-up",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Follow-up": {
+      "main": [
+        [
+          {
+            "node": "Enviar Follow-up WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar Follow-up WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Marcar Follow-up Enviado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

@@ -1,0 +1,1283 @@
+{
+  "name": "[PALUDO] SDR IA - Matheus",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {}
+      },
+      "id": "trigger-whatsapp",
+      "name": "WhatsApp Trigger",
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [
+        -5984,
+        976
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "campo-telefone",
+              "name": "meta.telefoneCliente",
+              "value": "={{ $json.contacts[0].wa_id }}",
+              "type": "string"
+            },
+            {
+              "id": "campo-nome",
+              "name": "meta.nomeCliente",
+              "value": "={{ $json.contacts[0].profile.name }}",
+              "type": "string"
+            },
+            {
+              "id": "campo-mensagem",
+              "name": "content.mensagem",
+              "value": "={{ $json.messages?.[0]?.type === 'text' ? ($json.messages?.[0]?.text?.body || '') : $json.messages?.[0]?.type === 'image' ? ($json.messages?.[0]?.image?.caption || '[IMAGEM]') : $json.messages?.[0]?.type === 'document' ? ($json.messages?.[0]?.document?.caption || '[DOCUMENTO]') : $json.messages?.[0]?.type === 'audio' ? '[AUDIO]' : '[MIDIA]' }}",
+              "type": "string"
+            },
+            {
+              "id": "campo-tipo",
+              "name": "content.tipoMensagem",
+              "value": "={{ $json.messages[0].type === 'text' ? 'conversation' : $json.messages[0].type === 'audio' ? 'audioMessage' : $json.messages[0].type === 'image' ? 'imageMessage' : $json.messages[0].type === 'document' ? 'documentMessage' : $json.messages[0].type }}",
+              "type": "string"
+            },
+            {
+              "id": "campo-id-msg",
+              "name": "content.idMensagem",
+              "value": "={{ $json.messages[0].id }}",
+              "type": "string"
+            },
+            {
+              "id": "campo-empresa",
+              "name": "empresa.nomeEmpresa",
+              "value": "PPALaw",
+              "type": "string"
+            },
+            {
+              "id": "campo-debounce",
+              "name": "app.debouncerTime",
+              "value": "3",
+              "type": "string"
+            },
+            {
+              "id": "campo-digitando",
+              "name": "app.Digitando",
+              "value": 2000,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-campos-iniciais",
+      "name": "camposIniciais",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -5456,
+        976
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "conditions": [
+                  {
+                    "id": "switch-audio",
+                    "leftValue": "={{ $('camposIniciais').item.json.content.tipoMensagem }}",
+                    "rightValue": "audioMessage",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "audioMessage"
+            },
+            {
+              "conditions": {
+                "conditions": [
+                  {
+                    "id": "switch-text",
+                    "leftValue": "={{ $('camposIniciais').item.json.content.tipoMensagem }}",
+                    "rightValue": "conversation",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "conversation"
+            },
+            {
+              "conditions": {
+                "conditions": [
+                  {
+                    "id": "switch-image",
+                    "leftValue": "={{ $('camposIniciais').item.json.content.tipoMensagem }}",
+                    "rightValue": "imageMessage",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "imageMessage"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "id": "node-switch-tipo",
+      "name": "Switch Tipo Mensagem",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [
+        -3600,
+        1072
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "node-noop-audio",
+      "name": "Processa Audio",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -3312,
+        896
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "node-noop-imagem",
+      "name": "Processa Imagem",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -3312,
+        1040
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "id": "node-merge-inicial",
+      "name": "Unifica Dados Iniciais",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        -4864,
+        1120
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "paludo_leads",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "telefoneCliente",
+              "keyValue": "={{ $('camposIniciais').item.json.meta.telefoneCliente }}"
+            }
+          ]
+        }
+      },
+      "id": "node-get-lead",
+      "name": "Buscar Lead no Supabase",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -4672,
+        1120
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "if-lead-existe",
+              "leftValue": "={{ $('Buscar Lead no Supabase').item.json.telefoneCliente }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "node-if-lead-existe",
+      "name": "Lead Existe?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -4512,
+        1120
+      ]
+    },
+    {
+      "parameters": {
+        "action": "generate"
+      },
+      "id": "node-gera-uuid",
+      "name": "Gerar UUID",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        -4368,
+        1296
+      ]
+    },
+    {
+      "parameters": {
+        "tableId": "paludo_leads",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "nomeCliente",
+              "fieldValue": "={{ $('camposIniciais').item.json.meta.nomeCliente }}"
+            },
+            {
+              "fieldId": "telefoneCliente",
+              "fieldValue": "={{ $('camposIniciais').item.json.meta.telefoneCliente }}"
+            },
+            {
+              "fieldId": "idMensagem",
+              "fieldValue": "={{ $('camposIniciais').item.json.content.idMensagem }}"
+            },
+            {
+              "fieldId": "sessionID",
+              "fieldValue": "={{ $json.data }}"
+            }
+          ]
+        }
+      },
+      "id": "node-create-lead",
+      "name": "Criar Lead no Supabase",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -4240,
+        1296
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "push",
+        "list": "={{ $('camposIniciais').item.json.meta.telefoneCliente.toString() }}",
+        "messageData": "={{ JSON.stringify({ 'message': $json.texto, 'timestamp': $now, 'message_id': $('camposIniciais').item.json.content.idMensagem }) }}",
+        "tail": true
+      },
+      "id": "node-empilha-texto",
+      "name": "Empilha Mensagem (Redis)",
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        -2144,
+        1104
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "message",
+        "key": "={{ $('camposIniciais').item.json.meta.telefoneCliente.toString() }}",
+        "options": {}
+      },
+      "id": "node-obtem-redis",
+      "name": "Obtem Buffer (Redis)",
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        -1952,
+        1104
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "conditions": [
+                  {
+                    "id": "switch-msg-exists",
+                    "leftValue": "={{ $json.message.length > 0 ? JSON.parse($json.message[$json.message.length - 1]).message_id : '' }}",
+                    "rightValue": "={{ $('camposIniciais').item.json.content.idMensagem }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  },
+                  {
+                    "id": "switch-tempo",
+                    "leftValue": "={{ DateTime.fromISO(JSON.parse($json.message.last()).timestamp) }}",
+                    "rightValue": "={{ $now.minus($('camposIniciais').item.json.app.debouncerTime, 'seconds') }}",
+                    "operator": {
+                      "type": "dateTime",
+                      "operation": "before"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "proceder"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "id": "node-switch-debounce",
+      "name": "Debounce Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -1744,
+        1104
+      ]
+    },
+    {
+      "parameters": {
+        "amount": "={{ $('camposIniciais').item.json.app.debouncerTime }}"
+      },
+      "id": "node-wait",
+      "name": "Wait Debounce",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1584,
+        1216
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "={{ $('camposIniciais').item.json.meta.telefoneCliente.toString() }}"
+      },
+      "id": "node-deleta-redis",
+      "name": "Deleta Buffer (Redis)",
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        -1440,
+        1104
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "assign-messages",
+              "name": "=messages",
+              "value": "={{ $json.message.map(buffer => JSON.parse(buffer).message).join('\\n') }}",
+              "type": "string"
+            },
+            {
+              "id": "assign-session",
+              "name": "=sessionId",
+              "value": "={{ $('camposIniciais').item.json.sessionID }}",
+              "type": "string"
+            },
+            {
+              "id": "assign-followup",
+              "name": "Followup",
+              "value": "False",
+              "type": "string"
+            },
+            {
+              "id": "assign-nome",
+              "name": "nomeCliente",
+              "value": "={{ $('camposIniciais').item.json.meta.nomeCliente }}",
+              "type": "string"
+            },
+            {
+              "id": "assign-telefone",
+              "name": "telefoneCliente",
+              "value": "={{ $('camposIniciais').item.json.meta.telefoneCliente }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-messages",
+      "name": "Messages Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1200,
+        1056
+      ]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o",
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "id": "node-modelo-gpt",
+      "name": "GPT-4o Matheus",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        1232
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Messages Set').first().json.messages }}",
+        "options": {
+          "systemMessage": "={{ $('Prompts SDR').first().json.systemMessageAgente }}"
+        }
+      },
+      "id": "node-agente-mattheus",
+      "name": "Matheus - SDR IA",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        -400,
+        1056
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "assign-system-msg",
+              "name": "systemMessageAgente",
+              "value": "=Carregue as instrucoes do arquivo prompt-sdr-mattheus.txt",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "node-prompts",
+      "name": "Prompts SDR",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -5248,
+        976
+      ]
+    },
+    {
+      "parameters": {
+        "tableId": "paludo_chat_history",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "session_id",
+              "fieldValue": "={{ $('Messages Set').first().json.sessionId }}"
+            },
+            {
+              "fieldId": "role",
+              "fieldValue": "human"
+            },
+            {
+              "fieldId": "content",
+              "fieldValue": "={{ $json.messages }}"
+            }
+          ]
+        }
+      },
+      "id": "node-save-human",
+      "name": "Salvar Msg Humano",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -992,
+        1056
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "paludo_chat_history",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "session_id",
+              "condition": "eq",
+              "keyValue": "={{ $('Messages Set').first().json.sessionId }}"
+            }
+          ]
+        }
+      },
+      "id": "node-get-history",
+      "name": "Buscar Historico",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -816,
+        1056
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const HOURS_LIMIT = 72;\nconst historyItems = $input.all();\nlet formattedHistory = '';\nconst now = new Date();\nconst cutoffTime = new Date(now.getTime() - (HOURS_LIMIT * 60 * 60 * 1000));\n\nif (historyItems.length > 0) {\n  historyItems.sort((a, b) => new Date(a.json.created_at) - new Date(b.json.created_at));\n\n  for (const item of historyItems) {\n    const msgDateStr = item.json.created_at || item.json.timestamp;\n    if (msgDateStr) {\n      const msgDate = new Date(msgDateStr);\n      if (msgDate > cutoffTime) {\n        const role = item.json.role === 'human' ? 'Cliente' : 'Matheus';\n        const cleanContent = (item.json.content || '').replace(/\\n/g, ' ');\n        formattedHistory += role + ': ' + cleanContent + '\\n';\n      }\n    }\n  }\n}\nreturn [{ json: { formattedHistory } }];"
+      },
+      "id": "node-format-history",
+      "name": "Formatar Historico",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -640,
+        1056
+      ]
+    },
+    {
+      "parameters": {
+        "tableId": "paludo_chat_history",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "session_id",
+              "fieldValue": "={{ $('Messages Set').first().json.sessionId }}"
+            },
+            {
+              "fieldId": "role",
+              "fieldValue": "ai"
+            },
+            {
+              "fieldId": "content",
+              "fieldValue": "={{ $json.output }}"
+            }
+          ]
+        }
+      },
+      "id": "node-save-ai",
+      "name": "Salvar Msg IA",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        48,
+        1136
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "if-audio",
+              "leftValue": "={{ $('camposIniciais').first().json.content.tipoMensagem }}",
+              "rightValue": "audioMessage",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "node-if-audio",
+      "name": "Eh Audio?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        256,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "phoneNumberId": "={{ $('camposIniciais').first().json.whatsapp.meta.phone_id }}",
+        "recipientPhoneNumber": "={{ $('camposIniciais').first().json.meta.telefoneCliente }}",
+        "additionalFields": {}
+      },
+      "id": "node-send-whatsapp",
+      "name": "Enviar WhatsApp",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        672,
+        1216
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "paludo_leads",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "telefoneCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('camposIniciais').first().json.meta.telefoneCliente.toString() }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "sessionID",
+              "fieldValue": "={{ $('Buscar Lead no Supabase').first().json.sessionID }}"
+            },
+            {
+              "fieldId": "last_interaction_at",
+              "fieldValue": "={{ $now.toISO() }}"
+            }
+          ]
+        }
+      },
+      "id": "node-update-lead",
+      "name": "Atualizar Lead",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        864,
+        1216
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Historico:\n{{ $('Formatar Historico').first().json.formattedHistory }}\n\nInput Atual:\n{{ $('Messages Set').first().json.messages }}",
+        "options": {
+          "systemMessage": "={{ $('Prompts QA').first().json.systemPromptQA }}"
+        }
+      },
+      "id": "node-qa-agent",
+      "name": "QA - MQL Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        1104,
+        256
+      ]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o",
+        "options": {
+          "temperature": 0.1
+        }
+      },
+      "id": "node-modelo-qa",
+      "name": "GPT-4o QA",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        976,
+        496
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "assign-qa-prompt",
+              "name": "systemPromptQA",
+              "value": "=Carregue as instrucoes do arquivo prompt-qa-mql.txt",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "node-prompts-qa",
+      "name": "Prompts QA",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1104,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const rawOutput = $input.first().json.output || '';\nlet aiData = {};\n\ntry {\n  const startIndex = rawOutput.indexOf('{');\n  const endIndex = rawOutput.lastIndexOf('}');\n  if (startIndex !== -1 && endIndex !== -1) {\n    const jsonString = rawOutput.substring(startIndex, endIndex + 1);\n    aiData = JSON.parse(jsonString);\n  } else {\n    throw new Error('JSON nao encontrado');\n  }\n} catch (error) {\n  aiData = { is_mql: false, motivo: 'Erro tecnico na leitura da QA' };\n}\n\nreturn [{\n  json: {\n    is_mql: aiData.is_mql === true,\n    motivo: aiData.motivo || 'Nao especificado',\n    motivo_tag: aiData.motivo_tag || 'AguardandoResposta',\n    resumo_lead: aiData.resumo_lead || {}\n  }\n}];"
+      },
+      "id": "node-parse-qa",
+      "name": "Parse JSON QA",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1280,
+        256
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "if-mql",
+              "leftValue": "={{ $json.is_mql }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "node-if-mql",
+      "name": "Eh MQL?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1456,
+        256
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://kommo.kommo.com/api/v4/leads",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $credentials.kommoApi.access_token }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"name\": \"{{ $('Parse JSON QA').first().json.resumo_lead.nome || 'Lead PPA' }}\",\n  \"responsible_user_id\": null,\n  \"pipeline_id\": 1,\n  \"status_id\": 1,\n  \"tags\": [\"SDR IA\"],\n  \"custom_fields_values\": [\n    {\n      \"field_id\": null,\n      \"values\": [{\"value\": \"{{ $('Parse JSON QA').first().json.resumo_lead.produto_interesse || '' }}\"}]\n    }\n  ],\n  \"_embedded\": {\n    \"contacts\": [\n      {\n        \"name\": \"{{ $('camposIniciais').first().json.meta.nomeCliente }}\",\n        \"custom_fields_values\": [\n          {\n            \"field_code\": \"PHONE\",\n            \"values\": [{\"value\": \"{{ $('camposIniciais').first().json.meta.telefoneCliente }}\"}]\n          }\n        ]\n      }\n    ]\n  }\n}",
+        "options": {}
+      },
+      "id": "node-kommo-mql",
+      "name": "Enviar MQL para Kommo",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1664,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://kommo.kommo.com/api/v4/leads",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $credentials.kommoApi.access_token }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"name\": \"{{ $('camposIniciais').first().json.meta.nomeCliente }}\",\n  \"pipeline_id\": 2,\n  \"status_id\": 1,\n  \"tags\": [\"{{ 'SDR IA', '#IA_' + ($('Parse JSON QA').first().json.motivo_tag || 'ForaDoICP') }}\"],\n  \"custom_fields_values\": [\n    {\n      \"field_code\": \"PHONE\",\n      \"values\": [{\"value\": \"{{ $('camposIniciais').first().json.meta.telefoneCliente }}\"}]\n    }\n  ],\n  \"notes\": [{\n    \"note_type\": \"common\",\n    \"params\": {\n      \"text\": \"Lead desqualificado pela SDR IA. Motivo: {{ $('Parse JSON QA').first().json.motivo }}\"\n    }\n  }]\n}",
+        "options": {}
+      },
+      "id": "node-kommo-nao-mql",
+      "name": "Enviar Nao-MQL para Kommo",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1664,
+        384
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "id": "node-merge-leads",
+      "name": "Merge Inicial",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        -4864,
+        1120
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "node-noop-merge",
+      "name": "NoOp",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -5280,
+        976
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### SDR IA - Paludo & Paschoal Advocacia",
+        "height": 780,
+        "width": 2094,
+        "color": 4
+      },
+      "id": "node-sticky-header",
+      "name": "Sticky Note - Header",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        592,
+        48
+      ]
+    }
+  ],
+  "connections": {
+    "WhatsApp Trigger": {
+      "main": [
+        [
+          {
+            "node": "camposIniciais",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "camposIniciais": {
+      "main": [
+        [
+          {
+            "node": "NoOp",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prompts SDR",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NoOp": {
+      "main": [
+        [
+          {
+            "node": "Switch Tipo Mensagem",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge Inicial",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch Tipo Mensagem": {
+      "main": [
+        [
+          {
+            "node": "Processa Audio",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Processa Imagem",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Unifica Dados Iniciais",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Processa Audio": {
+      "main": [
+        [
+          {
+            "node": "Unifica Dados Iniciais",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Processa Imagem": {
+      "main": [
+        [
+          {
+            "node": "Unifica Dados Iniciais",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Unifica Dados Iniciais": {
+      "main": [
+        [
+          {
+            "node": "Buscar Lead no Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar Lead no Supabase": {
+      "main": [
+        [
+          {
+            "node": "Lead Existe?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lead Existe?": {
+      "main": [
+        [
+          {
+            "node": "Gerar UUID",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Empilha Mensagem (Redis)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gerar UUID": {
+      "main": [
+        [
+          {
+            "node": "Criar Lead no Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Criar Lead no Supabase": {
+      "main": [
+        [
+          {
+            "node": "Empilha Mensagem (Redis)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Empilha Mensagem (Redis)": {
+      "main": [
+        [
+          {
+            "node": "Obtem Buffer (Redis)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtem Buffer (Redis)": {
+      "main": [
+        [
+          {
+            "node": "Debounce Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Debounce Switch": {
+      "main": [
+        [
+          {
+            "node": "Wait Debounce",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Deleta Buffer (Redis)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait Debounce": {
+      "main": [
+        [
+          {
+            "node": "Empilha Mensagem (Redis)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Deleta Buffer (Redis)": {
+      "main": [
+        [
+          {
+            "node": "Messages Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Messages Set": {
+      "main": [
+        [
+          {
+            "node": "Salvar Msg Humano",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Salvar Msg Humano": {
+      "main": [
+        [
+          {
+            "node": "Buscar Historico",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar Historico": {
+      "main": [
+        [
+          {
+            "node": "Formatar Historico",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GPT-4o Matheus": {
+      "main": [
+        [
+          {
+            "node": "Matheus - SDR IA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prompts SDR": {
+      "main": [
+        [
+          {
+            "node": "Matheus - SDR IA",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge Inicial",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formatar Historico": {
+      "main": [
+        [
+          {
+            "node": "Matheus - SDR IA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Matheus - SDR IA": {
+      "main": [
+        [
+          {
+            "node": "Salvar Msg IA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Salvar Msg IA": {
+      "main": [
+        [
+          {
+            "node": "Eh Audio?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Eh Audio?": {
+      "main": [
+        [
+          {
+            "node": "Enviar WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Atualizar Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prompts QA": {
+      "main": [
+        [
+          {
+            "node": "QA - MQL Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GPT-4o QA": {
+      "main": [
+        [
+          {
+            "node": "QA - MQL Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Atualizar Lead": {
+      "main": [
+        [
+          {
+            "node": "QA - MQL Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "QA - MQL Agent": {
+      "main": [
+        [
+          {
+            "node": "Parse JSON QA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse JSON QA": {
+      "main": [
+        [
+          {
+            "node": "Eh MQL?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Eh MQL?": {
+      "main": [
+        [
+          {
+            "node": "Enviar MQL para Kommo",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Enviar Nao-MQL para Kommo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

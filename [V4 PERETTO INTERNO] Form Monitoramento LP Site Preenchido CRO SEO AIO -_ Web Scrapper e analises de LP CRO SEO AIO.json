@@ -1,0 +1,1174 @@
+{
+  "name": "[V4 PERETTO INTERNO] Form Monitoramento LP Site Preenchido CRO SEO AIO -> Web Scrapper e analises de LP CRO SEO AIO",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "0bc7d404-879c-4b93-99c5-5cd7fb22ab21",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -336,
+        1952
+      ],
+      "id": "b5581131-536f-4eac-addc-250534a6f1b9",
+      "name": "Webhook",
+      "webhookId": "0bc7d404-879c-4b93-99c5-5cd7fb22ab21"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.body.url }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        112,
+        1600
+      ],
+      "id": "71f4ea7c-e35a-4f44-8ade-2f41e8c368ab",
+      "name": "HTTP Request",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-5-MINI"
+        },
+        "messages": {
+          "values": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.1,
+      "position": [
+        688,
+        1600
+      ],
+      "id": "f3755b34-9da0-4e69-8918-091881c6e0e9",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "X9ME71JvJJcVlKX2",
+          "name": "GPT Transcricoes"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pega todos os itens de entrada\nconst items = $input.all();\n\nreturn items.map(item => {\n  // Garante que html seja uma string\n  let html = (item.json.data || '').toString();\n\n  // 1. Extrair apenas o conteúdo do <body> (se existir) para reduzir o tamanho inicial\n  const matchBody = html.match(/<body[^>]*>([\\s\\S]*?)<\\/body>/i);\n  if (matchBody) {\n    html = matchBody[1];\n  }\n\n  // 2. Remover tags inteiras que não interessam para CRO\n  // Remove: script, style, svg, noscript, iframe, head\n  html = html.replace(/<(script|style|noscript|iframe|svg|head)[^>]*>[\\s\\S]*?<\\/\\1>/gi, ' ');\n\n  // Remove tags soltas / self-closing comuns e inputs hidden\n  html = html.replace(/<(meta|link|hr|br)\\b[^>]*\\/?>/gi, ' ');\n  html = html.replace(/<input\\b[^>]*\\btype=[\"']?hidden[\"']?[^>]*\\/?>/gi, ' ');\n\n  // 3. Remover comentários HTML  ✅ (correção do seu erro)\n  html = html.replace(/<!--[\\s\\S]*?-->/g, ' ');\n\n  // 4. Limpeza de atributos (Mantendo apenas o essencial)\n  html = html.replace(/<([a-z0-9]+)\\s+([^>]+)>/gi, function(match, tagName, attributes) {\n    const allowedAttributes = ['href', 'src', 'alt', 'title', 'name', 'type', 'value', 'placeholder', 'id', 'action'];\n\n    const attrRegex = /([a-zA-Z0-9-]+)\\s*=\\s*[\"']([^\"']*)[\"']/g;\n\n    let newAttrs = [];\n    let attrMatch;\n\n    while ((attrMatch = attrRegex.exec(attributes)) !== null) {\n      const attrName = attrMatch[1].toLowerCase();\n      const attrValue = attrMatch[2];\n\n      if (allowedAttributes.includes(attrName)) {\n        if (attrName === 'src' && attrValue.startsWith('data:image')) {\n          newAttrs.push('src=\"[BASE64_IMAGE]\"');\n        } else {\n          newAttrs.push(attrName + '=\"' + attrValue + '\"');\n        }\n      }\n    }\n\n    const cleanTag = '<' + tagName + (newAttrs.length > 0 ? ' ' + newAttrs.join(' ') : '') + '>';\n    return cleanTag;\n  });\n\n  // 5. Remover linhas em branco e espaços duplicados gerados pela limpeza\n  html = html.replace(/\\s+/g, ' ').trim();\n\n  // 6. Remover tags vazias que sobraram\n  html = html.replace(/<([a-z]+)[^>]*>\\s*<\\/\\1>/gi, '');\n\n  // Salva o resultado\n  item.json.cleanedHtml = html;\n\n  return item;\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        400,
+        1600
+      ],
+      "id": "4e82382a-1610-447a-9aa3-baf3c266ed79",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "spaceId": "={{ $('Webhook').item.json.body['space-id'] }}",
+        "messageUi": {
+          "text": "=💎 *CRO Intelligence | Diagnóstico da Landing Page:\n{{ $('Webhook').item.json.body.url }} !*\n\n{{ $json.output[0].content[0].text }}"
+        },
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.googleChat",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        1600
+      ],
+      "id": "6afccbd3-d036-4c4b-a68f-061b8dc5c3ab",
+      "name": "Create a message",
+      "webhookId": "f907559f-c28a-4655-a05b-afb6d9f4e415",
+      "credentials": {
+        "googleApi": {
+          "id": "w4djRnCAopKNq6Gz",
+          "name": "Sofia Chatbot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1. Get the URL directly from the Trigger node\n// We reference the node by name to ensure we get the initial input\nconst landingPageUrl = $('Webhook').first().json.body.url;\n\n// 2. Get the aggregated outputs\n// The Aggregate node creates an array called \"output\" with all items\nconst aggregatedOutputs = $input.first().json.output;\n\n// 3. Assign variables (safely handling the array)\n// Index 0 = Technical Audit (Input 0 of Merge node)\n// Index 1 = Content Audit (Input 1 of Merge node)\nconst technicalAudit = aggregatedOutputs[0] || \"<p>⚠️ Technical Audit not found.</p>\";\nconst contentAudit = aggregatedOutputs[1] || \"<p>⚠️ Content Audit not found.</p>\";\n\n// 4. Generate the HTML structure\n// IMPORTANT: Notice the backtick (`) at the start of the next line\nconst htmlContent = `\n<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Auditoria SEO - ${landingPageUrl}</title>\n    <style>\n        body {\n            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n            line-height: 1.6;\n            color: #333;\n            max-width: 900px;\n            margin: 0 auto;\n            padding: 30px;\n            background-color: #f9fafb;\n        }\n        .header {\n            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n            color: white;\n            padding: 40px;\n            border-radius: 10px;\n            text-align: center;\n            margin-bottom: 30px;\n            box-shadow: 0 4px 6px rgba(0,0,0,0.1);\n        }\n        .header h1 {\n            margin: 0;\n            font-size: 2em;\n        }\n        .header .url {\n            margin-top: 10px;\n            font-size: 1.1em;\n            opacity: 0.9;\n        }\n        .header .date {\n            margin-top: 5px;\n            font-size: 0.9em;\n            opacity: 0.8;\n        }\n        .content {\n            background: white;\n            padding: 40px;\n            border-radius: 10px;\n            box-shadow: 0 2px 4px rgba(0,0,0,0.05);\n            margin-bottom: 20px;\n        }\n        h2 {\n            border-bottom: 3px solid #667eea;\n            padding-bottom: 10px;\n            margin-top: 30px;\n        }\n        h3 {\n            margin-top: 25px;\n            margin-bottom: 15px;\n        }\n        ul {\n            padding-left: 25px;\n        }\n        li {\n            margin-bottom: 12px;\n            line-height: 1.8;\n        }\n        .section-divider {\n            height: 2px;\n            background: linear-gradient(90deg, transparent, #667eea, transparent);\n            margin: 40px 0;\n        }\n        .footer {\n            text-align: center;\n            padding: 20px;\n            color: #666;\n            font-size: 0.9em;\n        }\n    </style>\n</head>\n<body>\n    <div class=\"header\">\n        <h1>🔍 Auditoria SEO Completa</h1>\n        <div class=\"url\">${landingPageUrl}</div>\n        <div class=\"date\">Data: ${new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</div>\n    </div>\n    \n    <div class=\"content\">\n        ${technicalAudit}\n    </div>\n    \n    <div class=\"section-divider\"></div>\n    \n    <div class=\"content\">\n        ${contentAudit}\n    </div>\n    \n    <div class=\"footer\">\n        <p>Auditoria gerada automaticamente | n8n Workflow</p>\n    </div>\n</body>\n</html>\n`; \n// ^ IMPORTANT: The backtick above closes the template string\n\n// Converte o texto HTML num Ficheiro Binário para o CloudConvert ler\nconst binaryData = Buffer.from(htmlContent).toString('base64');\n\nreturn {\n    json: {\n        landingPageUrl: landingPageUrl\n    },\n    binary: {\n        data: {\n            data: binaryData,\n            mimeType: 'text/html',\n            fileExtension: 'html',\n            fileName: 'relatorio_seo.html'\n        }\n    }\n};"
+      },
+      "id": "7750c09e-ab3a-44ee-a56c-0b21e8febd3e",
+      "name": "Gerar HTML",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1744,
+        2096
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Webhook').item.json.body.url }}",
+        "options": {}
+      },
+      "id": "b8a27a6c-2c22-4589-953b-0bb274faa7c2",
+      "name": "Scrape Website1",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        112,
+        2096
+      ],
+      "typeVersion": 4.2,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Você é um especialista em Content SEO para 2026, com domínio de EEAT, AI Overviews optimization, topical authority, entity-based ranking e V4 Company frameworks.\n\n⚠️ DIRETRIZES ESPECÍFICAS PARA 2026:\n\n1. **EEAT (Experience, Expertise, Authoritativeness, Trustworthiness)**: O conteúdo demonstra experiência de primeira mão? Há informações do autor? A página cita fontes confiáveis? Há sinais de autoridade da marca? O conteúdo é preciso e verificável?\n\n2. **AI Overviews Readiness**: O conteúdo responde perguntas de forma direta e concisa? Há definições claras, passo-a-passos, listas, tabelas, FAQs? O formato favorece citação (frases auto-contidas, facts concisos)? Avalie quão \"citável\" o conteúdo é para respostas de IA.\n\n3. **Topical Authority & Entity Optimization**: Quais entidades (pessoas, lugares, conceitos, marcas) são mencionadas? O conteúdo cobre o tópico de forma abrangente vs superficial? As entidades estão conectadas semanticamente?\n\n4. **Search Intent Match**: Identifique a intenção de busca dominante (informacional, navegacional, comercial, transacional). O formato do conteúdo corresponde à intenção?\n\n5. **Content Freshness**: O conteúdo tem data de publicação/atualização? Há informações desatualizadas?\n\n6. **Keyword Strategy & Semantic Coverage**: A palavra-chave principal aparece no title, h1, primeiros 100 palavras, url? Variações semânticas e LSI keywords naturais?\n\n7. **Readability & Engagement**: Conteúdo é escaneável (headings, bullets, parágrafos curtos)? Elementos multimídia? Tom apropriado para o público?\n\n8. **V4 Logical Thinking**: Qual a causa raiz (não o sintoma) do baixo performance de conteúdo? Qual dos 4 Pilares (Tráfego, Engajamento, Conversão, Retenção) é mais impactado pelo conteúdo atual?\n\nSua resposta DEVE ser em HTML formatado. Use EXATAMENTE esta estrutura:\n\n<h2 style=\"color: #2563eb; margin-top: 30px;\">ANÁLISE DE CONTEÚDO SEO 2026</h2>\n\n<h3 style=\"color: #1e40af; margin-top: 20px;\">📋 EEAT & Qualidade do Conteúdo</h3>\n<p style=\"line-height: 1.6;\">[Análise de EEAT signals, credibilidade, originalidade e profundidade]</p>\n\n<h3 style=\"color: #1e40af; margin-top: 20px;\">🤖 AI Overviews Readiness</h3>\n<p style=\"line-height: 1.6;\">[Avaliação de quão \"citável\" o conteúdo é para respostas de IA — respostas diretas, formatação, concisão]</p>\n\n<h3 style=\"color: #1e40af; margin-top: 20px;\">🔍 Intenção de Busca & Cobertura Semântica</h3>\n<p style=\"line-height: 1.6;\">[Análise de search intent match, entidades, palavras-chave e cobertura tópica]</p>\n\n<h3 style=\"color: #1e40af; margin-top: 20px;\">📖 Legibilidade & Experiência</h3>\n<p style=\"line-height: 1.6;\">[Análise de legibilidade, freshness, multimídia e engajamento]</p>\n\n<h2 style=\"color: #16a34a; margin-top: 30px;\">RECOMENDAÇÕES</h2>\n\n<h3 style=\"color: #15803d; margin-top: 20px;\">✅ Melhorias Prioritárias (Pareto 80/20)</h3>\n<ul style=\"line-height: 1.8;\">\n<li>[Recomendação 1 com justificativa — 20% do esforço, 80% do impacto]</li>\n<li>[Recomendação 2 com justificativa]</li>\n<li>[Recomendação 3 com justificativa]</li>\n</ul>\n\n<h3 style=\"color: #15803d; margin-top: 20px;\">📝 Otimizações de Conteúdo</h3>\n<ul style=\"line-height: 1.8;\">\n<li>[Recomendação 1]</li>\n<li>[Recomendação 2]</li>\n</ul>\n\n<h3 style=\"color: #15803d; margin-top: 20px;\">🚀 Melhorias de Engajamento</h3>\n<ul style=\"line-height: 1.8;\">\n<li>[Recomendação 1]</li>\n<li>[Recomendação 2]</li>\n</ul>\n\nIMPORTANTE: Retorne APENAS o HTML sem nenhum texto antes ou depois. Não inclua tags <html>, <body> ou comentários.\n\nConteúdo: {{ $json.cleanedHtml }}",
+        "options": {}
+      },
+      "id": "9bbc17cd-5f92-4b7c-8fe2-6e69a5bc1603",
+      "name": "Content Audit1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        816,
+        2304
+      ],
+      "typeVersion": 1.7,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Você é um especialista em SEO técnico para 2026, com conhecimentos aprofundados em Core Web Vitals, AI crawler optimization, structured data, e V4 Company frameworks.\n\n⚠️ DIRETRIZES PARA 2026:\n\n1. **Core Web Vitals**: Avalie pelo HTML sinais de performance — lazy loading, preconnect/preload/prefetch hints, dimensões de imagem (width/height para evitar CLS), CSS/JS inline vs externo, render-blocking resources. Recomende testes reais de Lighthouse/PageSpeed Insights.\n\n2. **AI Crawler Accessibility**: Verifique meta robots, X-Robots-Tag que bloqueiem AI crawlers (GPTBot, ClaudeBot, Google-Extended, PerplexityBot, CCBot). Instrua sobre verificação de robots.txt.\n\n3. **LLMs.txt Standard**: Verifique referência a /llms.txt ou /llms-full.txt. Recomende implementação se ausente.\n\n4. **Structured Data (Schema.org)**: Extraia e avalie TODO JSON-LD ou Microdata. Tipos esperados: Organization, WebSite, WebPage, Article, BreadcrumbList, FAQPage, HowTo, Product, LocalBusiness, Review, Speakable. Recomende schemas para AI citability.\n\n5. **Semantic HTML5**: Avalie tags semânticas (<header>, <main>, <article>, <section>, <nav>, <aside>, <footer>). Heading hierarchy correta (h1 único, h2, h3 sem saltos). Landmarks para crawlers de IA.\n\n6. **Indexabilidade**: Meta robots tag, canonical tag, hreflang (se multilíngue), meta title e meta description (comprimento, keyword positioning), Open Graph tags.\n\n7. **Mobile & a11y**: Meta viewport, alt em imagens, ARIA labels.\n\n8. **JavaScript Rendering**: Conteúdo real no HTML estático ou shell vazio (SPA)? CSR vs SSR vs SSG?\n\n9. **V4 TOC Analysis**: Aplique a Teoria das Restrições — qual o gargalo técnico que mais impacta ranking? Priorize pelo Pareto 80/20.\n\nSua resposta DEVE ser em HTML formatado. Use EXATAMENTE esta estrutura:\n\n<h2 style=\"color: #dc2626; margin-top: 30px;\">AUDITORIA TÉCNICA SEO ON-PAGE 2026</h2>\n\n<h3 style=\"color: #b91c1c; margin-top: 20px;\">🚨 Problemas Críticos</h3>\n<p style=\"line-height: 1.6; color: #666;\">Itens que devem ser corrigidos imediatamente:</p>\n<ul style=\"line-height: 1.8; background-color: #fee2e2; padding: 15px; border-radius: 5px;\">\n<li><strong>[Problema 1]:</strong> [Explicação + impacto em rankings/AI Visibility]</li>\n<li><strong>[Problema 2]:</strong> [Explicação + impacto]</li>\n<li><strong>[Problema 3]:</strong> [Explicação + impacto]</li>\n</ul>\n\n<h3 style=\"color: #ca8a04; margin-top: 20px;\">⚡ Ganhos Rápidos (Quick Wins)</h3>\n<p style=\"line-height: 1.6; color: #666;\">Correções fáceis com alto impacto:</p>\n<ul style=\"line-height: 1.8; background-color: #fef3c7; padding: 15px; border-radius: 5px;\">\n<li><strong>[Quick Win 1]:</strong> [Explicação]</li>\n<li><strong>[Quick Win 2]:</strong> [Explicação]</li>\n<li><strong>[Quick Win 3]:</strong> [Explicação]</li>\n</ul>\n\n<h3 style=\"color: #0891b2; margin-top: 20px;\">📈 Oportunidades de Melhoria</h3>\n<p style=\"line-height: 1.6; color: #666;\">Melhorias de médio/longo prazo:</p>\n<ul style=\"line-height: 1.8; background-color: #cffafe; padding: 15px; border-radius: 5px;\">\n<li><strong>[Oportunidade 1]:</strong> [Explicação]</li>\n<li><strong>[Oportunidade 2]:</strong> [Explicação]</li>\n<li><strong>[Oportunidade 3]:</strong> [Explicação]</li>\n</ul>\n\n<h3 style=\"color: #7c3aed; margin-top: 20px;\">🤖 AI Crawler Readiness</h3>\n<p style=\"line-height: 1.6; color: #666;\">Avaliação específica para crawlers de inteligência artificial:</p>\n<ul style=\"line-height: 1.8; background-color: #ede9fe; padding: 15px; border-radius: 5px;\">\n<li><strong>[AI Item 1]:</strong> [Explicação]</li>\n<li><strong>[AI Item 2]:</strong> [Explicação]</li>\n</ul>\n\n<h3 style=\"color: #e11d48; margin-top: 20px;\">🔗 V4 Gargalo TOC</h3>\n<p style=\"line-height: 1.6; color: #666;\">Aplicando a Teoria das Restrições — qual o único gargalo que, se resolvido, destrava os demais:</p>\n<p style=\"line-height: 1.6; background-color: #ffe4e6; padding: 15px; border-radius: 5px;\">\n[Identifique a restrição principal → explore → subordine → eleve]\n</p>\n\nIMPORTANTE: Retorne APENAS o HTML sem nenhum texto antes ou depois. Não inclua tags <html>, <body> ou comentários.\n\nConteúdo: {{ $json.cleanedHtml }}",
+        "options": {}
+      },
+      "id": "10fba1e8-3491-4e6c-8204-a818c80a20b1",
+      "name": "Technical Audit1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        816,
+        1792
+      ],
+      "typeVersion": 1.7,
+      "retryOnFail": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {},
+      "id": "9fc40de4-2088-4b06-815b-672414fdf025",
+      "name": "Merge1",
+      "type": "n8n-nodes-base.merge",
+      "position": [
+        1232,
+        2096
+      ],
+      "typeVersion": 3,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "output"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fdb791f7-e243-4364-898c-fb1009b97057",
+      "name": "Aggregate1",
+      "type": "n8n-nodes-base.aggregate",
+      "position": [
+        1520,
+        2096
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "spaceId": "={{ $('Webhook').item.json.body['space-id'] }}",
+        "messageUi": {
+          "text": "=👋 Olá! Sua auditoria de SEO foi finalizada com sucesso.\n\n🌐 Site analisado: {{ $('Webhook').item.json.body.url }}\n\n📂 Visualize o relatório completo aqui:\n{{ $('Upload file').item.json.webViewLink }}"
+        },
+        "additionalFields": {}
+      },
+      "id": "9a810bac-154d-471e-8878-8f32b3b78df3",
+      "name": "Google Chat1",
+      "type": "n8n-nodes-base.googleChat",
+      "typeVersion": 1,
+      "position": [
+        2416,
+        2096
+      ],
+      "webhookId": "d3f92a1f-b6f4-4038-8a3e-689a444f525d",
+      "credentials": {
+        "googleApi": {
+          "id": "w4djRnCAopKNq6Gz",
+          "name": "Sofia Chatbot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "outputFormat": "pdf"
+      },
+      "type": "@cloudconvert/n8n-nodes-cloudconvert.cloudConvert",
+      "typeVersion": 1,
+      "position": [
+        1968,
+        2096
+      ],
+      "id": "6417fe21-8154-4604-875a-f331b9360e21",
+      "name": "CloudConvert",
+      "credentials": {
+        "cloudConvertOAuth2Api": {
+          "id": "XW6IT0LKRWH79Hsl",
+          "name": "CloudConvert account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "name": "=Análise SEO -  {{ $('Webhook').item.json.body.url }}",
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1nJlcQTJGk2Cwtj37oB2ImKGvuykDmBnP",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2192,
+        2096
+      ],
+      "id": "fb522dc6-a3a9-411e-9101-3a581ac3237c",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "eeLqFlDHKRMoIl8f",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        816,
+        1952
+      ],
+      "id": "141b6f25-bbe8-4ef8-827a-3f1bb1a728d9",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "X9ME71JvJJcVlKX2",
+          "name": "GPT Transcricoes"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        816,
+        2464
+      ],
+      "id": "4058561b-e66a-4252-ac8b-73f2aff39461",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "X9ME71JvJJcVlKX2",
+          "name": "GPT Transcricoes"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pega todos os itens de entrada\nconst items = $input.all();\n\nreturn items.map(item => {\n  // Garante que html seja uma string\n  let html = (item.json.data || '').toString();\n\n  // --- MUDANÇA 1: NÃO isolamos o <body>.\n  // Precisamos do <head> para ler Title e Meta Description.\n  // Apenas removemos o doctype para limpar o início.\n  html = html.replace(/<!DOCTYPE[^>]*>/i, '');\n\n  // 2. Remover tags que consomem tokens e não ajudam na análise de CONTEÚDO SEO\n  // Remove: script, style, svg, noscript, iframe, button\n  // Nota: Mantivemos 'meta', 'link', 'title' e 'head' propositalmente.\n  html = html.replace(/<(script|style|noscript|iframe|svg|button)[^>]*>[\\s\\S]*?<\\/\\1>/gi, '');\n\n  // Remove comentários HTML  ✅ (CORREÇÃO)\n  html = html.replace(/<!--[\\s\\S]*?-->/g, '');\n\n  // 3. Limpeza de atributos (Whitelisting focado em SEO)\n  html = html.replace(/<([a-z0-9]+)\\s+([^>]+)>/gi, function(match, tagName, attributes) {\n    // Lista de atributos vitais para SEO\n    const allowedAttributes = [\n      'href',     // Links\n      'src',      // Imagens\n      'alt',      // SEO de Imagem (Crucial)\n      'title',    // Títulos de links/imagens\n      'name',     // Meta tags names\n      'content',  // Meta description / OG tags\n      'rel',      // Canonical, nofollow, next/prev\n      'property', // Open Graph (Social SEO)\n      'lang',     // Idioma da página\n      'datetime'  // Útil para artigos/blogs\n    ];\n\n    // Regex simples para capturar chave=\"valor\"\n    const attrRegex = /([a-zA-Z0-9-]+)\\s*=\\s*[\"']([^\"']*)[\"']/g;\n\n    let newAttrs = [];\n    let attrMatch;\n\n    // Loop pelos atributos\n    while ((attrMatch = attrRegex.exec(attributes)) !== null) {\n      const attrName = attrMatch[1].toLowerCase();\n      const attrValue = attrMatch[2];\n\n      if (allowedAttributes.includes(attrName)) {\n        // Se for imagem em base64, remove para economizar espaço\n        if (attrName === 'src' && attrValue.startsWith('data:image')) {\n          // Ignora src base64\n        } else {\n          newAttrs.push(attrName + '=\"' + attrValue + '\"');\n        }\n      }\n    }\n\n    // Reconstrói a tag\n    const cleanTag = '<' + tagName + (newAttrs.length > 0 ? ' ' + newAttrs.join(' ') : '') + '>';\n    return cleanTag;\n  });\n\n  // 4. Remover tags vazias que não são de metadados\n  html = html.replace(/<(div|span|p|h[1-6]|li|ul|ol)[^>]*>\\s*<\\/\\1>/gi, '');\n\n  // 5. Remover linhas em branco e normalizar espaços\n  html = html.replace(/\\s+/g, ' ').trim();\n\n  // Salva o resultado\n  item.json.cleanedHtml = html;\n\n  return item;\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        544,
+        1808
+      ],
+      "id": "5ec06ea6-77a9-4627-8b52-c575f447e695",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pega todos os itens de entrada\nconst items = $input.all();\n\nreturn items.map(item => {\n  // Garante que html seja uma string\n  let html = (item.json.data || '').toString();\n\n  // --- MUDANÇA 1: NÃO isolamos o <body>.\n  // Precisamos do <head> para ler Title e Meta Description.\n  // Apenas removemos o doctype para limpar o início.\n  html = html.replace(/<!DOCTYPE[^>]*>/i, '');\n\n  // 2. Remover tags que consomem tokens e não ajudam na análise de CONTEÚDO SEO\n  // Remove: script, style, svg, noscript, iframe, button\n  // Nota: Mantivemos 'meta', 'link', 'title' e 'head' propositalmente.\n  html = html.replace(/<(script|style|noscript|iframe|svg|button)[^>]*>[\\s\\S]*?<\\/\\1>/gi, '');\n\n  // Remove comentários HTML  ✅ (CORREÇÃO)\n  html = html.replace(/<!--[\\s\\S]*?-->/g, '');\n\n  // 3. Limpeza de atributos (Whitelisting focado em SEO)\n  html = html.replace(/<([a-z0-9]+)\\s+([^>]+)>/gi, function(match, tagName, attributes) {\n    // Lista de atributos vitais para SEO\n    const allowedAttributes = [\n      'href',     // Links\n      'src',      // Imagens\n      'alt',      // SEO de Imagem (Crucial)\n      'title',    // Títulos de links/imagens\n      'name',     // Meta tags names\n      'content',  // Meta description / OG tags\n      'rel',      // Canonical, nofollow, next/prev\n      'property', // Open Graph (Social SEO)\n      'lang',     // Idioma da página\n      'datetime'  // Útil para artigos/blogs\n    ];\n\n    // Regex simples para capturar chave=\"valor\"\n    const attrRegex = /([a-zA-Z0-9-]+)\\s*=\\s*[\"']([^\"']*)[\"']/g;\n\n    let newAttrs = [];\n    let attrMatch;\n\n    // Loop pelos atributos\n    while ((attrMatch = attrRegex.exec(attributes)) !== null) {\n      const attrName = attrMatch[1].toLowerCase();\n      const attrValue = attrMatch[2];\n\n      if (allowedAttributes.includes(attrName)) {\n        // Se for imagem em base64, remove para economizar espaço\n        if (attrName === 'src' && attrValue.startsWith('data:image')) {\n          // Ignora src base64\n        } else {\n          newAttrs.push(attrName + '=\"' + attrValue + '\"');\n        }\n      }\n    }\n\n    // Reconstrói a tag\n    const cleanTag = '<' + tagName + (newAttrs.length > 0 ? ' ' + newAttrs.join(' ') : '') + '>';\n    return cleanTag;\n  });\n\n  // 4. Remover tags vazias que não são de metadados\n  html = html.replace(/<(div|span|p|h[1-6]|li|ul|ol)[^>]*>\\s*<\\/\\1>/gi, '');\n\n  // 5. Remover linhas em branco e normalizar espaços\n  html = html.replace(/\\s+/g, ' ').trim();\n\n  // Salva o resultado\n  item.json.cleanedHtml = html;\n\n  return item;\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        528,
+        2304
+      ],
+      "id": "7c16beab-8d4a-417b-bf55-6a746b64ed2f",
+      "name": "Code in JavaScript3"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract metadata from webhook request for auditing\nconst webhookItem = $('Webhook').first().json;\nconst body = webhookItem.body || {};\nconst headers = webhookItem.headers || {};\n\n// Generate unique execution ID\nconst executionId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {const r = Math.random()*16|0;return(c=='x'?r:r&0x3|0x8).toString(16);});\n\n// Parse timestamp\nconst timestamp = new Date().toISOString();\n\n// Extract IP from headers (handles various proxy headers)\nconst ipOrigem = headers['x-real-ip']\n    || headers['x-forwarded-for']\n    || headers['x-forwarded-server']\n    || '';\n\nconst userAgent = headers['user-agent'] || '';\n\nreturn {\n    execution_id: executionId,\n    timestamp: timestamp,\n    cliente: body.cliente || '',\n    url_lp: body.url || '',\n    space_id: body['space-id'] || '',\n    tipo_analise: body['tipo-analise'] || '',\n    contexto: body.contexto || '',\n    ip_origem: ipOrigem,\n    user_agent: userAgent,\n    body: body,\n    node_sequence: ['Webhook', 'Extract Metadata']\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -80,
+        1952
+      ],
+      "id": "4ce06a3e-f45c-4345-8126-22c2be41305e",
+      "name": "Extract Metadata"
+    },
+    {
+      "parameters": {
+        "tableId": "monitoramento_lp_audit_log",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "execution_id",
+              "fieldValue": "={{ $json.execution_id }}"
+            },
+            {
+              "fieldId": "cliente",
+              "fieldValue": "={{ $json.cliente }}"
+            },
+            {
+              "fieldId": "url_lp",
+              "fieldValue": "={{ $json.url_lp }}"
+            },
+            {
+              "fieldId": "space_id",
+              "fieldValue": "={{ $json.space_id }}"
+            },
+            {
+              "fieldId": "tipo_analise",
+              "fieldValue": "={{ $json.tipo_analise }}"
+            },
+            {
+              "fieldId": "started_at",
+              "fieldValue": "={{ $json.timestamp }}"
+            },
+            {
+              "fieldId": "ip_origem",
+              "fieldValue": "={{ $json.ip_origem }}"
+            },
+            {
+              "fieldId": "user_agent",
+              "fieldValue": "={{ $json.user_agent }}"
+            },
+            {
+              "fieldId": "created_at",
+              "fieldValue": "={{ $json.timestamp }}"
+            },
+            {
+              "fieldId": "node_sequence",
+              "fieldValue": "={{ $json.node_sequence }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        208,
+        1952
+      ],
+      "id": "12a3f3c9-52df-450b-9d69-c5cb67bbf524",
+      "name": "Supabase Insert Start",
+      "credentials": {
+        "supabaseApi": {
+          "id": "KrO5cgJeimjwnCdU",
+          "name": "PerrettoProd"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "45b3f385-98cb-46ed-ac79-feb22a9b5a47",
+                    "leftValue": "={{ ($json.body['tipo-analise'] || '').toLowerCase() }}",
+                    "rightValue": "cro",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains",
+                      "name": "filter.operator.contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "CRO"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "60ec61b3-1d36-4c6d-9980-54ec34191f5e",
+                    "leftValue": "={{ ($json.body['tipo-analise'] || '').toLowerCase() }}",
+                    "rightValue": "seo",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains",
+                      "name": "filter.operator.contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "SEO"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f2824b7f-112b-4826-ae82-77300063d16d",
+                    "leftValue": "={{ ($json.body['tipo-analise'] || '').toLowerCase() }}",
+                    "rightValue": "aio",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains",
+                      "name": "filter.operator.contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "AIO"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "OUTROS"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        512,
+        1952
+      ],
+      "id": "646685eb-09fe-4995-90d7-a939fc6bc5c5",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Check for errors and prepare Supabase update\nconst startMeta = ($('Extract Metadata')?.first()?.json || {});\nconst executionId = startMeta.execution_id || 'fallback-' + Date.now();\nconst startedAt = startMeta.timestamp || new Date().toISOString();\nconst now = new Date().toISOString();\nconst durationMs = new Date(now).getTime() - new Date(startedAt).getTime();\n\nconst item = $input.first();\nconst hasError = item.json._error ? true : false;\nconst errorMessage = hasError ? (item.json._error.message || item.json._error.error || '') : '';\nconst errorStack = hasError ? (item.json._error.stack || '') : '';\n\nreturn {\n  execution_id: executionId,\n  status: hasError ? 'failed' : 'completed',\n  completed_at: now,\n  duration_ms: durationMs,\n  erro_message: errorMessage,\n  erro_stack: errorStack\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1344,
+        1600
+      ],
+      "id": "c59117f9-2d9f-4711-9f16-5b0d1cbfb241",
+      "name": "Error Check CRO"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "monitoramento_lp_audit_log",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "execution_id",
+              "condition": "eq",
+              "keyValue": "={{ $json.execution_id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "={{ $json.status }}"
+            },
+            {
+              "fieldId": "completed_at",
+              "fieldValue": "={{ $json.completed_at }}"
+            },
+            {
+              "fieldId": "duration_ms",
+              "fieldValue": "={{ $json.duration_ms }}"
+            },
+            {
+              "fieldId": "erro_message",
+              "fieldValue": "={{ $json.erro_message }}"
+            },
+            {
+              "fieldId": "erro_stack",
+              "fieldValue": "={{ $json.erro_stack }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1584,
+        1600
+      ],
+      "id": "42bd4114-df43-4fb1-be40-1dd894594683",
+      "name": "Supabase Update CRO",
+      "credentials": {
+        "supabaseApi": {
+          "id": "KrO5cgJeimjwnCdU",
+          "name": "PerrettoProd"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Check for errors and prepare Supabase update\nconst startMeta = ($('Extract Metadata')?.first()?.json || {});\nconst executionId = startMeta.execution_id || 'fallback-' + Date.now();\nconst startedAt = startMeta.timestamp || new Date().toISOString();\nconst now = new Date().toISOString();\nconst durationMs = new Date(now).getTime() - new Date(startedAt).getTime();\n\nconst item = $input.first();\nconst hasError = item.json._error ? true : false;\nconst errorMessage = hasError ? (item.json._error.message || item.json._error.error || '') : '';\nconst errorStack = hasError ? (item.json._error.stack || '') : '';\n\nreturn {\n  execution_id: executionId,\n  status: hasError ? 'failed' : 'completed',\n  completed_at: now,\n  duration_ms: durationMs,\n  erro_message: errorMessage,\n  erro_stack: errorStack\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2704,
+        2096
+      ],
+      "id": "f64c117d-fb0f-43b2-b57d-81c4674fcbd5",
+      "name": "Error Check SEO"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "monitoramento_lp_audit_log",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "execution_id",
+              "condition": "eq",
+              "keyValue": "={{ $json.execution_id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "={{ $json.status }}"
+            },
+            {
+              "fieldId": "completed_at",
+              "fieldValue": "={{ $json.completed_at }}"
+            },
+            {
+              "fieldId": "duration_ms",
+              "fieldValue": "={{ $json.duration_ms }}"
+            },
+            {
+              "fieldId": "erro_message",
+              "fieldValue": "={{ $json.erro_message }}"
+            },
+            {
+              "fieldId": "erro_stack",
+              "fieldValue": "={{ $json.erro_stack }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2944,
+        2096
+      ],
+      "id": "d609f319-6b11-4e78-8c5a-dab05126fe08",
+      "name": "Supabase Update SEO",
+      "credentials": {
+        "supabaseApi": {
+          "id": "KrO5cgJeimjwnCdU",
+          "name": "PerrettoProd"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.body.url }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        112,
+        2672
+      ],
+      "id": "93eac666-e5a2-42b0-a956-488145dfa4ab",
+      "name": "Scrape AIO",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pega todos os itens de entrada\nconst items = $input.all();\n\nreturn items.map(item => {\n  // Garante que html seja uma string\n  let html = (item.json.data || '').toString();\n\n  // Remove doctype\n  html = html.replace(/<!DOCTYPE[^>]*>/i, '');\n\n  // Remove tags que consomem tokens\n  html = html.replace(/<(script|style|noscript|iframe|svg|button)[^>]*>[\\s\\S]*?<\\/\\1>/gi, '');\n\n  // Remove comentarios HTML\n  html = html.replace(/<!--[\\s\\S]*?-->/g, '');\n\n  // Limpeza de atributos (Whitelisting para AIO)\n  html = html.replace(/<([a-z0-9]+)\\s+([^>]+)>/gi, function(match, tagName, attributes) {\n    const allowedAttributes = [\n      'href', 'src', 'alt', 'title', 'name', 'content',\n      'rel', 'property', 'lang', 'datetime', 'type',\n      'itemprop', 'itemtype', 'itemscope'\n    ];\n\n    const attrRegex = /([a-zA-Z0-9-]+)\\s*=\\s*[\"']([^\"']*)[\"']/g;\n\n    let newAttrs = [];\n    let attrMatch;\n\n    while ((attrMatch = attrRegex.exec(attributes)) !== null) {\n      const attrName = attrMatch[1].toLowerCase();\n      const attrValue = attrMatch[2];\n\n      if (allowedAttributes.includes(attrName)) {\n        if (attrName === 'src' && attrValue.startsWith('data:image')) {\n          // Ignora src base64\n        } else {\n          newAttrs.push(attrName + '=\"' + attrValue + '\"');\n        }\n      }\n    }\n\n    const cleanTag = '<' + tagName + (newAttrs.length > 0 ? ' ' + newAttrs.join(' ') : '') + '>';\n    return cleanTag;\n  });\n\n  // Remover tags vazias\n  html = html.replace(/<(div|span|p|h[1-6]|li|ul|ol)[^>]*>\\s*<\\/\\1>/gi, '');\n\n  // Normalizar espacos\n  html = html.replace(/\\s+/g, ' ').trim();\n\n  // Salva o resultado\n  item.json.cleanedHtml = html;\n\n  return item;\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        400,
+        2672
+      ],
+      "id": "8c2b4137-0a9c-4aec-8867-293a62e806c0",
+      "name": "Clean HTML AIO"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Você é o principal especialista mundial em AI Search (AEO/GEO) 2026 — Answer Engine Optimization e Generative Engine Optimization. Aplique a metodologia V4 Company (4Vs, 4 Pilares, TOC, FPA, Logical Thinking, Médico vs Garçom) para diagnosticar como a página pode dominar respostas de IAs.\n\n⚠️ DIRETRIZES OBRIGATÓRIAS 2026:\n\n1. **AI Crawler Accessibility** (PRIORIDADE MÁXIMA): O robots.txt permite GPTBot, ClaudeBot, Google-Extended, PerplexityBot, CCBot? Meta robots bloqueia? A página tem /llms.txt ou /llms-full.txt? Se houver bloqueio, aponte como crítica absoluta.\n\n2. **Extractability Score (0-100)**: Headings formam hierarquia lógica? Informações mais importantes estão no início (princípio da resposta direta)? Definições claras e auto-contidas para LLMs? Densidade de informações úteis vs ruído? O conteúdo responde perguntas de forma direta?\n\n3. **Structured Data Readiness**: Liste TODO schema.org markup presente. Schemas críticos: Organization, WebSite, WebPage, Article, BreadcrumbList, FAQPage, HowTo, QAPage, Speakable, Review, Product. Speakable está presente? (essencial para Google AI Overviews e Google Assistant). Schemas estão completos?\n\n4. **Entity Clarity & Salience**: Quais entidades a página apresenta? Estão claramente definidas para um LLM? Qual a entidade principal (saliência)? Há ambiguidade que pode confundir LLMs?\n\n5. **Content Format Suitability for LLM Citations**: O formato atual favorece citação? Formatos bem ranqueados: definições concisas, listas numeradas, tabelas, FAQs, step-by-step, comparações. Formatos mal ranqueados: textos corridos sem estrutura. Recomende conversões específicas:\n   - ChatGPT: FAQs, listas, bullets com respostas diretas\n   - Perplexity: HowTo, step-by-step, tabelas\n   - Google AI Overviews: definições concisas (40-60 palavras)\n   - Gemini/Claude: markdown semântico, seções bem definidas\n\n6. **Share of AI Voice (SAIV) Context**: Baseado no setor/segmento, qual o gap esperado de citações? Quais concorrentes dominam? Qual a meta SAIV para 6 meses (target: 30%+)?\n\n7. **Brand & Knowledge Panel Readiness**: A página informa claramente marca, proposta de valor, público-alvo, preços? NAP consistente (para negócios locais)? Dados para Knowledge Panel?\n\n8. **Zero-Click Value**: Qual % do valor pode ser consumido na resposta IA sem clique? Há CTAs que incentivem clique mesmo após resumo? Equilíbrio entre informação útil e incentivo ao clique?\n\n9. **Freshness & Currency**: Data de publicação/atualização visível? Informações desatualizadas? AI engines preferem conteúdo recente.\n\n10. **V4 Diagnóstico (Médico vs Garçom)**: Como um médico, diagnostique a causa raiz. Qual dos 4Vs está travado? (V1: vender, V2: vender mais vezes, V3: vender para mais pessoas, V4: maior valor). Qual pilar (Tráfego, Engajamento, Conversão, Retenção) a AI Search mais impacta? Aplique TOC: qual restrição única, se resolvida, destrava tudo?\n\nSua resposta DEVE ser em HTML formatado. Use EXATAMENTE esta estrutura:\n\n<h2 style=\"color: #7c3aed; margin-top: 30px;\">🔬 AUDITORIA AI SEARCH (AEO/GEO) 2026 — V4 COMPANY</h2>\n\n<h3 style=\"color: #dc2626; margin-top: 20px;\">🚨 AI Crawler Accessibility</h3>\n<p style=\"line-height: 1.6;\">[Verificação crítica — robots.txt + llms.txt + meta robots]</p>\n<ul style=\"background-color: #fee2e2; padding: 15px; border-radius: 5px;\">\n<li><strong>Status:</strong> [Liberado / Bloqueado / Indeterminado]</li>\n<li><strong>Impacto no negócio:</strong> [Se bloqueado, a página é invisível para TODAS as IAs]</li>\n</ul>\n\n<h3 style=\"color: #6d28d9; margin-top: 20px;\">📊 Extractability Score</h3>\n<p style=\"line-height: 1.6;\">[Nota 0-100 + análise: headings, resposta direta, densidade informacional, definições auto-contidas]</p>\n\n<h3 style=\"color: #6d28d9; margin-top: 20px;\">🏗️ Structured Data Readiness</h3>\n<p style=\"line-height: 1.6;\">[Schemas presentes, completude, schemas recomendados para AI citability — destaque Speakable]</p>\n\n<h3 style=\"color: #6d28d9; margin-top: 20px;\">🧠 Entity Clarity & Salience</h3>\n<p style=\"line-height: 1.6;\">[Entidades detectadas, clareza, saliência da entidade principal, ambiguidades]</p>\n\n<h3 style=\"color: #6d28d9; margin-top: 20px;\">📐 Content Format Suitability</h3>\n<p style=\"line-height: 1.6;\">[Adequação do formato por plataforma: ChatGPT, Perplexity, AI Overviews, Gemini, Claude]</p>\n\n<h3 style=\"color: #6d28d9; margin-top: 20px;\">🏷️ Brand & KP Readiness</h3>\n<p style=\"line-height: 1.6;\">[Clareza da marca, consistência, readiness para Knowledge Panel]</p>\n\n<h3 style=\"color: #6d28d9; margin-top: 20px;\">📉 Zero-Click Value Assessment</h3>\n<p style=\"line-height: 1.6;\">[% de valor consumível sem clique + CTAs que equilibram resposta e conversão]</p>\n\n<h3 style=\"color: #e11d48; margin-top: 20px;\">🔗 V4 Diagnóstico Estratégico</h3>\n<p style=\"line-height: 1.6; background-color: #ffe4e6; padding: 15px; border-radius: 5px;\">\n<strong>4Vs Impactados:</strong> [Qual V está travado?]<br>\n<strong>Pilar Dominante:</strong> [Tráfego/Engajamento/Conversão/Retenção]<br>\n<strong>Gargalo TOC:</strong> [Qual a restrição única que, resolvida, mais impacta AI Visibility?]<br>\n<strong>Causa Raiz (não sintoma):</strong> [Diagnóstico médico, não garçom]<br>\n<strong>Recomendação FPA:</strong> [Fé para investir, Pesquisa para medir, Atitude para executar]\n</p>\n\n<h2 style=\"color: #059669; margin-top: 30px;\">RECOMENDAÇÕES AI SEARCH</h2>\n\n<h3 style=\"color: #047857; margin-top: 20px;\">🔓 AI Accessibility (P0 — Urgente)</h3>\n<ul style=\"line-height: 1.8;\">\n<li>[Liberação de AI crawlers + implementação de llms.txt]</li>\n</ul>\n\n<h3 style=\"color: #047857; margin-top: 20px;\">🎯 Melhorias de Extractability</h3>\n<ul style=\"line-height: 1.8;\">\n<li>[Recomendação 1 — maior impacto no score]</li>\n<li>[Recomendação 2]</li>\n</ul>\n\n<h3 style=\"color: #047857; margin-top: 20px;\">🔧 Otimizações de Structured Data</h3>\n<ul style=\"line-height: 1.8;\">\n<li>[Schema Speakable + FAQPage + QAPage]</li>\n<li>[Demais schemas]</li>\n</ul>\n\n<h3 style=\"color: #047857; margin-top: 20px;\">📝 Melhorias de Entity & Conteúdo</h3>\n<ul style=\"line-height: 1.8;\">\n<li>[Entity clarity, definições, formato por plataforma]</li>\n</ul>\n\n<h3 style=\"color: #047857; margin-top: 20px;\">📱 Otimizações por Plataforma</h3>\n<ul style=\"line-height: 1.8;\">\n<li><strong>ChatGPT:</strong> [Ajustes específicos]</li>\n<li><strong>Perplexity:</strong> [Ajustes específicos]</li>\n<li><strong>AI Overviews:</strong> [Ajustes específicos]</li>\n<li><strong>Gemini/Claude:</strong> [Ajustes específicos]</li>\n</ul>\n\nIMPORTANTE: Retorne APENAS o HTML sem nenhum texto antes ou depois. Não inclua tags <html>, <body> ou comentários.\n\nConteúdo da página: {{ $json.cleanedHtml }}\nContexto do Cliente: {{ $('Webhook').item.json.body.contexto || 'Não informado' }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        688,
+        2672
+      ],
+      "id": "e7d84914-b498-48f6-8eb5-41356618ee06",
+      "name": "AIO Agent",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        688,
+        2880
+      ],
+      "id": "742f2eaf-980e-4814-8602-77d3aea0a750",
+      "name": "OpenAI Chat Model2",
+      "credentials": {
+        "openAiApi": {
+          "id": "X9ME71JvJJcVlKX2",
+          "name": "GPT Transcricoes"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "spaceId": "={{ $('Webhook').item.json.body['space-id'] }}",
+        "messageUi": {
+          "text": "=🤖 *AIO Intelligence | Diagnóstico de AI Search:\n{{ $('Webhook').item.json.body.url }}*\n\n📊 *Análise de otimização para AI Search (AEO/GEO) concluída!*\n\n{{ $json.output[0]?.content[0]?.text || $json.output }}"
+        },
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.googleChat",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        2672
+      ],
+      "id": "d6f340e2-589b-4985-b40d-f75fed16cfe5",
+      "name": "Google Chat AIO",
+      "webhookId": "d8173271-50e7-40af-8ab6-37e53901dfc7",
+      "credentials": {
+        "googleApi": {
+          "id": "w4djRnCAopKNq6Gz",
+          "name": "Sofia Chatbot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Check for errors and prepare Supabase update\nconst startMeta = ($('Extract Metadata')?.first()?.json || {});\nconst executionId = startMeta.execution_id || 'fallback-' + Date.now();\nconst startedAt = startMeta.timestamp || new Date().toISOString();\nconst now = new Date().toISOString();\nconst durationMs = new Date(now).getTime() - new Date(startedAt).getTime();\n\nconst item = $input.first();\nconst hasError = item.json._error ? true : false;\nconst errorMessage = hasError ? (item.json._error.message || item.json._error.error || '') : '';\nconst errorStack = hasError ? (item.json._error.stack || '') : '';\n\nreturn {\n  execution_id: executionId,\n  status: hasError ? 'failed' : 'completed',\n  completed_at: now,\n  duration_ms: durationMs,\n  erro_message: errorMessage,\n  erro_stack: errorStack\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1344,
+        2672
+      ],
+      "id": "159aceec-7917-4e79-8146-6a634d0e47ff",
+      "name": "Error Check AIO"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "monitoramento_lp_audit_log",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "execution_id",
+              "condition": "eq",
+              "keyValue": "={{ $json.execution_id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "={{ $json.status }}"
+            },
+            {
+              "fieldId": "completed_at",
+              "fieldValue": "={{ $json.completed_at }}"
+            },
+            {
+              "fieldId": "duration_ms",
+              "fieldValue": "={{ $json.duration_ms }}"
+            },
+            {
+              "fieldId": "erro_message",
+              "fieldValue": "={{ $json.erro_message }}"
+            },
+            {
+              "fieldId": "erro_stack",
+              "fieldValue": "={{ $json.erro_stack }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1584,
+        2672
+      ],
+      "id": "5d37f448-ffb8-45a9-9a80-69a234ed93e3",
+      "name": "Supabase Update AIO",
+      "credentials": {
+        "supabaseApi": {
+          "id": "KrO5cgJeimjwnCdU",
+          "name": "PerrettoProd"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Extract Metadata",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Metadata": {
+      "main": [
+        [
+          {
+            "node": "Supabase Insert Start",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Scrape Website1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Scrape AIO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Create a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a message": {
+      "main": [
+        [
+          {
+            "node": "Error Check CRO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Check CRO": {
+      "main": [
+        [
+          {
+            "node": "Supabase Update CRO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scrape Website1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code in JavaScript3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Technical Audit1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript3": {
+      "main": [
+        [
+          {
+            "node": "Content Audit1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Technical Audit1": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Content Audit1": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate1": {
+      "main": [
+        [
+          {
+            "node": "Gerar HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gerar HTML": {
+      "main": [
+        [
+          {
+            "node": "CloudConvert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CloudConvert": {
+      "main": [
+        [
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload file": {
+      "main": [
+        [
+          {
+            "node": "Google Chat1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Chat1": {
+      "main": [
+        [
+          {
+            "node": "Error Check SEO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Check SEO": {
+      "main": [
+        [
+          {
+            "node": "Supabase Update SEO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scrape AIO": {
+      "main": [
+        [
+          {
+            "node": "Clean HTML AIO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clean HTML AIO": {
+      "main": [
+        [
+          {
+            "node": "AIO Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AIO Agent": {
+      "main": [
+        [
+          {
+            "node": "Google Chat AIO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Chat AIO": {
+      "main": [
+        [
+          {
+            "node": "Error Check AIO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Check AIO": {
+      "main": [
+        [
+          {
+            "node": "Supabase Update AIO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Technical Audit1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Content Audit1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AIO Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "errorWorkflow": "vPc4W9QJivVmwjml"
+  },
+  "versionId": "5c230f59-16c6-4898-9f68-c2bc68ca170a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2f313a0f8d4301cb30bfc2eed9002e609662e65bab98f31e975fc08b9d2f64ce"
+  },
+  "id": "af23bRYAKwHUcIpO",
+  "tags": []
+}

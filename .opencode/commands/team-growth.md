@@ -8,6 +8,6 @@ Ative o Growth Strike Team completo:
 2. @cro-otimizacao — pipeline de experimentos e otimizacao de funil
 3. @midia-paga — campanhas pagas e aquisicao
 4. @seo-visibilidade — SEO tecnico e AI Visibility
-5. @copy-content — criativos e landing pages
+5. @copy-orchestrator — criativos e landing pages via sub-agentes especializados
 
 Missão: Acelerar aquisição e conversão. Pergunte ao usuário qual o objetivo de crescimento, métricas atuais e prazo.

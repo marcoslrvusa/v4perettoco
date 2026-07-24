@@ -1,0 +1,2552 @@
+{
+  "name": "[SIGNOR] SDR IA",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0d9377f3-acbb-49ed-9254-ef9e3e561465",
+              "name": "texto",
+              "value": "={{ \n  $json.text \n  || $json.content \n  || $('camposIniciais1').first().json.content.mensagem \n  || '[MÍDIA RECEBIDA]'\n}}",
+              "type": "string"
+            },
+            {
+              "id": "78a5682d-daae-4215-8a53-4d37f86879c6",
+              "name": "created_at",
+              "value": "={{ $('Switch5').item.json.created_at }}",
+              "type": "string"
+            },
+            {
+              "id": "aa04bf46-304e-4193-934a-841b87d41024",
+              "name": "nomeCliente",
+              "value": "={{ $('Switch5').item.json.nomeCliente }}",
+              "type": "string"
+            },
+            {
+              "id": "4ac50e30-dfd2-4ebe-841a-1bb5f655fc81",
+              "name": "telefoneCliente",
+              "value": "={{ $('Switch5').item.json.telefoneCliente }}",
+              "type": "string"
+            },
+            {
+              "id": "a7c4ddc3-1d6b-429e-8706-fe00f23fe97d",
+              "name": "idMensagem",
+              "value": "={{ $('Switch5').item.json.idMensagem }}",
+              "type": "string"
+            },
+            {
+              "id": "72821ef6-7a83-4087-b9d1-c355681195de",
+              "name": "sessionID",
+              "value": "={{ $('Switch5').item.json.sessionID }}",
+              "type": "string"
+            },
+            {
+              "id": "e7deff42-920f-43fb-b736-077f4587e226",
+              "name": "followup",
+              "value": "={{ $('Switch5').item.json.followup }}",
+              "type": "string"
+            },
+            {
+              "id": "73432aa6-b89c-4b4f-b763-39b8bd471826",
+              "name": "interf",
+              "value": "={{ $('Switch5').item.json['interf.humana'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1899bee2-9c08-4cf5-b1f0-917657d0167e",
+      "name": "Filtra Webhook",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2288,
+        1104
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('camposIniciais1').item.json.whatsapp.evo.server_url }}/chat/getBase64FromMediaMessage/{{ encodeURIComponent($('No Operation, do nothing').item.json.whatsapp.evo.nomeInstancia) }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $('camposIniciais1').item.json.body['apikey-instance'] }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"message\": {\n        \"key\": {\n            \"id\":  \"{{ $('WhatsApp Trigger1').item.json.messages[0].id }}\"\n        }\n    },\n    \"convertToMp4\": true\n} ",
+        "options": {}
+      },
+      "id": "f4f66569-21a7-440a-b7c6-c62ac7f8f9fb",
+      "name": "Mensagem de Audio",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -3312,
+        896
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64",
+        "options": {
+          "fileName": "audio",
+          "mimeType": "={{ $json.mimetype }}"
+        }
+      },
+      "id": "d99b4e4c-0e90-424e-bdc4-517ba4593370",
+      "name": "Converter Áudio",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        -3136,
+        896
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2f8e1fbf-9134-4b48-be29-066509e021f5",
+              "name": "telefone",
+              "value": "={{ $('camposIniciais1').item.json.meta.telefoneCliente.toString() }}",
+              "type": "string"
+            },
+            {
+              "id": "a6004904-d9e1-4627-be79-d2a5b073d44f",
+              "name": "text",
+              "value": "={{ $('camposIniciais1').item.json.content.mensagem }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "11038624-ab9f-434e-b698-6ca5fbc7537c",
+      "name": "Filta Msg App",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3312,
+        1040
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "id": "668a4085-1155-4f66-9cb4-af21091fb497",
+      "name": "OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        -2928,
+        896
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "0gfrMoNokOXtnvLg",
+          "name": "OpenAi Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "id": "101c3ff7-e997-43bb-8e99-fe82746c5993",
+                    "leftValue": "={{ $('camposIniciais1').item.json.content.tipoMensagem }}",
+                    "rightValue": "audioMessage",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "audioMessage"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "id": "38226af4-80fe-4155-9ceb-2379f44e29ed",
+                    "leftValue": "={{ $('camposIniciais1').item.json.content.tipoMensagem }}",
+                    "rightValue": "conversation",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "conversation"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "id": "300366d9-2416-4cf4-93c3-e48c8761c60f",
+                    "leftValue": "={{ $('camposIniciais1').item.json.content.tipoMensagem }}",
+                    "rightValue": "imageMessage",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "imageMessage"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "id": "f33566fd-3eb9-45f4-934a-3a39e2adca6c",
+                    "leftValue": "={{ $('camposIniciais1').item.json.content.tipoMensagem }}",
+                    "rightValue": "documentMessage",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "documentMessage"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "id": "861f194f-54fd-433d-994b-3281788f7efe",
+      "name": "Switch5",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [
+        -3600,
+        1072
+      ]
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -5248,
+        1232
+      ],
+      "id": "09aae4ad-25f5-4a63-ad51-42cd689943fd",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "amount": "={{ $('camposIniciais1').item.json.app.debouncerTime }}"
+      },
+      "id": "60f09f4d-afe4-41ca-b64f-2518e181761e",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1584,
+        1216
+      ],
+      "webhookId": "496bdab3-00e9-44b1-baba-e25afca8235f"
+    },
+    {
+      "parameters": {
+        "model": "gpt-4.1",
+        "options": {
+          "temperature": 0.3
+        }
+      },
+      "id": "a9aa6bfc-12c8-4275-8b00-07da9933fabc",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        -464,
+        1232
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "0gfrMoNokOXtnvLg",
+          "name": "OpenAi Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "478e388a-0535-42aa-a779-f9891064a966",
+      "name": "NoOp.1",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -1584,
+        944
+      ]
+    },
+    {
+      "parameters": {
+        "content": "Configure seu Prompt",
+        "height": 223.25452635785376,
+        "width": 180.90155202154455,
+        "color": 7
+      },
+      "id": "8d7d73d2-58e0-4e70-858c-3023d4012fc6",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -5504,
+        912
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b7158aa0-84e0-44b1-8629-bf23fb4c0766",
+              "name": "=messages",
+              "value": "={{ $json.message.map(buffer => JSON.parse(buffer).message).join('\\n') }}\n{{ (() => { \n    try {\n        return $('camposIniciais1').item.json.content.quoted || \"\"; \n    } catch (error) {\n        return \"\";\n    } \n})() }}\n",
+              "type": "string"
+            },
+            {
+              "id": "0c4c3b74-297a-4cf2-b2b8-0feefad328ec",
+              "name": "=sessionId",
+              "value": "={{ $('Switch5').item.json.sessionID }}",
+              "type": "string"
+            },
+            {
+              "id": "9791940f-68a1-4b68-acde-645d83af913f",
+              "name": "Followup",
+              "value": "False",
+              "type": "string"
+            },
+            {
+              "id": "101fe827-e372-428a-9daf-90a46b0522e5",
+              "name": "nomeCliente",
+              "value": "={{ $('camposIniciais1').item.json.meta.nomeCliente }}",
+              "type": "string"
+            },
+            {
+              "id": "0566e4da-9208-4610-bf8f-f7f977cc3d99",
+              "name": "telefoneCliente",
+              "value": "={{ $('camposIniciais1').item.json.meta.telefoneCliente }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "df25c3d4-59cc-4cbe-828c-505d2c6be7de",
+      "name": "messages1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1200,
+        1056
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "push",
+        "list": "={{ $('camposIniciais1').item.json.meta.telefoneCliente.toString() }}",
+        "messageData": "={{ JSON.stringify({ \n    \"message\": $json.texto, \n    \"timestamp\": $now,\n    \"message_id\": $('camposIniciais1').item.json.content.idMensagem\n}) }}",
+        "tail": true
+      },
+      "id": "9c42bcea-709d-4588-a8ff-a1d1ba60cfd5",
+      "name": "empilhaTexto1",
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        -2144,
+        1104
+      ],
+      "credentials": {
+        "redis": {
+          "id": "9eTAwFRBf0NrGA0c",
+          "name": "Adplan-bot-memory"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "message",
+        "key": "={{ $('camposIniciais1').item.json.meta.telefoneCliente.toString() }}",
+        "options": {}
+      },
+      "id": "e3c50388-f75d-4f25-ac4b-028ee7fb83ea",
+      "name": "Obtem1",
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        -1952,
+        1104
+      ],
+      "credentials": {
+        "redis": {
+          "id": "9eTAwFRBf0NrGA0c",
+          "name": "Adplan-bot-memory"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "={{ $('camposIniciais1').item.json.meta.telefoneCliente.toString() }}"
+      },
+      "id": "4669f398-a558-44b7-a59f-60cbad50b429",
+      "name": "Deleta1",
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        -1440,
+        1104
+      ],
+      "credentials": {
+        "redis": {
+          "id": "9eTAwFRBf0NrGA0c",
+          "name": "Adplan-bot-memory"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "aa4d5d29-e6f1-4bce-b5ff-4575b553a077",
+              "name": "systemMessageAgente",
+              "value": "=<regra_confinamento_absoluto>\n  RESTRIÇÃO TOTAL DE CONHECIMENTO (ANTI-ALUCINAÇÃO):\n  1. Seu universo de conhecimento se limita EXCLUSIVAMENTE ao conteúdo deste prompt. Ignore qualquer conhecimento prévio do mundo.\n  2. NUNCA invente preços, prazos, especificações técnicas, serviços ou unidades que não estejam expressamente descritos aqui.\n  3. Se o cliente fizer uma pergunta fora do conteúdo que está em <prompt_assistente>, NÃO TENTE ADIVINHAR.\n  4. Aja como um filtro: responda apenas \"Essa é uma ótima pergunta técnica. Vou registrar aqui para que o nosso consultor especialista te responda com precisão assim que assumir o atendimento.\" e siga o fluxo de coleta de dados.\n  5. CRÍTICO: Mesmo que o cliente pergunte sobre preço, valor, orçamento, investimento, pagamento, entrada, parcelamento ou valor por m², você NUNCA pode informar números, faixas, estimativas ou condições comerciais. Nesses casos, informe que isso será tratado pelo consultor e continue apenas a qualificação.\n</regra_confinamento_absoluto>\n\n<prompt_assistente>\n\n  <identidade_assistente>\n    <empresa>Signor Concretos (+30 anos)</empresa>\n    <persona>Assistente de Qualificação</persona>\n    <objetivo>Qualificar projetos de obra (Industrial, Comercial, Agro, Institucional, etc.) coletando os dados mínimos para que a equipe comercial possa atuar, sem fornecer preços, orçamentos ou condições comerciais.</objetivo>\n    <tom>Consultivo, direto, humano, eficiente e profissional.</tom>\n  </identidade_assistente>\n\n  <regras_de_ouro_prioridade_zero>\n    <regra_prioridade_maxima_absoluta>\n      ORDEM DE PRIORIDADE OBRIGATÓRIA:\n      1. Proibição absoluta de passar orçamento, preço, valor estimado, investimento, condições de pagamento ou preço por m².\n      2. Não repetir perguntas já respondidas.\n      3. Coletar apenas os dados mínimos para o consultor.\n      4. Encerrar corretamente conforme o fluxo.\n\n      Se qualquer parte do prompt entrar em conflito com a regra de proibição comercial, a proibição comercial SEMPRE prevalece.\n    </regra_prioridade_maxima_absoluta>\n\n    <regra_proibicao_comercial_absoluta>\n      CRÍTICO:\n      O assistente é apenas um Qualificador de Atendimento.\n\n      Ele NUNCA pode informar ao cliente:\n      - preço\n      - orçamento\n      - estimativa de investimento\n      - valor total da obra\n      - cálculo de valor do projeto\n      - valor por m²\n      - faixa de preço aplicada ao projeto do cliente\n      - condições de pagamento\n      - parcelamento\n      - entrada\n      - medições financeiras\n      - cronograma financeiro\n      - qualquer referência monetária aplicada ao caso do cliente\n\n      Isso vale MESMO QUE:\n      - o cliente peça diretamente\n      - o cliente insista\n      - o cliente envie metragem\n      - o cliente envie medidas como 20x30, 30x70, etc.\n      - o cliente envie projeto, planta, foto ou PDF\n      - exista alguma referência interna de preço médio por m² em dados da empresa\n\n      Nesses casos, use apenas respostas como:\n      \"Essa parte de valores e condições é tratada pelo nosso consultor comercial. Vou adiantar seu atendimento e registrar suas informações para ele te passar isso com precisão.\"\n      ou\n      \"Para valores e condições comerciais, o consultor responsável vai te passar a orientação correta. Vou só confirmar as informações da obra para adiantar seu atendimento.\"\n\n      Após isso:\n      - NÃO informe nenhum número\n      - NÃO faça conta de preço\n      - NÃO multiplique m² por nenhum valor\n      - NÃO gere estimativa\n      - NÃO gere orçamento preliminar\n      - Continue apenas a coleta dos dados faltantes do fluxo\n    </regra_proibicao_comercial_absoluta>\n\n    <regra_anti_reset_de_conversa>\n      CRÍTICO - VERIFICAÇÃO DE ESTADO:\n      1. Analise o histórico: O Cliente já informou os dados básicos? Você já enviou o \"Resumo da Obra\"?\n      2. SE o Cliente enviar um e-mail, telefone ou arquivo APÓS o resumo, você deve APENAS responder: \"Perfeito! Já anotei aqui e atualizei seu consultor com essa informação adicional. Ele entrará em contato em breve.\"\n      3. É ESTRITAMENTE PROIBIDO reiniciar perguntas como \"Qual o tipo de construção?\" se o histórico mostrar que isso já foi respondido há 1 ou 2 dias.\n      4. Se o histórico indicar que o cliente já foi encaminhado, aja apenas como um confirmador de recebimento de dados extras.\n    </regra_anti_reset_de_conversa>\n\n    <regra_higienizacao_nome>\n       O sistema informou que o nome bruto do WhatsApp é: \"{{ $('camposIniciais1').first().json.meta.nomeCliente }}\".\n\n       PASSO 1: EXTRAÇÃO AGRESSIVA (Prioridade Máxima):\n       Analise a string e tente isolar o Primeiro Nome Humano, ignorando sobrenomes, cargos, emojis ou nomes de empresa após separadores.\n\n       Exemplos de como você deve processar:\n       - Entra: \"Guilherme Passos | V4 Company\" -> Sai: \"Guilherme\" (VÁLIDO)\n       - Entra: \"João - Padaria Central\" -> Sai: \"João\" (VÁLIDO)\n       - Entra: \"Maria (Arquiteta)\" -> Sai: \"Maria\" (VÁLIDO)\n       - Entra: \"Carlos Silva\" -> Sai: \"Carlos\" (VÁLIDO)\n\n       PASSO 2: VALIDAÇÃO DE ERRO:\n       Apenas marque como INVÁLIDO se a string inteira for genérica, ininteligível ou não contiver nome humano.\n       - Entra: \"Loja de Materiais\" -> Sai: INVÁLIDO.\n       - Entra: \"🦁\" -> Sai: INVÁLIDO.\n       - Entra: \".\" -> Sai: INVÁLIDO.\n\n       PASSO 3: AÇÃO:\n       - Se achou um nome (Ex: Guilherme): Use o [Nome Limpo] no script de abertura.\n       - Se for INVÁLIDO: Ignore o nome e pergunte: \"Olá! Bem-vindo à Signor Concretos. Qual é o seu nome?\".\n    </regra_higienizacao_nome>\n\n    <regra_scanner_de_historico_obrigatorio>\n       PASSO ZERO - ANTES DE ESCREVER QUALQUER COISA:\n       1. LEIA todo o histórico da conversa.\n       2. Crie um checklist mental dos dados que JÁ temos:\n          - Tipo da obra? (Ex: Galpão, Casa, Prédio)\n          - Cidade/Local?\n          - Tamanho?\n          - Projeto?\n          - Prazo?\n\n       REGRA DE SILÊNCIO (CRÍTICA):\n       - Se o cliente já disse \"Sou de Porto Alegre\", É PROIBIDO perguntar a cidade.\n       - Se o cliente já disse \"Quero um galpão\", É PROIBIDO perguntar o tipo.\n       - Se o cliente disse \"Galpão em SP\", você já tem DOIS dados. Pule DUAS perguntas.\n\n       Não seja repetitivo:\n       - Não repita o que o cliente acabou de dizer.\n       - Apenas avance para o próximo dado faltante.\n    </regra_scanner_de_historico_obrigatorio>\n\n    <regra_proibicao_repeticao_nome_e_saudacao>\n      VERIFICAÇÃO OBRIGATÓRIA DE HISTÓRICO:\n      Antes de gerar qualquer resposta, olhe as mensagens anteriores.\n\n      SE você (o Agente) JÁ DISSE \"Olá\", \"Oi\", \"Tudo bem\" ou JÁ usou o nome do cliente uma vez:\n      1. É ESTRITAMENTE PROIBIDO usar o nome do cliente novamente.\n      2. É PROIBIDO dizer \"Olá\" ou fazer saudações novamente.\n      3. Seja direto e vá direto ao ponto.\n    </regra_proibicao_repeticao_nome_e_saudacao>\n\n    <regra_emojis>\n      Use no MÁXIMO 2 emojis durante a conversa inteira.\n    </regra_emojis>\n\n    <regra_retencao_contexto_inteligente>\n      NUNCA repita uma pergunta que já foi respondida.\n      CRÍTICO - DATAS E NÚMEROS:\n      Se o cliente responder apenas um número (Ex: \"2027\", \"2026\", \"600\") ou uma palavra curta (\"Sim\", \"Isso\"), ACEITE IMEDIATAMENTE. Não peça para ele elaborar a frase.\n    </regra_retencao_contexto_inteligente>\n\n    <regra_calculo_automatico_m2>\n      Se o cliente fornecer medidas (Ex: \"20x30\", \"30x70\"), calcule apenas a área total em m² para fins de qualificação.\n      Exemplo: \"30x70\" = 2.100m².\n\n      CRÍTICO:\n      - NUNCA calcule preço\n      - NUNCA multiplique metragem por valor\n      - NUNCA transforme metragem em orçamento\n      - NUNCA envie estimativa financeira\n      - Use a metragem apenas para continuar o fluxo de qualificação\n    </regra_calculo_automatico_m2>\n\n    <regra_gerenciamento_expectativa_prazo_curto>\n      GATILHO: Se o cliente pedir prazo < 60 dias, \"30 dias\", \"Urgente\", \"Pra ontem\".\n      RESPOSTA OBRIGATÓRIA: \"Entendido a urgência. Importante alinhar que, como trabalhamos com pré-moldado, existem processos de fabricação e cura antes da montagem. Mas vou passar essa prioridade ao consultor para verificar a viabilidade.\"\n      NÃO PROMETA que consegue entregar em 30 dias.\n    </regra_gerenciamento_expectativa_prazo_curto>\n\n    <regra_arquivos_sucesso>\n        RECEBIMENTO DE ARQUIVOS:\n        Se o cliente enviar uma imagem, planta ou PDF:\n        1. CONFIRME o recebimento com segurança.\n        2. SCRIPT: \"Recebi seu arquivo aqui! Já anexei ao seu cadastro para o nosso consultor analisar.\"\n        3. Considere automaticamente que o cliente POSSUI PROJETO (Pule perguntas sobre se ele tem projeto).\n    </regra_arquivos_sucesso>\n\n    <regra_email_opcional>\n      O e-mail é 100% OPCIONAL. Se o cliente não quiser, aceite e encerre.\n    </regra_email_opcional>\n\n    <regra_telefone_automatico_n8n>\n      NÃO PERGUNTE O WHATSAPP. Já temos o número.\n    </regra_telefone_automatico_n8n>\n\n    <regra_vocabulario_proibido>\n      NUNCA use a palavra \"Lead\". Use \"Consultor\" ou \"Especialista\".\n    </regra_vocabulario_proibido>\n\n    <regra_perguntas_comerciais>\n      Se o cliente perguntar sobre:\n      - preço\n      - valor\n      - orçamento\n      - investimento\n      - entrada\n      - parcelamento\n      - pagamento\n      - custo por m²\n      - faixa de preço\n      - \"quanto ficaria\"\n      - \"me passa uma ideia de valor\"\n      - \"quanto custa esse projeto\"\n\n      Você deve:\n      1. NÃO responder com valores.\n      2. Informar que essa parte será tratada pelo consultor.\n      3. Continuar a coleta do próximo dado faltante, se ainda houver dados faltando.\n      4. Se todos os dados já estiverem completos, seguir para coleta de e-mail opcional ou encerramento final.\n\n      Exemplos válidos:\n      - \"Essa parte de valores e condições é tratada pelo nosso consultor comercial. Para adiantar seu atendimento, pode me confirmar a cidade da obra?\"\n      - \"Para valores e condições, o consultor vai te passar a orientação correta. Só preciso confirmar o tamanho aproximado da obra.\"\n      - \"Os valores são tratados diretamente pelo consultor responsável. Vou deixar seu atendimento adiantado com as informações da obra.\"\n    </regra_perguntas_comerciais>\n  </regras_de_ouro_prioridade_zero>\n\n  <fluxo_de_conversa>\n\n    <passo_1_abertura>\n      <condicao_unica>Use este script APENAS se o histórico estiver vazio ou se for a PRIMEIRA mensagem.</condicao_unica>\n      <script>Olá, [Nome Limpo]! Sou da Signor Concretos. Como posso ajudar?</script>\n    </passo_1_abertura>\n\n    <passo_2_triagem_nao_comercial>\n      <instrucao>Se o assunto NÃO for sobre obra, construção, projeto, orçamento de obra ou atendimento comercial relacionado à construção, utilize estritamente os dados abaixo e encerre o atendimento.</instrucao>\n\n      <setor_rh>\n        <gatilho>Vagas, currículo, trabalhar na empresa.</gatilho>\n        <resposta>Para RH e Vagas, você pode:\n        - Ligar: 0800 000 1537\n        - WhatsApp: 558000001537\n        - E-mail: rh@signor.ind.br</resposta>\n      </setor_rh>\n\n      <setor_compras>\n        <gatilho>Fornecedores, venda de materiais, serviços para a Signor.</gatilho>\n        <resposta>Para assuntos de Compras e Fornecedores, por favor, envie um e-mail para: compras@signor.ind.br</resposta>\n      </setor_compras>\n\n      <setor_financeiro_contabil>\n        <gatilho>Notas fiscais, pagamentos, boletos, contabilidade.</gatilho>\n        <resposta>Para o Financeiro ou Contábil, contate:\n        - Telefone: (54) 3385-2424 ou (54) 3385-1050\n        - E-mail: gestao.financeiro@signor.ind.br</resposta>\n      </setor_financeiro_contabil>\n\n      <setor_atendimento_geral>\n        <gatilho>Recepção, reclamações, outros assuntos não listados.</gatilho>\n        <resposta>Para este assunto, nossa recepção central pode te ajudar:\n        - Ligar ou WhatsApp: 558000001537\n        - E-mail: atendimento@signor.ind.br</resposta>\n      </setor_atendimento_geral>\n    </passo_2_triagem_nao_comercial>\n\n    <passo_3_filtro_rapido>\n      <gatilho_negativa_direta>Se o cliente pedir APENAS \"Muro\" ou \"Reforma\".</gatilho_negativa_direta>\n      <script_recusa>No momento, a Signor Concretos foca exclusivamente em obras industriais, comerciais e agrícolas completas. Não executamos apenas muros ou reformas. Agradecemos!</script_recusa>\n      <acao>ENCERRAR.</acao>\n    </passo_3_filtro_rapido>\n\n    <passo_4_fluxo_obra>\n      <instrucao_mestra>\n          Verifique no HISTÓRICO quais dados FALTAM e pergunte APENAS o próximo da lista.\n          NÃO REPITA PERGUNTAS DE DADOS JÁ INFORMADOS.\n      </instrucao_mestra>\n\n      <lista_de_dados_sequencial>\n          1. TIPO (Galpão, Comercial, etc)\n          2. LOCAL (Cidade)\n          3. TAMANHO (m² ou medidas)\n          4. PROJETO (Tem projeto/arquivo? - Verifique se já enviou arquivo)\n          5. PRAZO (Quando quer começar?)\n      </lista_de_dados_sequencial>\n\n      <logica_de_pergunta>\n         - Falta o TIPO? -> \"Pode me dizer qual o tipo de construção? (Ex: Galpão Industrial, Comercial, Agrícola...)\"\n         - Tem Tipo, falta LOCAL? -> \"Entendido. E qual a cidade onde a obra será realizada?\"\n         - Tem Local, falta TAMANHO? -> \"Qual o tamanho aproximado da obra (m² ou medidas)?\"\n         - Tem Tamanho, falta PROJETO? -> \"Você já possui um projeto ou esboço? (Se tiver, pode me enviar a imagem ou PDF por aqui mesmo).\"\n         - Tem Projeto (ou Arquivo), falta PRAZO? -> \"Para finalizar: Qual a previsão para o início da obra?\"\n      </logica_de_pergunta>\n\n      <logica_se_cliente_perguntar_preco_no_meio_do_fluxo>\n        Se o cliente perguntar preço, valor, orçamento, investimento ou pagamento antes de concluir a qualificação:\n        1. NÃO responda com números.\n        2. Diga que isso será tratado pelo consultor.\n        3. Faça imediatamente a próxima pergunta faltante do fluxo.\n\n        Exemplo:\n        \"Essa parte de valores e condições é tratada pelo nosso consultor comercial. Para adiantar seu atendimento, pode me confirmar a cidade da obra?\"\n      </logica_se_cliente_perguntar_preco_no_meio_do_fluxo>\n    </passo_4_fluxo_obra>\n\n    <passo_4b_fluxo_casas>\n      <script_filtro_casas>\n        <pergunta>Para projetos residenciais, trabalhamos apenas com lotes a partir de 10 unidades (ex: vilas, alojamentos). Este seria o seu caso?</pergunta>\n      </script_filtro_casas>\n\n      <condicao_sim_10_mais>\n        <acao>Voltar para <passo_4_fluxo_obra> e coletar os dados restantes.</acao>\n      </condicao_sim_10_mais>\n\n      <condicao_nao_1_casa>\n        <script>Entendido. No momento, não atendemos unidades individuais, apenas múltiplas unidades. Agradecemos seu contato!</script>\n        <acao>ENCERRAR.</acao>\n      </condicao_nao_1_casa>\n    </passo_4b_fluxo_casas>\n\n    <passo_5_coleta_email_obrigatoria>\n      <gatilho_analise_intencao>\n          Analise a ÚLTIMA mensagem do cliente:\n          - Se contiver um \"@\" (arroba) ou formato de e-mail: NÃO PERGUNTE MAIS NADA. Agradeça e vá para o encerramento.\n          - Se ele disse \"não\", \"não tenho\", \"prefiro não\": NÃO INSISTA. Agradeça e vá para o encerramento.\n      </gatilho_analise_intencao>\n\n      <script_coleta>\n        (Use APENAS se o cliente ainda não informou e-mail e não recusou na mensagem anterior)\n        Perfeito. Antes de finalizar e enviar o resumo ao consultor: Você gostaria de deixar um e-mail para registro? (É opcional).\n      </script_coleta>\n    </passo_5_coleta_email_obrigatoria>\n\n    <passo_6_encerramento_final>\n      <gatilho>IMEDIATAMENTE após o cliente fornecer o e-mail ou recusar.</gatilho>\n\n      <regra_validacao_final_metragem>\n        SE o tamanho informado for inferior a 150m² (e não for condomínio de casas):\n        Script: \"Agradecemos as informações. No entanto, para garantir a viabilidade técnica e logística do sistema pré-moldado, a Signor atende projetos apenas a partir de 150m². No momento não conseguiremos dar sequência ao seu orçamento. Agradecemos o interesse!\"\n        Ação: ENCERRAR IMEDIATAMENTE sem enviar ao consultor.\n      </regra_validacao_final_metragem>\n\n      <script_final>\n        Resumo da Obra:\n        - Tipo: [Tipo]\n        - Local: [Local]\n        - Tamanho: [m²]\n        - Prazo: [Prazo]\n\n        Encaminhei tudo ao nosso consultor comercial, que entrará em contato por este WhatsApp em breve. Agradecemos seu contato!\n      </script_final>\n      <acao>ENCERRAR.</acao>\n    </passo_6_encerramento_final>\n\n  </fluxo_de_conversa>\n\n  <base_de_conhecimento>\n    <item_preco_valor_pagamento>\n      <gatilho>Se perguntar \"preço\", \"valor\", \"orçamento\", \"investimento\", \"m²\", \"quanto custa\", \"parcelamento\", \"entrada\", \"pagamento\".</gatilho>\n      <resposta>\n      Essa parte de valores e condições é tratada pelo nosso consultor comercial, porque depende da análise correta do projeto e das características da obra.\n      Vou adiantar seu atendimento e registrar as informações para ele te passar isso com precisão.\n      </resposta>\n\n      <regra_critica>\n        Mesmo que exista referência interna média de preço por m² no contexto da empresa:\n        - isso NÃO pode ser enviado ao cliente\n        - isso NÃO pode ser usado para estimar o projeto do cliente\n        - isso NÃO pode ser transformado em orçamento\n        - isso NÃO pode ser mencionado em forma de faixa, aproximação ou referência\n      </regra_critica>\n    </item_preco_valor_pagamento>\n\n    <item_m2_pequeno>\n      <gatilho>Se mencionar m² pequeno (<150m²).</gatilho>\n      <resposta>Para essa metragem, o sistema pré-moldado acaba não tendo viabilidade logística e técnica. Atendemos apenas projetos a partir de 150m².</resposta>\n      <acao>ENCERRAR.</acao>\n    </item_m2_pequeno>\n\n    <item_desenho_projeto_3d>\n      <gatilho>3D, desenho, maquete, visualização, projeto.</gatilho>\n      <resposta>Sim! Após o contato de um dos nossos representantes e o entendimento do projeto, será desenvolvido um 3D para seu entendimento do layout da obra.</resposta>\n    </item_desenho_projeto_3d>\n\n    <item_prazo_execucao>\n      <resposta>O prazo depende do volume da fábrica e do projeto. O consultor dará a estimativa exata.</resposta>\n    </item_prazo_execucao>\n\n    <item_recuo_divisa>\n      <resposta>Ideal 15-20cm de recuo. Rente à divisa exige custo extra em pilares.</resposta>\n    </item_recuo_divisa>\n\n    <item_comparativo_alvenaria>\n      <resposta>Pré-moldado é 3-4x mais rápido, obra limpa, isolamento superior.</resposta>\n    </item_comparativo_alvenaria>\n\n    <item_comparativo_metalico>\n      <resposta>Concreto tem maior durabilidade, resistência a fogo/vento e zero manutenção comparado ao metálico.</resposta>\n    </item_comparativo_metalico>\n  </base_de_conhecimento>\n\n  <tratamento_de_erros_e_seguranca>\n    <condicao_irritacao>\n      <gatilho>Se o cliente irritar (\"robô\", \"repetitivo\").</gatilho>\n      <acao>ENCERRAR E TRANSFERIR.</acao>\n    </condicao_irritacao>\n  </tratamento_de_erros_e_seguranca>\n\n</prompt_assistente>",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "bcf9b372-6ad8-4a2b-9e76-2199346778e2",
+      "name": "Prompts1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -5248,
+        976
+      ],
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "id": "421e0c78-e5cf-40ad-a3e3-b9a6e476bb36",
+      "name": "UnificaDados1",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        -4832,
+        1120
+      ],
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f9ecf2fc-da2c-4f44-897a-5dc0a2f2f379",
+              "name": "meta.telefoneCliente",
+              "value": "={{ $('WhatsApp Trigger1').item.json.contacts[0].wa_id }}",
+              "type": "string"
+            },
+            {
+              "id": "dab7ca54-c3d2-4a36-a9ca-a0ebbd375ef5",
+              "name": "meta.nomeCliente",
+              "value": "={{ $('WhatsApp Trigger1').item.json.contacts[0].profile.name }}",
+              "type": "string"
+            },
+            {
+              "id": "01238a36-6907-4aec-ab21-26345ed5fc96",
+              "name": "whatsapp.meta.phone_id",
+              "value": "={{ $json.metadata.phone_number_id }}",
+              "type": "string"
+            },
+            {
+              "id": "81612acf-1b66-4c8e-82e4-ce8c77b31334",
+              "name": "content.mensagem",
+              "value": "={{ \n  $json.messages?.[0]?.type === 'text'\n    ? ($json.messages?.[0]?.text?.body || '[TEXTO VAZIO]')\n  : $json.messages?.[0]?.type === 'image'\n    ? ($json.messages?.[0]?.image?.caption || '[IMAGEM RECEBIDA]')\n  : $json.messages?.[0]?.type === 'document'\n    ? ($json.messages?.[0]?.document?.caption || '[DOCUMENTO RECEBIDO]')\n  : $json.messages?.[0]?.type === 'video'\n    ? ($json.messages?.[0]?.video?.caption || '[VÍDEO RECEBIDO]')\n  : $json.messages?.[0]?.type === 'audio'\n    ? '[ÁUDIO RECEBIDO]'\n  : $json.messages?.[0]?.type === 'voice'\n    ? '[ÁUDIO RECEBIDO]'\n  : '[MÍDIA RECEBIDA]'\n}}",
+              "type": "string"
+            },
+            {
+              "id": "cc7dcfe1-8ad7-4fe8-93ec-8f643c7d08c7",
+              "name": "content.tipoMensagem",
+              "value": "={{ $json.messages[0].type === 'text' ? 'conversation' : $json.messages[0].type === 'audio' ? 'audioMessage' : $json.messages[0].type === 'image' ? 'imageMessage' : $json.messages[0].type === 'document' ? 'documentMessage' : $json.messages[0].type }}",
+              "type": "string"
+            },
+            {
+              "id": "2dfc64f4-b222-4ea7-b095-fdd96d9fcb95",
+              "name": "content.idMensagem",
+              "value": "={{ $json.messages[0].id }}",
+              "type": "string"
+            },
+            {
+              "id": "9d947263-3b68-4c63-88ba-ef1b9de22571",
+              "name": "empresa.nomeEmpresa",
+              "value": "UnicoCRM",
+              "type": "string"
+            },
+            {
+              "id": "255b9c45-7769-4d09-9c50-61dcdfb7c09d",
+              "name": "app.debouncerTime",
+              "value": "1",
+              "type": "string"
+            },
+            {
+              "id": "196aeb96-5c33-4dd7-9a4f-6bd40765b7fb",
+              "name": "doc.id",
+              "value": "1G3ca5La7WxEfZxpRYwyxhweknGlxRFxWPiwoUoP7eUY",
+              "type": "string"
+            },
+            {
+              "id": "fc7c5c8f-b505-4a43-ae07-51eea58d6f80",
+              "name": "linkPreview",
+              "value": false,
+              "type": "boolean"
+            },
+            {
+              "id": "e30bbf8c-d5da-4410-b875-8dfe4b301798",
+              "name": "Digitando",
+              "value": 2000,
+              "type": "number"
+            },
+            {
+              "id": "803009aa-3953-4aec-bb83-5a536f5c9000",
+              "name": "body.data.messageType",
+              "value": "={{ $json.messages[0].type === 'text' ? 'conversation' : $json.messages[0].type === 'audio' ? 'audioMessage' : $json.messages[0].type === 'image' ? 'imageMessage' : $json.messages[0].type === 'document' ? 'documentMessage' : $json.messages[0].type }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "581be0a3-76e5-42e9-b2e0-874eafd48ffb",
+      "name": "camposIniciais1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -5456,
+        976
+      ],
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "signor_leads",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "telefoneCliente",
+              "keyValue": "={{ $('camposIniciais1').item.json.meta.telefoneCliente }}"
+            }
+          ]
+        }
+      },
+      "id": "77bfab3e-1c81-453b-8c92-8df88a77b7c1",
+      "name": "getClient1",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -4672,
+        1120
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4e77cc7c-48f4-4cbe-94e7-6d211db67002",
+              "leftValue": "={{ $('getClient1').item.json.telefoneCliente }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "2d1fc471-9b4d-4b3c-9a5e-cab6c67d1c6c",
+      "name": "If5",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -4512,
+        1120
+      ],
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "action": "generate"
+      },
+      "id": "3264f2bc-758f-4a44-8873-33a8e562001d",
+      "name": "GeraUUID1",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        -4368,
+        1296
+      ],
+      "notesInFlow": false
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ \n  $json.message.length \n? $('camposIniciais1')?.item?.json?.content?.idMensagem \n  : JSON.parse($json.message?.[0] || '{}').message_id?.toString().trim() \n}}",
+                    "rightValue": "={{ $('camposIniciais1').item.json.content.idMensagem.toString().trim() }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEquals"
+                    },
+                    "id": "da9524b6-1ce9-474c-87c8-04e17de93d1f"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "nada a fazer"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2b9b7794-e8f6-45b5-8021-f59dbb747cb0",
+                    "leftValue": "={{ \n  $json.message && $json.message.length > 0\n    ? DateTime.fromISO(JSON.parse($json.message[$json.message.length - 1]).timestamp)\n    : null \n}}\n",
+                    "rightValue": "={{ $now.minus($('camposIniciais1').item.json.app.debouncerTime, 'seconds') }}",
+                    "operator": {
+                      "type": "dateTime",
+                      "operation": "before"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "proceder"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "esperar"
+        }
+      },
+      "id": "734ef1ff-6ba9-49a4-bca0-4ac2970633a5",
+      "name": "Switch1",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -1744,
+        1104
+      ]
+    },
+    {
+      "parameters": {
+        "content": "Configure seus dados",
+        "height": 223.25452635785376,
+        "width": 180.90155202154455,
+        "color": 7
+      },
+      "id": "a7777b17-e9d1-410d-8a45-5910e391a4a7",
+      "name": "Sticky Note57",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -6016,
+        912
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### Gerenciador SDR",
+        "height": 780,
+        "width": 2094,
+        "color": 4
+      },
+      "id": "63faef0a-a8ac-4d95-a6a2-36662f8e73be",
+      "name": "Sticky Note7",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        592,
+        48
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Histórico da Conversa:\n{{ $json.formattedHistory }}\n\nDados do Lead:\nNome: {{ $('camposIniciais1').first().json.meta.nomeCliente }}\nTelefone: {{ $('camposIniciais1').first().json.meta.telefoneCliente }}\n\nDados do Input Atual:\n- Tipo de Mensagem: {{ $('camposIniciais1').first().json.content.tipoMensagem }}\n- Tem Arquivo Anexado: {{ ['imageMessage', 'documentMessage'].includes($('camposIniciais1').first().json.content.tipoMensagem) ? \"SIM\" : \"NÃO\" }}",
+        "options": {
+          "systemMessage": "Você é um analista de qualidade (QA) da Signor Concretos.\nSua tarefa: Analisar o histórico e decidir se o lead está PRONTO para ser enviado ao CRM.\n\n---\n**CRITÉRIOS DE DADOS (OBRIGATÓRIOS):**\n1. TIPO DE OBRA (Não pode ser Muro/Reforma).\n2. LOCAL (Cidade).\n3. TAMANHO (m² ou medidas).\n4. STATUS PROJETO (Sim/Não/Em estudo/Arquivo Enviado).\n5. PRAZO (Data ou previsão).\n\n---\n**REGRA DE RETENÇÃO DE CONTEXTO (ANTI-RESUMO):**\nO consultor comercial precisa de TODOS os detalhes para fechar a venda. \n1. **NÃO RESUMA EXCESSIVAMENTE.** Ao preencher os campos, mantenha a riqueza de detalhes informada pelo cliente. \n2. Se o cliente especificou o uso do galpão, a altura, o tipo de negócio ou qualquer detalhe arquitetônico, INCLUA essa informação no campo `tipo_obra` ou no campo `observacoes_adicionais`.\n3. Preserve as medidas exatas e comentários adicionais sobre o terreno ou projeto.\n\n---\n**REGRA CRÍTICA - DETECÇÃO DE ARQUIVOS:**\nOlhe para o campo \"Tem Arquivo Anexado\" no input:\n- Se for \"SIM\": Considere OBRIGATORIAMENTE que o `status_projeto` é \"Sim (Arquivo Enviado)\". O envio de um arquivo conta como validação deste critério.\n\n---\n**REGRA CRÍTICA DE FLUXO (TRAVA DE E-MAIL):**\nO sistema **NÃO PODE** enviar o lead antes de finalizar a tentativa de coleta de e-mail.\n\nAnalise a ÚLTIMA mensagem do Agente e a ÚLTIMA do Cliente:\n\n* **CENÁRIO DE ESPERA (`is_mql: false`):**\n    Se o Agente acabou de perguntar \"Gostaria de deixar um e-mail?\" e o Cliente **AINDA NÃO RESPONDEU** (ou respondeu apenas o prazo antes dessa pergunta), você deve retornar `is_mql: false`.\n    *Motivo: Precisamos esperar a resposta sobre o e-mail para não criar duplicidade.*\n\n* **CENÁRIO DE APROVAÇÃO (`is_mql: true`):**\n    Se tem os 5 dados obrigatórios (Lembre-se: Arquivo conta como dado de projeto) E:\n    a) O cliente forneceu o e-mail.\n    b) O cliente disse \"não\", \"não tenho\" ou \"prefiro não\".\n    c) O cliente ignorou a pergunta e encerrou o papo.\n    d) O cliente enviou um ARQUIVO logo após a pergunta de projeto.\n\n---\n**Formato de Saída (JSON Plano OBRIGATÓRIO):**\n\n{\n  \"is_mql\": boolean, \n  \"reason\": \"Explique a decisão de forma curta.\",\n  \"name\": \"Nome validado do cliente\",\n  \"phone\": \"{{ $('camposIniciais1').first().json.meta.telefoneCliente }}\",\n  \"tipo_obra\": \"Mantenha os detalhes completos descritos pelo cliente. Ex: 'Galpão industrial para logística com docas'\",\n  \"local_obra\": \"PADRONIZAÇÃO OBRIGATÓRIA: Retorne APENAS o nome da Cidade e a sigla do Estado no formato 'Cidade/UF' (Ex: 'Passo Fundo/RS', 'São Paulo/SP'). Corrija a ortografia e capitalize as letras. Se o cliente informar bairros ou referências, IGNORE. Se não souber o estado, coloque apenas a Cidade corretamente escrita.\",\n  \"tamanho_m2\": \"Medidas exatas ou m² informados. Ex: '600m² (20x30)'\",\n  \"status_projeto\": \"string. Se 'Tem Arquivo Anexado' for SIM, preencha: 'Sim (Arquivo Enviado)'\",\n  \"prazo_obra\": \"A previsão informada e eventuais comentários de urgência\",\n  \"email\": \"string (Se recusou ou não informou, preencha 'Não informado')\",\n  \"observacoes_adicionais\": \"Capture AQUI qualquer outra informação útil dita na conversa (ex: dúvidas técnicas, objeções, detalhes do terreno, se é uma franquia, etc). Se não houver nada extra, deixe vazio.\"\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        896,
+        256
+      ],
+      "id": "6ed1b2e1-fc60-4fa5-b718-78decdcc6213",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o",
+        "options": {
+          "temperature": 0.1
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        768,
+        496
+      ],
+      "id": "a83ba04f-a99c-4166-93f4-c7ebcff6dcc8",
+      "name": "OpenAI Chat Model11",
+      "credentials": {
+        "openAiApi": {
+          "id": "0gfrMoNokOXtnvLg",
+          "name": "OpenAi Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1XqpEknEZ6Hyre3mtSscrOU2ucG7CKhnkfg16RoZStos",
+          "mode": "list",
+          "cachedResultName": "SDR IA",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XqpEknEZ6Hyre3mtSscrOU2ucG7CKhnkfg16RoZStos/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XqpEknEZ6Hyre3mtSscrOU2ucG7CKhnkfg16RoZStos/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [
+            "telefone"
+          ],
+          "schema": [
+            {
+              "id": "telefone",
+              "displayName": "telefone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Data",
+              "displayName": "Data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "resumo",
+              "displayName": "resumo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Observações",
+              "displayName": "Observações",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.5,
+      "position": [
+        1104,
+        480
+      ],
+      "id": "01bc8863-96aa-4de4-955b-416a187bdcbb",
+      "name": "UPDATE-Atendimentos ads Facebook",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "qKaxc79zoaCaXn3c",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('messages1').first().json.messages }}",
+        "options": {
+          "systemMessage": "=Abaixo está o histórico da conversa até agora. Use-o para ter contexto.\n\n--- HISTÓRICO ---\n{{ $json.formattedHistory }}\n--- FIM DO HISTÓRICO ---\n\n{{ $('Prompts1').first().json.systemMessageAgente }}"
+        }
+      },
+      "id": "3c2b6683-0c58-4031-a063-51c65805a3fe",
+      "name": "Vendedor Remo",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        -400,
+        1056
+      ]
+    },
+    {
+      "parameters": {
+        "tableId": "signor_leads",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "nomeCliente",
+              "fieldValue": "={{ $('camposIniciais1').item.json.meta.nomeCliente }}"
+            },
+            {
+              "fieldId": "telefoneCliente",
+              "fieldValue": "={{ $('camposIniciais1').item.json.meta.telefoneCliente }}"
+            },
+            {
+              "fieldId": "idMensagem",
+              "fieldValue": "={{ $('camposIniciais1').item.json.content.idMensagem }}"
+            },
+            {
+              "fieldId": "sessionID",
+              "fieldValue": "={{ $json.data }}"
+            }
+          ]
+        }
+      },
+      "id": "ca1554a9-2e6c-4dce-a1d7-ae10e563f5bd",
+      "name": "CreateUser1",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -4240,
+        1296
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Responde em Texto\n",
+        "height": 239,
+        "width": 929,
+        "color": 5
+      },
+      "id": "6d53896f-cd33-42b8-8b0f-dffe0120d2a5",
+      "name": "Sticky Note77",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        224,
+        1136
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "9432a5cd-37fc-4ba9-a0e3-c12017585807",
+              "leftValue": "={{ $('camposIniciais1').first().json.content.tipoMensagem }}",
+              "rightValue": "audioMessage",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "ca37518e-bf26-4ada-b611-6bc3b9614557",
+      "name": "If6",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        256,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "signor_leads",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "telefoneCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('camposIniciais1').first().json.meta.telefoneCliente.toString() }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "sessionID",
+              "fieldValue": "={{ $('getClient1').first().json.sessionID }}"
+            },
+            {
+              "fieldId": "last_interaction_at",
+              "fieldValue": "={{ $now.toISO() }}"
+            }
+          ]
+        }
+      },
+      "id": "620374a0-52f1-49e3-bed9-aea86a4ab058",
+      "name": "AtualizaUsuario1",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        864,
+        1216
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a93ec82e-1a83-4a35-a776-333c7d13221f",
+              "leftValue": "={{ $json.is_mql }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1456,
+        256
+      ],
+      "id": "44b1e46e-373f-46d3-8c6c-f4892e9a7e77",
+      "name": "If7"
+    },
+    {
+      "parameters": {
+        "tableId": "signor_chat_history",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "session_id",
+              "fieldValue": "={{ $json.sessionId }}"
+            },
+            {
+              "fieldId": "role",
+              "fieldValue": "human"
+            },
+            {
+              "fieldId": "content",
+              "fieldValue": "={{ $json.messages }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -992,
+        1056
+      ],
+      "id": "d71aa829-b69c-4451-9fe1-96d9ca306e02",
+      "name": "Save Human Message1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "signor_chat_history",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "session_id",
+              "fieldValue": "={{ $('messages1').first().json.sessionId }}"
+            },
+            {
+              "fieldId": "role",
+              "fieldValue": "ai"
+            },
+            {
+              "fieldId": "content",
+              "fieldValue": "={{ $json.output }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        48,
+        1136
+      ],
+      "id": "c1b36014-ed02-4f31-9aec-2d43058b5b3a",
+      "name": "Save AI Message1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "signor_chat_history",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "session_id",
+              "condition": "eq",
+              "keyValue": "={{ $('messages1').first().json.sessionId }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -816,
+        1056
+      ],
+      "id": "24db9c83-b16f-4017-b7ae-1b0419259ce0",
+      "name": "Get many rows1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const HOURS_LIMIT = 72; // Aumentado para cobrir gaps de fim de semana\nconst historyItems = $input.all();\nlet formattedHistory = \"\";\nconst now = new Date();\nconst cutoffTime = new Date(now.getTime() - (HOURS_LIMIT * 60 * 60 * 1000));\n\nif (historyItems.length > 0) {\n    // Ordenar por data para garantir cronologia\n    historyItems.sort((a, b) => new Date(a.json.created_at) - new Date(b.json.created_at));\n\n    for (const item of historyItems) {\n        const msgDateStr = item.json.created_at || item.json.timestamp;\n        if (msgDateStr) {\n            const msgDate = new Date(msgDateStr);\n            if (msgDate > cutoffTime) {\n                const role = item.json.role === 'human' ? 'Cliente' : 'SDR';\n                const cleanContent = (item.json.content || \"\").replace(/\\n/g, \" \");\n                formattedHistory += `${role}: ${cleanContent}\\n`;\n            }\n        }\n    }\n}\nreturn [{ json: { formattedHistory } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -640,
+        1056
+      ],
+      "id": "e132fb20-96ca-4c92-b8a1-512647ed929d",
+      "name": "Code in JavaScript3"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1. Pega a saída bruta do Agente\nconst rawOutput = $input.first().json.output || \"\";\n\nlet aiData = {};\n\ntry {\n  // 2. Limpeza Robusta do JSON (Remove ```json e quebras de linha extras)\n  // Procura o primeiro '{' e o último '}' para isolar o objeto\n  const startIndex = rawOutput.indexOf('{');\n  const endIndex = rawOutput.lastIndexOf('}');\n\n  if (startIndex !== -1 && endIndex !== -1) {\n    const jsonString = rawOutput.substring(startIndex, endIndex + 1);\n    aiData = JSON.parse(jsonString);\n  } else {\n    throw new Error(\"JSON não encontrado na resposta da IA\");\n  }\n\n} catch (error) {\n  // Se falhar o parse, assumimos que NÃO é MQL para segurança\n  console.log(\"Erro ao ler JSON da IA:\", error.message);\n  aiData = { is_mql: false, reason: \"Erro técnico na leitura da IA\" };\n}\n\n// 3. Monta o objeto final garantindo que os campos existam (mesmo que nulos)\n// Isso evita que o fluxo quebre se a IA mandar um JSON incompleto\nreturn [{\n  json: {\n    // Controle\n    is_mql: aiData.is_mql === true, // Garante booleano\n    reason: aiData.reason || \"Motivo não especificado\",\n\n    // Dados do Lead (Usa || null para evitar undefined)\n    name: aiData.name || null,\n    phone: aiData.phone || null,\n    email: aiData.email || null,\n    \n    // Dados da Obra\n    tipo_obra: aiData.tipo_obra || \"Não informado\",\n    local_obra: aiData.local_obra || \"Não informado\",\n    tamanho_m2: aiData.tamanho_m2 || \"Não informado\",\n    status_projeto: aiData.status_projeto || \"Não informado\",\n    prazo_obra: aiData.prazo_obra || \"Não informado\"\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1264,
+        256
+      ],
+      "id": "cb3924c4-e742-4cd4-ad37-caeeb45ea232",
+      "name": "Code in JavaScript4"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "signor_leads",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "sessionID",
+              "condition": "eq",
+              "keyValue": "={{ $('getClient1').first().json.sessionID }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "lead_created_in_crm",
+              "fieldValue": "true"
+            },
+            {
+              "fieldId": "bitrix_id",
+              "fieldValue": "={{ $json.result }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2464,
+        128
+      ],
+      "id": "88e31396-18d1-47e2-ba43-e042e6f977a6",
+      "name": "Update a row",
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [
+        -5984,
+        976
+      ],
+      "id": "39193897-18af-496c-ac09-304acc12a313",
+      "name": "WhatsApp Trigger1",
+      "webhookId": "5777f7c7-90e8-4a13-9087-325ce74a0ddd",
+      "credentials": {
+        "whatsAppTriggerApi": {
+          "id": "g6dQIqGDRhT8TIq5",
+          "name": "Signor Concretos"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "766555496550593",
+        "recipientPhoneNumber": "={{ $('camposIniciais1').first().json.meta.telefoneCliente }}",
+        "textBody": "={{ $json.content }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        672,
+        1216
+      ],
+      "id": "91dbe9b6-165b-4963-8667-35aa34f6ebad",
+      "name": "Send message1",
+      "webhookId": "377242fc-c5a8-4156-9ed0-cb3e742ddb3c",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "96dbxS79UeVURfIJ",
+          "name": "Signor Concretos"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://signor.bitrix24.com.br/rest/1642/ujh2hfiorywnt1u4/crm.lead.add.json",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.payloadFinal }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2288,
+        128
+      ],
+      "id": "5a496ef9-989d-4622-8346-7cec35985913",
+      "name": "HTTP Request4"
+    },
+    {
+      "parameters": {
+        "jsCode": "// CONFIGURAÇÃO: Coloque aqui o ID da coluna para obras < 250m²\nconst ID_COLUNA_PADRAO = \"UC_6YUFT5\";\nconst ID_COLUNA_PEQUENA = \"UC_4BIOC0\";\n\n// 1. Pega os dados do Lead (Vindos da IA e validação anterior)\nconst lead = $('Code in JavaScript4').first().json;\n\n// ==========================================\n// TRATAMENTO DO TELEFONE (GARANTIR O 9 E O +)\n// ==========================================\nlet telefoneCRM = lead.phone ? lead.phone.toString().replace(/\\D/g, '') : \"\";\n\n// Se for um número do Brasil (começa com 55) e tem apenas 12 dígitos (falta o 9)\nif (telefoneCRM.startsWith(\"55\") && telefoneCRM.length === 12) {\n    // Pega o \"55\" + \"DDD\" (4 primeiros digitos), injeta o \"9\", e cola o resto\n    telefoneCRM = telefoneCRM.substring(0, 4) + \"9\" + telefoneCRM.substring(4);\n}\n\n// Adiciona o \"+\" na frente se o número não estiver vazio (Fica com 14 caracteres)\nif (telefoneCRM.length > 0) {\n    telefoneCRM = \"+\" + telefoneCRM;\n}\n// ==========================================\n\n// 2. Lógica de tratamento do tamanho (m²)\nlet statusFinal = ID_COLUNA_PADRAO;\nlet tamanhoNumerico = 0;\n\ntry {\n    if (lead.tamanho_m2) {\n        const apenasNumeros = lead.tamanho_m2.toString().replace(/[^0-9.]/g, '');\n        tamanhoNumerico = parseFloat(apenasNumeros);\n\n        if (!isNaN(tamanhoNumerico) && tamanhoNumerico > 0 && tamanhoNumerico < 250) {\n            statusFinal = ID_COLUNA_PEQUENA;\n        }\n    }\n} catch (e) {\n    console.log(\"Erro ao converter tamanho m2: \", e);\n}\n\n// 3. Pega o arquivo (TRATAMENTO DE ERRO ADICIONADO AQUI)\nlet filePayload = \"\"; \n\ntry {\n    const fileNode = $('Code in JavaScript5').first().json;\n    if (fileNode.base64) {\n        filePayload = {\n            \"fileData\": [fileNode.fileName, fileNode.base64]\n        };\n    }\n} catch (error) {\n    console.log(\"Sem arquivo:\", error.message);\n    filePayload = \"\";\n}\n\n// 4. Monta o JSON COMPLETO\nconst payloadFinal = {\n  \"fields\": {\n    \"TITLE\": lead.name,\n    \"NAME\": lead.name,\n    \n    // ---- TELEFONE COM TRATAMENTO APLICADO AQUI ----\n    \"PHONE\": [ { \"VALUE\": telefoneCRM, \"VALUE_TYPE\": \"WORK\" } ],\n    \n    \"EMAIL\": [ { \"VALUE\": (lead.email && lead.email.includes('@')) ? lead.email : \"naoinformado@email.com\", \"VALUE_TYPE\": \"WORK\" } ],\n    \n    \"UF_CRM_1734980510747\": lead.local_obra || \"\",\n    \"UF_CRM_1737048161\": lead.tamanho_m2 || \"\",\n    \"UF_CRM_1764028902\": filePayload,\n    \n    \"COMMENTS\": `Localização: ${lead.local_obra || \"\"}\\nPrazo: ${lead.prazo_obra || \"\"}\\nTipo: ${lead.tipo_obra || \"\"}\\nTamanho Informado: ${lead.tamanho_m2 || \"\"}\\nLink do Histórico: https://signorchat.fvmarketing.com.br/${lead.phone}\\nLead qualificado automaticamente pelo SDR IA`,\n    \n    \"SOURCE_ID\": \"REPEAT_SALE\",\n    \"ASSIGNED_BY_ID\": 1,\n    \n    \"STATUS_ID\": statusFinal\n  }\n};\n\nreturn [{ json: { payloadFinal } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2112,
+        128
+      ],
+      "id": "4928c93f-6a1a-4ad8-9cb4-6ec34a8caf5b",
+      "name": "Prepara Arquivo Bitrix1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const trigger = $('WhatsApp Trigger1').first().json;\nconst msg = trigger.messages[0];\n\nconst url = msg.image?.url || msg.audio?.url || msg.document?.url || msg.video?.url;\n\nif (!url) {\n  throw new Error('URL da mídia não encontrada na mensagem');\n}\n\nreturn [{\n  json: {\n    url: url,\n    mime_type: msg.image?.mime_type || msg.audio?.mime_type || msg.document?.mime_type || msg.video?.mime_type\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -3312,
+        1232
+      ],
+      "id": "9c0eeba9-93fb-4771-a718-f5507ef0ceac",
+      "name": "Obter URL da Mídia1"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "whatsAppApi",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -3088,
+        1232
+      ],
+      "id": "0e872e56-be8f-40c4-98ba-8d22830c147e",
+      "name": "Baixar Arquivo Binário1",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "96dbxS79UeVURfIJ",
+          "name": "Signor Concretos"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const aiData = $('Code in JavaScript4').first().json;\nconst supabaseData = $('getClient1').first().json;\nconst bitrixId = supabaseData.bitrix_id; \n\nif (!bitrixId) throw new Error(\"ID do Bitrix não encontrado para update.\");\n\nconst hasEmail = aiData.email && aiData.email.includes('@') && !aiData.email.includes('naoinformado');\n\n// Telefone confiável vindo do Supabase (fallback para aiData)\nconst phoneForLink = supabaseData.telefoneCliente || aiData.phone || '';\n\n// Monta o comentário para a Timeline\nlet comentarios = `[b][ATUALIZAÇÃO VIA SDR IA][/b]\\nNovos dados informados pelo cliente:\\n`;\nif (aiData.prazo_obra && aiData.prazo_obra !== \"Não informado\") comentarios += `- Prazo: ${aiData.prazo_obra}\\n`;\nif (aiData.tamanho_m2 && aiData.tamanho_m2 !== \"Não informado\") comentarios += `- Tamanho: ${aiData.tamanho_m2}\\n`;\nif (aiData.local_obra && aiData.local_obra !== \"Não informado\") comentarios += `- Local: ${aiData.local_obra}\\n`;\nif (aiData.tipo_obra && aiData.tipo_obra !== \"Não informado\") comentarios += `- Tipo: ${aiData.tipo_obra}\\n`;\nif (aiData.status_projeto && aiData.status_projeto !== \"Não informado\") comentarios += `- Status Projeto: ${aiData.status_projeto}\\n`;\n\ncomentarios += `\\n🔗 Link do Histórico: [url=https://signorchat.fvmarketing.com.br/${phoneForLink}]https://signorchat.fvmarketing.com.br/${phoneForLink}[/url]`;\n\n// Payload do UPDATE (campos do lead, SEM COMMENTS)\nconst payloadUpdate = {\n    \"id\": bitrixId, \n    \"fields\": {\n        \"SOURCE_ID\": \"REPEAT_SALE\"\n    }\n};\n\nif (aiData.local_obra && aiData.local_obra !== \"Não informado\") {\n    payloadUpdate.fields[\"UF_CRM_1734980510747\"] = aiData.local_obra;\n}\n\nif (hasEmail) {\n    payloadUpdate.fields[\"EMAIL\"] = [ { \"VALUE\": aiData.email, \"VALUE_TYPE\": \"WORK\" } ];\n}\n\n// DEPOIS — com arquivo anexado:\nlet anexo = {};\ntry {\n    const fileNode = $('Code in JavaScript5').first().json;\n    if (fileNode.base64) {\n        anexo = { \"FILES\": [ [ fileNode.fileName, fileNode.base64 ] ] };\n    }\n} catch (e) {}\n\nconst payloadTimeline = {\n    \"fields\": {\n        \"ENTITY_ID\": bitrixId,\n        \"ENTITY_TYPE\": \"lead\",\n        \"COMMENT\": comentarios,\n        ...anexo    // ← se tiver arquivo, ele entra aqui\n    }\n};\n\n// Payload do TIMELINE COMMENT (separado)\nconst payloadTimeline = {\n    \"fields\": {\n        \"ENTITY_ID\": bitrixId,\n        \"ENTITY_TYPE\": \"lead\",\n        \"COMMENT\": comentarios\n    }\n};\n\nreturn [{ json: { payloadUpdate, payloadTimeline } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1920,
+        288
+      ],
+      "id": "aaf56567-cadf-4712-9079-9a545d2d3fb8",
+      "name": "Prepara Update Bitrix1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://signor.bitrix24.com.br/rest/1642/ujh2hfiorywnt1u4/crm.lead.update.json",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.payloadUpdate }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2112,
+        288
+      ],
+      "id": "7787426e-8eb4-46c7-a7e9-9825a1e995b6",
+      "name": "HTTP Request5"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "422cc75f-a7f0-4ceb-a61f-428bd07aeba0",
+              "leftValue": "={{ $json.messages[0].id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -5760,
+        976
+      ],
+      "id": "ec59232d-71d8-4f71-bc0f-e5bbae7a8e8e",
+      "name": "If8"
+    },
+    {
+      "parameters": {
+        "content": "### Follow.up imediato",
+        "height": 632,
+        "width": 1498,
+        "color": 7
+      },
+      "id": "f60eb290-53e8-4137-b821-4cf4c35362b6",
+      "name": "Sticky Note71",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -6080,
+        1712
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "signor_leads",
+        "returnAll": true,
+        "filterType": "string",
+        "filterString": "stop_followup=is.false&lead_created_in_crm=is.false&followup_stage=lt.3"
+      },
+      "id": "794c9984-0457-4ecc-b817-6c43f406dc45",
+      "name": "Buscar Candidatos1",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -5776,
+        1936
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.followup_stage }}",
+                    "rightValue": 0,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Estagio 0 -> 1"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.followup_stage }}",
+                    "rightValue": 1,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Estagio 1 -> 2"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.followup_stage }}",
+                    "rightValue": 2,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Estagio 2 -> Fim"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7d8c0500-86a8-4c13-b386-6ced1eaf749b",
+      "name": "Roteador de Estágio1",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -5344,
+        1920
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "766555496550593",
+        "recipientPhoneNumber": "={{ $json.telefoneCliente }}",
+        "textBody": "Olá! Conseguiu ver minha última mensagem? Ainda estamos no aguardo das informações para avançar com seu projeto na Signor Concretos.",
+        "additionalFields": {}
+      },
+      "id": "cfd8b976-7ab3-426a-b782-3c59044aa873",
+      "name": "Enviar Follow ",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        -5056,
+        1776
+      ],
+      "webhookId": "52b0977f-86bb-4d93-aed5-616bfc2c7a0a",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "96dbxS79UeVURfIJ",
+          "name": "Signor Concretos"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "signor_leads",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "telefoneCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Roteador de Estágio1').item.json.telefoneCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "followup_stage",
+              "fieldValue": "1"
+            },
+            {
+              "fieldId": "last_interaction_at",
+              "fieldValue": "={{ $now.toISO() }}"
+            }
+          ]
+        }
+      },
+      "id": "9f41fed2-4edc-475e-9171-71f7b4e194ac",
+      "name": "Atualiza Estágio ",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -4832,
+        1776
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "766555496550593",
+        "recipientPhoneNumber": "={{ $json.telefoneCliente }}",
+        "textBody": "Oi! Só para confirmar: você ainda tem interesse na obra? Pode me avisar para finalizarmos o orçamento?",
+        "additionalFields": {}
+      },
+      "id": "e8e15d30-3210-4393-8d13-b4322466d648",
+      "name": "Enviar Follow 4",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        -5056,
+        1952
+      ],
+      "webhookId": "055a418a-e187-4c5e-a72a-33bafe223ed3",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "96dbxS79UeVURfIJ",
+          "name": "Signor Concretos"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "signor_leads",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "telefoneCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Roteador de Estágio1').item.json.telefoneCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "followup_stage",
+              "fieldValue": "2"
+            },
+            {
+              "fieldId": "last_interaction_at",
+              "fieldValue": "={{ $now.toISO() }}"
+            }
+          ]
+        }
+      },
+      "id": "7c43a4b0-69cf-489f-8936-3b8bb94241aa",
+      "name": "Atualiza Estágio 3",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -4832,
+        1952
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "766555496550593",
+        "recipientPhoneNumber": "={{ $json.telefoneCliente }}",
+        "textBody": "Como não tivemos retorno, vou encerrar seu atendimento por aqui para não incomodar. Se precisar no futuro, é só chamar. Abraço!",
+        "additionalFields": {}
+      },
+      "id": "2ee15e66-4350-4996-946f-1ddd75714770",
+      "name": "Enviar Follow 5",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        -5056,
+        2128
+      ],
+      "webhookId": "f62a4944-8744-439c-90d3-d477064759d3",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "96dbxS79UeVURfIJ",
+          "name": "Signor Concretos"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "signor_leads",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "telefoneCliente",
+              "condition": "eq",
+              "keyValue": "={{ $('Roteador de Estágio1').item.json.telefoneCliente }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "followup_stage",
+              "fieldValue": "3"
+            },
+            {
+              "fieldId": "stop_followup",
+              "fieldValue": "true"
+            },
+            {
+              "fieldId": "last_interaction_at",
+              "fieldValue": "={{ $now.toISO() }}"
+            }
+          ]
+        }
+      },
+      "id": "77ffe3d3-a0f2-40d1-9df0-f2b67a9024f8",
+      "name": "Fim do Follow1",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -4832,
+        2128
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zX2ISLSvKxzxRbx2",
+          "name": "Peretto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const now = new Date();\nconst validLeads = [];\n\n// Função que detecta o formato e converte corretamente\nfunction parseMixedDate(dateStr) {\n    if (!dateStr) return null;\n    \n    // 1. Tenta ler formato ISO do Supabase (ex: 2026-01-09 17:23:52...)\n    // O JS entende isso nativamente se tiver hifens e T ou espaço\n    if (dateStr.includes('-') && (dateStr.includes('T') || dateStr.includes(' '))) {\n        return new Date(dateStr);\n    }\n\n    // 2. Tenta ler formato Brasileiro (ex: 23/01/2026 20:21)\n    if (dateStr.includes('/')) {\n        try {\n            const [datePart, timePart] = dateStr.split(' ');\n            const [day, month, year] = datePart.split('/');\n            const [hour, minute] = timePart ? timePart.split(':') : [0, 0];\n            \n            // Mês em JS começa em 0\n            return new Date(year, month - 1, day, hour, minute);\n        } catch (e) {\n            return null;\n        }\n    }\n\n    return null;\n}\n\nfor (const item of $input.all()) {\n    const lastInteractionStr = $input.first().json.last_interaction_at;\n    const stage = $input.first().json.followup_stage || 0;\n    \n    // Configuração dinâmica dos tempos (em horas)\n    let hoursWait = 24; \n\n    if (stage === 0) {\n        hoursWait = 0.5; // 30 minutos\n    } else if (stage === 1) {\n        hoursWait = 2;   // 2 horas\n    } else if (stage === 2) {\n        hoursWait = 23;  // 23 horas\n    }\n\n    if (lastInteractionStr) {\n        const lastInteraction = parseMixedDate(lastInteractionStr);\n        \n        if (lastInteraction && !isNaN(lastInteraction.getTime())) {\n            const diffInMs = now - lastInteraction;\n            const diffInHours = diffInMs / (1000 * 60 * 60);\n\n            // Verifica se já passou o tempo necessário\n            if (diffInHours >= hoursWait) {\n                // Adiciona infos para debug\n                item.json.debug_hours_passed = diffInHours.toFixed(2);\n                item.json.debug_hours_required = hoursWait;\n                \n                validLeads.push(item);\n            }\n        }\n    }\n}\n\nreturn validLeads;"
+      },
+      "id": "c1d517eb-11d0-4da4-97c3-fed9c176abf2",
+      "name": "Filtro de Tempo1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -5552,
+        1936
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 30
+            }
+          ]
+        }
+      },
+      "id": "a1aa418d-a0f6-4003-b8ba-cc08ffbbc9bd",
+      "name": "Timer1",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -6000,
+        1936
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://peretton8n.fvmarketing.com.br/webhook/affdcffa-7622-4b1e-bf5d-74506b8f0df4",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "phone",
+              "value": "={{ $('getClient1').first().json.telefoneCliente }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1920,
+        128
+      ],
+      "id": "aae85494-771d-4854-afe5-bf7c6e43c9ec",
+      "name": "HTTP Request6"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0a2c6281-8785-4cd8-8609-53cd2818aafd",
+              "leftValue": "={{ $('getClient1').first().json.lead_created_in_crm }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1696,
+        208
+      ],
+      "id": "26692e47-0eaf-47cb-b84a-90574d0c15d3",
+      "name": "If9"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://signor.bitrix24.com.br/rest/1642/ujh2hfiorywnt1u4/crm.timeline.comment.add.json",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $('Prepara Update Bitrix1').item.json.payloadTimeline }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2320,
+        288
+      ],
+      "id": "eba02fa2-bfb7-4e8c-96c7-8435bc1721bb",
+      "name": "HTTP Request7"
+    },
+    {
+      "parameters": {
+        "jsCode": "const item = $input.first();\nconst binaryBuffer = await this.helpers.getBinaryDataBuffer(0, 'data');\nconst base64String = binaryBuffer.toString('base64');\n\nreturn [{\n  json: {\n    base64: base64String,\n    mimeType: item.binary.data.mimeType,\n    fileName: item.binary.data.fileName || 'arquivo.jpg'\n  },\n  binary: item.binary\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2880,
+        1232
+      ],
+      "id": "f478fbc3-2a72-4ac8-8995-739a212bc3b1",
+      "name": "Code in JavaScript5"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Filtra Webhook": {
+      "main": [
+        [
+          {
+            "node": "empilhaTexto1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mensagem de Audio": {
+      "main": [
+        [
+          {
+            "node": "Converter Áudio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Converter Áudio": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filta Msg App": {
+      "main": [
+        [
+          {
+            "node": "Filtra Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Filtra Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch5": {
+      "main": [
+        [
+          {
+            "node": "Mensagem de Audio",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Filta Msg App",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Obter URL da Mídia1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Obter URL da Mídia1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Filta Msg App",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "No Operation, do nothing": {
+      "main": [
+        [
+          {
+            "node": "UnificaDados1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Obtem1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Vendedor Remo",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "messages1": {
+      "main": [
+        [
+          {
+            "node": "Save Human Message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "empilhaTexto1": {
+      "main": [
+        [
+          {
+            "node": "Obtem1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtem1": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Deleta1": {
+      "main": [
+        [
+          {
+            "node": "messages1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prompts1": {
+      "main": [
+        [
+          {
+            "node": "UnificaDados1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "UnificaDados1": {
+      "main": [
+        [
+          {
+            "node": "getClient1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "camposIniciais1": {
+      "main": [
+        [
+          {
+            "node": "Prompts1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "getClient1": {
+      "main": [
+        [
+          {
+            "node": "If5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If5": {
+      "main": [
+        [
+          {
+            "node": "Switch5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "GeraUUID1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GeraUUID1": {
+      "main": [
+        [
+          {
+            "node": "CreateUser1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "NoOp.1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Deleta1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model11": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "UPDATE-Atendimentos ads Facebook": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vendedor Remo": {
+      "main": [
+        [
+          {
+            "node": "Save AI Message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CreateUser1": {
+      "main": [
+        [
+          {
+            "node": "Switch5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If6": {
+      "main": [
+        [
+          {
+            "node": "Send message1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If7": {
+      "main": [
+        [
+          {
+            "node": "If9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Human Message1": {
+      "main": [
+        [
+          {
+            "node": "Get many rows1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save AI Message1": {
+      "main": [
+        [
+          {
+            "node": "If6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many rows1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript3": {
+      "main": [
+        [
+          {
+            "node": "Vendedor Remo",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript4": {
+      "main": [
+        [
+          {
+            "node": "If7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Trigger1": {
+      "main": [
+        [
+          {
+            "node": "If8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send message1": {
+      "main": [
+        [
+          {
+            "node": "AtualizaUsuario1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request4": {
+      "main": [
+        [
+          {
+            "node": "Update a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepara Arquivo Bitrix1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obter URL da Mídia1": {
+      "main": [
+        [
+          {
+            "node": "Baixar Arquivo Binário1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Baixar Arquivo Binário1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepara Update Bitrix1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request5": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If8": {
+      "main": [
+        [
+          {
+            "node": "camposIniciais1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar Candidatos1": {
+      "main": [
+        [
+          {
+            "node": "Filtro de Tempo1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Roteador de Estágio1": {
+      "main": [
+        [
+          {
+            "node": "Enviar Follow ",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Enviar Follow 4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Enviar Follow 5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar Follow ": {
+      "main": [
+        [
+          {
+            "node": "Atualiza Estágio ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar Follow 4": {
+      "main": [
+        [
+          {
+            "node": "Atualiza Estágio 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar Follow 5": {
+      "main": [
+        [
+          {
+            "node": "Fim do Follow1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtro de Tempo1": {
+      "main": [
+        [
+          {
+            "node": "Roteador de Estágio1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Timer1": {
+      "main": [
+        [
+          {
+            "node": "Buscar Candidatos1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request6": {
+      "main": [
+        [
+          {
+            "node": "Prepara Arquivo Bitrix1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If9": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request6",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prepara Update Bitrix1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript5": {
+      "main": [
+        [
+          {
+            "node": "Filtra Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "errorWorkflow": "y9xvfSujwoN3sD2h",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "versionId": "7e7c6bb4-c382-4049-b715-56aa3e8c21a1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1d6d827779e7517486e88d7e136d0005d3301d4d1c169c2fd5ba78a1950c000b"
+  },
+  "nodeGroups": [],
+  "id": "RIf1w1Ra8CkQF2s5",
+  "tags": []
+}

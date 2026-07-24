@@ -8,7 +8,7 @@ Score atual: **3.8 / 10** | Esforço total: **185,5 h**
 ## Críticos (impedem indexação e ranqueamento)
 
 - [ ] **C-01** — Canonical mismatch do blog apontando para `/?page_id=3511` + categorias com 404
-- [ ] **C-02** — Zero structured data (JSON-LD) em qualquer página
+- [x] **C-02** — Article schema no blog (`TAREFA-C02-article-schema-blog.md`)
 - [ ] **C-03** — 4 broken internal links (blog/projetos-e-cases, blog/tendencias-de-mercado, blog/equipamentos-audiovisuais, blog/tecnologia-para-eventos)
 
 ---

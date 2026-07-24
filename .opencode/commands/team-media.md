@@ -6,7 +6,7 @@ Ative o Media Buying Command completo:
 
 1. @media-buyer (líder/comandante) — arquitetura de contas e otimizacao ROAS
 2. @analista-dados — analise de performance e deteccao de anomalias
-3. @copy-content — ad creatives e variacoes de copia
+3. @copy-orchestrator — ad creatives via @ads-writer
 4. @criacao-design — banners, videos e assets de anuncio
 5. @automacao-analytics — tracking, automacao e dashboards
 
