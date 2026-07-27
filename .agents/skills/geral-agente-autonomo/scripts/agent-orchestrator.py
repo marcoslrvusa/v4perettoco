@@ -93,7 +93,10 @@ def supabase_request(method: str, path: str, data: dict = None) -> dict:
     req = urllib.request.Request(url, data=body, headers=headers, method=method)
     try:
         with urllib.request.urlopen(req) as resp:
-            return json.loads(resp.read())
+            content = resp.read()
+            if content.strip():
+                return json.loads(content)
+            return []
     except urllib.error.HTTPError as e:
         print(f"[ERRO] Supabase {method} {path}: {e.code} {e.read().decode()}")
         return {}
@@ -160,7 +163,10 @@ def record_memory(summary: str, content: str, function: str, orchestrator: str,
 
 def classify_demand(item: dict) -> dict:
     briefing = item.get("briefing", {})
-    demand_type = item.get("demand_type", "manual")
+    if isinstance(briefing, str):
+        try: briefing = json.loads(briefing)
+        except: briefing = {"raw": briefing}
+    demand_type = item.get("demand_type", "")
     function = item.get("function", "")
     source = item.get("source", "")
     priority = item.get("priority", 0)
@@ -211,22 +217,27 @@ def classify_demand(item: dict) -> dict:
 def write_brief(item: dict, classification: dict, memories: list = None) -> str:
     os.makedirs(INPUT_DIR, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"{timestamp}_{item['id']}.json"
+    filename = f"{timestamp}_{item.get('id', 'unknown')}.json"
     filepath = os.path.join(INPUT_DIR, filename)
 
+    briefing = item.get("briefing", {})
+    if isinstance(briefing, str):
+        try: briefing = json.loads(briefing)
+        except: briefing = {"raw": briefing}
+
     brief = {
-        "queue_id": item["id"],
-        "demand_type": item["demand_type"],
-        "source": item["source"],
-        "function": item["function"],
-        "urgency": item["urgency"],
-        "scope": item["scope"],
+        "queue_id": item.get("id", item.get("o_id", "unknown")),
+        "demand_type": item.get("demand_type", ""),
+        "source": item.get("source", ""),
+        "function": item.get("function", ""),
+        "urgency": item.get("urgency", ""),
+        "scope": item.get("scope", ""),
         "orchestrator": classification["orchestrator"],
         "specialists": classification["specialists"],
         "mode": classification["mode"],
-        "briefing": item["briefing"],
+        "briefing": briefing,
         "memories": memories or [],
-        "created_at": item["created_at"],
+        "created_at": item.get("created_at", ""),
     }
 
     with open(filepath, "w") as f:
@@ -252,15 +263,19 @@ def log_event(queue_id: str, event: str, detail: dict = None):
 
 def update_routing_stats(orchestrator: str, specialist: str, function: str, score: int, exec_time: int):
     try:
-        supabase_rpc("update_routing_stats", {
+        result = supabase_rpc("update_routing_stats", {
             "p_orchestrator": orchestrator,
             "p_specialist": specialist,
             "p_function": function,
             "p_success_score": score,
             "p_execution_time_seconds": exec_time,
         })
+        if isinstance(result, dict) and result.get("message"):
+            print(f"  [STATS] RPC indisponivel: {result['message']}")
+        else:
+            print(f"  [STATS] Atualizado")
     except Exception as e:
-        print(f"[AVISO] Erro ao atualizar stats: {e}")
+        print(f"  [STATS] Erro: {e}")
 
 
 def cmd_queue(args):
@@ -299,11 +314,18 @@ def cmd_process(args):
         return
 
     item = items[0] if isinstance(items, list) else items
+
+    # Normalizar chaves o_* (RPC legacy) para nomes diretos
+    if "o_id" in item:
+        item = {k[2:] if k.startswith("o_") else k: v for k, v in item.items()}
     qid = item.get("id") or item.get("o_id", "")
     function = item.get("function", "")
     demand_type = item.get("demand_type", "")
     source = item.get("source", "")
     briefing = item.get("briefing", {})
+    if isinstance(briefing, str):
+        try: briefing = json.loads(briefing)
+        except: briefing = {"raw": briefing}
     print(f"\n[PROCESSANDO] {qid} | {function} | {source}")
 
     log_event(qid, "process_start", {"item": item})
@@ -455,13 +477,14 @@ def cmd_report(args):
 
 
 def cmd_enqueue(args):
+    briefing_obj = json.loads(args.briefing) if args.briefing else {}
     data = {
         "demand_type": args.demand_type or "manual",
         "source": args.source or "manual",
         "function": args.function,
         "urgency": args.urgency or "normal",
         "scope": args.scope or "single",
-        "briefing": json.dumps(json.loads(args.briefing)) if args.briefing else "{}",
+        "briefing": briefing_obj,
         "priority": args.priority or 0,
     }
 
