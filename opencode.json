@@ -9,11 +9,83 @@
     "openrouter"
   ],
   "provider": {
+    "opencode": {
+      "models": {
+        "deepseek-v4-flash-free": {
+          "options": { "textVerbosity": "low" }
+        },
+        "nemotron-3-ultra-free": {
+          "options": { "textVerbosity": "low" }
+        }
+      }
+    },
     "litellm": {
       "name": "Sofia AI (LiteLLM)",
       "type": "openai-compatible",
       "apiKey": "{env:LITELLM_VIRTUAL_KEY}",
-      "baseURL": "https://litellm.fvmarketing.com.br/v1"
+      "baseURL": "https://litellm.fvmarketing.com.br/v1",
+      "models": {
+        "sofia-daily": {
+          "name": "Sofia AI Daily ♺"
+        },
+        "claude-sonnet-4": {
+          "name": "Sofia AI Complex"
+        },
+        "deepseek-v4-flash-free": {
+          "name": "DeepSeek V4 Flash Free [Código · Tool calling]"
+        },
+        "nemotron-3-ultra-free": {
+          "name": "Nemotron 3 Ultra Free [📷 Visão · Imagens · NVIDIA]"
+        },
+        "minimax-m2.5-free": {
+          "name": "MiniMax M2.5 Free [Leve · Rápido]"
+        },
+        "mimo-v2.5-free": {
+          "name": "MiMo V2.5 Free [Leve · Resp. rápidas]"
+        },
+        "laguna-s-2.1-free": {
+          "name": "Laguna S 2.1 Free [Uso geral · Equilíbrio]"
+        },
+        "ling-3.0-flash-free": {
+          "name": "Ling 3.0 Flash Free [Flash · Resp. curtas]"
+        },
+        "north-mini-code-free": {
+          "name": "North Mini Code Free [Código leve · Snippets]"
+        },
+        "big-pickle": {
+          "name": "Big Pickle Free [Stealth · Experimental]"
+        },
+        "deepseek-v4-flash": {
+          "name": "DeepSeek V4 Flash"
+        },
+        "deepseek-v4-pro": {
+          "name": "DeepSeek V4 Pro"
+        },
+        "claude-sonnet-5": {
+          "name": "Claude Sonnet 5"
+        },
+        "claude-opus-4-8": {
+          "name": "Claude Opus 4.8"
+        },
+        "claude-haiku-4-5": {
+          "name": "Claude Haiku 4.5"
+        },
+        "gpt-5.4": {
+          "name": "GPT-5.4"
+        },
+        "gpt-5.4-mini": {
+          "name": "GPT-5.4 Mini"
+        },
+        "gpt-5.5": {
+          "name": "GPT-5.5"
+        },
+        "gemini-3.5-flash": {
+          "name": "Gemini 3.5 Flash"
+        },
+        "gemini-2.5-flash": {
+          "name": "Gemini 2.5 Flash"
+        }
+      }
     },
     "gemini": {
       "apiKey": "{env:GEMINI_API_KEY}"
@@ -26,6 +98,12 @@
     "ekyte": {
       "type": "remote",
       "url": "https://api.ekyte.com/mcp?token=83dc09fffd00860c43ddf3aaa3d302ebccb42c48f79267daf0de883dc19e60f2",
+      "enabled": true
+    }
+  },
+  "plugin": {
+    "zen-models": {
+      "path": ".opencode/plugin/zen-models",
       "enabled": true
     }
   },
@@ -128,6 +206,10 @@
     "team-conteudo-full": {
       "description": "Monta a Content Pipeline Full (pipeline-conteudo + estrategia + copy + design + revisor + SEO)",
       "template": "Ative o @pipeline-conteudo como líder e convoque os especialistas:\n1. @estrategia-marketing para pesquisa e topicos\n2. @copy-content para producao de texto\n3. @criacao-design para assets visuais\n4. @seo-visibilidade para otimizacao\n5. @revisor para quality gate\n\nPergunte ao usuario qual cliente e o escopo para montar o pipeline completo."
+    },
+    "models-free": {
+      "description": "Mostra os modelos free do OpenCode Zen e suas especialidades",
+      "template": "Apresente esta tabela dos modelos free do OpenCode Zen:\n\n| Modelo | ID | Melhor para | Visão |\n|---|---|---|---|\n| DeepSeek V4 Flash Free | `opencode/deepseek-v4-flash-free` | Coding geral, tool calling, tarefas complexas | ❌ |\n| Nemotron 3 Ultra Free | `opencode/nemotron-3-ultra-free` | Leitura de imagens, visão, reasoning NVIDIA | ✅📷 |\n| MiniMax M2.5 Free | `opencode/minimax-m2.5-free` | Tasks rápidas, contexto curto, small model | ❌ |\n| MiMo V2.5 Free | `opencode/mimo-v2.5-free` | Leve, respostas rápidas | ❌ |\n| Laguna S 2.1 Free | `opencode/laguna-s-2.1-free` | Uso geral, equilíbrio | ❌ |\n| Ling 3.0 Flash Free | `opencode/ling-3.0-flash-free` | Flash rápido, respostas curtas | ❌ |\n| North Mini Code Free | `opencode/north-mini-code-free` | Código leve, snippets | ❌ |\n| Big Pickle Free | `opencode/big-pickle-free` | Stealth, experimental | ❌ |\n\nPara trocar de modelo, use `/models` no OpenCode e selecione o ID desejado.\nPara ler imagens, selecione `opencode/nemotron-3-ultra-free`.\n\nO modelo atual é `opencode/deepseek-v4-flash-free` (padrão)."
     }
   }
 }
