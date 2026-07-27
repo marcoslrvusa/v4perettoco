@@ -27,6 +27,14 @@
       "type": "remote",
       "url": "https://api.ekyte.com/mcp?token=83dc09fffd00860c43ddf3aaa3d302ebccb42c48f79267daf0de883dc19e60f2",
       "enabled": true
+    },
+    "opencode-vision": {
+      "command": "opencode-vision",
+      "env": {
+        "GOOGLE_API_KEY": "{env:GOOGLE_API_KEY}"
+      },
+      "enabled": true,
+      "description": "Dá visão para modelos text-only (PaddleOCR + Gemini fallback)"
     }
   },
   "permission": {
@@ -128,6 +136,10 @@
     "team-conteudo-full": {
       "description": "Monta a Content Pipeline Full (pipeline-conteudo + estrategia + copy + design + revisor + SEO)",
       "template": "Ative o @pipeline-conteudo como líder e convoque os especialistas:\n1. @estrategia-marketing para pesquisa e topicos\n2. @copy-content para producao de texto\n3. @criacao-design para assets visuais\n4. @seo-visibilidade para otimizacao\n5. @revisor para quality gate\n\nPergunte ao usuario qual cliente e o escopo para montar o pipeline completo."
+    },
+    "modelos": {
+      "description": "🔥 Lista todos os modelos disponíveis com descrições e performance",
+      "template": "## Modelos Disponíveis\n\n| Modelo | Provider | Descrição | Performance |\n|---|---|---|---|\n| **deepseek-v4-flash-free** → `opencode` | OpenCode | 🔥 **ALTA PERFORMANCE** — Modelo padrão. Leitura de imagens via MCP opencode-vision | ⭐⭐⭐⭐⭐ |\n| minimax-m2.5-free → `opencode` | OpenCode | Modelo small. Leve e rápido para tarefas simples | ⭐⭐⭐ |\n| gemini-2.5-flash → `gemini` | Google Gemini | Multimodal nativo (visão/texto). Rápido, gratuito via API key | ⭐⭐⭐⭐ |\n| gemini-2.5-pro → `gemini` | Google Gemini | Modelo premium. Raciocínio profundo. 1500 req/dia grátis | ⭐⭐⭐⭐⭐ |\n| claude-3.5-haiku → `openrouter` | OpenRouter/Anthropic | Rápido e econômico. 200k tokens | ⭐⭐⭐⭐ |\n| claude-3.5-sonnet → `openrouter` | OpenRouter/Anthropic | Equilíbrio custo-qualidade | ⭐⭐⭐⭐ |\n| claude-3-opus → `openrouter` | OpenRouter/Anthropic | Máxima qualidade. Raciocínio mais profundo | ⭐⭐⭐⭐⭐ |\n| Sofia AI → `litellm` | LiteLLM V4 | Pool de modelos gerenciado pela V4 | ⭐⭐⭐⭐ |\n\n### Como usar\n- `/model deepseek-v4-flash-free` — volta ao modelo padrão (imagens via MCP vision)\n- `/model gemini-2.5-flash` — multimodal nativo (lê imagens diretamente)\n- `/model claude-3.5-sonnet` — qualidade com OpenRouter\n\n### Pipeline de Visão\nPara **ler imagens com deepseek-v4-flash-free**: o MCP `opencode-vision` faz OCR (PaddleOCR local + Gemini fallback) e entrega o texto extraído como contexto. O modelo principal continua sendo texto puro.\n\n### Pipeline de geração de imagens\nUse `/model gemini-2.5-flash` (multimodal nativo) ou `Gerar HTML` com `/frontend-design`.\n\nQuer mudar de modelo ou testar um específico?"
     }
   }
 }
