@@ -1,15 +1,15 @@
 # Builders Hub — Registry
 
-**106 skills** · última atualização: 2026-07-06
+**112 skills** · última atualização: 2026-07-27
 
 > Catálogo auto-gerado por `scripts/build-registry.py`. Não edite à mão — rode `/sync-hub` ou envie PR pela `/compartilhar-skill`.
 
 ## Índice
 
 - [🛠 Base (setup/fluxo)](#base) (7)
-- [🌐 Geral](#geral) (88)
-- [🎯 Gestao de Trafego](#gt) (3)
-- [✍️ Copy](#copy) (2)
+- [🌐 Geral](#geral) (89)
+- [🎯 Gestao de Trafego](#gt) (6)
+- [✍️ Copy](#copy) (4)
 - [🤝 Account](#account) (5)
 - [🔌 Integrações / Fontes](#fontes) (1)
   - [🔌 V4mos](#v4mos) (1)
@@ -69,6 +69,7 @@
 | `flow-next-opencode-work` | Execute a Flow epic or task systematically with git setup, task tracking, quality checks, and commit workfl... | — | — |
 | `form-cro` | When the user wants to optimize any form that is NOT signup/registration — including lead capture forms, co... | — | 1.1.0 |
 | `free-tool-strategy` | When the user wants to plan, evaluate, or build a free tool for marketing purposes — lead generation, SEO v... | — | 1.1.0 |
+| `geral-agente-autonomo` | > | @Marcos Luciano Rodrigues Vieira | 1.1.0 |
 | `geral-agents-hub` | (sem descrição) | — | — |
 | `geral-ai-visibility` | Skill migrada para ai-search. Use ai-search para acesso ao setor completo de AI Search (AEO + GEO + AI SEO). | — | — |
 | `geral-brainstormar-sobre-minha-funcao` | Entrevista o usuario sobre seu trabalho para descobrir como usar IA no dia a dia dele. Configura agenda, an... | — | — |
@@ -129,6 +130,9 @@
 
 | Skill | O que faz | Autor | v |
 |---|---|---|---|
+| `gt-analise-bing-ads` | Skill de analise de metricas Bing Ads (Microsoft Advertising) com interpretacao contextual — sabe diferenci... | @v4team | 1.0.0 |
+| `gt-analise-google-ads` | >- | @v4team | 1.0.0 |
+| `gt-analise-meta-ads` | Skill de analise de metricas Meta Ads com interpretacao contextual — sabe diferenciar metrica de operacao d... | @v4team | 1.0.0 |
 | `gt-gestor-de-trafego-completo` | >- | @marcoslrvusa | 1.0.0 |
 | `gt-media-buyer-completo` | >- | @marcoslrvusa | 1.0.0 |
 | `gt-relatorios-trafego` | Relatorio consolidado de trafego multicanal — Google Ads, Meta Ads, Bing Ads. Gera reports HTML/JSON, envia... | @v4team | 1.0.0 |
@@ -139,8 +143,10 @@
 
 | Skill | O que faz | Autor | v |
 |---|---|---|---|
+| `copy-briefing` | Skill de criacao e analise de briefings para copywriting de altissima conversao. Integra 70 anos de evoluca... | @v4team | 1.0.0 |
 | `copy-editing` | When the user wants to edit, review, or improve existing marketing copy, or refresh outdated content. Also... | — | 1.3.0 |
 | `copy-pipeline-conteudo` | Pipeline completo de conteudo editorial — cria calendario, produz blog posts e email marketing via IA, envi... | @v4team | 1.0.0 |
+| `copy-producao` | Skill de producao de copywriting de altissima conversao. Integra 70 anos de evolucao da copy (1950-presente... | @v4team | 1.0.0 |
 
 ## 🤝 Account
 
