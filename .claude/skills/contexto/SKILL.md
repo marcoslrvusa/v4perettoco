@@ -1,1 +1,0 @@
-../../../.agents/skills/contexto/SKILL.md

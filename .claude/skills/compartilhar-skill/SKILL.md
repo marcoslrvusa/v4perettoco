@@ -1,1 +1,0 @@
-../../../.agents/skills/compartilhar-skill/SKILL.md

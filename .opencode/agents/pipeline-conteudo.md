@@ -5,7 +5,7 @@ temperature: 0.25
 permission:
   read: allow
   edit: allow
-  bash: allow
+  bash: ask
   glob: allow
   grep: allow
   webfetch: allow

@@ -6,7 +6,7 @@ temperature: 0.3
 permission:
   read: allow
   edit: allow
-  bash: allow
+  bash: deny
   webfetch: deny
   glob: allow
   grep: allow

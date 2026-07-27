@@ -1,1 +1,0 @@
-../../../.agents/skills/novo-cliente/SKILL.md

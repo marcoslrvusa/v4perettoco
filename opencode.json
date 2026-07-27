@@ -25,7 +25,7 @@
   "mcp": {
     "ekyte": {
       "type": "remote",
-      "url": "https://api.ekyte.com/mcp?token=83dc09fffd00860c43ddf3aaa3d302ebccb42c48f79267daf0de883dc19e60f2",
+      "url": "https://api.ekyte.com/mcp?token=",
       "enabled": true
     },
     "opencode-vision": {
@@ -35,12 +35,12 @@
         "PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK": "True"
       },
       "enabled": true,
-      "description": "Dá visão para modelos text-only (PaddleOCR + Gemini fallback)"
+      "description": "Visão para modelos text-only (PaddleOCR + Gemini fallback)"
     }
   },
   "permission": {
     "edit": "allow",
-    "bash": "allow",
+    "bash": "ask",
     "read": "allow",
     "glob": "allow",
     "grep": "allow",
@@ -48,14 +48,19 @@
     "websearch": "allow",
     "skill": "allow",
     "question": "allow",
-    "todowrite": "allow"
+    "todowrite": "allow",
+    "task": "allow",
+    "lsp": "allow",
+    "list": "allow",
+    "external_directory": "allow",
+    "doom_loop": "allow"
   },
   "agent": {
     "build": {
       "mode": "primary",
       "permission": {
         "edit": "allow",
-        "bash": "allow",
+        "bash": "ask",
         "read": "allow",
         "glob": "allow",
         "grep": "allow",
@@ -64,7 +69,9 @@
         "skill": "allow",
         "task": {
           "*": "allow"
-        }
+        },
+        "lsp": "allow",
+        "doom_loop": "allow"
       }
     },
     "plan": {
@@ -77,7 +84,11 @@
         "grep": "allow",
         "webfetch": "allow",
         "websearch": "allow",
-        "skill": "allow"
+        "skill": "allow",
+        "lsp": "allow",
+        "task": {
+          "*": "allow"
+        }
       }
     }
   },
@@ -142,5 +153,77 @@
       "description": "🔥 Lista todos os modelos disponíveis com descrições e performance",
       "template": "## Modelos Disponíveis\n\n| Modelo | Provider | Descrição | Performance |\n|---|---|---|---|\n| **deepseek-v4-flash-free** → `opencode` | OpenCode | 🔥 **ALTA PERFORMANCE** — Modelo padrão. Leitura de imagens via MCP opencode-vision | ⭐⭐⭐⭐⭐ |\n| minimax-m2.5-free → `opencode` | OpenCode | Modelo small. Leve e rápido para tarefas simples | ⭐⭐⭐ |\n| gemini-2.5-flash → `gemini` | Google Gemini | Multimodal nativo (visão/texto). Rápido, gratuito via API key | ⭐⭐⭐⭐ |\n| gemini-2.5-pro → `gemini` | Google Gemini | Modelo premium. Raciocínio profundo. 1500 req/dia grátis | ⭐⭐⭐⭐⭐ |\n| claude-3.5-haiku → `openrouter` | OpenRouter/Anthropic | Rápido e econômico. 200k tokens | ⭐⭐⭐⭐ |\n| claude-3.5-sonnet → `openrouter` | OpenRouter/Anthropic | Equilíbrio custo-qualidade | ⭐⭐⭐⭐ |\n| claude-3-opus → `openrouter` | OpenRouter/Anthropic | Máxima qualidade. Raciocínio mais profundo | ⭐⭐⭐⭐⭐ |\n| Sofia AI → `litellm` | LiteLLM V4 | Pool de modelos gerenciado pela V4 | ⭐⭐⭐⭐ |\n\n### Como usar\n- `/model deepseek-v4-flash-free` — volta ao modelo padrão (imagens via MCP vision)\n- `/model gemini-2.5-flash` — multimodal nativo (lê imagens diretamente)\n- `/model claude-3.5-sonnet` — qualidade com OpenRouter\n\n### Pipeline de Visão\nPara **ler imagens com deepseek-v4-flash-free**: o MCP `opencode-vision` faz OCR (PaddleOCR local + Gemini fallback) e entrega o texto extraído como contexto. O modelo principal continua sendo texto puro.\n\n### Pipeline de geração de imagens\nUse `/model gemini-2.5-flash` (multimodal nativo) ou `Gerar HTML` com `/frontend-design`.\n\nQuer mudar de modelo ou testar um específico?"
     }
+  },
+  "lsp": {
+    "pyright": {
+      "mode": "always",
+      "autoDownload": true
+    },
+    "ruff": {
+      "mode": "always",
+      "autoDownload": true
+    }
+  },
+  "formatter": {
+    "formatOnSave": true,
+    "python": "ruff",
+    "json": "prettier",
+    "markdown": "prettier",
+    "yaml": "prettier"
+  },
+  "tool_output": {
+    "max_lines": 500,
+    "max_bytes": 32000
+  },
+  "compaction": {
+    "tail_turns": 50,
+    "preserve_recent_tokens": 8000,
+    "prune": true
+  },
+  "experimental": {
+    "doom_loop": true,
+    "vision_cache": true,
+    "policies": [
+      {
+        "name": "bash-safe",
+        "bash": {
+          "allow_patterns": [
+            "git *",
+            "npm *",
+            "python3 *",
+            "pip3 *",
+            "npx *",
+            "opencode *",
+            "ssh *",
+            "scp *",
+            "docker *",
+            "ls *",
+            "cat *",
+            "cp *",
+            "mv *",
+            "rm *",
+            "mkdir *",
+            "chmod *",
+            "ln *",
+            "echo *",
+            "grep *",
+            "head *",
+            "tail *",
+            "wc *",
+            "sort *",
+            "find *",
+            "which *",
+            "cd *",
+            "source *",
+            "export *",
+            "set *",
+            "env *",
+            "node *",
+            "tsx *",
+            "npx --yes *"
+          ]
+        }
+      }
+    ]
   }
 }

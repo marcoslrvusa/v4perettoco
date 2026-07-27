@@ -121,16 +121,16 @@ Siga os principios da secao avancada ("Skill Writing Guide" mais abaixo). Pontos
 
 ### Passo 5 — DUPLO-WRITE (critico)
 
-Apos montar o conteudo final da skill, escreva em **dois lugares**, sempre em sequencia:
+Apos montar o conteudo final da skill, escreva em **um lugar** e crie **symlink**:
 
-1. `.claude/skills/{nome}/SKILL.md`
-2. `.agents/skills/{nome}/SKILL.md`
+1. `.agents/skills/{nome}/` — pasta real com SKILL.md e assets
+2. `.claude/skills/{nome}` — symlink apontando pra `../../.agents/skills/{nome}`
 
-O conteudo deve ser **byte-a-byte identico** nos dois arquivos. Use a mesma string exata pros dois Write calls. Crie as pastas se nao existirem.
+Use `ln -sf ../../.agents/skills/{nome} .claude/skills/{nome}`. Crie a pasta real em `.agents/skills/{nome}/` primeiro.
 
-Se a skill tiver arquivos extras (`references/`, `scripts/`, `assets/`), duplique a estrutura inteira nos dois lugares.
+O symlink funciona no git (linux), e o conteudo `byte-a-byte identico` e garantido porque e o mesmo arquivo fisico.
 
-**Por que duplo-write:** Claude Code le `.claude/skills/`, Anti-Gravity le `.agents/skills/`. Se a skill so esta em um dos dois, ela nao funciona pro outro agente. Como os V4ers usam os dois (Anti-Gravity na IDE, Claude Code no terminal), ambos precisam estar atualizados.
+**Por que symlink:** Claude Code le `.claude/skills/`, Anti-Gravity le `.agents/skills/`. Com symlink, os dois apontam pro mesmo arquivo — zero duplicacao, zero risco de divergir. A migracao de skills antigas (copia → symlink) ja foi feita.
 
 ### Passo 6 — Oferecer compartilhamento
 

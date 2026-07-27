@@ -1,1 +1,0 @@
-../../../.agents/skills/account-handoff/SKILL.md

@@ -1,1 +1,0 @@
-../../../.agents/skills/novo-projeto/SKILL.md

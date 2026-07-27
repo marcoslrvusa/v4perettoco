@@ -1,1 +1,0 @@
-../../../.agents/skills/account-checkin-review/SKILL.md

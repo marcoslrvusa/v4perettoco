@@ -1,1 +1,0 @@
-../../../.agents/skills/account-pesquisa-profunda-cliente/SKILL.md
