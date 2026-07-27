@@ -1,0 +1,81 @@
+{
+  "id": "e0f1a2b3-4c5d-6e7f-8a9b-0c1d2e3f4a5b",
+  "name": "Agent Orchestra - Queue Processor",
+  "active": false,
+  "nodes": [
+    {
+      "id": "n1-manual-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "parameters": {}
+    },
+    {
+      "id": "n2-dequeue",
+      "name": "Dequeue & Classify",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [450, 300],
+      "parameters": {
+        "command": "python3",
+        "parameters": "/workspace/agent-orchestrator.py process"
+      }
+    },
+    {
+      "id": "n3-check-result",
+      "name": "Check Result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [650, 300],
+      "parameters": {
+        "jsCode": "const output = $input.first().json;\nconst stdout = (output.stdout || '').toString();\nconst stderr = (output.stderr || '').toString();\n\nconst hasError = stderr.includes('ERRO') || stderr.includes('Traceback') || stdout.includes('Nenhum item');\nconst mode = stdout.includes('AUTONOMO') ? 'autonomo'\n  : stdout.includes('SEMI') ? 'semi'\n  : stdout.includes('MANUAL') ? 'manual'\n  : 'unknown';\n\nreturn [{\n  raw_stdout: stdout,\n  raw_stderr: stderr,\n  has_error: hasError,\n  mode: mode,\n  requires_review: mode === 'semi' || mode === 'manual' || mode === 'unknown',\n}];"
+      }
+    },
+    {
+      "id": "n4-success",
+      "name": "Handle Success",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [850, 200],
+      "parameters": {
+        "jsCode": "const result = $input.first().json;\nreturn [{\n  status: 'processed',\n  mode: result.mode,\n  message: result.mode === 'autonomo'\n    ? 'Demanda processada automaticamente'\n    : 'Brief gerado. Aguardando revis\u00e3o.',\n  timestamp: new Date().toISOString(),\n}];"
+      }
+    },
+    {
+      "id": "n5-failure",
+      "name": "Handle Failure",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [850, 400],
+      "parameters": {
+        "jsCode": "const result = $input.first().json;\nconst https = require('https');\nconst url = process.env.SUPABASE_URL;\nconst key = process.env.SUPABASE_SERVICE_KEY;\n\nfunction supabasePost(path, body) {\n  return new Promise((resolve, reject) => {\n    const u = new URL(path, url);\n    const payload = JSON.stringify(body);\n    const opt = {\n      hostname: u.hostname,\n      path: u.pathname + u.search,\n      method: 'POST',\n      headers: {\n        'Content-Type': 'application/json',\n        apikey: key,\n        Authorization: 'Bearer ' + key,\n        Prefer: 'return=minimal',\n      },\n    };\n    const req = https.request(opt, res => {\n      let d = '';\n      res.on('data', c => d += c);\n      res.on('end', () => resolve(d));\n    });\n    req.on('error', reject);\n    req.write(payload);\n    req.end();\n  });\n}\n\ntry {\n  await supabasePost('/rest/v1/agent_queue_log', {\n    queue_id: 'unknown',\n    event: 'processor_failure',\n    detail: JSON.stringify({ error: result.raw_stderr, stdout: result.raw_stdout }),\n  });\n} catch (e) {\n}\n\nreturn [{\n  status: 'failed',\n  error: result.raw_stderr || 'Erro desconhecido no processamento',\n  timestamp: new Date().toISOString(),\n}];"
+      }
+    }
+  ],
+  "connections": {
+    "n1-manual-trigger": {
+      "main": [
+        [{ "node": "n2-dequeue", "type": "main", "index": 0 }]
+      ]
+    },
+    "n2-dequeue": {
+      "main": [
+        [{ "node": "n3-check-result", "type": "main", "index": 0 }]
+      ]
+    },
+    "n3-check-result": {
+      "main": [
+        [
+          { "node": "n4-success", "type": "main", "index": 0 },
+          { "node": "n5-failure", "type": "main", "index": 0 }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": ["agent-orchestra", "processor"]
+}

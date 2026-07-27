@@ -407,8 +407,111 @@ Use `@nome-do-agente` seguido da missão:
        10 especialistas + 4 nicho + revisor + analista
 ```
 
-**Total: 23 subagentes × 65 skills = capacidade de agência completa em texto.**
+---
+
+## 8. Modo Autônomo (Agent Queue System)
+
+> **Da orquestração manual para o sistema autônomo de fila de demandas com learning loop.**
+> As seções 1-7 descrevem o que a orquestração pode fazer. Esta seção descreve como ela roda sem supervisão.
+
+### Arquitetura
+
+```
+detector_flags.py ──→ flag-hook.py ──┐
+cron (15min) ────────────────────────┼──→ Supabase agent_queue
+comando manual ──────────────────────┘         │
+n8n (opcional) ────────────────────────────────┘
+                                               ▼
+                                     agent-orchestrator.py
+                                         │
+                                    ┌────┴────┐
+                                    │ search  │ ← pgvector (memórias similares)
+                                    └────┬────┘
+                                         │
+                                    classify_demand()
+                                         │
+                                    write_brief() → /workspace/input/
+                                         │
+                                    ┌────┴────┐
+                                    │ record  │ → pgvector (aprendizado)
+                                    └────┬────┘
+                                         │
+                                    update_routing_stats()
+```
+
+### Fluxo Completo
+
+1. **Entrada**: `detector_flags.py` (via `flag-hook.py`), cron a cada 15min, comando manual, ou n8n (opcional)
+2. **Fila**: `agent_queue` no Supabase com prioridade, urgência, função e modo de operação
+3. **Learning Loop — search**: `search.py` busca memórias similares no pgvector (mesmo cliente/nicho/tarefa)
+4. **Classificação**: `classify_demand()` → orquestrador + especialistas + modo (manual/semi/autonomo)
+5. **Briefing**: escreve JSON enriquecido com memórias em `/workspace/input/`
+6. **Execução**: agente OpenCode processa o brief
+7. **Learning Loop — record**: `record.py` registra aprendizado (estratégia, resultado, score)
+8. **Aprendizado**: `update_routing_stats()` alimenta dashboard de performance
+
+### Modos de Operação
+
+| Modo | Gatilho | Fluxo | Indicação |
+|------|---------|-------|-----------|
+| **Manual** | Prioridade < 50 ou `demand_type=manual` | Orquestrador prepara briefing → humano aprova antes de executar | Demandas de alto risco ou cliente sensível |
+| **Semi** | Prioridade 50-79 ou `demand_type=flag` | Orquestrador executa → humano revisa output final | Flags de rotina, demandas de copy/CRO |
+| **Autônomo** | Prioridade ≥ 80 ou `demand_type=scheduled` | Orquestrador executa e entrega direto → escalona se erro | Tarefas programadas, ingestão de dados, relatórios |
+
+### Componentes do Sistema
+
+| Componente | Localização | Função |
+|-----------|-------------|--------|
+| Schema Supabase | `.agents/skills/geral-agente-autonomo/scripts/setup/supabase-schema.sql` | `agent_queue` + funções RPC |
+| CLI Orchestrator | `.agents/skills/geral-agente-autonomo/scripts/agent-orchestrator.py` | Ciclo completo c/ learning loop (search → classify → brief → record → stats) |
+| Flag Hook | `.agents/skills/geral-agente-autonomo/scripts/flag-hook.py` | Ponte `detector_flags.py` → `agent_queue` |
+| Cron Wrapper | `.agents/skills/geral-agente-autonomo/scripts/cron-wrapper.sh` | Execução periódica com lock |
+| n8n Workflows (opcional) | `.agents/skills/geral-agente-autonomo/workflows/*.json` | Importável pelo n8n UI |
+| Dashboard | `.agents/skills/geral-agente-autonomo/dashboard/index.html` | Painel de performance |
+
+### Mapa de Classificação
+
+Demanda chega → `agent-orchestrator.py classify` define:
+
+```
+source = flag-roi       → orchestrator = growth-team
+source = flag-churn     → orchestrator = account-orchestrator
+source = flag-okr       → orchestrator = cmoorch
+source = flag-operacao  → orchestrator = csm-orquestrador
+function = copy         → orchestrator = copy-orchestrator
+function = aquisicao    → orchestrator = growth-team
+function = conteudo     → orchestrator = content-studio
+function = saude_cliente → orchestrator = account-orchestrator
+function = receita      → orchestrator = revenue-ops
+function = lancamento   → orchestrator = launch-pad
+function = operacao     → orchestrator = csm-orquestrador
+function = lideranca    → orchestrator = cmoorch
+fallback                → orchestrator = cmoorch
+```
+
+### Comandos Rápidos
+
+```bash
+# Ver fila
+python3 agent-orchestrator.py queue
+
+# Processar próximo item
+python3 agent-orchestrator.py process
+
+# Enfileirar demanda
+python3 agent-orchestrator.py enqueue --function copy --urgency alta --priority 80 --briefing '{"task":"Landing page novo produto"}'
+
+# Dashboard de performance
+python3 agent-orchestrator.py report
+
+# Saúde do sistema
+python3 agent-orchestrator.py status
+```
 
 ---
 
-*"Sozinho você é uma skill. Em orquestra, você é uma agência."*
+**Total: 23 subagentes × 65 skills × 3 modos operacionais = agência autônoma.**
+
+---
+
+*"Sozinho você é uma skill. Em orquestra, você é uma agência. Autônoma, você nunca para."*

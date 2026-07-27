@@ -1,0 +1,59 @@
+{
+  "id": "d9e8f7a6-5b4c-3d2e-1f0a-9b8c7d6e5f4a",
+  "name": "Agent Orchestra - Webhook Receiver",
+  "active": false,
+  "nodes": [
+    {
+      "id": "n1-webhook",
+      "name": "Webhook Receiver",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "agent-orchestra/enqueue",
+        "options": {},
+        "responseMode": "onReceived",
+        "responseData": "allEntries"
+      },
+      "webhookId": "agent-orchestra-enqueue"
+    },
+    {
+      "id": "n2-validate",
+      "name": "Validate Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [450, 300],
+      "parameters": {
+        "jsCode": "const payload = $input.first().json;\n\nconst validFunctions = ['aquisicao','conteudo','saude_cliente','receita','lancamento','operacao','lideranca','copy'];\nconst validUrgency = ['baixa','normal','alta','critica'];\nconst validTypes = ['flag','scheduled','manual','webhook'];\n\nif (!payload.function || !validFunctions.includes(payload.function)) {\n  throw new Error('function inv\u00e1lida. Use: ' + validFunctions.join(', '));\n}\n\nif (payload.urgency && !validUrgency.includes(payload.urgency)) {\n  throw new Error('urgency inv\u00e1lida. Use: ' + validUrgency.join(', '));\n}\n\nif (!payload.demand_type || !validTypes.includes(payload.demand_type)) {\n  payload.demand_type = 'webhook';\n}\n\nreturn [{\n  demand_type: payload.demand_type,\n  source: payload.source || 'webhook',\n  function: payload.function,\n  urgency: payload.urgency || 'normal',\n  scope: payload.scope || 'single',\n  priority: payload.priority || 50,\n  briefing: payload.briefing || {},\n}];"
+      }
+    },
+    {
+      "id": "n3-enqueue",
+      "name": "Enqueue in Supabase",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [650, 300],
+      "parameters": {
+        "jsCode": "const https = require('https');\nconst url = process.env.SUPABASE_URL;\nconst key = process.env.SUPABASE_SERVICE_KEY;\nconst data = $input.first().json;\n\nfunction supabasePost(path, body) {\n  return new Promise((resolve, reject) => {\n    const u = new URL(path, url);\n    const payload = JSON.stringify(body);\n    const opt = {\n      hostname: u.hostname,\n      path: u.pathname + u.search,\n      method: 'POST',\n      headers: {\n        'Content-Type': 'application/json',\n        apikey: key,\n        Authorization: 'Bearer ' + key,\n        Prefer: 'return=representation',\n      },\n    };\n    const req = https.request(opt, res => {\n      let d = '';\n      res.on('data', c => d += c);\n      res.on('end', () => {\n        try { resolve(JSON.parse(d)); }\n        catch { reject(new Error('Falha ao parsear: ' + d)); }\n      });\n    });\n    req.on('error', reject);\n    req.write(payload);\n    req.end();\n  });\n}\n\nconst result = await supabasePost('/rest/v1/agent_queue', {\n  demand_type: data.demand_type,\n  source: data.source,\n  function: data.function,\n  urgency: data.urgency,\n  scope: data.scope,\n  priority: data.priority,\n  briefing: JSON.stringify(data.briefing),\n  status: 'pending',\n});\n\nreturn [{\n  success: true,\n  queue_id: Array.isArray(result) ? result[0]?.id : result?.id,\n  demand: data,\n}];"
+      }
+    }
+  ],
+  "connections": {
+    "n1-webhook": {
+      "main": [
+        [{ "node": "n2-validate", "type": "main", "index": 0 }]
+      ]
+    },
+    "n2-validate": {
+      "main": [
+        [{ "node": "n3-enqueue", "type": "main", "index": 0 }]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": ["agent-orchestra", "webhook"]
+}

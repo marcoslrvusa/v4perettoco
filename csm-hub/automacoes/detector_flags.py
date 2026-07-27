@@ -9,9 +9,11 @@ Depende de: v4-automations/scripts/connectors.py
 """
 import sys
 import os
+import json
 from pathlib import Path
 from datetime import date, timedelta
 from dotenv import load_dotenv
+import subprocess
 
 # Importa connectors do v4-automations
 V4_PATH = Path(__file__).parent.parent.parent / "v4-automations"
@@ -22,6 +24,9 @@ from scripts.connectors import (
     GmailConnector, claude, load_clientes
 )
 from scripts.ekyte.connector import EkyteClient
+
+# Caminho para o flag-hook.py da skill geral-agente-autonomo
+FLAG_HOOK_PATH = Path(__file__).parent.parent.parent / ".agents" / "skills" / "geral-agente-autonomo" / "scripts" / "flag-hook.py"
 
 load_dotenv(V4_PATH / "config" / ".env")
 
@@ -233,6 +238,25 @@ def main():
     for cliente in clientes:
         print(f"  Verificando: {cliente['nome']}...")
         flags = detectar_flags_cliente(cliente)
+
+        # Enfileira cada flag na agent_queue (se o hook existir)
+        for flag in flags:
+            if FLAG_HOOK_PATH.exists():
+                try:
+                    subprocess.run(
+                        ["python3", str(FLAG_HOOK_PATH),
+                         "--flag", flag["tipo"],
+                         "--urgencia", flag["urgencia"],
+                         "--dado", flag["dado"],
+                         "--cliente", cliente["nome"],
+                         "--dados-brutos", json.dumps(flag.get("dados_brutos", {}))],
+                        capture_output=True, text=True, timeout=15,
+                    )
+                except Exception as e:
+                    print(f"  Hook erro: {e}")
+            else:
+                print(f"  AVISO: flag-hook.py não encontrado em {FLAG_HOOK_PATH}")
+
         briefing = gerar_briefing_csm(cliente, flags)
         briefings.append((cliente["nome"], briefing, len(flags)))
         print(f"  Flags detectadas: {len(flags)}")
