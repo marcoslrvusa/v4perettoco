@@ -29,9 +29,10 @@
       "enabled": true
     },
     "opencode-vision": {
-      "command": "opencode-vision",
+      "command": "opencode-vision-wrapper",
       "env": {
-        "GOOGLE_API_KEY": "{env:GOOGLE_API_KEY}"
+        "GOOGLE_API_KEY": "{env:GOOGLE_API_KEY}",
+        "PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK": "True"
       },
       "enabled": true,
       "description": "Dá visão para modelos text-only (PaddleOCR + Gemini fallback)"
