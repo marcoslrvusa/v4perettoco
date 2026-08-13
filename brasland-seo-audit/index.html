@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auditoria Técnica SEO — Brasland</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --red: rgb(229, 9, 20);
+    --red-dark: rgb(180, 7, 16);
+    --red-light: rgb(255, 60, 70);
+    --gold: #c9a96e;
+    --gold-light: #f5f0e6;
+    --gold-border: #e8dcc8;
+    --gray-50: #fafafa;
+    --gray-100: #f5f5f5;
+    --gray-200: #eeeeee;
+    --gray-300: #e0e0e0;
+    --gray-400: #bdbdbd;
+    --gray-500: #9e9e9e;
+    --gray-600: #757575;
+    --gray-700: #616161;
+    --gray-800: #424242;
+    --gray-900: #212121;
+  }
+
+  body {
+    font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f8f7f4;
+    color: var(--gray-900);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  .cover {
+    background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #2a2a2a 100%);
+    color: #fff;
+    padding: 64px 40px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(201,169,110,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .cover-content { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
+  .cover-content::before {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .cover-content::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin: 28px auto 0;
+    border-radius: 1px;
+  }
+
+  .cover .label {
+    display: inline-block;
+    background: rgba(201,169,110,0.12);
+    border: 1px solid rgba(201,169,110,0.3);
+    padding: 6px 20px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    color: var(--gold);
+  }
+  .cover h1 {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 14px;
+    letter-spacing: -0.5px;
+    font-family: 'Plus Jakarta Sans', serif;
+  }
+  .cover p {
+    font-size: 18px;
+    opacity: 0.85;
+    margin-bottom: 24px;
+    font-weight: 300;
+    letter-spacing: 0.2px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 14px;
+    opacity: 0.7;
+    letter-spacing: 0.5px;
+  }
+
+  .container { max-width: 960px; margin: -36px auto 48px; position: relative; z-index: 2; }
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+    margin-bottom: 28px;
+    overflow: hidden;
+    border: 1px solid var(--gray-300);
+    position: relative;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 40px;
+    right: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-border), var(--gold), var(--gold-border), transparent);
+    opacity: 0.6;
+  }
+  .card-body { padding: 44px 52px; }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--gold-border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -0.3px;
+    position: relative;
+  }
+  h2::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 1px;
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin: 36px 0 18px;
+    letter-spacing: -0.2px;
+  }
+  h4 { font-size: 16px; font-weight: 700; color: var(--gray-800); margin: 22px 0 12px; }
+  p { font-size: 16px; color: var(--gray-700); margin-bottom: 16px; line-height: 1.8; }
+  p:last-child { margin-bottom: 0; }
+
+  .badge {
+    display: inline-block;
+    padding: 5px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .badge-critico { background: #fef2f2; color: var(--red); border: 1px solid #fecaca; }
+  .badge-alto { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+  .badge-medio { background: #fefce8; color: #a16207; border: 1px solid #fef08a; }
+  .badge-baixo { background: var(--gold-light); color: #8b7a4a; border: 1px solid var(--gold-border); }
+  .badge-info { background: #f5f5f5; color: #616161; border: 1px solid #d4d4d4; }
+
+  .severity { display: inline-block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .sev-critico { color: var(--red); }
+  .sev-alto { color: #c2410c; }
+  .sev-medio { color: #a16207; }
+  .sev-baixo { color: #8b7a4a; }
+  .sev-info { color: #616161; }
+
+  table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 15px; }
+  th, td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--gray-100); }
+  th {
+    background: linear-gradient(135deg, var(--gray-50), #f8f7f4);
+    font-weight: 700;
+    color: var(--gray-700);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 2px solid var(--gold-border);
+    position: relative;
+  }
+  tr:hover td { background: #fcfaf7; }
+  tr:last-child td { border-bottom: none; }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .kpi-card {
+    background: #f2f0ec;
+    border-radius: 10px;
+    padding: 20px 12px 18px;
+    text-align: center;
+    border: 1px solid var(--gold-border);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .kpi-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 2px 12px rgba(201,169,110,0.1);
+  }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--red), var(--gold));
+  }
+  .kpi-card .value {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--red);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+  .kpi-card .label {
+    font-size: 12px;
+    color: var(--gray-600);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 8px;
+  }
+  .kpi-card .sub { font-size: 12px; color: var(--gray-600); margin-top: 4px; }
+
+  .risk-box {
+    background: linear-gradient(135deg, #fcfaf7, #f8f7f4);
+    border-left: 4px solid var(--red);
+    padding: 22px 26px;
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 18px;
+  }
+  .risk-box h4 { margin: 0 0 10px; color: var(--red); font-size: 16px; letter-spacing: -0.2px; }
+  .risk-box p { font-size: 15px; color: var(--gray-700); margin: 0; line-height: 1.7; }
+
+  .finding {
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 26px 30px;
+    margin-bottom: 18px;
+    background: #fcfcfc;
+    transition: box-shadow 0.2s, border-color 0.2s;
+    border-left: 3px solid transparent;
+  }
+  .finding:hover {
+    box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+    border-color: var(--gold-border);
+    border-left-color: var(--gold);
+  }
+  .finding-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    gap: 12px;
+  }
+  .finding-title { font-weight: 700; font-size: 17px; color: var(--gray-900); letter-spacing: -0.2px; }
+  .finding-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 32px;
+    font-size: 15px;
+  }
+  .finding-grid .field { font-weight: 600; color: var(--gray-800); }
+  .finding-grid .value { color: var(--gray-700); }
+  .finding-grid .full { grid-column: 1 / -1; }
+
+  .bar-container { margin: 22px 0; }
+  .bar-row { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+  .bar-label { width: 170px; font-size: 14px; font-weight: 700; color: var(--gray-700); text-align: right; flex-shrink: 0; letter-spacing: -0.2px; }
+  .bar-track { flex: 1; height: 30px; background: var(--gray-100); border-radius: 6px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding-right: 14px; font-size: 13px; font-weight: 700; color: #fff; letter-spacing: 0.3px; }
+  .bar-fill.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .bar-fill.orange { background: linear-gradient(90deg, #c2410c, #ea580c); }
+  .bar-fill.gold { background: linear-gradient(90deg, #b8963a, #d4b96a); }
+  .bar-fill.gray { background: linear-gradient(90deg, #616161, #9e9e9e); }
+
+  .timeline {
+    display: flex;
+    gap: 0;
+    margin: 32px 0 16px;
+    position: relative;
+    padding: 0 0 20px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 5%;
+    right: 5%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold-border), var(--gold), var(--gold-border));
+    border-radius: 2px;
+  }
+  .timeline-phase {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    padding: 0 8px;
+  }
+  .timeline-phase .dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    position: relative;
+    z-index: 1;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px var(--gold);
+  }
+  .timeline-phase .dot.red { background: var(--red); }
+  .timeline-phase .dot.orange { background: #c2410c; }
+  .timeline-phase .dot.gold { background: var(--gold); }
+  .timeline-phase .dot.gray { background: #757575; }
+  .timeline-phase .phase-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 2px;
+  }
+  .timeline-phase .phase-hours {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--red);
+    letter-spacing: -0.5px;
+  }
+  .timeline-phase .phase-pct {
+    font-size: 12px;
+    color: var(--gray-500);
+    font-weight: 600;
+  }
+  .timeline-phase .phase-bar {
+    height: 8px;
+    border-radius: 4px;
+    margin: 8px auto 6px;
+    max-width: 80%;
+  }
+  .timeline-phase .phase-bar.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .timeline-phase .phase-bar.orange { background: linear-gradient(90deg, #c2410c, #ea580c); }
+  .timeline-phase .phase-bar.gold { background: linear-gradient(90deg, #b8963a, #d4b96a); }
+  .timeline-phase .phase-bar.gray { background: linear-gradient(90deg, #616161, #9e9e9e); }
+  .timeline-deliverables {
+    display: flex;
+    gap: 0;
+    margin-top: 4px;
+  }
+  .timeline-deliverables .deliv {
+    flex: 1;
+    text-align: center;
+    padding: 0 6px;
+    font-size: 12px;
+    color: var(--gray-600);
+    line-height: 1.4;
+  }
+  .timeline-deliverables .deliv strong {
+    display: block;
+    color: var(--gray-700);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 2px;
+  }
+
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--gray-100);
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 14px;
+    color: var(--red);
+  }
+
+  .glossary-row { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--gray-100); }
+  .glossary-row:last-child { border: none; }
+  .glossary-row span:last-child { font-size: 15px; color: var(--gray-700); }
+
+  .footer {
+    text-align: center;
+    padding: 36px;
+    font-size: 14px;
+    color: var(--gray-500);
+    border-top: 1px solid var(--gold-border);
+    letter-spacing: 0.3px;
+    position: relative;
+  }
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 2px;
+  }
+
+  @media print {
+    body { background: #fff; padding: 0; font-size: 12px; }
+    .cover { padding: 40px 30px; }
+    .container { max-width: 100%; margin: 0; }
+    .card { box-shadow: none; border: 1px solid var(--gray-200); page-break-inside: avoid; }
+    .card-body { padding: 20px 24px; }
+    .finding { page-break-inside: avoid; }
+    table { page-break-inside: avoid; }
+    @page { margin: 1.5cm 1cm; }
+  }
+
+  @media (max-width: 640px) {
+    .cover h1 { font-size: 26px; }
+    .cover { padding: 40px 20px 32px; }
+    .card-body { padding: 20px; }
+    .finding-grid { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .bar-label { width: 90px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-content">
+    <img src="../assets/logo-peretto.png" alt="Peretto" style="height:60px; width:auto; margin-bottom:28px; opacity:0.95;">
+    <div class="label">Confidencial &bull; Agosto 2026</div>
+    <h1>Auditoria T&eacute;cnica SEO</h1>
+    <p>Brasland &mdash; tecnologia.chleba.net:89/brasland/<br>Relat&oacute;rio completo de diagn&oacute;stico e plano de a&ccedil;&atilde;o trimestral</p>
+    <div class="cover-meta">
+      <span>&bull; Crawl &amp; an&aacute;lise t&eacute;cnica</span>
+      <span>&bull; 18 URLs no sitemap</span>
+      <span>&bull; 5 sitemaps analisados</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Sum&aacute;rio</h2>
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="value">1.5 / 10</div>
+          <div class="label">Sa&uacute;de SEO</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">19</div>
+          <div class="label">Problemas</div>
+          <div class="sub">6 Cr&iacute;ticos &bull; 7 Alto &bull; 3 M&eacute;dio &bull; 3 Info</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">107 h</div>
+          <div class="label">Esfor&ccedil;o Total</div>
+          <div class="sub">3 meses + Fase 0</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">+30% a +50%</div>
+          <div class="label">Proje&ccedil;&atilde;o Tr&aacute;fego</div>
+          <div class="sub">90 dias p&oacute;s go-live</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">6</div>
+          <div class="label">Quick Wins</div>
+          <div class="sub">48 horas pr&eacute;-go-live</div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:36px;">
+        <h2>Evolu&ccedil;&atilde;o do Projeto</h2>
+        <p style="margin-bottom:20px; color:var(--gray-700);">Distribui&ccedil;&atilde;o de esfor&ccedil;o ao longo das 4 fases &mdash; da corre&ccedil;&atilde;o pr&eacute;-go-live &agrave; expans&atilde;o de conte&uacute;do.</p>
+
+        <div class="timeline">
+          <div class="timeline-phase">
+            <div class="dot red"></div>
+            <div class="phase-bar red" style="width:65%;"></div>
+            <div class="phase-hours">16</div>
+            <div class="phase-name">Fase 0</div>
+            <div class="phase-pct">15% do total</div>
+          </div>
+          <div class="timeline-phase">
+            <div class="dot orange"></div>
+            <div class="phase-bar orange" style="width:75%;"></div>
+            <div class="phase-hours">30</div>
+            <div class="phase-name">M&ecirc;s 1</div>
+            <div class="phase-pct">28%</div>
+          </div>
+          <div class="timeline-phase">
+            <div class="dot gold"></div>
+            <div class="phase-bar gold" style="width:85%;"></div>
+            <div class="phase-hours">29</div>
+            <div class="phase-name">M&ecirc;s 2</div>
+            <div class="phase-pct">27%</div>
+          </div>
+          <div class="timeline-phase">
+            <div class="dot gray"></div>
+            <div class="phase-bar gray" style="width:100%;"></div>
+            <div class="phase-hours">32</div>
+            <div class="phase-name">M&ecirc;s 3</div>
+            <div class="phase-pct">30%</div>
+          </div>
+        </div>
+
+        <div class="timeline-deliverables">
+          <div class="deliv"><strong>Pr&eacute;-Go-Live</strong>Remover noindex<br>Robots.txt<br>Titles + metas<br>Limpar conte&uacute;do de teste</div>
+          <div class="deliv"><strong>Funda&ccedil;&atilde;o</strong>Can&ocirc;nicos<br>Schema Product<br>Estrutura de escavadeiras<br>Performance/imagens</div>
+          <div class="deliv"><strong>Conte&uacute;do</strong>Hubs + categorias<br>P&aacute;ginas de produto ricas<br>Conte&uacute;do main pages<br>Alt texts</div>
+          <div class="deliv"><strong>Expans&atilde;o</strong>+hubs, +spokes<br>Clusters de conte&uacute;do<br>Core Web Vitals<br>Monitoramento</div>
+        </div>
+
+        <div style="margin-top:24px; background:linear-gradient(135deg, #fcfaf7, #f8f7f4); border-radius:10px; padding:18px 22px; border:1px solid var(--gold-border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+          <div>
+            <div style="font-size:12px; color:var(--gray-500); font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Progresso Total</div>
+            <div style="font-size:28px; font-weight:700; color:var(--red); letter-spacing:-0.5px;">107 h</div>
+          </div>
+          <div style="flex:1; max-width:400px;">
+            <div style="height:6px; background:var(--gray-200); border-radius:3px; overflow:hidden; margin-bottom:6px;">
+              <div style="height:100%; width:100%; background:linear-gradient(90deg, var(--red), var(--gold)); border-radius:3px;"></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--gray-500);">
+              <span>In&iacute;cio</span>
+              <span style="font-weight:600; color:var(--gray-700);">90 dias de execu&ccedil;&atilde;o</span>
+              <span>Go-Live</span>
+            </div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:12px; color:var(--gray-500); font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">+30% a +50%</div>
+            <div style="font-size:16px; font-weight:700; color:var(--gold);">Proje&ccedil;&atilde;o de tr&aacute;fego</div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Top 3 Riscos que Exigem Aten&ccedil;&atilde;o Imediata do C-Level</h3>
+      <div class="risk-box">
+        <h4>1. Site 100% bloqueado da indexa&ccedil;&atilde;o &mdash; <code>noindex, nofollow</code> em todas as 18 URLs</h4>
+        <p>100% das p&aacute;ginas possuem a meta <code>&lt;meta name='robots' content='noindex, nofollow' /&gt;</code>. O Google n&atilde;o indexar&aacute; NENHUMA p&aacute;gina enquanto essa diretiva existir. Al&eacute;m disso, o <code>/robots.txt</code> retorna erro 500 (Internal Server Error), impedindo a instru&ccedil;&atilde;o de crawlers no dom&iacute;nio. Sinal claro de site em staging/preview sem configura&ccedil;&atilde;o de produ&ccedil;&atilde;o.</p>
+      </div>
+      <div class="risk-box">
+        <h4>2. Conte&uacute;do de teste publicado + URLs/slugs desconexos</h4>
+        <p>Posts <code>/insights/post-teste/</code> e <code>/insights/post-teste-2/</code> publicados com slugs de teste. URL <code>maximizando-a-economia-de-combustivel...</code> serve o artigo "5 sinais de manuten&ccedil;&atilde;o preventiva". P&aacute;gina de privacidade com lorem ipsum ("Teste do teste do teste"). og:description da home com texto padr&atilde;o do WordPress ("Esta &eacute; uma p&aacute;gina de exemplo..."). O site n&atilde;o pode ir ao ar nesse estado.</p>
+      </div>
+      <div class="risk-box">
+        <h4>3. Zero can&ocirc;nicos + zero meta descriptions + t&iacute;tulos gen&eacute;ricos em 100% das p&aacute;ginas</h4>
+        <p>Nenhuma p&aacute;gina tem <code>&lt;link rel="canonical"&gt;</code> ou meta description. T&iacute;tulos como "Home - Brasland", "Contato - Brasland" e "ZX130-5A - Brasland" n&atilde;o comunicam valor e perdem CTR. Mesmo ap&oacute;s remover o noindex, o site n&atilde;o conseguiria competir no SERP sem essas otimiza&ccedil;&otilde;es on-page.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Perfil do Site</h2>
+      <table>
+        <tr><th>Caracter&iacute;stica</th><th>Detalhe</th></tr>
+        <tr><td><strong>Dom&iacute;nio</strong></td><td>tecnologia.chleba.net:89 (porta n&atilde;o-padr&atilde;o) &mdash; prov&aacute;vel ambiente de preview/staging, n&atilde;o o dom&iacute;nio definitivo de produ&ccedil;&atilde;o</td></tr>
+        <tr><td><strong>Segmento</strong></td><td>M&aacute;quinas pesadas &mdash; distribuidor exclusivo Hitachi Construction Machinery no Brasil (escavadeiras hidr&aacute;ulicas ZX130 a ZX490, pe&ccedil;as originais e suporte)</td></tr>
+        <tr><td><strong>CMS</strong></td><td>WordPress 6.1.6 + tema customizado (theme-brasland)</td></tr>
+        <tr><td><strong>Plugins</strong></td><td>Yoast SEO, Contact Form 7</td></tr>
+        <tr><td><strong>Idioma</strong></td><td>pt-BR (sem vers&otilde;es multil&iacute;ngue)</td></tr>
+        <tr><td><strong>Total URLs no sitemap</strong></td><td>18 (4 posts + 7 p&aacute;ginas + 4 escavadeiras + 2 categorias + 1 tipo)</td></tr>
+        <tr><td><strong>URLs index&aacute;veis</strong></td><td>0 (todas com noindex, nofollow)</td></tr>
+        <tr><td><strong>Sitemap XML</strong></td><td>Presente (Yoast, 5 sitemaps em sitemap_index.xml)</td></tr>
+        <tr><td><strong>robots.txt</strong></td><td><strong>Quebrado</strong> &mdash; retorna HTTP 500</td></tr>
+        <tr><td><strong>Response time (TTFB)</strong></td><td>~1,1s a 1,9s (acima do ideal &lt; 0,8s)</td></tr>
+        <tr><td><strong>HTTPS</strong></td><td><strong>N&atilde;o implementado</strong> &mdash; apenas HTTP na porta 89. Sem certificado SSL.</td></tr>
+        <tr><td><strong>Estrutura de dados</strong></td><td>Somente schema b&aacute;sico do Yoast (WebPage, BreadcrumbList, WebSite). Sem Product/Article/FAQ.</td></tr>
+        <tr><td><strong>Mobile</strong></td><td>Responsivo (viewport configurado)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Diagn&oacute;stico T&eacute;cnico Detalhado</h2>
+
+      <h3><span class="badge badge-critico">Cr&iacute;ticos</span> &mdash; Impedem Indexa&ccedil;&atilde;o e Ranqueamento</h3>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">C-01. <code>noindex, nofollow</code> em 100% das P&aacute;ginas</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Todas as 18 URLs (home, pe&ccedil;as, servi&ccedil;os, quem somos, contato, insights, 4 escavadeiras, 4 posts, 3 arquivos) possuem <code>&lt;meta name='robots' content='noindex, nofollow' /&gt;</code>.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Bloqueio total de indexa&ccedil;&atilde;o. O Google n&atilde;o encontrar&aacute; o site. Zero tr&aacute;fego org&acirc;nico poss&iacute;vel. Impede qualquer resultado de SEO.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Remover a diretiva noindex/nofollow global (via Yoast SEO &gt; Apar&ecirc;ncia &gt; Pesquisar ou "Discourage search engines" nas Settings). (2) Garantir que a home fique index,follow. (3) Validar com a ferramenta de inspe&ccedil;&atilde;o de URL do GSC ap&oacute;s publicar.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">1 h (Dev WordPress)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">C-02. robots.txt Retorna HTTP 500</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value"><code>GET http://tecnologia.chleba.net:89/robots.txt</code> retorna <code>HTTP/1.1 500 Internal Server Error</code> com HTML de erro do Apache.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Crawlers n&atilde;o conseguem ler instru&ccedil;&otilde;es do site. Sem sitemap referenciado e sem controle sobre o que pode/cresce ser rastreado. Erro de servidor no arquivo mais fundamental do SEO.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Corrigir o erro 500 no Apache/.htaccess. (2) Criar robots.txt com <code>Allow: /</code> e <code>Sitemap: http://tecnologia.chleba.net:89/brasland/sitemap_index.xml</code>. (3) Validar resposta 200.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">1 h (Dev WordPress)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">C-03. Zero Canonical Tags em Todas as P&aacute;ginas</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Nenhuma das 18 URLs possui <code>&lt;link rel="canonical" href="..."&gt;</code>. Nem a home, nem p&aacute;ginas, nem posts, nem arquivos.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Sem sinal can&ocirc;nico, o Google decide a URL que aparece no &iacute;ndice e pode escolher variantes (com/sem barra, par&acirc;metros, portas). Risco de duplica&ccedil;&atilde;o e dilui&ccedil;&atilde;o de autoridade. Piora com a porta n&atilde;o-padr&atilde;o 89.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Ativar can&ocirc;nicos autom&aacute;ticos no Yoast SEO. (2) Garantir can&ocirc;nico self-referencing em cada p&aacute;gina. (3) Usar o dom&iacute;nio de produ&ccedil;&atilde;o definitivo (sem porta) como can&ocirc;nico.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">2 h (Dev WordPress)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">C-04. Zero Meta Descriptions em Todas as P&aacute;ginas</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Nenhuma das 18 URLs possui <code>&lt;meta name="description"&gt;</code>. A home exibe og:description com o texto padr&atilde;o do WordPress ("Esta &eacute; uma p&aacute;gina de exemplo...").</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Google gera description autom&aacute;tica (quando indexa), frequentemente inferior. Perda de controle do texto no SERP e de CTR estimado em 10-20%.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Escrever meta description &uacute;nica (120-155 caracteres, keyword + CTA) para cada p&aacute;gina. (2) Definir template de description no Yoast como fallback.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">6 h (SEO / Copywriter)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">C-05. Conte&uacute;do de Teste Publicado em Produ&ccedil;&atilde;o</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Posts <code>/insights/post-teste/</code> e <code>/insights/post-teste-2/</code> com slugs de teste. P&aacute;gina /politica-de-privacidade/ com H2 "Teste do teste do teste" e lorem ipsum. og:description da home com texto de exemplo do WordPress. 2 posts com slug <code>maximizando-a-economia-de-combustivel...</code> cujo conte&uacute;do real &eacute; outro artigo (um "5 sinais de manuten&ccedil;&atilde;o preventiva", outro "Comprar ou alugar equipamento pesado?").</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Duplicidade e qualidade de baixa confian&ccedil;a. URLs que n&atilde;o refletem o conte&uacute;do criam concorr&ecirc;ncia interna e confus&atilde;o sem&acirc;ntica. Lorem ipsum em p&aacute;gina legal gera risco de LGPD e imagem de site inacabado.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Excluir/deletar posts de teste ou renomear slugs para refletir o t&iacute;tulo. (2) Reaproveitar os 2 posts com slug errado criando 301 para a URL can&ocirc;nica correta. (3) Substituir lorem ipsum da p&aacute;gina de privacidade pelo texto legal real.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">4 h (SEO + Copywriter)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">C-06. T&iacute;tulos Gen&eacute;ricos / Sem Keyword em P&aacute;ginas-Chave</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Home: "Home - Brasland". Contato: "Contato - Brasland". Pe&ccedil;as: "Pe&ccedil;as - Brasland". Escavadeiras: apenas o modelo ("ZX130-5A - Brasland") sem termos comerciais como "escavadeira hidr&aacute;ulica", "revenda Hitachi", "pre&ccedil;o", "loca&ccedil;&atilde;o". Nenhum t&iacute;tulo comunica valor ou keyword prim&aacute;ria.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Perda de relev&acirc;ncia para termos de busca de alto valor ("escavadeira Hitachi", "pe&ccedil;as originais Hitachi", "escavadeira hidr&aacute;ulica pre&ccedil;o"). CTR muito inferior no SERP.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Reescrever title tags otimizados (50-60 caracteres, keyword na frente). Ex: "Escavadeiras Hitachi | Distribuidor Oficial no Brasil | Brasland". (2) Configurar templates de title no Yoast por post type.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">5 h (SEO)</span></div>
+        </div>
+      </div>
+
+      <h3><span class="badge badge-alto">Alto</span> &mdash; Impactam Diretamente CTR, Experi&ecirc;ncia e Estrutura</h3>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">A-01. Posts de Blog com H1 Fixo "Insights"</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Todos os 4 posts possuem H1 = "Insights" (vindo do template), enquanto o t&iacute;tulo real do artigo aparece apenas como H2. Quebra de hierarquia: title diz "5 sinais de manuten&ccedil;&atilde;o preventiva", H1 diz "Insights".</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Google perde o principal sinal estrutural de t&oacute;pico em p&aacute;ginas de conte&uacute;do informacional &mdash; o motor de tr&aacute;fego do blog. H1 n&atilde;o corresponde ao tema do artigo.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Corrigir o template single.php para renderizar o t&iacute;tulo do post como H1. (2) Garantir H1 &uacute;nico e descritivo por artigo.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">3 h (Dev WordPress)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">A-02. M&uacute;ltiplos H1 em P&aacute;ginas de Arquivo</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">/insights/tipo/escavadeiras-hidraulicas/ possui 4 H1s (um por modelo de escavadeira). Arquivo de categoria "manutencao" possui 3 H1s. Arquivo de categoria "gestao" usa o t&iacute;tulo de um post como H1.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Hierarquia sem&acirc;ntica polu&iacute;da. Google ignora H1s adicionais. P&aacute;ginas de arquivo perdem clareza sobre o t&oacute;pico central.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Usar um &uacute;nico H1 por arquivo (nome da categoria/tipo). (2) T&iacute;tulos dos cards devem ser H3+. (3) Revisar template archive.php.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">3 h (Dev WordPress)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">A-03. Imagens Pesadas (&gt; 2 MB) Sem Otimiza&ccedil;&atilde;o</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Home com ~10 imagens &uacute;nicas: Hitachi-ZX130 hero PNG (2,56 MB), MAQUINA-CORRETA.png (2,5 MB), ZX490LCH PNG (1,88 MB), ZX210-5A.png (0,97 MB), ZX350-5A.png (0,91 MB), IMAGEM-2.png (0,99 MB). Nenhuma em WebP. Arquivos PNG de alta resolu&ccedil;&atilde;o servidos diretamente.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Core Web Vitals (LCP) severamente comprometidos. P&aacute;ginas de escavadeiras com imagem hero de ~1-2 MB atrasam a renderiza&ccedil;&atilde;o. Baixa performance m&oacute;vel. Concorrentes com WebP/AVIF carregam 5-10x mais r&aacute;pido.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Converter para WebP (lossy ~80-90). (2) Gerar m&uacute;ltiplas resolu&ccedil;&otilde;es com srcset. (3) Comprimir via ShortPixel/Smush. (4) Reduzir dimens&otilde;es ao m&aacute;ximo renderizado.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">5 h (Dev WordPress)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">A-04. Imagens sem Alt Text</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Home: 10 de 12 imagens sem alt. Quem somos: 12 de 13. Escavadeiras: 5 de 6 por p&aacute;gina. Insights: 6 de 7. Alt text ausente ou vazio <code>alt=""</code> nas imagens principais de produto.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Oportunidade perdida de ranquear em Google Imagens (forte para equipamentos pesados). Acessibilidade comprometida. Sinal on-page ausente nas p&aacute;ginas de produto.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Adicionar alt descritivo em todas as imagens de produto: "Escavadeira hidr&aacute;ulica Hitachi ZX210LC-5A" (n&atilde;o usar o nome do arquivo). (2) Alt &uacute;nico e relevante por imagem.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">4 h (SEO)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">A-05. Sem HTTPS &mdash; Site Servido Apenas via HTTP na Porta 89</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">A URL usa HTTP na porta n&atilde;o-padr&atilde;o 89 (<code>http://tecnologia.chleba.net:89/brasland/</code>). Tentativa de HTTPS n&atilde;o responde (falha de conex&atilde;o). Sem certificado SSL.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Site n&atilde;o-seguro, sem tr&aacute;fego de dados criptografado (formul&aacute;rio de contato, dados de clientes). Sinal negativo de confian&ccedil;a (E-A-T) e compatibilidade. Porta n&atilde;o-padr&atilde;o n&atilde;o &eacute; index&aacute;vel de forma can&ocirc;nica confi&aacute;vel.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Publicar em dom&iacute;nio definitivo com HTTPS (porta 443) e certificado SSL v&aacute;lido. (2) Redirecionar 301 HTTP &rarr; HTTPS. (3) Implementar HSTS.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">4 h (Dev WordPress / Infra)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">A-06. Conte&uacute;do Fino nas P&aacute;ginas Principais</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Home ~223 palavras, Pe&ccedil;as ~130, Servi&ccedil;os ~118, Contato ~100, Insights ~92 palavras de texto &uacute;til no main. P&aacute;ginas de escavadeira de 172 a 202 palavras, sem tabela de especifica&ccedil;&otilde;es estruturada e sem conte&uacute;do de apoio.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Thin content penaliza relev&acirc;ncia para termos transacionais ("pe&ccedil;as originais Hitachi", "escavadeira hidr&aacute;ulica ZX210 pre&ccedil;o"). Google prioriza profundidade. Menos palavras = menos cobertura de inten&ccedil;&atilde;o de busca.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Home &gt; 800 palavras cobrindo posicionamento, portf&oacute;lio, diferenciais e CTA. (2) P&aacute;ginas de escavadeira &gt; 1.000 palavras com tabela de especifica&ccedil;&otilde;es, benef&iacute;cios, FAQ e compara&ccedil;&otilde;es. (3) Pe&ccedil;as e servi&ccedil;os &gt; 500 palavras.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">16 h (Copywriter)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">A-07. Sem Product Schema nas P&aacute;ginas de Escavadeira</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">As 4 p&aacute;ginas de escavadeira s&oacute; possuem o schema b&aacute;sico do Yoast (WebPage, BreadcrumbList). Sem Product schema com nome, imagem, pre&ccedil;o, oferta, agrega&ccedil;&atilde;o, avalia&ccedil;&atilde;o ou brand.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Sem rich snippets de produto no SERP. Concorrentes com Product schema ganham mais espa&ccedil;o visual e CTR. Oportunidade de destaque (modelos com marca e imagem) desperdi&ccedil;ada.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Implementar Product schema (json-ld) nas p&aacute;ginas de escavadeira: nome, image, brand Hitachi, offers (consultar), review/aggregateRating se houver. (2) Article schema nos posts. (3) FAQPage schema nas p&aacute;ginas de produto.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">4 h (Dev WordPress / SEO)</span></div>
+        </div>
+      </div>
+
+      <h3><span class="badge badge-medio">M&eacute;dio</span> &mdash; Oportunidades de Melhoria</h3>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">M-01. URL de Produ&ccedil;&atilde;o N&atilde;o Definida / Estrutura de Escavadeiras em Subpasta de Blog</span></div>
+          <div><span class="severity sev-medio">M&eacute;dio</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Escavadeiras vivem em <code>/insights/escavadeiras/...</code> (dentro da pasta do blog), e n&atilde;o em um caminho de produto (<code>/produtos/escavadeiras/...)</code>. O arquivo <code>/insights/escavadeiras/</code> retorna 404 enquanto o tipo <code>/insights/tipo/escavadeiras-hidraulicas/</code> lista os modelos.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Arquitetura de informa&ccedil;&atilde;o confusa: produtos dentro do blog diluem autoridade e confundem sem&acirc;ntica. URL n&atilde;o reflete a import&acirc;ncia comercial dos modelos.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Migrar escavadeiras para <code>/produtos/escavadeiras/{modelo}/</code> com 301 dos URLs antigos. (2) Criar hub "Escavadeiras" com todos os modelos + comparativo. (3) Definir dom&iacute;nio de produ&ccedil;&atilde;o antes do go-live.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">4 h (SEO + Dev WordPress)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">M-02. TTFB Alto (1,1s a 1,9s) Sem Cache/CDN</span></div>
+          <div><span class="severity sev-medio">M&eacute;dio</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">TTFB m&eacute;dio ~1,2s nas p&aacute;ginas; home em 1,9s. Apache 2.4.38 sem ind&iacute;cios de cache de p&aacute;gina. 10 scripts JS + 9 CSS (jQuery, Slick, AOS, Lenis, Lucide) carregados na home sem defer.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">LCP e INP comprometidos. Experi&ecirc;ncia mais lenta que concorrentes com cache/CDN. Risco de abandonos e penaliza&ccedil;&atilde;o de Core Web Vitals.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Ativar cache de p&aacute;gina (LiteSpeed/W3TC) e cache de objeto (Redis). (2) Adicionar CDN. (3) Carregar JS com defer, unificar/minificar CSS. (4) Habilitar gzip/brotli (j&aacute; parcialmente ativo).</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">5 h (Dev WordPress / Infra)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">M-03. Security Headers Ausentes + og:image Faltando na Home</span></div>
+          <div><span class="severity sev-medio">M&eacute;dio</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Sem HSTS, X-Content-Type-Options, X-Frame-Options, Referrer-Policy nas respostas. A home n&atilde;o possui <code>og:image</code> (as p&aacute;ginas de escavadeira t&ecirc;m).</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Risco de seguran&ccedil;a (clickjacking, MIME sniffing). Compartilhamento da home em redes sociais sem imagem pr&eacute;via (thumbnail vazia) reduz CTR social e de marca.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Implementar security headers no .htaccess. (2) Definir og:image padr&atilde;o no Yoast para a home. (3) Validar com teste de compartilhamento.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">2 h (Dev WordPress)</span></div>
+        </div>
+      </div>
+
+      <h3><span class="badge badge-info">Informativo</span> &mdash; Observa&ccedil;&otilde;es</h3>
+
+      <div class="finding" style="padding:14px 24px;">
+        <div class="finding-header" style="margin-bottom:6px;">
+          <div><span class="finding-title" style="font-size:16px;">I-01. Sitemap XML Presente (Yoast)</span></div>
+          <div><span class="severity sev-info">Info</span></div>
+        </div>
+        <p style="font-size:15px; margin:0; color:var(--gray-700);">sitemap_index.xml com 5 sub-sitemaps (post, page, escavadeiras, category, tipo) e 18 URLs. V&aacute;lido e bem formatado. N&atilde;o referenciado no robots.txt (quebrado).</p>
+      </div>
+      <div class="finding" style="padding:14px 24px;">
+        <div class="finding-header" style="margin-bottom:6px;">
+          <div><span class="finding-title" style="font-size:16px;">I-02. Redirecionamento www &rarr; raiz Funcionando</span></div>
+          <div><span class="severity sev-info">Info</span></div>
+        </div>
+        <p style="font-size:15px; margin:0; color:var(--gray-700);"><code>www.tecnologia.chleba.net:89/brasland/</code> retorna 301 para a vers&atilde;o sem www. Correto. Manter no dom&iacute;nio de produ&ccedil;&atilde;o.</p>
+      </div>
+      <div class="finding" style="padding:14px 24px;">
+        <div class="finding-header" style="margin-bottom:6px;">
+          <div><span class="finding-title" style="font-size:16px;">I-03. Responsividade e Monol&iacute;ngue</span></div>
+          <div><span class="severity sev-info">Info</span></div>
+        </div>
+        <p style="font-size:15px; margin:0; color:var(--gray-700);">Viewport configurado e tema responsivo. Site monol&iacute;ngue pt-BR &mdash; aus&ecirc;ncia de hreflang &eacute; correta. P&aacute;gina 404 tratada corretamente (HTTP 404).</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Fase 0 &mdash; Pr&eacute;-Go-Live</h2>
+      <p style="margin-bottom:16px; color:var(--gray-700);">Sprint de 2 semanas antes do go-live. Corre&ccedil;&otilde;es obrigat&oacute;rias &mdash; o site <strong>n&atilde;o deve ir ao ar</strong> sem elas.</p>
+      <table>
+        <tr><th>#</th><th>A&ccedil;&atilde;o</th><th>Horas</th><th>Resp.</th><th>Priod.</th></tr>
+        <tr><td>1</td><td>Remover noindex/nofollow global &mdash; liberar indexa&ccedil;&atilde;o</td><td>1</td><td>Dev WP</td><td>1</td></tr>
+        <tr><td>2</td><td>Corrigir robots.txt (HTTP 500) + referenciar sitemap</td><td>1</td><td>Dev WP</td><td>2</td></tr>
+        <tr><td>3</td><td>Definir dom&iacute;nio de produ&ccedil;&atilde;o com HTTPS + SSL</td><td>4</td><td>Infra</td><td>3</td></tr>
+        <tr><td>4</td><td>Excluir/renomear posts de teste + limpar lorem ipsum da privacidade</td><td>3</td><td>SEO / Copy</td><td>4</td></tr>
+        <tr><td>5</td><td>Reescrever titles (home + p&aacute;ginas-chave)</td><td>2</td><td>SEO</td><td>5</td></tr>
+        <tr><td>6</td><td>Escrever meta descriptions das p&aacute;ginas-chave</td><td>2</td><td>Copywriter</td><td>6</td></tr>
+        <tr><td>7</td><td>Ativar can&ocirc;nicos no Yoast + og:image na home</td><td>1</td><td>Dev WP</td><td>7</td></tr>
+        <tr><td>8</td><td>Corrigir H1 fixo "Insights" no template de posts</td><td>2</td><td>Dev WP</td><td>8</td></tr>
+      </table>
+      <div style="margin-top:14px; padding:14px 20px; background:#fef2f2; border-radius:8px; border-left:4px solid var(--red);">
+        <p style="margin:0; font-size:15px; color:var(--gray-700);"><strong>Total Fase 0: 16 h</strong> &mdash; concluir antes do go-live. O site <strong>n&atilde;o deve ir ao ar</strong> sem essas corre&ccedil;&otilde;es.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Plano de A&ccedil;&atilde;o Trimestral</h2>
+
+      <h3>M&ecirc;s 1 &mdash; Funda&ccedil;&atilde;o T&eacute;cnica (Dias 1-30 p&oacute;s Fase 0) &mdash; 30 h</h3>
+      <table>
+        <tr><th>#</th><th>A&ccedil;&atilde;o</th><th>Horas</th><th>Resp.</th><th>Priod.</th></tr>
+        <tr><td>1</td><td>Product schema nas 4 p&aacute;ginas de escavadeira</td><td>4</td><td>Dev WP / SEO</td><td>1</td></tr>
+        <tr><td>2</td><td>Otimizar imagens: WebP + srcset + compress&atilde;o (home e produtos)</td><td>5</td><td>Dev WP</td><td>2</td></tr>
+        <tr><td>3</td><td>Migrar escavadeiras para /produtos/escavadeiras/ + 301</td><td>3</td><td>SEO / Dev WP</td><td>3</td></tr>
+        <tr><td>4</td><td>Ativar cache de p&aacute;gina + defer de scripts</td><td>3</td><td>Dev WP</td><td>4</td></tr>
+        <tr><td>5</td><td>Meta descriptions restantes (todas as 18 URLs)</td><td>4</td><td>Copywriter</td><td>5</td></tr>
+        <tr><td>6</td><td>Corrigir m&uacute;ltiplos H1 em arquivos (tipo + categorias)</td><td>2</td><td>Dev WP</td><td>6</td></tr>
+        <tr><td>7</td><td>Alt text descritivo em todas as imagens de produto</td><td>3</td><td>SEO</td><td>7</td></tr>
+        <tr><td>8</td><td>Implementar security headers (HSTS, X-Frame-Options, etc.)</td><td>1</td><td>Dev WP</td><td>8</td></tr>
+        <tr><td>9</td><td>Configurar GSC + Bing Webmaster Tools + enviar sitemap</td><td>1</td><td>SEO</td><td>9</td></tr>
+        <tr><td>10</td><td>Configurar monitoramento de rankings (semrush/ahrefs/manual)</td><td>4</td><td>SEO</td><td>10</td></tr>
+      </table>
+
+      <h3>M&ecirc;s 2 &mdash; Conte&uacute;do e Estrutura (Dias 31-60) &mdash; 29 h</h3>
+      <table>
+        <tr><th>#</th><th>A&ccedil;&atilde;o</th><th>Horas</th><th>Resp.</th><th>Priod.</th></tr>
+        <tr><td>1</td><td>Home expandida (&gt;800 palavras) com posicionamento, portf&oacute;lio e diferenciais</td><td>4</td><td>Copywriter</td><td>1</td></tr>
+        <tr><td>2</td><td>P&aacute;ginas de escavadeira &gt;1.000 palavras + tabela de especifica&ccedil;&otilde;es</td><td>8</td><td>Copywriter</td><td>2</td></tr>
+        <tr><td>3</td><td>Pe&ccedil;as e Servi&ccedil;os &gt;500 palavras com FAQ</td><td>4</td><td>Copywriter</td><td>3</td></tr>
+        <tr><td>4</td><td>Mapear 2 clusters tem&aacute;ticos (Escavadeiras Hitachi + Pe&ccedil;as Originais)</td><td>3</td><td>SEO</td><td>4</td></tr>
+        <tr><td>5</td><td>Corrigir/atualizar slugs dos 4 posts (301 para URLs corretas)</td><td>2</td><td>SEO</td><td>5</td></tr>
+        <tr><td>6</td><td>Hub "Escavadeiras" com comparativo entre modelos</td><td>4</td><td>Copywriter</td><td>6</td></tr>
+        <tr><td>7</td><td>Malha de links internos entre hubs, produtos e blog</td><td>2</td><td>SEO</td><td>7</td></tr>
+        <tr><td>8</td><td>Revisar e testar corre&ccedil;&otilde;es do M&ecirc;s 1</td><td>2</td><td>SEO</td><td>8</td></tr>
+      </table>
+
+      <h3>M&ecirc;s 3 &mdash; Expans&atilde;o e Monitoramento (Dias 61-90) &mdash; 32 h</h3>
+      <table>
+        <tr><th>#</th><th>A&ccedil;&atilde;o</th><th>Horas</th><th>Resp.</th><th>Priod.</th></tr>
+        <tr><td>1</td><td>Mapear 2 clusters complementares (Manuten&ccedil;&atilde;o + Gest&atilde;o de Frota)</td><td>3</td><td>SEO</td><td>1</td></tr>
+        <tr><td>2</td><td>4 artigos spoke novos (1.000+ palavras cada) nos clusters</td><td>12</td><td>Copywriter</td><td>2</td></tr>
+        <tr><td>3</td><td>FAQPage schema nas p&aacute;ginas de produto e hub</td><td>2</td><td>Dev WP</td><td>3</td></tr>
+        <tr><td>4</td><td>Conte&uacute;do de categoria/arquivo (introdu&ccedil;&atilde;o + FAQ)</td><td>4</td><td>Copywriter</td><td>4</td></tr>
+        <tr><td>5</td><td>Testar Core Web Vitals (ap&oacute;s otimiza&ccedil;&otilde;es) + ajustes</td><td>4</td><td>SEO / Dev WP</td><td>5</td></tr>
+        <tr><td>6</td><td>Revisar e expandir links internos</td><td>3</td><td>SEO</td><td>6</td></tr>
+        <tr><td>7</td><td>Relat&oacute;rio de fechamento do trimestre</td><td>4</td><td>SEO</td><td>7</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Resumo de Esfor&ccedil;o Consolidado</h2>
+      <table>
+        <tr><th>Especialidade</th><th>Fase 0</th><th>M&ecirc;s 1</th><th>M&ecirc;s 2</th><th>M&ecirc;s 3</th><th>Total</th></tr>
+        <tr><td>Desenvolvedor WordPress</td><td>6 h</td><td>14 h</td><td>2 h</td><td>6 h</td><td><strong>28 h</strong></td></tr>
+        <tr><td>SEO</td><td>5 h</td><td>12 h</td><td>7 h</td><td>10 h</td><td><strong>34 h</strong></td></tr>
+        <tr><td>Copywriter</td><td>5 h</td><td>4 h</td><td>20 h</td><td>16 h</td><td><strong>45 h</strong></td></tr>
+        <tr style="font-weight:700; background:var(--gray-50);"><td><strong>Total</strong></td><td><strong>16 h</strong></td><td><strong>30 h</strong></td><td><strong>29 h</strong></td><td><strong>32 h</strong></td><td><strong>107 h</strong></td></tr>
+      </table>
+      <p style="margin-top:16px; font-size:14px; color:var(--gray-600);">* Fase 0 n&atilde;o est&aacute; inclu&iacute;da no escopo trimestral &mdash; &eacute; pr&eacute;-requisito para o go-live do site.</p>
+
+      <h3>Curva de Investimento (p&oacute;s Fase 0)</h3>
+      <div class="bar-container">
+        <div class="bar-row"><div class="bar-label">Fase 0 (pr&eacute;-go-live)</div><div class="bar-track"><div class="bar-fill gold" style="width:15%">16 h</div></div></div>
+      </div>
+      <div class="bar-container">
+        <div class="bar-row"><div class="bar-label">M&ecirc;s 1</div><div class="bar-track"><div class="bar-fill red" style="width:33%">30 h (33%)</div></div></div>
+        <div class="bar-row"><div class="bar-label">M&ecirc;s 2</div><div class="bar-track"><div class="bar-fill orange" style="width:32%">29 h (32%)</div></div></div>
+        <div class="bar-row"><div class="bar-label">M&ecirc;s 3</div><div class="bar-track"><div class="bar-fill red" style="width:35%">32 h (35%)</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Proje&ccedil;&atilde;o de Impacto</h2>
+      <table>
+        <tr><th>M&eacute;trica</th><th>Conservador</th><th>Otimista</th></tr>
+        <tr><td><strong>Tr&aacute;fego org&acirc;nico (90 dias)</strong></td><td>+30%</td><td>+50%</td></tr>
+        <tr><td><strong>P&aacute;ginas indexadas</strong></td><td>0 &rarr; 18+</td><td>0 &rarr; 25+</td></tr>
+        <tr><td><strong>CTR m&eacute;dio no SERP</strong></td><td>+10%</td><td>+20%</td></tr>
+        <tr><td><strong>Core Web Vitals pass</strong></td><td>LCP &lt; 2,5s</td><td>LCP &lt; 2,0s</td></tr>
+        <tr><td><strong>Rich snippets</strong></td><td>0 &rarr; 8+</td><td>0 &rarr; 18+</td></tr>
+      </table>
+      <h3>Fatores que Influenciam a Proje&ccedil;&atilde;o</h3>
+      <div class="risk-box" style="border-left-color:var(--red);"><p>Remover o noindex &eacute; a condi&ccedil;&atilde;o <strong>sine qua non</strong> de qualquer resultado &mdash; sem ele, proje&ccedil;&otilde;es s&atilde;o zero. &Eacute; o primeiro gatilho do projeto.</p></div>
+      <div class="risk-box" style="border-left-color:#c2410c;"><p>Setor de m&aacute;quinas pesadas no Brasil tem concorr&ecirc;ncia regional limitada. Distribuidor exclusivo Hitachi com conte&uacute;do estruturado (produtos, especifica&ccedil;&otilde;es, FAQs) pode dominar as buscas comerciais de modelo.</p></div>
+      <div class="risk-box" style="border-left-color:var(--gold);"><p>Otimiza&ccedil;&atilde;o de imagens (WebP) + Product schema t&ecirc;m potencial de ganho imediato de LCP e CTR nas p&aacute;ginas de produto j&aacute; na Fase 0/M&ecirc;s 1.</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>KPIs para Acompanhamento Mensal</h2>
+      <table>
+        <tr><th>KPI</th><th>Fase 0</th><th>M&ecirc;s 1</th><th>M&ecirc;s 2</th><th>M&ecirc;s 3</th></tr>
+        <tr><td>P&aacute;ginas indexadas</td><td>0</td><td>0 &rarr; 10</td><td>10 &rarr; 18</td><td>18 &rarr; 25</td></tr>
+        <tr><td>P&aacute;ginas com schema</td><td>0</td><td>6</td><td>18</td><td>18+</td></tr>
+        <tr><td>P&aacute;ginas sem noindex</td><td>18</td><td>18</td><td>18</td><td>18</td></tr>
+        <tr><td>Can&ocirc;nicos presentes</td><td>100%</td><td>100%</td><td>100%</td><td>100%</td></tr>
+        <tr><td>Meta descriptions &uacute;nicas</td><td>40% &rarr; 60%</td><td>100%</td><td>100%</td><td>100%</td></tr>
+        <tr><td>Imagens em WebP</td><td>0% &rarr; 30%</td><td>60%</td><td>90%</td><td>100%</td></tr>
+        <tr><td>Imagens com alt text</td><td>20% &rarr; 50%</td><td>70%</td><td>100%</td><td>100%</td></tr>
+        <tr><td>P&aacute;ginas com thin content</td><td>7</td><td>5</td><td>2</td><td>0</td></tr>
+        <tr><td>H1 &uacute;nico por p&aacute;gina</td><td>0%</td><td>60%</td><td>100%</td><td>100%</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Riscos e Mitiga&ccedil;&otilde;es</h2>
+      <table>
+        <tr><th>Risco</th><th>Prob.</th><th>Impacto</th><th>Mitiga&ccedil;&atilde;o</th></tr>
+        <tr><td>Site permanecer com noindex no go-live</td><td>Alta</td><td>Alto</td><td>Checklist de go-live obrigat&oacute;ria. Testar com inspe&ccedil;&atilde;o de URL antes de anunciar.</td></tr>
+        <tr><td>Dom&iacute;nio de produ&ccedil;&atilde;o n&atilde;o definido / porta n&atilde;o-padr&atilde;o</td><td>Alta</td><td>Alto</td><td>Definir dom&iacute;nio + HTTPS + SSL na Fase 0. Re-auditar ap&oacute;s migra&ccedil;&atilde;o.</td></tr>
+        <tr><td>Depend&ecirc;ncia do dev WordPress</td><td>Alta</td><td>M&eacute;dio</td><td>Briefings claros. Validar em ambiente de testes antes de publicar.</td></tr>
+        <tr><td>Conte&uacute;do de teste reaparecer</td><td>M&eacute;dia</td><td>M&eacute;dio</td><td>Regra editorial: nenhum post de teste em produ&ccedil;&atilde;o. Revis&atilde;o pr&eacute;-go-live.</td></tr>
+        <tr><td>Google n&atilde;o revisitar rapidamente</td><td>M&eacute;dia</td><td>M&eacute;dio</td><td>Sitemap + Solicitar Indexa&ccedil;&atilde;o + novo conte&uacute;do consistente.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Pr&oacute;ximos Passos</h2>
+      <div class="kpi-grid" style="grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));">
+        <div class="kpi-card" style="text-align:left; padding:18px;">
+          <div class="label" style="text-align:left; margin-bottom:4px;">1. Definir URL de produ&ccedil;&atilde;o</div>
+          <p style="font-size:15px; margin:0; color:var(--gray-700);">Dom&iacute;nio definitivo com HTTPS + SSL. Re-auditar ap&oacute;s migra&ccedil;&atilde;o.</p>
+        </div>
+        <div class="kpi-card" style="text-align:left; padding:18px;">
+          <div class="label" style="text-align:left; margin-bottom:4px;">2. Remover noindex</div>
+          <p style="font-size:15px; margin:0; color:var(--gray-700);">1 h. Bloqueante absoluto. Sem isso n&atilde;o existe SEO.</p>
+        </div>
+        <div class="kpi-card" style="text-align:left; padding:18px;">
+          <div class="label" style="text-align:left; margin-bottom:4px;">3. Limpar conte&uacute;do de teste</div>
+          <p style="font-size:15px; margin:0; color:var(--gray-700);">4 h. Remover posts de teste e lorem ipsum antes do go-live.</p>
+        </div>
+        <div class="kpi-card" style="text-align:left; padding:18px;">
+          <div class="label" style="text-align:left; margin-bottom:4px;">4. Titles + Metas + Can&ocirc;nicos</div>
+          <p style="font-size:15px; margin:0; color:var(--gray-700);">8 h. Base on-page para competir no SERP.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Gloss&aacute;rio de Severidade</h2>
+      <div class="glossary-row"><span class="badge badge-critico">Cr&iacute;tico</span> <span>Impede indexa&ccedil;&atilde;o ou ranqueamento. Impacto direto em receita.</span></div>
+      <div class="glossary-row"><span class="badge badge-alto">Alto</span> <span>Impacta CTR, experi&ecirc;ncia do usu&aacute;rio ou autoridade.</span></div>
+      <div class="glossary-row"><span class="badge badge-medio">M&eacute;dio</span> <span>Oportunidade de melhoria com impacto moderado.</span></div>
+      <div class="glossary-row"><span class="badge badge-baixo">Baixo</span> <span>Ajuste de polimento. Baixo impacto individual.</span></div>
+      <div class="glossary-row"><span class="badge badge-info">Info</span> <span>Observa&ccedil;&atilde;o ou boa pr&aacute;tica. Nenhuma a&ccedil;&atilde;o requerida.</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Sobre Esta Auditoria</h2>
+      <table>
+        <tr><td><strong>M&eacute;todo</strong></td><td>Crawl completo dos 5 sitemaps (18 URLs) + an&aacute;lise t&eacute;cnica, on-page e de conte&uacute;do por requisi&ccedil;&atilde;o HTTP e parse do HTML.</td></tr>
+        <tr><td><strong>Data do crawl</strong></td><td>13 de agosto de 2026</td></tr>
+        <tr><td><strong>Revis&atilde;o t&eacute;cnica</strong></td><td>SEO Squad V4 Company (seo-visibilidade, estrategista-marketing, analista-dados)</td></tr>
+        <tr><td><strong>Escopo</strong></td><td>Auditoria t&eacute;cnica + on-page + conte&uacute;do baseada em crawl. Ferramentas de monitoramento (Search Console, PageSpeed Insights, backlinks) recomendadas para as fases seguintes ap&oacute;s o go-live.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer">
+    Documento gerado em Agosto de 2026 pela equipe de SEO da <strong>V4 Company</strong> &mdash; Padr&atilde;o BuiltVisible / Moz / Searchmetrics
+  </div>
+</div>
+
+</body>
+</html>
