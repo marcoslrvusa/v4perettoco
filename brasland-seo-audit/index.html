@@ -190,6 +190,30 @@
   .sev-baixo { color: #8b7a4a; }
   .sev-info { color: #616161; }
 
+  .disclaimer {
+    background: linear-gradient(135deg, var(--gold-light), #fbf8f1);
+    border: 1px solid var(--gold-border);
+    border-left: 4px solid var(--gold);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin: 20px 0 28px;
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--gray-800);
+  }
+  .disclaimer strong { color: var(--red-dark); }
+  .disclaimer .disclaimer-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
   table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 15px; }
   th, td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--gray-100); }
   th {
@@ -471,9 +495,9 @@
           <div class="label">Sa&uacute;de SEO</div>
         </div>
         <div class="kpi-card">
-          <div class="value">19</div>
+          <div class="value">21</div>
           <div class="label">Problemas</div>
-          <div class="sub">6 Cr&iacute;ticos &bull; 7 Alto &bull; 3 M&eacute;dio &bull; 3 Info</div>
+          <div class="sub">6 Cr&iacute;ticos &bull; 7 Alto &bull; 3 M&eacute;dio &bull; 5 Info</div>
         </div>
         <div class="kpi-card">
           <div class="value">107 h</div>
@@ -490,6 +514,11 @@
           <div class="label">Quick Wins</div>
           <div class="sub">48 horas pr&eacute;-go-live</div>
         </div>
+      </div>
+
+      <div class="disclaimer">
+        <div class="disclaimer-title">Nota de Contexto &mdash; Ambiente de Desenvolvimento</div>
+        <p style="margin:0;">Esta auditoria foi executada sobre a URL <strong>tecnologia.chleba.net:89/brasland/</strong>, um ambiente provis&oacute;rio de desenvolvimento ainda n&atilde;o publicado em produ&ccedil;&atilde;o. Parte dos diagn&oacute;sticos &mdash; como a aus&ecirc;ncia de HTTPS/SSL, a porta n&atilde;o padr&atilde;o (89), o alto TTFB e a URL de produ&ccedil;&atilde;o indefinida &mdash; decorre diretamente dessa condi&ccedil;&atilde;o transit&oacute;ria e deve ser revalidada ap&oacute;s o go-live. <strong>Isso n&atilde;o reduz a relev&acirc;ncia do diagn&oacute;stico:</strong> os problemas estruturais mais graves &mdash; noindex global, robots.txt quebrado, zero can&ocirc;nicos, conte&uacute;do de teste publicado e arquitetura de URLs desconexa &mdash; s&atilde;o independentes do ambiente e precisam ser corrigidos antes da publica&ccedil;&atilde;o, sob pena de o site entrar no ar j&aacute; bloqueado da indexa&ccedil;&atilde;o. O estado atual &eacute; o retrato exato do que ser&aacute; entregue ao usu&aacute;rio se o go-live acontecer sem a Fase 0.</p>
       </div>
 
       <div style="margin-bottom:36px;">
@@ -834,6 +863,20 @@
           <div><span class="severity sev-info">Info</span></div>
         </div>
         <p style="font-size:15px; margin:0; color:var(--gray-700);">Viewport configurado e tema responsivo. Site monol&iacute;ngue pt-BR &mdash; aus&ecirc;ncia de hreflang &eacute; correta. P&aacute;gina 404 tratada corretamente (HTTP 404).</p>
+      </div>
+      <div class="finding" style="padding:14px 24px;">
+        <div class="finding-header" style="margin-bottom:6px;">
+          <div><span class="finding-title" style="font-size:16px;">I-04. xmlrpc.php Exposto (HTTP 405)</span></div>
+          <div><span class="severity sev-info">Info</span></div>
+        </div>
+        <p style="font-size:15px; margin:0; color:var(--gray-700);"><code>/xmlrpc.php</code> responde 405 (endpoint ativo, sem m&eacute;todo liberado). Exposi&ccedil;&atilde;o de superf&iacute;cie de ataque conhecida do WordPress &mdash; recomenda-se bloquear via WAF ou no servidor antes do go-live. Em contrapartida, <code>/wp-login.php</code> retorna 404 e arquivos de autor n&atilde;o existem &mdash; sinais positivos de endurecimento.</p>
+      </div>
+      <div class="finding" style="padding:14px 24px;">
+        <div class="finding-header" style="margin-bottom:6px;">
+          <div><span class="finding-title" style="font-size:16px;">I-05. Feed RSS Exposto sem noindex</span></div>
+          <div><span class="severity sev-info">Info</span></div>
+        </div>
+        <p style="font-size:15px; margin:0; color:var(--gray-700);"><code>/feed/</code> retorna 200 e publica conte&uacute;do integral sem diretiva noindex. Quando o noindex global for removido, o feed deve ser verificado para evitar canibaliza&ccedil;&atilde;o e perda de contexto do conte&uacute;do can&ocirc;nico. Search (<code>/?s=</code>) e pagina&ccedil;&atilde;o (<code>/insights/page/2/</code>) j&aacute; s&atilde;o corretamente noindexados pelo Yoast.</p>
       </div>
     </div>
   </div>
