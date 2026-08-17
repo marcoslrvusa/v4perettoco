@@ -245,7 +245,7 @@ return [{
         sendBody: true,
         specifyBody: 'json',
         jsonBody:
-            '={{ JSON.stringify({ model: "nemotron-3.5-lightning-free", messages: [{ role: "system", content: $("Montar Prompt").item.json.system_instruction }, { role: "user", content: $("Montar Prompt").item.json.user_prompt }], max_tokens: 16384, temperature: 0.3 }) }}',
+            '={{ JSON.stringify({ model: "deepseek-v4-flash-free", messages: [{ role: "system", content: $("Montar Prompt").item.json.system_instruction }, { role: "user", content: $("Montar Prompt").item.json.user_prompt }], max_tokens: 16384, temperature: 0.3 }) }}',
         options: {
             timeout: 120000,
             retryOnFail: true,
