@@ -1,85 +1,65 @@
-# PROMPT 0 — BOOTSTRAP (Cole num agente ORCA aberto na raiz do repo)
+# PROMPT 0 — FASE 0 + CONTRATOS (Cole no ORCA aberto no worktree `contracts`)
 
-Você é o agente de BOOTSTRAP do projeto HUB TÁTICO OPERACIONAL V4. Seu único trabalho é preparar o ambiente para 3 agentes paralelos trabalharem em worktrees git. NÃO desenvolva nada além do descrito aqui.
+> Os 4 worktrees já foram criados pela UI do ORCA (opção "Name"). Seu trabalho NÃO é criar worktrees nem copiar seeds — é só validar os modelos e escrever os contratos compartilhados.
 
-## Contexto
-- Repo: /home/marcos/Desktop/v4perettoco-main (branch atual: main, tag hub-base-v1)
-- Objetivo final do projeto: Hub tático em ia.fvmarketing.com.br (ver docs: Harness Engineering/PLANO-MESTRE-HUB-TATICO-V4.md e ORCA-WORKTREES-SETUP.md — LEIA OS DOIS ANTES DE COMEÇAR)
+Você é o agente de BOOTSTRAP do projeto HUB TÁTICO OPERACIONAL V4, na branch `integration/contracts`. Leia primeiro: `Harness Engineering/PLANO-MESTRE-HUB-TATICO-V4.md` (seções 5 e 12) e `Harness Engineering/ORCA-WORKTREES-SETUP.md`.
 
-## Tarefas (nesta ordem)
+## TAREFA ÚNICA: FASE 0 + Contratos
 
-### 1. Criar branches + worktrees
+### 1. Validar slugs de modelos (BLOQUEANTE — requests reais)
+
+Peça ao usuário (interativamente) as env vars que faltarem: `ZEN_API_BASE`, `ZEN_API_KEY`, `GEMINI_API_KEY`.
+
 ```bash
-cd /home/marcos/Desktop/v4perettoco-main
-git checkout -b ws1/infra-n8n 2>/dev/null || git checkout ws1/infra-n8n && git checkout main
-git checkout -b ws2/dashboard-api 2>/dev/null || git checkout ws2/dashboard-api && git checkout main
-git checkout -b ws3/data-agents 2>/dev/null || git checkout ws3/data-agents && git checkout main
-git checkout -b integration/contracts 2>/dev/null || git checkout integration/contracts && git checkout main
-
-git worktree add ../orca-infra-n8n ws1/infra-n8n
-git worktree add ../orca-dashboard-api ws2/dashboard-api
-git worktree add ../orca-data-agents ws3/data-agents
-git worktree add ../orca-contracts integration/contracts
-git worktree list   # valide: 4 worktrees + main
-```
-
-### 2. Copiar seeds (APENAS o que existe)
-```bash
-cp -r workflows/producao ../orca-infra-n8n/
-cp -r projetos/pia-saas/dashboard ../orca-dashboard-api/
-cp -r projetos/pia-saas/rotinas ../orca-data-agents/
-```
-
-### 3. FASE 0 — Validar slugs de modelos (BLOQUEANTE)
-Peça ao usuário (se ainda não estiverem no ambiente) e valide com requests REAIS:
-```bash
-export ZEN_API_BASE="<pergunte ao usuário se faltar>"   # endpoint OpenCode Zen (openai-compatible)
-export ZEN_API_KEY="<pergunte ao usuário se faltar>"
-export GEMINI_API_KEY="<pergunte ao usuário se faltar>"
-
+# 1a. Testar ox-alpha-free no OpenCode Zen
 curl -s "$ZEN_API_BASE/chat/completions" -H "Authorization: Bearer $ZEN_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"model":"ox-alpha-free","messages":[{"role":"user","content":"ping"}],"max_tokens":5}'
 
-curl -s "https://generativelanguage.googleapis.com/v1beta/models?key=$GEMINI_API_KEY" | head -50
+# 1b. Se falhar, listar catálogo Zen e testar variações até achar o slug exato
+curl -s "$ZEN_API_BASE/models" -H "Authorization: Bearer $ZEN_API_KEY"
+
+# 1c. Validar gemini-2.5-flash free tier
+curl -s "https://generativelanguage.googleapis.com/v1beta/models?key=$GEMINI_API_KEY"
 ```
-Se `ox-alpha-free` falhar, teste variações de slug no catálogo (`$ZEN_API_BASE/models`) até confirmar o slug exato.
 
-### 4. Escrever contratos compartilhados (worktree ../orca-contracts/)
-Crie estes arquivos:
+Se algum slug não responder OK, PARE e reporte ao usuário antes de seguir.
 
-**model-slugs.json** (com os slugs CONFIRMADOS no passo 3):
+### 2. Escrever os contratos (nesta pasta, raiz do worktree)
+
+**model-slugs.json** (com slugs CONFIRMADOS no passo 1):
 ```json
 {
   "primary_route1": "<slug zen validado>",
-  "primary_route1_provider": {"api_base": "<ZEN_API_BASE>", "key_env": "ZEN_API_KEY"},
+  "primary_route1_provider": {"api_base": "<ZEN_API_BASE>", "key_env": "ZEN_API_KEY", "rpm": 20},
   "primary_route2": "gemini/gemini-2.5-flash",
   "primary_route2_provider": {"key_env": "GEMINI_API_KEY", "rpm": 12},
   "structured": "<slug zen validado>",
   "fallback": "gpt-4o-mini",
-  "fallback_provider": {"key_env": "OPENAI_API_KEY"}
+  "fallback_provider": {"key_env": "OPENAI_API_KEY", "rpm": 300}
 }
 ```
 
 **litellm-keys.json**: `["squad-csm","squad-gt","squad-copy","squad-design","squad-account","squad-coord","ops-n8n"]`
 
-**qdrant-collections.json**: collections `skills`, `runs`, `clients`, `okr_pace`, `transcripts` (vector_size 1536, quantization scalar, hnsw m=16 ef=64, on_disk true)
+**qdrant-collections.json**: collections `skills`, `runs`, `clients`, `okr_pace`, `transcripts` — vector_size conforme embedding escolhido (1536 OpenAI / 384 MiniLM — documente qual), quantization scalar, hnsw m=16 ef=64, on_disk true
 
-**ekyte-workspace-map.json**: `{}` vazio + `"fallback_workspace": "16032"` (usuário preencherá depois)
+**ekyte-workspace-map.json**: `{"fallback_workspace": "16032"}` (usuário preencherá os IDs depois)
 
-**pace-schema.sql** e **api-endpoints.yaml**: copie das seções 3 e do documento ORCA-WORKTREES-SETUP.md (aba AGENTE A2 lista os 8 endpoints)
+**pace-schema.sql**: copie fielmente o schema SQL das seções 3 e 8 do PLANO-MESTRE-HUB-TATICO-V4.md (okr_pace_snapshots com view em created_at, matriz_operacional com RLS, okr_pace_monthly_agg, extensões agent_queue com idempotency_key UNIQUE)
 
-Committe em integration/contracts: `git add -A && git commit -m "chore(contracts): slugs validados + contratos base"`
+**api-endpoints.yaml**: os 6 endpoints listados em ORCA-WORKTREES-SETUP.md → AGENTE A2 (okr-pace, csm-review GET/POST comment, coordinator approve, queue, memory search), com request/response schemas
 
-### 5. Relatório final
-Informe ao usuário:
-- [ ] 4 worktrees criados (listar caminhos)
-- [ ] Seeds copiados
-- [ ] Slugs validados (quais exatamente) ou FALHA (parar e reportar)
-- [ ] Contratos escritos e commitados
-- Próximo passo para o usuário: abrir 3 abas ORCA nas pastas ../orca-infra-n8n, ../orca-dashboard-api, ../orca-data-agents e colar os prompts A1/A2/A3
+### 3. Commitar
+```bash
+git add -A && git commit -m "chore(contracts): fase 0 ok — slugs validados + contratos base"
+```
+
+### 4. Relatório final ao usuário
+- [ ] Slugs validados (listar exatamente quais) OU falha (parar e reportar)
+- [ ] 6 arquivos de contrato criados e commitados
+- Próximo passo: abrir as abas ORCA nos worktrees infra-n8n / dashboard-api / data-agents e colar PROMPT-A1/A2/A3
 
 ## Regras rígidas
-- NÃO commite nada na main
-- NÃO commite arquivos .xlsx, senhas, API keys ou tokens em qualquer arquivo versionado
-- Se um comando falhar, corrija e siga; se for bloqueante, PARE e reporte
+- NÃO commite nada fora desta branch
+- NUNCA escreva API keys/tokens em arquivos versionados — só nomes de env vars

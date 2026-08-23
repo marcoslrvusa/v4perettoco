@@ -2,16 +2,29 @@
 
 ## ⚡ FLUXO SEM TERMINAL (recomendado)
 
-Você não roda comandos git — **os agentes fazem tudo**. Basta abrir as abas do ORCA e colar os prompts prontos:
+### Passo A — Criar os 4 worktrees na UI do ORCA
+No diálogo **Create Worktree**: Project = `v4perettoco-main` · Run on = local linux · Create from = **Name** · Start-from = `main`.
+No drawer **Advanced**, preencha o Branch name exato:
+
+| # | Name | Branch name (Advanced) | Prompt depois |
+|---|------|------------------------|---------------|
+| 1 | `infra-n8n` | `ws1/infra-n8n` | PROMPT-A1 |
+| 2 | `dashboard-api` | `ws2/dashboard-api` | PROMPT-A2 |
+| 3 | `data-agents` | `ws3/data-agents` | PROMPT-A3 |
+| 4 | `contracts` | `integration/contracts` | PROMPT-0 |
+
+> Não use "Branch"/"GitHub"/"Smart" — as branches ainda não existem e nada há no remoto. Docs/seeds já estão commitados na main: os worktrees nascem completos, **sem copiar nada**.
+
+### Passo B — Rodar os prompts nas abas ORCA
 
 | Ordem | Arquivo de prompt | Aba ORCA onde colar | O que o agente faz |
 |-------|-------------------|---------------------|--------------------|
-| 1º | `ORCA-PROMPTS/PROMPT-0-BOOTSTRAP.md` | ORCA aberto na **raiz do repo** (`v4perettoco-main`) | Cria branches, worktrees, seeds, valida slugs (FASE 0), escreve contratos |
-| 2º | `ORCA-PROMPTS/PROMPT-A1-INFRA-N8N.md` | ORCA aberto em `../orca-infra-n8n` | Compose, LiteLLM config, Pace Calculator, CSM→Coord→Ekyte |
-| 3º | `ORCA-PROMPTS/PROMPT-A2-DASHBOARD-API.md` | ORCA aberto em `../orca-dashboard-api` | FastAPI 6 endpoints + HTML V4 6 abas + nginx |
-| 4º | `ORCA-PROMPTS/PROMPT-A3-DATA-AGENTS.md` | ORCA aberto em `../orca-data-agents` | Migrations (matriz+pace, RLS), syncs manuais, Qdrant, 2 agentes |
+| 1º | `ORCA-PROMPTS/PROMPT-0-BOOTSTRAP.md` | Aba do worktree `contracts` | FASE 0 (valida slugs com request real) + escreve os 6 contratos |
+| 2º | `ORCA-PROMPTS/PROMPT-A1-INFRA-N8N.md` | Aba do worktree `infra-n8n` | Compose, LiteLLM config, Pace Calculator, CSM→Coord→Ekyte |
+| 3º | `ORCA-PROMPTS/PROMPT-A2-DASHBOARD-API.md` | Aba do worktree `dashboard-api` | FastAPI 6 endpoints + HTML V4 6 abas + nginx |
+| 4º | `ORCA-PROMPTS/PROMPT-A3-DATA-AGENTS.md` | Aba do worktree `data-agents` | Migrations (matriz+pace, RLS), syncs manuais, Qdrant, 2 agentes |
 
-**Sequência:** abra a aba 1 com PROMPT-0 → aguarde relatório dele → abra as abas 2/3/4 com A1/A2/A3 (podem rodar em paralelo). Os prompts são autocontidos: cada agente lê os docs da própria pasta e pergunta a você apenas env vars que faltarem.
+**Sequência:** PROMPT-0 primeiro (gera `model-slugs.json` que A1/A3 consomem) → depois A1/A2/A3 em paralelo. Prompts autocontidos: cada agente lê os docs da própria pasta e pergunta a você apenas env vars faltantes.
 
 ---
 
