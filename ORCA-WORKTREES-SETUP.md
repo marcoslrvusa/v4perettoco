@@ -1,5 +1,20 @@
 # ORCA Worktrees Setup — Plano 6h (v2)
 
+## ⚡ FLUXO SEM TERMINAL (recomendado)
+
+Você não roda comandos git — **os agentes fazem tudo**. Basta abrir as abas do ORCA e colar os prompts prontos:
+
+| Ordem | Arquivo de prompt | Aba ORCA onde colar | O que o agente faz |
+|-------|-------------------|---------------------|--------------------|
+| 1º | `ORCA-PROMPTS/PROMPT-0-BOOTSTRAP.md` | ORCA aberto na **raiz do repo** (`v4perettoco-main`) | Cria branches, worktrees, seeds, valida slugs (FASE 0), escreve contratos |
+| 2º | `ORCA-PROMPTS/PROMPT-A1-INFRA-N8N.md` | ORCA aberto em `../orca-infra-n8n` | Compose, LiteLLM config, Pace Calculator, CSM→Coord→Ekyte |
+| 3º | `ORCA-PROMPTS/PROMPT-A2-DASHBOARD-API.md` | ORCA aberto em `../orca-dashboard-api` | FastAPI 6 endpoints + HTML V4 6 abas + nginx |
+| 4º | `ORCA-PROMPTS/PROMPT-A3-DATA-AGENTS.md` | ORCA aberto em `../orca-data-agents` | Migrations (matriz+pace, RLS), syncs manuais, Qdrant, 2 agentes |
+
+**Sequência:** abra a aba 1 com PROMPT-0 → aguarde relatório dele → abra as abas 2/3/4 com A1/A2/A3 (podem rodar em paralelo). Os prompts são autocontidos: cada agente lê os docs da própria pasta e pergunta a você apenas env vars que faltarem.
+
+---
+
 > **Rev. v2** — incorpora correções da análise técnica: slugs de modelo validados na FASE 0 (`ox-alpha-free` do OpenCode Zen substitui `mimo-v2.5-free`/`qwen3-coder`), sintaxe LiteLLM correta, cálculos L1-L4 determinísticos em código, lock anti-overlap no cron, idempotência Ekyte, compose só com serviços novos.
 >
 > **Stack de modelos (100% free tier primeiro):** `primary` = **ox-alpha-free** (Zen) → failover Gemini free · `structured` = **ox-alpha-free** (Zen) · `fallback`/críticos N8N = gpt-4o-mini (credencial já existente, só overflow)
