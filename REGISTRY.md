@@ -1,6 +1,6 @@
 # Builders Hub — Registry
 
-**112 skills** · última atualização: 2026-07-27
+**112 skills** · última atualização: 2026-08-24
 
 > Catálogo auto-gerado por `scripts/build-registry.py`. Não edite à mão — rode `/sync-hub` ou envie PR pela `/compartilhar-skill`.
 
