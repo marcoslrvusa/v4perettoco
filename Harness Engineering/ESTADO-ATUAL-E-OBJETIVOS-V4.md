@@ -50,7 +50,7 @@ opencode-auth        → ambos — healthy
 
 **N8N API Key:** `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...` (já no N8N)
 
-**OpenCode Server Password:** `***REDACTED***`
+**OpenCode Server Password:** `***REDACTED — rotacionada, ver vault***`
 
 ---
 
