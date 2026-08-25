@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Progresso das Otimizações — Metal Indianápolis | Agosto 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#e50914; --red-dark:#b40710;
+  --gold:#c9a96e; --gold-light:#f7f2e9; --gold-border:#e8dcc8;
+  --green:#1a8a3f; --blue:#1a4a8c;
+  --ink:#2d2d2d; --muted:#6b6b6b;
+  --bg:#faf9f6;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Ubuntu',sans-serif;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.75}
+.container{max-width:960px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:'Plus Jakarta Sans',sans-serif;color:#1d1d1d}
+
+/* ---------- CAPA ---------- */
+.cover{background:linear-gradient(135deg,#141414,#2e2e2e);color:#fff;padding:56px 0 84px;border-top:3px solid var(--gold)}
+.cover .label{display:inline-block;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,169,110,.45);padding:6px 16px;border-radius:20px;margin-bottom:18px}
+.cover h1{font-size:36px;font-weight:800;line-height:1.2}
+.cover h1 span{color:var(--gold)}
+.gold-bar{width:64px;height:4px;background:linear-gradient(90deg,var(--gold),var(--red));border-radius:2px;margin:16px 0}
+.cover p.sub{font-size:17px;color:#cfcfcf;max-width:680px;font-weight:300}
+.cover .meta{margin-top:22px;display:flex;flex-wrap:wrap;gap:30px;font-size:13.5px;color:#a8a8a8}
+.cover .meta strong{color:#fff;font-weight:500}
+
+/* ---------- TIMELINE ---------- */
+.timeline-wrap{margin:-58px auto 44px;position:relative;z-index:2}
+.timeline{background:#fff;border-radius:18px;box-shadow:0 10px 34px rgba(0,0,0,.09);padding:32px 34px 26px}
+.timeline h2{font-size:20px;margin-bottom:6px}
+.timeline .tl-sub{font-size:14.5px;color:var(--muted);margin-bottom:26px}
+.phase{display:flex;gap:20px;padding:14px 0;position:relative}
+.phase::before{content:'';position:absolute;left:21px;top:52px;bottom:-14px;width:2px;background:var(--gold-border)}
+.phase:last-child::before{display:none}
+.badge{flex-shrink:0;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px;background:#f2efe8;border:2px solid var(--gold-border)}
+.phase.done .badge{background:#e8f4ec;border-color:#bfe0ca}
+.phase.now .badge{background:var(--red);border-color:var(--red-dark);box-shadow:0 0 0 5px rgba(229,9,20,.12)}
+.phase .ph-body{flex:1}
+.phase h3{font-size:16.5px;margin-bottom:2px}
+.phase.done h3{color:#3f6e50}
+.phase .ph-status{font-size:12px;text-transform:uppercase;letter-spacing:1px;font-weight:700}
+.phase.done .ph-status{color:var(--green)}
+.phase.now .ph-status{color:var(--red)}
+.phase.next .ph-status{color:var(--muted)}
+.phase p{font-size:14.5px;color:var(--muted)}
+.you-are-here{display:inline-block;background:#fdeaea;color:var(--red);font-weight:700;font-size:13px;padding:4px 14px;border-radius:14px;margin-top:8px}
+
+/* ---------- CARDOS ---------- */
+.card{background:#fff;border-radius:16px;box-shadow:0 3px 16px rgba(0,0,0,.05);margin-bottom:28px;overflow:hidden}
+.card-head{padding:22px 30px 18px;border-left:5px solid var(--red)}
+.card-head h2{font-size:21px}
+.card-head p{font-size:14px;color:var(--muted)}
+.card-body{padding:6px 30px 28px}
+.card-body h3{font-size:16px;margin:20px 0 6px}
+.explain{background:var(--gold-light);border-radius:12px;padding:18px 22px;margin:14px 0;font-size:15.5px}
+.explain strong{color:#8a6d3b}
+.good{background:#eef8f1;border-left:4px solid var(--green);border-radius:0 10px 10px 0;padding:14px 20px;margin:12px 0}
+.attention{background:#fdf3ec;border-left:4px solid #d97b29;border-radius:0 10px 10px 0;padding:14px 20px;margin:12px 0}
+ul.clean{list-style:none;padding:0}
+ul.clean li{padding:9px 0 9px 34px;position:relative;border-bottom:1px dashed #eee}
+ul.clean li:last-child{border-bottom:none}
+ul.clean li::before{position:absolute;left:2px;font-size:16px}
+ul.clean li.ok::before{content:'✅'}
+ul.clean li.doing::before{content:'🔧'}
+.step-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+.step-card{background:#fbfaf7;border:1px solid #eceae4;border-radius:12px;padding:16px 18px}
+.step-card .num{width:30px;height:30px;border-radius:50%;background:var(--gold);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans';margin-bottom:8px}
+.step-card h4{font-family:'Plus Jakarta Sans';font-size:14.5px;margin-bottom:4px;color:#1d1d1d}
+.step-card p{font-size:13.5px;color:var(--muted)}
+
+/* ---------- TABELA ---------- */
+table{width:100%;border-collapse:collapse;font-size:13.5px;line-height:1.55}
+thead th{background:#262626;color:#fff;text-align:left;padding:11px 13px;font-size:11.5px;text-transform:uppercase;letter-spacing:.8px}
+tbody td{padding:10px 13px;border-bottom:1px solid #f0ede6;vertical-align:top}
+tbody tr:nth-child(even){background:#fbfaf7}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px;white-space:nowrap}
+.tag-red{background:#fdeaea;color:var(--red)}
+.tag-gold{background:var(--gold-light);color:#8a6d3b;border:1px solid var(--gold-border)}
+.tag-gray{background:#f1f1f1;color:#666}
+.mono{font-family:'JetBrains Mono',monospace;font-size:11.5px;word-break:break-all;color:#555}
+.small{font-size:12px;color:#999}
+.note{background:#fbfaf7;border:1px solid #eceae4;border-radius:12px;padding:16px 20px;font-size:14.5px;margin-top:16px}
+details{margin-top:10px}
+summary{cursor:pointer;font-family:'Plus Jakarta Sans';font-weight:700;color:var(--red);font-size:15px;padding:10px 0}
+footer{text-align:center;padding:40px 20px 48px;color:#9a9a9a;font-size:13px}
+
+/* ---------- EVIDENCIAS ---------- */
+.ev-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.ev-card{background:#fbfaf7;border:1px solid #eceae4;border-radius:12px;padding:14px}
+.ev-card img{width:100%;border-radius:8px;border:1px solid #e5e2da;display:block}
+.ev-card figcaption{font-size:13px;color:var(--muted);margin-top:10px;line-height:1.5}
+.ev-card figcaption strong{color:#1d1d1d}
+
+/* ---------- ACCORDIONS ---------- */
+details.phase-detail {margin: 10px 0 0 0}
+details.phase-detail summary {cursor: pointer; font-size: 12.5px; color: var(--muted); padding: 8px 12px; background: var(--gray-50); border-radius: 8px; font-weight: 500; list-style: none; transition: background .2s}
+details.phase-detail summary:hover {background: var(--gray-100)}
+details.phase-detail summary::-webkit-details-marker {display: none}
+details.phase-detail summary::before {content: '▸'; display: inline-block; margin-right: 8px; transition: transform .2s; font-size: 10px}
+details.phase-detail[open] summary::before {transform: rotate(90deg)}
+details.phase-detail[open] summary {background: var(--gold-light); color: #8a6d3b}
+.phase-detail-content {margin-top: 10px; padding-left: 16px; font-size: 12.5px; line-height: 1.7; color: var(--ink)}
+.phase-detail-content ul {margin: 0; padding-left: 20px}
+.phase-detail-content li {margin-bottom: 6px; font-size: 12.5px}
+.phase-detail-content .done-item {color: #1a8a3f}
+.phase-detail-content .current-item {color: var(--red); font-weight: 600}
+.phase-detail-content .pending-item {color: var(--muted)}
+
+@media(max-width:760px){.ev-grid{grid-template-columns:1fr}}
+
+@media(max-width:760px){
+  .cover h1{font-size:27px}
+  .step-grid{grid-template-columns:1fr}
+  .timeline{padding:24px 20px}
+  .card-body,.card-head{padding-left:20px;padding-right:20px}
+  .container{padding:0 14px}
+}
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="container">
+    <span class="label">Relatório de Progresso · Agosto 2026</span>
+    <h1>Otimização das <span>Imagens</span><br>e Próximos Passos</h1>
+    <div class="gold-bar"></div>
+    <p class="sub">Relatório preparado pela equipe técnica V4 para acompanhamento da Metal Indianápolis, com base na auditoria de SEO aprovada em conjunto.</p>
+    <div class="meta">
+      <div>Cliente<br><strong>Metal Indianápolis</strong></div>
+      <div>Site<br><strong>indianapolis.com.br</strong></div>
+      <div>Data<br><strong>25/08/2026</strong></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ==================== TIMELINE ==================== -->
+<div class="timeline-wrap">
+<div class="timeline">
+  <h2>Onde estamos no plano trimestral</h2>
+  <p class="tl-sub">Este é o plano de ação que aprovamos juntos na auditoria. Cada fase tem objetivos claros — veja em qual ponto estamos hoje:</p>
+
+  <div class="phase done">
+    <div class="badge">🏗️</div>
+    <div class="ph-body">
+      <h3>Fase 0 — Pré-lançamento</h3>
+      <span class="ph-status">✓ Concluída</span>
+      <p>Ajustes de infraestrutura que garantiram a segurança da migração: configuração de domínio, mapa do site (sitemap) e padronização dos títulos. Foi ela que protegeu o ranqueamento durante a mudança.</p>
+      <details class="phase-detail">
+        <summary>Ver detalhes da Fase 0</summary>
+        <div class="phase-detail-content">
+          <ul>
+            <li class="done-item">✓ Configuração de domínio e DNS</li>
+            <li class="done-item">✓ Geração e envio do sitemap.xml</li>
+            <li class="done-item">✓ Padronização de H1 único na homepage</li>
+            <li class="done-item">✓ Configuração de canonical e robots.txt</li>
+            <li class="done-item">✓ Validação de SSL e headers de segurança</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <div class="phase done">
+    <div class="badge">🧱</div>
+    <div class="ph-body">
+      <h3>Mês 1 — Fundação técnica</h3>
+      <span class="ph-status">✓ Concluído</span>
+      <p>Correções estruturais: marcação de dados para o Google entender quem vocês são (schema), títulos das páginas, velocidade e links internos. É a base que sustenta todo o resto.</p>
+      <details class="phase-detail">
+        <summary>Ver detalhes do Mês 1 (10 ações)</summary>
+        <div class="phase-detail-content">
+          <ul>
+            <li class="done-item">✓ Product schema nas páginas de produto (WooCommerce)</li>
+            <li class="done-item">✓ Article schema no blog</li>
+            <li class="done-item">✓ Remoção de H1 duplicado em 12 páginas de blog</li>
+            <li class="done-item">✓ Correção de meta descriptions duplicadas (30 páginas)</li>
+            <li class="done-item">✓ Correção de category page titles genéricos</li>
+            <li class="done-item">✓ Correção de titles das 4 páginas de rolo de apoio</li>
+            <li class="done-item">✓ Padronização brand name (Indianápolis → Indianápolis)</li>
+            <li class="done-item">✓ Otimização de imagens: compressão + width/height</li>
+            <li class="done-item">✓ Correção de 6 páginas lentas (performance)</li>
+            <li class="done-item">✓ Atualização de 42 links internos de /home/ para /</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <div class="phase now">
+    <div class="badge">✍️</div>
+    <div class="ph-body">
+      <h3>Mês 2 — Conteúdo e estrutura</h3>
+      <span class="ph-status">● Em andamento</span>
+      <p>Agora o foco é conteúdo: otimizar os textos e descrições das páginas existentes. Estamos na <strong>ação 3 de 9</strong> desta etapa.</p>
+      <span class="you-are-here">📍 Você está aqui — Ação 3: Descrições das imagens</span>
+      <details class="phase-detail">
+        <summary>Ver detalhes do Mês 2 (9 ações)</summary>
+        <div class="phase-detail-content">
+          <ul>
+            <li class="done-item">✓ Meta descriptions para categorias + produtos restantes</li>
+            <li class="done-item">✓ Conteúdo introdutório em 6 categorias de produto</li>
+            <li class="current-item">● <strong>Ação 3: Otimizar alt text das imagens (prioridade: páginas de produto)</strong> — <strong>CONCLUÍDO HOJE</strong></li>
+            <li class="pending-item">○ FAQ schema nas páginas informacionais do blog</li>
+            <li class="pending-item">○ Mapear 2 clusters temáticos prioritários (Fundição + Usinagem CNC)</li>
+            <li class="pending_item">○ Produzir 2 páginas hub (2000+ palavras cada)</li>
+            <li class="pending_item">○ Malha de links internos entre hubs e conteúdo existente</li>
+            <li class="pending_item">○ Substituir placeholder.png restante</li>
+            <li class="pending_item">○ Revisar e testar correções do Mês 1</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <div class="phase next">
+    <div class="badge">🚀</div>
+    <div class="ph-body">
+      <h3>Mês 3 — Expansão e monitoramento</h3>
+      <span class="ph-status">Próxima etapa</span>
+      <p>Criação das páginas principais de conteúdo (pilares), artigos complementares e relatório consolidado do trimestre com resultados.</p>
+      <details class="phase-detail">
+        <summary>Ver detalhes do Mês 3 (9 ações)</summary>
+        <div class="phase-detail-content">
+          <ul>
+            <li class="pending_item">○ Mapear 2 clusters complementares (Peças Industriais + Construção Civil)</li>
+            <li class="pending_item">○ 2 páginas hub adicionais (2000+ palavras cada)</li>
+            <li class="pending_item">○ 4 artigos spoke complementares (1000+ palavras)</li>
+            <li class="pending_item">○ FAQPage schema nas páginas hub</li>
+            <li class="pending_item">○ Revisar e expandir links internos</li>
+            <li class="pending_item">○ Configurar monitoramento de rankings</li>
+            <li class="pending_item">○ Testar Core Web Vitals (após otimizações)</li>
+            <li class="pending_item">○ Criar visuais para páginas hub (infográficos)</li>
+            <li class="pending_item">○ Relatório de fechamento do trimestre</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== O QUE E ALT TEXT ==================== -->
+<div class="card">
+  <div class="card-head">
+    <h2>Primeiro, o que é essa ação?</h2>
+    <p>Explicando de forma simples antes de mostrar os números</p>
+  </div>
+  <div class="card-body">
+    <div class="explain">
+      <strong>Toda imagem do site pode carregar uma descrição curta chamada "texto alternativo" (alt text).</strong> Ela é invisível para quem navega, mas é assim que o Google entende o que a imagem mostra. Sem ela, o Google vê apenas um arquivo vazio.
+    </div>
+    <p>Por que isso importa para vocês? Porque <strong>as buscas por imagem já estão trazendo visitantes para o site</strong> — como a própria Kátia destacou no último encontro. Completar essas descrições fortalece exatamente esse canal que já funciona. E fiquem tranquilos:</p>
+    <div class="good">
+      ✔️ <strong>Nenhuma imagem será trocada ou removida.</strong> O trabalho é apenas escrever a descrição que falta — o compromisso que alinhamos no check-in.
+    </div>
+  </div>
+</div>
+
+<!-- ==================== DIAGNOSTICO ==================== -->
+<div class="card">
+  <div class="card-head">
+    <h2>O que encontramos ao examinar o site</h2>
+    <p>Analisamos todas as 92 páginas e 1.510 imagens do site em 25/08/2026</p>
+  </div>
+  <div class="card-body">
+    <ul class="clean">
+      <li class="ok"><strong>Páginas de produto: praticamente tudo certo.</strong> As fotos dos 18 produtos já têm descrição. Faltam apenas duas imagens fixas (logotipo do topo e do rodapé) que se repetem em todas as páginas — corrigindo uma vez no padrão do site, resolve tudo de uma vez.</li>
+      <li class="doing"><strong>Blog: 41 imagens de posts sem descrição.</strong> São as capas dos artigos — é aqui que está a maior parte do trabalho.</li>
+      <li class="doing"><strong>Páginas institucionais:</strong> algumas fotos da fábrica, certificados ISO e cartões de categorias também precisam das descrições.</li>
+    </ul>
+    <div class="note">
+      <strong>Números do diagnóstico:</strong> 92 páginas analisadas · 1.510 imagens mapeadas · 74 arquivos únicos a descrever · <strong>62% das ocorrências se resolvem com apenas 2 ajustes no padrão do site</strong>.
+    </div>
+  </div>
+</div>
+
+
+<!-- ==================== IMAGENS QUE JA RANQUEIAM ==================== -->
+<div class="card">
+  <div class="card-head">
+    <h2>E as imagens que já aparecem no Google Imagens?</h2>
+    <p>Análise dos dados reais do Search Console — últimos 3 meses</p>
+  </div>
+  <div class="card-body">
+    <p>Essa era uma preocupação legítima: mexer nas imagens poderia atrapalhar o que já funciona hoje? Fomos buscar a resposta nos dados oficiais do Google antes de tocar em qualquer coisa.</p>
+
+    <div class="explain" style="margin-top:18px">
+      <strong>Boa notícia primeiro:</strong> vocês têm razão — o site <strong>já aparece bem nas buscas por imagem</strong>. Foram <strong>96 cliques e quase 12 mil exibições</strong> vindas do Google Imagens nos últimos 3 meses, em termos como "anel de segmento", "ferro fundido cinzento" e "fundição".
+    </div>
+
+    <h3>Mas os dados revelaram um problema importante</h3>
+    <p>Ao verificar cada página que recebe esse tráfego, encontramos isto:</p>
+    <table style="margin:14px 0">
+      <thead><tr><th>Situação da página no site atual</th><th>Páginas</th><th>% das exibições de imagem</th></tr></thead>
+      <tbody>
+        <tr><td><strong style="color:#b02418">Página não existe mais (erro 404)</strong></td><td><strong>81</strong></td><td><strong style="color:#b02418">72%</strong></td></tr>
+        <tr><td style="color:#1a8a3f"><strong>Página ativa e saudável</strong></td><td>41</td><td style="color:#1a8a3f"><strong>28%</strong></td></tr>
+      </tbody>
+    </table>
+    <div class="attention">
+      ⚠️ <strong>O que isso significa:</strong> quando o novo site entrou no ar, os endereços antigos das páginas mudaram. O Google continuava mostrando as imagens desses endereços antigos — mas quem clicava caía numa página de erro ("não encontrado"). É <strong>exatamente o problema que a Kátia percebeu nas pesquisas</strong> e relatamos no último check-in.
+    </div>
+    <p>Em outras palavras: <strong>o risco de perder esse tráfego não vem da otimização das imagens — ele já existe hoje</strong>, e identificamos exatamente onde está. A boa notícia é que tem solução direta:</p>
+
+    <div class="good">
+      <strong style="font-size:16px">✅ RESOLVIDO em 25/08/2026 — mesmo dia do diagnóstico.</strong><br>
+      Instalamos o redirecionamento automático das <strong>81 páginas antigas</strong> para seus novos endereços (técnica padrão <em>301</em>). Quem chega por um resultado antigo agora é levado automaticamente à página certa, e o Google transfere a força dessas posições para as páginas novas. As <strong>81 rotas foram testadas uma a uma após a instalação: todas validadas, zero falhas</strong>. Esse era o problema dos erros 404 que vocês haviam notado nas pesquisas — corrigido.
+    </div>
+
+    <h3>2️⃣ Proteger — protocolo para as imagens que ranqueiam hoje</h3>
+    <ul class="clean">
+      <li class="ok">Nenhum arquivo de imagem será renomeado, movido ou substituído — o endereço de cada foto permanece idêntico (é isso que mantém o ranqueamento).</li>
+      <li class="ok">Nas imagens que <strong>já possuem descrição</strong>: nada é alterado.</li>
+      <li class="ok">Nas imagens <strong>sem descrição</strong>: adicionamos apenas o texto que falta, reforçando o sinal que hoje o Google deduz pelo contexto.</li>
+      <li class="doing">Monitoramento no Search Console (filtro Imagens) durante 30 dias após a aplicação, comparando antes e depois — se algo oscilar, revertemos individualmente.</li>
+    </ul>
+
+    <div class="note">
+      📎 <strong>Material técnico gerado desta ação:</strong> mapa completo das 81 redireções com destinos e tráfego de cada uma (<code>redirecionamentos-301-MANUAL.md</code>), regra ativa no site (<code>redirecionamentos-301-snippet.php</code>) e dados brutos do Search Console (<code>alt-imagens-ranking/</code>).
+    </div>
+  </div>
+</div>
+
+
+<!-- ==================== EVIDENCIAS ==================== -->
+<div class="card">
+  <div class="card-head">
+    <h2>Evidências da execução</h2>
+    <p>Registros da correção aplicada em 25/08/2026 — regra ativa no servidor do site</p>
+  </div>
+  <div class="card-body">
+    <div class="good">
+      <strong>Regra instalada e ativa:</strong> as 81 rotas de redirecionamento estão gravadas no servidor e foram testadas uma a uma — <strong>81/81 aprovadas, zero falhas</strong>. Abaixo, os registros da configuração aplicada.
+    </div>
+    <div class="ev-grid">
+      <figure class="ev-card">
+        <img src="evidencia.png" alt="Registro da regra de redirecionamento ativa no site — código com as 81 rotas configuradas">
+        <figcaption><strong>Registro 1 —</strong> Regra de redirecionamento ativa no gerenciador do site, com o mapa completo dos endereços antigos apontando para os novos (81 rotas).</figcaption>
+      </figure>
+      <figure class="ev-card">
+        <img src="evidencia2.png" alt="Registro das regras de redirecionamento gravadas na configuração do servidor">
+        <figcaption><strong>Registro 2 —</strong> Regras gravadas na configuração do servidor, garantindo que o redirecionamento funciona em qualquer navegador ou dispositivo.</figcaption>
+      </figure>
+    </div>
+    <div class="note">
+      🔎 <strong>Como validamos:</strong> cada endereço antigo foi acessado individualmente após a instalação. Todos responderam corretamente, levando o visitante à página nova correspondente. Monitoramento de 30 dias em andamento no Search Console.
+    </div>
+  </div>
+</div>
+
+<!-- ==================== EXECUCAO ==================== -->
+<div class="card">
+  <div class="card-head">
+    <h2>Como vamos executar</h2>
+    <p>Cerca de 3 horas de trabalho, dentro do planejado para esta ação</p>
+  </div>
+  <div class="card-body">
+    <div class="step-grid">
+      <div class="step-card">
+        <div class="num">1</div>
+        <h4>Padrão do site (~15 min)</h4>
+        <p>Ajustar o logotipo do topo e rodapé uma única vez — corrige automaticamente todas as 92 páginas, incluindo todos os produtos.</p>
+      </div>
+      <div class="step-card">
+        <div class="num">2</div>
+        <h4>Acervo de imagens (~2h)</h4>
+        <p>Escrever as 74 descrições seguindo regras de otimização (palavra-chave natural, sem exageros). Como cada imagem é cadastrada uma vez no acervo, a correção vale para todo o site.</p>
+      </div>
+      <div class="step-card">
+        <div class="num">3</div>
+        <h4>Validação (~30 min)</h4>
+        <p>Nova varredura completa para confirmar que nenhuma imagem ficou sem descrição. Enviamos a confirmação por aqui mesmo.</p>
+      </div>
+    </div>
+    <div class="attention">
+      💡 <strong>E as próximas ações do Mês 2?</strong> Concluída esta, seguem as demais do plano: perguntas frequentes nos artigos, agrupamentos de conteúdo (topic clusters) e páginas pilares — sempre passando pela validação de vocês antes de publicar, conforme o novo combinado de aprovação via documento compartilhado.
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ANEXO TECNICO ==================== -->
+<div class="card">
+  <div class="card-head">
+    <h2>Anexo técnico — lista completa de execução</h2>
+    <p>Para registro e conferência da equipe · 74 itens priorizados</p>
+  </div>
+  <div class="card-body">
+    <p style="font-size:14.5px;color:var(--muted)">A tabela abaixo documenta cada arquivo com a descrição sugerida, na ordem de prioridade. Fica como registro oficial da execução desta ação.</p>
+    <details open>
+      <summary>Abrir lista completa (74 itens)</summary>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th style="width:27%">Arquivo</th><th style="width:27%">Contexto / onde aparece</th><th style="width:33%">Descrição sugerida (alt)</th><th>Prioridade</th></tr></thead>
+          <tbody>
+<tr>
+<td class="mono">LOGOTIPO-HORIZONTAL-3.png</td>
+<td>Logo do header (desktop + mobile)<div class="small">Todas as 92 páginas (2x por página)</div></td>
+<td><strong>Metal Indianápolis</strong></td>
+<td><span class="tag tag-red">Prioridade 1</span></td>
+</tr>
+<tr>
+<td class="mono">Pre-visualizacao-da-Grade-de-Formas.png</td>
+<td>Logo branco do rodapé (wp-image-2804)<div class="small">Todas as 92 páginas (2x por página)</div></td>
+<td><strong>Logotipo Metal Indianápolis - fundição e usinagem de ferro fundido</strong></td>
+<td><span class="tag tag-red">Prioridade 1</span></td>
+</tr>
+<tr>
+<td class="mono">GUS03521-convertido-de-png-2-scaled.webp</td>
+<td>Seção &quot;Tradição e Capacidade Industrial&quot; — foto do galpão<div class="small">/ (home)</div></td>
+<td><strong>Galpão industrial da fundição Metal Indianápolis</strong></td>
+<td><span class="tag tag-red">Prioridade 1</span></td>
+</tr>
+<tr>
+<td class="mono">GUS03534-convertido-de-png-scaled.webp</td>
+<td>Seção &quot;Qualidade e Controle de Processo&quot; — inspeção de peça<div class="small">/ e /empresa/ (+ resize 768x512)</div></td>
+<td><strong>Inspeção de qualidade de peça em ferro fundido</strong></td>
+<td><span class="tag tag-red">Prioridade 1</span></td>
+</tr>
+<tr>
+<td class="mono">GUS03534-convertido-de-png.webp</td>
+<td>Mesma foto do arquivo scaled — attachment separado na biblioteca<div class="small">/ e /empresa/ (upload em tamanho original)</div></td>
+<td><strong>Inspeção de qualidade de peça em ferro fundido</strong></td>
+<td><span class="tag tag-red">Prioridade 1</span></td>
+</tr>
+<tr>
+<td class="mono">7eTjJUHqbS33vmBMcDh6fM-1.webp</td>
+<td>Seção &quot;Qualidade e Controle de Processo&quot; — controle dimensional<div class="small">/ e /empresa/</div></td>
+<td><strong>Controle dimensional no laboratório da Metal Indianápolis</strong></td>
+<td><span class="tag tag-red">Prioridade 1</span></td>
+</tr>
+<tr>
+<td class="mono">1982.png</td>
+<td>Linha do tempo &quot;Nossa História&quot; (foto 1)<div class="small">/empresa/</div></td>
+<td><strong>Acervo histórico da Metal Indianápolis anos 1980</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">1982-1.png</td>
+<td>Linha do tempo &quot;Nossa História&quot; (foto 2)<div class="small">/empresa/</div></td>
+<td><strong>Memória da fundição Metal Indianápolis</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">1982-2.png</td>
+<td>Linha do tempo &quot;Nossa História&quot; (foto 3)<div class="small">/empresa/</div></td>
+<td><strong>História da Metal Indianápolis na fundição</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">1982-3.png</td>
+<td>Linha do tempo &quot;Nossa História&quot; (foto 4)<div class="small">/empresa/</div></td>
+<td><strong>Acervo institucional da Metal Indianápolis</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">Certificado-Iso-Usinagem_page-0001-convertido-de-jpg-scaled.webp</td>
+<td>Seção &quot;Certificados e Políticas&quot;<div class="small">/empresa/</div></td>
+<td><strong>Certificado ISO 9001 da usinagem Metal Indianápolis</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">Certificado-ISO-Fundicao_page-0001-convertido-de-jpg-scaled.webp</td>
+<td>Seção &quot;Certificados e Políticas&quot;<div class="small">/empresa/</div></td>
+<td><strong>Certificado ISO 9001 da fundição Metal Indianápolis</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">POLITICA-DA-QUALIDADE-rev.01_page-0001.jpg</td>
+<td>Documento — Política da Qualidade<div class="small">/empresa/</div></td>
+<td><strong>Política da Qualidade Metal Indianápolis</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">OBJETIVOS-DA-QUALIDADE-rev.03_page-0001.jpg</td>
+<td>Documento — Objetivos da Qualidade<div class="small">/empresa/</div></td>
+<td><strong>Objetivos da Qualidade Metal Indianápolis</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">PT_DUNS-Registered_Installation-Manual-new-1_page-0001.jpg</td>
+<td>Documento — Registro D-U-N-S<div class="small">/empresa/</div></td>
+<td><strong>Registro D-U-N-S da Metal Indianápolis</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">GUS03482-convertido-de-png-scaled.webp</td>
+<td>Banner de contato — foto da planta<div class="small">/solucoes/ (banner CTA -&gt; /contato/)</div></td>
+<td><strong>Fundição Metal Indianápolis com usinagem própria</strong></td>
+<td><span class="tag tag-red">Prioridade 1</span></td>
+</tr>
+<tr>
+<td class="mono">Design-sem-nome-4.png</td>
+<td>Seção capacidade de fabricação — variedade de peças<div class="small">/solucoes/ e /produtos/</div></td>
+<td><strong>Variedade de peças industriais em ferro fundido</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">Design-sem-nome-7.png</td>
+<td>Card &quot;Coletor de Escapamento&quot;<div class="small">/solucoes/</div></td>
+<td><strong>Coletor de escapamento em ferro fundido</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">Design-sem-nome-8.png</td>
+<td>Card &quot;Abraçadeira&quot;<div class="small">/solucoes/</div></td>
+<td><strong>Abraçadeira para concreto em ferro fundido nodular</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">Design-sem-nome-convertido-de-png-2.webp</td>
+<td>Card &quot;Carcaça&quot;<div class="small">/solucoes/</div></td>
+<td><strong>Carcaça em ferro fundido para equipamentos industriais</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">Design-sem-nome-2-convertido-de-png.webp</td>
+<td>Card &quot;Cabeçote&quot;<div class="small">/solucoes/</div></td>
+<td><strong>Cabeçote de compressor de ar em ferro fundido</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">Design-sem-nome-2-3.png</td>
+<td>Card &quot;Cabeçote&quot; (segunda foto)<div class="small">/solucoes/</div></td>
+<td><strong>Cabeçote para compressor em ferro fundido</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">Design-sem-nome-6.png</td>
+<td>Imagem reutilizada em dois contextos<div class="small">/produtos/ (card Automotivo) e /solucoes/ (card Carcaça)</div></td>
+<td><strong>Peças automotivas em ferro fundido</strong></td>
+<td><span class="tag tag-red">Prioridade 1</span></td>
+</tr>
+<tr>
+<td class="mono">Design-sem-nome-1-1.png</td>
+<td>Card de categoria<div class="small">/produtos/ (card Anéis de Segmento)</div></td>
+<td><strong>Anéis de segmento em ferro fundido</strong></td>
+<td><span class="tag tag-red">Prioridade 1</span></td>
+</tr>
+<tr>
+<td class="mono">Design-sem-nome-1-4.png</td>
+<td>Imagem reutilizada em dois contextos<div class="small">/produtos/ (card Máquinas) e /solucoes/ (card Anel de Segmento)</div></td>
+<td><strong>Componentes mecânicos em ferro fundido usinados sob medida</strong></td>
+<td><span class="tag tag-red">Prioridade 1</span></td>
+</tr>
+<tr>
+<td class="mono">Design-sem-nome-2-convertido-de-png-2.webp</td>
+<td>Card de categoria<div class="small">/produtos/ (card Construção Civil)</div></td>
+<td><strong>Peças de ferro fundido para construção civil</strong></td>
+<td><span class="tag tag-red">Prioridade 1</span></td>
+</tr>
+<tr>
+<td class="mono">blog-cabecote-compressor-de-ar-75348e99ad-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">2 páginas + relacionados</div></td>
+<td><strong>Cabeçote de compressor de ar em ferro fundido</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-fornecedor-aneis-de-segmento-7b9de1870c-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">2 páginas (preco / fornecedor)</div></td>
+<td><strong>Anéis de segmento prontos para expedição</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-abracadeira-para-concreto-f59b1eee42-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/abracadeira-para-concreto/ + relacionados</div></td>
+<td><strong>Abraçadeira para concreto em ferro fundido nodular</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-abracadeira-para-tubo-de-concreto-0c669d0967-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/abracadeira-para-tubo-de-concreto/ + relacionados</div></td>
+<td><strong>Abraçadeira para tubo de concreto instalada em tubulação</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-cilindro-compressor-de-ar-684f357ab8-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/cilindro-compressor-de-ar/</div></td>
+<td><strong>Cilindro para compressor de ar em ferro fundido</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-cubos-e-mancais-para-maquinas-fa80322427-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/cubos-e-mancais-para-maquinas/</div></td>
+<td><strong>Cubos e mancais para máquinas em ferro fundido</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-empresa-de-ferro-fundido-7dcf02a551-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/empresa-de-ferro-fundido/</div></td>
+<td><strong>Planta industrial de empresa de ferro fundido</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-empresa-de-fundicao-de-ferro-fundido-23b56750b2-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/empresa-de-fundicao-de-ferro-fundido/</div></td>
+<td><strong>Empresa de fundição de ferro fundido área de produção</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-empresas-fabricantes-de-pecas-automotivas-6a11c22826-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/empresas-fabricantes-de-pecas-automotivas/</div></td>
+<td><strong>Linha de produção de peças automotivas em ferro fundido</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-fabrica-de-pecas-automotiva-32a3860356-1-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/fabrica-de-pecas-automotiva/</div></td>
+<td><strong>Fábrica de peças automotivas com usinagem CNC</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-fabrica-de-roldanas-f43dbe2caf-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/fabrica-de-roldanas/ + relacionados</div></td>
+<td><strong>Roldanas em ferro fundido fabricadas sob medida</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">milling-cutters-3738903__340.jpg</td>
+<td>Foto de apoio no post (banco de imagens)<div class="small">/fabrica-de-roldanas/</div></td>
+<td><strong>Ferramentas de usinagem CNC para roldanas</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-fabricacao-de-pecas-em-ferro-fundido-616f65658d-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/fabricacao-de-pecas-em-ferro-fundido/</div></td>
+<td><strong>Fabricação de peças em ferro fundido na fundição</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-fabricante-de-abracadeiras-para-bombeamento-de-concreto-255010c7aa-1-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/fabricante-abracadeiras-bombeamento-concreto/</div></td>
+<td><strong>Abraçadeiras para bombeamento de concreto prontas para entrega</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-fabricante-aneis-de-segmento-9c26fa552b-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">4 páginas de anéis + relacionados</div></td>
+<td><strong>Anéis de segmento industriais produzidos sob medida</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-fabricante-de-pecas-automotivas-f9f4bf65b5-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/fabricante-de-pecas-automotivas/</div></td>
+<td><strong>Peças automotivas de ferro fundido usinadas</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-fabricante-de-pecas-para-maquinas-e-equipamentos-ec2b3e50ce-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/fabricante-de-pecas-para-maquinas-e-equipamentos/</div></td>
+<td><strong>Peças para máquinas e equipamentos em ferro fundido</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">iron-4452869_1280-4.jpg</td>
+<td>Foto de apoio (banco de imagens) — vazamento de metal<div class="small">/fabricante-de-pecas-para-maquinas-e-equipamentos/</div></td>
+<td><strong>Vazamento de metal líquido na fundição</strong></td>
+<td><span class="tag tag-gray">Prioridade 3</span></td>
+</tr>
+<tr>
+<td class="mono">blog-ferro-fundido-cinzento-7211ea24c1-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/ferro-fundido-cinzento/</div></td>
+<td><strong>Peças em ferro fundido cinzento</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-fundicao-de-auto-pecas-17b93ad98b-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/fundicao-de-auto-pecas/</div></td>
+<td><strong>Autopeças em ferro fundido produzidas em série</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">iron-4452869_1280-5.jpg</td>
+<td>Foto de apoio (banco de imagens) — forno<div class="small">/fundicao-de-auto-pecas/</div></td>
+<td><strong>Fusão de ferro no forno da fundição</strong></td>
+<td><span class="tag tag-gray">Prioridade 3</span></td>
+</tr>
+<tr>
+<td class="mono">photo-1739488754789-5a2e85ee6a79.jpg</td>
+<td>Foto EXTERNA hotlinkada do Unsplash (images.unsplash.com)<div class="small">/fundicao-de-auto-pecas/</div></td>
+<td><strong>Processo produtivo de autopeças em fundição</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">images-2-convertido-de-jpg.webp</td>
+<td>Thumbnail de post antigo (attachment 523) — confirmar visual ao aplicar<div class="small">Widgets de posts relacionados (anéis)</div></td>
+<td><strong>Peças mecânicas em ferro fundido produzidas sob medida</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-fundicao-de-autopecas-e438234fa2-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/fundicao-de-autopecas/</div></td>
+<td><strong>Autopeças fundidas com controle de qualidade</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-fundicao-de-ferro-cinzento-e-nodular-2082aba278-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/fundicao-de-ferro-cinzento-e-nodular/</div></td>
+<td><strong>Comparativo entre ferro fundido cinzento e nodular</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-fundicao-de-ferro-em-itaquaquecetuba-sp-b596c30d9a-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">3 páginas (itaquaquecetuba / ferros / preco)</div></td>
+<td><strong>Fundição de ferro em Itaquaquecetuba planta industrial</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-fundicao-de-ferro-em-pep-set-9775a092dc-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/fundicao-de-ferro-em-pep-set/</div></td>
+<td><strong>Molde em pep set para fundição de ferro</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-fundicao-de-ferro-fundido-27d5967173-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/fundicao-de-ferro-fundido-2/</div></td>
+<td><strong>Aplicações do ferro fundido na indústria</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">milling-1151344_1280.jpg</td>
+<td>Foto de apoio — torno CNC<div class="small">/fundicao-de-ferro-fundido-2/</div></td>
+<td><strong>Torno CNC usinando peça de ferro fundido</strong></td>
+<td><span class="tag tag-gray">Prioridade 3</span></td>
+</tr>
+<tr>
+<td class="mono">blog-fundicao-de-ferro-fundido-sp-d5a08a7ea2-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/fundicao-de-ferro-fundido/</div></td>
+<td><strong>Fundição de ferro fundido em São Paulo</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-fundicao-de-pecas-em-ferro-fundido-4a2ab0e77d-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/fundicao-de-pecas-em-ferro-fundido/ + relacionados</div></td>
+<td><strong>Peças em ferro fundido recém-fundidas</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-fundicao-e-usinagem-em-ferro-fundido-empresa-fcf43cbff9-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/fundicao-e-usinagem-em-ferro-fundido-empresa/</div></td>
+<td><strong>Empresa de fundição e usinagem de ferro fundido</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-fundicao-e-usinagem-proprias-d5222300a6-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/fundicao-e-usinagem-proprias/</div></td>
+<td><strong>Usinagem própria de peças em ferro fundido</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-fundicao-e-usinagem-818fd5627b-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/fundicao-e-usinagem/</div></td>
+<td><strong>Centro de usinagem CNC processando peça fundida</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-fundicao-em-sao-paulo-b886fc0db1-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/fundicao-em-sao-paulo/</div></td>
+<td><strong>Fundição em São Paulo chão de fábrica</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-fundicao-ferro-fundido-cinzento-ba6817e251-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/fundicao-ferro-fundido-cinzento/</div></td>
+<td><strong>Peças em ferro fundido cinzento na fundição</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-industria-metalurgica-de-pecas-automotivas-deed38c95f-convertido-de-png.webp</td>
+<td>Imagem destacada do post<div class="small">/industria-metalurgica-de-pecas-automotivas/</div></td>
+<td><strong>Indústria metalúrgica de peças automotivas produção</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">milling-1151344_1280-12.jpg</td>
+<td>Foto de apoio — usinagem<div class="small">/industria-metalurgica-de-pecas-automotivas/</div></td>
+<td><strong>Usinagem de precisão de componente fundido</strong></td>
+<td><span class="tag tag-gray">Prioridade 3</span></td>
+</tr>
+<tr>
+<td class="mono">blog-anel-de-segmento-em-ferro-fundido-6c877001c1-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">5 páginas de anéis + relacionados</div></td>
+<td><strong>Anel de segmento em ferro fundido para motores</strong></td>
+<td><span class="tag tag-red">Prioridade 1</span></td>
+</tr>
+<tr>
+<td class="mono">blog-anel-de-segmento-para-compressor-2dd9f70420-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">3 páginas + relacionados</div></td>
+<td><strong>Anel de segmento para compressor de ar</strong></td>
+<td><span class="tag tag-red">Prioridade 1</span></td>
+</tr>
+<tr>
+<td class="mono">blog-pecas-de-ferro-fundido-aabd286047-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/pecas-de-ferro-fundido/</div></td>
+<td><strong>Diversas peças de ferro fundido acabadas</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-pecas-para-bomba-de-concreto-4a2e0daa5c-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">2 páginas + relacionados</div></td>
+<td><strong>Peças para bomba de concreto em ferro fundido</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-pecas-para-bombeamento-de-concreto-07a8bad6b6-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/pecas-para-bombeamento-de-concreto/</div></td>
+<td><strong>Peças para bombeamento de concreto em ferro fundido</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-pecas-para-sistema-de-bombeamento-de-concreto-e60a87ec35-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/pecas-para-sistema-de-bombeamento-de-concreto/</div></td>
+<td><strong>Componentes de sistema de bombeamento de concreto</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-pecas-para-tratores-agricolas-c9c680bdfb-convertido-de-png.webp</td>
+<td>Imagem destacada do post<div class="small">2 páginas + relacionados</div></td>
+<td><strong>Peças para tratores agrícolas em ferro fundido</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-preco-do-ferro-fundido-kg-95baf166c3-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/preco-do-ferro-fundido-kg/</div></td>
+<td><strong>Lote de peças de ferro fundido pronto para cotação</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-rolos-de-apoio-para-betoneiras-236350f539-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/rolos-de-apoio-para-betoneiras/</div></td>
+<td><strong>Rolos de apoio para betoneiras em ferro fundido</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+<tr>
+<td class="mono">blog-servico-de-fundicao-em-sao-paulo-7d6be380ee-convertido-de-jpg.webp</td>
+<td>Imagem destacada do post<div class="small">/servico-de-fundicao-em-sao-paulo/</div></td>
+<td><strong>Serviço de fundição em São Paulo forno de fusão</strong></td>
+<td><span class="tag tag-gold">Prioridade 2</span></td>
+</tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+</div>
+
+<footer>Relatório gerado em 25/08/2026 · V4 Company — SEO &amp; Performance · Metal Indianápolis</footer>
+
+</div>
+</body>
+</html>
