@@ -1,0 +1,44 @@
+{
+  "title": "Core Web Vitals no Front-end Next.js (Lazy Loading & Code Splitting)",
+  "area": "Arquitetura Full Stack",
+  "autor": "Marcos Perettoco",
+  "unidade": "V4 Company / FV Marketing",
+  "data": "25/08/2026",
+  "problem": "Páginas de landing apresentavam LCP e CLS ruins, prejudicando SEO e conversão.",
+  "diagnosis": [
+    "Imagens sem dimensionamento (CLS)",
+    "Componentes pesados no bundle inicial (INP)",
+    "Sem lazy loading de widgets"
+  ],
+  "architecture": [
+    "next/image com priority no hero e tamanhos reservados",
+    "dynamic() para code splitting de componentes pesados",
+    "Reserva de aspect-ratio para evitar layout shift"
+  ],
+  "deliverables": [
+    "CORE-WEB-VITALS.md (guia)",
+    "example_next.tsx (Next.js lazy + image)"
+  ],
+  "metrics": [
+    [
+      "LCP",
+      "> 4s",
+      "<= 2.5s"
+    ],
+    [
+      "CLS",
+      "> 0.25",
+      "<= 0.1"
+    ],
+    [
+      "INP",
+      "> 300ms",
+      "<= 200ms"
+    ]
+  ],
+  "next": [
+    "Medir com Lighthouse em produção",
+    "Aplicar aos templates de landing"
+  ],
+  "docx": "fullstack-modelagem-dados-a4.docx"
+}

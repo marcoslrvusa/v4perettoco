@@ -1,0 +1,40 @@
+{
+  "title": "Conformidade LGPD no Tráfego Distribuído (criptografia em trânsito e repouso)",
+  "area": "Sistemas Distribuídos",
+  "autor": "Marcos Perettoco",
+  "unidade": "V4 Company / FV Marketing",
+  "data": "25/08/2026",
+  "problem": "Dados pessoais trafegam entre serviços sem controle de conformidade.",
+  "diagnosis": [
+    "Sem criptografia em trânsito entre serviços",
+    "PII em claro no banco",
+    "Sem trilha de consentimento"
+  ],
+  "architecture": [
+    "TLS 1.2+ e mTLS entre serviços internos",
+    "AES-256 em colunas PII no banco",
+    "Consent_id no cabeçalho das mensagens",
+    "Log imutável de acesso a PII"
+  ],
+  "deliverables": [
+    "LGPD-COMPLIANCE.md (framework + checklist)",
+    "encrypt_pii.py (criptografia)"
+  ],
+  "metrics": [
+    [
+      "Trânsito criptografado",
+      "Não",
+      "TLS/mTLS"
+    ],
+    [
+      "Repouso (PII)",
+      "Claro",
+      "AES-256"
+    ]
+  ],
+  "next": [
+    "Aplicar mTLS no barramento (Módulo 05-A1)",
+    "Mascarar PII em logs"
+  ],
+  "docx": "distribuidos-mensageria-eventos-a4.docx"
+}

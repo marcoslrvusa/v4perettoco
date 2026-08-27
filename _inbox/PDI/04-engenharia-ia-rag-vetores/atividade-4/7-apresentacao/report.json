@@ -1,0 +1,41 @@
+{
+  "title": "Monitoramento de Custos e Consumo de Tokens de LLMs de Fronteira",
+  "area": "Engenharia de IA",
+  "autor": "Marcos Perettoco",
+  "unidade": "V4 Company / FV Marketing",
+  "data": "25/08/2026",
+  "problem": "Sem visibilidade de custo, o uso de LLMs de fronteira (OpenAI, Gemini) saía do controle em picos.",
+  "diagnosis": [
+    "Sem log de tokens por agente/modelo",
+    "Sem tabela de preço atualizada",
+    "Sem alerta de orçamento"
+  ],
+  "architecture": [
+    "Captura de prompt/completion tokens por Run",
+    "Tabela de preço por 1k tokens (atualização mensal)",
+    "Alertas: 80% warn, 100% block por agente",
+    "Otimização: cache de prompt e modelo menor para tarefas simples"
+  ],
+  "deliverables": [
+    "COST-MONITORING.md (padrão)",
+    "usage_schema.sql (schema)",
+    "track_cost.py (cálculo de custo)"
+  ],
+  "metrics": [
+    [
+      "Visibilidade de custo",
+      "0%",
+      "Por agente/modelo/dia"
+    ],
+    [
+      "Alerta de orçamento",
+      "Não",
+      "Sim"
+    ]
+  ],
+  "next": [
+    "Instrumentar os agentes em produção",
+    "Dashboard de custo no Command Center"
+  ],
+  "docx": "engenharia-ia-rag-vetores-a4.docx"
+}

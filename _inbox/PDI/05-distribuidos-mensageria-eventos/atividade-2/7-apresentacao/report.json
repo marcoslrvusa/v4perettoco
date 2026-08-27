@@ -1,0 +1,41 @@
+{
+  "title": "Microsserviço Consumidor Assíncrono Idempotente",
+  "area": "Sistemas Distribuídos",
+  "autor": "Marcos Perettoco",
+  "unidade": "V4 Company / FV Marketing",
+  "data": "25/08/2026",
+  "problem": "Reentregas e duplicatas em filas causavam dados duplicados.",
+  "diagnosis": [
+    "Mesma mensagem processada múltiplas vezes",
+    "Sem chave de deduplicação",
+    "Upsert ausente no destino"
+  ],
+  "architecture": [
+    "Chave event_id única no cabeçalho",
+    "Tabela processed_events com PK (INSERT rejeita duplicata)",
+    "Upsert (ON CONFLICT DO NOTHING) no dado de negócio",
+    "Descarte silencioso de evento já processado"
+  ],
+  "deliverables": [
+    "IDEMPOTENCY.md (padrão)",
+    "consumer.py (consumidor idempotente)",
+    "processed_events.sql (schema)"
+  ],
+  "metrics": [
+    [
+      "Duplicidade de dados",
+      "Sim",
+      "Eliminada"
+    ],
+    [
+      "Deduplicação",
+      "Não",
+      "Sim"
+    ]
+  ],
+  "next": [
+    "Conectar o consumidor a um tópico real",
+    "Testar reentrega em massa"
+  ],
+  "docx": "distribuidos-mensageria-eventos-a2.docx"
+}

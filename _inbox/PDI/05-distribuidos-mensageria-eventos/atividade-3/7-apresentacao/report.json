@@ -1,0 +1,40 @@
+{
+  "title": "Contingência Automatizada (Circuit Breaker) para APIs Externas",
+  "area": "Sistemas Distribuídos",
+  "autor": "Marcos Perettoco",
+  "unidade": "V4 Company / FV Marketing",
+  "data": "25/08/2026",
+  "problem": "Quedas de CRMs/ERPs externos derrubavam workflows inteiros.",
+  "diagnosis": [
+    "Sem proteção contra instabilidade de terceiros",
+    "Chamadas repetidas agravando a falha",
+    "Sem fallback"
+  ],
+  "architecture": [
+    "Circuit Breaker com estados closed/open/half-open",
+    "Threshold de falhas + cooldown + recovery",
+    "Fallback automático quando aberto",
+    "Recuperação automática testando 1 requisição"
+  ],
+  "deliverables": [
+    "CIRCUIT-BREAKER.md (padrão)",
+    "circuit_breaker.py (implementação)"
+  ],
+  "metrics": [
+    [
+      "Cascata de falhas",
+      "Sim",
+      "Mitigada"
+    ],
+    [
+      "Fallback",
+      "Não",
+      "Sim"
+    ]
+  ],
+  "next": [
+    "Aplicar aos nós de CRM/ERP nos workflows",
+    "Expor métricas de estado do breaker"
+  ],
+  "docx": "distribuidos-mensageria-eventos-a3.docx"
+}

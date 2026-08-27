@@ -1,0 +1,41 @@
+{
+  "title": "Computação Serverless (Cloud Function/AWS Lambda) integrada com segurança ao banco",
+  "area": "Arquitetura Full Stack",
+  "autor": "Marcos Perettoco",
+  "unidade": "V4 Company / FV Marketing",
+  "data": "25/08/2026",
+  "problem": "Tarefas pontuais (export, webhook) rodavam em instâncias always-on, desperdiçando custo e sem segurança de secrets.",
+  "diagnosis": [
+    "Custo fixo de servidores para jobs esporádicos",
+    "Secrets em env var (risco)",
+    "Conexões de banco sem pooler/TLS"
+  ],
+  "architecture": [
+    "Cloud Function que conecta via Secret Manager",
+    "Pooler (PgBouncer) com TLS",
+    "IAM de minima privilégio",
+    "Idempotência por chave de evento"
+  ],
+  "deliverables": [
+    "SERVERLESS-SECURITY.md (padrão)",
+    "main.py (Cloud Function segura)",
+    "Dockerfile"
+  ],
+  "metrics": [
+    [
+      "Custo (jobs esporádicos)",
+      "Always-on",
+      "Por execução"
+    ],
+    [
+      "Secrets",
+      "Env var",
+      "Secret Manager"
+    ]
+  ],
+  "next": [
+    "Deploy em staging (GCP)",
+    "Validar IAM e rotação de secrets"
+  ],
+  "docx": "fullstack-modelagem-dados-a3.docx"
+}

@@ -1,0 +1,46 @@
+{
+  "title": "Refatoração de Módulo Legado com SOLID e Clean Architecture",
+  "area": "Engenharia de Software",
+  "autor": "Marcos Perettoco",
+  "unidade": "V4 Company / FV Marketing",
+  "data": "25/08/2026",
+  "problem": "Um módulo crítico de orquestração de campanhas estava acoplado: a classe CampaignService misturava regra de negócio, acesso a banco, envio de e-mail e chamadas de API de CRM em um único arquivo de 600+ linhas, impossível de testar.",
+  "diagnosis": [
+    "SRP violado: uma classe cuidava de regra, DB, e-mail e CRM",
+    "OCP violado: mudar canal exigia editar o método central",
+    "DIP violado: camada de aplicação dependia de psycopg2 diretamente"
+  ],
+  "architecture": [
+    "Aplicação dos 5 princípios SOLID documentados antes/depois",
+    "Separação em camadas: domain / application / infrastructure",
+    "Ports (LeadRepository, Notifier) e adapters desacoplados",
+    "Injeção de dependência no CampaignService"
+  ],
+  "deliverables": [
+    "SOLID-BEFORE-AFTER.md (mapeamento antes/depois)",
+    "before_campaign_service.py (código legado)",
+    "after_campaign_service.py (Clean Architecture)"
+  ],
+  "metrics": [
+    [
+      "Acoplamento (responsabilidades)",
+      "4 em 1 classe",
+      "1 por classe"
+    ],
+    [
+      "Testabilidade",
+      "Nula",
+      "Alta (ports)"
+    ],
+    [
+      "Linhas por classe",
+      "600+",
+      "< 40"
+    ]
+  ],
+  "next": [
+    "Aplicar o mesmo padrão aos demais módulos legados",
+    "Adicionar suíte de testes sobre os ports"
+  ],
+  "docx": "praticas-engenharia-clean-code-a1.docx"
+}

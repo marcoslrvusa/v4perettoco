@@ -1,0 +1,41 @@
+{
+  "title": "APIs Modulares de Missão Crítica (FastAPI) com Paginação, Cache e Rate Limiting",
+  "area": "Arquitetura Full Stack",
+  "autor": "Marcos Perettoco",
+  "unidade": "V4 Company / FV Marketing",
+  "data": "25/08/2026",
+  "problem": "Os endpoints internos eram monolíticos e sem proteção, sofrendo sobrecarga em picos e sem paginação.",
+  "diagnosis": [
+    "Sem paginação (vazamento de memória em listas grandes)",
+    "Sem rate limiting (abuso de quota)",
+    "Sem cache (pressão desnecessária no banco)"
+  ],
+  "architecture": [
+    "API modular FastAPI versionada (/v1)",
+    "Paginação com envelope {items,page,size,total}",
+    "Rate limiting por api_key (slowapi, 100/min)",
+    "Cache via Redis para listas quentes"
+  ],
+  "deliverables": [
+    "API-STANDARD.md (padrão)",
+    "main_api.py (FastAPI paginação + rate limit)",
+    "requirements.txt"
+  ],
+  "metrics": [
+    [
+      "Proteção de sobrecarga",
+      "Não",
+      "Sim (rate limit)"
+    ],
+    [
+      "Paginação",
+      "Não",
+      "Sim"
+    ]
+  ],
+  "next": [
+    "Expor os endpoints críticos por trás do gateway",
+    "Adicionar autenticação OAuth2"
+  ],
+  "docx": "fullstack-modelagem-dados-a2.docx"
+}

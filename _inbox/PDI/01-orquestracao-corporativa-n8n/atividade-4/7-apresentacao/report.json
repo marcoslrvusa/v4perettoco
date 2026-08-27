@@ -1,0 +1,46 @@
+{
+  "title": "Observabilidade e Logs de Sincronização n8n-CRM",
+  "area": "Automação & Infraestrutura",
+  "autor": "Marcos Perettoco",
+  "unidade": "V4 Company / FV Marketing",
+  "data": "25/08/2026",
+  "problem": "Falhas de sincronização com CRMs terceiros (Salesforce, HubSpot, RD Station) só eram percebidas quando o cliente reclamava — não havia rastro estruturado de qual registro falhou, em qual etapa e por quê.",
+  "diagnosis": [
+    "Sem trace correlacionando a execução inteira do workflow",
+    "Logs não estruturados impossibilitando alertas por taxa de erro",
+    "Falta de SLO de latência e de detecção proativa de falhas"
+  ],
+  "architecture": [
+    "Padrão de log estruturado (JSON) com trace_id, entity, crm, action, record_id",
+    "Workflow de observabilidade que propaga trace e emite log centralizado",
+    "Painel SQL com taxa de erro por CRM, falhas consecutivas e p95 de latência",
+    "Alerta proativo em #ops-crm antes do impacto ao cliente"
+  ],
+  "deliverables": [
+    "STANDARD-OBSERVABILITY-LOGS.md (padrão + SLO)",
+    "Workflow n8n de log + alerta proativo",
+    "Queries de dashboard (erro, falhas consecutivas, p95)"
+  ],
+  "metrics": [
+    [
+      "Detecção de falha de sync",
+      "Dias",
+      "< 1 min"
+    ],
+    [
+      "Visibilidade por CRM",
+      "0%",
+      "100%"
+    ],
+    [
+      "Alerta proativo",
+      "Não",
+      "Sim (SLO)"
+    ]
+  ],
+  "next": [
+    "Homologar o workflow de observabilidade em produção",
+    "Integrar o painel ao dashboard do Command Center"
+  ],
+  "docx": "orquestracao-corporativa-n8n-a4.docx"
+}

@@ -1,0 +1,41 @@
+{
+  "title": "Sistema Multi-Agente Assíncrono (autoaperfeiçoamento contínuo)",
+  "area": "Engenharia de IA",
+  "autor": "Marcos Perettoco",
+  "unidade": "V4 Company / FV Marketing",
+  "data": "25/08/2026",
+  "problem": "Agentes atuais eram síncronos e de passo único, sem memória nem melhoria contínua.",
+  "diagnosis": [
+    "Sem memória entre execuções",
+    "Sem comunicação entre agentes",
+    "Sem loop de autoavaliação"
+  ],
+  "architecture": [
+    "Bus de mensagens assíncrono (asyncio/Redis Streams)",
+    "MemoryStore por agente (curto + longo prazo)",
+    "CriticAgent que avalia e escreve lições (lessons.md)",
+    "Orchestrator roteando tarefas por capacidade"
+  ],
+  "deliverables": [
+    "MULTIAGENT-PROTOCOL.md (protocolo)",
+    "multiagent.py (protótipo assíncrono)",
+    "lessons.md (memória de melhoria)"
+  ],
+  "metrics": [
+    [
+      "Memória entre runs",
+      "Não",
+      "Sim"
+    ],
+    [
+      "Autoaperfeiçoamento",
+      "Não",
+      "Sim (loop)"
+    ]
+  ],
+  "next": [
+    "Rodar em ambiente controlado com tarefas reais",
+    "Persistir MemoryStore em banco"
+  ],
+  "docx": "engenharia-ia-rag-vetores-a3.docx"
+}

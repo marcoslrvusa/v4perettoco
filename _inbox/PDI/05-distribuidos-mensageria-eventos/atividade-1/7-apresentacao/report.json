@@ -1,0 +1,40 @@
+{
+  "title": "Arquitetura de Barramento de Mensageria (Pub/Sub, RabbitMQ ou Kafka)",
+  "area": "Sistemas Distribuídos",
+  "autor": "Marcos Perettoco",
+  "unidade": "V4 Company / FV Marketing",
+  "data": "25/08/2026",
+  "problem": "Sistemas internos se integravam por chamadas síncronas frágeis, sem desacoplamento.",
+  "diagnosis": [
+    "Acoplamento síncrono ponto a ponto",
+    "Sem contrato de evento versionado",
+    "Cascata de falhas em chamadas diretas"
+  ],
+  "architecture": [
+    "Kafka como barramento (event log distribuído)",
+    "Produtores publicam em tópicos por domínio",
+    "Consumidores assinam tópicos de interesse",
+    "Particionamento por entity_id (ordem por chave)"
+  ],
+  "deliverables": [
+    "MESH-ARCHITECTURE.md (arquitetura + diagrama)",
+    "topic_contracts.json (contratos)"
+  ],
+  "metrics": [
+    [
+      "Acoplamento",
+      "Síncrono",
+      "Event-driven"
+    ],
+    [
+      "Resiliência",
+      "Baixa",
+      "Alta"
+    ]
+  ],
+  "next": [
+    "Prototipar tópico crm.lead.created em staging",
+    "Adicionar Schema Registry"
+  ],
+  "docx": "distribuidos-mensageria-eventos-a1.docx"
+}
