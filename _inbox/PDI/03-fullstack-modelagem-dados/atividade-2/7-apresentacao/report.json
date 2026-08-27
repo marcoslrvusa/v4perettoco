@@ -1,206 +1,39 @@
 {
-  "autor": "Marcos L. R. V. (Coordenador de Engenharia)",
-  "unidade": "V4 Company / Squad de Engenharia de IA",
-  "data": "2026-08-27",
+  "autor": "PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com",
   "title": "APIs Modulares de Missao Critica (FastAPI) com Paginacao, Cache e Rate Limiting",
-  "area": "Arquitetura Full Stack",
   "slug": "fullstack-modelagem-dados-a2",
   "sections": [
     [
-      "Resumo Executivo",
-      [
-        [
-          "p",
-          "API modular FastAPI para dados de missao critica, com paginacao cursor-based, cache Redis com invalidacao e rate limiting por chave. Entrego o padrao e uma implementacao real."
-        ],
-        [
-          "p",
-          "Foco em corretude sob carga: uma API de leads nao pode vazar memoria nem derrubar o banco em pico."
-        ]
-      ]
+      "1. Contexto",
+      "<h2><span class=\"num\">1.</span> Contexto</h2>"
     ],
     [
-      "Contexto de Producao",
-      [
-        [
-          "ul",
-          [
-            "Endpoints internos servem 3-5 sistemas.",
-            "Listas de 5k-80k sem paginacao estouravam memoria.",
-            "Sem rate limit: 2k req/min derrubava o Postgres."
-          ]
-        ]
-      ]
+      "2. Diagnóstico",
+      "<h2><span class=\"num\">2.</span> Diagnóstico</h2>"
     ],
     [
-      "O Problema e o Blast Radius",
-      [
-        [
-          "table",
-          [
-            "Sintoma",
-            "Hoje",
-            "Alvo"
-          ],
-          [
-            [
-              "Paginacao",
-              "offset",
-              "cursor-based"
-            ],
-            [
-              "Cache",
-              "nenhum",
-              "Redis + invalidacao"
-            ],
-            [
-              "Rate limit",
-              "ausente",
-              "por api_key"
-            ],
-            [
-              "Erro 5xx",
-              "stack cru",
-              "envelope"
-            ]
-          ]
-        ]
-      ]
+      "3. Solução",
+      "<h2><span class=\"num\">3.</span> Solução</h2>"
     ],
     [
-      "Diagnostico",
-      [
-        [
-          "ul",
-          [
-            "Offset em tabelas grandes = full scan.",
-            "Conexoes nao pooladas -> esgotamento.",
-            "Sem distincao 4xx vs 5xx."
-          ]
-        ]
-      ]
+      "4. Como funciona (pipeline)",
+      "<h2><span class=\"num\">4.</span> Como funciona (pipeline)</h2>"
     ],
     [
-      "Decisao Arquitetural (ADR)",
-      [
-        [
-          "p",
-          "ADR-032 — API Modular"
-        ],
-        [
-          "table",
-          [
-            "Opcao",
-            "Pro",
-            "Contra",
-            "Decisao"
-          ],
-          [
-            [
-              "FastAPI + Redis + slowapi",
-              "async, maduro",
-              "mais deps",
-              "ESCOLHIDA"
-            ],
-            [
-              "Flask manual",
-              "simples",
-              "menos perf",
-              "rejeitada"
-            ]
-          ]
-        ],
-        [
-          "note",
-          "Cursor-based para estabilidade; cache por chave com invalidacao no write."
-        ]
-      ]
+      "5. Antes vs Depois",
+      "<h2><span class=\"num\">5.</span> Antes vs Depois</h2>"
     ],
     [
-      "Entregas desta Atividade",
-      [
-        [
-          "ul",
-          [
-            "API-STANDARD.md.",
-            "main_api.py.",
-            "requirements.txt."
-          ]
-        ]
-      ]
+      "6. Entregas",
+      "<h2><span class=\"num\">6.</span> Entregas</h2>"
     ],
     [
-      "Validacao",
-      [
-        [
-          "ol",
-          [
-            "Carga com k6: 200 req/s por 5 min.",
-            "Rate limit: estourar quota -> 429.",
-            "Cache: 2o hit vem do Redis."
-          ]
-        ]
-      ]
+      "7. Métricas",
+      "<h2><span class=\"num\">7.</span> Métricas</h2>"
     ],
     [
-      "Metricas e SLO",
-      [
-        [
-          "table",
-          [
-            "SLO",
-            "Alvo"
-          ],
-          [
-            [
-              "p95 (lista)",
-              "< 200 ms cache hit"
-            ],
-            [
-              "Rate limit",
-              "100/min/key"
-            ],
-            [
-              "Disponibilidade",
-              ">= 99.5%"
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "Riscos",
-      [
-        [
-          "table",
-          [
-            "Risco",
-            "Mitigacao"
-          ],
-          [
-            [
-              "Cache stale",
-              "TTL + invalidar no write"
-            ],
-            [
-              "Redis down",
-              "fallback DB"
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "Proximos Passos",
-      [
-        [
-          "ul",
-          [
-            "Gateway com OAuth2.",
-            "Tracing OTel."
-          ]
-        ]
-      ]
+      "8. Status final",
+      "<h2><span class=\"num\">8.</span> Status final</h2>"
     ]
   ]
 }

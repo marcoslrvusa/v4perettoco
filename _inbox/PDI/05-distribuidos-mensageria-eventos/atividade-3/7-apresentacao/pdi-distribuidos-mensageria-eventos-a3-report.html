@@ -1,45 +1,113 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
-<title>PDI — Resiliencia com Circuit Breaker e Retry/Backoff</title><style>
-:root{--bg:#f7f8fa;--card:#fff;--gold:#b8860b;--red:#8b1e1e;--muted:#6b7280;--txt:#1f2733;--bd:#e3e7ee}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font-family:'Segoe UI',Georgia,serif}
-.page{max-width:820px;margin:0 auto;padding:0 0 60px}
-.cover{background:linear-gradient(135deg,#11131a,#241423);color:#fff;padding:56px 44px 40px}
-.cover .label{color:#e3c14e;letter-spacing:3px;font-size:11px;text-transform:uppercase}
-.cover h1{margin:10px 0 6px;font-size:30px}
-.gold-bar{height:4px;width:120px;background:linear-gradient(90deg,var(--red),var(--gold));margin:14px 0}
-.cover .sub{color:#c7cdd8;font-size:15px}
-.meta{display:flex;gap:26px;margin-top:22px;flex-wrap:wrap}
-.meta div{font-size:12px;color:#9aa4b2}
-.meta strong{display:block;color:#fff;font-size:14px;margin-top:3px}
-.card{background:var(--card);border:1px solid var(--bd);border-left:4px solid var(--gold);border-radius:10px;padding:18px 22px;margin:18px 22px}
-.card h2{margin:0 0 10px;font-size:20px;color:#7a1d1d}
-.card h3{color:#9a7b13;margin:14px 0 4px}
-.card p,.card li{font-size:14px;line-height:1.6}
-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
-th,td{border:1px solid var(--bd);padding:8px 10px}
-th{background:#f0f1f5;color:#7a1d1d}
-.tbl{font-size:13px}
-.callout{border-radius:8px;padding:10px 14px;margin:10px 0;font-size:13px}
-.callout.note{background:#fff8e6;border-left:4px solid var(--gold)}
-.callout.warn{background:#fdeaea;border-left:4px solid var(--red)}
-pre.code{background:#11131a;color:#e9edf3;padding:12px 14px;border-radius:8px;overflow:auto;font-size:12px}
-</style></head><body><div class="page">
-<div class="cover"><img class="logo" src="https://marcoslrvusa.github.io/v4perettoco/v4logowhitepng.png" alt="V4 Company" style="height:48px;width:auto"><span class="label">Dossie Tecnico de PDI — Nivel Senior</span>
-<h1>Resiliencia com Circuit Breaker e Retry/Backoff</h1><div class="gold-bar"></div>
-<p class="sub">Sistemas Distribuidos</p>
-<div class="meta"><div>Autor<br><strong>Marcos Luciano</strong></div><div>Unidade<br><strong>V4 Company / Squad de Engenharia de IA</strong></div>
-<div>Data<br><strong>2026-08-27</strong></div><div>Status<br><strong>Entregue (desenvolvido)</strong></div></div></div>
-<p>Padrao de resiliencia para chamadas a servicos externos (LLM, CRM): Circuit Breaker + retry com backoff e jitter, fallback. Entrego o padrao e uma implementacao funcional.</p>
-<p>Sem breaker, 1 API lenta vira fila que derruba o proprio servico.</p>
-<ul><li>LLM/CRM lentos travavam o worker.</li><li>Retry sem backoff multiplicava a carga.</li><li>Sem fallback: erro virou 5xx.</li></ul>
-<table class="tbl"><thead><tr><th>Hoje</th><th>Alvo</th></tr></thead><tbody><tr><td>retry imediato</td><td>backoff + jitter</td></tr><tr><td>sem protecao</td><td>breaker</td></tr><tr><td>5xx seco</td><td>fallback</td></tr></tbody></table>
-<p>ADR-053 — Resiliencia</p>
-<table class="tbl"><thead><tr><th>Opcao</th><th>Pro</th><th>Contra</th><th>Decisao</th></tr></thead><tbody><tr><td>CB + backoff + fallback</td><td>protege cascata</td><td>estado</td><td>ESCOLHIDA</td></tr><tr><td>retry infinito</td><td>simples</td><td>piora outage</td><td>rejeitada</td></tr></tbody></table>
-<div class="callout note">Closed -&gt; Open apos N falhas; Half-Open testa; fallback em Open.</div>
-<ul><li>RESILIENCIA.md.</li><li>circuit_breaker.py.</li><li>retry.py.</li></ul>
-<ol><li>Simular API lenta; breaker abre apos limite.</li><li>Fallback em Open (sem 5xx).</li><li>API volta -&gt; Half-Open reabilita.</li></ol>
-<table class="tbl"><thead><tr><th>SLO</th><th>Alvo</th></tr></thead><tbody><tr><td>Breaker abre em</td><td>&lt;= 5 falhas</td></tr><tr><td>Fallback em outage</td><td>100%</td></tr></tbody></table>
-<table class="tbl"><thead><tr><th>Risco</th><th>Mitigacao</th></tr></thead><tbody><tr><td>Mal calibrado</td><td>tunar</td></tr><tr><td>Fallback mentiroso</td><td>explicito</td></tr></tbody></table>
-<ul><li>Aplicar em todas as saidas.</li><li>Metricas de breaker.</li></ul>
-<p style="margin-top:24px;color:var(--muted);font-size:12px">PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com</p>
-</div></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDI: Resiliencia com Circuit Breaker e Retry/Backoff — Registro de Entrega</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white:#ffffff; --off-white:#f8f9fb; --gray-50:#f1f3f5; --gray-100:#e9ecef;
+  --gray-200:#dde3e9; --gray-300:#c8d0d8; --gray-500:#8896a8; --gray-600:#6b7a8a;
+  --gray-700:#495560; --gray-800:#2e3740; --gray-900:#1a1f24;
+  --accent:#b8860b; --accent2:#8b4513; --red-600:#c0392b; --yellow-600:#e6a800; --border:#e2e6ea;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Inter',-apple-system,sans-serif; color:var(--gray-900); background:var(--off-white); line-height:1.6; -webkit-font-smoothing:antialiased; }
+.page { max-width:900px; margin:0 auto; background:var(--white); box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+.cover { padding:80px 72px 56px; background:linear-gradient(135deg,#1a0f0a 0%,#2d1a10 100%); color:var(--white); position:relative; overflow:hidden; }
+.cover-badge { display:inline-block; font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--accent); border:1px solid rgba(184,134,11,0.3); padding:5px 14px; background:rgba(184,134,11,0.06); }
+.cover h1 { font-size:36px; font-weight:700; line-height:1.2; letter-spacing:-0.5px; max-width:640px; margin-top:16px; }
+.cover h1 em { color:var(--accent); font-style:normal; }
+.cover-meta { margin-top:32px; font-size:14px; color:#8896a8; line-height:1.8; }
+.cover-meta strong { color:var(--gray-200); font-weight:500; }
+.cover-logo { margin-bottom:28px; }
+.cover-logo img { height:56px; width:auto; display:block; opacity:0.92; }
+.cover-avatar { position:absolute; top:40px; right:56px; width:84px; height:84px; border-radius:50%; overflow:hidden; border:2px solid rgba(184,134,11,0.6); box-shadow:0 0 0 5px rgba(184,134,11,0.12),0 8px 24px rgba(0,0,0,0.4); }
+.cover-avatar img { width:100%; height:100%; object-fit:cover; display:block; }
+.cover-slug { margin-top:24px; font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(255,255,255,0.25); letter-spacing:0.5px; }
+.content { padding:56px 72px 80px; }
+h2 { font-size:22px; font-weight:700; letter-spacing:-0.3px; margin:40px 0 16px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+h2 .num { color:var(--accent2); }
+h3 { font-size:15px; font-weight:600; margin:24px 0 10px; }
+p { color:var(--gray-700); font-size:14px; margin-bottom:14px; }
+p strong { color:var(--gray-900); }
+table { width:100%; border-collapse:collapse; font-size:13px; margin:16px 0 20px; }
+th { text-align:left; padding:10px 14px; background:var(--gray-50); border-top:1px solid var(--border); border-bottom:1px solid var(--border); color:var(--gray-800); font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:0.5px; }
+td { padding:10px 14px; border-bottom:1px solid var(--border); color:var(--gray-700); vertical-align:top; }
+td code, p code { font-family:'JetBrains Mono',monospace; font-size:12px; background:var(--gray-50); border:1px solid var(--border); padding:1px 4px; border-radius:3px; color:var(--accent2); }
+pre { background:#0d1014; color:#e8ecf0; padding:16px 20px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:12px; line-height:1.7; overflow-x:auto; margin:16px 0 20px; }
+pre .c { color:#5a6a7a; } pre .g { color:#00e699; }
+.status { display:inline-block; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; padding:3px 10px; border-radius:3px; }
+.st-warn { background:rgba(230,168,0,0.12); color:var(--yellow-600); }
+.st-ok { background:rgba(22,139,73,0.12); color:#168b49; }
+ul { margin:8px 0 16px 20px; } li { color:var(--gray-700); font-size:14px; margin-bottom:6px; }
+.callout { border-left:3px solid var(--accent); background:var(--off-white); padding:14px 18px; font-size:13px; color:var(--gray-700); margin:16px 0; }
+.callout strong { color:var(--accent2); }
+.didactic { border:1px dashed var(--accent2); border-left:4px solid var(--accent2); background:linear-gradient(90deg,rgba(139,69,19,0.06) 0%,rgba(139,69,19,0.02) 100%); padding:14px 18px; margin:16px 0; border-radius:6px; }
+.didactic-title { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--accent2); margin-bottom:6px; }
+.didactic p { margin-bottom:0; font-size:14px; color:var(--gray-700); }
+.charts { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:16px 0 20px; }
+.chart-card { border:1px solid var(--border); border-radius:8px; background:#0d1014; padding:14px 14px 6px; }
+.chart-title { font-family:'JetBrains Mono',monospace; font-size:11px; color:#e8ecf0; margin-bottom:8px; }
+.chart-card svg { width:100%; height:auto; display:block; }
+@media (max-width:640px){ .charts{ grid-template-columns:1fr; } }
+.pipeline { margin:24px 0 28px; border:1px solid var(--border); border-radius:10px; overflow:hidden; background:#0d1014; }
+.pipeline-head { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 18px; background:linear-gradient(135deg,#1a0f0a,#2d1a10); border-bottom:1px solid rgba(184,134,11,0.25); }
+.pipeline-title { color:#fff; font-size:13px; font-weight:600; letter-spacing:0.3px; }
+.pipeline-title em { color:var(--accent); font-style:normal; }
+.pipeline-live { display:inline-flex; align-items:center; gap:7px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#8896a8; letter-spacing:0.5px; text-transform:uppercase; white-space:nowrap; }
+.pipeline-live .dot { width:7px; height:7px; border-radius:50%; background:var(--accent); animation:pingDot 1.6s infinite; }
+@keyframes pingDot { 0%{box-shadow:0 0 0 0 rgba(184,134,11,0.6);} 70%{box-shadow:0 0 0 8px rgba(184,134,11,0);} 100%{box-shadow:0 0 0 0 rgba(184,134,11,0);} }
+.pipeline-body { position:relative; padding:26px 22px 24px; }
+.pl-rail { position:absolute; left:62px; top:20px; bottom:20px; width:2px; background:rgba(184,134,11,0.22); }
+.pl-pulse { position:absolute; left:-3px; width:8px; height:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 10px rgba(184,134,11,0.9); opacity:0; }
+.pl-pulse.p1 { animation:plFlow 3.4s linear infinite; }
+.pl-pulse.p2 { animation:plFlow 3.4s linear infinite 1.7s; }
+.pl-pulse.g { background:#52d69b; box-shadow:0 0 10px rgba(82,214,155,0.9); animation:plFlow 3.4s linear infinite 2.55s; }
+@keyframes plFlow { 0%{top:0%;opacity:0;} 8%{opacity:1;} 85%{opacity:1;} 100%{top:97%;opacity:0;} }
+.pl-steps { display:flex; flex-direction:column; gap:14px; width:100%; padding-left:26px; }
+.pl-step { display:flex; align-items:flex-start; gap:14px; background:#141922; border:1px solid rgba(232,236,240,0.07); border-radius:8px; padding:14px 16px; }
+.pl-step .num { flex:0 0 30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; color:var(--accent); background:rgba(184,134,11,0.1); border:1px solid rgba(184,134,11,0.35); }
+.pl-step .name { font-size:13px; font-weight:600; color:#fff; }
+.pl-step .name code { font-family:'JetBrains Mono',monospace; font-size:12px; background:rgba(184,134,11,0.12); border:1px solid rgba(184,134,11,0.35); padding:1px 5px; border-radius:3px; color:#ffd98a; }
+.pl-step .desc { font-size:12px; color:#8896a8; margin-top:2px; line-height:1.55; }
+.pl-step .desc code { font-family:'JetBrains Mono',monospace; font-size:11px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); padding:1px 5px; border-radius:3px; color:#e6a800; white-space:nowrap; }
+.pl-chip { display:inline-flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+.pl-tag { font-family:'JetBrains Mono',monospace; font-size:10px; padding:3px 8px; border-radius:3px; background:rgba(184,134,11,0.12); color:#ffd98a; border:1px solid rgba(184,134,11,0.3); white-space:nowrap; }
+.pl-tag.ok { background:rgba(22,139,73,0.14); color:#52d69b; border-color:rgba(22,139,73,0.4); }
+.pl-tag.warn { background:rgba(230,168,0,0.14); color:#ffd98a; border-color:rgba(230,168,0,0.45); }
+.pl-footer { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-top:20px; padding:12px 16px; border-top:1px dashed rgba(184,134,11,0.25); font-size:11px; color:#8896a8; }
+@media print { body{background:white;} .page{box-shadow:none;} .content{padding:20px 48px 60px;} .cover{padding:48px 56px 40px;} }
+</style>
+</head>
+<body>
+<div class="page">
+<div class="cover"><div class="cover-avatar"><img src="../../../../../assets/images/logo-peretto-perfil.jpg" alt="Marcos Luciano"></div><div class="cover-logo"><img src="../../../../../assets/logo-peretto.png" alt="Peretto"></div><span class="cover-badge">PDI — Atividade 03 · Registro de Entrega</span><h1>Resiliencia com <em>Circuit Breaker</em> e Retry/Backoff</h1><div class="cover-meta"><strong>Autor:</strong> PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com<br><strong>Unidade:</strong> FV Marketing / V4 Company — Automação &amp; Infraestrutura<br><strong>Módulo:</strong> 05 · Sistemas Distribuídos, Mensageria e Eventos<br><strong>Data:</strong> Agosto 2026<br><strong>Status:</strong> <span class="status st-warn">NÃO publicado</span> · Desenvolvido / Homologação pendente<br><strong>Versão:</strong> 1.0</div><div class="cover-slug">resiliência / fallback / timeout</div></div>
+<div class="content"><h2><span class="num">1.</span> Contexto</h2><p>A FV faz chamadas entre microsserviços: o de <strong>Pagamento</strong> chama o de <strong>Antifraude</strong>, que chama o de <strong>Score</strong>. Se o Antifraude fica lento, o Pagamento fica <strong>centenas de requisições esperando</strong>. Cada uma segura um thread. O sistema todo entra em <em>congestão</em> mesmo com os outros serviços saudáveis. É a <strong>falha em cascata</strong>.</p><div class="didactic"><div class="didactic-title">Analogia do guarda de trânsito</div>Num cruzamento, se uma rua alaga, os carros ficam parados esperando a água baixar e travam todo o bairro. O <strong>circuit breaker</strong> é o guarda que, ao ver a rua alagada, <em>fecha o cruzamento</em> (abre o caminho alternativo) por alguns minutos. Depois ele testa 'a água baixou?' — se sim, reabre; se não, mantém fechado. Assim o trânsito desvia e a rua alagada se recupera sem virar um caos.</div><h2><span class="num">2.</span> Diagnóstico</h2><p>Sem proteção, uma lentidão no Score derruba o Pagamento por <strong>esgotamento de threads</strong>. O P95 dispara, o timeout estoura e o cliente vê erro. Não há <em>fallback</em>: tudo ou nada. Carece de <strong>retry com backoff</strong> — retentar na hora só piora a sobrecarga.</p><div class="charts"><div class="chart-card"><div class="chart-title">Latência P95 do Pagamento (ms)</div><svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Latência P95 do Pagamento (ms)"><line x1="42" y1="170" x2="330" y2="170" stroke="#c8d0d8"/><line x1="42" y1="170" x2="42" y2="26" stroke="#c8d0d8"/><polyline points="42,157 68,155 94,151 121,144 147,132 173,117 199,101 225,82 251,64 278,51 304,39 330,26" fill="none" stroke="#e6a800" stroke-width="2.5"/><circle cx="330" cy="26" r="3.5" fill="#e6a800"/><polyline points="42,157 68,157 94,156 121,156 147,155 173,154 199,154 225,153 251,152 278,152 304,152 330,152" fill="none" stroke="#52d69b" stroke-width="2.5"/><circle cx="330" cy="152" r="3.5" fill="#52d69b"/><text x="42" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jan</text><text x="68" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Fev</text><text x="94" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Mar</text><text x="121" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Abr</text><text x="147" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Mai</text><text x="173" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jun</text><text x="199" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jul</text><text x="225" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Ago</text><text x="251" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Set</text><text x="278" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Out</text><text x="304" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Nov</text><text x="330" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Dez</text><text x="46" y="12" fill="#e6a800" font-size="10" font-family="JetBrains Mono">Antes</text><text x="46" y="24" fill="#52d69b" font-size="10" font-family="JetBrains Mono">Depois</text></svg></div><div class="chart-card"><div class="chart-title">Taxa de erro do Pagamento (%)</div><svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Taxa de erro do Pagamento (%)"><line x1="42" y1="170" x2="330" y2="170" stroke="#c8d0d8"/><line x1="42" y1="170" x2="42" y2="26" stroke="#c8d0d8"/><polyline points="42,168 68,166 94,162 121,154 147,139 173,121 199,102 225,84 251,65 278,51 304,38 330,26" fill="none" stroke="#e6a800" stroke-width="2.5"/><circle cx="330" cy="26" r="3.5" fill="#e6a800"/><polyline points="42,168 68,168 94,168 121,166 147,166 173,166 199,164 225,164 251,164 278,164 304,164 330,164" fill="none" stroke="#52d69b" stroke-width="2.5"/><circle cx="330" cy="164" r="3.5" fill="#52d69b"/><text x="42" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jan</text><text x="68" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Fev</text><text x="94" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Mar</text><text x="121" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Abr</text><text x="147" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Mai</text><text x="173" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jun</text><text x="199" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jul</text><text x="225" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Ago</text><text x="251" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Set</text><text x="278" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Out</text><text x="304" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Nov</text><text x="330" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Dez</text><text x="46" y="12" fill="#e6a800" font-size="10" font-family="JetBrains Mono">Antes</text><text x="46" y="24" fill="#52d69b" font-size="10" font-family="JetBrains Mono">Depois</text></svg></div></div><div class="callout"><strong>Raiz do problema:</strong> chamadas remotas não têm <strong>timeout</strong> nem <strong>isolamento</strong>. Um serviço lento consome todos os recursos do chamador e propaga a falha — não há fronteira de resiliência.</div><h2><span class="num">3.</span> Solução</h2><p>Implementar um <strong>Circuit Breaker</strong> em 3 estados: <code>CLOSED</code> (tráfego normal, conta falhas), <code>OPEN</code> (após N falhas/timeout, bloqueia e devolve <em>fallback</em> imediato) e <code>HALF_OPEN</code> (após um tempo, libera poucos testes; se passarem, volta a CLOSED, senão segue OPEN). Combinar com <strong>retry exponencial com backoff + jitter</strong> (espera 0.1s, 0.2s, 0.4s... com ruído) para não sincronizar as retentativas.</p><pre><code># Circuit Breaker (exemplo didático, Python)
+import time
+
+class CircuitBreaker:
+    def __init__(self, falhas=5, abre=30):
+        self.estado = "CLOSED"; self.f = 0; self.t = time.time(); self.abre = abre
+    def call(self, fn):
+        if self.estado == "OPEN":
+            if time.time() - self.t &lt; self.abre:
+                return self.fallback()       # degradação graciosa
+            self.estado = "HALF_OPEN"         # sonda 1 chamada
+        try:
+            r = fn()
+            self.estado = "CLOSED"; self.f = 0
+            return r
+        except Exception:
+            self.f += 1
+            if self.f &gt;= 5:
+                self.estado = "OPEN"; self.t = time.time()
+            raise
+    def fallback(self):
+        return {"score": 0, "origem": "cache"}
+</code></pre><h2><span class="num">4.</span> Como funciona (pipeline)</h2><div class="pipeline"><div class="pipeline-head"><span class="pipeline-title">Chamada resiliente Pagamento→Score</span><span class="pipeline-live"><span class="dot"></span> fluxo em execução</span></div><div class="pipeline-body"><div class="pl-rail"><span class="pl-pulse p1"></span><span class="pl-pulse p2"></span><span class="pl-pulse g"></span></div><div class="pl-steps"><div class="pl-step"><div class="num">1</div><div><div class="name">Timeout <code>client.timeout(800)</code></div><div class="desc">Se o Score não responde em 800ms, conta como falha.</div><span class="pl-chip"><span class="pl-tag limite">warn</span></span></div></div><div class="pl-step"><div class="num">2</div><div><div class="name">Breaker <code>breaker.call()</code></div><div class="desc">Se falhas > 5 em 10s → estado <code>OPEN</code>.</div><span class="pl-chip"><span class="pl-tag abre">warn</span></span></div></div><div class="pl-step"><div class="num">3</div><div><div class="name">Fallback <code>score_cache()</code></div><div class="desc">No <code>OPEN</code>, devolve score em cache / default.</div><span class="pl-chip"><span class="pl-tag fallback">ok</span></span></div></div><div class="pl-step"><div class="num">4</div><div><div class="name">Half-open <code>breaker.test()</code></div><div class="desc">Após 30s, libera 1 chamada de teste.</div><span class="pl-chip"><span class="pl-tag sonda">audit</span></span></div></div><div class="pl-step"><div class="num">5</div><div><div class="name">Retry <code>backoff(jitter)</code></div><div class="desc">No <code>CLOSED</code>, retenta com 0.1→0.4s + ruído.</div><span class="pl-chip"><span class="pl-tag backoff">ok</span></span></div></div></div><div class="pl-footer"><span>Serviço cai → fallback em ms; sobe → half-open valida e reabre o fluxo sem cascata.</span></div></div></div><h2><span class="num">5.</span> Antes vs Depois</h2><table><tr><th>Cenário</th><th>Antes (sem breaker)</th><th>Depois (circuit breaker)</th></tr><tr><td>Score lento</td><td>Pagamento trava</td><td>Fallback em <1s</td></tr><tr><td>Falha em cascata</td><td>Toda a cadeia</td><td>Isolada no Score</td></tr><tr><td>Retry</td><td>Imediato (piora)</td><td>Backoff + jitter</td></tr><tr><td>Recuperação</td><td>Manual</td><td>Half-open automático</td></tr></table><h2><span class="num">6.</span> Entregas</h2><ul><li><strong>Classe</strong> <code>circuit_breaker.py</code>: estados CLOSED/OPEN/HALF_OPEN.</li><li><strong>Decorator</strong> <code>@resilient</code>: aplica timeout + retry + breaker.</li><li><strong>Fallback</strong> <code>score_fallback.py</code>: resposta de degradação graciosa.</li><li><strong>Teste</strong> <code>test_breaker.py</code>: simula queda e afirma abertura/fechamento.</li></ul><h2><span class="num">7.</span> Métricas</h2><div class="charts"><div class="chart-card"><div class="chart-title">Disponibilidade do Pagamento (%)</div><svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Disponibilidade do Pagamento (%)"><line x1="42" y1="170" x2="330" y2="170" stroke="#c8d0d8"/><line x1="42" y1="170" x2="42" y2="26" stroke="#c8d0d8"/><polyline points="42,27 68,29 94,32 121,36 147,43 173,52 199,62 225,72 251,84 278,91 304,98 330,105" fill="none" stroke="#e6a800" stroke-width="2.5"/><circle cx="330" cy="105" r="3.5" fill="#e6a800"/><polyline points="42,27 68,27 94,27 121,27 147,26 173,26 199,26 225,26 251,26 278,26 304,26 330,26" fill="none" stroke="#52d69b" stroke-width="2.5"/><circle cx="330" cy="26" r="3.5" fill="#52d69b"/><text x="42" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jan</text><text x="68" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Fev</text><text x="94" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Mar</text><text x="121" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Abr</text><text x="147" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Mai</text><text x="173" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jun</text><text x="199" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jul</text><text x="225" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Ago</text><text x="251" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Set</text><text x="278" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Out</text><text x="304" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Nov</text><text x="330" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Dez</text><text x="46" y="12" fill="#e6a800" font-size="10" font-family="JetBrains Mono">Antes</text><text x="46" y="24" fill="#52d69b" font-size="10" font-family="JetBrains Mono">Depois</text></svg></div></div><div class="callout"><strong>Meta:</strong> 99,9% de disponibilidade do Pagamento mesmo quando o Score fica fora do ar por minutos, via fallback gracioso.</div><h2><span class="num">8.</span> Status final</h2><p><span class="status st-warn">NÃO publicado</span> — Desenvolvido e em homologação. Aguarda revisão antes de produção.</p></div>
+</div>
+</body>
+</html>

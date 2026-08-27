@@ -1,178 +1,39 @@
 {
-  "autor": "Marcos L. R. V. (Coordenador de Engenharia)",
-  "unidade": "V4 Company / Squad de Engenharia de IA",
-  "data": "2026-08-27",
+  "autor": "PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com",
   "title": "Conformidade LGPD em Eventos e Dados (anonimizacao, consentimento, esquecimento)",
-  "area": "Sistemas Distribuidos",
   "slug": "distribuidos-mensageria-eventos-a4",
   "sections": [
     [
-      "Resumo Executivo",
-      [
-        [
-          "p",
-          "Padrao LGPD para o ecossistema de dados/eventos: minimizacao, consentimento por fluxo, anonimizacao em logs/traces e direito ao esquecimento via delete em cascata. Entrego o padrao e um util de anonimizacao."
-        ],
-        [
-          "p",
-          "Eventos e traces carregam PII (e-mail, CNPJ); sem controle, vazamento e processo administrativo."
-        ]
-      ]
+      "1. Contexto",
+      "<h2><span class=\"num\">1.</span> Contexto</h2>"
     ],
     [
-      "Contexto de Producao",
-      [
-        [
-          "ul",
-          [
-            "Logs de agente gravavam e-mail inteiro.",
-            "Sem consentimento por finalidade.",
-            "Pedido de exclusao nao propagava."
-          ]
-        ]
-      ]
+      "2. Diagnóstico",
+      "<h2><span class=\"num\">2.</span> Diagnóstico</h2>"
     ],
     [
-      "Diagnostico",
-      [
-        [
-          "table",
-          [
-            "Hoje",
-            "Alvo"
-          ],
-          [
-            [
-              "PII em log/trace",
-              "anonimizado"
-            ],
-            [
-              "sem consentimento",
-              "consent por finalidade"
-            ],
-            [
-              "delete parcial",
-              "cascata"
-            ]
-          ]
-        ]
-      ]
+      "3. Solução",
+      "<h2><span class=\"num\">3.</span> Solução</h2>"
     ],
     [
-      "Decisao Arquitetural (ADR)",
-      [
-        [
-          "p",
-          "ADR-054 — Tratamento de PII"
-        ],
-        [
-          "table",
-          [
-            "Opcao",
-            "Pro",
-            "Contra",
-            "Decisao"
-          ],
-          [
-            [
-              "Anon + consent + delete cascata",
-              "conforme LGPD",
-              "governanca",
-              "ESCOLHIDA"
-            ]
-          ]
-        ],
-        [
-          "note",
-          "Minimizacao por padrao; PII so com consentimento e retencao definida."
-        ]
-      ]
+      "4. Como funciona (pipeline)",
+      "<h2><span class=\"num\">4.</span> Como funciona (pipeline)</h2>"
     ],
     [
-      "Entregas",
-      [
-        [
-          "ul",
-          [
-            "LGPD-DATA.md.",
-            "anon.py.",
-            "retention_policy.sql."
-          ]
-        ]
-      ]
+      "5. Antes vs Depois",
+      "<h2><span class=\"num\">5.</span> Antes vs Depois</h2>"
     ],
     [
-      "Validacao",
-      [
-        [
-          "ol",
-          [
-            "Varrer logs: 0 e-mail/CNPJ cru.",
-            "Simular exclusao: delete em todas as tabelas.",
-            "Auditoria: consentimento por finalidade."
-          ]
-        ]
-      ]
+      "6. Entregas",
+      "<h2><span class=\"num\">6.</span> Entregas</h2>"
     ],
     [
-      "Metricas e SLO",
-      [
-        [
-          "table",
-          [
-            "SLO",
-            "Alvo"
-          ],
-          [
-            [
-              "PII em log",
-              "0"
-            ],
-            [
-              "Exclusao",
-              "<= 15 dias"
-            ],
-            [
-              "Consentimento",
-              "100% fluxos"
-            ]
-          ]
-        ]
-      ]
+      "7. Métricas",
+      "<h2><span class=\"num\">7.</span> Métricas</h2>"
     ],
     [
-      "Riscos",
-      [
-        [
-          "table",
-          [
-            "Risco",
-            "Mitigacao"
-          ],
-          [
-            [
-              "Delete esquece tabela",
-              "mapear subject"
-            ],
-            [
-              "Cache PII",
-              "nao cachear"
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "Proximos Passos",
-      [
-        [
-          "ul",
-          [
-            "Data map de PII.",
-            "Alerta de PII em logs."
-          ]
-        ]
-      ]
+      "8. Status final",
+      "<h2><span class=\"num\">8.</span> Status final</h2>"
     ]
   ]
 }

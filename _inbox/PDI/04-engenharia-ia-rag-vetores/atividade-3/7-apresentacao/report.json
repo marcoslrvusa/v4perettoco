@@ -1,171 +1,39 @@
 {
-  "autor": "Marcos L. R. V. (Coordenador de Engenharia)",
-  "unidade": "V4 Company / Squad de Engenharia de IA",
-  "data": "2026-08-27",
+  "autor": "PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com",
   "title": "Orquestracao Multi-agente com Handoffs e Isolamento",
-  "area": "Engenharia de IA",
   "slug": "engenharia-ia-rag-vetores-a3",
   "sections": [
     [
-      "Resumo Executivo",
-      [
-        [
-          "p",
-          "Padrao de orquestracao multi-agente: supervisor + especialistas com handoff explicit, isolamento de contexto, timeouts e fallbacks. Entrego o padrao e um orquestrador real."
-        ],
-        [
-          "p",
-          "Agente unico vira 'deus' e quebra em prompt longo."
-        ]
-      ]
+      "1. Contexto",
+      "<h2><span class=\"num\">1.</span> Contexto</h2>"
     ],
     [
-      "Contexto de Producao",
-      [
-        [
-          "ul",
-          [
-            "Um agente fazia tudo: triagem, consulta, proposta.",
-            "Prompt gigante -> custo alto.",
-            "Sem timeout: sub-agente travado parava o fluxo."
-          ]
-        ]
-      ]
+      "2. Diagnóstico",
+      "<h2><span class=\"num\">2.</span> Diagnóstico</h2>"
     ],
     [
-      "Diagnostico",
-      [
-        [
-          "ul",
-          [
-            "SRP ausente entre agentes.",
-            "Contexto compartilhado -> vazamento de PII.",
-            "Sem handoff formal."
-          ]
-        ]
-      ]
+      "3. Solução",
+      "<h2><span class=\"num\">3.</span> Solução</h2>"
     ],
     [
-      "Decisao Arquitetural (ADR)",
-      [
-        [
-          "p",
-          "ADR-043 — Topologia Multi-agente"
-        ],
-        [
-          "table",
-          [
-            "Opcao",
-            "Pro",
-            "Contra",
-            "Decisao"
-          ],
-          [
-            [
-              "Supervisor + handoff",
-              "foco, testavel",
-              "mais nos",
-              "ESCOLHIDA"
-            ],
-            [
-              "Agente unico",
-              "simples",
-              "fragil",
-              "rejeitada"
-            ]
-          ]
-        ],
-        [
-          "note",
-          "Handoff = mensagem tipada. Cada agente tem contexto proprio e timeout."
-        ]
-      ]
+      "4. Como funciona (pipeline)",
+      "<h2><span class=\"num\">4.</span> Como funciona (pipeline)</h2>"
     ],
     [
-      "Entregas",
-      [
-        [
-          "ul",
-          [
-            "MULTI-AGENT.md.",
-            "orchestrator.py.",
-            "handoff_schema.py."
-          ]
-        ]
-      ]
+      "5. Antes vs Depois",
+      "<h2><span class=\"num\">5.</span> Antes vs Depois</h2>"
     ],
     [
-      "Validacao",
-      [
-        [
-          "ol",
-          [
-            "Simular triagem->consulta->proposta.",
-            "Forcar timeout -> fallback.",
-            "Contexto nao vaza."
-          ]
-        ]
-      ]
+      "6. Entregas",
+      "<h2><span class=\"num\">6.</span> Entregas</h2>"
     ],
     [
-      "Metricas e SLO",
-      [
-        [
-          "table",
-          [
-            "SLO",
-            "Alvo"
-          ],
-          [
-            [
-              "Timeout/agente",
-              "<= 15 s"
-            ],
-            [
-              "Handoff com fallback",
-              "100%"
-            ],
-            [
-              "Vazamento",
-              "0"
-            ]
-          ]
-        ]
-      ]
+      "7. Métricas",
+      "<h2><span class=\"num\">7.</span> Métricas</h2>"
     ],
     [
-      "Riscos",
-      [
-        [
-          "table",
-          [
-            "Risco",
-            "Mitigacao"
-          ],
-          [
-            [
-              "Loop",
-              "max hops"
-            ],
-            [
-              "Custo supervisor",
-              "modelo leve"
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "Proximos Passos",
-      [
-        [
-          "ul",
-          [
-            "Observabilidade de handoff.",
-            "Eval por agente."
-          ]
-        ]
-      ]
+      "8. Status final",
+      "<h2><span class=\"num\">8.</span> Status final</h2>"
     ]
   ]
 }

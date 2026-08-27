@@ -1,180 +1,39 @@
 {
-  "autor": "Marcos L. R. V. (Coordenador de Engenharia)",
-  "unidade": "V4 Company / Squad de Engenharia de IA",
-  "data": "2026-08-27",
+  "autor": "PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com",
   "title": "Resiliencia com Circuit Breaker e Retry/Backoff",
-  "area": "Sistemas Distribuidos",
   "slug": "distribuidos-mensageria-eventos-a3",
   "sections": [
     [
-      "Resumo Executivo",
-      [
-        [
-          "p",
-          "Padrao de resiliencia para chamadas a servicos externos (LLM, CRM): Circuit Breaker + retry com backoff e jitter, fallback. Entrego o padrao e uma implementacao funcional."
-        ],
-        [
-          "p",
-          "Sem breaker, 1 API lenta vira fila que derruba o proprio servico."
-        ]
-      ]
+      "1. Contexto",
+      "<h2><span class=\"num\">1.</span> Contexto</h2>"
     ],
     [
-      "Contexto de Producao",
-      [
-        [
-          "ul",
-          [
-            "LLM/CRM lentos travavam o worker.",
-            "Retry sem backoff multiplicava a carga.",
-            "Sem fallback: erro virou 5xx."
-          ]
-        ]
-      ]
+      "2. Diagnóstico",
+      "<h2><span class=\"num\">2.</span> Diagnóstico</h2>"
     ],
     [
-      "Diagnostico",
-      [
-        [
-          "table",
-          [
-            "Hoje",
-            "Alvo"
-          ],
-          [
-            [
-              "retry imediato",
-              "backoff + jitter"
-            ],
-            [
-              "sem protecao",
-              "breaker"
-            ],
-            [
-              "5xx seco",
-              "fallback"
-            ]
-          ]
-        ]
-      ]
+      "3. Solução",
+      "<h2><span class=\"num\">3.</span> Solução</h2>"
     ],
     [
-      "Decisao Arquitetural (ADR)",
-      [
-        [
-          "p",
-          "ADR-053 — Resiliencia"
-        ],
-        [
-          "table",
-          [
-            "Opcao",
-            "Pro",
-            "Contra",
-            "Decisao"
-          ],
-          [
-            [
-              "CB + backoff + fallback",
-              "protege cascata",
-              "estado",
-              "ESCOLHIDA"
-            ],
-            [
-              "retry infinito",
-              "simples",
-              "piora outage",
-              "rejeitada"
-            ]
-          ]
-        ],
-        [
-          "note",
-          "Closed -> Open apos N falhas; Half-Open testa; fallback em Open."
-        ]
-      ]
+      "4. Como funciona (pipeline)",
+      "<h2><span class=\"num\">4.</span> Como funciona (pipeline)</h2>"
     ],
     [
-      "Entregas",
-      [
-        [
-          "ul",
-          [
-            "RESILIENCIA.md.",
-            "circuit_breaker.py.",
-            "retry.py."
-          ]
-        ]
-      ]
+      "5. Antes vs Depois",
+      "<h2><span class=\"num\">5.</span> Antes vs Depois</h2>"
     ],
     [
-      "Validacao",
-      [
-        [
-          "ol",
-          [
-            "Simular API lenta; breaker abre apos limite.",
-            "Fallback em Open (sem 5xx).",
-            "API volta -> Half-Open reabilita."
-          ]
-        ]
-      ]
+      "6. Entregas",
+      "<h2><span class=\"num\">6.</span> Entregas</h2>"
     ],
     [
-      "Metricas e SLO",
-      [
-        [
-          "table",
-          [
-            "SLO",
-            "Alvo"
-          ],
-          [
-            [
-              "Breaker abre em",
-              "<= 5 falhas"
-            ],
-            [
-              "Fallback em outage",
-              "100%"
-            ]
-          ]
-        ]
-      ]
+      "7. Métricas",
+      "<h2><span class=\"num\">7.</span> Métricas</h2>"
     ],
     [
-      "Riscos",
-      [
-        [
-          "table",
-          [
-            "Risco",
-            "Mitigacao"
-          ],
-          [
-            [
-              "Mal calibrado",
-              "tunar"
-            ],
-            [
-              "Fallback mentiroso",
-              "explicito"
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "Proximos Passos",
-      [
-        [
-          "ul",
-          [
-            "Aplicar em todas as saidas.",
-            "Metricas de breaker."
-          ]
-        ]
-      ]
+      "8. Status final",
+      "<h2><span class=\"num\">8.</span> Status final</h2>"
     ]
   ]
 }

@@ -1,174 +1,39 @@
 {
-  "autor": "Marcos L. R. V. (Coordenador de Engenharia)",
-  "unidade": "V4 Company / Squad de Engenharia de IA",
-  "data": "2026-08-27",
+  "autor": "PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com",
   "title": "Idempotencia e Entrega Exactly-Once (na pratica: at-least-once + dedup)",
-  "area": "Sistemas Distribuidos",
   "slug": "distribuidos-mensageria-eventos-a2",
   "sections": [
     [
-      "Resumo Executivo",
-      [
-        [
-          "p",
-          "Garantir idempotencia de handlers: dedup por chave de evento + upsert, tornando 'at-least-once' equivalente a 'exactly-once' para o negocio. Entrego o padrao e um decorator."
-        ],
-        [
-          "p",
-          "Mensageria entrega no minimo 1 vez; sem dedup, reenvio duplica lead/fatura."
-        ]
-      ]
+      "1. Contexto",
+      "<h2><span class=\"num\">1.</span> Contexto</h2>"
     ],
     [
-      "Contexto de Producao",
-      [
-        [
-          "ul",
-          [
-            "Reenvio duplicava leads (CNPJ repetido).",
-            "Fatura emitida 2x em retry.",
-            "Sem chave de evento."
-          ]
-        ]
-      ]
+      "2. Diagnóstico",
+      "<h2><span class=\"num\">2.</span> Diagnóstico</h2>"
     ],
     [
-      "Diagnostico",
-      [
-        [
-          "table",
-          [
-            "Hoje",
-            "Alvo"
-          ],
-          [
-            [
-              "reatenvio duplica",
-              "dedup event_id"
-            ],
-            [
-              "sem upsert",
-              "upsert"
-            ],
-            [
-              "sem versao",
-              "etag"
-            ]
-          ]
-        ]
-      ]
+      "3. Solução",
+      "<h2><span class=\"num\">3.</span> Solução</h2>"
     ],
     [
-      "Decisao Arquitetural (ADR)",
-      [
-        [
-          "p",
-          "ADR-052 — Idempotencia"
-        ],
-        [
-          "table",
-          [
-            "Opcao",
-            "Pro",
-            "Contra",
-            "Decisao"
-          ],
-          [
-            [
-              "dedup event_id + upsert",
-              "exactly-once p/ negocio",
-              "store",
-              "ESCOLHIDA"
-            ]
-          ]
-        ],
-        [
-          "note",
-          "At-least-once do broker + dedup no consumidor = exactly-once observacional."
-        ]
-      ]
+      "4. Como funciona (pipeline)",
+      "<h2><span class=\"num\">4.</span> Como funciona (pipeline)</h2>"
     ],
     [
-      "Entregas",
-      [
-        [
-          "ul",
-          [
-            "IDEMPOTENCY.md.",
-            "idempotent.py.",
-            "schema_dedup.sql."
-          ]
-        ]
-      ]
+      "5. Antes vs Depois",
+      "<h2><span class=\"num\">5.</span> Antes vs Depois</h2>"
     ],
     [
-      "Validacao",
-      [
-        [
-          "ol",
-          [
-            "Mesmo evento 3x -> 1 efeito.",
-            "Concorrencia: 2 consumers, 1 aplicacao.",
-            "DLQ nao cria duplicata."
-          ]
-        ]
-      ]
+      "6. Entregas",
+      "<h2><span class=\"num\">6.</span> Entregas</h2>"
     ],
     [
-      "Metricas e SLO",
-      [
-        [
-          "table",
-          [
-            "SLO",
-            "Alvo"
-          ],
-          [
-            [
-              "Duplicatas",
-              "0"
-            ],
-            [
-              "Idempotente",
-              "100% handlers"
-            ]
-          ]
-        ]
-      ]
+      "7. Métricas",
+      "<h2><span class=\"num\">7.</span> Métricas</h2>"
     ],
     [
-      "Riscos",
-      [
-        [
-          "table",
-          [
-            "Risco",
-            "Mitigacao"
-          ],
-          [
-            [
-              "Store cheio",
-              "TTL"
-            ],
-            [
-              "Chave errada",
-              "event_id + negocio"
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "Proximos Passos",
-      [
-        [
-          "ul",
-          [
-            "Aplicar em todos os consumers.",
-            "Teste de concorrencia no CI."
-          ]
-        ]
-      ]
+      "8. Status final",
+      "<h2><span class=\"num\">8.</span> Status final</h2>"
     ]
   ]
 }

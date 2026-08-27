@@ -1,45 +1,91 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
-<title>PDI — Sistemas Distribuidos com Mensageria (fila, topico, DLQ)</title><style>
-:root{--bg:#f7f8fa;--card:#fff;--gold:#b8860b;--red:#8b1e1e;--muted:#6b7280;--txt:#1f2733;--bd:#e3e7ee}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font-family:'Segoe UI',Georgia,serif}
-.page{max-width:820px;margin:0 auto;padding:0 0 60px}
-.cover{background:linear-gradient(135deg,#11131a,#241423);color:#fff;padding:56px 44px 40px}
-.cover .label{color:#e3c14e;letter-spacing:3px;font-size:11px;text-transform:uppercase}
-.cover h1{margin:10px 0 6px;font-size:30px}
-.gold-bar{height:4px;width:120px;background:linear-gradient(90deg,var(--red),var(--gold));margin:14px 0}
-.cover .sub{color:#c7cdd8;font-size:15px}
-.meta{display:flex;gap:26px;margin-top:22px;flex-wrap:wrap}
-.meta div{font-size:12px;color:#9aa4b2}
-.meta strong{display:block;color:#fff;font-size:14px;margin-top:3px}
-.card{background:var(--card);border:1px solid var(--bd);border-left:4px solid var(--gold);border-radius:10px;padding:18px 22px;margin:18px 22px}
-.card h2{margin:0 0 10px;font-size:20px;color:#7a1d1d}
-.card h3{color:#9a7b13;margin:14px 0 4px}
-.card p,.card li{font-size:14px;line-height:1.6}
-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
-th,td{border:1px solid var(--bd);padding:8px 10px}
-th{background:#f0f1f5;color:#7a1d1d}
-.tbl{font-size:13px}
-.callout{border-radius:8px;padding:10px 14px;margin:10px 0;font-size:13px}
-.callout.note{background:#fff8e6;border-left:4px solid var(--gold)}
-.callout.warn{background:#fdeaea;border-left:4px solid var(--red)}
-pre.code{background:#11131a;color:#e9edf3;padding:12px 14px;border-radius:8px;overflow:auto;font-size:12px}
-</style></head><body><div class="page">
-<div class="cover"><img class="logo" src="https://marcoslrvusa.github.io/v4perettoco/v4logowhitepng.png" alt="V4 Company" style="height:48px;width:auto"><span class="label">Dossie Tecnico de PDI — Nivel Senior</span>
-<h1>Sistemas Distribuidos com Mensageria (fila, topico, DLQ)</h1><div class="gold-bar"></div>
-<p class="sub">Sistemas Distribuidos</p>
-<div class="meta"><div>Autor<br><strong>Marcos Luciano</strong></div><div>Unidade<br><strong>V4 Company / Squad de Engenharia de IA</strong></div>
-<div>Data<br><strong>2026-08-27</strong></div><div>Status<br><strong>Entregue (desenvolvido)</strong></div></div></div>
-<p>Fundamentos de mensageria para desacoplar servicos: fila, topico, DLQ e ACK. Entrego o padrao e um consumidor com backpressure e DLQ.</p>
-<p>O ecossistema de agentes ja e distribuido; sem fila, falha de 1 servico propaga.</p>
-<ul><li>Agentes chamam uns aos outros via HTTP sincrono.</li><li>Falha de downstream derruba a cadeia.</li><li>Sem DLQ: mensagem ruim some.</li></ul>
-<table class="tbl"><thead><tr><th>Hoje</th><th>Alvo</th></tr></thead><tbody><tr><td>HTTP sincrono</td><td>fila desacoplada</td></tr><tr><td>sem DLQ</td><td>DLQ + retry</td></tr><tr><td>sem backpressure</td><td>prefetch limitado</td></tr></tbody></table>
-<p>ADR-051 — Transporte de Eventos</p>
-<table class="tbl"><thead><tr><th>Opcao</th><th>Pro</th><th>Contra</th><th>Decisao</th></tr></thead><tbody><tr><td>Fila + topico + DLQ</td><td>desacopla</td><td>ops</td><td>ESCOLHIDA</td></tr><tr><td>HTTP sincrono</td><td>simples</td><td>cascata</td><td>rejeitada</td></tr></tbody></table>
-<div class="callout note">ACK explicito; prefetch limitado; DLQ apos N tentativas.</div>
-<ul><li>MESSAGING.md.</li><li>consumer.py.</li><li>broker.tf.</li></ul>
-<ol><li>Publicar 1k msg; derrubar consumer; confirmar reprocessamento.</li><li>Msg invalida -&gt; DLQ (nao perde).</li><li>Backpressure: consumer lento nao estoura.</li></ol>
-<table class="tbl"><thead><tr><th>SLO</th><th>Alvo</th></tr></thead><tbody><tr><td>Throughput</td><td>&gt;= 200 msg/s</td></tr><tr><td>Perdidas</td><td>0</td></tr><tr><td>DLQ revisitada</td><td>&lt; 24h</td></tr></tbody></table>
-<table class="tbl"><thead><tr><th>Risco</th><th>Mitigacao</th></tr></thead><tbody><tr><td>Duplicata</td><td>idempotencia (05-A2)</td></tr><tr><td>DLQ esquecida</td><td>alerta</td></tr></tbody></table>
-<ul><li>Eventos de dominio do DDD (02-A3).</li><li>Tracing por trace_id.</li></ul>
-<p style="margin-top:24px;color:var(--muted);font-size:12px">PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com</p>
-</div></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDI: Sistemas Distribuidos com Mensageria (fila, topico, DLQ) — Registro de Entrega</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white:#ffffff; --off-white:#f8f9fb; --gray-50:#f1f3f5; --gray-100:#e9ecef;
+  --gray-200:#dde3e9; --gray-300:#c8d0d8; --gray-500:#8896a8; --gray-600:#6b7a8a;
+  --gray-700:#495560; --gray-800:#2e3740; --gray-900:#1a1f24;
+  --accent:#b8860b; --accent2:#8b4513; --red-600:#c0392b; --yellow-600:#e6a800; --border:#e2e6ea;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Inter',-apple-system,sans-serif; color:var(--gray-900); background:var(--off-white); line-height:1.6; -webkit-font-smoothing:antialiased; }
+.page { max-width:900px; margin:0 auto; background:var(--white); box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+.cover { padding:80px 72px 56px; background:linear-gradient(135deg,#1a0f0a 0%,#2d1a10 100%); color:var(--white); position:relative; overflow:hidden; }
+.cover-badge { display:inline-block; font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--accent); border:1px solid rgba(184,134,11,0.3); padding:5px 14px; background:rgba(184,134,11,0.06); }
+.cover h1 { font-size:36px; font-weight:700; line-height:1.2; letter-spacing:-0.5px; max-width:640px; margin-top:16px; }
+.cover h1 em { color:var(--accent); font-style:normal; }
+.cover-meta { margin-top:32px; font-size:14px; color:#8896a8; line-height:1.8; }
+.cover-meta strong { color:var(--gray-200); font-weight:500; }
+.cover-logo { margin-bottom:28px; }
+.cover-logo img { height:56px; width:auto; display:block; opacity:0.92; }
+.cover-avatar { position:absolute; top:40px; right:56px; width:84px; height:84px; border-radius:50%; overflow:hidden; border:2px solid rgba(184,134,11,0.6); box-shadow:0 0 0 5px rgba(184,134,11,0.12),0 8px 24px rgba(0,0,0,0.4); }
+.cover-avatar img { width:100%; height:100%; object-fit:cover; display:block; }
+.cover-slug { margin-top:24px; font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(255,255,255,0.25); letter-spacing:0.5px; }
+.content { padding:56px 72px 80px; }
+h2 { font-size:22px; font-weight:700; letter-spacing:-0.3px; margin:40px 0 16px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+h2 .num { color:var(--accent2); }
+h3 { font-size:15px; font-weight:600; margin:24px 0 10px; }
+p { color:var(--gray-700); font-size:14px; margin-bottom:14px; }
+p strong { color:var(--gray-900); }
+table { width:100%; border-collapse:collapse; font-size:13px; margin:16px 0 20px; }
+th { text-align:left; padding:10px 14px; background:var(--gray-50); border-top:1px solid var(--border); border-bottom:1px solid var(--border); color:var(--gray-800); font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:0.5px; }
+td { padding:10px 14px; border-bottom:1px solid var(--border); color:var(--gray-700); vertical-align:top; }
+td code, p code { font-family:'JetBrains Mono',monospace; font-size:12px; background:var(--gray-50); border:1px solid var(--border); padding:1px 4px; border-radius:3px; color:var(--accent2); }
+pre { background:#0d1014; color:#e8ecf0; padding:16px 20px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:12px; line-height:1.7; overflow-x:auto; margin:16px 0 20px; }
+pre .c { color:#5a6a7a; } pre .g { color:#00e699; }
+.status { display:inline-block; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; padding:3px 10px; border-radius:3px; }
+.st-warn { background:rgba(230,168,0,0.12); color:var(--yellow-600); }
+.st-ok { background:rgba(22,139,73,0.12); color:#168b49; }
+ul { margin:8px 0 16px 20px; } li { color:var(--gray-700); font-size:14px; margin-bottom:6px; }
+.callout { border-left:3px solid var(--accent); background:var(--off-white); padding:14px 18px; font-size:13px; color:var(--gray-700); margin:16px 0; }
+.callout strong { color:var(--accent2); }
+.didactic { border:1px dashed var(--accent2); border-left:4px solid var(--accent2); background:linear-gradient(90deg,rgba(139,69,19,0.06) 0%,rgba(139,69,19,0.02) 100%); padding:14px 18px; margin:16px 0; border-radius:6px; }
+.didactic-title { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--accent2); margin-bottom:6px; }
+.didactic p { margin-bottom:0; font-size:14px; color:var(--gray-700); }
+.charts { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:16px 0 20px; }
+.chart-card { border:1px solid var(--border); border-radius:8px; background:#0d1014; padding:14px 14px 6px; }
+.chart-title { font-family:'JetBrains Mono',monospace; font-size:11px; color:#e8ecf0; margin-bottom:8px; }
+.chart-card svg { width:100%; height:auto; display:block; }
+@media (max-width:640px){ .charts{ grid-template-columns:1fr; } }
+.pipeline { margin:24px 0 28px; border:1px solid var(--border); border-radius:10px; overflow:hidden; background:#0d1014; }
+.pipeline-head { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 18px; background:linear-gradient(135deg,#1a0f0a,#2d1a10); border-bottom:1px solid rgba(184,134,11,0.25); }
+.pipeline-title { color:#fff; font-size:13px; font-weight:600; letter-spacing:0.3px; }
+.pipeline-title em { color:var(--accent); font-style:normal; }
+.pipeline-live { display:inline-flex; align-items:center; gap:7px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#8896a8; letter-spacing:0.5px; text-transform:uppercase; white-space:nowrap; }
+.pipeline-live .dot { width:7px; height:7px; border-radius:50%; background:var(--accent); animation:pingDot 1.6s infinite; }
+@keyframes pingDot { 0%{box-shadow:0 0 0 0 rgba(184,134,11,0.6);} 70%{box-shadow:0 0 0 8px rgba(184,134,11,0);} 100%{box-shadow:0 0 0 0 rgba(184,134,11,0);} }
+.pipeline-body { position:relative; padding:26px 22px 24px; }
+.pl-rail { position:absolute; left:62px; top:20px; bottom:20px; width:2px; background:rgba(184,134,11,0.22); }
+.pl-pulse { position:absolute; left:-3px; width:8px; height:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 10px rgba(184,134,11,0.9); opacity:0; }
+.pl-pulse.p1 { animation:plFlow 3.4s linear infinite; }
+.pl-pulse.p2 { animation:plFlow 3.4s linear infinite 1.7s; }
+.pl-pulse.g { background:#52d69b; box-shadow:0 0 10px rgba(82,214,155,0.9); animation:plFlow 3.4s linear infinite 2.55s; }
+@keyframes plFlow { 0%{top:0%;opacity:0;} 8%{opacity:1;} 85%{opacity:1;} 100%{top:97%;opacity:0;} }
+.pl-steps { display:flex; flex-direction:column; gap:14px; width:100%; padding-left:26px; }
+.pl-step { display:flex; align-items:flex-start; gap:14px; background:#141922; border:1px solid rgba(232,236,240,0.07); border-radius:8px; padding:14px 16px; }
+.pl-step .num { flex:0 0 30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; color:var(--accent); background:rgba(184,134,11,0.1); border:1px solid rgba(184,134,11,0.35); }
+.pl-step .name { font-size:13px; font-weight:600; color:#fff; }
+.pl-step .name code { font-family:'JetBrains Mono',monospace; font-size:12px; background:rgba(184,134,11,0.12); border:1px solid rgba(184,134,11,0.35); padding:1px 5px; border-radius:3px; color:#ffd98a; }
+.pl-step .desc { font-size:12px; color:#8896a8; margin-top:2px; line-height:1.55; }
+.pl-step .desc code { font-family:'JetBrains Mono',monospace; font-size:11px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); padding:1px 5px; border-radius:3px; color:#e6a800; white-space:nowrap; }
+.pl-chip { display:inline-flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+.pl-tag { font-family:'JetBrains Mono',monospace; font-size:10px; padding:3px 8px; border-radius:3px; background:rgba(184,134,11,0.12); color:#ffd98a; border:1px solid rgba(184,134,11,0.3); white-space:nowrap; }
+.pl-tag.ok { background:rgba(22,139,73,0.14); color:#52d69b; border-color:rgba(22,139,73,0.4); }
+.pl-tag.warn { background:rgba(230,168,0,0.14); color:#ffd98a; border-color:rgba(230,168,0,0.45); }
+.pl-footer { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-top:20px; padding:12px 16px; border-top:1px dashed rgba(184,134,11,0.25); font-size:11px; color:#8896a8; }
+@media print { body{background:white;} .page{box-shadow:none;} .content{padding:20px 48px 60px;} .cover{padding:48px 56px 40px;} }
+</style>
+</head>
+<body>
+<div class="page">
+<div class="cover"><div class="cover-avatar"><img src="../../../../../assets/images/logo-peretto-perfil.jpg" alt="Marcos Luciano"></div><div class="cover-logo"><img src="../../../../../assets/logo-peretto.png" alt="Peretto"></div><span class="cover-badge">PDI — Atividade 01 · Registro de Entrega</span><h1>Sistemas Distribuidos com <em>Mensageria</em> (fila, topico, DLQ)</h1><div class="cover-meta"><strong>Autor:</strong> PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com<br><strong>Unidade:</strong> FV Marketing / V4 Company — Automação &amp; Infraestrutura<br><strong>Módulo:</strong> 05 · Sistemas Distribuídos, Mensageria e Eventos<br><strong>Data:</strong> Agosto 2026<br><strong>Status:</strong> <span class="status st-warn">NÃO publicado</span> · Desenvolvido / Homologação pendente<br><strong>Versão:</strong> 1.0</div><div class="cover-slug">filas / RabbitMQ / Kafka</div></div>
+<div class="content"><h2><span class="num">1.</span> Contexto</h2><p>A FV precisa que o time de <strong>Vendas</strong> registre um negócio e, em segundos, o time de <strong>Financeiro</strong>, o de <strong>Marketing</strong> e o de <strong>Operação</strong> reajam — sem que um sistema espere o outro travar. Hoje tudo é feito por chamada síncrona: o Vendas chama o Financeiro, que chama o Marketing... se um cai, a cadeia inteira falha. É o chamado <strong>acoplamento forte</strong>.</p><div class="didactic"><div class="didactic-title">Analogia do restaurante</div>Imagine um restaurante onde o garçom só libera o pedido se ele mesmo levar o prato à cozinha, encher o copo, cobrar no caixa e lavar a louça antes de atender a próxima mesa. Ninguém come. A <strong>mensageria</strong> é o <em>comanda na cozinha</em>: o garçom anota o pedido (evento) e segue. A cozinha, o caixa e a lavanderia lêem a comanda no próprio ritmo. Cada setor trabalha independente.</div><h2><span class="num">2.</span> Diagnóstico</h2><p>Com chamadas síncronas, uma lentidão no Financeiro trava o Vendas. Picos de campanha geram <strong>fila invisível</strong> de requisições perdidas. Não há replay: se o Marketing estava fora do ar, o evento sumiu. O custo é operacional (timeout em cascata) e de oportunidade (lead esquecido).</p><div class="charts"><div class="chart-card"><div class="chart-title">Tempo de resposta do Vendas (ms/req)</div><svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tempo de resposta do Vendas (ms/req)"><line x1="42" y1="170" x2="330" y2="170" stroke="#c8d0d8"/><line x1="42" y1="170" x2="42" y2="26" stroke="#c8d0d8"/><polyline points="42,125 68,122 94,112 121,97 147,84 173,68 199,73 225,57 251,42 278,46 304,36 330,26" fill="none" stroke="#e6a800" stroke-width="2.5"/><circle cx="330" cy="26" r="3.5" fill="#e6a800"/><polyline points="42,125 68,145 94,149 121,150 147,151 173,152 199,152 225,152 251,153 278,153 304,153 330,154" fill="none" stroke="#52d69b" stroke-width="2.5"/><circle cx="330" cy="154" r="3.5" fill="#52d69b"/><text x="42" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jan</text><text x="68" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Fev</text><text x="94" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Mar</text><text x="121" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Abr</text><text x="147" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Mai</text><text x="173" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jun</text><text x="199" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jul</text><text x="225" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Ago</text><text x="251" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Set</text><text x="278" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Out</text><text x="304" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Nov</text><text x="330" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Dez</text><text x="46" y="12" fill="#e6a800" font-size="10" font-family="JetBrains Mono">Antes</text><text x="46" y="24" fill="#52d69b" font-size="10" font-family="JetBrains Mono">Depois</text></svg></div><div class="chart-card"><div class="chart-title">Eventos perdidos em picos (mil/mês)</div><svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Eventos perdidos em picos (mil/mês)"><line x1="42" y1="170" x2="330" y2="170" stroke="#c8d0d8"/><line x1="42" y1="170" x2="42" y2="26" stroke="#c8d0d8"/><polyline points="42,163 68,159 94,152 121,141 147,127 173,116 199,105 225,91 251,73 278,58 304,44 330,26" fill="none" stroke="#e6a800" stroke-width="2.5"/><circle cx="330" cy="26" r="3.5" fill="#e6a800"/><polyline points="42,163 68,166 94,166 121,168 147,169 173,169 199,169 225,169 251,170 278,170 304,170 330,170" fill="none" stroke="#52d69b" stroke-width="2.5"/><circle cx="330" cy="170" r="3.5" fill="#52d69b"/><text x="42" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jan</text><text x="68" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Fev</text><text x="94" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Mar</text><text x="121" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Abr</text><text x="147" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Mai</text><text x="173" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jun</text><text x="199" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jul</text><text x="225" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Ago</text><text x="251" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Set</text><text x="278" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Out</text><text x="304" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Nov</text><text x="330" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Dez</text><text x="46" y="12" fill="#e6a800" font-size="10" font-family="JetBrains Mono">Antes</text><text x="46" y="24" fill="#52d69b" font-size="10" font-family="JetBrains Mono">Depois</text></svg></div></div><div class="callout"><strong>Raiz do problema:</strong> o Vendas é <em>acoplado</em> ao Financeiro/Marketing via chamada direta. Não existe <strong>desacoplamento</strong> nem <strong>buffer</strong> para absorver picos — o sistema não escala porque cada parte depende do tempo de resposta da outra.</div><h2><span class="num">3.</span> Solução</h2><p>Inserir um <strong>broker de mensageria</strong> (RabbitMQ para filas de trabalho, Kafka para eventos de fluxo) entre os sistemas. O Vendas <em>publica</em> um evento <code>venda.criada</code> e segue em ~2ms. Cada time <em>assina</em> o que precisa. Há dois padrões principais: <strong>fila (queue)</strong>, onde 1 mensagem é consumida por 1 worker (tarefa), e <strong>publish/subscribe</strong>, onde 1 mensagem é entregue a N assinantes (evento difundido).</p><h2><span class="num">4.</span> Como funciona (pipeline)</h2><div class="pipeline"><div class="pipeline-head"><span class="pipeline-title">Pipeline de mensageria venda.criada</span><span class="pipeline-live"><span class="dot"></span> fluxo em execução</span></div><div class="pipeline-body"><div class="pl-rail"><span class="pl-pulse p1"></span><span class="pl-pulse p2"></span><span class="pl-pulse g"></span></div><div class="pl-steps"><div class="pl-step"><div class="num">1</div><div><div class="name">Producer <code>vendas.publish()</code></div><div class="desc">Vendas publica <code>venda.criada</code> no broker e retorna imediatamente (fire-and-forget).</div><span class="pl-chip"><span class="pl-tag async">ok</span></span></div></div><div class="pl-step"><div class="num">2</div><div><div class="name">Broker <code>exchange/partition</code></div><div class="desc">Roteia por tópico: fila de cobrança (1 worker) e fan-out de eventos (N assinantes).</div><span class="pl-chip"><span class="pl-tag roteamento">ok</span></span></div></div><div class="pl-step"><div class="num">3</div><div><div class="name">Consumer Financeiro <code>cobranca.consume()</code></div><div class="desc">Consome da fila, gera boleto, faz <code>ack</code>.</div><span class="pl-chip"><span class="pl-tag 1 worker">warn</span></span></div></div><div class="pl-step"><div class="num">4</div><div><div class="name">Consumer Marketing + Operação <code>*.on_event()</code></div><div class="desc">Assinam o mesmo tópico em pub/sub: dispara campanha e abre ordem.</div><span class="pl-chip"><span class="pl-tag fan-out">ok</span></span></div></div><div class="pl-step"><div class="num">5</div><div><div class="name">Dead Letter <code>dlq.save()</code></div><div class="desc">Falha de parse vira para DLQ para reprocessamento sem perder evento.</div><span class="pl-chip"><span class="pl-tag DLQ">audit</span></span></div></div></div><div class="pl-footer"><span>Pico de campanha → broker absorve o volume; cada consumer processa no próprio ritmo (back-pressure natural).</span></div></div></div><h2><span class="num">5.</span> Antes vs Depois</h2><table><tr><th>Cenário</th><th>Antes (síncrono)</th><th>Depois (mensageria)</th></tr><tr><td>Falha em 1 sistema</td><td>Trava a cadeia</td><td>Isolado ao consumer</td></tr><tr><td>Pico de campanha</td><td>Timeouts / perda</td><td>Buffer no broker</td></tr><tr><td>Replay de evento</td><td>Impossível</td><td>Replay por offset (Kafka)</td></tr><tr><td>Acoplamento</td><td>Forte (Vendas→Fin)</td><td>Fraco (evento)</td></tr></table><h2><span class="num">6.</span> Entregas</h2><ul><li><strong>Diagrama</strong> <code>topologia-mensageria.png</code>: fila vs pub/sub com os 3 times.</li><li><strong>Worker</strong> <code>cobranca_consumer.py</code>: consumer com <code>ack</code> e DLQ.</li><li><strong>Producer</strong> <code>vendas_publisher.py</code>: publicação assíncrona via RabbitMQ.</li><li><strong>Doc</strong> <code>runbook-mensageria.md</code>: como reprocessar a DLQ e subir um consumer.</li></ul><h2><span class="num">7.</span> Métricas</h2><div class="charts"><div class="chart-card"><div class="chart-title">Throughput de eventos (mil/h)</div><svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Throughput de eventos (mil/h)"><line x1="42" y1="170" x2="330" y2="170" stroke="#c8d0d8"/><line x1="42" y1="170" x2="42" y2="26" stroke="#c8d0d8"/><polyline points="42,163 68,163 94,161 121,161 147,159 173,159 199,158 225,158 251,156 278,156 304,154 330,154" fill="none" stroke="#e6a800" stroke-width="2.5"/><circle cx="330" cy="154" r="3.5" fill="#e6a800"/><polyline points="42,163 68,154 94,145 121,135 147,121 173,109 199,93 225,79 251,65 278,51 304,38 330,26" fill="none" stroke="#52d69b" stroke-width="2.5"/><circle cx="330" cy="26" r="3.5" fill="#52d69b"/><text x="42" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jan</text><text x="68" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Fev</text><text x="94" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Mar</text><text x="121" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Abr</text><text x="147" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Mai</text><text x="173" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jun</text><text x="199" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jul</text><text x="225" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Ago</text><text x="251" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Set</text><text x="278" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Out</text><text x="304" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Nov</text><text x="330" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Dez</text><text x="46" y="12" fill="#e6a800" font-size="10" font-family="JetBrains Mono">Antes</text><text x="46" y="24" fill="#52d69b" font-size="10" font-family="JetBrains Mono">Depois</text></svg></div></div><div class="callout"><strong>Meta:</strong> 100% dos eventos de venda processados de forma assíncrona, com <em>zero</em> perda em pico e P95 de ponta-a-ponta < 5s.</div><h2><span class="num">8.</span> Status final</h2><p><span class="status st-warn">NÃO publicado</span> — Desenvolvido e em homologação. Aguarda revisão antes de produção.</p></div>
+</div>
+</body>
+</html>

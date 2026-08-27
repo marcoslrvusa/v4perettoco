@@ -1,178 +1,39 @@
 {
-  "autor": "Marcos L. R. V. (Coordenador de Engenharia)",
-  "unidade": "V4 Company / Squad de Engenharia de IA",
-  "data": "2026-08-27",
+  "autor": "PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com",
   "title": "Engenharia de Custos de LLM (custo por tarefa, cache, roteamento)",
-  "area": "Engenharia de IA",
   "slug": "engenharia-ia-rag-vetores-a4",
   "sections": [
     [
-      "Resumo Executivo",
-      [
-        [
-          "p",
-          "Framework de custo de LLM: custo por tarefa, cache de prompt, roteamento por complexidade e budget. Entrego o padrao e um calculador."
-        ],
-        [
-          "p",
-          "Sem contabilidade de tokens, nao se precifica o agente."
-        ]
-      ]
+      "1. Contexto",
+      "<h2><span class=\"num\">1.</span> Contexto</h2>"
     ],
     [
-      "Contexto de Producao",
-      [
-        [
-          "ul",
-          [
-            "Modelo 'maxi' para tudo (10x custo).",
-            "Sem cache -> mesma pergunta paga 2x.",
-            "Impossivel precificar ao cliente."
-          ]
-        ]
-      ]
+      "2. Diagnóstico",
+      "<h2><span class=\"num\">2.</span> Diagnóstico</h2>"
     ],
     [
-      "Diagnostico",
-      [
-        [
-          "table",
-          [
-            "Hoje",
-            "Alvo"
-          ],
-          [
-            [
-              "modelo unico",
-              "roteamento"
-            ],
-            [
-              "sem cache",
-              "cache"
-            ],
-            [
-              "custo invisivel",
-              "custo/tarefa"
-            ]
-          ]
-        ]
-      ]
+      "3. Solução",
+      "<h2><span class=\"num\">3.</span> Solução</h2>"
     ],
     [
-      "Decisao Arquitetural (ADR)",
-      [
-        [
-          "p",
-          "ADR-044 — Estrategia de Custo"
-        ],
-        [
-          "table",
-          [
-            "Opcao",
-            "Pro",
-            "Contra",
-            "Decisao"
-          ],
-          [
-            [
-              "Roteamento + cache + budget",
-              "previsivel",
-              "governanca",
-              "ESCOLHIDA"
-            ]
-          ]
-        ],
-        [
-          "note",
-          "Trivial -> leve; complexo -> forte; repetido -> cache."
-        ]
-      ]
+      "4. Como funciona (pipeline)",
+      "<h2><span class=\"num\">4.</span> Como funciona (pipeline)</h2>"
     ],
     [
-      "Entregas",
-      [
-        [
-          "ul",
-          [
-            "LLM-COST.md.",
-            "cost_calc.py.",
-            "BUDGET.md."
-          ]
-        ]
-      ]
+      "5. Antes vs Depois",
+      "<h2><span class=\"num\">5.</span> Antes vs Depois</h2>"
     ],
     [
-      "Validacao",
-      [
-        [
-          "ol",
-          [
-            "Medir custo/tarefa com e sem roteamento.",
-            "Habilitar cache; medir hit rate.",
-            "Budget por cliente + alerta 80%."
-          ]
-        ]
-      ]
+      "6. Entregas",
+      "<h2><span class=\"num\">6.</span> Entregas</h2>"
     ],
     [
-      "Metricas e SLO",
-      [
-        [
-          "table",
-          [
-            "SLO",
-            "Alvo"
-          ],
-          [
-            [
-              "Custo/tarefa",
-              "<= baseline*0.4"
-            ],
-            [
-              "Cache hit",
-              ">= 30%"
-            ],
-            [
-              "Budget",
-              "alerta 80%"
-            ]
-          ]
-        ]
-      ]
+      "7. Métricas",
+      "<h2><span class=\"num\">7.</span> Métricas</h2>"
     ],
     [
-      "Riscos",
-      [
-        [
-          "table",
-          [
-            "Risco",
-            "Mitigacao"
-          ],
-          [
-            [
-              "Qualidade cai",
-              "eval + roteamento"
-            ],
-            [
-              "Cache PII",
-              "nao cachear"
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "Proximos Passos",
-      [
-        [
-          "ul",
-          [
-            "Precificar por tarefa.",
-            "Dashboard de custo."
-          ]
-        ]
-      ]
+      "8. Status final",
+      "<h2><span class=\"num\">8.</span> Status final</h2>"
     ]
   ]
 }

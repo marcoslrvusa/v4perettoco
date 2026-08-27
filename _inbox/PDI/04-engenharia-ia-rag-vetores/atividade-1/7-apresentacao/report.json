@@ -1,161 +1,39 @@
 {
-  "autor": "Marcos L. R. V. (Coordenador de Engenharia)",
-  "unidade": "V4 Company / Squad de Engenharia de IA",
-  "data": "2026-08-27",
+  "autor": "PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com",
   "title": "Fundamentos de IA Generativa (NVIDIA DLI) aplicados a RAG",
-  "area": "Engenharia de IA",
   "slug": "engenharia-ia-rag-vetores-a1",
   "sections": [
     [
-      "Resumo Executivo",
-      [
-        [
-          "p",
-          "Conclusao do curso NVIDIA DLI 'Building RAG Agents with LLMs' com transposicao pratica. Entrego notas e um notebook funcional de RAG end-to-end."
-        ],
-        [
-          "p",
-          "A base sustenta as proximas atividades (RAG hibrido, multi-agente, custos)."
-        ]
-      ]
+      "1. Contexto",
+      "<h2><span class=\"num\">1.</span> Contexto</h2>"
     ],
     [
-      "Contexto de Producao",
-      [
-        [
-          "ul",
-          [
-            "Time comenta 'RAG' mas sem padrao de chunking.",
-            "Similaridade pura trazia contexto irrelevante.",
-            "Sem metrica de qualidade."
-          ]
-        ]
-      ]
+      "2. Diagnóstico",
+      "<h2><span class=\"num\">2.</span> Diagnóstico</h2>"
     ],
     [
-      "Diagnostico",
-      [
-        [
-          "ul",
-          [
-            "Chunk grande -> ruido; pequeno -> perde contexto.",
-            "Embedding sem normalizacao.",
-            "Sem rerank -> top-k ruido."
-          ]
-        ]
-      ]
+      "3. Solução",
+      "<h2><span class=\"num\">3.</span> Solução</h2>"
     ],
     [
-      "Decisao Arquitetural (ADR)",
-      [
-        [
-          "p",
-          "ADR-041 — Baseline RAG"
-        ],
-        [
-          "table",
-          [
-            "Opcao",
-            "Pro",
-            "Contra",
-            "Decisao"
-          ],
-          [
-            [
-              "Chunk 512 + overlap 64 + rerank",
-              "coeso",
-              "mais tokens",
-              "ESCOLHIDA"
-            ]
-          ]
-        ],
-        [
-          "note",
-          "Normalizar embeddings; top-k=20 + rerank para top-5."
-        ]
-      ]
+      "4. Como funciona (pipeline)",
+      "<h2><span class=\"num\">4.</span> Como funciona (pipeline)</h2>"
     ],
     [
-      "Entregas",
-      [
-        [
-          "ul",
-          [
-            "DLI-NOTES.md.",
-            "rag_baseline.py.",
-            "CONCLUSAO.md."
-          ]
-        ]
-      ]
+      "5. Antes vs Depois",
+      "<h2><span class=\"num\">5.</span> Antes vs Depois</h2>"
     ],
     [
-      "Validacao",
-      [
-        [
-          "ol",
-          [
-            "Rodar rag_baseline.py.",
-            "Medir faithfulness em 10 perguntas.",
-            "Comparar com similaridade pura."
-          ]
-        ]
-      ]
+      "6. Entregas",
+      "<h2><span class=\"num\">6.</span> Entregas</h2>"
     ],
     [
-      "Metricas",
-      [
-        [
-          "table",
-          [
-            "SLO",
-            "Alvo"
-          ],
-          [
-            [
-              "Faithfulness",
-              ">= 0.8"
-            ],
-            [
-              "Chunk",
-              "512/64"
-            ]
-          ]
-        ]
-      ]
+      "7. Métricas",
+      "<h2><span class=\"num\">7.</span> Métricas</h2>"
     ],
     [
-      "Riscos",
-      [
-        [
-          "table",
-          [
-            "Risco",
-            "Mitigacao"
-          ],
-          [
-            [
-              "Contexto irrelevante",
-              "rerank"
-            ],
-            [
-              "Hallucination",
-              "cite trecho"
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "Proximos Passos",
-      [
-        [
-          "ul",
-          [
-            "RAG hibrido (04-A2).",
-            "Avaliacao RAGAS."
-          ]
-        ]
-      ]
+      "8. Status final",
+      "<h2><span class=\"num\">8.</span> Status final</h2>"
     ]
   ]
 }

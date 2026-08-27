@@ -1,27 +1,108 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
-<title>Mapeamento de Dominios com Domain-Driven Design (DDD) — Apresentacao</title><style>
-:root{--bg:#0e0f13;--card:#16181f;--gold:#c9a227;--red:#8b1e1e;--muted:#9aa4b2;--txt:#e9edf3}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font-family:'Segoe UI',system-ui,sans-serif}
-header{background:linear-gradient(135deg,#0e0f13,#1a1020);padding:48px 40px 28px;border-bottom:3px solid var(--gold)}
-header .tag{color:var(--gold);letter-spacing:2px;font-size:12px;text-transform:uppercase}
-header h1{margin:8px 0 4px;font-size:30px}
-header .meta{color:var(--muted);font-size:13px;margin-top:8px}
-.bar{height:4px;background:linear-gradient(90deg,var(--red),var(--gold))}
-main{max-width:980px;margin:24px auto;padding:0 24px}
-.card{background:var(--card);border:1px solid #232733;border-left:4px solid var(--gold);border-radius:10px;padding:18px 20px;margin:16px 0}
-.card h2{margin:0 0 6px;font-size:19px;color:var(--gold)}
-.card .badge{display:inline-block;font-size:11px;color:var(--muted);border:1px solid #2c3340;border-radius:20px;padding:2px 10px;margin-bottom:8px}
-.card p,.card li{font-size:14px;line-height:1.55;color:#d4dae3}
-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
-th,td{border:1px solid #2a3140;padding:7px 9px;text-align:left}
-th{background:#1d2230;color:var(--gold)}
-footer{color:var(--muted);font-size:12px;text-align:center;padding:24px}
-</style></head><body>
-<header><img class="logo" src="https://marcoslrvusa.github.io/v4perettoco/v4logowhitepng.png" alt="V4 Company" style="height:48px;width:auto"><div class="tag">PDI Engenharia de Software</div><h1>Mapeamento de Dominios com Domain-Driven Design (DDD)</h1>
-<div class="meta">Autor: Marcos Luciano · V4 Company / Squad de Engenharia de IA · 2026-08-27</div></header>
-<div class="bar"></div>
-<main><div class="card"><div class="badge">Dossie Senior</div><h2>Resumo Executivo</h2><p>Mapeamento dos dominios da empresa em DDD antes de novas codificacoes: bounded contexts, agregados, linguagem ubíqua e eventos de dominio. Entrego o mapa, modelos e um exemplo de invariante de agregado.</p>
-<p>O objetivo e eliminar modelos duplicados e linguagem inconsistente entre squads.</p></div><div class="card"><div class="badge">Dossie Senior</div><h2>Contexto de Producao</h2><ul><li>4 squads tocam dados de Lead/Conta/agente sem vocabulario comum.</li><li>Mesma entidade &#x27;Contato&#x27; tem 3 modelos diferentes.</li><li>Novas features recriam agregados ja existentes.</li></ul></div><div class="card"><div class="badge">Dossie Senior</div><h2>Diagnostico e Causa Raiz</h2><ul><li>Ausencia de bounded contexts -&gt; tudo vira &#x27;tabela unica&#x27;.</li><li>Linguagem ubíqua ausente -&gt; &#x27;lead&#x27; significa 3 coisas.</li><li>Sem agregado -&gt; regras de consistencia espalhadas.</li></ul></div><div class="card"><div class="badge">Dossie Senior</div><h2>Decisao Arquitetural (ADR)</h2><p>ADR-023 — Mapa de Dominios</p>
-<table class="tbl"><thead><tr><th>Opcao</th><th>Pro</th><th>Contra</th><th>Decisao</th></tr></thead><tbody><tr><td>DDD explicito</td><td>consistencia, linguagem</td><td>governanca</td><td>ESCOLHIDA</td></tr><tr><td>Schema unico</td><td>simples</td><td>acopla squads</td><td>rejeitada</td></tr></tbody></table>
-<div class="callout note">Cada bounded context tem seu modelo; integracao por eventos de dominio.</div></div><div class="card"><div class="badge">Dossie Senior</div><h2>Entregas desta Atividade</h2><ul><li>DOMAIN-MAP.md.</li><li>domain_models.py — agregados com invariantes.</li><li>domain_events.py — eventos.</li></ul></div><div class="card"><div class="badge">Dossie Senior</div><h2>Plano de Validacao</h2><ol><li>Workshop de linguagem ubíqua com Product + 2 squads.</li><li>Validar agregados contra 3 user stories.</li><li>Gerar schemas dos agregados aprovados.</li></ol></div><div class="card"><div class="badge">Dossie Senior</div><h2>Metricas e SLO</h2><table class="tbl"><thead><tr><th>SLO</th><th>Alvo</th></tr></thead><tbody><tr><td>Dominios mapeados</td><td>4</td></tr><tr><td>Modelos duplicados</td><td>0</td></tr><tr><td>Eventos definidos</td><td>&gt;= 6</td></tr></tbody></table></div><div class="card"><div class="badge">Dossie Senior</div><h2>Riscos e Mitigacoes</h2><table class="tbl"><thead><tr><th>Risco</th><th>Mitigacao</th></tr></thead><tbody><tr><td>Mapa vira teoria</td><td>code review exige mapear</td></tr><tr><td>Over-engineering</td><td>so modelar o que tem regra</td></tr></tbody></table></div><div class="card"><div class="badge">Dossie Senior</div><h2>Proximos Passos</h2><ul><li>Adotar eventos no barramento (05-A1).</li><li>Testes de invariante de agregado.</li></ul></div></main>
-<footer>PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com</footer></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDI: Mapeamento de Dominios com Domain-Driven Design (DDD) — Registro de Entrega</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white:#ffffff; --off-white:#f8f9fb; --gray-50:#f1f3f5; --gray-100:#e9ecef;
+  --gray-200:#dde3e9; --gray-300:#c8d0d8; --gray-500:#8896a8; --gray-600:#6b7a8a;
+  --gray-700:#495560; --gray-800:#2e3740; --gray-900:#1a1f24;
+  --accent:#b8860b; --accent2:#8b4513; --red-600:#c0392b; --yellow-600:#e6a800; --border:#e2e6ea;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Inter',-apple-system,sans-serif; color:var(--gray-900); background:var(--off-white); line-height:1.6; -webkit-font-smoothing:antialiased; }
+.page { max-width:900px; margin:0 auto; background:var(--white); box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+.cover { padding:80px 72px 56px; background:linear-gradient(135deg,#1a0f0a 0%,#2d1a10 100%); color:var(--white); position:relative; overflow:hidden; }
+.cover-badge { display:inline-block; font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--accent); border:1px solid rgba(184,134,11,0.3); padding:5px 14px; background:rgba(184,134,11,0.06); }
+.cover h1 { font-size:36px; font-weight:700; line-height:1.2; letter-spacing:-0.5px; max-width:640px; margin-top:16px; }
+.cover h1 em { color:var(--accent); font-style:normal; }
+.cover-meta { margin-top:32px; font-size:14px; color:#8896a8; line-height:1.8; }
+.cover-meta strong { color:var(--gray-200); font-weight:500; }
+.cover-logo { margin-bottom:28px; }
+.cover-logo img { height:56px; width:auto; display:block; opacity:0.92; }
+.cover-avatar { position:absolute; top:40px; right:56px; width:84px; height:84px; border-radius:50%; overflow:hidden; border:2px solid rgba(184,134,11,0.6); box-shadow:0 0 0 5px rgba(184,134,11,0.12),0 8px 24px rgba(0,0,0,0.4); }
+.cover-avatar img { width:100%; height:100%; object-fit:cover; display:block; }
+.cover-slug { margin-top:24px; font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(255,255,255,0.25); letter-spacing:0.5px; }
+.content { padding:56px 72px 80px; }
+h2 { font-size:22px; font-weight:700; letter-spacing:-0.3px; margin:40px 0 16px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+h2 .num { color:var(--accent2); }
+h3 { font-size:15px; font-weight:600; margin:24px 0 10px; }
+p { color:var(--gray-700); font-size:14px; margin-bottom:14px; }
+p strong { color:var(--gray-900); }
+table { width:100%; border-collapse:collapse; font-size:13px; margin:16px 0 20px; }
+th { text-align:left; padding:10px 14px; background:var(--gray-50); border-top:1px solid var(--border); border-bottom:1px solid var(--border); color:var(--gray-800); font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:0.5px; }
+td { padding:10px 14px; border-bottom:1px solid var(--border); color:var(--gray-700); vertical-align:top; }
+td code, p code { font-family:'JetBrains Mono',monospace; font-size:12px; background:var(--gray-50); border:1px solid var(--border); padding:1px 4px; border-radius:3px; color:var(--accent2); }
+pre { background:#0d1014; color:#e8ecf0; padding:16px 20px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:12px; line-height:1.7; overflow-x:auto; margin:16px 0 20px; }
+pre .c { color:#5a6a7a; } pre .g { color:#00e699; }
+.status { display:inline-block; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; padding:3px 10px; border-radius:3px; }
+.st-warn { background:rgba(230,168,0,0.12); color:var(--yellow-600); }
+.st-ok { background:rgba(22,139,73,0.12); color:#168b49; }
+ul { margin:8px 0 16px 20px; } li { color:var(--gray-700); font-size:14px; margin-bottom:6px; }
+.callout { border-left:3px solid var(--accent); background:var(--off-white); padding:14px 18px; font-size:13px; color:var(--gray-700); margin:16px 0; }
+.callout strong { color:var(--accent2); }
+.didactic { border:1px dashed var(--accent2); border-left:4px solid var(--accent2); background:linear-gradient(90deg,rgba(139,69,19,0.06) 0%,rgba(139,69,19,0.02) 100%); padding:14px 18px; margin:16px 0; border-radius:6px; }
+.didactic-title { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--accent2); margin-bottom:6px; }
+.didactic p { margin-bottom:0; font-size:14px; color:var(--gray-700); }
+.charts { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:16px 0 20px; }
+.chart-card { border:1px solid var(--border); border-radius:8px; background:#0d1014; padding:14px 14px 6px; }
+.chart-title { font-family:'JetBrains Mono',monospace; font-size:11px; color:#e8ecf0; margin-bottom:8px; }
+.chart-card svg { width:100%; height:auto; display:block; }
+@media (max-width:640px){ .charts{ grid-template-columns:1fr; } }
+.pipeline { margin:24px 0 28px; border:1px solid var(--border); border-radius:10px; overflow:hidden; background:#0d1014; }
+.pipeline-head { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 18px; background:linear-gradient(135deg,#1a0f0a,#2d1a10); border-bottom:1px solid rgba(184,134,11,0.25); }
+.pipeline-title { color:#fff; font-size:13px; font-weight:600; letter-spacing:0.3px; }
+.pipeline-title em { color:var(--accent); font-style:normal; }
+.pipeline-live { display:inline-flex; align-items:center; gap:7px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#8896a8; letter-spacing:0.5px; text-transform:uppercase; white-space:nowrap; }
+.pipeline-live .dot { width:7px; height:7px; border-radius:50%; background:var(--accent); animation:pingDot 1.6s infinite; }
+@keyframes pingDot { 0%{box-shadow:0 0 0 0 rgba(184,134,11,0.6);} 70%{box-shadow:0 0 0 8px rgba(184,134,11,0);} 100%{box-shadow:0 0 0 0 rgba(184,134,11,0);} }
+.pipeline-body { position:relative; padding:26px 22px 24px; }
+.pl-rail { position:absolute; left:62px; top:20px; bottom:20px; width:2px; background:rgba(184,134,11,0.22); }
+.pl-pulse { position:absolute; left:-3px; width:8px; height:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 10px rgba(184,134,11,0.9); opacity:0; }
+.pl-pulse.p1 { animation:plFlow 3.4s linear infinite; }
+.pl-pulse.p2 { animation:plFlow 3.4s linear infinite 1.7s; }
+.pl-pulse.g { background:#52d69b; box-shadow:0 0 10px rgba(82,214,155,0.9); animation:plFlow 3.4s linear infinite 2.55s; }
+@keyframes plFlow { 0%{top:0%;opacity:0;} 8%{opacity:1;} 85%{opacity:1;} 100%{top:97%;opacity:0;} }
+.pl-steps { display:flex; flex-direction:column; gap:14px; width:100%; padding-left:26px; }
+.pl-step { display:flex; align-items:flex-start; gap:14px; background:#141922; border:1px solid rgba(232,236,240,0.07); border-radius:8px; padding:14px 16px; }
+.pl-step .num { flex:0 0 30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; color:var(--accent); background:rgba(184,134,11,0.1); border:1px solid rgba(184,134,11,0.35); }
+.pl-step .name { font-size:13px; font-weight:600; color:#fff; }
+.pl-step .name code { font-family:'JetBrains Mono',monospace; font-size:12px; background:rgba(184,134,11,0.12); border:1px solid rgba(184,134,11,0.35); padding:1px 5px; border-radius:3px; color:#ffd98a; }
+.pl-step .desc { font-size:12px; color:#8896a8; margin-top:2px; line-height:1.55; }
+.pl-step .desc code { font-family:'JetBrains Mono',monospace; font-size:11px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); padding:1px 5px; border-radius:3px; color:#e6a800; white-space:nowrap; }
+.pl-chip { display:inline-flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+.pl-tag { font-family:'JetBrains Mono',monospace; font-size:10px; padding:3px 8px; border-radius:3px; background:rgba(184,134,11,0.12); color:#ffd98a; border:1px solid rgba(184,134,11,0.3); white-space:nowrap; }
+.pl-tag.ok { background:rgba(22,139,73,0.14); color:#52d69b; border-color:rgba(22,139,73,0.4); }
+.pl-tag.warn { background:rgba(230,168,0,0.14); color:#ffd98a; border-color:rgba(230,168,0,0.45); }
+.pl-footer { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-top:20px; padding:12px 16px; border-top:1px dashed rgba(184,134,11,0.25); font-size:11px; color:#8896a8; }
+@media print { body{background:white;} .page{box-shadow:none;} .content{padding:20px 48px 60px;} .cover{padding:48px 56px 40px;} }
+</style>
+</head>
+<body>
+<div class="page">
+<div class="cover"><div class="cover-avatar"><img src="../../../../../assets/images/logo-peretto-perfil.jpg" alt="Marcos Luciano"></div><div class="cover-logo"><img src="../../../../../assets/logo-peretto.png" alt="Peretto"></div><span class="cover-badge">PDI — Atividade 03 · Registro de Entrega</span><h1>Mapeamento de Dominios com Domain-Driven Design (<em>DDD</em>)</h1><div class="cover-meta"><strong>Autor:</strong> PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com<br><strong>Unidade:</strong> FV Marketing / V4 Company — Automação &amp; Infraestrutura<br><strong>Módulo:</strong> 02 · Práticas de Engenharia e Clean Code<br><strong>Data:</strong> Agosto 2026<br><strong>Status:</strong> <span class="status st-warn">NÃO publicado</span> · Desenvolvido / Homologação pendente<br><strong>Versão:</strong> 1.0</div><div class="cover-slug">bounded contexts / agregados / eventos</div></div>
+<div class="content"><h2><span class="num">1.</span> Contexto</h2><p>A FV opera em <strong>múltiplos domínios</strong>: Imobiliário, Saúde, Varejo e Serviços. Hoje o time modela tudo num único modelo de dados gigante, onde alterar um campo de imóvel quebra a regra de agendamento de saúde. O domínio virou um emaranhado onde <strong>todo conceito conhece todo conceito</strong>.</p><div class="didactic"><div class="didactic-title">Analogia do prédio de apartamentos</div>Um condomínio tem moradores, elevadores, portaria e academia. Cada um é um <em>contexto delimitado</em>: a portaria não precisa saber o que você come na cozinha, e a academia não manda na sua conta de luz. Se tentássemos um único manual para tudo, ninguém entenderia nada. DDD é organizar o prédio em <strong>áreas com regras próprias</strong>, que conversam por recados (eventos).</div><h2><span class="num">2.</span> Diagnóstico</h2><p>Sem fronteiras de domínio, mudanças têm efeito cascata e as regras de negócio ficam espalhadas em <em>ifs</em> por todo o código. O tempo de impacto de uma alteração é imprevisível e a linguagem do time diverge da linguagem do código.</p><div class="charts"><div class="chart-card"><div class="chart-title">Acoplamento entre módulos (dependências)</div><svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Acoplamento entre módulos (dependências)"><line x1="42" y1="170" x2="330" y2="170" stroke="#c8d0d8"/><line x1="42" y1="170" x2="42" y2="26" stroke="#c8d0d8"/><polyline points="42,109 68,103 94,97 121,90 147,82 173,76 199,68 225,61 251,52 278,44 304,37 330,26" fill="none" stroke="#e6a800" stroke-width="2.5"/><circle cx="330" cy="26" r="3.5" fill="#e6a800"/><polyline points="42,109 68,118 94,126 121,132 147,138 173,143 199,147 225,150 251,153 278,156 304,158 330,159" fill="none" stroke="#52d69b" stroke-width="2.5"/><circle cx="330" cy="159" r="3.5" fill="#52d69b"/><text x="42" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jan</text><text x="68" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Fev</text><text x="94" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Mar</text><text x="121" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Abr</text><text x="147" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Mai</text><text x="173" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jun</text><text x="199" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jul</text><text x="225" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Ago</text><text x="251" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Set</text><text x="278" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Out</text><text x="304" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Nov</text><text x="330" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Dez</text><text x="46" y="12" fill="#e6a800" font-size="10" font-family="JetBrains Mono">Antes</text><text x="46" y="24" fill="#52d69b" font-size="10" font-family="JetBrains Mono">Depois</text></svg></div><div class="chart-card"><div class="chart-title">Lead time de feature (dias)</div><svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Lead time de feature (dias)"><line x1="42" y1="170" x2="330" y2="170" stroke="#c8d0d8"/><line x1="42" y1="170" x2="42" y2="26" stroke="#c8d0d8"/><polyline points="42,118 68,113 94,105 121,100 147,91 173,83 199,74 225,65 251,57 278,48 304,39 330,26" fill="none" stroke="#e6a800" stroke-width="2.5"/><circle cx="330" cy="26" r="3.5" fill="#e6a800"/><polyline points="42,118 68,126 94,131 121,135 147,139 173,144 199,144 225,148 251,148 278,153 304,153 330,153" fill="none" stroke="#52d69b" stroke-width="2.5"/><circle cx="330" cy="153" r="3.5" fill="#52d69b"/><text x="42" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jan</text><text x="68" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Fev</text><text x="94" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Mar</text><text x="121" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Abr</text><text x="147" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Mai</text><text x="173" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jun</text><text x="199" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jul</text><text x="225" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Ago</text><text x="251" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Set</text><text x="278" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Out</text><text x="304" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Nov</text><text x="330" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Dez</text><text x="46" y="12" fill="#e6a800" font-size="10" font-family="JetBrains Mono">Antes</text><text x="46" y="24" fill="#52d69b" font-size="10" font-family="JetBrains Mono">Depois</text></svg></div></div><div class="callout"><strong>Raiz do problema:</strong> um único modelo onipresente força regras de domínios distintos a conviverem, destruindo a <em>linguagem ubíqua</em> e criando acoplamento oculto.</div><h2><span class="num">3.</span> Solução</h2><p>Adotar <strong>DDD (Domain-Driven Design)</strong> dividindo o sistema em <strong>bounded contexts</strong> (contextos delimitados), cada um com sua <strong>linguagem ubíqua</strong> — o vocabulário que negócio e código compartilham sem tradução. Dentro de cada contexto modelamos <strong>agregados</strong> (raiz + entidades + value objects com consistência transacional) e comunicamos mudanças via <strong>eventos de domínio</strong>.</p><p>Mapeamento dos contextos da FV:</p><pre><code># Contextos delimitados
+Imobiliario   -&gt; Agregado Raiz: Imovel      (Proposta, Visita)
+Saude         -&gt; Agregado Raiz: Paciente    (Agendamento, Prontuario)
+Varejo        -&gt; Agregado Raiz: Pedido     (Item, Pagamento)
+Servicos      -&gt; Agregado Raiz: Ordem       (Execucao, NotaFiscal)</code></pre><p>Agregado garante consistência: só a raiz é referenciada de fora; filhos não têm identidade pública:</p><pre><code>class Pedido:                       # Aggregate Root
+    def __init__(self, id):
+        self.id = id
+        self.itens = []             # entidades internas
+        self._eventos = []
+    def adicionar(self, produto, qtd):
+        self.itens.append(Item(produto, qtd))
+        self._eventos.append(PedidoAtualizado(self.id))</code></pre><p>Eventos de domínio desacoplam os contextos — Saúde não chama Imobiliário direto, apenas publica:</p><pre><code>@dataclass
+class PedidoPago(DomainEvent):
+    pedido_id: str
+    total: float
+
+# orquestrador publica; outros contextos reagem
+bus.publish(PedidoPago(pedido_id, total))</code></pre><h2><span class="num">4.</span> Como funciona (pipeline)</h2><div class="pipeline"><div class="pipeline-head"><span class="pipeline-title">Modelagem DDD da FV</span><span class="pipeline-live"><span class="dot"></span> fluxo em execução</span></div><div class="pipeline-body"><div class="pl-rail"><span class="pl-pulse p1"></span><span class="pl-pulse p2"></span><span class="pl-pulse g"></span></div><div class="pl-steps"><div class="pl-step"><div class="num">1</div><div><div class="name">Identificar <code>bounded contexts</code></div><div class="desc">Workshop de event storming separa Imobiliário/Saúde/Varejo/Serviços.</div><span class="pl-chip"><span class="pl-tag 1">audit</span></span></div></div><div class="pl-step"><div class="num">2</div><div><div class="name">Definir <code>linguagem ubíqua</code></div><div class="desc">Glossário único por contexto, usado em código e reunião.</div><span class="pl-chip"><span class="pl-tag sem tradução">ok</span></span></div></div><div class="pl-step"><div class="num">3</div><div><div class="name">Modelar <code>agregados</code></div><div class="desc">Raiz + filhos com regra de consistência transacional.</div><span class="pl-chip"><span class="pl-tag raiz única">warn</span></span></div></div><div class="pl-step"><div class="num">4</div><div><div class="name">Emitir <code>eventos de domínio</code></div><div class="desc">Mudanças publicam eventos; contextos vizinhos reagem.</div><span class="pl-chip"><span class="pl-tag desacoplado">ok</span></span></div></div><div class="pl-step"><div class="num">5</div><div><div class="name">Anti-corruption layer</div><div class="desc">Tradutor na fronteira para não poluir um contexto com o modelo de outro.</div><span class="pl-chip"><span class="pl-tag 1">audit</span></span></div></div></div><div class="pl-footer"><span>Contextos se comunicam por eventos, nunca por tabela compartilhada.</span></div></div></div><h2><span class="num">5.</span> Antes vs Depois</h2><table><tr><th>Cenário</th><th>Antes (modelo único)</th><th>Depois (DDD)</th></tr><tr><td>Mudar regra de Saúde</td><td>Risco no Imobiliário</td><td>Isolado no contexto</td></tr><tr><td>Vocabulário</td><td>Negócio ≠ código</td><td>Linguagem ubíqua</td></tr><tr><td>Consistência</td><td>Ad-hoc</td><td>Agregado transacional</td></tr><tr><td>Integração</td><td>SQL cruzado</td><td>Eventos de domínio</td></tr></table><h2><span class="num">6.</span> Entregas</h2><ul><li><strong>Mapa</strong> <code>bounded-contexts.svg</code>: fronteiras da FV e fluxo de eventos.</li><li><strong>Glossário</strong> <code>ubiquitous-language.md</code> por contexto.</li><li><strong>Módulos</strong> <code>imobiliario/</code>, <code>saude/</code>, <code>varejo/</code>, <code>servicos/</code> com agregados.</li><li><strong>Eventos</strong> <code>domain_events.py</code>: contratos versionados.</li></ul><h2><span class="num">7.</span> Métricas</h2><div class="charts"><div class="chart-card"><div class="chart-title">Clareza de domínio (score 0-100)</div><svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Clareza de domínio (score 0-100)"><line x1="42" y1="170" x2="330" y2="170" stroke="#c8d0d8"/><line x1="42" y1="170" x2="42" y2="26" stroke="#c8d0d8"/><polyline points="42,170 68,148 94,129 121,111 147,94 173,77 199,64 225,52 251,44 278,36 304,30 330,26" fill="none" stroke="#e6a800" stroke-width="2.5"/><circle cx="330" cy="26" r="3.5" fill="#e6a800"/><text x="42" y="184" fill="#8896a8" font-size="9" text-anchor="middle">M1</text><text x="68" y="184" fill="#8896a8" font-size="9" text-anchor="middle">M2</text><text x="94" y="184" fill="#8896a8" font-size="9" text-anchor="middle">M3</text><text x="121" y="184" fill="#8896a8" font-size="9" text-anchor="middle">M4</text><text x="147" y="184" fill="#8896a8" font-size="9" text-anchor="middle">M5</text><text x="173" y="184" fill="#8896a8" font-size="9" text-anchor="middle">M6</text><text x="199" y="184" fill="#8896a8" font-size="9" text-anchor="middle">M7</text><text x="225" y="184" fill="#8896a8" font-size="9" text-anchor="middle">M8</text><text x="251" y="184" fill="#8896a8" font-size="9" text-anchor="middle">M9</text><text x="278" y="184" fill="#8896a8" font-size="9" text-anchor="middle">M10</text><text x="304" y="184" fill="#8896a8" font-size="9" text-anchor="middle">M11</text><text x="330" y="184" fill="#8896a8" font-size="9" text-anchor="middle">M12</text><text x="46" y="12" fill="#e6a800" font-size="10" font-family="JetBrains Mono">Mês 1</text></svg></div></div><div class="callout"><strong>Meta:</strong> 100% dos contextos com glossário ubíquo documentado e eventos versionados entre eles.</div><h2><span class="num">8.</span> Status final</h2><p><span class="status st-warn">NÃO publicado</span> — Desenvolvido e em homologação. Aguarda revisão antes de produção.</p></div>
+</div>
+</body>
+</html>

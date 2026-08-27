@@ -1,195 +1,39 @@
 {
-  "autor": "Marcos L. R. V. (Coordenador de Engenharia)",
-  "unidade": "V4 Company / Squad de Engenharia de IA",
-  "data": "2026-08-27",
+  "autor": "PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com",
   "title": "Otimizacao de Core Web Vitals (LCP/INP/CLS) com Diagnostico Real",
-  "area": "Arquitetura Full Stack",
   "slug": "fullstack-modelagem-dados-a4",
   "sections": [
     [
-      "Resumo Executivo",
-      [
-        [
-          "p",
-          "Diagnostico e plano de Core Web Vitals (LCP, INP, CLS) para as interfaces dos agentes/portal, com evidencias de campo (CrUX) e laboratorio, mais correcoes aplicadas."
-        ],
-        [
-          "p",
-          "CWV e sinal de ranqueamento e de retencao."
-        ]
-      ]
+      "1. Contexto",
+      "<h2><span class=\"num\">1.</span> Contexto</h2>"
     ],
     [
-      "Contexto de Producao",
-      [
-        [
-          "ul",
-          [
-            "Portais com LCP ~ 4s.",
-            "INP ruim ao clicar em acoes.",
-            "CLS ao carregar cards."
-          ]
-        ]
-      ]
+      "2. Diagnóstico",
+      "<h2><span class=\"num\">2.</span> Diagnóstico</h2>"
     ],
     [
-      "O Problema",
-      [
-        [
-          "table",
-          [
-            "Metrica",
-            "Campo",
-            "Alvo"
-          ],
-          [
-            [
-              "LCP",
-              "4.1 s",
-              "<= 2.5 s"
-            ],
-            [
-              "INP",
-              "410 ms",
-              "<= 200 ms"
-            ],
-            [
-              "CLS",
-              "0.22",
-              "<= 0.1"
-            ]
-          ]
-        ]
-      ]
+      "3. Solução",
+      "<h2><span class=\"num\">3.</span> Solução</h2>"
     ],
     [
-      "Diagnostico",
-      [
-        [
-          "ul",
-          [
-            "LCP: hero sem fetchpriority/preconnect.",
-            "INP: handler sincrono bloqueia.",
-            "CLS: cards sem aspect-ratio."
-          ]
-        ]
-      ]
+      "4. Como funciona (pipeline)",
+      "<h2><span class=\"num\">4.</span> Como funciona (pipeline)</h2>"
     ],
     [
-      "Decisao Arquitetural (ADR)",
-      [
-        [
-          "p",
-          "ADR-034 — Ordem de Otimizacao"
-        ],
-        [
-          "table",
-          [
-            "Opcao",
-            "Pro",
-            "Contra",
-            "Decisao"
-          ],
-          [
-            [
-              "LCP->INP->CLS",
-              "maior ROI",
-              "-",
-              "ESCOLHIDA"
-            ]
-          ]
-        ],
-        [
-          "note",
-          "Medir no CrUX antes de cada mudanca."
-        ]
-      ]
+      "5. Antes vs Depois",
+      "<h2><span class=\"num\">5.</span> Antes vs Depois</h2>"
     ],
     [
-      "Entregas",
-      [
-        [
-          "ul",
-          [
-            "CWV-DIAGNOSTICO.md.",
-            "cwv_fixes.html.",
-            "field_cwv.py."
-          ]
-        ]
-      ]
+      "6. Entregas",
+      "<h2><span class=\"num\">6.</span> Entregas</h2>"
     ],
     [
-      "Validacao",
-      [
-        [
-          "ol",
-          [
-            "Baseline de campo via field_cwv.py.",
-            "Aplicar correcoes; re-medir em 28 dias.",
-            "Confirmar LCP<=2.5, INP<=200, CLS<=0.1."
-          ]
-        ]
-      ]
+      "7. Métricas",
+      "<h2><span class=\"num\">7.</span> Métricas</h2>"
     ],
     [
-      "Metricas e SLO",
-      [
-        [
-          "table",
-          [
-            "SLO",
-            "Alvo"
-          ],
-          [
-            [
-              "LCP p75",
-              "<= 2.5 s"
-            ],
-            [
-              "INP p75",
-              "<= 200 ms"
-            ],
-            [
-              "CLS p75",
-              "<= 0.1"
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "Riscos",
-      [
-        [
-          "table",
-          [
-            "Risco",
-            "Mitigacao"
-          ],
-          [
-            [
-              "Regressao",
-              "budgate no CI"
-            ],
-            [
-              "CrUX baixo",
-              "RUM proprio"
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "Proximos Passos",
-      [
-        [
-          "ul",
-          [
-            "Lighthouse CI no pipeline.",
-            "RUM de INP por rota."
-          ]
-        ]
-      ]
+      "8. Status final",
+      "<h2><span class=\"num\">8.</span> Status final</h2>"
     ]
   ]
 }

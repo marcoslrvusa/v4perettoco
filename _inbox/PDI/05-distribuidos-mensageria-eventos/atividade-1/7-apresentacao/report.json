@@ -1,184 +1,39 @@
 {
-  "autor": "Marcos L. R. V. (Coordenador de Engenharia)",
-  "unidade": "V4 Company / Squad de Engenharia de IA",
-  "data": "2026-08-27",
+  "autor": "PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com",
   "title": "Sistemas Distribuidos com Mensageria (fila, topico, DLQ)",
-  "area": "Sistemas Distribuidos",
   "slug": "distribuidos-mensageria-eventos-a1",
   "sections": [
     [
-      "Resumo Executivo",
-      [
-        [
-          "p",
-          "Fundamentos de mensageria para desacoplar servicos: fila, topico, DLQ e ACK. Entrego o padrao e um consumidor com backpressure e DLQ."
-        ],
-        [
-          "p",
-          "O ecossistema de agentes ja e distribuido; sem fila, falha de 1 servico propaga."
-        ]
-      ]
+      "1. Contexto",
+      "<h2><span class=\"num\">1.</span> Contexto</h2>"
     ],
     [
-      "Contexto de Producao",
-      [
-        [
-          "ul",
-          [
-            "Agentes chamam uns aos outros via HTTP sincrono.",
-            "Falha de downstream derruba a cadeia.",
-            "Sem DLQ: mensagem ruim some."
-          ]
-        ]
-      ]
+      "2. Diagnóstico",
+      "<h2><span class=\"num\">2.</span> Diagnóstico</h2>"
     ],
     [
-      "Diagnostico",
-      [
-        [
-          "table",
-          [
-            "Hoje",
-            "Alvo"
-          ],
-          [
-            [
-              "HTTP sincrono",
-              "fila desacoplada"
-            ],
-            [
-              "sem DLQ",
-              "DLQ + retry"
-            ],
-            [
-              "sem backpressure",
-              "prefetch limitado"
-            ]
-          ]
-        ]
-      ]
+      "3. Solução",
+      "<h2><span class=\"num\">3.</span> Solução</h2>"
     ],
     [
-      "Decisao Arquitetural (ADR)",
-      [
-        [
-          "p",
-          "ADR-051 — Transporte de Eventos"
-        ],
-        [
-          "table",
-          [
-            "Opcao",
-            "Pro",
-            "Contra",
-            "Decisao"
-          ],
-          [
-            [
-              "Fila + topico + DLQ",
-              "desacopla",
-              "ops",
-              "ESCOLHIDA"
-            ],
-            [
-              "HTTP sincrono",
-              "simples",
-              "cascata",
-              "rejeitada"
-            ]
-          ]
-        ],
-        [
-          "note",
-          "ACK explicito; prefetch limitado; DLQ apos N tentativas."
-        ]
-      ]
+      "4. Como funciona (pipeline)",
+      "<h2><span class=\"num\">4.</span> Como funciona (pipeline)</h2>"
     ],
     [
-      "Entregas",
-      [
-        [
-          "ul",
-          [
-            "MESSAGING.md.",
-            "consumer.py.",
-            "broker.tf."
-          ]
-        ]
-      ]
+      "5. Antes vs Depois",
+      "<h2><span class=\"num\">5.</span> Antes vs Depois</h2>"
     ],
     [
-      "Validacao",
-      [
-        [
-          "ol",
-          [
-            "Publicar 1k msg; derrubar consumer; confirmar reprocessamento.",
-            "Msg invalida -> DLQ (nao perde).",
-            "Backpressure: consumer lento nao estoura."
-          ]
-        ]
-      ]
+      "6. Entregas",
+      "<h2><span class=\"num\">6.</span> Entregas</h2>"
     ],
     [
-      "Metricas e SLO",
-      [
-        [
-          "table",
-          [
-            "SLO",
-            "Alvo"
-          ],
-          [
-            [
-              "Throughput",
-              ">= 200 msg/s"
-            ],
-            [
-              "Perdidas",
-              "0"
-            ],
-            [
-              "DLQ revisitada",
-              "< 24h"
-            ]
-          ]
-        ]
-      ]
+      "7. Métricas",
+      "<h2><span class=\"num\">7.</span> Métricas</h2>"
     ],
     [
-      "Riscos",
-      [
-        [
-          "table",
-          [
-            "Risco",
-            "Mitigacao"
-          ],
-          [
-            [
-              "Duplicata",
-              "idempotencia (05-A2)"
-            ],
-            [
-              "DLQ esquecida",
-              "alerta"
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "Proximos Passos",
-      [
-        [
-          "ul",
-          [
-            "Eventos de dominio do DDD (02-A3).",
-            "Tracing por trace_id."
-          ]
-        ]
-      ]
+      "8. Status final",
+      "<h2><span class=\"num\">8.</span> Status final</h2>"
     ]
   ]
 }

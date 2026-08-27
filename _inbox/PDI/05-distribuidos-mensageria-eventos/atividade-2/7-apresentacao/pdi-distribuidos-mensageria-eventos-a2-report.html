@@ -1,45 +1,112 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
-<title>PDI — Idempotencia e Entrega Exactly-Once (na pratica: at-least-once + dedup)</title><style>
-:root{--bg:#f7f8fa;--card:#fff;--gold:#b8860b;--red:#8b1e1e;--muted:#6b7280;--txt:#1f2733;--bd:#e3e7ee}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font-family:'Segoe UI',Georgia,serif}
-.page{max-width:820px;margin:0 auto;padding:0 0 60px}
-.cover{background:linear-gradient(135deg,#11131a,#241423);color:#fff;padding:56px 44px 40px}
-.cover .label{color:#e3c14e;letter-spacing:3px;font-size:11px;text-transform:uppercase}
-.cover h1{margin:10px 0 6px;font-size:30px}
-.gold-bar{height:4px;width:120px;background:linear-gradient(90deg,var(--red),var(--gold));margin:14px 0}
-.cover .sub{color:#c7cdd8;font-size:15px}
-.meta{display:flex;gap:26px;margin-top:22px;flex-wrap:wrap}
-.meta div{font-size:12px;color:#9aa4b2}
-.meta strong{display:block;color:#fff;font-size:14px;margin-top:3px}
-.card{background:var(--card);border:1px solid var(--bd);border-left:4px solid var(--gold);border-radius:10px;padding:18px 22px;margin:18px 22px}
-.card h2{margin:0 0 10px;font-size:20px;color:#7a1d1d}
-.card h3{color:#9a7b13;margin:14px 0 4px}
-.card p,.card li{font-size:14px;line-height:1.6}
-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
-th,td{border:1px solid var(--bd);padding:8px 10px}
-th{background:#f0f1f5;color:#7a1d1d}
-.tbl{font-size:13px}
-.callout{border-radius:8px;padding:10px 14px;margin:10px 0;font-size:13px}
-.callout.note{background:#fff8e6;border-left:4px solid var(--gold)}
-.callout.warn{background:#fdeaea;border-left:4px solid var(--red)}
-pre.code{background:#11131a;color:#e9edf3;padding:12px 14px;border-radius:8px;overflow:auto;font-size:12px}
-</style></head><body><div class="page">
-<div class="cover"><img class="logo" src="https://marcoslrvusa.github.io/v4perettoco/v4logowhitepng.png" alt="V4 Company" style="height:48px;width:auto"><span class="label">Dossie Tecnico de PDI — Nivel Senior</span>
-<h1>Idempotencia e Entrega Exactly-Once (na pratica: at-least-once + dedup)</h1><div class="gold-bar"></div>
-<p class="sub">Sistemas Distribuidos</p>
-<div class="meta"><div>Autor<br><strong>Marcos Luciano</strong></div><div>Unidade<br><strong>V4 Company / Squad de Engenharia de IA</strong></div>
-<div>Data<br><strong>2026-08-27</strong></div><div>Status<br><strong>Entregue (desenvolvido)</strong></div></div></div>
-<p>Garantir idempotencia de handlers: dedup por chave de evento + upsert, tornando &#x27;at-least-once&#x27; equivalente a &#x27;exactly-once&#x27; para o negocio. Entrego o padrao e um decorator.</p>
-<p>Mensageria entrega no minimo 1 vez; sem dedup, reenvio duplica lead/fatura.</p>
-<ul><li>Reenvio duplicava leads (CNPJ repetido).</li><li>Fatura emitida 2x em retry.</li><li>Sem chave de evento.</li></ul>
-<table class="tbl"><thead><tr><th>Hoje</th><th>Alvo</th></tr></thead><tbody><tr><td>reatenvio duplica</td><td>dedup event_id</td></tr><tr><td>sem upsert</td><td>upsert</td></tr><tr><td>sem versao</td><td>etag</td></tr></tbody></table>
-<p>ADR-052 — Idempotencia</p>
-<table class="tbl"><thead><tr><th>Opcao</th><th>Pro</th><th>Contra</th><th>Decisao</th></tr></thead><tbody><tr><td>dedup event_id + upsert</td><td>exactly-once p/ negocio</td><td>store</td><td>ESCOLHIDA</td></tr></tbody></table>
-<div class="callout note">At-least-once do broker + dedup no consumidor = exactly-once observacional.</div>
-<ul><li>IDEMPOTENCY.md.</li><li>idempotent.py.</li><li>schema_dedup.sql.</li></ul>
-<ol><li>Mesmo evento 3x -&gt; 1 efeito.</li><li>Concorrencia: 2 consumers, 1 aplicacao.</li><li>DLQ nao cria duplicata.</li></ol>
-<table class="tbl"><thead><tr><th>SLO</th><th>Alvo</th></tr></thead><tbody><tr><td>Duplicatas</td><td>0</td></tr><tr><td>Idempotente</td><td>100% handlers</td></tr></tbody></table>
-<table class="tbl"><thead><tr><th>Risco</th><th>Mitigacao</th></tr></thead><tbody><tr><td>Store cheio</td><td>TTL</td></tr><tr><td>Chave errada</td><td>event_id + negocio</td></tr></tbody></table>
-<ul><li>Aplicar em todos os consumers.</li><li>Teste de concorrencia no CI.</li></ul>
-<p style="margin-top:24px;color:var(--muted);font-size:12px">PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com</p>
-</div></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDI: Idempotencia e Entrega Exactly-Once (na pratica: at-least-once + dedup) — Registro de Entrega</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white:#ffffff; --off-white:#f8f9fb; --gray-50:#f1f3f5; --gray-100:#e9ecef;
+  --gray-200:#dde3e9; --gray-300:#c8d0d8; --gray-500:#8896a8; --gray-600:#6b7a8a;
+  --gray-700:#495560; --gray-800:#2e3740; --gray-900:#1a1f24;
+  --accent:#b8860b; --accent2:#8b4513; --red-600:#c0392b; --yellow-600:#e6a800; --border:#e2e6ea;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Inter',-apple-system,sans-serif; color:var(--gray-900); background:var(--off-white); line-height:1.6; -webkit-font-smoothing:antialiased; }
+.page { max-width:900px; margin:0 auto; background:var(--white); box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+.cover { padding:80px 72px 56px; background:linear-gradient(135deg,#1a0f0a 0%,#2d1a10 100%); color:var(--white); position:relative; overflow:hidden; }
+.cover-badge { display:inline-block; font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--accent); border:1px solid rgba(184,134,11,0.3); padding:5px 14px; background:rgba(184,134,11,0.06); }
+.cover h1 { font-size:36px; font-weight:700; line-height:1.2; letter-spacing:-0.5px; max-width:640px; margin-top:16px; }
+.cover h1 em { color:var(--accent); font-style:normal; }
+.cover-meta { margin-top:32px; font-size:14px; color:#8896a8; line-height:1.8; }
+.cover-meta strong { color:var(--gray-200); font-weight:500; }
+.cover-logo { margin-bottom:28px; }
+.cover-logo img { height:56px; width:auto; display:block; opacity:0.92; }
+.cover-avatar { position:absolute; top:40px; right:56px; width:84px; height:84px; border-radius:50%; overflow:hidden; border:2px solid rgba(184,134,11,0.6); box-shadow:0 0 0 5px rgba(184,134,11,0.12),0 8px 24px rgba(0,0,0,0.4); }
+.cover-avatar img { width:100%; height:100%; object-fit:cover; display:block; }
+.cover-slug { margin-top:24px; font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(255,255,255,0.25); letter-spacing:0.5px; }
+.content { padding:56px 72px 80px; }
+h2 { font-size:22px; font-weight:700; letter-spacing:-0.3px; margin:40px 0 16px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+h2 .num { color:var(--accent2); }
+h3 { font-size:15px; font-weight:600; margin:24px 0 10px; }
+p { color:var(--gray-700); font-size:14px; margin-bottom:14px; }
+p strong { color:var(--gray-900); }
+table { width:100%; border-collapse:collapse; font-size:13px; margin:16px 0 20px; }
+th { text-align:left; padding:10px 14px; background:var(--gray-50); border-top:1px solid var(--border); border-bottom:1px solid var(--border); color:var(--gray-800); font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:0.5px; }
+td { padding:10px 14px; border-bottom:1px solid var(--border); color:var(--gray-700); vertical-align:top; }
+td code, p code { font-family:'JetBrains Mono',monospace; font-size:12px; background:var(--gray-50); border:1px solid var(--border); padding:1px 4px; border-radius:3px; color:var(--accent2); }
+pre { background:#0d1014; color:#e8ecf0; padding:16px 20px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:12px; line-height:1.7; overflow-x:auto; margin:16px 0 20px; }
+pre .c { color:#5a6a7a; } pre .g { color:#00e699; }
+.status { display:inline-block; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; padding:3px 10px; border-radius:3px; }
+.st-warn { background:rgba(230,168,0,0.12); color:var(--yellow-600); }
+.st-ok { background:rgba(22,139,73,0.12); color:#168b49; }
+ul { margin:8px 0 16px 20px; } li { color:var(--gray-700); font-size:14px; margin-bottom:6px; }
+.callout { border-left:3px solid var(--accent); background:var(--off-white); padding:14px 18px; font-size:13px; color:var(--gray-700); margin:16px 0; }
+.callout strong { color:var(--accent2); }
+.didactic { border:1px dashed var(--accent2); border-left:4px solid var(--accent2); background:linear-gradient(90deg,rgba(139,69,19,0.06) 0%,rgba(139,69,19,0.02) 100%); padding:14px 18px; margin:16px 0; border-radius:6px; }
+.didactic-title { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--accent2); margin-bottom:6px; }
+.didactic p { margin-bottom:0; font-size:14px; color:var(--gray-700); }
+.charts { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:16px 0 20px; }
+.chart-card { border:1px solid var(--border); border-radius:8px; background:#0d1014; padding:14px 14px 6px; }
+.chart-title { font-family:'JetBrains Mono',monospace; font-size:11px; color:#e8ecf0; margin-bottom:8px; }
+.chart-card svg { width:100%; height:auto; display:block; }
+@media (max-width:640px){ .charts{ grid-template-columns:1fr; } }
+.pipeline { margin:24px 0 28px; border:1px solid var(--border); border-radius:10px; overflow:hidden; background:#0d1014; }
+.pipeline-head { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 18px; background:linear-gradient(135deg,#1a0f0a,#2d1a10); border-bottom:1px solid rgba(184,134,11,0.25); }
+.pipeline-title { color:#fff; font-size:13px; font-weight:600; letter-spacing:0.3px; }
+.pipeline-title em { color:var(--accent); font-style:normal; }
+.pipeline-live { display:inline-flex; align-items:center; gap:7px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#8896a8; letter-spacing:0.5px; text-transform:uppercase; white-space:nowrap; }
+.pipeline-live .dot { width:7px; height:7px; border-radius:50%; background:var(--accent); animation:pingDot 1.6s infinite; }
+@keyframes pingDot { 0%{box-shadow:0 0 0 0 rgba(184,134,11,0.6);} 70%{box-shadow:0 0 0 8px rgba(184,134,11,0);} 100%{box-shadow:0 0 0 0 rgba(184,134,11,0);} }
+.pipeline-body { position:relative; padding:26px 22px 24px; }
+.pl-rail { position:absolute; left:62px; top:20px; bottom:20px; width:2px; background:rgba(184,134,11,0.22); }
+.pl-pulse { position:absolute; left:-3px; width:8px; height:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 10px rgba(184,134,11,0.9); opacity:0; }
+.pl-pulse.p1 { animation:plFlow 3.4s linear infinite; }
+.pl-pulse.p2 { animation:plFlow 3.4s linear infinite 1.7s; }
+.pl-pulse.g { background:#52d69b; box-shadow:0 0 10px rgba(82,214,155,0.9); animation:plFlow 3.4s linear infinite 2.55s; }
+@keyframes plFlow { 0%{top:0%;opacity:0;} 8%{opacity:1;} 85%{opacity:1;} 100%{top:97%;opacity:0;} }
+.pl-steps { display:flex; flex-direction:column; gap:14px; width:100%; padding-left:26px; }
+.pl-step { display:flex; align-items:flex-start; gap:14px; background:#141922; border:1px solid rgba(232,236,240,0.07); border-radius:8px; padding:14px 16px; }
+.pl-step .num { flex:0 0 30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; color:var(--accent); background:rgba(184,134,11,0.1); border:1px solid rgba(184,134,11,0.35); }
+.pl-step .name { font-size:13px; font-weight:600; color:#fff; }
+.pl-step .name code { font-family:'JetBrains Mono',monospace; font-size:12px; background:rgba(184,134,11,0.12); border:1px solid rgba(184,134,11,0.35); padding:1px 5px; border-radius:3px; color:#ffd98a; }
+.pl-step .desc { font-size:12px; color:#8896a8; margin-top:2px; line-height:1.55; }
+.pl-step .desc code { font-family:'JetBrains Mono',monospace; font-size:11px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); padding:1px 5px; border-radius:3px; color:#e6a800; white-space:nowrap; }
+.pl-chip { display:inline-flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+.pl-tag { font-family:'JetBrains Mono',monospace; font-size:10px; padding:3px 8px; border-radius:3px; background:rgba(184,134,11,0.12); color:#ffd98a; border:1px solid rgba(184,134,11,0.3); white-space:nowrap; }
+.pl-tag.ok { background:rgba(22,139,73,0.14); color:#52d69b; border-color:rgba(22,139,73,0.4); }
+.pl-tag.warn { background:rgba(230,168,0,0.14); color:#ffd98a; border-color:rgba(230,168,0,0.45); }
+.pl-footer { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-top:20px; padding:12px 16px; border-top:1px dashed rgba(184,134,11,0.25); font-size:11px; color:#8896a8; }
+@media print { body{background:white;} .page{box-shadow:none;} .content{padding:20px 48px 60px;} .cover{padding:48px 56px 40px;} }
+</style>
+</head>
+<body>
+<div class="page">
+<div class="cover"><div class="cover-avatar"><img src="../../../../../assets/images/logo-peretto-perfil.jpg" alt="Marcos Luciano"></div><div class="cover-logo"><img src="../../../../../assets/logo-peretto.png" alt="Peretto"></div><span class="cover-badge">PDI — Atividade 02 · Registro de Entrega</span><h1>Idempotencia e Entrega Exactly-Once (na pratica: at-least-once + dedup)</h1><div class="cover-meta"><strong>Autor:</strong> PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com<br><strong>Unidade:</strong> FV Marketing / V4 Company — Automação &amp; Infraestrutura<br><strong>Módulo:</strong> 05 · Sistemas Distribuídos, Mensageria e Eventos<br><strong>Data:</strong> Agosto 2026<br><strong>Status:</strong> <span class="status st-warn">NÃO publicado</span> · Desenvolvido / Homologação pendente<br><strong>Versão:</strong> 1.0</div><div class="cover-slug">exactly-once / dedupe / chave</div></div>
+<div class="content"><h2><span class="num">1.</span> Contexto</h2><p>Quando você <strong>desacopla</strong> com mensageria, o mesmo evento pode chegar <strong>duas vezes</strong>. Rede caiu no <code>ack</code>? O broker reentrega. Consumer reiniciou? Ele reprocessa o último lote. Se cada entrega cobrar o cliente de novo, vira prejuízo e reclamação. O desafio é garantir que <strong>processar 1x ou 5x dê o mesmo resultado</strong>: é a <strong>idempotência</strong>.</p><div class="didactic"><div class="didactic-title">Analogia da conta de luz</div>Você recebe a conta e paga. O banco envia o comprovante 3 vezes por engano. Se cada comprovante disparasse um <em>novo</em> débito, você pagaria 3x. A conta tem um <strong>código de autenticação</strong>: o banco vê 'já paguei esse código' e ignora as cópias. A <strong>chave de idempotência</strong> é esse código — ela diz 'esse evento já foi processado, não faça de novo'.</div><h2><span class="num">2.</span> Diagnóstico</h2><p>Sem dedupe, reentregas do broker geram <strong>cobranças duplicadas</strong>, estoque negativo e e-mails repetidos. Times gastam horas apagando incêndio manualmente. O problema é estrutural: em sistema distribuído, <em>exactly-once</em> de ponta-a-ponta é impossível — só existe <em>at-least-once</em> + idempotência, ou <em>effectively-once</em>.</p><div class="charts"><div class="chart-card"><div class="chart-title">Cobranças duplicadas (n/mês)</div><svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cobranças duplicadas (n/mês)"><line x1="42" y1="170" x2="330" y2="170" stroke="#c8d0d8"/><line x1="42" y1="170" x2="42" y2="26" stroke="#c8d0d8"/><polyline points="42,138 68,126 94,132 121,114 147,104 173,94 199,82 225,74 251,62 278,50 304,42 330,26" fill="none" stroke="#e6a800" stroke-width="2.5"/><circle cx="330" cy="26" r="3.5" fill="#e6a800"/><polyline points="42,138 68,156 94,163 121,167 147,168 173,169 199,169 225,170 251,170 278,170 304,170 330,170" fill="none" stroke="#52d69b" stroke-width="2.5"/><circle cx="330" cy="170" r="3.5" fill="#52d69b"/><text x="42" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jan</text><text x="68" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Fev</text><text x="94" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Mar</text><text x="121" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Abr</text><text x="147" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Mai</text><text x="173" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jun</text><text x="199" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jul</text><text x="225" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Ago</text><text x="251" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Set</text><text x="278" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Out</text><text x="304" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Nov</text><text x="330" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Dez</text><text x="46" y="12" fill="#e6a800" font-size="10" font-family="JetBrains Mono">Antes</text><text x="46" y="24" fill="#52d69b" font-size="10" font-family="JetBrains Mono">Depois</text></svg></div><div class="chart-card"><div class="chart-title">Horas de correção manual (h/mês)</div><svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Horas de correção manual (h/mês)"><line x1="42" y1="170" x2="330" y2="170" stroke="#c8d0d8"/><line x1="42" y1="170" x2="42" y2="26" stroke="#c8d0d8"/><polyline points="42,129 68,121 94,125 121,108 147,98 173,88 199,79 225,67 251,57 278,47 304,42 330,26" fill="none" stroke="#e6a800" stroke-width="2.5"/><circle cx="330" cy="26" r="3.5" fill="#e6a800"/><polyline points="42,129 68,154 94,162 121,166 147,168 173,168 199,169 225,170 251,170 278,170 304,170 330,170" fill="none" stroke="#52d69b" stroke-width="2.5"/><circle cx="330" cy="170" r="3.5" fill="#52d69b"/><text x="42" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jan</text><text x="68" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Fev</text><text x="94" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Mar</text><text x="121" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Abr</text><text x="147" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Mai</text><text x="173" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jun</text><text x="199" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Jul</text><text x="225" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Ago</text><text x="251" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Set</text><text x="278" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Out</text><text x="304" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Nov</text><text x="330" y="184" fill="#8896a8" font-size="9" text-anchor="middle">Dez</text><text x="46" y="12" fill="#e6a800" font-size="10" font-family="JetBrains Mono">Antes</text><text x="46" y="24" fill="#52d69b" font-size="10" font-family="JetBrains Mono">Depois</text></svg></div></div><div class="callout"><strong>Raiz do problema:</strong> o consumer não distingue 'evento novo' de 'evento reentregue'. Falta uma <strong>chave de idempotência</strong> persistida e uma tabela de <em>já-processados</em> consultada antes de agir.</div><h2><span class="num">3.</span> Solução</h2><p>Dois pilares: (1) <strong>idempotência no consumer</strong> — toda ação só executa se a <code>idempotency_key</code> não existir numa tabela; (2) <strong>Outbox Pattern</strong> — em vez de escrever no banco E publicar no broker na mesma transação (que pode falhar no meio), você grava o evento numa tabela <code>outbox</code> dentro da <strong>mesma transação</strong> do negócio. Um <em>relay</em> depois publica o outbox no broker. Assim o evento nunca se perde nem duplica: banco e mensagem ficam atômicos.</p><pre><code># Outbox + idempotência (exemplo didático, Python)
+import json, uuid, psycopg2
+
+def registrar_venda(conn, venda):
+    event_id = str(uuid.uuid4())
+    with conn:                          # MESMA transação: banco + evento
+        cur = conn.cursor()
+        cur.execute("INSERT INTO venda VALUES (%s,%s)", (venda['id'], venda['valor']))
+        cur.execute(
+            "INSERT INTO outbox(event_id, tipo, payload, sent) VALUES (%s,'venda.criada',%s,false)",
+            (event_id, json.dumps(venda)))
+
+def consumer_cobrar(conn, key, venda):
+    with conn:
+        cur = conn.cursor()
+        cur.execute("SELECT 1 FROM processados WHERE idempotency_key=%s", (key,))
+        if cur.fetchone():              # reentrega -&gt; ignora
+            return "ignorado (dedupe)"
+        cobrar(venda)                    # efeito só acontece 1x
+        cur.execute("INSERT INTO processados(idempotency_key) VALUES (%s)", (key,))
+    return "cobrado 1x"
+</code></pre><h2><span class="num">4.</span> Como funciona (pipeline)</h2><div class="pipeline"><div class="pipeline-head"><span class="pipeline-title">Outbox + idempotência na cobrança</span><span class="pipeline-live"><span class="dot"></span> fluxo em execução</span></div><div class="pipeline-body"><div class="pl-rail"><span class="pl-pulse p1"></span><span class="pl-pulse p2"></span><span class="pl-pulse g"></span></div><div class="pl-steps"><div class="pl-step"><div class="num">1</div><div><div class="name">Transaction <code>DB.begin()</code></div><div class="desc">Grava a venda E o evento na tabela <code>outbox</code> na mesma transação.</div><span class="pl-chip"><span class="pl-tag atômico">ok</span></span></div></div><div class="pl-step"><div class="num">2</div><div><div class="name">Commit <code>db.commit()</code></div><div class="desc">Se der erro, nada é gravado — consistência garantida.</div><span class="pl-chip"><span class="pl-tag all-or-nothing">ok</span></span></div></div><div class="pl-step"><div class="num">3</div><div><div class="name">Relay <code>outbox.publish()</code></div><div class="desc">Lê o outbox não enviado e publica no broker, marcando como enviado.</div><span class="pl-chip"><span class="pl-tag 1 vez">warn</span></span></div></div><div class="pl-step"><div class="num">4</div><div><div class="name">Consumer <code>dedupe(key)</code></div><div class="desc">Antes de cobrar, consulta <code>idempotency_key</code> na tabela de processados.</div><span class="pl-chip"><span class="pl-tag dedupe">audit</span></span></div></div><div class="pl-step"><div class="num">5</div><div><div class="name">Ack <code>consumer.ack()</code></div><div class="desc">Só faz <code>ack</code> após gravar a chave — reentrega não cobra 2x.</div><span class="pl-chip"><span class="pl-tag effectively-once">ok</span></span></div></div></div><div class="pl-footer"><span>Falha no relay → evento fica no outbox até ser publicado; falha no consumer → reentrega cai no dedupe.</span></div></div></div><h2><span class="num">5.</span> Antes vs Depois</h2><table><tr><th>Cenário</th><th>Antes (sem dedupe)</th><th>Depois (outbox + dedupe)</th></tr><tr><td>Reentrega do broker</td><td>Cobra 2x</td><td>Ignorada (chave existe)</td></tr><tr><td>Falha na publicação</td><td>Evento perdido</td><td>Reprocessado do outbox</td></tr><tr><td>Consistência</td><td>Banco≠Mensagem</td><td>Atômica</td></tr><tr><td>Correção manual</td><td>~60h/mês</td><td>~0h/mês</td></tr></table><h2><span class="num">6.</span> Entregas</h2><ul><li><strong>Migração</strong> <code>001_outbox.sql</code>: tabela <code>outbox(event_id, payload, sent)</code>.</li><li><strong>Relay</strong> <code>outbox_relay.py</code>: publica pendentes no Kafka a cada 1s.</li><li><strong>Consumer</strong> <code>cobranca_idempotente.py</code>: dedupe por <code>idempotency_key</code>.</li><li><strong>Teste</strong> <code>test_reentrega.py</code>: injeta o mesmo evento 5x e afirma 1 cobrança.</li></ul><h2><span class="num">7.</span> Métricas</h2><div class="charts"><div class="chart-card"><div class="chart-title">Eventos idempotentes corretos (%)</div><svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Eventos idempotentes corretos (%)"><line x1="42" y1="170" x2="330" y2="170" stroke="#c8d0d8"/><line x1="42" y1="170" x2="42" y2="26" stroke="#c8d0d8"/><polyline points="42,170 68,127 94,91 121,66 147,49 173,39 199,33 225,30 251,27 278,27 304,26 330,26" fill="none" stroke="#e6a800" stroke-width="2.5"/><circle cx="330" cy="26" r="3.5" fill="#e6a800"/><text x="42" y="184" fill="#8896a8" font-size="9" text-anchor="middle">S1</text><text x="68" y="184" fill="#8896a8" font-size="9" text-anchor="middle">S2</text><text x="94" y="184" fill="#8896a8" font-size="9" text-anchor="middle">S3</text><text x="121" y="184" fill="#8896a8" font-size="9" text-anchor="middle">S4</text><text x="147" y="184" fill="#8896a8" font-size="9" text-anchor="middle">S5</text><text x="173" y="184" fill="#8896a8" font-size="9" text-anchor="middle">S6</text><text x="199" y="184" fill="#8896a8" font-size="9" text-anchor="middle">S7</text><text x="225" y="184" fill="#8896a8" font-size="9" text-anchor="middle">S8</text><text x="251" y="184" fill="#8896a8" font-size="9" text-anchor="middle">S9</text><text x="278" y="184" fill="#8896a8" font-size="9" text-anchor="middle">S10</text><text x="304" y="184" fill="#8896a8" font-size="9" text-anchor="middle">S11</text><text x="330" y="184" fill="#8896a8" font-size="9" text-anchor="middle">S12</text><text x="46" y="12" fill="#e6a800" font-size="10" font-family="JetBrains Mono">Semana 1</text></svg></div></div><div class="callout"><strong>Meta:</strong> 100% de <em>effectively-once</em> nas cobranças, com zero débito duplicado mesmo sob reentrega contínua.</div><h2><span class="num">8.</span> Status final</h2><p><span class="status st-warn">NÃO publicado</span> — Desenvolvido e em homologação. Aguarda revisão antes de produção.</p></div>
+</div>
+</body>
+</html>
