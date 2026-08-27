@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDI — Nós Customizados n8n</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #07080a;
+  --bg2: #0d0f13;
+  --surface: #14181d;
+  --surface2: #1a1f26;
+  --border: #232a33;
+  --border2: #2e3845;
+  --text: #e8ecf0;
+  --text2: #8896a8;
+  --text3: #5a6a7a;
+  --green: #00e699;
+  --red: #ff4757;
+  --yellow: #ffc800;
+  --blue: #4d9fff;
+  --orange: #ff8c42;
+  --code-bg: #0d1014;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── NAV ─── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; height: 48px;
+  background: rgba(7,8,10,0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 28px; z-index: 100;
+  font-size: 12px;
+}
+.nav-logo { color: var(--green); font-weight: 500; letter-spacing: 0.5px; }
+.nav-logo span { color: var(--text3); font-weight: 300; }
+.nav-actions { display: flex; gap: 8px; }
+.nav-actions button {
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--text2); padding: 4px 14px; border-radius: 4px;
+  cursor: pointer; font-family: inherit; font-size: 11px;
+  transition: 0.15s;
+}
+.nav-actions button:hover { border-color: var(--green); color: var(--green); }
+.progress { position: fixed; top: 48px; left: 0; right: 0; height: 2px; background: var(--border); z-index: 100; }
+.progress-bar { height: 100%; background: var(--green); width: 0%; transition: width 0.3s; }
+
+/* ─── SLIDE ─── */
+.slide {
+  min-height: 100vh; padding: 80px 64px 48px;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; border-bottom: 1px solid var(--border);
+  background: radial-gradient(ellipse 70% 50% at 50% -10%, rgba(0,230,153,0.025) 0%, transparent 70%);
+}
+.slide-num {
+  position: absolute; top: 64px; right: 48px;
+  font-size: 11px; color: var(--text3); letter-spacing: 2px;
+}
+.tag {
+  display: inline-block; font-size: 11px; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--green);
+  margin-bottom: 20px; border: 1px solid rgba(0,230,153,0.25);
+  padding: 5px 12px; background: rgba(0,230,153,0.04);
+}
+
+/* ─── TYPOGRAPHY ─── */
+h1 {
+  font-size: clamp(36px, 5vw, 68px);
+  font-weight: 500; line-height: 1.05; letter-spacing: -1px;
+}
+h1 .g { color: var(--green); }
+h1 .r { color: var(--red); }
+h1 .y { color: var(--yellow); }
+h1 .b { color: var(--blue); }
+h2 {
+  font-size: clamp(22px, 3vw, 38px);
+  font-weight: 500; letter-spacing: -0.5px; margin-bottom: 16px;
+  line-height: 1.2;
+}
+h3 {
+  font-size: 13px; font-weight: 500; text-transform: uppercase;
+  letter-spacing: 1.5px; color: var(--green); margin-bottom: 12px;
+}
+.sub {
+  font-size: 14px; color: var(--text2); line-height: 1.6; max-width: 680px; margin-bottom: 20px;
+}
+
+/* ─── CODE BLOCKS ─── */
+pre {
+  background: var(--code-bg); border: 1px solid var(--border);
+  padding: 16px 20px; border-radius: 6px; overflow-x: auto;
+  font-size: 12px; line-height: 1.7; color: var(--text2);
+}
+code { font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+pre .k { color: var(--blue); }
+pre .s { color: var(--green); }
+pre .c { color: var(--text3); }
+pre .v { color: var(--yellow); }
+pre .o { color: var(--red); }
+pre .f { color: var(--orange); }
+
+/* ─── CARDS ─── */
+.card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+  padding: 20px 24px; transition: 0.15s;
+}
+.card:hover { border-color: var(--border2); }
+.card-title { font-size: 12px; font-weight: 500; color: var(--green); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.card p, .card li { font-size: 12px; line-height: 1.7; color: var(--text2); }
+.card ul { list-style: none; }
+.card ul li::before { content: '→ '; color: var(--green); }
+.card ul li { margin-bottom: 4px; }
+
+/* ─── GRID ─── */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 8px; }
+.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 8px; }
+.g4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-top: 8px; }
+
+/* ─── TABLE ─── */
+table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 12px; }
+th { text-align: left; padding: 10px 14px; border-bottom: 2px solid var(--green); color: var(--green); font-weight: 500; text-transform: uppercase; letter-spacing: 1px; font-size: 10px; }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text2); }
+tr:hover td { color: var(--text); }
+
+/* ─── BADGE ─── */
+.badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+.b-crit { background: rgba(255,71,87,0.12); color: var(--red); }
+.b-warn { background: rgba(255,200,0,0.12); color: var(--yellow); }
+.b-info { background: rgba(77,159,255,0.12); color: var(--blue); }
+.b-ok { background: rgba(0,230,153,0.12); color: var(--green); }
+
+/* ─── PIPELINE ─── */
+.pipeline { margin-top: 12px; }
+.step {
+  display: flex; align-items: flex-start; gap: 14px;
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 14px 18px; margin-bottom: 8px; background: var(--surface);
+}
+.step-idx {
+  min-width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,230,153,0.1); border: 1px solid rgba(0,230,153,0.3);
+  color: var(--green); font-size: 11px; font-weight: 500;
+}
+.step h4 { font-size: 12px; color: var(--text); margin-bottom: 4px; }
+.step p { font-size: 11px; color: var(--text2); line-height: 1.6; }
+
+/* ─── METRIC CARDS ─── */
+.metric { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 18px 20px; text-align: center; }
+.metric .val { font-size: 28px; font-weight: 500; color: var(--green); }
+.metric .label { font-size: 11px; color: var(--text2); margin-top: 6px; text-transform: uppercase; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-logo">PDI<span> // NÓS CUSTOMIZADOS</span></div>
+  <div class="nav-actions">
+    <button onclick="window.print()">Print / PDF</button>
+  </div>
+</div>
+<div class="progress"><div class="progress-bar" id="bar"></div></div>
+
+<!-- SLIDE 1 — CAPA -->
+<section class="slide" id="s1">
+  <div class="slide-num">SLIDE 01 / 08</div>
+  <span class="tag">PDI — Atividade 03</span>
+  <h1>Nós <span class="g">Customizados</span><br>&amp; Expressões Avançadas n8n</h1>
+  <p class="sub">Nós Code JavaScript/Python otimizados e expressões avançadas para processar payloads pesados em streaming — dedupe O(n), parse único, cópia mínima e biblioteca reutilizável.</p>
+  <p class="sub" style="color:var(--text3);font-size:12px;">Status: <span class="badge b-warn">NÃO publicado</span> · Aguardando homologação</p>
+</section>
+
+<!-- SLIDE 2 — PROBLEMA -->
+<section class="slide">
+  <div class="slide-num">SLIDE 02 / 08</div>
+  <div class="tag">Problema</div>
+  <h2>"Nó que faz tudo" = <span class="r">payload que trava</span></h2>
+  <div class="g3" style="margin-top:28px;">
+    <div class="card">
+      <div class="card-title">Memória</div>
+      <p>Payload inteiro carregado na memória + <code>{ ...item }</code> por iteração em 100k itens = OOM e event loop bloqueado.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Complexidade</div>
+      <p><code>JSON.parse</code> no loop e buscas por item (<code>.find</code>, <code>indexOf</code>) viram O(n²). Cada re-parse custa caro.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Duplicação</div>
+      <p>Mesmo transform copiado entre dezenas de workflows. Expressões inline difíceis de manter, sem biblioteca compartilhada.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 3 — ARQUITETURA -->
+<section class="slide">
+  <div class="slide-num">SLIDE 03 / 08</div>
+  <div class="tag">Arquitetura</div>
+  <h2>Payload pesado em <span class="g">5 etapas</span>, O(n)</h2>
+  <div class="pipeline">
+    <div class="step">
+      <div class="step-idx">1</div>
+      <div><h4>Payload pesado (10k–100k itens)</h4><p>Chega via webhook. Antes: <code>map().filter()</code> encadeado + cópias por item → <span class="badge b-crit">OOM</span>.</p></div>
+    </div>
+    <div class="step">
+      <div class="step-idx">2</div>
+      <div><h4>Parse + Chunk (JS)</h4><p>Decodifica o JSON <span class="badge b-ok">1x</span> na entrada e quebra em chunks de 1000. Nunca re-parseia dentro do loop.</p></div>
+    </div>
+    <div class="step">
+      <div class="step-idx">3</div>
+      <div><h4>Normalize in One Pass (JS)</h4><p>Filtra, dedupe (Set por chave primitiva) e transforma no <span class="badge b-ok">mesmo loop</span> — O(n), cópia mínima.</p></div>
+    </div>
+    <div class="step">
+      <div class="step-idx">4</div>
+      <div><h4>Enrich Python (Python)</h4><p>Enriquecimento e agregação com <code>collections</code>/<code>itertools</code> — só stdlib, sem pandas.</p></div>
+    </div>
+    <div class="step">
+      <div class="step-idx">5</div>
+      <div><h4>Return Metrics (JS)</h4><p>Entrega <code>processedItems</code>, <code>deduped</code>, <code>durationMs</code>, <code>itemsPerSecond</code> — base do monitoramento.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 4 — O(n) vs O(n²) -->
+<section class="slide">
+  <div class="slide-num">SLIDE 04 / 08</div>
+  <div class="tag">Complexidade</div>
+  <h2>De O(n²) para <span class="g">O(n)</span></h2>
+  <pre><code><span class="c">// ANTES: busca por item dentro do loop → O(n²)</span>
+items.forEach(item =&gt; {
+  <span class="o">const</span> x = items.find(o =&gt; o.id === item.ref);  <span class="c">// 100k × 100k</span>
+});
+
+<span class="c">// DEPOIS: Set de dedupe + UMA passada → O(n)</span>
+<span class="o">const</span> seen = <span class="k">new Set()</span>();
+<span class="o">for</span> (<span class="o">const</span> item of items) {
+  <span class="o">if</span> (seen.has(item.id)) <span class="o">continue</span>;   <span class="c">// sair cedo</span>
+  seen.add(item.id);
+  out.push({ json: normalize(item) });  <span class="c">// cópia mínima</span>
+}</code></pre>
+  <p class="sub">Filtro barato antes de transformação cara; dedupe por chave primitiva, nunca por objeto.</p>
+</section>
+
+<!-- SLIDE 5 — MEMO / EXPRESSÕES -->
+<section class="slide">
+  <div class="slide-num">SLIDE 05 / 08</div>
+  <div class="tag">Expressões avançadas</div>
+  <h2>Memoização + <span class="g">expressões</span></h2>
+  <pre><code><span class="c">// Valor estável calculado 1x e reutilizado entre execuções</span>
+<span class="o">const</span> staticData = $getWorkflowStaticData(<span class="s">'global'</span>);
+<span class="o">if</span> (staticData.scoreThreshold === <span class="k">undefined</span>) {
+  staticData.scoreThreshold = <span class="v">70</span>;  <span class="c">// busca cara feita 1x</span>
+}
+<span class="c">// Segunda execução: cachedAt NÃO muda</span></code></pre>
+  <pre style="margin-top:16px;"><code><span class="c">// Expressão em parâmetro de nó (IF):</span>
+leftValue  = {{ <span class="v">$json.score</span> }}   <span class="c">// referencia o proprio item</span>
+rightValue = {{ <span class="v">70</span> }}
+operator   = number &gt;= <span class="c">// gte</span></code></pre>
+  <p class="sub">Referências entre nós: <code>$('Node').item.json.campo</code>; JSONata para consulta em payload grande.</p>
+</section>
+
+<!-- SLIDE 6 — BIBLIOTECA -->
+<section class="slide">
+  <div class="slide-num">SLIDE 06 / 08</div>
+  <div class="tag">3-lib</div>
+  <h2>Biblioteca única — <span class="g">fonte da verdade</span></h2>
+  <div class="g2" style="margin-top:28px;">
+    <div>
+      <h3>payload-lib.js</h3>
+      <table>
+        <tr><th>Função</th><th>Uso</th></tr>
+        <tr><td><code>chunk</code></td><td>Chunking streaming</td></tr>
+        <tr><td><code>normalizeStream</code></td><td>Filtra+dedupe+transforma O(n)</td></tr>
+        <tr><td><code>dedupe</code></td><td>Set por chave primitiva</td></tr>
+        <tr><td><code>aggregate</code></td><td>Map — agregação O(n)</td></tr>
+        <tr><td><code>memoizeGlobal</code></td><td>Cache entre execuções</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3>payload-lib.py</h3>
+      <table>
+        <tr><th>Função</th><th>Uso</th></tr>
+        <tr><td><code>chunk</code></td><td>islice streaming</td></tr>
+        <tr><td><code>dedupe</code></td><td>set — O(n)</td></tr>
+        <tr><td><code>aggregate</code></td><td>Counter/defaultdict</td></tr>
+        <tr><td><code>parse_payload</code></td><td>Decodifica 1x</td></tr>
+        <tr><td><code>to_output</code></td><td>Formato {json}</td></tr>
+      </table>
+    </div>
+  </div>
+  <p class="sub" style="margin-top:20px;">Regra: nunca editar um nó Code sem atualizar a lib. Os workflows embutem cópias das funções usadas.</p>
+</section>
+
+<!-- SLIDE 7 — MÉTRICAS -->
+<section class="slide">
+  <div class="slide-num">SLIDE 07 / 08</div>
+  <div class="tag">Métricas</div>
+  <h2>Antes → <span class="g">Meta</span></h2>
+  <div class="g4" style="margin-top:28px;">
+    <div class="metric"><div class="val">100k</div><div class="label">itens streaming</div></div>
+    <div class="metric"><div class="val">O(n)</div><div class="label">normalização</div></div>
+    <div class="metric"><div class="val">1x</div><div class="label">parse na entrada</div></div>
+    <div class="metric"><div class="val">3-lib</div><div class="label">código único</div></div>
+  </div>
+  <br>
+  <table style="max-width:720px;margin-top:20px;">
+    <tr><th>Métrica</th><th>Antes</th><th>Meta</th></tr>
+    <tr><td>Payload 100k itens</td><td>OOM / timeout</td><td><span class="badge b-ok">Streaming &lt; 2 GB</span></td></tr>
+    <tr><td>Complexidade de normalização</td><td>O(n²)</td><td><span class="badge b-ok">O(n)</span></td></tr>
+    <tr><td>Re-parse de JSON</td><td>Múltiplos</td><td><span class="badge b-ok">1x entrada</span></td></tr>
+    <tr><td>Código duplicado</td><td>Alto</td><td><span class="badge b-ok">3-lib única</span></td></tr>
+  </table>
+</section>
+
+<!-- SLIDE 8 — ENTREGAS / NEXT -->
+<section class="slide">
+  <div class="slide-num">SLIDE 08 / 08</div>
+  <div class="tag">Entregas</div>
+  <h2>Próximos passos</h2>
+  <div class="g2" style="margin-top:28px;">
+    <div class="card">
+      <div class="card-title">Entregas</div>
+      <ul>
+        <li>1-standards/ — 3 padrões (JS, Python, expressões)</li>
+        <li>2-workflows/ — 3 workflows .workflow.ts</li>
+        <li>3-lib/ — payload-lib.js + payload-lib.py</li>
+        <li>4-retrofit/ — ADPLAN, PRO ANALISES, CC</li>
+        <li>5-monitoring/ — queries + alertas</li>
+        <li>6-automation/ — deploy com gate</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Próximos passos</div>
+      <ul>
+        <li>Homologar com payload simulado (100k itens)</li>
+        <li>Publicar 3 workflows (n8nac push)</li>
+        <li>Medir items/s e pico de memória</li>
+        <li>Retrofit do primeiro workflow existente</li>
+        <li>Configurar dashboard de performance</li>
+      </ul>
+    </div>
+  </div>
+  <br><br>
+  <p class="sub" style="color:var(--red);">Status: desenvolvido · aguardando homologação · NÃO publicado em produção.</p>
+</section>
+
+<script>
+const bar = document.getElementById('bar');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  const p = h > 0 ? (window.scrollY / h) * 100 : 0;
+  bar.style.width = p + '%';
+});
+</script>
+</body>
+</html>

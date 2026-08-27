@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDI: Nós Customizados n8n — Registro de Entrega</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white: #ffffff;
+  --off-white: #f8f9fb;
+  --gray-50: #f1f3f5;
+  --gray-100: #e9ecef;
+  --gray-200: #dde3e9;
+  --gray-300: #c8d0d8;
+  --gray-500: #8896a8;
+  --gray-600: #6b7a8a;
+  --gray-700: #495560;
+  --gray-800: #2e3740;
+  --gray-900: #1a1f24;
+  --accent: #b8860b;
+  --accent2: #8b4513;
+  --red-600: #c0392b;
+  --yellow-600: #e6a800;
+  --border: #e2e6ea;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  color: var(--gray-900);
+  background: var(--off-white);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* PAGE */
+.page { max-width: 900px; margin: 0 auto; background: var(--white); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+
+.cover {
+  padding: 80px 72px 56px;
+  background: linear-gradient(135deg, #1a0f0a 0%, #2d1a10 100%);
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+.cover-badge {
+  display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--accent);
+  border: 1px solid rgba(184,134,11,0.3); padding: 5px 14px; background: rgba(184,134,11,0.06);
+}
+.cover h1 { font-size: 36px; font-weight: 700; line-height: 1.2; letter-spacing: -0.5px; max-width: 640px; margin-top: 16px; }
+.cover h1 em { color: var(--accent); font-style: normal; }
+.cover-meta { margin-top: 32px; font-size: 14px; color: #8896a8; line-height: 1.8; }
+.cover-meta strong { color: var(--gray-200); font-weight: 500; }
+.cover-logo { margin-bottom: 28px; }
+.cover-logo img { height: 56px; width: auto; display: block; opacity: 0.92; }
+.cover-avatar {
+  position: absolute; top: 40px; right: 56px; width: 84px; height: 84px;
+  border-radius: 50%; overflow: hidden;
+  border: 2px solid rgba(184,134,11,0.6);
+  box-shadow: 0 0 0 5px rgba(184,134,11,0.12), 0 8px 24px rgba(0,0,0,0.4);
+}
+.cover-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cover-slug {
+  margin-top: 24px; font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: rgba(255,255,255,0.25); letter-spacing: 0.5px;
+}
+
+/* CONTENT */
+.content { padding: 56px 72px 80px; }
+h2 {
+  font-size: 22px; font-weight: 700; letter-spacing: -0.3px;
+  margin: 40px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border);
+}
+h2 .num { color: var(--accent2); }
+h3 { font-size: 15px; font-weight: 600; margin: 24px 0 10px; }
+p { color: var(--gray-700); font-size: 14px; margin-bottom: 14px; }
+p strong { color: var(--gray-900); }
+
+table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0 20px; }
+th {
+  text-align: left; padding: 10px 14px; background: var(--gray-50);
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  color: var(--gray-800); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--gray-700); vertical-align: top; }
+td code, p code { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--gray-50); border: 1px solid var(--border); padding: 1px 4px; border-radius: 3px; color: var(--accent2); }
+
+pre {
+  background: #0d1014; color: #e8ecf0; padding: 16px 20px; border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.7;
+  overflow-x: auto; margin: 16px 0 20px;
+}
+pre .c { color: #5a6a7a; }
+pre .g { color: #00e699; }
+
+.status { display: inline-block; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; padding: 3px 10px; border-radius: 3px; }
+.st-warn { background: rgba(230,168,0,0.12); color: var(--yellow-600); }
+.st-ok { background: rgba(22,139,73,0.12); color: #168b49; }
+
+ul { margin: 8px 0 16px 20px; }
+li { color: var(--gray-700); font-size: 14px; margin-bottom: 6px; }
+
+.callout {
+  border-left: 3px solid var(--accent); background: var(--off-white);
+  padding: 14px 18px; font-size: 13px; color: var(--gray-700); margin: 16px 0;
+}
+.callout strong { color: var(--accent2); }
+
+/* DIDACTIC BOX */
+.didactic {
+  border: 1px dashed var(--accent2); border-left: 4px solid var(--accent2);
+  background: linear-gradient(90deg, rgba(139,69,19,0.06) 0%, rgba(139,69,19,0.02) 100%);
+  padding: 14px 18px; margin: 16px 0; border-radius: 6px;
+}
+.didactic-title {
+  font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--accent2); margin-bottom: 6px;
+}
+.didactic p { margin-bottom: 0; font-size: 14px; color: var(--gray-700); }
+
+/* CHARTS */
+.charts { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 16px 0 20px; }
+.chart-card { border: 1px solid var(--border); border-radius: 8px; background: #0d1014; padding: 14px 14px 6px; }
+.chart-title { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #e8ecf0; margin-bottom: 8px; }
+.chart-card svg { width: 100%; height: auto; display: block; }
+@media (max-width: 640px) { .charts { grid-template-columns: 1fr; } }
+@media print { .charts { grid-template-columns: 1fr 1fr; } }
+
+/* PIPELINE ANIMADA */
+.pipeline { margin: 24px 0 28px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: #0d1014; }
+.pipeline-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 12px 18px; background: linear-gradient(135deg, #1a0f0a, #2d1a10);
+  border-bottom: 1px solid rgba(184,134,11,0.25);
+}
+.pipeline-title { color: #fff; font-size: 13px; font-weight: 600; letter-spacing: 0.3px; }
+.pipeline-title em { color: var(--accent); font-style: normal; }
+.pipeline-live {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #8896a8;
+  letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap;
+}
+.pipeline-live .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pingDot 1.6s infinite; }
+@keyframes pingDot { 0% { box-shadow: 0 0 0 0 rgba(184,134,11,0.6); } 70% { box-shadow: 0 0 0 8px rgba(184,134,11,0); } 100% { box-shadow: 0 0 0 0 rgba(184,134,11,0); } }
+
+.pipeline-body { position: relative; padding: 26px 22px 24px; }
+.pl-rail { position: absolute; left: 62px; top: 20px; bottom: 20px; width: 2px; background: rgba(184,134,11,0.22); }
+.pl-pulse { position: absolute; left: -3px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px rgba(184,134,11,0.9); opacity: 0; }
+.pl-pulse.p1 { animation: plFlow 3.4s linear infinite; }
+.pl-pulse.p2 { animation: plFlow 3.4s linear infinite 1.7s; }
+.pl-pulse.g  { background: #52d69b; box-shadow: 0 0 10px rgba(82,214,155,0.9); animation: plFlow 3.4s linear infinite 2.55s; }
+@keyframes plFlow {
+  0%   { top: 0%; opacity: 0; }
+  8%   { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { top: 97%; opacity: 0; }
+}
+.pl-steps { display: flex; flex-direction: column; gap: 14px; width: 100%; padding-left: 26px; }
+.pl-step {
+  display: flex; align-items: flex-start; gap: 14px;
+  background: #141922; border: 1px solid rgba(232,236,240,0.07); border-radius: 8px;
+  padding: 14px 16px; transition: border-color .2s, transform .2s;
+}
+.pl-step:hover { border-color: rgba(184,134,11,0.5); transform: translateX(3px); }
+.pl-step .num {
+  flex: 0 0 30px; height: 30px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600;
+  color: var(--accent); background: rgba(184,134,11,0.1); border: 1px solid rgba(184,134,11,0.35);
+}
+.pl-step .name { font-size: 13px; font-weight: 600; color: #fff; }
+.pl-step .name code {
+  font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  background: rgba(184,134,11,0.12); border: 1px solid rgba(184,134,11,0.35);
+  padding: 1px 5px; border-radius: 3px; color: #ffd98a;
+}
+.pl-step .desc { font-size: 12px; color: #8896a8; margin-top: 2px; line-height: 1.55; }
+.pl-step .desc code {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  padding: 1px 5px; border-radius: 3px; color: #e6a800; white-space: nowrap;
+}
+.pl-chip { display: inline-flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.pl-tag {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 3px 8px; border-radius: 3px;
+  background: rgba(184,134,11,0.12); color: #ffd98a; border: 1px solid rgba(184,134,11,0.3); white-space: nowrap;
+}
+.pl-tag.ok { background: rgba(22,139,73,0.14); color: #52d69b; border-color: rgba(22,139,73,0.4); }
+.pl-tag.warn { background: rgba(230,168,0,0.14); color: #ffd98a; border-color: rgba(230,168,0,0.45); animation: pingDot 2.4s infinite; }
+.pl-terminal {
+  border-style: dashed; border-color: rgba(82,214,155,0.45);
+}
+.pl-terminal .num { background: rgba(22,139,73,0.14); border-color: rgba(82,214,155,0.5); color: #52d69b; }
+.pl-footer {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  margin-top: 20px; padding: 12px 16px; border-top: 1px dashed rgba(184,134,11,0.25);
+  font-size: 11px; color: #8896a8;
+}
+.pl-lifecycle { display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 10px; }
+.pl-life{ display:inline-flex; align-items:center; gap:5px; }
+.pl-life .b { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+.pl-life.queued .b { background:#e6a800; }
+.pl-life.running .b { background: var(--accent); animation: pingDot 1.6s infinite; }
+.pl-life.done .b { background:#52d69b; }
+.pl-life.failed .b { background: #c0392b; }
+
+/* PRINT */
+@media print {
+  body { background: white; }
+  .page { box-shadow: none; }
+  .content { padding: 20px 48px 60px; }
+  .cover { padding: 48px 56px 40px; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="cover">
+    <div class="cover-avatar"><img src="../../../../../assets/images/logo-peretto-perfil.jpg" alt="Marcos Luciano"></div>
+    <div class="cover-logo"><img src="../../../../../assets/logo-peretto.png" alt="Peretto"></div>
+    <span class="cover-badge">PDI — Atividade 03 · Registro de Entrega</span>
+    <h1>Nós <em>Customizados</em> e Expressões Avançadas n8n</h1>
+    <div class="cover-meta">
+      <strong>Autor:</strong> Marcos Luciano · PDI Técnico<br>
+      <strong>Unidade:</strong> FV Marketing / V4 Company — Automação &amp; Infraestrutura<br>
+      <strong>Data:</strong> Agosto 2026<br>
+      <strong>Status:</strong> <span class="status st-warn">NÃO publicado</span> · Desenvolvido / Homologação pendente<br>
+      <strong>Versão:</strong> 1.0
+    </div>
+    <div class="cover-slug">n8n Enterprise / code nodes JS·Python / expressões avançadas / payload pesado</div>
+  </div>
+
+  <div class="content">
+
+    <h2><span class="num">1.</span> Contexto</h2>
+    <p>
+      Os pipelines n8n da V4 Company (SDR IA e MarTech) processam payloads cada vez
+      maiores — listas de leads, sincronizações de CRM, importações em massa. Os nós
+      <code>Code</code> que fazem esse trabalho foram escritos como "um nó que faz
+      tudo": carregam o payload inteiro em memória, re-parseiam JSON a cada etapa,
+      percorrem listas com complexidade O(n²) e repetem a mesma lógica entre dezenas
+      de workflows. Três problemas estruturais motivam este PDI:
+    </p>
+    <ul>
+      <li><strong>Payloads pesados estouram a instância</strong> — 100k+ itens com <code>map().filter()</code> encadeado e <code>{ ...item }</code> por iteração geram OOM e event loop bloqueado.</li>
+      <li><strong>Parse e complexidade desperdiçados</strong> — <code>JSON.parse</code> dentro de loops e buscas por item (<code>.find</code>, <code>indexOf</code>) viram O(n²).</li>
+      <li><strong>Lógica duplicada e sem padrão</strong> — o mesmo transform copiado entre workflows, expressões inline difíceis de manter e nenhuma biblioteca compartilhada.</li>
+    </ul>
+
+    <h2><span class="num">2.</span> Diagnóstico</h2>
+    <h3>2.1 Causa raiz</h3>
+    <p>
+      Não existe uma <strong>camada padrão de transformação</strong> no n8n da V4. Cada
+      nó Code reinventa a roda — e a forma "mais fácil de escrever" é a mais cara de
+      rodar. O resultado é o sintoma já visto na atividade 1 (ADPLAN: JS timeout de
+      25 min) e na atividade 2 (payload pesado sem processamento incremental).
+    </p>
+
+    <h2><span class="num">3.</span> Solução em 3 frentes</h2>
+    <table>
+      <tr><th>Frente</th><th>Solução</th><th>Workflow</th></tr>
+      <tr>
+        <td><strong>1. Nós Code JS avançados</strong></td>
+        <td>Streaming com chunking, dedupe O(n) por chave primitiva, cópia mínima de objetos e parse 1x na entrada.</td>
+        <td><code>[CC] NOS - JS Payload Normalizer</code></td>
+      </tr>
+      <tr>
+        <td><strong>2. Nós Code Python no n8n</strong></td>
+        <td>Enriquecimento e agregação pesados com a biblioteca padrão (collections, itertools) — sem dependências externas.</td>
+        <td><code>[CC] NOS - Python Payload Enricher</code></td>
+      </tr>
+      <tr>
+        <td><strong>3. Expressões avançadas + biblioteca</strong></td>
+        <td>Referências entre nós, JSONata, condicionais, memoização e uma biblioteca única <code>3-lib/</code> como fonte da verdade.</td>
+        <td><code>[CC] NOS - Expressions &amp; Memo Playground</code></td>
+      </tr>
+    </table>
+
+    <pre><span class="c">// O coração da mudança — de O(n²) para O(n)</span>
+<span class="c">// ANTES: busca por item dentro do loop</span>
+items.forEach(item =&gt; { const x = items.find(o =&gt; o.id === item.ref); })
+
+<span class="c">// DEPOIS: índice Map + Set de dedupe — UMA passada</span>
+const seen = new Set();
+for (const item of items) {
+  if (seen.has(item.id)) continue;
+  seen.add(item.id);
+  out.push({ json: normalize(item) });
+}</pre>
+
+    <h2><span class="num">4.</span> Pipeline de processamento</h2>
+    <table>
+      <tr><th>Etapa</th><th>Responsável</th><th>Técnica</th></tr>
+      <tr><td>1. Entrada</td><td><code>Webhook /nos/js-normalizer</code></td><td>Payload bruto (string ou array)</td></tr>
+      <tr><td>2. Parse + Chunk</td><td><code>Parse and Chunk</code> (JS)</td><td>Parse 1x + chunking streaming (default 1000)</td></tr>
+      <tr><td>3. Normalizar</td><td><code>Normalize in One Pass</code> (JS)</td><td>Filtra + dedupe + transforma em O(n)</td></tr>
+      <tr><td>4. Enriquecer</td><td><code>Enrich Python</code> (Python)</td><td>Agregação stdlib (Counter/defaultdict)</td></tr>
+      <tr><td>5. Métricas</td><td><code>Return Metrics</code> (JS)</td><td>durationMs + items/s + dedupe</td></tr>
+    </table>
+
+    <div class="pipeline">
+      <div class="pipeline-head">
+        <span class="pipeline-title">Como a engenharia funciona — <em>payload pesado de ponta a ponta</em></span>
+        <span class="pipeline-live"><span class="dot"></span> fluxo em execução</span>
+      </div>
+      <div class="pipeline-body">
+        <div class="pl-rail">
+          <span class="pl-pulse p1"></span>
+          <span class="pl-pulse p2"></span>
+          <span class="pl-pulse g"></span>
+        </div>
+        <div class="pl-steps">
+          <div class="pl-step">
+            <div class="num">1</div>
+            <div>
+              <div class="name">Payload pesado (10k–100k itens)</div>
+              <div class="desc">Chega via webhook. Antes, <code>map().filter()</code> encadeado e cópias por item geravam OOM e event loop bloqueado.</div>
+              <span class="pl-chip"><span class="pl-tag">10k+ itens</span><span class="pl-tag warn">OOM no padrão antigo</span></span>
+            </div>
+          </div>
+
+          <div class="pl-step">
+            <div class="num">2</div>
+            <div>
+              <div class="name">Parse + Chunk <code>(JS)</code></div>
+              <div class="desc">Decodifica o JSON <strong>1x</strong> na entrada e quebra em chunks de 1000. Nunca re-parseia dentro do loop.</div>
+              <span class="pl-chip"><span class="pl-tag ok">parse 1x</span><span class="pl-tag">chunk 1000</span></span>
+            </div>
+          </div>
+
+          <div class="pl-step">
+            <div class="num">3</div>
+            <div>
+              <div class="name">Normalize in One Pass <code>(JS)</code></div>
+              <div class="desc">Filtra, dedupe (Set por chave primitiva) e transforma no <strong>mesmo</strong> loop — complexidade O(n), cópia mínima de campos.</div>
+              <span class="pl-chip"><span class="pl-tag ok">O(n)</span><span class="pl-tag ok">dedupe Set</span><span class="pl-tag">cópia mínima</span></span>
+            </div>
+          </div>
+
+          <div class="pl-step">
+            <div class="num">4</div>
+            <div>
+              <div class="name">Enrich Python <code>(Python)</code></div>
+              <div class="desc">Enriquecimento e agregação com a biblioteca padrão (<code>collections</code>, <code>itertools</code>) — sem pandas, sem pip.</div>
+              <span class="pl-chip"><span class="pl-tag">stdlib only</span><span class="pl-tag ok">Counter/defaultdict</span></span>
+            </div>
+          </div>
+
+          <div class="pl-step pl-terminal">
+            <div class="num">5</div>
+            <div>
+              <div class="name">Return Metrics <code>(JS)</code></div>
+              <div class="desc">Entrega <code>processedItems</code>, <code>deduped</code>, <code>durationMs</code> e <code>itemsPerSecond</code> — a base das queries de performance do <code>5-monitoring/</code>.</div>
+              <span class="pl-chip"><span class="pl-tag ok">items/s</span><span class="pl-tag ok">dedupe ratio</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pl-footer">
+          <span>Cada item atravessa uma única vez: a engrenagem processa em stream, não em lotes de memória.</span>
+          <span class="pl-lifecycle">
+            <span class="pl-life queued"><span class="b"></span> parse 1x</span>
+            <span class="pl-life running"><span class="b"></span> stream</span>
+            <span class="pl-life done"><span class="b"></span> O(n)</span>
+            <span class="pl-life failed"><span class="b"></span> metrics</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Escala:</strong> o mesmo fluxo que processa 10 itens processa 100k — o chunking
+      streaming e o dedupe O(n) garantem memória controlada e event loop livre.
+    </div>
+
+    <h2><span class="num">5.</span> Por que O(n) muda tudo</h2>
+    <p>O mesmo payload de 100 mil itens custa bilhões de operações no padrão antigo
+      (O(n²)) e poucas centenas de milhares no novo (O(n)) — e a memória acompanha:</p>
+
+    <div class="charts">
+      <div class="chart-card">
+        <div class="chart-title">Operações × tamanho do payload</div>
+        <svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Comparação de complexidade">
+          <line x1="40" y1="170" x2="330" y2="170" stroke="#c8d0d8" stroke-width="1"/>
+          <line x1="40" y1="170" x2="40" y2="20" stroke="#c8d0d8" stroke-width="1"/>
+          <line x1="40" y1="170" x2="330" y2="170" stroke="#c8d0d8" stroke-width="1"/>
+          <polyline points="40,168 92,158 144,140 196,112 248,74 300,26" fill="none" stroke="#c0392b" stroke-width="2.5"/>
+          <polyline points="40,170 92,164 144,156 196,144 248,130 300,112" fill="none" stroke="#168b49" stroke-width="2.5"/>
+          <circle cx="248" cy="74" r="3.5" fill="#c0392b"/>
+          <circle cx="248" cy="130" r="3.5" fill="#168b49"/>
+          <text x="248" y="64" fill="#c0392b" font-size="9" font-family="JetBrains Mono">100k → ~10¹⁰</text>
+          <text x="248" y="146" fill="#168b49" font-size="9" font-family="JetBrains Mono">100k → ~10⁵</text>
+          <text x="40" y="188" fill="#8896a8" font-size="9" font-family="JetBrains Mono">1k</text>
+          <text x="196" y="188" fill="#8896a8" font-size="9" font-family="JetBrains Mono">50k</text>
+          <text x="300" y="188" fill="#8896a8" font-size="9" font-family="JetBrains Mono">100k</text>
+          <text x="150" y="12" fill="#c0392b" font-size="10" font-family="JetBrains Mono">O(n²) — antigo</text>
+          <text x="150" y="26" fill="#168b49" font-size="10" font-family="JetBrains Mono">O(n) — novo</text>
+        </svg>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-title">Memória do processamento</div>
+        <svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Comparação de memória">
+          <line x1="40" y1="170" x2="330" y2="170" stroke="#c8d0d8" stroke-width="1"/>
+          <line x1="40" y1="170" x2="40" y2="20" stroke="#c8d0d8" stroke-width="1"/>
+          <polyline points="40,168 92,162 144,150 196,132 248,104 300,64" fill="none" stroke="#c0392b" stroke-width="2.5"/>
+          <polyline points="40,169 92,168 144,166 196,164 248,162 300,158" fill="none" stroke="#168b49" stroke-width="2.5"/>
+          <circle cx="300" cy="64" r="3.5" fill="#c0392b"/>
+          <circle cx="300" cy="158" r="3.5" fill="#168b49"/>
+          <text x="180" y="52" fill="#c0392b" font-size="9" font-family="JetBrains Mono">antes: OOM</text>
+          <text x="180" y="150" fill="#168b49" font-size="9" font-family="JetBrains Mono">depois: &lt; 2 GB fixo</text>
+          <text x="40" y="188" fill="#8896a8" font-size="9" font-family="JetBrains Mono">1k</text>
+          <text x="196" y="188" fill="#8896a8" font-size="9" font-family="JetBrains Mono">50k</text>
+          <text x="300" y="188" fill="#8896a8" font-size="9" font-family="JetBrains Mono">100k</text>
+        </svg>
+      </div>
+    </div>
+
+    <p>
+      Chunking streaming mantém o pico de memória <strong>constante</strong> — o payload
+      inteiro nunca fica residente. É por isso que o mesmo nó processa 10 ou 100 mil
+      itens sem trocar de máquina.
+    </p>
+
+    <div class="didactic">
+      <div class="didactic-title">Explicação didática</div>
+      <p>
+        Imagine uma esteira com 100 mil caixas. No jeito antigo, para cada caixa a
+        pessoa voltava e conferia todas as outras — o processo travava. No novo, cada
+        caixa passa uma única vez e você anota numa lista quem já viu: a esteira nunca
+        para, mesmo com 100 mil caixas.
+      </p>
+    </div>
+
+    <h2><span class="num">6.</span> Memoização entre execuções</h2>
+    <p>
+      Valores estáveis (limiar, taxa, config) são cacheados com
+      <code>$getWorkflowStaticData('global')</code> — calculados 1x e reutilizados
+      nas execuções seguintes, sem repetir chamadas caras.
+    </p>
+    <pre><code><span class="c">// Memoize Reference — cache entre execuções</span>
+const staticData = $getWorkflowStaticData('global');
+if (staticData.scoreThreshold === undefined) {
+  staticData.scoreThreshold = 70;  <span class="c">// busca cara feita 1x</span>
+}
+
+<span class="c">// Segunda execução: cachedAt NÃO muda</span></code></pre>
+
+    <h2><span class="num">7.</span> Biblioteca reutilizável 3-lib</h2>
+    <table>
+      <tr><th>Arquivo</th><th>Funções</th></tr>
+      <tr><td><code>payload-lib.js</code></td><td><code>chunk</code> · <code>normalizeStream</code> · <code>dedupe</code> · <code>aggregate</code> · <code>memoizeGlobal</code> · <code>toOutput</code></td></tr>
+      <tr><td><code>payload-lib.py</code></td><td><code>chunk</code> · <code>dedupe</code> · <code>aggregate</code> · <code>parse_payload</code> · <code>to_output</code></td></tr>
+    </table>
+    <p>
+      <strong>Fonte da verdade:</strong> nunca editar um nó Code sem atualizar a lib.
+      Os workflows embutem cópias das funções usadas; a lib é o padrão único.
+    </p>
+
+    <h2><span class="num">8.</span> Workflows entregues</h2>
+    <table>
+      <tr><th>Workflow</th><th>Tipo</th><th>Função</th></tr>
+      <tr><td><code>[CC] NOS - JS Payload Normalizer</code></td><td>Webhook /nos/js-normalizer</td><td>Parse 1x, chunking streaming, dedupe e normalização O(n)</td></tr>
+      <tr><td><code>[CC] NOS - Python Payload Enricher</code></td><td>Webhook /nos/python-enricher</td><td>Enriquecimento/agregação com stdlib (set + Counter)</td></tr>
+      <tr><td><code>[CC] NOS - Expressions &amp; Memo Playground</code></td><td>Manual</td><td>Expressões avançadas + memoização ($getWorkflowStaticData)</td></tr>
+    </table>
+
+    <h2><span class="num">9.</span> Métricas de sucesso</h2>
+    <table>
+      <tr><th>Métrica</th><th>Antes</th><th>Meta</th></tr>
+      <tr><td>Payload 100k itens</td><td>OOM / timeout</td><td>Streaming, &lt; 2 GB pico</td></tr>
+      <tr><td>Complexidade de normalização</td><td>O(n²)</td><td>O(n) padrão</td></tr>
+      <tr><td>Re-parse de JSON por pipeline</td><td>Múltiplos por etapa</td><td>1x na entrada</td></tr>
+      <tr><td>Código duplicado entre workflows</td><td>Alto (copiar/colar)</td><td>Biblioteca única 3-lib</td></tr>
+      <tr><td>Expressões de manutenção difícil</td><td>Inline, não testáveis</td><td>Padronizadas + JSONata</td></tr>
+    </table>
+
+    <h2><span class="num">10.</span> Entregas</h2>
+    <table>
+      <tr><th>Pasta</th><th>Conteúdo</th><th>Formato</th></tr>
+      <tr><td><code>1-standards/</code></td><td>3 padrões: nós Code JS, Python no n8n, expressões avançadas</td><td>Markdown</td></tr>
+      <tr><td><code>2-workflows/</code></td><td>3 workflows validados com n8nac</td><td>.workflow.ts</td></tr>
+      <tr><td><code>3-lib/</code></td><td>Biblioteca reutilizável payload-lib (JS + Python)</td><td>JS + Python</td></tr>
+      <tr><td><code>4-retrofit/</code></td><td>Como adaptar nós Code existentes (ADPLAN, PRO ANALISES, CC)</td><td>Markdown</td></tr>
+      <tr><td><code>5-monitoring/</code></td><td>Queries de performance + alertas de duração/dedupe</td><td>Markdown</td></tr>
+      <tr><td><code>6-automation/</code></td><td>Deploy com gate de aprovação (dry-run)</td><td>Shell</td></tr>
+      <tr><td><code>7-apresentacao/</code></td><td>Deck HTML + demo + este relatório</td><td>HTML + Markdown</td></tr>
+      <tr><td><code>MANUAL-IMPLEMENTACAO.md</code></td><td>Manual de implementação completo (6 fases + rollback + checklist de homologação)</td><td>Markdown</td></tr>
+    </table>
+
+    <div class="callout">
+      <strong>Status:</strong> desenvolvido · workflows validados e prontos para produção ·
+      aguardando homologação. Nenhum workflow foi publicado no n8n nesta etapa.
+      Implementar seguindo o <code>MANUAL-IMPLEMENTACAO.md</code> na raiz da atividade.
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

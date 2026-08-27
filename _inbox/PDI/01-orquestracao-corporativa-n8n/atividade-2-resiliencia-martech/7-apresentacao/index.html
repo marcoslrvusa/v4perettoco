@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDI — Resiliência MarTech n8n</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #07080a;
+  --bg2: #0d0f13;
+  --surface: #14181d;
+  --surface2: #1a1f26;
+  --border: #232a33;
+  --border2: #2e3845;
+  --text: #e8ecf0;
+  --text2: #8896a8;
+  --text3: #5a6a7a;
+  --green: #00e699;
+  --red: #ff4757;
+  --yellow: #ffc800;
+  --blue: #4d9fff;
+  --orange: #ff8c42;
+  --code-bg: #0d1014;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── NAV ─── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; height: 48px;
+  background: rgba(7,8,10,0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 28px; z-index: 100;
+  font-size: 12px;
+}
+.nav-logo { color: var(--green); font-weight: 500; letter-spacing: 0.5px; }
+.nav-logo span { color: var(--text3); font-weight: 300; }
+.nav-actions { display: flex; gap: 8px; }
+.nav-actions button {
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--text2); padding: 4px 14px; border-radius: 4px;
+  cursor: pointer; font-family: inherit; font-size: 11px;
+  transition: 0.15s;
+}
+.nav-actions button:hover { border-color: var(--green); color: var(--green); }
+.progress { position: fixed; top: 48px; left: 0; right: 0; height: 2px; background: var(--border); z-index: 100; }
+.progress-bar { height: 100%; background: var(--green); width: 0%; transition: width 0.3s; }
+
+/* ─── SLIDE ─── */
+.slide {
+  min-height: 100vh; padding: 80px 64px 48px;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; border-bottom: 1px solid var(--border);
+  background: radial-gradient(ellipse 70% 50% at 50% -10%, rgba(0,230,153,0.025) 0%, transparent 70%);
+}
+.slide-num {
+  position: absolute; top: 64px; right: 48px;
+  font-size: 11px; color: var(--text3); letter-spacing: 2px;
+}
+.tag {
+  display: inline-block; font-size: 11px; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--green);
+  margin-bottom: 20px; border: 1px solid rgba(0,230,153,0.25);
+  padding: 5px 12px; background: rgba(0,230,153,0.04);
+}
+
+/* ─── TYPOGRAPHY ─── */
+h1 {
+  font-size: clamp(36px, 5vw, 68px);
+  font-weight: 500; line-height: 1.05; letter-spacing: -1px;
+}
+h1 .g { color: var(--green); }
+h1 .r { color: var(--red); }
+h1 .y { color: var(--yellow); }
+h1 .b { color: var(--blue); }
+h2 {
+  font-size: clamp(22px, 3vw, 38px);
+  font-weight: 500; letter-spacing: -0.5px; margin-bottom: 16px;
+  line-height: 1.2;
+}
+h3 {
+  font-size: 13px; font-weight: 500; text-transform: uppercase;
+  letter-spacing: 1.5px; color: var(--green); margin-bottom: 12px;
+}
+.sub {
+  font-size: 14px; color: var(--text2); line-height: 1.6; max-width: 680px; margin-bottom: 20px;
+}
+
+/* ─── CODE BLOCKS ─── */
+pre {
+  background: var(--code-bg); border: 1px solid var(--border);
+  padding: 16px 20px; border-radius: 6px; overflow-x: auto;
+  font-size: 12px; line-height: 1.7; color: var(--text2);
+}
+code { font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+pre .k { color: var(--blue); }
+pre .s { color: var(--green); }
+pre .c { color: var(--text3); }
+pre .v { color: var(--yellow); }
+pre .o { color: var(--red); }
+pre .f { color: var(--orange); }
+
+/* ─── CARDS ─── */
+.card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+  padding: 20px 24px; transition: 0.15s;
+}
+.card:hover { border-color: var(--border2); }
+.card-title { font-size: 12px; font-weight: 500; color: var(--green); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.card p, .card li { font-size: 12px; line-height: 1.7; color: var(--text2); }
+.card ul { list-style: none; }
+.card ul li::before { content: '→ '; color: var(--green); }
+.card ul li { margin-bottom: 4px; }
+
+/* ─── GRID ─── */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 8px; }
+.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 8px; }
+.g4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-top: 8px; }
+
+/* ─── TABLE ─── */
+table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 12px; }
+th { text-align: left; padding: 10px 14px; border-bottom: 2px solid var(--green); color: var(--green); font-weight: 500; text-transform: uppercase; letter-spacing: 1px; font-size: 10px; }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text2); }
+tr:hover td { color: var(--text); }
+
+/* ─── BADGE ─── */
+.badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+.b-crit { background: rgba(255,71,87,0.12); color: var(--red); }
+.b-warn { background: rgba(255,200,0,0.12); color: var(--yellow); }
+.b-info { background: rgba(77,159,255,0.12); color: var(--blue); }
+.b-ok { background: rgba(0,230,153,0.12); color: var(--green); }
+.b-p0 { background: rgba(255,71,87,0.15); color: var(--red); }
+.b-p1 { background: rgba(255,200,0,0.12); color: var(--yellow); }
+
+/* ─── PIPELINE ─── */
+.pipeline { margin-top: 12px; }
+.step {
+  display: flex; align-items: flex-start; gap: 14px;
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 14px 18px; margin-bottom: 8px; background: var(--surface);
+}
+.step-idx {
+  min-width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,230,153,0.1); border: 1px solid rgba(0,230,153,0.3);
+  color: var(--green); font-size: 11px; font-weight: 500;
+}
+.step h4 { font-size: 12px; color: var(--text); margin-bottom: 4px; }
+.step p { font-size: 11px; color: var(--text2); line-height: 1.6; }
+
+/* ─── METRIC CARDS ─── */
+.metric { background: var(--surface); border: 1px solid var(--slate); border-radius: 6px; padding: 18px 20px; text-align: center; border-color: var(--border); }
+.metric .val { font-size: 28px; font-weight: 500; color: var(--green); }
+.metric .label { font-size: 11px; color: var(--text2); margin-top: 6px; text-transform: uppercase; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-logo">PDI<span> // MARTECH RESILIENCE</span></div>
+  <div class="nav-actions">
+    <button onclick="window.print()">Print / PDF</button>
+  </div>
+</div>
+<div class="progress"><div class="progress-bar" id="bar"></div></div>
+
+<!-- SLIDE 1 — CAPA -->
+<section class="slide" id="s1">
+  <div class="slide-num">SLIDE 01 / 08</div>
+  <span class="tag">PDI — Atividade 02</span>
+  <h1>Resiliência <span class="g">MarTech</span><br>n8n Enterprise</h1>
+  <p class="sub">Filas assíncronas com controle de concorrência, processamento de payloads pesados com checkpoint e observabilidade completa de sincronização com CRMs — antes que a falha chegue ao cliente.</p>
+  <p class="sub" style="color:var(--text3);font-size:12px;">Status: <span class="badge b-warn">NÃO publicado</span> · Aguardando homologação</p>
+</section>
+
+<!-- SLIDE 2 — PROBLEMA -->
+<section class="slide">
+  <div class="slide-num">SLIDE 02 / 08</div>
+  <div class="tag">Problema</div>
+  <h2>Síncrono, frágil e <span class="r">às cegas</span></h2>
+  <div class="g3" style="margin-top:28px;">
+    <div class="card">
+      <div class="card-title">Fila</div>
+      <p>Requisições MarTech processadas dentro do webhook. Em picos (campanha, importação), a instância trava e o cliente não recebe ACK.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Payload pesado</div>
+      <p>Processamento de 10k+ itens roda de uma vez. Um timeout no meio perde tudo — o job recomeça do zero.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Sem observabilidade</div>
+      <p>Falha de sync não é registrada. Divergência entre o esperado e o syncado só é descoberta quando o cliente reclama.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 3 — ARQUITETURA -->
+<section class="slide">
+  <div class="slide-num">SLIDE 03 / 08</div>
+  <div class="tag">Arquitetura</div>
+  <h2>Pipeline assíncrono em <span class="g">4 etapas</span></h2>
+  <div class="pipeline">
+    <div class="step">
+      <div class="step-idx">1</div>
+      <div><h4>[CC] MT Queue Gateway</h4><p>Webhook de entrada. Enfileira em <code>mt_jobs</code> e responde <span class="badge b-ok">ACK 202</span> imediato. Idempotência por <code>job_key</code>.</p></div>
+    </div>
+    <div class="step">
+      <div class="step-idx">2</div>
+      <div><h4>[CC] MT - Queue Worker</h4><p>Polling a cada 15s. Respeita o <span class="badge b-info">semáforo mt_concurrency</span> (slots por fila) e delega o processamento pesado.</p></div>
+    </div>
+    <div class="step">
+      <div class="step-idx">3</div>
+      <div><h4>[CC] MT - Heavy Payload Processor</h4><p>Normalização em chunks (JS) + enriquecimento opcional (Python). Grava <span class="badge b-ok">checkpoint mt_job_progress</span> por chunk.</p></div>
+    </div>
+    <div class="step">
+      <div class="step-idx">4</div>
+      <div><h4>[CC] MT - CRM Sync Observabilidade</h4><p>Endpoint <code>/mt/crm-sync</code>. Registra <code>mt_sync_log</code>, atualiza <code>mt_crm_health</code> e detecta <span class="badge b-crit">drift</span>.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 4 — DADOS -->
+<section class="slide">
+  <div class="slide-num">SLIDE 04 / 08</div>
+  <div class="tag">Schema Supabase</div>
+  <h2>v3.0 — <span class="g">aditivo</span>, sem tocar no error_*</h2>
+  <div class="g2" style="margin-top:28px;">
+    <div>
+      <h3>Tabelas</h3>
+      <table>
+        <tr><th>Nome</th><th>Uso</th></tr>
+        <tr><td><code>mt_jobs</code></td><td>Fila assíncrona (queued/running/done/failed)</td></tr>
+        <tr><td><code>mt_concurrency</code></td><td>Semáforo distribuído por fila</td></tr>
+        <tr><td><code>mt_job_progress</code></td><td>Checkpoint de chunk de payload pesado</td></tr>
+        <tr><td><code>mt_sync_log</code></td><td>Auditoria de cada sync de CRM</td></tr>
+        <tr><td><code>mt_crm_health</code></td><td>Saúde agregada por object+direction</td></tr>
+        <tr><td><code>mt_sync_delta</code></td><td>Divergências abertas (drift)</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3>Views</h3>
+      <table>
+        <tr><th>Nome</th><th>Uso</th></tr>
+        <tr><td><code>vw_mt_queue_backlog</code></td><td>Backlog + stale por fila</td></tr>
+        <tr><td><code>vw_mt_slots</code></td><td>Slots em uso vs limite</td></tr>
+        <tr><td><code>vw_mt_sync_summary_24h</code></td><td>Resumo de sync por objeto</td></tr>
+        <tr><td><code>vw_mt_drift_abertos</code></td><td>Divergências não resolvidas</td></tr>
+        <tr><td><code>vw_mt_crm_health</code></td><td>Health abaixo do mínimo</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 5 — DRIFT -->
+<section class="slide">
+  <div class="slide-num">SLIDE 05 / 08</div>
+  <div class="tag">Detecção de divergência</div>
+  <h2><span class="y">Drift</span> — detectado antes do cliente</h2>
+  <pre><code><span class="c">// Tolerância configurável (default 5%)</span>
+esperado   = 1200   <span class="c">// o que o workflow devia syncar</span>
+confirmado = 1184   <span class="c">// o que o CRM confirmou</span>
+drift      = (1200 - 1184) / 1200 ≈ <span class="v">1.3%</span>  <span class="c">// ok, dentro da tolerância</span>
+
+<span class="c">// Divergência real:</span>
+esperado   = 1000   <span class="c">// importante manter min < 5%</span>
+confirmado = 860
+drift      = <span class="r">14%</span>   <span class="c">// &gt; 5% → mt_sync_delta aberto + alerta</span></code></pre>
+  <p class="sub">O envelope de sync calcula hash de payload e resposta; o Observabilidade decide se há drift e alimenta o dashboard em tempo real.</p>
+</section>
+
+<!-- SLIDE 6 — RETENTATIVA / CHECKPOINT -->
+<section class="slide">
+  <div class="slide-num">SLIDE 06 / 08</div>
+  <div class="tag">Payload pesado</div>
+  <h2>Retomada do <span class="g">chunk</span>, não do zero</h2>
+  <pre><code><span class="c">// mt_job_progress — checkpoint por chunk</span>
+chunk_index  4 / 10
+status       running
+
+<span class="c">// Falha no chunk 4? Redispara do 4 (não do 0)</span>
+Queries:
+  SELECT * FROM mt_job_progress WHERE job_id = :id
+
+<span class="c">// Worker re-enfileira com backoff exponencial:</span>
+retry_at   = now + 30s   <span class="c">// tentativa 1</span>
+retry_at   = now + 1m    <span class="c">// tentativa 2</span>
+retry_at   = now + 2m    <span class="c">// tentativa 3</span>
+max_attempts = 3</code></pre>
+  <p class="sub">O envelope de erro (atividade 1, Error Handler Central) continua tratando o que escapar daqui.</p>
+</section>
+
+<!-- SLIDE 7 — MÉTRICAS -->
+<section class="slide">
+  <div class="slide-num">SLIDE 07 / 08</div>
+  <div class="tag">Métricas</div>
+  <h2>Antes → <span class="g">Meta</span></h2>
+  <div class="g4" style="margin-top:28px;">
+    <div class="metric"><div class="val">&lt;2s</div><div class="label">ACK 202 (antes: trava)</div></div>
+    <div class="metric"><div class="val">Chunk</div><div class="label">Payload retomável</div></div>
+    <div class="metric"><div class="val">&lt;15m</div><div class="label">drift detectado</div></div>
+    <div class="metric"><div class="val">Slot</div><div class="label">concorrência controlada</div></div>
+  </div>
+  <br>
+  <table style="max-width:720px;margin-top:20px;">
+    <tr><th>Métrica</th><th>Antes</th><th>Meta</th></tr>
+    <tr><td>ACK de requisição MarTech</td><td>Trava no webhook</td><td><span class="badge b-ok">&lt; 2s</span></td></tr>
+    <tr><td>Job pesado retomável</td><td>Não</td><td><span class="badge b-ok">Sim</span></td></tr>
+    <tr><td>Falha de sync detectada</td><td>Cliente reclama</td><td><span class="badge b-ok">&lt; 15 min</span></td></tr>
+    <tr><td>Divergência (drift) visível</td><td>Não</td><td><span class="badge b-ok">Dashboard</span></td></tr>
+  </table>
+</section>
+
+<!-- SLIDE 8 — ENTREGAS / NEXT -->
+<section class="slide">
+  <div class="slide-num">SLIDE 08 / 08</div>
+  <div class="tag">Entregas</div>
+  <h2>Próximos passos</h2>
+  <div class="g2" style="margin-top:28px;">
+    <div class="card">
+      <div class="card-title">Entregas</div>
+      <ul>
+        <li>1-standards/ — 3 padrões</li>
+        <li>2-workflows/ — 4 pipelines .workflow.ts</li>
+        <li>3-supabase/ — schema v3.0 + migração</li>
+        <li>4-retrofit/ — adaptação de fluxos existentes</li>
+        <li>5-monitoring/ — queries + alertas</li>
+        <li>6-automation/ — scripts de deploy</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Próximos passos</div>
+      <ul>
+        <li>Homologar com mock (job de teste no gateway)</li>
+        <li>Aplicar schema v3.0 (run-migration.sh)</li>
+        <li>Publicar e ajustar ID do sub-workflow no worker</li>
+        <li>Retrofit do primeiro cliente real</li>
+        <li>Configurar alertas do dashboard</li>
+      </ul>
+    </div>
+  </div>
+  <br><br>
+  <p class="sub" style="color:var(--red);">Status: desenvolvido · aguardando homologação · NÃO publicado em produção.</p>
+</section>
+
+<script>
+const bar = document.getElementById('bar');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  const p = h > 0 ? (window.scrollY / h) * 100 : 0;
+  bar.style.width = p + '%';
+});
+</script>
+</body>
+</html>
