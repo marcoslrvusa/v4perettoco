@@ -1,0 +1,9 @@
+{
+  "nodes": [{
+    "name": "Upsert CRM (log estruturado)",
+    "type": "n8n-nodes-base.function",
+    "parameters": {
+      "functionCode": "const trace=$execution.id; const r=await upsert(lead); console.log(JSON.stringify({ts:new Date().toISOString(), level:r.ok?'info':'error', trace_id:trace, integration:'hubspot', op:'upsert_lead', code:r.code, lead_id:lead.id}));"
+    }
+  }]
+}

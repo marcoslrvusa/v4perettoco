@@ -1,46 +1,212 @@
 {
-  "title": "Observabilidade e Logs de Sincronização n8n-CRM",
-  "area": "Automação & Infraestrutura",
-  "autor": "Marcos Perettoco",
-  "unidade": "V4 Company / FV Marketing",
-  "data": "25/08/2026",
-  "problem": "Falhas de sincronização com CRMs terceiros (Salesforce, HubSpot, RD Station) só eram percebidas quando o cliente reclamava — não havia rastro estruturado de qual registro falhou, em qual etapa e por quê.",
-  "diagnosis": [
-    "Sem trace correlacionando a execução inteira do workflow",
-    "Logs não estruturados impossibilitando alertas por taxa de erro",
-    "Falta de SLO de latência e de detecção proativa de falhas"
-  ],
-  "architecture": [
-    "Padrão de log estruturado (JSON) com trace_id, entity, crm, action, record_id",
-    "Workflow de observabilidade que propaga trace e emite log centralizado",
-    "Painel SQL com taxa de erro por CRM, falhas consecutivas e p95 de latência",
-    "Alerta proativo em #ops-crm antes do impacto ao cliente"
-  ],
-  "deliverables": [
-    "STANDARD-OBSERVABILITY-LOGS.md (padrão + SLO)",
-    "Workflow n8n de log + alerta proativo",
-    "Queries de dashboard (erro, falhas consecutivas, p95)"
-  ],
-  "metrics": [
+  "autor": "Marcos L. R. V. (Coordenador de Engenharia)",
+  "unidade": "V4 Company / Squad de Engenharia de IA",
+  "data": "2026-08-27",
+  "title": "Observabilidade e Logs de Sincronizacao n8n-CRM",
+  "area": "Orquestracao Corporativa (n8n)",
+  "slug": "orquestracao-corporativa-n8n-a4",
+  "sections": [
     [
-      "Detecção de falha de sync",
-      "Dias",
-      "< 1 min"
+      "Resumo Executivo",
+      [
+        [
+          "p",
+          "Esta atividade institui um contrato de observabilidade para todas as integracoes n8n->CRM da operacao. O objetivo nao e 'ter logs', e sim reduzir o MTTR de falhas de sincronizacao de dias para minutos e criar um sinal proativo que protege a experiencia do cliente antes da reclamacao."
+        ],
+        [
+          "p",
+          "O contrato e: todo erro de sync gera evento estruturado com trace_id, painel SQL de correlacao e alerta em < 1 min."
+        ]
+      ]
     ],
     [
-      "Visibilidade por CRM",
-      "0%",
-      "100%"
+      "Contexto de Producao",
+      [
+        [
+          "ul",
+          [
+            "n8n orquestra 12 integracoes com 4 CRMs diferentes.",
+            "Hoje o erro de sincronizacao so aparece quando o cliente reclama (dias depois).",
+            "Sem trace_id: impossivel correlacionar uma falha de API ao registro afetado."
+          ]
+        ]
+      ]
     ],
     [
-      "Alerta proativo",
-      "Não",
-      "Sim (SLO)"
+      "O Problema e o Blast Radius",
+      [
+        [
+          "p",
+          "Uma falha de API no CRM (timeout/401/limite) faz o no n8n falhar silenciosamente ou marcar registro como 'ok' sem confirmar. O lead some do funil sem ninguem saber."
+        ],
+        [
+          "table",
+          [
+            "Falha",
+            "Hoje",
+            "Com contrato"
+          ],
+          [
+            [
+              "Deteccao",
+              "reclamacao (dias)",
+              "< 1 min"
+            ],
+            [
+              "Correlacao registro->causa",
+              "manual",
+              "trace_id"
+            ],
+            [
+              "Visibilidade por CRM",
+              "0%",
+              "100%"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Diagnostico e Causa Raiz",
+      [
+        [
+          "ul",
+          [
+            "Ausencia de padrao de log nas saidas do n8n (cada no loga diferente).",
+            "Sem ID de correlacao entre trigger, execucao e escrita no CRM.",
+            "Sem SLO de sincronizacao -> nada alerta."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Decisao Arquitetural (ADR)",
+      [
+        [
+          "p",
+          "ADR-011 — Log estruturado + painel + alerta, nao APM caro."
+        ],
+        [
+          "table",
+          [
+            "Opcao",
+            "Pro",
+            "Contra",
+            "Decisao"
+          ],
+          [
+            [
+              "Log estruturado + painel SQL",
+              "simples, sem custo",
+              "consulta manual",
+              "ESCOLHIDA"
+            ],
+            [
+              "APM (Datadog)",
+              "rico",
+              "custo + setup",
+              "futuro"
+            ],
+            [
+              "Contador no n8n",
+              "zero",
+              "sem contexto",
+              "rejeitada"
+            ]
+          ]
+        ],
+        [
+          "note",
+          "Nao precisa de stack APM para ter observabilidade de negocio; um log JSON + view SQL ja reduz MTTR drasticamente."
+        ]
+      ]
+    ],
+    [
+      "Entregas desta Atividade",
+      [
+        [
+          "ul",
+          [
+            "STANDARD-OBSERVABILITY-LOGS.md — contrato de log (schema + niveis).",
+            "observability_dashboard.sql — view de correlacao por trace_id.",
+            "exemplo de no n8n com log estruturado (trecho)."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Plano de Validacao e Rollout",
+      [
+        [
+          "ol",
+          [
+            "Aplicar o padrao em 1 integracao (piloto) por 1 semana.",
+            "Medir MTTR antes/depois (alvo: de dias para < 15 min).",
+            "Expandir para as 12 integracoes via template de no.",
+            "Alerta: taxa de erro por CRM > 2% em 5 min -> Slack."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Metricas e SLO",
+      [
+        [
+          "table",
+          [
+            "SLO",
+            "Alvo"
+          ],
+          [
+            [
+              "Taxa de erro por CRM (5 min)",
+              "<= 2%"
+            ],
+            [
+              "MTTR de falha de sync",
+              "< 15 min"
+            ],
+            [
+              "Cobertura de trace_id",
+              "100%"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Riscos e Mitigacoes",
+      [
+        [
+          "table",
+          [
+            "Risco",
+            "Mitigacao"
+          ],
+          [
+            [
+              "Log vira ruido",
+              "nivel + amostragem"
+            ],
+            [
+              "PII no log",
+              "mascarar e-mail/cnpj"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Proximos Passos",
+      [
+        [
+          "ul",
+          [
+            "Tracing distribuido (OTel) quando houver orquestracao multi-servico.",
+            "SLO de negocio por cliente."
+          ]
+        ]
+      ]
     ]
-  ],
-  "next": [
-    "Homologar o workflow de observabilidade em produção",
-    "Integrar o painel ao dashboard do Command Center"
-  ],
-  "docx": "orquestracao-corporativa-n8n-a4.docx"
+  ]
 }

@@ -1,0 +1,5 @@
+CREATE (c:Cliente {id:'C1', nome:'Peretto'})
+CREATE (ct:Contrato {num:'K-01'})
+CREATE (f:Fatura {id:'F-9', valor:1200})
+CREATE (c)-[:TEM]->(ct)
+CREATE (ct)-[:GERA]->(f)

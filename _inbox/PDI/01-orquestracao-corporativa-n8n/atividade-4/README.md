@@ -1,23 +1,101 @@
-# PDI — Observabilidade e Logs de Sincronização n8n-CRM
+# Observabilidade e Logs de Sincronizacao n8n-CRM
 
-> **Área:** Automação & Infraestrutura
-> **Unidade:** V4 Company / FV Marketing
-> **Autor:** Marcos Perettoco
-> **Data:** 25/08/2026
-> **Status:** **Entregue (desenvolvido) · NÃO publicado — aguardando homologação**
+Orquestracao Corporativa (n8n)
 
----
+## Resumo Executivo
 
-## Problema Resolvido
+Esta atividade institui um contrato de observabilidade para todas as integracoes n8n->CRM da operacao. O objetivo nao e 'ter logs', e sim reduzir o MTTR de falhas de sincronizacao de dias para minutos e criar um sinal proativo que protege a experiencia do cliente antes da reclamacao.
 
-Falhas de sincronização com CRMs terceiros (Salesforce, HubSpot, RD Station) muitas vezes só são percebidas quando o cliente reclama — não há rastro estruturado de qual registro falhou, em qual etapa e por quê. Esta atividade entrega um padrão de observabilidade: logs enriquecidos, trace de ponta a ponta e alerta proativo antes de impactar o cliente.
+O contrato e: todo erro de sync gera evento estruturado com trace_id, painel SQL de correlacao e alerta em < 1 min.
 
-## Entregas desta PDI
+## Contexto de Producao
 
-- Padrão de logs estruturados (STANDARD-OBSERVABILITY-LOGS)
-- Workflow n8n de log + alerta proativo
-- Queries de dashboard (erro, falhas consecutivas, p95)
+- n8n orquestra 12 integracoes com 4 CRMs diferentes.
 
-## Validação
+- Hoje o erro de sincronizacao so aparece quando o cliente reclama (dias depois).
 
-Artefatos desenvolvidos e versionados. Publicação em produção aguarda homologação.
+- Sem trace_id: impossivel correlacionar uma falha de API ao registro afetado.
+
+## O Problema e o Blast Radius
+
+Uma falha de API no CRM (timeout/401/limite) faz o no n8n falhar silenciosamente ou marcar registro como 'ok' sem confirmar. O lead some do funil sem ninguem saber.
+
+| Falha | Hoje | Com contrato |
+
+| --- | --- | --- |
+
+| Deteccao | reclamacao (dias) | < 1 min |
+
+| Correlacao registro->causa | manual | trace_id |
+
+| Visibilidade por CRM | 0% | 100% |
+
+## Diagnostico e Causa Raiz
+
+- Ausencia de padrao de log nas saidas do n8n (cada no loga diferente).
+
+- Sem ID de correlacao entre trigger, execucao e escrita no CRM.
+
+- Sem SLO de sincronizacao -> nada alerta.
+
+## Decisao Arquitetural (ADR)
+
+ADR-011 — Log estruturado + painel + alerta, nao APM caro.
+
+| Opcao | Pro | Contra | Decisao |
+
+| --- | --- | --- | --- |
+
+| Log estruturado + painel SQL | simples, sem custo | consulta manual | ESCOLHIDA |
+
+| APM (Datadog) | rico | custo + setup | futuro |
+
+| Contador no n8n | zero | sem contexto | rejeitada |
+
+> **Nota:** Nao precisa de stack APM para ter observabilidade de negocio; um log JSON + view SQL ja reduz MTTR drasticamente.
+
+## Entregas desta Atividade
+
+- STANDARD-OBSERVABILITY-LOGS.md — contrato de log (schema + niveis).
+
+- observability_dashboard.sql — view de correlacao por trace_id.
+
+- exemplo de no n8n com log estruturado (trecho).
+
+## Plano de Validacao e Rollout
+
+1. Aplicar o padrao em 1 integracao (piloto) por 1 semana.
+
+2. Medir MTTR antes/depois (alvo: de dias para < 15 min).
+
+3. Expandir para as 12 integracoes via template de no.
+
+4. Alerta: taxa de erro por CRM > 2% em 5 min -> Slack.
+
+## Metricas e SLO
+
+| SLO | Alvo |
+
+| --- | --- |
+
+| Taxa de erro por CRM (5 min) | <= 2% |
+
+| MTTR de falha de sync | < 15 min |
+
+| Cobertura de trace_id | 100% |
+
+## Riscos e Mitigacoes
+
+| Risco | Mitigacao |
+
+| --- | --- |
+
+| Log vira ruido | nivel + amostragem |
+
+| PII no log | mascarar e-mail/cnpj |
+
+## Proximos Passos
+
+- Tracing distribuido (OTel) quando houver orquestracao multi-servico.
+
+- SLO de negocio por cliente.

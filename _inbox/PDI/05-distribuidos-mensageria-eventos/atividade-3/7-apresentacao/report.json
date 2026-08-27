@@ -1,40 +1,180 @@
 {
-  "title": "Contingência Automatizada (Circuit Breaker) para APIs Externas",
-  "area": "Sistemas Distribuídos",
-  "autor": "Marcos Perettoco",
-  "unidade": "V4 Company / FV Marketing",
-  "data": "25/08/2026",
-  "problem": "Quedas de CRMs/ERPs externos derrubavam workflows inteiros.",
-  "diagnosis": [
-    "Sem proteção contra instabilidade de terceiros",
-    "Chamadas repetidas agravando a falha",
-    "Sem fallback"
-  ],
-  "architecture": [
-    "Circuit Breaker com estados closed/open/half-open",
-    "Threshold de falhas + cooldown + recovery",
-    "Fallback automático quando aberto",
-    "Recuperação automática testando 1 requisição"
-  ],
-  "deliverables": [
-    "CIRCUIT-BREAKER.md (padrão)",
-    "circuit_breaker.py (implementação)"
-  ],
-  "metrics": [
+  "autor": "Marcos L. R. V. (Coordenador de Engenharia)",
+  "unidade": "V4 Company / Squad de Engenharia de IA",
+  "data": "2026-08-27",
+  "title": "Resiliencia com Circuit Breaker e Retry/Backoff",
+  "area": "Sistemas Distribuidos",
+  "slug": "distribuidos-mensageria-eventos-a3",
+  "sections": [
     [
-      "Cascata de falhas",
-      "Sim",
-      "Mitigada"
+      "Resumo Executivo",
+      [
+        [
+          "p",
+          "Padrao de resiliencia para chamadas a servicos externos (LLM, CRM): Circuit Breaker + retry com backoff e jitter, fallback. Entrego o padrao e uma implementacao funcional."
+        ],
+        [
+          "p",
+          "Sem breaker, 1 API lenta vira fila que derruba o proprio servico."
+        ]
+      ]
     ],
     [
-      "Fallback",
-      "Não",
-      "Sim"
+      "Contexto de Producao",
+      [
+        [
+          "ul",
+          [
+            "LLM/CRM lentos travavam o worker.",
+            "Retry sem backoff multiplicava a carga.",
+            "Sem fallback: erro virou 5xx."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Diagnostico",
+      [
+        [
+          "table",
+          [
+            "Hoje",
+            "Alvo"
+          ],
+          [
+            [
+              "retry imediato",
+              "backoff + jitter"
+            ],
+            [
+              "sem protecao",
+              "breaker"
+            ],
+            [
+              "5xx seco",
+              "fallback"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Decisao Arquitetural (ADR)",
+      [
+        [
+          "p",
+          "ADR-053 — Resiliencia"
+        ],
+        [
+          "table",
+          [
+            "Opcao",
+            "Pro",
+            "Contra",
+            "Decisao"
+          ],
+          [
+            [
+              "CB + backoff + fallback",
+              "protege cascata",
+              "estado",
+              "ESCOLHIDA"
+            ],
+            [
+              "retry infinito",
+              "simples",
+              "piora outage",
+              "rejeitada"
+            ]
+          ]
+        ],
+        [
+          "note",
+          "Closed -> Open apos N falhas; Half-Open testa; fallback em Open."
+        ]
+      ]
+    ],
+    [
+      "Entregas",
+      [
+        [
+          "ul",
+          [
+            "RESILIENCIA.md.",
+            "circuit_breaker.py.",
+            "retry.py."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Validacao",
+      [
+        [
+          "ol",
+          [
+            "Simular API lenta; breaker abre apos limite.",
+            "Fallback em Open (sem 5xx).",
+            "API volta -> Half-Open reabilita."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Metricas e SLO",
+      [
+        [
+          "table",
+          [
+            "SLO",
+            "Alvo"
+          ],
+          [
+            [
+              "Breaker abre em",
+              "<= 5 falhas"
+            ],
+            [
+              "Fallback em outage",
+              "100%"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Riscos",
+      [
+        [
+          "table",
+          [
+            "Risco",
+            "Mitigacao"
+          ],
+          [
+            [
+              "Mal calibrado",
+              "tunar"
+            ],
+            [
+              "Fallback mentiroso",
+              "explicito"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Proximos Passos",
+      [
+        [
+          "ul",
+          [
+            "Aplicar em todas as saidas.",
+            "Metricas de breaker."
+          ]
+        ]
+      ]
     ]
-  ],
-  "next": [
-    "Aplicar aos nós de CRM/ERP nos workflows",
-    "Expor métricas de estado do breaker"
-  ],
-  "docx": "distribuidos-mensageria-eventos-a3.docx"
+  ]
 }

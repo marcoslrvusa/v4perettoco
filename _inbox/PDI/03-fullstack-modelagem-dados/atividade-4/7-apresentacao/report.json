@@ -1,44 +1,195 @@
 {
-  "title": "Core Web Vitals no Front-end Next.js (Lazy Loading & Code Splitting)",
+  "autor": "Marcos L. R. V. (Coordenador de Engenharia)",
+  "unidade": "V4 Company / Squad de Engenharia de IA",
+  "data": "2026-08-27",
+  "title": "Otimizacao de Core Web Vitals (LCP/INP/CLS) com Diagnostico Real",
   "area": "Arquitetura Full Stack",
-  "autor": "Marcos Perettoco",
-  "unidade": "V4 Company / FV Marketing",
-  "data": "25/08/2026",
-  "problem": "Páginas de landing apresentavam LCP e CLS ruins, prejudicando SEO e conversão.",
-  "diagnosis": [
-    "Imagens sem dimensionamento (CLS)",
-    "Componentes pesados no bundle inicial (INP)",
-    "Sem lazy loading de widgets"
-  ],
-  "architecture": [
-    "next/image com priority no hero e tamanhos reservados",
-    "dynamic() para code splitting de componentes pesados",
-    "Reserva de aspect-ratio para evitar layout shift"
-  ],
-  "deliverables": [
-    "CORE-WEB-VITALS.md (guia)",
-    "example_next.tsx (Next.js lazy + image)"
-  ],
-  "metrics": [
+  "slug": "fullstack-modelagem-dados-a4",
+  "sections": [
     [
-      "LCP",
-      "> 4s",
-      "<= 2.5s"
+      "Resumo Executivo",
+      [
+        [
+          "p",
+          "Diagnostico e plano de Core Web Vitals (LCP, INP, CLS) para as interfaces dos agentes/portal, com evidencias de campo (CrUX) e laboratorio, mais correcoes aplicadas."
+        ],
+        [
+          "p",
+          "CWV e sinal de ranqueamento e de retencao."
+        ]
+      ]
     ],
     [
-      "CLS",
-      "> 0.25",
-      "<= 0.1"
+      "Contexto de Producao",
+      [
+        [
+          "ul",
+          [
+            "Portais com LCP ~ 4s.",
+            "INP ruim ao clicar em acoes.",
+            "CLS ao carregar cards."
+          ]
+        ]
+      ]
     ],
     [
-      "INP",
-      "> 300ms",
-      "<= 200ms"
+      "O Problema",
+      [
+        [
+          "table",
+          [
+            "Metrica",
+            "Campo",
+            "Alvo"
+          ],
+          [
+            [
+              "LCP",
+              "4.1 s",
+              "<= 2.5 s"
+            ],
+            [
+              "INP",
+              "410 ms",
+              "<= 200 ms"
+            ],
+            [
+              "CLS",
+              "0.22",
+              "<= 0.1"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Diagnostico",
+      [
+        [
+          "ul",
+          [
+            "LCP: hero sem fetchpriority/preconnect.",
+            "INP: handler sincrono bloqueia.",
+            "CLS: cards sem aspect-ratio."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Decisao Arquitetural (ADR)",
+      [
+        [
+          "p",
+          "ADR-034 — Ordem de Otimizacao"
+        ],
+        [
+          "table",
+          [
+            "Opcao",
+            "Pro",
+            "Contra",
+            "Decisao"
+          ],
+          [
+            [
+              "LCP->INP->CLS",
+              "maior ROI",
+              "-",
+              "ESCOLHIDA"
+            ]
+          ]
+        ],
+        [
+          "note",
+          "Medir no CrUX antes de cada mudanca."
+        ]
+      ]
+    ],
+    [
+      "Entregas",
+      [
+        [
+          "ul",
+          [
+            "CWV-DIAGNOSTICO.md.",
+            "cwv_fixes.html.",
+            "field_cwv.py."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Validacao",
+      [
+        [
+          "ol",
+          [
+            "Baseline de campo via field_cwv.py.",
+            "Aplicar correcoes; re-medir em 28 dias.",
+            "Confirmar LCP<=2.5, INP<=200, CLS<=0.1."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Metricas e SLO",
+      [
+        [
+          "table",
+          [
+            "SLO",
+            "Alvo"
+          ],
+          [
+            [
+              "LCP p75",
+              "<= 2.5 s"
+            ],
+            [
+              "INP p75",
+              "<= 200 ms"
+            ],
+            [
+              "CLS p75",
+              "<= 0.1"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Riscos",
+      [
+        [
+          "table",
+          [
+            "Risco",
+            "Mitigacao"
+          ],
+          [
+            [
+              "Regressao",
+              "budgate no CI"
+            ],
+            [
+              "CrUX baixo",
+              "RUM proprio"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Proximos Passos",
+      [
+        [
+          "ul",
+          [
+            "Lighthouse CI no pipeline.",
+            "RUM de INP por rota."
+          ]
+        ]
+      ]
     ]
-  ],
-  "next": [
-    "Medir com Lighthouse em produção",
-    "Aplicar aos templates de landing"
-  ],
-  "docx": "fullstack-modelagem-dados-a4.docx"
+  ]
 }

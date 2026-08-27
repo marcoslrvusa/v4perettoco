@@ -1,66 +1,44 @@
-# PDI — Apresentação: Sistema Multi-Agente Assíncrono (autoaperfeiçoamento contínuo)
+# Deck PDI — Orquestracao Multi-agente com Handoffs e Isolamento
 
-> **Formato:** 5-6 slides | **Tempo:** 15-20 min
-> **Audiência:** Tech Lead + Squad
+Area: Engenharia de IA
 
----
-
-## Slide 1: Título
-
-```
-PDI: SISTEMA MULTI-AGENTE ASSÍNCRONO (AUTOAPERFEIÇOAMENTO CONTÍNUO)
-
-Marcos Perettoco — V4 Company
-25/08/2026 | Engenharia de IA
-```
-
----
-
-## Slide 2: O Problema
-
-**Agentes atuais eram síncronos e de passo único, sem memória nem melhoria contínua.**
-
-## Diagnóstico
-
-- Sem memória entre execuções
-- Sem comunicação entre agentes
-- Sem loop de autoavaliação
-
-
----
-
-## Slide 3: Arquitetura da Solução
-
-## Abordagem
-
-- Bus de mensagens assíncrono (asyncio/Redis Streams)
-- MemoryStore por agente (curto + longo prazo)
-- CriticAgent que avalia e escreve lições (lessons.md)
-- Orchestrator roteando tarefas por capacidade
-
-
----
-
-## Slide 4: Entregas
-
-## Artefatos
-
-- MULTIAGENT-PROTOCOL.md (protocolo)
-- multiagent.py (protótipo assíncrono)
-- lessons.md (memória de melhoria)
-
-
----
-
-## Slide 5: Métricas de Sucesso
-
-| Métrica | Antes | Depois |
-|--------|-------|--------|
-| Memória entre runs | Não | Sim |
-| Autoaperfeiçoamento | Não | Sim (loop) |
----
-
-## Slide 6: Próximos Passos
-
-- Rodar em ambiente controlado com tarefas reais
-- Persistir MemoryStore em banco
+## Slide 1: Resumo Executivo
+Padrao de orquestracao multi-agente: supervisor + especialistas com handoff explicit, isolamento de contexto, timeouts e fallbacks. Entrego o padrao e um orquestrador real.
+Agente unico vira 'deus' e quebra em prompt longo.
+## Slide 2: Contexto de Producao
+Um agente fazia tudo: triagem, consulta, proposta.
+Prompt gigante -> custo alto.
+Sem timeout: sub-agente travado parava o fluxo.
+## Slide 3: Diagnostico
+SRP ausente entre agentes.
+Contexto compartilhado -> vazamento de PII.
+Sem handoff formal.
+## Slide 4: Decisao Arquitetural (ADR)
+ADR-043 — Topologia Multi-agente
+| Opcao | Pro | Contra | Decisao |
+| --- | --- | --- | --- |
+| Supervisor + handoff | foco, testavel | mais nos | ESCOLHIDA |
+| Agente unico | simples | fragil | rejeitada |
+> Nota: Handoff = mensagem tipada. Cada agente tem contexto proprio e timeout.
+## Slide 5: Entregas
+MULTI-AGENT.md.
+orchestrator.py.
+handoff_schema.py.
+## Slide 6: Validacao
+Simular triagem->consulta->proposta.
+Forcar timeout -> fallback.
+Contexto nao vaza.
+## Slide 7: Metricas e SLO
+| SLO | Alvo |
+| --- | --- |
+| Timeout/agente | <= 15 s |
+| Handoff com fallback | 100% |
+| Vazamento | 0 |
+## Slide 8: Riscos
+| Risco | Mitigacao |
+| --- | --- |
+| Loop | max hops |
+| Custo supervisor | modelo leve |
+## Slide 9: Proximos Passos
+Observabilidade de handoff.
+Eval por agente.

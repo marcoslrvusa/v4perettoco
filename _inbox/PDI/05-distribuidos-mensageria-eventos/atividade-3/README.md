@@ -1,22 +1,85 @@
-# PDI — Contingência Automatizada (Circuit Breaker) para APIs Externas
+# Resiliencia com Circuit Breaker e Retry/Backoff
 
-> **Área:** Sistemas Distribuídos
-> **Unidade:** V4 Company / FV Marketing
-> **Autor:** Marcos Perettoco
-> **Data:** 25/08/2026
-> **Status:** **Entregue (desenvolvido) · NÃO publicado — aguardando homologação**
+Sistemas Distribuidos
 
----
+## Resumo Executivo
 
-## Problema Resolvido
+Padrao de resiliencia para chamadas a servicos externos (LLM, CRM): Circuit Breaker + retry com backoff e jitter, fallback. Entrego o padrao e uma implementacao funcional.
 
-Quedas de CRMs/ERPs externos derrubavam workflows inteiros. Esta atividade entrega um padrão de Circuit Breaker que abre após N falhas, faz fallback e recupera automaticamente, protegendo o sistema contra instabilidades de terceiros.
+Sem breaker, 1 API lenta vira fila que derruba o proprio servico.
 
-## Entregas desta PDI
+## Contexto de Producao
 
-- Padrão de Circuit Breaker
-- Implementação (Python)
+- LLM/CRM lentos travavam o worker.
 
-## Validação
+- Retry sem backoff multiplicava a carga.
 
-Artefatos desenvolvidos e versionados. Publicação em produção aguarda homologação.
+- Sem fallback: erro virou 5xx.
+
+## Diagnostico
+
+| Hoje | Alvo |
+
+| --- | --- |
+
+| retry imediato | backoff + jitter |
+
+| sem protecao | breaker |
+
+| 5xx seco | fallback |
+
+## Decisao Arquitetural (ADR)
+
+ADR-053 — Resiliencia
+
+| Opcao | Pro | Contra | Decisao |
+
+| --- | --- | --- | --- |
+
+| CB + backoff + fallback | protege cascata | estado | ESCOLHIDA |
+
+| retry infinito | simples | piora outage | rejeitada |
+
+> **Nota:** Closed -> Open apos N falhas; Half-Open testa; fallback em Open.
+
+## Entregas
+
+- RESILIENCIA.md.
+
+- circuit_breaker.py.
+
+- retry.py.
+
+## Validacao
+
+1. Simular API lenta; breaker abre apos limite.
+
+2. Fallback em Open (sem 5xx).
+
+3. API volta -> Half-Open reabilita.
+
+## Metricas e SLO
+
+| SLO | Alvo |
+
+| --- | --- |
+
+| Breaker abre em | <= 5 falhas |
+
+| Fallback em outage | 100% |
+
+## Riscos
+
+| Risco | Mitigacao |
+
+| --- | --- |
+
+| Mal calibrado | tunar |
+
+| Fallback mentiroso | explicito |
+
+## Proximos Passos
+
+- Aplicar em todas as saidas.
+
+- Metricas de breaker.

@@ -1,40 +1,161 @@
 {
-  "title": "Trilha NVIDIA Deep Learning Institute + Pipelines de Dados para IA",
+  "autor": "Marcos L. R. V. (Coordenador de Engenharia)",
+  "unidade": "V4 Company / Squad de Engenharia de IA",
+  "data": "2026-08-27",
+  "title": "Fundamentos de IA Generativa (NVIDIA DLI) aplicados a RAG",
   "area": "Engenharia de IA",
-  "autor": "Marcos Perettoco",
-  "unidade": "V4 Company / FV Marketing",
-  "data": "25/08/2026",
-  "problem": "Fundamentar a equipe em pipelines de dados eficientes para IA, base para os agentes e RAG.",
-  "diagnosis": [
-    "Ingestão ad-hoc sem chunking consistente",
-    "Embeddings sem batch assíncrono (estrangulamento de API)",
-    "Falta de versionamento de dataset de embeddings"
-  ],
-  "architecture": [
-    "Estágios: ingest → chunk → embed → store → serve",
-    "Chunk semântico (512-1024 tokens, overlap 10%)",
-    "Embed em batch assíncrono",
-    "pgvector com índice HNSW"
-  ],
-  "deliverables": [
-    "DATA-PIPELINE-AI.md (guia)",
-    "TRILHA.md (registro de conclusão)"
-  ],
-  "metrics": [
+  "slug": "engenharia-ia-rag-vetores-a1",
+  "sections": [
     [
-      "Pipeline documentado",
-      "Não",
-      "Sim"
+      "Resumo Executivo",
+      [
+        [
+          "p",
+          "Conclusao do curso NVIDIA DLI 'Building RAG Agents with LLMs' com transposicao pratica. Entrego notas e um notebook funcional de RAG end-to-end."
+        ],
+        [
+          "p",
+          "A base sustenta as proximas atividades (RAG hibrido, multi-agente, custos)."
+        ]
+      ]
     ],
     [
-      "Trilha NVIDIA DLI",
-      "Em andamento",
-      "Concluída"
+      "Contexto de Producao",
+      [
+        [
+          "ul",
+          [
+            "Time comenta 'RAG' mas sem padrao de chunking.",
+            "Similaridade pura trazia contexto irrelevante.",
+            "Sem metrica de qualidade."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Diagnostico",
+      [
+        [
+          "ul",
+          [
+            "Chunk grande -> ruido; pequeno -> perde contexto.",
+            "Embedding sem normalizacao.",
+            "Sem rerank -> top-k ruido."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Decisao Arquitetural (ADR)",
+      [
+        [
+          "p",
+          "ADR-041 — Baseline RAG"
+        ],
+        [
+          "table",
+          [
+            "Opcao",
+            "Pro",
+            "Contra",
+            "Decisao"
+          ],
+          [
+            [
+              "Chunk 512 + overlap 64 + rerank",
+              "coeso",
+              "mais tokens",
+              "ESCOLHIDA"
+            ]
+          ]
+        ],
+        [
+          "note",
+          "Normalizar embeddings; top-k=20 + rerank para top-5."
+        ]
+      ]
+    ],
+    [
+      "Entregas",
+      [
+        [
+          "ul",
+          [
+            "DLI-NOTES.md.",
+            "rag_baseline.py.",
+            "CONCLUSAO.md."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Validacao",
+      [
+        [
+          "ol",
+          [
+            "Rodar rag_baseline.py.",
+            "Medir faithfulness em 10 perguntas.",
+            "Comparar com similaridade pura."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Metricas",
+      [
+        [
+          "table",
+          [
+            "SLO",
+            "Alvo"
+          ],
+          [
+            [
+              "Faithfulness",
+              ">= 0.8"
+            ],
+            [
+              "Chunk",
+              "512/64"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Riscos",
+      [
+        [
+          "table",
+          [
+            "Risco",
+            "Mitigacao"
+          ],
+          [
+            [
+              "Contexto irrelevante",
+              "rerank"
+            ],
+            [
+              "Hallucination",
+              "cite trecho"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Proximos Passos",
+      [
+        [
+          "ul",
+          [
+            "RAG hibrido (04-A2).",
+            "Avaliacao RAGAS."
+          ]
+        ]
+      ]
     ]
-  ],
-  "next": [
-    "Aplicar o pipeline no RAG do Módulo 04-A2",
-    "Versionar dataset de embeddings"
-  ],
-  "docx": "engenharia-ia-rag-vetores-a1.docx"
+  ]
 }

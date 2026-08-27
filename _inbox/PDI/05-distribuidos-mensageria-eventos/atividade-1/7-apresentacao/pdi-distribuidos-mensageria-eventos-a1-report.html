@@ -1,0 +1,45 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
+<title>PDI — Sistemas Distribuidos com Mensageria (fila, topico, DLQ)</title><style>
+:root{--bg:#f7f8fa;--card:#fff;--gold:#b8860b;--red:#8b1e1e;--muted:#6b7280;--txt:#1f2733;--bd:#e3e7ee}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font-family:'Segoe UI',Georgia,serif}
+.page{max-width:820px;margin:0 auto;padding:0 0 60px}
+.cover{background:linear-gradient(135deg,#11131a,#241423);color:#fff;padding:56px 44px 40px}
+.cover .label{color:#e3c14e;letter-spacing:3px;font-size:11px;text-transform:uppercase}
+.cover h1{margin:10px 0 6px;font-size:30px}
+.gold-bar{height:4px;width:120px;background:linear-gradient(90deg,var(--red),var(--gold));margin:14px 0}
+.cover .sub{color:#c7cdd8;font-size:15px}
+.meta{display:flex;gap:26px;margin-top:22px;flex-wrap:wrap}
+.meta div{font-size:12px;color:#9aa4b2}
+.meta strong{display:block;color:#fff;font-size:14px;margin-top:3px}
+.card{background:var(--card);border:1px solid var(--bd);border-left:4px solid var(--gold);border-radius:10px;padding:18px 22px;margin:18px 22px}
+.card h2{margin:0 0 10px;font-size:20px;color:#7a1d1d}
+.card h3{color:#9a7b13;margin:14px 0 4px}
+.card p,.card li{font-size:14px;line-height:1.6}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th,td{border:1px solid var(--bd);padding:8px 10px}
+th{background:#f0f1f5;color:#7a1d1d}
+.tbl{font-size:13px}
+.callout{border-radius:8px;padding:10px 14px;margin:10px 0;font-size:13px}
+.callout.note{background:#fff8e6;border-left:4px solid var(--gold)}
+.callout.warn{background:#fdeaea;border-left:4px solid var(--red)}
+pre.code{background:#11131a;color:#e9edf3;padding:12px 14px;border-radius:8px;overflow:auto;font-size:12px}
+</style></head><body><div class="page">
+<div class="cover"><span class="label">Dossie Tecnico de PDI — Nivel Senior</span>
+<h1>Sistemas Distribuidos com Mensageria (fila, topico, DLQ)</h1><div class="gold-bar"></div>
+<p class="sub">Sistemas Distribuidos</p>
+<div class="meta"><div>Autor<br><strong>Marcos L. R. V. (Coordenador de Engenharia)</strong></div><div>Unidade<br><strong>V4 Company / Squad de Engenharia de IA</strong></div>
+<div>Data<br><strong>2026-08-27</strong></div><div>Status<br><strong>Entregue (desenvolvido)</strong></div></div></div>
+<p>Fundamentos de mensageria para desacoplar servicos: fila, topico, DLQ e ACK. Entrego o padrao e um consumidor com backpressure e DLQ.</p>
+<p>O ecossistema de agentes ja e distribuido; sem fila, falha de 1 servico propaga.</p>
+<ul><li>Agentes chamam uns aos outros via HTTP sincrono.</li><li>Falha de downstream derruba a cadeia.</li><li>Sem DLQ: mensagem ruim some.</li></ul>
+<table class="tbl"><thead><tr><th>Hoje</th><th>Alvo</th></tr></thead><tbody><tr><td>HTTP sincrono</td><td>fila desacoplada</td></tr><tr><td>sem DLQ</td><td>DLQ + retry</td></tr><tr><td>sem backpressure</td><td>prefetch limitado</td></tr></tbody></table>
+<p>ADR-051 — Transporte de Eventos</p>
+<table class="tbl"><thead><tr><th>Opcao</th><th>Pro</th><th>Contra</th><th>Decisao</th></tr></thead><tbody><tr><td>Fila + topico + DLQ</td><td>desacopla</td><td>ops</td><td>ESCOLHIDA</td></tr><tr><td>HTTP sincrono</td><td>simples</td><td>cascata</td><td>rejeitada</td></tr></tbody></table>
+<div class="callout note">ACK explicito; prefetch limitado; DLQ apos N tentativas.</div>
+<ul><li>MESSAGING.md.</li><li>consumer.py.</li><li>broker.tf.</li></ul>
+<ol><li>Publicar 1k msg; derrubar consumer; confirmar reprocessamento.</li><li>Msg invalida -&gt; DLQ (nao perde).</li><li>Backpressure: consumer lento nao estoura.</li></ol>
+<table class="tbl"><thead><tr><th>SLO</th><th>Alvo</th></tr></thead><tbody><tr><td>Throughput</td><td>&gt;= 200 msg/s</td></tr><tr><td>Perdidas</td><td>0</td></tr><tr><td>DLQ revisitada</td><td>&lt; 24h</td></tr></tbody></table>
+<table class="tbl"><thead><tr><th>Risco</th><th>Mitigacao</th></tr></thead><tbody><tr><td>Duplicata</td><td>idempotencia (05-A2)</td></tr><tr><td>DLQ esquecida</td><td>alerta</td></tr></tbody></table>
+<ul><li>Eventos de dominio do DDD (02-A3).</li><li>Tracing por trace_id.</li></ul>
+<p style="margin-top:24px;color:var(--muted);font-size:12px">Dossie gerado em 2026-08-27 · PDI Marcos L. R. V. (Coordenador de Engenharia)</p>
+</div></body></html>

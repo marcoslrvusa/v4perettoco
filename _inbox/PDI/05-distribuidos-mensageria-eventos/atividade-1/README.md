@@ -1,22 +1,87 @@
-# PDI — Arquitetura de Barramento de Mensageria (Pub/Sub, RabbitMQ ou Kafka)
+# Sistemas Distribuidos com Mensageria (fila, topico, DLQ)
 
-> **Área:** Sistemas Distribuídos
-> **Unidade:** V4 Company / FV Marketing
-> **Autor:** Marcos Perettoco
-> **Data:** 25/08/2026
-> **Status:** **Entregue (desenvolvido) · NÃO publicado — aguardando homologação**
+Sistemas Distribuidos
 
----
+## Resumo Executivo
 
-## Problema Resolvido
+Fundamentos de mensageria para desacoplar servicos: fila, topico, DLQ e ACK. Entrego o padrao e um consumidor com backpressure e DLQ.
 
-Sistemas internos se integravam por chamadas síncronas frágeis. Esta atividade entrega o diagrama de arquitetura de um barramento de mensageria (Kafka como padrão) para desacoplar produtores e consumidores internos, com topologias de tópico e contrato de evento.
+O ecossistema de agentes ja e distribuido; sem fila, falha de 1 servico propaga.
 
-## Entregas desta PDI
+## Contexto de Producao
 
-- Documento de arquitetura + diagrama
-- Contratos de tópico (JSON)
+- Agentes chamam uns aos outros via HTTP sincrono.
 
-## Validação
+- Falha de downstream derruba a cadeia.
 
-Artefatos desenvolvidos e versionados. Publicação em produção aguarda homologação.
+- Sem DLQ: mensagem ruim some.
+
+## Diagnostico
+
+| Hoje | Alvo |
+
+| --- | --- |
+
+| HTTP sincrono | fila desacoplada |
+
+| sem DLQ | DLQ + retry |
+
+| sem backpressure | prefetch limitado |
+
+## Decisao Arquitetural (ADR)
+
+ADR-051 — Transporte de Eventos
+
+| Opcao | Pro | Contra | Decisao |
+
+| --- | --- | --- | --- |
+
+| Fila + topico + DLQ | desacopla | ops | ESCOLHIDA |
+
+| HTTP sincrono | simples | cascata | rejeitada |
+
+> **Nota:** ACK explicito; prefetch limitado; DLQ apos N tentativas.
+
+## Entregas
+
+- MESSAGING.md.
+
+- consumer.py.
+
+- broker.tf.
+
+## Validacao
+
+1. Publicar 1k msg; derrubar consumer; confirmar reprocessamento.
+
+2. Msg invalida -> DLQ (nao perde).
+
+3. Backpressure: consumer lento nao estoura.
+
+## Metricas e SLO
+
+| SLO | Alvo |
+
+| --- | --- |
+
+| Throughput | >= 200 msg/s |
+
+| Perdidas | 0 |
+
+| DLQ revisitada | < 24h |
+
+## Riscos
+
+| Risco | Mitigacao |
+
+| --- | --- |
+
+| Duplicata | idempotencia (05-A2) |
+
+| DLQ esquecida | alerta |
+
+## Proximos Passos
+
+- Eventos de dominio do DDD (02-A3).
+
+- Tracing por trace_id.

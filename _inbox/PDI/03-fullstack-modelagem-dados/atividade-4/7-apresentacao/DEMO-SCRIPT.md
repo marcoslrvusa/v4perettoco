@@ -1,29 +1,10 @@
-# Script de Demonstração — Core Web Vitals no Front-end Next.js (Lazy Loading & Code Splitting)
+# Roteiro de Demo — Otimizacao de Core Web Vitals (LCP/INP/CLS) com Diagnostico Real
 
-## Setup
-```bash
-# Estrutura da entrega
-tree 03-fullstack-modelagem-dados/atividade-4/
-```
+Abra o deck (index.html) e percorra os slides na ordem.
 
-## Passo 1: Contexto
-Explique o problema:
-> Páginas de landing apresentavam LCP e CLS ruins, prejudicando SEO e conversão.
+1. Slide de Resumo: abra com o problema de negocio e o blast radius.
+2. Slide do ADR: defenda a opcao escolhida vs as rejeitadas (trade-offs).
+3. Slide de Validacao/Rollout: mostre como provamos em producao.
+4. Slide de Riscos: apresente o plano de mitigacao.
 
-## Passo 2: Arquitetura
-Apresente os pontos-chave:
-- next/image com priority no hero e tamanhos reservados
-- dynamic() para code splitting de componentes pesados
-- Reserva de aspect-ratio para evitar layout shift
-
-## Passo 3: Entregas
-Mostre os artefatos gerados:
-- CORE-WEB-VITALS.md (guia)
-- example_next.tsx (Next.js lazy + image)
-
-## Passo 4: Métricas
-| Métrica | Antes | Depois |
-|--------|-------|--------|
-| LCP | > 4s | <= 2.5s |
-| CLS | > 0.25 | <= 0.1 |
-| INP | > 300ms | <= 200ms |
+Material de apoio: pdi-fullstack-modelagem-dados-a4-report.pdf (dossie completo).

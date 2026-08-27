@@ -1,86 +1,28 @@
 <!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PDI — Refatoração de Módulo Legado com SOLID e Clean Architecture</title>
-<style>
-:root{--bg:#07080a;--surface:#14181d;--surface2:#1a1f26;--border:#232a33;--text:#e8ecf0;--text2:#8896a8;--gold:#c9a96e;--red:#ff4757;--green:#00e699;}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'JetBrains Mono',ui-monospace,monospace;overflow-x:hidden}
-.nav{position:fixed;top:0;left:0;right:0;height:46px;background:rgba(7,8,10,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:100;font-size:12px}
-.nav-logo{color:var(--gold);font-weight:700;letter-spacing:.5px}
-.progress{position:fixed;top:46px;left:0;right:0;height:2px;background:var(--border);z-index:100}
-.progress-bar{height:100%;background:var(--gold);width:0%}
-.slide{min-height:100vh;padding:84px 56px 48px;display:flex;flex-direction:column;justify-content:center;position:relative;border-bottom:1px solid var(--border)}
-.slide::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% -10%,rgba(201,169,110,.05),transparent 70%);pointer-events:none}
-.slide-num{position:absolute;top:60px;right:40px;font-size:11px;color:var(--text2);letter-spacing:2px}
-.tag{display:inline-block;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,169,110,.3);padding:5px 12px;background:rgba(201,169,110,.05)}
-h1{font-size:30px;font-weight:700;line-height:1.25;margin:18px 0}
-h2{font-size:22px;font-weight:700;color:var(--gold);margin-bottom:18px}
-p{font-size:15px;color:var(--text2);line-height:1.7;max-width:760px}
-ul{margin:8px 0 0 0;padding:0;list-style:none}
-li{font-size:14.5px;color:var(--text);padding:9px 0 9px 26px;position:relative;border-bottom:1px solid var(--border)}
-li::before{content:'▸';position:absolute;left:4px;color:var(--gold)}
-.meta{margin-top:22px;display:flex;gap:26px;flex-wrap:wrap;font-size:12.5px;color:var(--text2)}
-.meta strong{color:var(--text);font-weight:500}
-table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13px}
-th,td{border:1px solid var(--border);padding:9px 12px;text-align:left}
-th{background:var(--surface2);color:var(--gold)}
-.good{color:var(--green)}.bad{color:var(--red)}
-.cover-title{font-size:34px}
-footer{position:fixed;bottom:0;left:0;right:0;text-align:center;padding:8px;font-size:11px;color:var(--text2);background:rgba(7,8,10,.7);z-index:50}
+<title>Refatoracao de Modulo Legado com SOLID e Clean Architecture — Apresentacao</title><style>
+:root{--bg:#0e0f13;--card:#16181f;--gold:#c9a227;--red:#8b1e1e;--muted:#9aa4b2;--txt:#e9edf3}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font-family:'Segoe UI',system-ui,sans-serif}
+header{background:linear-gradient(135deg,#0e0f13,#1a1020);padding:48px 40px 28px;border-bottom:3px solid var(--gold)}
+header .tag{color:var(--gold);letter-spacing:2px;font-size:12px;text-transform:uppercase}
+header h1{margin:8px 0 4px;font-size:30px}
+header .meta{color:var(--muted);font-size:13px;margin-top:8px}
+.bar{height:4px;background:linear-gradient(90deg,var(--red),var(--gold))}
+main{max-width:980px;margin:24px auto;padding:0 24px}
+.card{background:var(--card);border:1px solid #232733;border-left:4px solid var(--gold);border-radius:10px;padding:18px 20px;margin:16px 0}
+.card h2{margin:0 0 6px;font-size:19px;color:var(--gold)}
+.card .badge{display:inline-block;font-size:11px;color:var(--muted);border:1px solid #2c3340;border-radius:20px;padding:2px 10px;margin-bottom:8px}
+.card p,.card li{font-size:14px;line-height:1.55;color:#d4dae3}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+th,td{border:1px solid #2a3140;padding:7px 9px;text-align:left}
+th{background:#1d2230;color:var(--gold)}
+footer{color:var(--muted);font-size:12px;text-align:center;padding:24px}
 </style></head><body>
-<div class="nav"><span class="nav-logo">PDI · Engenharia de Software</span><span style="color:var(--text2)">Marcos Perettoco</span></div>
-<div class="progress"><div class="progress-bar" id="bar"></div></div>
-
-<section class="slide">
-  <span class="tag">Apresentação de Entrega</span>
-  <h1 class="cover-title">Refatoração de Módulo Legado com SOLID e Clean Architecture</h1>
-  <div class="meta">
-    <div>Autor<br><strong>Marcos Perettoco</strong></div>
-    <div>Unidade<br><strong>V4 Company / FV Marketing</strong></div>
-    <div>Data<br><strong>25/08/2026</strong></div>
-    <div>Status<br><strong>Entregue (desenvolvido)</strong></div>
-  </div>
-</section>
-
-<section class="slide">
-  <span class="slide-num">01</span>
-  <h2>O Problema</h2>
-  <p>Um módulo crítico de orquestração de campanhas estava acoplado: a classe CampaignService misturava regra de negócio, acesso a banco, envio de e-mail e chamadas de API de CRM em um único arquivo de 600+ linhas, impossível de testar.</p>
-  <ul><li>SRP violado: uma classe cuidava de regra, DB, e-mail e CRM</li><li>OCP violado: mudar canal exigia editar o método central</li><li>DIP violado: camada de aplicação dependia de psycopg2 diretamente</li></ul>
-</section>
-
-<section class="slide">
-  <span class="slide-num">02</span>
-  <h2>A Solução / Arquitetura</h2>
-  <ul><li>Aplicação dos 5 princípios SOLID documentados antes/depois</li><li>Separação em camadas: domain / application / infrastructure</li><li>Ports (LeadRepository, Notifier) e adapters desacoplados</li><li>Injeção de dependência no CampaignService</li></ul>
-</section>
-
-<section class="slide">
-  <span class="slide-num">03</span>
-  <h2>Entregas desta atividade</h2>
-  <ul><li>SOLID-BEFORE-AFTER.md (mapeamento antes/depois)</li><li>before_campaign_service.py (código legado)</li><li>after_campaign_service.py (Clean Architecture)</li></ul>
-</section>
-
-<section class="slide">
-  <span class="slide-num">04</span>
-  <h2>Métricas de Sucesso</h2>
-  <table><thead><tr><th>Métrica</th><th>Antes</th><th>Depois</th></tr></thead><tbody><tr><td>Acoplamento (responsabilidades)</td><td class='bad'>4 em 1 classe</td><td class='good'>1 por classe</td></tr><tr><td>Testabilidade</td><td class='bad'>Nula</td><td class='good'>Alta (ports)</td></tr><tr><td>Linhas por classe</td><td class='bad'>600+</td><td class='good'>&lt; 40</td></tr></tbody></table>
-</section>
-
-<section class="slide">
-  <span class="slide-num">05</span>
-  <h2>Próximos Passos</h2>
-  <ul><li>Aplicar o mesmo padrão aos demais módulos legados</li><li>Adicionar suíte de testes sobre os ports</li></ul>
-</section>
-
-<footer>PDI Marcos Perettoco · V4 Company — padrão visual de apresentação</footer>
-<script>
-var secs=document.querySelectorAll('.slide');
-window.addEventListener('scroll',function(){
-  var h=document.documentElement;
-  var p=h.scrollTop/(h.scrollHeight-h.clientHeight);
-  document.getElementById('bar').style.width=(p*100)+'%';
-});
-</script>
-</body></html>
+<header><div class="tag">PDI Engenharia de Software</div><h1>Refatoracao de Modulo Legado com SOLID e Clean Architecture</h1>
+<div class="meta">Autor: Marcos L. R. V. (Coordenador de Engenharia) · V4 Company / Squad de Engenharia de IA · 2026-08-27</div></header>
+<div class="bar"></div>
+<main><div class="card"><div class="badge">Dossie Senior</div><h2>Resumo Executivo</h2><p>Refatoracao do modulo de orquestracao de campanhas (antigo CampaignService, 600+ linhas, acoplado) para Clean Architecture com ports/adapters e os 5 principios SOLID. Entrego o antes/depois, o ADR e um teste que prova a nova testabilidade.</p>
+<p>O ponto nao e &#x27;estilo&#x27;: e eliminar classes de risco (SQL injection, transacoes ausentes, falha silenciosa de CRM) e tornar o modulo coberto por teste sem subir infra.</p></div><div class="card"><div class="badge">Dossie Senior</div><h2>Contexto de Producao</h2><ul><li>O modulo dispara 3-5 campanhas/dia para listas de 5k-80k leads.</li><li>Falha silenciosa de gravacao no CRM ja causou duplo contato (reclamacao real).</li><li>Qualquer alteracao hoje exige deploy manual e testes manuais.</li></ul></div><div class="card"><div class="badge">Dossie Senior</div><h2>O Problema e o Blast Radius</h2><p>O CampaignService original misturava regra de negocio, acesso direto a banco, envio de e-mail e chamada de CRM no mesmo metodo.</p>
+<table class="tbl"><thead><tr><th>Violacao</th><th>Manifestacao</th></tr></thead><tbody><tr><td>SRP</td><td>1 classe cuida de regra+DB+email+CRM</td></tr><tr><td>OCP</td><td>novo canal = editar metodo central</td></tr><tr><td>DIP</td><td>aplicacao depende de psycopg2/smtp direto</td></tr><tr><td>Sem transacao</td><td>estado parcial em falha</td></tr></tbody></table></div><div class="card"><div class="badge">Dossie Senior</div><h2>Diagnostico e Causa Raiz</h2><ul><li>SQL concatenado (f&quot;SELECT ... {camp.id}&quot;) — vetor de injection.</li><li>Sem transacao: lead marcado enviado mas e-mail falha -&gt; estado inconsistente.</li><li>Impossivel testar: 600 linhas, 4 dependencias de I/O acopladas, 0% cobertura.</li></ul></div><div class="card"><div class="badge">Dossie Senior</div><h2>Decisao Arquitetural (ADR)</h2><p>ADR-021 — Camadas e Ports/Adapters</p>
+<table class="tbl"><thead><tr><th>Opcao</th><th>Pro</th><th>Contra</th><th>Decisao</th></tr></thead><tbody><tr><td>Clean Architecture</td><td>testavel, desacoplado</td><td>mais arquivos</td><td>ESCOLHIDA</td></tr><tr><td>Hexagonal puro</td><td>simetrico</td><td>overhead</td><td>rejeitada</td></tr><tr><td>Manter acoplado + E2E</td><td>zero refactor</td><td>fragil</td><td>rejeitada</td></tr></tbody></table>
+<div class="callout note">Dependencia de I/O vira interface (Protocol): LeadRepository, Notifier, Logger. O servico depende de abstracoes; implementacoes sao injetadas no bootstrap.</div></div><div class="card"><div class="badge">Dossie Senior</div><h2>Entregas desta Atividade</h2><ul><li>SOLID-BEFORE-AFTER.md — mapeamento violacao-&gt;solucao.</li><li>before_campaign_service.py — modulo legado.</li><li>after_campaign_service.py — Clean Architecture + 1 teste.</li></ul></div><div class="card"><div class="badge">Dossie Senior</div><h2>Plano de Validacao e Rollout</h2><ol><li>Cobrir o servico com testes de porta (mock de Notifier/Repository) — alvo 85%.</li><li>Feature flag: novo modulo em paralelo por 1 sprint (shadow).</li><li>Se divergencia &lt; 0,1%, migrar trafego e remover legado.</li><li>Rollback: flag desliga o novo sem deploy.</li></ol></div><div class="card"><div class="badge">Dossie Senior</div><h2>Metricas e SLO</h2><table class="tbl"><thead><tr><th>Metrica</th><th>Antes</th><th>Depois</th></tr></thead><tbody><tr><td>Acoplamento (resp/classe)</td><td>4</td><td>1</td></tr><tr><td>Cobertura</td><td>0%</td><td>&gt;= 85%</td></tr><tr><td>Linhas por classe</td><td>600+</td><td>&lt; 45</td></tr><tr><td>SQL injection</td><td>sim</td><td>eliminado</td></tr></tbody></table></div><div class="card"><div class="badge">Dossie Senior</div><h2>Riscos e Mitigacoes</h2><table class="tbl"><thead><tr><th>Risco</th><th>Mitigacao</th></tr></thead><tbody><tr><td>Shadow com divergencia</td><td>reconciliacao diaria</td></tr><tr><td>Time nao adota</td><td>PR template + lint de arquitetura</td></tr></tbody></table></div><div class="card"><div class="badge">Dossie Senior</div><h2>Proximos Passos</h2><ul><li>Aplicar o molde aos demais modulos legados.</li><li>Mutation testing (mutmut) no servico.</li></ul></div></main>
+<footer>Dossie gerado em 2026-08-27 · PDI Marcos L. R. V. (Coordenador de Engenharia)</footer></body></html>

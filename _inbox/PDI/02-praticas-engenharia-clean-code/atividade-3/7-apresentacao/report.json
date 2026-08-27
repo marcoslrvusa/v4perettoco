@@ -1,40 +1,171 @@
 {
-  "title": "Mapeamento de Domínios com Domain-Driven Design (DDD)",
+  "autor": "Marcos L. R. V. (Coordenador de Engenharia)",
+  "unidade": "V4 Company / Squad de Engenharia de IA",
+  "data": "2026-08-27",
+  "title": "Mapeamento de Dominios com Domain-Driven Design (DDD)",
   "area": "Engenharia de Software",
-  "autor": "Marcos Perettoco",
-  "unidade": "V4 Company / FV Marketing",
-  "data": "25/08/2026",
-  "problem": "Antes de codificar, os domínios de dados da empresa não estavam mapeados, gerando modelos duplicados e linguagem inconsistente entre times.",
-  "diagnosis": [
-    "Modelos de dados duplicados entre squads",
-    "Linguagem ubíqua ausente",
-    "Agregados e bounded contexts não definidos"
-  ],
-  "architecture": [
-    "Mapeamento de 4 bounded contexts (CRM, Campaign, Agent, Billing)",
-    "Definição de agregados com raiz e filhos",
-    "Glossário de linguagem ubíqua",
-    "Diagrama Mermaid de relacionamento dos domínios"
-  ],
-  "deliverables": [
-    "DOMAIN-MAP.md (mapa + diagrama)",
-    "domain_models.py (modelos de domínio)"
-  ],
-  "metrics": [
+  "slug": "praticas-engenharia-clean-code-a3",
+  "sections": [
     [
-      "Domínios mapeados",
-      "0",
-      "4"
+      "Resumo Executivo",
+      [
+        [
+          "p",
+          "Mapeamento dos dominios da empresa em DDD antes de novas codificacoes: bounded contexts, agregados, linguagem ubíqua e eventos de dominio. Entrego o mapa, modelos e um exemplo de invariante de agregado."
+        ],
+        [
+          "p",
+          "O objetivo e eliminar modelos duplicados e linguagem inconsistente entre squads."
+        ]
+      ]
     ],
     [
-      "Consistência de linguagem",
-      "Baixa",
-      "Alta"
+      "Contexto de Producao",
+      [
+        [
+          "ul",
+          [
+            "4 squads tocam dados de Lead/Conta/agente sem vocabulario comum.",
+            "Mesma entidade 'Contato' tem 3 modelos diferentes.",
+            "Novas features recriam agregados ja existentes."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Diagnostico e Causa Raiz",
+      [
+        [
+          "ul",
+          [
+            "Ausencia de bounded contexts -> tudo vira 'tabela unica'.",
+            "Linguagem ubíqua ausente -> 'lead' significa 3 coisas.",
+            "Sem agregado -> regras de consistencia espalhadas."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Decisao Arquitetural (ADR)",
+      [
+        [
+          "p",
+          "ADR-023 — Mapa de Dominios"
+        ],
+        [
+          "table",
+          [
+            "Opcao",
+            "Pro",
+            "Contra",
+            "Decisao"
+          ],
+          [
+            [
+              "DDD explicito",
+              "consistencia, linguagem",
+              "governanca",
+              "ESCOLHIDA"
+            ],
+            [
+              "Schema unico",
+              "simples",
+              "acopla squads",
+              "rejeitada"
+            ]
+          ]
+        ],
+        [
+          "note",
+          "Cada bounded context tem seu modelo; integracao por eventos de dominio."
+        ]
+      ]
+    ],
+    [
+      "Entregas desta Atividade",
+      [
+        [
+          "ul",
+          [
+            "DOMAIN-MAP.md.",
+            "domain_models.py — agregados com invariantes.",
+            "domain_events.py — eventos."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Plano de Validacao",
+      [
+        [
+          "ol",
+          [
+            "Workshop de linguagem ubíqua com Product + 2 squads.",
+            "Validar agregados contra 3 user stories.",
+            "Gerar schemas dos agregados aprovados."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Metricas e SLO",
+      [
+        [
+          "table",
+          [
+            "SLO",
+            "Alvo"
+          ],
+          [
+            [
+              "Dominios mapeados",
+              "4"
+            ],
+            [
+              "Modelos duplicados",
+              "0"
+            ],
+            [
+              "Eventos definidos",
+              ">= 6"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Riscos e Mitigacoes",
+      [
+        [
+          "table",
+          [
+            "Risco",
+            "Mitigacao"
+          ],
+          [
+            [
+              "Mapa vira teoria",
+              "code review exige mapear"
+            ],
+            [
+              "Over-engineering",
+              "so modelar o que tem regra"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Proximos Passos",
+      [
+        [
+          "ul",
+          [
+            "Adotar eventos no barramento (05-A1).",
+            "Testes de invariante de agregado."
+          ]
+        ]
+      ]
     ]
-  ],
-  "next": [
-    "Validar o mapa com Product e Data",
-    "Gerar schemas a partir dos agregados"
-  ],
-  "docx": "praticas-engenharia-clean-code-a3.docx"
+  ]
 }

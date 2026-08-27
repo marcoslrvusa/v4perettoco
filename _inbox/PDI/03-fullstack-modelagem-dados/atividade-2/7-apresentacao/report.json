@@ -1,41 +1,206 @@
 {
-  "title": "APIs Modulares de Missão Crítica (FastAPI) com Paginação, Cache e Rate Limiting",
+  "autor": "Marcos L. R. V. (Coordenador de Engenharia)",
+  "unidade": "V4 Company / Squad de Engenharia de IA",
+  "data": "2026-08-27",
+  "title": "APIs Modulares de Missao Critica (FastAPI) com Paginacao, Cache e Rate Limiting",
   "area": "Arquitetura Full Stack",
-  "autor": "Marcos Perettoco",
-  "unidade": "V4 Company / FV Marketing",
-  "data": "25/08/2026",
-  "problem": "Os endpoints internos eram monolíticos e sem proteção, sofrendo sobrecarga em picos e sem paginação.",
-  "diagnosis": [
-    "Sem paginação (vazamento de memória em listas grandes)",
-    "Sem rate limiting (abuso de quota)",
-    "Sem cache (pressão desnecessária no banco)"
-  ],
-  "architecture": [
-    "API modular FastAPI versionada (/v1)",
-    "Paginação com envelope {items,page,size,total}",
-    "Rate limiting por api_key (slowapi, 100/min)",
-    "Cache via Redis para listas quentes"
-  ],
-  "deliverables": [
-    "API-STANDARD.md (padrão)",
-    "main_api.py (FastAPI paginação + rate limit)",
-    "requirements.txt"
-  ],
-  "metrics": [
+  "slug": "fullstack-modelagem-dados-a2",
+  "sections": [
     [
-      "Proteção de sobrecarga",
-      "Não",
-      "Sim (rate limit)"
+      "Resumo Executivo",
+      [
+        [
+          "p",
+          "API modular FastAPI para dados de missao critica, com paginacao cursor-based, cache Redis com invalidacao e rate limiting por chave. Entrego o padrao e uma implementacao real."
+        ],
+        [
+          "p",
+          "Foco em corretude sob carga: uma API de leads nao pode vazar memoria nem derrubar o banco em pico."
+        ]
+      ]
     ],
     [
-      "Paginação",
-      "Não",
-      "Sim"
+      "Contexto de Producao",
+      [
+        [
+          "ul",
+          [
+            "Endpoints internos servem 3-5 sistemas.",
+            "Listas de 5k-80k sem paginacao estouravam memoria.",
+            "Sem rate limit: 2k req/min derrubava o Postgres."
+          ]
+        ]
+      ]
+    ],
+    [
+      "O Problema e o Blast Radius",
+      [
+        [
+          "table",
+          [
+            "Sintoma",
+            "Hoje",
+            "Alvo"
+          ],
+          [
+            [
+              "Paginacao",
+              "offset",
+              "cursor-based"
+            ],
+            [
+              "Cache",
+              "nenhum",
+              "Redis + invalidacao"
+            ],
+            [
+              "Rate limit",
+              "ausente",
+              "por api_key"
+            ],
+            [
+              "Erro 5xx",
+              "stack cru",
+              "envelope"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Diagnostico",
+      [
+        [
+          "ul",
+          [
+            "Offset em tabelas grandes = full scan.",
+            "Conexoes nao pooladas -> esgotamento.",
+            "Sem distincao 4xx vs 5xx."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Decisao Arquitetural (ADR)",
+      [
+        [
+          "p",
+          "ADR-032 — API Modular"
+        ],
+        [
+          "table",
+          [
+            "Opcao",
+            "Pro",
+            "Contra",
+            "Decisao"
+          ],
+          [
+            [
+              "FastAPI + Redis + slowapi",
+              "async, maduro",
+              "mais deps",
+              "ESCOLHIDA"
+            ],
+            [
+              "Flask manual",
+              "simples",
+              "menos perf",
+              "rejeitada"
+            ]
+          ]
+        ],
+        [
+          "note",
+          "Cursor-based para estabilidade; cache por chave com invalidacao no write."
+        ]
+      ]
+    ],
+    [
+      "Entregas desta Atividade",
+      [
+        [
+          "ul",
+          [
+            "API-STANDARD.md.",
+            "main_api.py.",
+            "requirements.txt."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Validacao",
+      [
+        [
+          "ol",
+          [
+            "Carga com k6: 200 req/s por 5 min.",
+            "Rate limit: estourar quota -> 429.",
+            "Cache: 2o hit vem do Redis."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Metricas e SLO",
+      [
+        [
+          "table",
+          [
+            "SLO",
+            "Alvo"
+          ],
+          [
+            [
+              "p95 (lista)",
+              "< 200 ms cache hit"
+            ],
+            [
+              "Rate limit",
+              "100/min/key"
+            ],
+            [
+              "Disponibilidade",
+              ">= 99.5%"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Riscos",
+      [
+        [
+          "table",
+          [
+            "Risco",
+            "Mitigacao"
+          ],
+          [
+            [
+              "Cache stale",
+              "TTL + invalidar no write"
+            ],
+            [
+              "Redis down",
+              "fallback DB"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Proximos Passos",
+      [
+        [
+          "ul",
+          [
+            "Gateway com OAuth2.",
+            "Tracing OTel."
+          ]
+        ]
+      ]
     ]
-  ],
-  "next": [
-    "Expor os endpoints críticos por trás do gateway",
-    "Adicionar autenticação OAuth2"
-  ],
-  "docx": "fullstack-modelagem-dados-a2.docx"
+  ]
 }

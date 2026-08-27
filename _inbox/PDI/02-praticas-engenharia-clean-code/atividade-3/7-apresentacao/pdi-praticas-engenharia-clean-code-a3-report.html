@@ -1,0 +1,45 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
+<title>PDI — Mapeamento de Dominios com Domain-Driven Design (DDD)</title><style>
+:root{--bg:#f7f8fa;--card:#fff;--gold:#b8860b;--red:#8b1e1e;--muted:#6b7280;--txt:#1f2733;--bd:#e3e7ee}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font-family:'Segoe UI',Georgia,serif}
+.page{max-width:820px;margin:0 auto;padding:0 0 60px}
+.cover{background:linear-gradient(135deg,#11131a,#241423);color:#fff;padding:56px 44px 40px}
+.cover .label{color:#e3c14e;letter-spacing:3px;font-size:11px;text-transform:uppercase}
+.cover h1{margin:10px 0 6px;font-size:30px}
+.gold-bar{height:4px;width:120px;background:linear-gradient(90deg,var(--red),var(--gold));margin:14px 0}
+.cover .sub{color:#c7cdd8;font-size:15px}
+.meta{display:flex;gap:26px;margin-top:22px;flex-wrap:wrap}
+.meta div{font-size:12px;color:#9aa4b2}
+.meta strong{display:block;color:#fff;font-size:14px;margin-top:3px}
+.card{background:var(--card);border:1px solid var(--bd);border-left:4px solid var(--gold);border-radius:10px;padding:18px 22px;margin:18px 22px}
+.card h2{margin:0 0 10px;font-size:20px;color:#7a1d1d}
+.card h3{color:#9a7b13;margin:14px 0 4px}
+.card p,.card li{font-size:14px;line-height:1.6}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th,td{border:1px solid var(--bd);padding:8px 10px}
+th{background:#f0f1f5;color:#7a1d1d}
+.tbl{font-size:13px}
+.callout{border-radius:8px;padding:10px 14px;margin:10px 0;font-size:13px}
+.callout.note{background:#fff8e6;border-left:4px solid var(--gold)}
+.callout.warn{background:#fdeaea;border-left:4px solid var(--red)}
+pre.code{background:#11131a;color:#e9edf3;padding:12px 14px;border-radius:8px;overflow:auto;font-size:12px}
+</style></head><body><div class="page">
+<div class="cover"><span class="label">Dossie Tecnico de PDI — Nivel Senior</span>
+<h1>Mapeamento de Dominios com Domain-Driven Design (DDD)</h1><div class="gold-bar"></div>
+<p class="sub">Engenharia de Software</p>
+<div class="meta"><div>Autor<br><strong>Marcos L. R. V. (Coordenador de Engenharia)</strong></div><div>Unidade<br><strong>V4 Company / Squad de Engenharia de IA</strong></div>
+<div>Data<br><strong>2026-08-27</strong></div><div>Status<br><strong>Entregue (desenvolvido)</strong></div></div></div>
+<p>Mapeamento dos dominios da empresa em DDD antes de novas codificacoes: bounded contexts, agregados, linguagem ubíqua e eventos de dominio. Entrego o mapa, modelos e um exemplo de invariante de agregado.</p>
+<p>O objetivo e eliminar modelos duplicados e linguagem inconsistente entre squads.</p>
+<ul><li>4 squads tocam dados de Lead/Conta/agente sem vocabulario comum.</li><li>Mesma entidade &#x27;Contato&#x27; tem 3 modelos diferentes.</li><li>Novas features recriam agregados ja existentes.</li></ul>
+<ul><li>Ausencia de bounded contexts -&gt; tudo vira &#x27;tabela unica&#x27;.</li><li>Linguagem ubíqua ausente -&gt; &#x27;lead&#x27; significa 3 coisas.</li><li>Sem agregado -&gt; regras de consistencia espalhadas.</li></ul>
+<p>ADR-023 — Mapa de Dominios</p>
+<table class="tbl"><thead><tr><th>Opcao</th><th>Pro</th><th>Contra</th><th>Decisao</th></tr></thead><tbody><tr><td>DDD explicito</td><td>consistencia, linguagem</td><td>governanca</td><td>ESCOLHIDA</td></tr><tr><td>Schema unico</td><td>simples</td><td>acopla squads</td><td>rejeitada</td></tr></tbody></table>
+<div class="callout note">Cada bounded context tem seu modelo; integracao por eventos de dominio.</div>
+<ul><li>DOMAIN-MAP.md.</li><li>domain_models.py — agregados com invariantes.</li><li>domain_events.py — eventos.</li></ul>
+<ol><li>Workshop de linguagem ubíqua com Product + 2 squads.</li><li>Validar agregados contra 3 user stories.</li><li>Gerar schemas dos agregados aprovados.</li></ol>
+<table class="tbl"><thead><tr><th>SLO</th><th>Alvo</th></tr></thead><tbody><tr><td>Dominios mapeados</td><td>4</td></tr><tr><td>Modelos duplicados</td><td>0</td></tr><tr><td>Eventos definidos</td><td>&gt;= 6</td></tr></tbody></table>
+<table class="tbl"><thead><tr><th>Risco</th><th>Mitigacao</th></tr></thead><tbody><tr><td>Mapa vira teoria</td><td>code review exige mapear</td></tr><tr><td>Over-engineering</td><td>so modelar o que tem regra</td></tr></tbody></table>
+<ul><li>Adotar eventos no barramento (05-A1).</li><li>Testes de invariante de agregado.</li></ul>
+<p style="margin-top:24px;color:var(--muted);font-size:12px">Dossie gerado em 2026-08-27 · PDI Marcos L. R. V. (Coordenador de Engenharia)</p>
+</div></body></html>

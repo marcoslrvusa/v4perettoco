@@ -1,25 +1,17 @@
-# Mapa de Domínios (DDD)
+# Mapa de Dominios (DDD)
 
 ## Bounded Contexts
-1. **CRM** — Lead, Contact, Deal, Account
-2. **Campaign** — Campaign, Segment, Message
-3. **Agent** — Agent, Task, Tool, Run
-4. **Billing** — Invoice, Plan, Usage
+| Contexto | Raiz de Agregado | Filhos |
+|----------|-----------------|-------|
+| CRM | Lead | Activities, Scores |
+| Campaign | Campaign | Segments |
+| Agent | Agent | Tasks -> ToolCalls |
+| Billing | Invoice | Plan, Usage |
 
-## Agregados (raiz → filhos)
-- Lead (raiz) → Activities, Scores
-- Campaign (raiz) → Segments, Schedules
-- Agent (raiz) → Tasks → ToolCalls
+## Linguagem ubíqua
+- **Lead**: contato capturado, ainda nao qualificado.
+- **Deal**: oportunidade com stage e value.
+- **Run**: execucao de um agente com trace_id.
 
-## Linguagem ubíqua (glossário)
-- *Lead*: contato capturado ainda não qualificado.
-- *Deal*: oportunidade com valor e estágio.
-- *Run*: execução de um agente com trace.
-
-## Diagrama (Mermaid)
-```mermaid
-graph TD
-  Lead --> Activities
-  Campaign --> Segments
-  Agent --> Tasks --> ToolCalls
-```
+## Integracao
+Nunca via tabela compartilhada. Via evento: `LeadCreated` (CRM) -> `CampaignEligibilityCheck`.

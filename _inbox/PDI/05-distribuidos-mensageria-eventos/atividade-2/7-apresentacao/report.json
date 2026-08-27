@@ -1,41 +1,174 @@
 {
-  "title": "Microsserviço Consumidor Assíncrono Idempotente",
-  "area": "Sistemas Distribuídos",
-  "autor": "Marcos Perettoco",
-  "unidade": "V4 Company / FV Marketing",
-  "data": "25/08/2026",
-  "problem": "Reentregas e duplicatas em filas causavam dados duplicados.",
-  "diagnosis": [
-    "Mesma mensagem processada múltiplas vezes",
-    "Sem chave de deduplicação",
-    "Upsert ausente no destino"
-  ],
-  "architecture": [
-    "Chave event_id única no cabeçalho",
-    "Tabela processed_events com PK (INSERT rejeita duplicata)",
-    "Upsert (ON CONFLICT DO NOTHING) no dado de negócio",
-    "Descarte silencioso de evento já processado"
-  ],
-  "deliverables": [
-    "IDEMPOTENCY.md (padrão)",
-    "consumer.py (consumidor idempotente)",
-    "processed_events.sql (schema)"
-  ],
-  "metrics": [
+  "autor": "Marcos L. R. V. (Coordenador de Engenharia)",
+  "unidade": "V4 Company / Squad de Engenharia de IA",
+  "data": "2026-08-27",
+  "title": "Idempotencia e Entrega Exactly-Once (na pratica: at-least-once + dedup)",
+  "area": "Sistemas Distribuidos",
+  "slug": "distribuidos-mensageria-eventos-a2",
+  "sections": [
     [
-      "Duplicidade de dados",
-      "Sim",
-      "Eliminada"
+      "Resumo Executivo",
+      [
+        [
+          "p",
+          "Garantir idempotencia de handlers: dedup por chave de evento + upsert, tornando 'at-least-once' equivalente a 'exactly-once' para o negocio. Entrego o padrao e um decorator."
+        ],
+        [
+          "p",
+          "Mensageria entrega no minimo 1 vez; sem dedup, reenvio duplica lead/fatura."
+        ]
+      ]
     ],
     [
-      "Deduplicação",
-      "Não",
-      "Sim"
+      "Contexto de Producao",
+      [
+        [
+          "ul",
+          [
+            "Reenvio duplicava leads (CNPJ repetido).",
+            "Fatura emitida 2x em retry.",
+            "Sem chave de evento."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Diagnostico",
+      [
+        [
+          "table",
+          [
+            "Hoje",
+            "Alvo"
+          ],
+          [
+            [
+              "reatenvio duplica",
+              "dedup event_id"
+            ],
+            [
+              "sem upsert",
+              "upsert"
+            ],
+            [
+              "sem versao",
+              "etag"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Decisao Arquitetural (ADR)",
+      [
+        [
+          "p",
+          "ADR-052 — Idempotencia"
+        ],
+        [
+          "table",
+          [
+            "Opcao",
+            "Pro",
+            "Contra",
+            "Decisao"
+          ],
+          [
+            [
+              "dedup event_id + upsert",
+              "exactly-once p/ negocio",
+              "store",
+              "ESCOLHIDA"
+            ]
+          ]
+        ],
+        [
+          "note",
+          "At-least-once do broker + dedup no consumidor = exactly-once observacional."
+        ]
+      ]
+    ],
+    [
+      "Entregas",
+      [
+        [
+          "ul",
+          [
+            "IDEMPOTENCY.md.",
+            "idempotent.py.",
+            "schema_dedup.sql."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Validacao",
+      [
+        [
+          "ol",
+          [
+            "Mesmo evento 3x -> 1 efeito.",
+            "Concorrencia: 2 consumers, 1 aplicacao.",
+            "DLQ nao cria duplicata."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Metricas e SLO",
+      [
+        [
+          "table",
+          [
+            "SLO",
+            "Alvo"
+          ],
+          [
+            [
+              "Duplicatas",
+              "0"
+            ],
+            [
+              "Idempotente",
+              "100% handlers"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Riscos",
+      [
+        [
+          "table",
+          [
+            "Risco",
+            "Mitigacao"
+          ],
+          [
+            [
+              "Store cheio",
+              "TTL"
+            ],
+            [
+              "Chave errada",
+              "event_id + negocio"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Proximos Passos",
+      [
+        [
+          "ul",
+          [
+            "Aplicar em todos os consumers.",
+            "Teste de concorrencia no CI."
+          ]
+        ]
+      ]
     ]
-  ],
-  "next": [
-    "Conectar o consumidor a um tópico real",
-    "Testar reentrega em massa"
-  ],
-  "docx": "distribuidos-mensageria-eventos-a2.docx"
+  ]
 }

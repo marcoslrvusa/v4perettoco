@@ -1,34 +1,170 @@
 {
-  "title": "Estudo de Design Patterns (Python/JavaScript) aplicados ao ecossistema",
+  "autor": "Marcos L. R. V. (Coordenador de Engenharia)",
+  "unidade": "V4 Company / Squad de Engenharia de IA",
+  "data": "2026-08-27",
+  "title": "Estudo de Design Patterns aplicados ao ecossistema",
   "area": "Engenharia de Software",
-  "autor": "Marcos Perettoco",
-  "unidade": "V4 Company / FV Marketing",
-  "data": "25/08/2026",
-  "problem": "Reforçar o domínio de Padrões de Projeto para elevar a qualidade do código no ecossistema Python/JavaScript da operação.",
-  "diagnosis": [
-    "Código repetitivo e acoplado em handlers/workers",
-    "Falta de vocabulário comum de padrões",
-    "Oportunidade de aplicar Adapter/Strategy em agentes"
-  ],
-  "architecture": [
-    "Estudo de padrões criacionais, estruturais e comportamentais",
-    "Exemplos aplicados (Factory, Adapter, Strategy, Observer, Command)",
-    "Plano de leitura/minicurso concluído"
-  ],
-  "deliverables": [
-    "DESIGN-PATTERNS-NOTES.md (notas + exemplos)",
-    "ESTUDO-PLANO.md (registro de conclusão)"
-  ],
-  "metrics": [
+  "slug": "praticas-engenharia-clean-code-a4",
+  "sections": [
     [
-      "Padrões dominados",
-      "—",
-      "Criacionais/Estruturais/Comportamentais"
+      "Resumo Executivo",
+      [
+        [
+          "p",
+          "Conclusao do minicurso de Design Patterns com aplicacao pratica aos problemas reais da operacao. Entrego notas com exemplos funcionais de Adapter, Strategy, Observer e Command."
+        ],
+        [
+          "p",
+          "Entrega de evidencia tecnica: codigo que ja roda no ecossistema."
+        ]
+      ]
+    ],
+    [
+      "Contexto de Producao",
+      [
+        [
+          "ul",
+          [
+            "Codigo repetitivo em handlers de webhook e workers.",
+            "Sem vocabulario comum: PRs discutem 'aquela classe'.",
+            "Oportunidade de aplicar padroes em agentes."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Diagnostico",
+      [
+        [
+          "ul",
+          [
+            "Acoplamento a APIs de terceiro espalhado (sem Adapter).",
+            "Selecao de modelo de LLM por if/else (sem Strategy).",
+            "Logs de dominio sem padrao (sem Observer)."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Decisao Arquitetural (ADR)",
+      [
+        [
+          "p",
+          "ADR-024 — Catalogo de Padroes"
+        ],
+        [
+          "table",
+          [
+            "Padrao",
+            "Onde",
+            "Decisao"
+          ],
+          [
+            [
+              "Adapter",
+              "CRM/LLM externos",
+              "ESCOLHIDO"
+            ],
+            [
+              "Strategy",
+              "roteamento de modelo",
+              "ESCOLHIDO"
+            ],
+            [
+              "Observer",
+              "eventos de dominio",
+              "ESCOLHIDO"
+            ],
+            [
+              "Singleton p/ clients",
+              "rejeitado (DI)",
+              "NAO"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Entregas desta Atividade",
+      [
+        [
+          "ul",
+          [
+            "DESIGN-PATTERNS-NOTES.md.",
+            "patterns_demo.py.",
+            "ESTUDO-PLANO.md."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Validacao",
+      [
+        [
+          "ol",
+          [
+            "Rodar patterns_demo.py.",
+            "PR aplicando Adapter no handler de 1 CRM.",
+            "Checklist de padroes no template de PR."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Metricas",
+      [
+        [
+          "table",
+          [
+            "SLO",
+            "Alvo"
+          ],
+          [
+            [
+              "Handlers com Adapter",
+              ">= 1 piloto"
+            ],
+            [
+              "Padroes documentados",
+              "criacionais/estruturais/comportamentais"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Riscos",
+      [
+        [
+          "table",
+          [
+            "Risco",
+            "Mitigacao"
+          ],
+          [
+            [
+              "Over-engineering",
+              "so onde ha variacao"
+            ],
+            [
+              "Padrao como fim",
+              "code review foca em valor"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Proximos Passos",
+      [
+        [
+          "ul",
+          [
+            "Refatorar handlers de CRM para Adapter.",
+            "Roteamento de modelo via Strategy."
+          ]
+        ]
+      ]
     ]
-  ],
-  "next": [
-    "Aplicar Adapter + Strategy nos agentes atuais",
-    "Revisar PRs com checklist de padrões"
-  ],
-  "docx": "praticas-engenharia-clean-code-a4.docx"
+  ]
 }

@@ -1,41 +1,182 @@
 {
-  "title": "RAG Híbrido / GraphRAG com Supabase (pgvector)",
+  "autor": "Marcos L. R. V. (Coordenador de Engenharia)",
+  "unidade": "V4 Company / Squad de Engenharia de IA",
+  "data": "2026-08-27",
+  "title": "RAG Hibrido (BM25 + Vetorial) e GraphRAG para Relacoes",
   "area": "Engenharia de IA",
-  "autor": "Marcos Perettoco",
-  "unidade": "V4 Company / FV Marketing",
-  "data": "25/08/2026",
-  "problem": "A busca interna por dados dependia de palavra-chave, perdendo contexto semântico.",
-  "diagnosis": [
-    "Busca só lexical (semântica perdida)",
-    "Sem rerank dos resultados",
-    "Relações entre entidades não exploradas"
-  ],
-  "architecture": [
-    "RAG híbrido: vetorial (pgvector HNSW) + lexical (tsvector/BM25)",
-    "Fusão RRF dos dois rankings",
-    "GraphRAG: tabelas entity/relationship + traverse por CTE",
-    "Query SQL híbrida combinando score vetorial e ts_rank"
-  ],
-  "deliverables": [
-    "RAG-ARCHITECTURE.md (arquitetura + SQL)",
-    "rag_hybrid.py (busca híbrida)",
-    "001_rag_schema.sql (schema pgvector)"
-  ],
-  "metrics": [
+  "slug": "engenharia-ia-rag-vetores-a2",
+  "sections": [
     [
-      "Qualidade da busca",
-      "Lexical",
-      "Híbrida + grafo"
+      "Resumo Executivo",
+      [
+        [
+          "p",
+          "Upgrade do RAG baseline para hibrido (BM25 + vetorial com RRF) e GraphRAG para relacoes. Entrego o padrao e implementacao."
+        ],
+        [
+          "p",
+          "Similaridade falha em 'qual contrato do cliente X' — Grafos cobrem isso."
+        ]
+      ]
     ],
     [
-      "Cobertura semântica",
-      "Baixa",
-      "Alta"
+      "Contexto de Producao",
+      [
+        [
+          "ul",
+          [
+            "Relacionamento ('cliente->contrato->fatura') ruim.",
+            "Termos exatos (CNPJ) nao recuperados por embeddings.",
+            "BM25 sozinho perde sinonimos."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Diagnostico",
+      [
+        [
+          "table",
+          [
+            "Caso",
+            "Vetorial",
+            "BM25",
+            "Hibrido"
+          ],
+          [
+            [
+              "ID exato",
+              "ruim",
+              "otimo",
+              "otimo"
+            ],
+            [
+              "sinonimo",
+              "otimo",
+              "ruim",
+              "otimo"
+            ],
+            [
+              "relacao",
+              "ruim",
+              "ruim",
+              "grafo"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Decisao Arquitetural (ADR)",
+      [
+        [
+          "p",
+          "ADR-042 — Recuperacao Hibrida + Grafo"
+        ],
+        [
+          "table",
+          [
+            "Opcao",
+            "Pro",
+            "Contra",
+            "Decisao"
+          ],
+          [
+            [
+              "BM25 + vetorial + GraphRAG",
+              "cobra todos",
+              "complexo",
+              "ESCOLHIDA"
+            ]
+          ]
+        ],
+        [
+          "note",
+          "RRF funde ranks; GraphRAG via traversal."
+        ]
+      ]
+    ],
+    [
+      "Entregas",
+      [
+        [
+          "ul",
+          [
+            "HYBRID-RAG.md.",
+            "hybrid_rag.py.",
+            "graph_schema.cypher."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Validacao",
+      [
+        [
+          "ol",
+          [
+            "Avaliar em 30 perguntas (10 exatas, 10 sinonimos, 10 relacao).",
+            "Comparar hit@5.",
+            "Confirmar GraphRAG resolve relacoes."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Metricas e SLO",
+      [
+        [
+          "table",
+          [
+            "SLO",
+            "Alvo"
+          ],
+          [
+            [
+              "hit@5 (relacao)",
+              ">= 0.9"
+            ],
+            [
+              "hit@5 (exato)",
+              ">= 0.95"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Riscos",
+      [
+        [
+          "table",
+          [
+            "Risco",
+            "Mitigacao"
+          ],
+          [
+            [
+              "Grafo desatualizado",
+              "rebuild incremental"
+            ],
+            [
+              "RRF ruim",
+              "tunar"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Proximos Passos",
+      [
+        [
+          "ul",
+          [
+            "RAGAS.",
+            "Cache de subgrafos."
+          ]
+        ]
+      ]
     ]
-  ],
-  "next": [
-    "Popular o índice com dados internos",
-    "Avaliar com conjunto de perguntas (golden set)"
-  ],
-  "docx": "engenharia-ia-rag-vetores-a2.docx"
+  ]
 }

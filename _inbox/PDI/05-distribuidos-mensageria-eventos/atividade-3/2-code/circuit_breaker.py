@@ -1,13 +1,22 @@
 import time
 class CircuitBreaker:
-    def __init__(self, threshold=5, cooldown=30):
-        self.fails=0; self.threshold=threshold; self.cooldown=cooldown; self.opened=0
-    def call(self, fn, *a, fallback=None, **k):
-        if self.opened and time.time()-self.opened < self.cooldown:
-            return fallback() if fallback else None
-        try:
-            r=fn(*a,**k); self.fails=0; return r
-        except Exception:
-            self.fails+=1
-            if self.fails>=self.threshold: self.opened=time.time()
-            return fallback() if fallback else None
+    def __init__(self, fail=5, reset=30):
+        self.fails = 0; self.fail_max = fail; self.reset = reset
+        self.state = "CLOSED"; self.opened_at = 0
+    def allow(self):
+        if self.state == "OPEN":
+            if time.time() - self.opened_at > self.reset:
+                self.state = "HALF_OPEN"; return True
+            return False
+        return True
+    def success(self): self.fails = 0; self.state = "CLOSED"
+    def failure(self):
+        self.fails += 1
+        if self.fails >= self.fail_max:
+            self.state = "OPEN"; self.opened_at = time.time()
+def call_with_breaker(breaker, fn, fallback):
+    if not breaker.allow(): return fallback()
+    try:
+        r = fn(); breaker.success(); return r
+    except Exception:
+        breaker.failure(); return fallback()

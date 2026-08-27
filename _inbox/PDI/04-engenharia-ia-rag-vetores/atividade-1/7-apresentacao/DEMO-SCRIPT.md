@@ -1,29 +1,10 @@
-# Script de Demonstração — Trilha NVIDIA Deep Learning Institute + Pipelines de Dados para IA
+# Roteiro de Demo — Fundamentos de IA Generativa (NVIDIA DLI) aplicados a RAG
 
-## Setup
-```bash
-# Estrutura da entrega
-tree 04-engenharia-ia-rag-vetores/atividade-1/
-```
+Abra o deck (index.html) e percorra os slides na ordem.
 
-## Passo 1: Contexto
-Explique o problema:
-> Fundamentar a equipe em pipelines de dados eficientes para IA, base para os agentes e RAG.
+1. Slide de Resumo: abra com o problema de negocio e o blast radius.
+2. Slide do ADR: defenda a opcao escolhida vs as rejeitadas (trade-offs).
+3. Slide de Validacao/Rollout: mostre como provamos em producao.
+4. Slide de Riscos: apresente o plano de mitigacao.
 
-## Passo 2: Arquitetura
-Apresente os pontos-chave:
-- Estágios: ingest → chunk → embed → store → serve
-- Chunk semântico (512-1024 tokens, overlap 10%)
-- Embed em batch assíncrono
-- pgvector com índice HNSW
-
-## Passo 3: Entregas
-Mostre os artefatos gerados:
-- DATA-PIPELINE-AI.md (guia)
-- TRILHA.md (registro de conclusão)
-
-## Passo 4: Métricas
-| Métrica | Antes | Depois |
-|--------|-------|--------|
-| Pipeline documentado | Não | Sim |
-| Trilha NVIDIA DLI | Em andamento | Concluída |
+Material de apoio: pdi-engenharia-ia-rag-vetores-a1-report.pdf (dossie completo).

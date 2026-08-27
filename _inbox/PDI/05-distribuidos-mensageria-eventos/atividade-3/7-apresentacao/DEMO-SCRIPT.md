@@ -1,29 +1,10 @@
-# Script de Demonstração — Contingência Automatizada (Circuit Breaker) para APIs Externas
+# Roteiro de Demo — Resiliencia com Circuit Breaker e Retry/Backoff
 
-## Setup
-```bash
-# Estrutura da entrega
-tree 05-distribuidos-mensageria-eventos/atividade-3/
-```
+Abra o deck (index.html) e percorra os slides na ordem.
 
-## Passo 1: Contexto
-Explique o problema:
-> Quedas de CRMs/ERPs externos derrubavam workflows inteiros.
+1. Slide de Resumo: abra com o problema de negocio e o blast radius.
+2. Slide do ADR: defenda a opcao escolhida vs as rejeitadas (trade-offs).
+3. Slide de Validacao/Rollout: mostre como provamos em producao.
+4. Slide de Riscos: apresente o plano de mitigacao.
 
-## Passo 2: Arquitetura
-Apresente os pontos-chave:
-- Circuit Breaker com estados closed/open/half-open
-- Threshold de falhas + cooldown + recovery
-- Fallback automático quando aberto
-- Recuperação automática testando 1 requisição
-
-## Passo 3: Entregas
-Mostre os artefatos gerados:
-- CIRCUIT-BREAKER.md (padrão)
-- circuit_breaker.py (implementação)
-
-## Passo 4: Métricas
-| Métrica | Antes | Depois |
-|--------|-------|--------|
-| Cascata de falhas | Sim | Mitigada |
-| Fallback | Não | Sim |
+Material de apoio: pdi-distribuidos-mensageria-eventos-a3-report.pdf (dossie completo).

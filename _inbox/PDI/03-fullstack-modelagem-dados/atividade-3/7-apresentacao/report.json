@@ -1,41 +1,197 @@
 {
-  "title": "Computação Serverless (Cloud Function/AWS Lambda) integrada com segurança ao banco",
+  "autor": "Marcos L. R. V. (Coordenador de Engenharia)",
+  "unidade": "V4 Company / Squad de Engenharia de IA",
+  "data": "2026-08-27",
+  "title": "Arquitetura Serverless para Processamento Assincrono (event-driven)",
   "area": "Arquitetura Full Stack",
-  "autor": "Marcos Perettoco",
-  "unidade": "V4 Company / FV Marketing",
-  "data": "25/08/2026",
-  "problem": "Tarefas pontuais (export, webhook) rodavam em instâncias always-on, desperdiçando custo e sem segurança de secrets.",
-  "diagnosis": [
-    "Custo fixo de servidores para jobs esporádicos",
-    "Secrets em env var (risco)",
-    "Conexões de banco sem pooler/TLS"
-  ],
-  "architecture": [
-    "Cloud Function que conecta via Secret Manager",
-    "Pooler (PgBouncer) com TLS",
-    "IAM de minima privilégio",
-    "Idempotência por chave de evento"
-  ],
-  "deliverables": [
-    "SERVERLESS-SECURITY.md (padrão)",
-    "main.py (Cloud Function segura)",
-    "Dockerfile"
-  ],
-  "metrics": [
+  "slug": "fullstack-modelagem-dados-a3",
+  "sections": [
     [
-      "Custo (jobs esporádicos)",
-      "Always-on",
-      "Por execução"
+      "Resumo Executivo",
+      [
+        [
+          "p",
+          "Desenho serverless event-driven para processar uploads e webhooks sem servidor sempre ligado: fila + funcao + armazenamento, com backpressure e retries. Entrego o padrao e um handler real."
+        ],
+        [
+          "p",
+          "Valor: custo por uso + escala automatica sob rajada."
+        ]
+      ]
     ],
     [
-      "Secrets",
-      "Env var",
-      "Secret Manager"
+      "Contexto de Producao",
+      [
+        [
+          "ul",
+          [
+            "Clientes enviam planilhas de 1k-50k linhas.",
+            "Worker always-on: 90% ocioso.",
+            "Pico de 200 uploads derrubava o worker."
+          ]
+        ]
+      ]
+    ],
+    [
+      "O Problema",
+      [
+        [
+          "table",
+          [
+            "Hoje",
+            "Alvo"
+          ],
+          [
+            [
+              "worker ocioso",
+              "scale to zero"
+            ],
+            [
+              "sem fila",
+              "queue + retry"
+            ],
+            [
+              "sem isolamento",
+              "1 falha nao derruba"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Diagnostico",
+      [
+        [
+          "ul",
+          [
+            "Processamento sincrono no request = timeout.",
+            "Sem idempotencia: reprocessar duplicava leads.",
+            "Sem limite de concorrencia."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Decisao Arquitetural (ADR)",
+      [
+        [
+          "p",
+          "ADR-033 — Serverless event-driven"
+        ],
+        [
+          "table",
+          [
+            "Opcao",
+            "Pro",
+            "Contra",
+            "Decisao"
+          ],
+          [
+            [
+              "Fila + funcao + store",
+              "scale to zero",
+              "cold start",
+              "ESCOLHIDA"
+            ],
+            [
+              "Lambda direto no upload",
+              "simples",
+              "sem backpressure",
+              "rejeitada"
+            ]
+          ]
+        ],
+        [
+          "note",
+          "Upload grava objeto e publica evento; consumo com concorrencia limitada e dedup."
+        ]
+      ]
+    ],
+    [
+      "Entregas",
+      [
+        [
+          "ul",
+          [
+            "SERVERLESS-STANDARD.md.",
+            "process_upload.py.",
+            "terraform_serverless.tf."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Validacao",
+      [
+        [
+          "ol",
+          [
+            "Enviar 200 planilhas; medir paralelismo e custo.",
+            "Forcar falha parcial; confirmar retry + sem duplicata.",
+            "1 arquivo ruim nao afeta os outros."
+          ]
+        ]
+      ]
+    ],
+    [
+      "Metricas e SLO",
+      [
+        [
+          "table",
+          [
+            "SLO",
+            "Alvo"
+          ],
+          [
+            [
+              "Custo/1k planilhas",
+              "< R$ 0,20"
+            ],
+            [
+              "P95",
+              "< 60 s"
+            ],
+            [
+              "Duplicatas",
+              "0"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Riscos",
+      [
+        [
+          "table",
+          [
+            "Risco",
+            "Mitigacao"
+          ],
+          [
+            [
+              "Cold start",
+              "provisioned concurrency"
+            ],
+            [
+              "Fila sem limite",
+              "DLQ"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "Proximos Passos",
+      [
+        [
+          "ul",
+          [
+            "Observabilidade por trace_id.",
+            "Workers de agentes no mesmo molde."
+          ]
+        ]
+      ]
     ]
-  ],
-  "next": [
-    "Deploy em staging (GCP)",
-    "Validar IAM e rotação de secrets"
-  ],
-  "docx": "fullstack-modelagem-dados-a3.docx"
+  ]
 }

@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
+<title>PDI — Estudo de Design Patterns aplicados ao ecossistema</title><style>
+:root{--bg:#f7f8fa;--card:#fff;--gold:#b8860b;--red:#8b1e1e;--muted:#6b7280;--txt:#1f2733;--bd:#e3e7ee}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font-family:'Segoe UI',Georgia,serif}
+.page{max-width:820px;margin:0 auto;padding:0 0 60px}
+.cover{background:linear-gradient(135deg,#11131a,#241423);color:#fff;padding:56px 44px 40px}
+.cover .label{color:#e3c14e;letter-spacing:3px;font-size:11px;text-transform:uppercase}
+.cover h1{margin:10px 0 6px;font-size:30px}
+.gold-bar{height:4px;width:120px;background:linear-gradient(90deg,var(--red),var(--gold));margin:14px 0}
+.cover .sub{color:#c7cdd8;font-size:15px}
+.meta{display:flex;gap:26px;margin-top:22px;flex-wrap:wrap}
+.meta div{font-size:12px;color:#9aa4b2}
+.meta strong{display:block;color:#fff;font-size:14px;margin-top:3px}
+.card{background:var(--card);border:1px solid var(--bd);border-left:4px solid var(--gold);border-radius:10px;padding:18px 22px;margin:18px 22px}
+.card h2{margin:0 0 10px;font-size:20px;color:#7a1d1d}
+.card h3{color:#9a7b13;margin:14px 0 4px}
+.card p,.card li{font-size:14px;line-height:1.6}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th,td{border:1px solid var(--bd);padding:8px 10px}
+th{background:#f0f1f5;color:#7a1d1d}
+.tbl{font-size:13px}
+.callout{border-radius:8px;padding:10px 14px;margin:10px 0;font-size:13px}
+.callout.note{background:#fff8e6;border-left:4px solid var(--gold)}
+.callout.warn{background:#fdeaea;border-left:4px solid var(--red)}
+pre.code{background:#11131a;color:#e9edf3;padding:12px 14px;border-radius:8px;overflow:auto;font-size:12px}
+</style></head><body><div class="page">
+<div class="cover"><span class="label">Dossie Tecnico de PDI — Nivel Senior</span>
+<h1>Estudo de Design Patterns aplicados ao ecossistema</h1><div class="gold-bar"></div>
+<p class="sub">Engenharia de Software</p>
+<div class="meta"><div>Autor<br><strong>Marcos L. R. V. (Coordenador de Engenharia)</strong></div><div>Unidade<br><strong>V4 Company / Squad de Engenharia de IA</strong></div>
+<div>Data<br><strong>2026-08-27</strong></div><div>Status<br><strong>Entregue (desenvolvido)</strong></div></div></div>
+<p>Conclusao do minicurso de Design Patterns com aplicacao pratica aos problemas reais da operacao. Entrego notas com exemplos funcionais de Adapter, Strategy, Observer e Command.</p>
+<p>Entrega de evidencia tecnica: codigo que ja roda no ecossistema.</p>
+<ul><li>Codigo repetitivo em handlers de webhook e workers.</li><li>Sem vocabulario comum: PRs discutem &#x27;aquela classe&#x27;.</li><li>Oportunidade de aplicar padroes em agentes.</li></ul>
+<ul><li>Acoplamento a APIs de terceiro espalhado (sem Adapter).</li><li>Selecao de modelo de LLM por if/else (sem Strategy).</li><li>Logs de dominio sem padrao (sem Observer).</li></ul>
+<p>ADR-024 — Catalogo de Padroes</p>
+<table class="tbl"><thead><tr><th>Padrao</th><th>Onde</th><th>Decisao</th></tr></thead><tbody><tr><td>Adapter</td><td>CRM/LLM externos</td><td>ESCOLHIDO</td></tr><tr><td>Strategy</td><td>roteamento de modelo</td><td>ESCOLHIDO</td></tr><tr><td>Observer</td><td>eventos de dominio</td><td>ESCOLHIDO</td></tr><tr><td>Singleton p/ clients</td><td>rejeitado (DI)</td><td>NAO</td></tr></tbody></table>
+<ul><li>DESIGN-PATTERNS-NOTES.md.</li><li>patterns_demo.py.</li><li>ESTUDO-PLANO.md.</li></ul>
+<ol><li>Rodar patterns_demo.py.</li><li>PR aplicando Adapter no handler de 1 CRM.</li><li>Checklist de padroes no template de PR.</li></ol>
+<table class="tbl"><thead><tr><th>SLO</th><th>Alvo</th></tr></thead><tbody><tr><td>Handlers com Adapter</td><td>&gt;= 1 piloto</td></tr><tr><td>Padroes documentados</td><td>criacionais/estruturais/comportamentais</td></tr></tbody></table>
+<table class="tbl"><thead><tr><th>Risco</th><th>Mitigacao</th></tr></thead><tbody><tr><td>Over-engineering</td><td>so onde ha variacao</td></tr><tr><td>Padrao como fim</td><td>code review foca em valor</td></tr></tbody></table>
+<ul><li>Refatorar handlers de CRM para Adapter.</li><li>Roteamento de modelo via Strategy.</li></ul>
+<p style="margin-top:24px;color:var(--muted);font-size:12px">Dossie gerado em 2026-08-27 · PDI Marcos L. R. V. (Coordenador de Engenharia)</p>
+</div></body></html>

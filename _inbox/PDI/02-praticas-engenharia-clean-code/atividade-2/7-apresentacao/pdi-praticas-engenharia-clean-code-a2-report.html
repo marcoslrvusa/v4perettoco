@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
+<title>PDI — Pipeline de Testes Automatizados (Unit/Integration/E2E) com 80% de Cobertura</title><style>
+:root{--bg:#f7f8fa;--card:#fff;--gold:#b8860b;--red:#8b1e1e;--muted:#6b7280;--txt:#1f2733;--bd:#e3e7ee}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font-family:'Segoe UI',Georgia,serif}
+.page{max-width:820px;margin:0 auto;padding:0 0 60px}
+.cover{background:linear-gradient(135deg,#11131a,#241423);color:#fff;padding:56px 44px 40px}
+.cover .label{color:#e3c14e;letter-spacing:3px;font-size:11px;text-transform:uppercase}
+.cover h1{margin:10px 0 6px;font-size:30px}
+.gold-bar{height:4px;width:120px;background:linear-gradient(90deg,var(--red),var(--gold));margin:14px 0}
+.cover .sub{color:#c7cdd8;font-size:15px}
+.meta{display:flex;gap:26px;margin-top:22px;flex-wrap:wrap}
+.meta div{font-size:12px;color:#9aa4b2}
+.meta strong{display:block;color:#fff;font-size:14px;margin-top:3px}
+.card{background:var(--card);border:1px solid var(--bd);border-left:4px solid var(--gold);border-radius:10px;padding:18px 22px;margin:18px 22px}
+.card h2{margin:0 0 10px;font-size:20px;color:#7a1d1d}
+.card h3{color:#9a7b13;margin:14px 0 4px}
+.card p,.card li{font-size:14px;line-height:1.6}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th,td{border:1px solid var(--bd);padding:8px 10px}
+th{background:#f0f1f5;color:#7a1d1d}
+.tbl{font-size:13px}
+.callout{border-radius:8px;padding:10px 14px;margin:10px 0;font-size:13px}
+.callout.note{background:#fff8e6;border-left:4px solid var(--gold)}
+.callout.warn{background:#fdeaea;border-left:4px solid var(--red)}
+pre.code{background:#11131a;color:#e9edf3;padding:12px 14px;border-radius:8px;overflow:auto;font-size:12px}
+</style></head><body><div class="page">
+<div class="cover"><span class="label">Dossie Tecnico de PDI — Nivel Senior</span>
+<h1>Pipeline de Testes Automatizados (Unit/Integration/E2E) com 80% de Cobertura</h1><div class="gold-bar"></div>
+<p class="sub">Engenharia de Software</p>
+<div class="meta"><div>Autor<br><strong>Marcos L. R. V. (Coordenador de Engenharia)</strong></div><div>Unidade<br><strong>V4 Company / Squad de Engenharia de IA</strong></div>
+<div>Data<br><strong>2026-08-27</strong></div><div>Status<br><strong>Entregue (desenvolvido)</strong></div></div></div>
+<p>Entrego uma pipeline de testes em 3 camadas (unitario/integracao/E2E) com gate de cobertura minima de 80% no CI. Inclui testes reais, config de cobertura e um workflow de CI.</p>
+<p>A entrega e defensavel: roda em qualquer maquina e bloqueia merge abaixo do teto.</p>
+<ul><li>Projeto de agentes com ~30 modulos Python + nos JS.</li><li>Sem suite: refactor de prompt/tool injetava regressao em producao.</li><li>CI existente so roda lint.</li></ul>
+<p>Sem rede de seguranca, toda mudanca em main e indiretamente em producao.</p>
+<table class="tbl"><thead><tr><th>Sintoma</th><th>Hoje</th><th>Alvo</th></tr></thead><tbody><tr><td>Cobertura</td><td>0%</td><td>&gt;= 80%</td></tr><tr><td>Gate de CI</td><td>ausente</td><td>bloqueia &lt; 80%</td></tr><tr><td>Regressao em prod</td><td>frequente</td><td>rara</td></tr></tbody></table>
+<ul><li>Sem fixtures: testes dependiam de estado global/real.</li><li>Sem distincao de camada: tudo demorava horas.</li><li>Sem teto de cobertura: era possivel piorar sem perceber.</li></ul>
+<p>ADR-022 — Estrategia de Testes</p>
+<table class="tbl"><thead><tr><th>Opcao</th><th>Pro</th><th>Contra</th><th>Decisao</th></tr></thead><tbody><tr><td>pytest + testcontainers + playwright</td><td>realista, 3 camadas</td><td>setup maior</td><td>ESCOLHIDA</td></tr><tr><td>so unitarios mockados</td><td>rapido</td><td>cego a integracao</td><td>rejeitada</td></tr></tbody></table>
+<div class="callout note">Unitario mira logica pura (90%), integracao mira ports com DB efemero (80%), E2E so happy path.</div>
+<ul><li>TEST-STRATEGY.md.</li><li>test_agent_pipeline.py.</li><li>test_integration_repo.py.</li><li>pytest.ini + .github/workflows/ci.yml.</li></ul>
+<ol><li>Rodar local: pytest --cov=src --cov-fail-under=80.</li><li>Subir o job no CI como required check.</li><li>Se &lt; 80%, adicionar testes de lacuna.</li><li>E2E em stage separado com retry (nao trava merge).</li></ol>
+<table class="tbl"><thead><tr><th>SLO</th><th>Alvo</th></tr></thead><tbody><tr><td>Cobertura global (gate)</td><td>&gt;= 80%</td></tr><tr><td>Tempo unit/int</td><td>&lt; 3 min</td></tr><tr><td>Flaky rate</td><td>&lt; 1%</td></tr></tbody></table>
+<table class="tbl"><thead><tr><th>Risco</th><th>Mitigacao</th></tr></thead><tbody><tr><td>Flaky</td><td>retry 1x + isolamento</td></tr><tr><td>Cobertura vazia</td><td>code review + mutation</td></tr></tbody></table>
+<ul><li>E2E para fluxos criticos.</li><li>Mutation testing em modulos nucleo.</li></ul>
+<p style="margin-top:24px;color:var(--muted);font-size:12px">Dossie gerado em 2026-08-27 · PDI Marcos L. R. V. (Coordenador de Engenharia)</p>
+</div></body></html>

@@ -1,30 +1,10 @@
-# Script de Demonstração — APIs Modulares de Missão Crítica (FastAPI) com Paginação, Cache e Rate Limiting
+# Roteiro de Demo — APIs Modulares de Missao Critica (FastAPI) com Paginacao, Cache e Rate Limiting
 
-## Setup
-```bash
-# Estrutura da entrega
-tree 03-fullstack-modelagem-dados/atividade-2/
-```
+Abra o deck (index.html) e percorra os slides na ordem.
 
-## Passo 1: Contexto
-Explique o problema:
-> Os endpoints internos eram monolíticos e sem proteção, sofrendo sobrecarga em picos e sem paginação.
+1. Slide de Resumo: abra com o problema de negocio e o blast radius.
+2. Slide do ADR: defenda a opcao escolhida vs as rejeitadas (trade-offs).
+3. Slide de Validacao/Rollout: mostre como provamos em producao.
+4. Slide de Riscos: apresente o plano de mitigacao.
 
-## Passo 2: Arquitetura
-Apresente os pontos-chave:
-- API modular FastAPI versionada (/v1)
-- Paginação com envelope {items,page,size,total}
-- Rate limiting por api_key (slowapi, 100/min)
-- Cache via Redis para listas quentes
-
-## Passo 3: Entregas
-Mostre os artefatos gerados:
-- API-STANDARD.md (padrão)
-- main_api.py (FastAPI paginação + rate limit)
-- requirements.txt
-
-## Passo 4: Métricas
-| Métrica | Antes | Depois |
-|--------|-------|--------|
-| Proteção de sobrecarga | Não | Sim (rate limit) |
-| Paginação | Não | Sim |
+Material de apoio: pdi-fullstack-modelagem-dados-a2-report.pdf (dossie completo).

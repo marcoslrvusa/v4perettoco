@@ -1,30 +1,10 @@
-# Script de Demonstração — Sistema Multi-Agente Assíncrono (autoaperfeiçoamento contínuo)
+# Roteiro de Demo — Orquestracao Multi-agente com Handoffs e Isolamento
 
-## Setup
-```bash
-# Estrutura da entrega
-tree 04-engenharia-ia-rag-vetores/atividade-3/
-```
+Abra o deck (index.html) e percorra os slides na ordem.
 
-## Passo 1: Contexto
-Explique o problema:
-> Agentes atuais eram síncronos e de passo único, sem memória nem melhoria contínua.
+1. Slide de Resumo: abra com o problema de negocio e o blast radius.
+2. Slide do ADR: defenda a opcao escolhida vs as rejeitadas (trade-offs).
+3. Slide de Validacao/Rollout: mostre como provamos em producao.
+4. Slide de Riscos: apresente o plano de mitigacao.
 
-## Passo 2: Arquitetura
-Apresente os pontos-chave:
-- Bus de mensagens assíncrono (asyncio/Redis Streams)
-- MemoryStore por agente (curto + longo prazo)
-- CriticAgent que avalia e escreve lições (lessons.md)
-- Orchestrator roteando tarefas por capacidade
-
-## Passo 3: Entregas
-Mostre os artefatos gerados:
-- MULTIAGENT-PROTOCOL.md (protocolo)
-- multiagent.py (protótipo assíncrono)
-- lessons.md (memória de melhoria)
-
-## Passo 4: Métricas
-| Métrica | Antes | Depois |
-|--------|-------|--------|
-| Memória entre runs | Não | Sim |
-| Autoaperfeiçoamento | Não | Sim (loop) |
+Material de apoio: pdi-engenharia-ia-rag-vetores-a3-report.pdf (dossie completo).

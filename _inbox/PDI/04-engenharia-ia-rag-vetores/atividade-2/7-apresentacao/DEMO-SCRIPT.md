@@ -1,30 +1,10 @@
-# Script de Demonstração — RAG Híbrido / GraphRAG com Supabase (pgvector)
+# Roteiro de Demo — RAG Hibrido (BM25 + Vetorial) e GraphRAG para Relacoes
 
-## Setup
-```bash
-# Estrutura da entrega
-tree 04-engenharia-ia-rag-vetores/atividade-2/
-```
+Abra o deck (index.html) e percorra os slides na ordem.
 
-## Passo 1: Contexto
-Explique o problema:
-> A busca interna por dados dependia de palavra-chave, perdendo contexto semântico.
+1. Slide de Resumo: abra com o problema de negocio e o blast radius.
+2. Slide do ADR: defenda a opcao escolhida vs as rejeitadas (trade-offs).
+3. Slide de Validacao/Rollout: mostre como provamos em producao.
+4. Slide de Riscos: apresente o plano de mitigacao.
 
-## Passo 2: Arquitetura
-Apresente os pontos-chave:
-- RAG híbrido: vetorial (pgvector HNSW) + lexical (tsvector/BM25)
-- Fusão RRF dos dois rankings
-- GraphRAG: tabelas entity/relationship + traverse por CTE
-- Query SQL híbrida combinando score vetorial e ts_rank
-
-## Passo 3: Entregas
-Mostre os artefatos gerados:
-- RAG-ARCHITECTURE.md (arquitetura + SQL)
-- rag_hybrid.py (busca híbrida)
-- 001_rag_schema.sql (schema pgvector)
-
-## Passo 4: Métricas
-| Métrica | Antes | Depois |
-|--------|-------|--------|
-| Qualidade da busca | Lexical | Híbrida + grafo |
-| Cobertura semântica | Baixa | Alta |
+Material de apoio: pdi-engenharia-ia-rag-vetores-a2-report.pdf (dossie completo).

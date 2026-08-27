@@ -1,30 +1,10 @@
-# Script de Demonstração — Monitoramento de Custos e Consumo de Tokens de LLMs de Fronteira
+# Roteiro de Demo — Engenharia de Custos de LLM (custo por tarefa, cache, roteamento)
 
-## Setup
-```bash
-# Estrutura da entrega
-tree 04-engenharia-ia-rag-vetores/atividade-4/
-```
+Abra o deck (index.html) e percorra os slides na ordem.
 
-## Passo 1: Contexto
-Explique o problema:
-> Sem visibilidade de custo, o uso de LLMs de fronteira (OpenAI, Gemini) saía do controle em picos.
+1. Slide de Resumo: abra com o problema de negocio e o blast radius.
+2. Slide do ADR: defenda a opcao escolhida vs as rejeitadas (trade-offs).
+3. Slide de Validacao/Rollout: mostre como provamos em producao.
+4. Slide de Riscos: apresente o plano de mitigacao.
 
-## Passo 2: Arquitetura
-Apresente os pontos-chave:
-- Captura de prompt/completion tokens por Run
-- Tabela de preço por 1k tokens (atualização mensal)
-- Alertas: 80% warn, 100% block por agente
-- Otimização: cache de prompt e modelo menor para tarefas simples
-
-## Passo 3: Entregas
-Mostre os artefatos gerados:
-- COST-MONITORING.md (padrão)
-- usage_schema.sql (schema)
-- track_cost.py (cálculo de custo)
-
-## Passo 4: Métricas
-| Métrica | Antes | Depois |
-|--------|-------|--------|
-| Visibilidade de custo | 0% | Por agente/modelo/dia |
-| Alerta de orçamento | Não | Sim |
+Material de apoio: pdi-engenharia-ia-rag-vetores-a4-report.pdf (dossie completo).

@@ -1,23 +1,83 @@
-# PDI — Microsserviço Consumidor Assíncrono Idempotente
+# Idempotencia e Entrega Exactly-Once (na pratica: at-least-once + dedup)
 
-> **Área:** Sistemas Distribuídos
-> **Unidade:** V4 Company / FV Marketing
-> **Autor:** Marcos Perettoco
-> **Data:** 25/08/2026
-> **Status:** **Entregue (desenvolvido) · NÃO publicado — aguardando homologação**
+Sistemas Distribuidos
 
----
+## Resumo Executivo
 
-## Problema Resolvido
+Garantir idempotencia de handlers: dedup por chave de evento + upsert, tornando 'at-least-once' equivalente a 'exactly-once' para o negocio. Entrego o padrao e um decorator.
 
-Reentregas e duplicatas em filas causavam dados duplicados. Esta atividade entrega um microsserviço que consome eventos de forma assíncrona garantindo idempotência (chave de evento + upsert), eliminando duplicidade.
+Mensageria entrega no minimo 1 vez; sem dedup, reenvio duplica lead/fatura.
 
-## Entregas desta PDI
+## Contexto de Producao
 
-- Padrão de idempotência
-- Consumidor assíncrono (Python)
-- Schema de idempotência
+- Reenvio duplicava leads (CNPJ repetido).
 
-## Validação
+- Fatura emitida 2x em retry.
 
-Artefatos desenvolvidos e versionados. Publicação em produção aguarda homologação.
+- Sem chave de evento.
+
+## Diagnostico
+
+| Hoje | Alvo |
+
+| --- | --- |
+
+| reatenvio duplica | dedup event_id |
+
+| sem upsert | upsert |
+
+| sem versao | etag |
+
+## Decisao Arquitetural (ADR)
+
+ADR-052 — Idempotencia
+
+| Opcao | Pro | Contra | Decisao |
+
+| --- | --- | --- | --- |
+
+| dedup event_id + upsert | exactly-once p/ negocio | store | ESCOLHIDA |
+
+> **Nota:** At-least-once do broker + dedup no consumidor = exactly-once observacional.
+
+## Entregas
+
+- IDEMPOTENCY.md.
+
+- idempotent.py.
+
+- schema_dedup.sql.
+
+## Validacao
+
+1. Mesmo evento 3x -> 1 efeito.
+
+2. Concorrencia: 2 consumers, 1 aplicacao.
+
+3. DLQ nao cria duplicata.
+
+## Metricas e SLO
+
+| SLO | Alvo |
+
+| --- | --- |
+
+| Duplicatas | 0 |
+
+| Idempotente | 100% handlers |
+
+## Riscos
+
+| Risco | Mitigacao |
+
+| --- | --- |
+
+| Store cheio | TTL |
+
+| Chave errada | event_id + negocio |
+
+## Proximos Passos
+
+- Aplicar em todos os consumers.
+
+- Teste de concorrencia no CI.

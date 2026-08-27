@@ -1,23 +1,97 @@
-# PDI — APIs Modulares de Missão Crítica (FastAPI) com Paginação, Cache e Rate Limiting
+# APIs Modulares de Missao Critica (FastAPI) com Paginacao, Cache e Rate Limiting
 
-> **Área:** Arquitetura Full Stack
-> **Unidade:** V4 Company / FV Marketing
-> **Autor:** Marcos Perettoco
-> **Data:** 25/08/2026
-> **Status:** **Entregue (desenvolvido) · NÃO publicado — aguardando homologação**
+Arquitetura Full Stack
 
----
+## Resumo Executivo
 
-## Problema Resolvido
+API modular FastAPI para dados de missao critica, com paginacao cursor-based, cache Redis com invalidacao e rate limiting por chave. Entrego o padrao e uma implementacao real.
 
-Os endpoints internos eram monolíticos e sem proteção, sofrendo sobrecarga em picos. Esta atividade entrega uma API modular em FastAPI com paginação, cache em memória/Redis e rate limiting por cliente, pronta para expor dados de missão crítica.
+Foco em corretude sob carga: uma API de leads nao pode vazar memoria nem derrubar o banco em pico.
 
-## Entregas desta PDI
+## Contexto de Producao
 
-- Padrão de API documentado
-- Implementação FastAPI
-- Dependências
+- Endpoints internos servem 3-5 sistemas.
 
-## Validação
+- Listas de 5k-80k sem paginacao estouravam memoria.
 
-Artefatos desenvolvidos e versionados. Publicação em produção aguarda homologação.
+- Sem rate limit: 2k req/min derrubava o Postgres.
+
+## O Problema e o Blast Radius
+
+| Sintoma | Hoje | Alvo |
+
+| --- | --- | --- |
+
+| Paginacao | offset | cursor-based |
+
+| Cache | nenhum | Redis + invalidacao |
+
+| Rate limit | ausente | por api_key |
+
+| Erro 5xx | stack cru | envelope |
+
+## Diagnostico
+
+- Offset em tabelas grandes = full scan.
+
+- Conexoes nao pooladas -> esgotamento.
+
+- Sem distincao 4xx vs 5xx.
+
+## Decisao Arquitetural (ADR)
+
+ADR-032 — API Modular
+
+| Opcao | Pro | Contra | Decisao |
+
+| --- | --- | --- | --- |
+
+| FastAPI + Redis + slowapi | async, maduro | mais deps | ESCOLHIDA |
+
+| Flask manual | simples | menos perf | rejeitada |
+
+> **Nota:** Cursor-based para estabilidade; cache por chave com invalidacao no write.
+
+## Entregas desta Atividade
+
+- API-STANDARD.md.
+
+- main_api.py.
+
+- requirements.txt.
+
+## Validacao
+
+1. Carga com k6: 200 req/s por 5 min.
+
+2. Rate limit: estourar quota -> 429.
+
+3. Cache: 2o hit vem do Redis.
+
+## Metricas e SLO
+
+| SLO | Alvo |
+
+| --- | --- |
+
+| p95 (lista) | < 200 ms cache hit |
+
+| Rate limit | 100/min/key |
+
+| Disponibilidade | >= 99.5% |
+
+## Riscos
+
+| Risco | Mitigacao |
+
+| --- | --- |
+
+| Cache stale | TTL + invalidar no write |
+
+| Redis down | fallback DB |
+
+## Proximos Passos
+
+- Gateway com OAuth2.
+
+- Tracing OTel.

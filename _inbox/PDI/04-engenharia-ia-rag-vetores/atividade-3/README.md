@@ -1,23 +1,83 @@
-# PDI — Sistema Multi-Agente Assíncrono (autoaperfeiçoamento contínuo)
+# Orquestracao Multi-agente com Handoffs e Isolamento
 
-> **Área:** Engenharia de IA
-> **Unidade:** V4 Company / FV Marketing
-> **Autor:** Marcos Perettoco
-> **Data:** 25/08/2026
-> **Status:** **Entregue (desenvolvido) · NÃO publicado — aguardando homologação**
+Engenharia de IA
 
----
+## Resumo Executivo
 
-## Problema Resolvido
+Padrao de orquestracao multi-agente: supervisor + especialistas com handoff explicit, isolamento de contexto, timeouts e fallbacks. Entrego o padrao e um orquestrador real.
 
-Agentes atuais são síncronos e de passo único. Esta atividade entrega um protótipo de sistema multi-agente assíncrono (inspirado no Hermes) onde agentes trocam mensagens, mantêm memória e se autoavaliam para melhoria contínua em ambiente controlado.
+Agente unico vira 'deus' e quebra em prompt longo.
 
-## Entregas desta PDI
+## Contexto de Producao
 
-- Protocolo multi-agente
-- Protótipo assíncrono
-- Log de autoaperfeiçoamento
+- Um agente fazia tudo: triagem, consulta, proposta.
 
-## Validação
+- Prompt gigante -> custo alto.
 
-Artefatos desenvolvidos e versionados. Publicação em produção aguarda homologação.
+- Sem timeout: sub-agente travado parava o fluxo.
+
+## Diagnostico
+
+- SRP ausente entre agentes.
+
+- Contexto compartilhado -> vazamento de PII.
+
+- Sem handoff formal.
+
+## Decisao Arquitetural (ADR)
+
+ADR-043 — Topologia Multi-agente
+
+| Opcao | Pro | Contra | Decisao |
+
+| --- | --- | --- | --- |
+
+| Supervisor + handoff | foco, testavel | mais nos | ESCOLHIDA |
+
+| Agente unico | simples | fragil | rejeitada |
+
+> **Nota:** Handoff = mensagem tipada. Cada agente tem contexto proprio e timeout.
+
+## Entregas
+
+- MULTI-AGENT.md.
+
+- orchestrator.py.
+
+- handoff_schema.py.
+
+## Validacao
+
+1. Simular triagem->consulta->proposta.
+
+2. Forcar timeout -> fallback.
+
+3. Contexto nao vaza.
+
+## Metricas e SLO
+
+| SLO | Alvo |
+
+| --- | --- |
+
+| Timeout/agente | <= 15 s |
+
+| Handoff com fallback | 100% |
+
+| Vazamento | 0 |
+
+## Riscos
+
+| Risco | Mitigacao |
+
+| --- | --- |
+
+| Loop | max hops |
+
+| Custo supervisor | modelo leve |
+
+## Proximos Passos
+
+- Observabilidade de handoff.
+
+- Eval por agente.

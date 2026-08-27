@@ -1,23 +1,85 @@
-# PDI — Monitoramento de Custos e Consumo de Tokens de LLMs de Fronteira
+# Engenharia de Custos de LLM (custo por tarefa, cache, roteamento)
 
-> **Área:** Engenharia de IA
-> **Unidade:** V4 Company / FV Marketing
-> **Autor:** Marcos Perettoco
-> **Data:** 25/08/2026
-> **Status:** **Entregue (desenvolvido) · NÃO publicado — aguardando homologação**
+Engenharia de IA
 
----
+## Resumo Executivo
 
-## Problema Resolvido
+Framework de custo de LLM: custo por tarefa, cache de prompt, roteamento por complexidade e budget. Entrego o padrao e um calculador.
 
-Sem visibilidade de custo, o uso de LLMs de fronteira (OpenAI, Gemini) saía do controle em picos. Esta atividade entrega um fluxo de monitoramento de tokens/custo por agente, modelo e dia, com alertas de orçamento.
+Sem contabilidade de tokens, nao se precifica o agente.
 
-## Entregas desta PDI
+## Contexto de Producao
 
-- Padrão de monitoramento de custo
-- Schema de uso (SQL)
-- Cálculo de custo (Python)
+- Modelo 'maxi' para tudo (10x custo).
 
-## Validação
+- Sem cache -> mesma pergunta paga 2x.
 
-Artefatos desenvolvidos e versionados. Publicação em produção aguarda homologação.
+- Impossivel precificar ao cliente.
+
+## Diagnostico
+
+| Hoje | Alvo |
+
+| --- | --- |
+
+| modelo unico | roteamento |
+
+| sem cache | cache |
+
+| custo invisivel | custo/tarefa |
+
+## Decisao Arquitetural (ADR)
+
+ADR-044 — Estrategia de Custo
+
+| Opcao | Pro | Contra | Decisao |
+
+| --- | --- | --- | --- |
+
+| Roteamento + cache + budget | previsivel | governanca | ESCOLHIDA |
+
+> **Nota:** Trivial -> leve; complexo -> forte; repetido -> cache.
+
+## Entregas
+
+- LLM-COST.md.
+
+- cost_calc.py.
+
+- BUDGET.md.
+
+## Validacao
+
+1. Medir custo/tarefa com e sem roteamento.
+
+2. Habilitar cache; medir hit rate.
+
+3. Budget por cliente + alerta 80%.
+
+## Metricas e SLO
+
+| SLO | Alvo |
+
+| --- | --- |
+
+| Custo/tarefa | <= baseline*0.4 |
+
+| Cache hit | >= 30% |
+
+| Budget | alerta 80% |
+
+## Riscos
+
+| Risco | Mitigacao |
+
+| --- | --- |
+
+| Qualidade cai | eval + roteamento |
+
+| Cache PII | nao cachear |
+
+## Proximos Passos
+
+- Precificar por tarefa.
+
+- Dashboard de custo.

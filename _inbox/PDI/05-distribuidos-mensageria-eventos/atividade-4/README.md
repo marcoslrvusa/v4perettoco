@@ -1,22 +1,85 @@
-# PDI — Conformidade LGPD no Tráfego Distribuído (criptografia em trânsito e repouso)
+# Conformidade LGPD em Eventos e Dados (anonimizacao, consentimento, esquecimento)
 
-> **Área:** Sistemas Distribuídos
-> **Unidade:** V4 Company / FV Marketing
-> **Autor:** Marcos Perettoco
-> **Data:** 25/08/2026
-> **Status:** **Entregue (desenvolvido) · NÃO publicado — aguardando homologação**
+Sistemas Distribuidos
 
----
+## Resumo Executivo
 
-## Problema Resolvido
+Padrao LGPD para o ecossistema de dados/eventos: minimizacao, consentimento por fluxo, anonimizacao em logs/traces e direito ao esquecimento via delete em cascata. Entrego o padrao e um util de anonimizacao.
 
-Dados pessoais trafegam entre serviços sem controle de conformidade. Esta atividade entrega um framework de conformidade LGPD para dados distribuídos: criptografia em trânsito (mTLS/TLS) e em repouso, classificação de dados e trilha de consentimento.
+Eventos e traces carregam PII (e-mail, CNPJ); sem controle, vazamento e processo administrativo.
 
-## Entregas desta PDI
+## Contexto de Producao
 
-- Framework de conformidade LGPD
-- Criptografia de PII
+- Logs de agente gravavam e-mail inteiro.
 
-## Validação
+- Sem consentimento por finalidade.
 
-Artefatos desenvolvidos e versionados. Publicação em produção aguarda homologação.
+- Pedido de exclusao nao propagava.
+
+## Diagnostico
+
+| Hoje | Alvo |
+
+| --- | --- |
+
+| PII em log/trace | anonimizado |
+
+| sem consentimento | consent por finalidade |
+
+| delete parcial | cascata |
+
+## Decisao Arquitetural (ADR)
+
+ADR-054 — Tratamento de PII
+
+| Opcao | Pro | Contra | Decisao |
+
+| --- | --- | --- | --- |
+
+| Anon + consent + delete cascata | conforme LGPD | governanca | ESCOLHIDA |
+
+> **Nota:** Minimizacao por padrao; PII so com consentimento e retencao definida.
+
+## Entregas
+
+- LGPD-DATA.md.
+
+- anon.py.
+
+- retention_policy.sql.
+
+## Validacao
+
+1. Varrer logs: 0 e-mail/CNPJ cru.
+
+2. Simular exclusao: delete em todas as tabelas.
+
+3. Auditoria: consentimento por finalidade.
+
+## Metricas e SLO
+
+| SLO | Alvo |
+
+| --- | --- |
+
+| PII em log | 0 |
+
+| Exclusao | <= 15 dias |
+
+| Consentimento | 100% fluxos |
+
+## Riscos
+
+| Risco | Mitigacao |
+
+| --- | --- |
+
+| Delete esquece tabela | mapear subject |
+
+| Cache PII | nao cachear |
+
+## Proximos Passos
+
+- Data map de PII.
+
+- Alerta de PII em logs.

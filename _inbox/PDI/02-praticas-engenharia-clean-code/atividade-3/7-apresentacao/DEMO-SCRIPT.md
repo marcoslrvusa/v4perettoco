@@ -1,29 +1,10 @@
-# Script de Demonstração — Mapeamento de Domínios com Domain-Driven Design (DDD)
+# Roteiro de Demo — Mapeamento de Dominios com Domain-Driven Design (DDD)
 
-## Setup
-```bash
-# Estrutura da entrega
-tree 02-praticas-engenharia-clean-code/atividade-3/
-```
+Abra o deck (index.html) e percorra os slides na ordem.
 
-## Passo 1: Contexto
-Explique o problema:
-> Antes de codificar, os domínios de dados da empresa não estavam mapeados, gerando modelos duplicados e linguagem inconsistente entre times.
+1. Slide de Resumo: abra com o problema de negocio e o blast radius.
+2. Slide do ADR: defenda a opcao escolhida vs as rejeitadas (trade-offs).
+3. Slide de Validacao/Rollout: mostre como provamos em producao.
+4. Slide de Riscos: apresente o plano de mitigacao.
 
-## Passo 2: Arquitetura
-Apresente os pontos-chave:
-- Mapeamento de 4 bounded contexts (CRM, Campaign, Agent, Billing)
-- Definição de agregados com raiz e filhos
-- Glossário de linguagem ubíqua
-- Diagrama Mermaid de relacionamento dos domínios
-
-## Passo 3: Entregas
-Mostre os artefatos gerados:
-- DOMAIN-MAP.md (mapa + diagrama)
-- domain_models.py (modelos de domínio)
-
-## Passo 4: Métricas
-| Métrica | Antes | Depois |
-|--------|-------|--------|
-| Domínios mapeados | 0 | 4 |
-| Consistência de linguagem | Baixa | Alta |
+Material de apoio: pdi-praticas-engenharia-clean-code-a3-report.pdf (dossie completo).

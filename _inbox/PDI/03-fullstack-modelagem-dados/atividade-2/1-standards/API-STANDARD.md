@@ -1,7 +1,15 @@
 # STANDARD — API Modular (FastAPI)
 
-- **Paginação:** `?page=1&size=50` → envelope `{items, page, size, total}`.
-- **Cache:** `Cache-Control: max-age=30` + `Redis` para listas quentes.
-- **Rate limiting:** token bucket por `api_key` (100 req/min).
-- **Erros:** envelope `{error:{code,message}}`, HTTP 429 em limite.
-- **Versionamento:** prefixo `/v1`.
+## Paginacao: SEMPRE cursor-based
+`?after=<cursor>&limit=50`. Cursor = id criptografado.
+Resposta: `{ items, next_cursor, limit }`. Nunca `offset` em tabelas > 10k.
+
+## Cache
+`Cache-Control: max-age=30, stale-while-revalidate=60`. Invalidar no write.
+
+## Rate limiting (token bucket)
+100 req/min por api_key -> 429 + Retry-After.
+
+## Erros
+`{ "error": { "code": "...", "message": "...", "trace_id": "..." } }`
+4xx = cliente (nao retentar). 5xx = nosso (retry com backoff).

@@ -1,22 +1,93 @@
-# PDI — Core Web Vitals no Front-end Next.js (Lazy Loading & Code Splitting)
+# Otimizacao de Core Web Vitals (LCP/INP/CLS) com Diagnostico Real
 
-> **Área:** Arquitetura Full Stack
-> **Unidade:** V4 Company / FV Marketing
-> **Autor:** Marcos Perettoco
-> **Data:** 25/08/2026
-> **Status:** **Entregue (desenvolvido) · NÃO publicado — aguardando homologação**
+Arquitetura Full Stack
 
----
+## Resumo Executivo
 
-## Problema Resolvido
+Diagnostico e plano de Core Web Vitals (LCP, INP, CLS) para as interfaces dos agentes/portal, com evidencias de campo (CrUX) e laboratorio, mais correcoes aplicadas.
 
-Páginas de landing da operação apresentavam LCP e CLS ruins, prejudicando SEO e conversão. Esta atividade entrega um guia e exemplos práticos de Next.js para melhorar Core Web Vitals via lazy loading, code splitting e otimização de imagens.
+CWV e sinal de ranqueamento e de retencao.
 
-## Entregas desta PDI
+## Contexto de Producao
 
-- Guia de Core Web Vitals
-- Exemplo prático Next.js
+- Portais com LCP ~ 4s.
 
-## Validação
+- INP ruim ao clicar em acoes.
 
-Artefatos desenvolvidos e versionados. Publicação em produção aguarda homologação.
+- CLS ao carregar cards.
+
+## O Problema
+
+| Metrica | Campo | Alvo |
+
+| --- | --- | --- |
+
+| LCP | 4.1 s | <= 2.5 s |
+
+| INP | 410 ms | <= 200 ms |
+
+| CLS | 0.22 | <= 0.1 |
+
+## Diagnostico
+
+- LCP: hero sem fetchpriority/preconnect.
+
+- INP: handler sincrono bloqueia.
+
+- CLS: cards sem aspect-ratio.
+
+## Decisao Arquitetural (ADR)
+
+ADR-034 — Ordem de Otimizacao
+
+| Opcao | Pro | Contra | Decisao |
+
+| --- | --- | --- | --- |
+
+| LCP->INP->CLS | maior ROI | - | ESCOLHIDA |
+
+> **Nota:** Medir no CrUX antes de cada mudanca.
+
+## Entregas
+
+- CWV-DIAGNOSTICO.md.
+
+- cwv_fixes.html.
+
+- field_cwv.py.
+
+## Validacao
+
+1. Baseline de campo via field_cwv.py.
+
+2. Aplicar correcoes; re-medir em 28 dias.
+
+3. Confirmar LCP<=2.5, INP<=200, CLS<=0.1.
+
+## Metricas e SLO
+
+| SLO | Alvo |
+
+| --- | --- |
+
+| LCP p75 | <= 2.5 s |
+
+| INP p75 | <= 200 ms |
+
+| CLS p75 | <= 0.1 |
+
+## Riscos
+
+| Risco | Mitigacao |
+
+| --- | --- |
+
+| Regressao | budgate no CI |
+
+| CrUX baixo | RUM proprio |
+
+## Proximos Passos
+
+- Lighthouse CI no pipeline.
+
+- RUM de INP por rota.

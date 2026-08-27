@@ -1,66 +1,44 @@
-# PDI — Apresentação: Microsserviço Consumidor Assíncrono Idempotente
+# Deck PDI — Idempotencia e Entrega Exactly-Once (na pratica: at-least-once + dedup)
 
-> **Formato:** 5-6 slides | **Tempo:** 15-20 min
-> **Audiência:** Tech Lead + Squad
+Area: Sistemas Distribuidos
 
----
-
-## Slide 1: Título
-
-```
-PDI: MICROSSERVIÇO CONSUMIDOR ASSÍNCRONO IDEMPOTENTE
-
-Marcos Perettoco — V4 Company
-25/08/2026 | Sistemas Distribuídos
-```
-
----
-
-## Slide 2: O Problema
-
-**Reentregas e duplicatas em filas causavam dados duplicados.**
-
-## Diagnóstico
-
-- Mesma mensagem processada múltiplas vezes
-- Sem chave de deduplicação
-- Upsert ausente no destino
-
-
----
-
-## Slide 3: Arquitetura da Solução
-
-## Abordagem
-
-- Chave event_id única no cabeçalho
-- Tabela processed_events com PK (INSERT rejeita duplicata)
-- Upsert (ON CONFLICT DO NOTHING) no dado de negócio
-- Descarte silencioso de evento já processado
-
-
----
-
-## Slide 4: Entregas
-
-## Artefatos
-
-- IDEMPOTENCY.md (padrão)
-- consumer.py (consumidor idempotente)
-- processed_events.sql (schema)
-
-
----
-
-## Slide 5: Métricas de Sucesso
-
-| Métrica | Antes | Depois |
-|--------|-------|--------|
-| Duplicidade de dados | Sim | Eliminada |
-| Deduplicação | Não | Sim |
----
-
-## Slide 6: Próximos Passos
-
-- Conectar o consumidor a um tópico real
-- Testar reentrega em massa
+## Slide 1: Resumo Executivo
+Garantir idempotencia de handlers: dedup por chave de evento + upsert, tornando 'at-least-once' equivalente a 'exactly-once' para o negocio. Entrego o padrao e um decorator.
+Mensageria entrega no minimo 1 vez; sem dedup, reenvio duplica lead/fatura.
+## Slide 2: Contexto de Producao
+Reenvio duplicava leads (CNPJ repetido).
+Fatura emitida 2x em retry.
+Sem chave de evento.
+## Slide 3: Diagnostico
+| Hoje | Alvo |
+| --- | --- |
+| reatenvio duplica | dedup event_id |
+| sem upsert | upsert |
+| sem versao | etag |
+## Slide 4: Decisao Arquitetural (ADR)
+ADR-052 — Idempotencia
+| Opcao | Pro | Contra | Decisao |
+| --- | --- | --- | --- |
+| dedup event_id + upsert | exactly-once p/ negocio | store | ESCOLHIDA |
+> Nota: At-least-once do broker + dedup no consumidor = exactly-once observacional.
+## Slide 5: Entregas
+IDEMPOTENCY.md.
+idempotent.py.
+schema_dedup.sql.
+## Slide 6: Validacao
+Mesmo evento 3x -> 1 efeito.
+Concorrencia: 2 consumers, 1 aplicacao.
+DLQ nao cria duplicata.
+## Slide 7: Metricas e SLO
+| SLO | Alvo |
+| --- | --- |
+| Duplicatas | 0 |
+| Idempotente | 100% handlers |
+## Slide 8: Riscos
+| Risco | Mitigacao |
+| --- | --- |
+| Store cheio | TTL |
+| Chave errada | event_id + negocio |
+## Slide 9: Proximos Passos
+Aplicar em todos os consumers.
+Teste de concorrencia no CI.

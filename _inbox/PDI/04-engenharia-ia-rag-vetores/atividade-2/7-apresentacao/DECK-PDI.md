@@ -1,66 +1,44 @@
-# PDI — Apresentação: RAG Híbrido / GraphRAG com Supabase (pgvector)
+# Deck PDI — RAG Hibrido (BM25 + Vetorial) e GraphRAG para Relacoes
 
-> **Formato:** 5-6 slides | **Tempo:** 15-20 min
-> **Audiência:** Tech Lead + Squad
+Area: Engenharia de IA
 
----
-
-## Slide 1: Título
-
-```
-PDI: RAG HÍBRIDO / GRAPHRAG COM SUPABASE (PGVECTOR)
-
-Marcos Perettoco — V4 Company
-25/08/2026 | Engenharia de IA
-```
-
----
-
-## Slide 2: O Problema
-
-**A busca interna por dados dependia de palavra-chave, perdendo contexto semântico.**
-
-## Diagnóstico
-
-- Busca só lexical (semântica perdida)
-- Sem rerank dos resultados
-- Relações entre entidades não exploradas
-
-
----
-
-## Slide 3: Arquitetura da Solução
-
-## Abordagem
-
-- RAG híbrido: vetorial (pgvector HNSW) + lexical (tsvector/BM25)
-- Fusão RRF dos dois rankings
-- GraphRAG: tabelas entity/relationship + traverse por CTE
-- Query SQL híbrida combinando score vetorial e ts_rank
-
-
----
-
-## Slide 4: Entregas
-
-## Artefatos
-
-- RAG-ARCHITECTURE.md (arquitetura + SQL)
-- rag_hybrid.py (busca híbrida)
-- 001_rag_schema.sql (schema pgvector)
-
-
----
-
-## Slide 5: Métricas de Sucesso
-
-| Métrica | Antes | Depois |
-|--------|-------|--------|
-| Qualidade da busca | Lexical | Híbrida + grafo |
-| Cobertura semântica | Baixa | Alta |
----
-
-## Slide 6: Próximos Passos
-
-- Popular o índice com dados internos
-- Avaliar com conjunto de perguntas (golden set)
+## Slide 1: Resumo Executivo
+Upgrade do RAG baseline para hibrido (BM25 + vetorial com RRF) e GraphRAG para relacoes. Entrego o padrao e implementacao.
+Similaridade falha em 'qual contrato do cliente X' — Grafos cobrem isso.
+## Slide 2: Contexto de Producao
+Relacionamento ('cliente->contrato->fatura') ruim.
+Termos exatos (CNPJ) nao recuperados por embeddings.
+BM25 sozinho perde sinonimos.
+## Slide 3: Diagnostico
+| Caso | Vetorial | BM25 | Hibrido |
+| --- | --- | --- | --- |
+| ID exato | ruim | otimo | otimo |
+| sinonimo | otimo | ruim | otimo |
+| relacao | ruim | ruim | grafo |
+## Slide 4: Decisao Arquitetural (ADR)
+ADR-042 — Recuperacao Hibrida + Grafo
+| Opcao | Pro | Contra | Decisao |
+| --- | --- | --- | --- |
+| BM25 + vetorial + GraphRAG | cobra todos | complexo | ESCOLHIDA |
+> Nota: RRF funde ranks; GraphRAG via traversal.
+## Slide 5: Entregas
+HYBRID-RAG.md.
+hybrid_rag.py.
+graph_schema.cypher.
+## Slide 6: Validacao
+Avaliar em 30 perguntas (10 exatas, 10 sinonimos, 10 relacao).
+Comparar hit@5.
+Confirmar GraphRAG resolve relacoes.
+## Slide 7: Metricas e SLO
+| SLO | Alvo |
+| --- | --- |
+| hit@5 (relacao) | >= 0.9 |
+| hit@5 (exato) | >= 0.95 |
+## Slide 8: Riscos
+| Risco | Mitigacao |
+| --- | --- |
+| Grafo desatualizado | rebuild incremental |
+| RRF ruim | tunar |
+## Slide 9: Proximos Passos
+RAGAS.
+Cache de subgrafos.

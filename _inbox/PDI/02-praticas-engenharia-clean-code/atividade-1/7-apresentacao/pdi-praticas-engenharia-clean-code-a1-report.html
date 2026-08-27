@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
+<title>PDI — Refatoracao de Modulo Legado com SOLID e Clean Architecture</title><style>
+:root{--bg:#f7f8fa;--card:#fff;--gold:#b8860b;--red:#8b1e1e;--muted:#6b7280;--txt:#1f2733;--bd:#e3e7ee}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font-family:'Segoe UI',Georgia,serif}
+.page{max-width:820px;margin:0 auto;padding:0 0 60px}
+.cover{background:linear-gradient(135deg,#11131a,#241423);color:#fff;padding:56px 44px 40px}
+.cover .label{color:#e3c14e;letter-spacing:3px;font-size:11px;text-transform:uppercase}
+.cover h1{margin:10px 0 6px;font-size:30px}
+.gold-bar{height:4px;width:120px;background:linear-gradient(90deg,var(--red),var(--gold));margin:14px 0}
+.cover .sub{color:#c7cdd8;font-size:15px}
+.meta{display:flex;gap:26px;margin-top:22px;flex-wrap:wrap}
+.meta div{font-size:12px;color:#9aa4b2}
+.meta strong{display:block;color:#fff;font-size:14px;margin-top:3px}
+.card{background:var(--card);border:1px solid var(--bd);border-left:4px solid var(--gold);border-radius:10px;padding:18px 22px;margin:18px 22px}
+.card h2{margin:0 0 10px;font-size:20px;color:#7a1d1d}
+.card h3{color:#9a7b13;margin:14px 0 4px}
+.card p,.card li{font-size:14px;line-height:1.6}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th,td{border:1px solid var(--bd);padding:8px 10px}
+th{background:#f0f1f5;color:#7a1d1d}
+.tbl{font-size:13px}
+.callout{border-radius:8px;padding:10px 14px;margin:10px 0;font-size:13px}
+.callout.note{background:#fff8e6;border-left:4px solid var(--gold)}
+.callout.warn{background:#fdeaea;border-left:4px solid var(--red)}
+pre.code{background:#11131a;color:#e9edf3;padding:12px 14px;border-radius:8px;overflow:auto;font-size:12px}
+</style></head><body><div class="page">
+<div class="cover"><span class="label">Dossie Tecnico de PDI — Nivel Senior</span>
+<h1>Refatoracao de Modulo Legado com SOLID e Clean Architecture</h1><div class="gold-bar"></div>
+<p class="sub">Engenharia de Software</p>
+<div class="meta"><div>Autor<br><strong>Marcos L. R. V. (Coordenador de Engenharia)</strong></div><div>Unidade<br><strong>V4 Company / Squad de Engenharia de IA</strong></div>
+<div>Data<br><strong>2026-08-27</strong></div><div>Status<br><strong>Entregue (desenvolvido)</strong></div></div></div>
+<p>Refatoracao do modulo de orquestracao de campanhas (antigo CampaignService, 600+ linhas, acoplado) para Clean Architecture com ports/adapters e os 5 principios SOLID. Entrego o antes/depois, o ADR e um teste que prova a nova testabilidade.</p>
+<p>O ponto nao e &#x27;estilo&#x27;: e eliminar classes de risco (SQL injection, transacoes ausentes, falha silenciosa de CRM) e tornar o modulo coberto por teste sem subir infra.</p>
+<ul><li>O modulo dispara 3-5 campanhas/dia para listas de 5k-80k leads.</li><li>Falha silenciosa de gravacao no CRM ja causou duplo contato (reclamacao real).</li><li>Qualquer alteracao hoje exige deploy manual e testes manuais.</li></ul>
+<p>O CampaignService original misturava regra de negocio, acesso direto a banco, envio de e-mail e chamada de CRM no mesmo metodo.</p>
+<table class="tbl"><thead><tr><th>Violacao</th><th>Manifestacao</th></tr></thead><tbody><tr><td>SRP</td><td>1 classe cuida de regra+DB+email+CRM</td></tr><tr><td>OCP</td><td>novo canal = editar metodo central</td></tr><tr><td>DIP</td><td>aplicacao depende de psycopg2/smtp direto</td></tr><tr><td>Sem transacao</td><td>estado parcial em falha</td></tr></tbody></table>
+<ul><li>SQL concatenado (f&quot;SELECT ... {camp.id}&quot;) — vetor de injection.</li><li>Sem transacao: lead marcado enviado mas e-mail falha -&gt; estado inconsistente.</li><li>Impossivel testar: 600 linhas, 4 dependencias de I/O acopladas, 0% cobertura.</li></ul>
+<p>ADR-021 — Camadas e Ports/Adapters</p>
+<table class="tbl"><thead><tr><th>Opcao</th><th>Pro</th><th>Contra</th><th>Decisao</th></tr></thead><tbody><tr><td>Clean Architecture</td><td>testavel, desacoplado</td><td>mais arquivos</td><td>ESCOLHIDA</td></tr><tr><td>Hexagonal puro</td><td>simetrico</td><td>overhead</td><td>rejeitada</td></tr><tr><td>Manter acoplado + E2E</td><td>zero refactor</td><td>fragil</td><td>rejeitada</td></tr></tbody></table>
+<div class="callout note">Dependencia de I/O vira interface (Protocol): LeadRepository, Notifier, Logger. O servico depende de abstracoes; implementacoes sao injetadas no bootstrap.</div>
+<ul><li>SOLID-BEFORE-AFTER.md — mapeamento violacao-&gt;solucao.</li><li>before_campaign_service.py — modulo legado.</li><li>after_campaign_service.py — Clean Architecture + 1 teste.</li></ul>
+<ol><li>Cobrir o servico com testes de porta (mock de Notifier/Repository) — alvo 85%.</li><li>Feature flag: novo modulo em paralelo por 1 sprint (shadow).</li><li>Se divergencia &lt; 0,1%, migrar trafego e remover legado.</li><li>Rollback: flag desliga o novo sem deploy.</li></ol>
+<table class="tbl"><thead><tr><th>Metrica</th><th>Antes</th><th>Depois</th></tr></thead><tbody><tr><td>Acoplamento (resp/classe)</td><td>4</td><td>1</td></tr><tr><td>Cobertura</td><td>0%</td><td>&gt;= 85%</td></tr><tr><td>Linhas por classe</td><td>600+</td><td>&lt; 45</td></tr><tr><td>SQL injection</td><td>sim</td><td>eliminado</td></tr></tbody></table>
+<table class="tbl"><thead><tr><th>Risco</th><th>Mitigacao</th></tr></thead><tbody><tr><td>Shadow com divergencia</td><td>reconciliacao diaria</td></tr><tr><td>Time nao adota</td><td>PR template + lint de arquitetura</td></tr></tbody></table>
+<ul><li>Aplicar o molde aos demais modulos legados.</li><li>Mutation testing (mutmut) no servico.</li></ul>
+<p style="margin-top:24px;color:var(--muted);font-size:12px">Dossie gerado em 2026-08-27 · PDI Marcos L. R. V. (Coordenador de Engenharia)</p>
+</div></body></html>

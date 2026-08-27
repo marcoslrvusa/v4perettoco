@@ -1,86 +1,27 @@
 <!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PDI — Conformidade LGPD no Tráfego Distribuído (criptografia em trânsito e repouso)</title>
-<style>
-:root{--bg:#07080a;--surface:#14181d;--surface2:#1a1f26;--border:#232a33;--text:#e8ecf0;--text2:#8896a8;--gold:#c9a96e;--red:#ff4757;--green:#00e699;}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'JetBrains Mono',ui-monospace,monospace;overflow-x:hidden}
-.nav{position:fixed;top:0;left:0;right:0;height:46px;background:rgba(7,8,10,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:100;font-size:12px}
-.nav-logo{color:var(--gold);font-weight:700;letter-spacing:.5px}
-.progress{position:fixed;top:46px;left:0;right:0;height:2px;background:var(--border);z-index:100}
-.progress-bar{height:100%;background:var(--gold);width:0%}
-.slide{min-height:100vh;padding:84px 56px 48px;display:flex;flex-direction:column;justify-content:center;position:relative;border-bottom:1px solid var(--border)}
-.slide::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% -10%,rgba(201,169,110,.05),transparent 70%);pointer-events:none}
-.slide-num{position:absolute;top:60px;right:40px;font-size:11px;color:var(--text2);letter-spacing:2px}
-.tag{display:inline-block;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,169,110,.3);padding:5px 12px;background:rgba(201,169,110,.05)}
-h1{font-size:30px;font-weight:700;line-height:1.25;margin:18px 0}
-h2{font-size:22px;font-weight:700;color:var(--gold);margin-bottom:18px}
-p{font-size:15px;color:var(--text2);line-height:1.7;max-width:760px}
-ul{margin:8px 0 0 0;padding:0;list-style:none}
-li{font-size:14.5px;color:var(--text);padding:9px 0 9px 26px;position:relative;border-bottom:1px solid var(--border)}
-li::before{content:'▸';position:absolute;left:4px;color:var(--gold)}
-.meta{margin-top:22px;display:flex;gap:26px;flex-wrap:wrap;font-size:12.5px;color:var(--text2)}
-.meta strong{color:var(--text);font-weight:500}
-table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13px}
-th,td{border:1px solid var(--border);padding:9px 12px;text-align:left}
-th{background:var(--surface2);color:var(--gold)}
-.good{color:var(--green)}.bad{color:var(--red)}
-.cover-title{font-size:34px}
-footer{position:fixed;bottom:0;left:0;right:0;text-align:center;padding:8px;font-size:11px;color:var(--text2);background:rgba(7,8,10,.7);z-index:50}
+<title>Conformidade LGPD em Eventos e Dados (anonimizacao, consentimento, esquecimento) — Apresentacao</title><style>
+:root{--bg:#0e0f13;--card:#16181f;--gold:#c9a227;--red:#8b1e1e;--muted:#9aa4b2;--txt:#e9edf3}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font-family:'Segoe UI',system-ui,sans-serif}
+header{background:linear-gradient(135deg,#0e0f13,#1a1020);padding:48px 40px 28px;border-bottom:3px solid var(--gold)}
+header .tag{color:var(--gold);letter-spacing:2px;font-size:12px;text-transform:uppercase}
+header h1{margin:8px 0 4px;font-size:30px}
+header .meta{color:var(--muted);font-size:13px;margin-top:8px}
+.bar{height:4px;background:linear-gradient(90deg,var(--red),var(--gold))}
+main{max-width:980px;margin:24px auto;padding:0 24px}
+.card{background:var(--card);border:1px solid #232733;border-left:4px solid var(--gold);border-radius:10px;padding:18px 20px;margin:16px 0}
+.card h2{margin:0 0 6px;font-size:19px;color:var(--gold)}
+.card .badge{display:inline-block;font-size:11px;color:var(--muted);border:1px solid #2c3340;border-radius:20px;padding:2px 10px;margin-bottom:8px}
+.card p,.card li{font-size:14px;line-height:1.55;color:#d4dae3}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+th,td{border:1px solid #2a3140;padding:7px 9px;text-align:left}
+th{background:#1d2230;color:var(--gold)}
+footer{color:var(--muted);font-size:12px;text-align:center;padding:24px}
 </style></head><body>
-<div class="nav"><span class="nav-logo">PDI · Sistemas Distribuídos</span><span style="color:var(--text2)">Marcos Perettoco</span></div>
-<div class="progress"><div class="progress-bar" id="bar"></div></div>
-
-<section class="slide">
-  <span class="tag">Apresentação de Entrega</span>
-  <h1 class="cover-title">Conformidade LGPD no Tráfego Distribuído (criptografia em trânsito e repouso)</h1>
-  <div class="meta">
-    <div>Autor<br><strong>Marcos Perettoco</strong></div>
-    <div>Unidade<br><strong>V4 Company / FV Marketing</strong></div>
-    <div>Data<br><strong>25/08/2026</strong></div>
-    <div>Status<br><strong>Entregue (desenvolvido)</strong></div>
-  </div>
-</section>
-
-<section class="slide">
-  <span class="slide-num">01</span>
-  <h2>O Problema</h2>
-  <p>Dados pessoais trafegam entre serviços sem controle de conformidade.</p>
-  <ul><li>Sem criptografia em trânsito entre serviços</li><li>PII em claro no banco</li><li>Sem trilha de consentimento</li></ul>
-</section>
-
-<section class="slide">
-  <span class="slide-num">02</span>
-  <h2>A Solução / Arquitetura</h2>
-  <ul><li>TLS 1.2+ e mTLS entre serviços internos</li><li>AES-256 em colunas PII no banco</li><li>Consent_id no cabeçalho das mensagens</li><li>Log imutável de acesso a PII</li></ul>
-</section>
-
-<section class="slide">
-  <span class="slide-num">03</span>
-  <h2>Entregas desta atividade</h2>
-  <ul><li>LGPD-COMPLIANCE.md (framework + checklist)</li><li>encrypt_pii.py (criptografia)</li></ul>
-</section>
-
-<section class="slide">
-  <span class="slide-num">04</span>
-  <h2>Métricas de Sucesso</h2>
-  <table><thead><tr><th>Métrica</th><th>Antes</th><th>Depois</th></tr></thead><tbody><tr><td>Trânsito criptografado</td><td class='bad'>Não</td><td class='good'>TLS/mTLS</td></tr><tr><td>Repouso (PII)</td><td class='bad'>Claro</td><td class='good'>AES-256</td></tr></tbody></table>
-</section>
-
-<section class="slide">
-  <span class="slide-num">05</span>
-  <h2>Próximos Passos</h2>
-  <ul><li>Aplicar mTLS no barramento (Módulo 05-A1)</li><li>Mascarar PII em logs</li></ul>
-</section>
-
-<footer>PDI Marcos Perettoco · V4 Company — padrão visual de apresentação</footer>
-<script>
-var secs=document.querySelectorAll('.slide');
-window.addEventListener('scroll',function(){
-  var h=document.documentElement;
-  var p=h.scrollTop/(h.scrollHeight-h.clientHeight);
-  document.getElementById('bar').style.width=(p*100)+'%';
-});
-</script>
-</body></html>
+<header><div class="tag">PDI Sistemas Distribuidos</div><h1>Conformidade LGPD em Eventos e Dados (anonimizacao, consentimento, esquecimento)</h1>
+<div class="meta">Autor: Marcos L. R. V. (Coordenador de Engenharia) · V4 Company / Squad de Engenharia de IA · 2026-08-27</div></header>
+<div class="bar"></div>
+<main><div class="card"><div class="badge">Dossie Senior</div><h2>Resumo Executivo</h2><p>Padrao LGPD para o ecossistema de dados/eventos: minimizacao, consentimento por fluxo, anonimizacao em logs/traces e direito ao esquecimento via delete em cascata. Entrego o padrao e um util de anonimizacao.</p>
+<p>Eventos e traces carregam PII (e-mail, CNPJ); sem controle, vazamento e processo administrativo.</p></div><div class="card"><div class="badge">Dossie Senior</div><h2>Contexto de Producao</h2><ul><li>Logs de agente gravavam e-mail inteiro.</li><li>Sem consentimento por finalidade.</li><li>Pedido de exclusao nao propagava.</li></ul></div><div class="card"><div class="badge">Dossie Senior</div><h2>Diagnostico</h2><table class="tbl"><thead><tr><th>Hoje</th><th>Alvo</th></tr></thead><tbody><tr><td>PII em log/trace</td><td>anonimizado</td></tr><tr><td>sem consentimento</td><td>consent por finalidade</td></tr><tr><td>delete parcial</td><td>cascata</td></tr></tbody></table></div><div class="card"><div class="badge">Dossie Senior</div><h2>Decisao Arquitetural (ADR)</h2><p>ADR-054 — Tratamento de PII</p>
+<table class="tbl"><thead><tr><th>Opcao</th><th>Pro</th><th>Contra</th><th>Decisao</th></tr></thead><tbody><tr><td>Anon + consent + delete cascata</td><td>conforme LGPD</td><td>governanca</td><td>ESCOLHIDA</td></tr></tbody></table>
+<div class="callout note">Minimizacao por padrao; PII so com consentimento e retencao definida.</div></div><div class="card"><div class="badge">Dossie Senior</div><h2>Entregas</h2><ul><li>LGPD-DATA.md.</li><li>anon.py.</li><li>retention_policy.sql.</li></ul></div><div class="card"><div class="badge">Dossie Senior</div><h2>Validacao</h2><ol><li>Varrer logs: 0 e-mail/CNPJ cru.</li><li>Simular exclusao: delete em todas as tabelas.</li><li>Auditoria: consentimento por finalidade.</li></ol></div><div class="card"><div class="badge">Dossie Senior</div><h2>Metricas e SLO</h2><table class="tbl"><thead><tr><th>SLO</th><th>Alvo</th></tr></thead><tbody><tr><td>PII em log</td><td>0</td></tr><tr><td>Exclusao</td><td>&lt;= 15 dias</td></tr><tr><td>Consentimento</td><td>100% fluxos</td></tr></tbody></table></div><div class="card"><div class="badge">Dossie Senior</div><h2>Riscos</h2><table class="tbl"><thead><tr><th>Risco</th><th>Mitigacao</th></tr></thead><tbody><tr><td>Delete esquece tabela</td><td>mapear subject</td></tr><tr><td>Cache PII</td><td>nao cachear</td></tr></tbody></table></div><div class="card"><div class="badge">Dossie Senior</div><h2>Proximos Passos</h2><ul><li>Data map de PII.</li><li>Alerta de PII em logs.</li></ul></div></main>
+<footer>Dossie gerado em 2026-08-27 · PDI Marcos L. R. V. (Coordenador de Engenharia)</footer></body></html>

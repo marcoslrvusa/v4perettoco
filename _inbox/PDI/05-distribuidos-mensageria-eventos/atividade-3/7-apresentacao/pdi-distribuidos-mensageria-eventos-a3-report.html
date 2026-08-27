@@ -1,0 +1,45 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
+<title>PDI — Resiliencia com Circuit Breaker e Retry/Backoff</title><style>
+:root{--bg:#f7f8fa;--card:#fff;--gold:#b8860b;--red:#8b1e1e;--muted:#6b7280;--txt:#1f2733;--bd:#e3e7ee}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font-family:'Segoe UI',Georgia,serif}
+.page{max-width:820px;margin:0 auto;padding:0 0 60px}
+.cover{background:linear-gradient(135deg,#11131a,#241423);color:#fff;padding:56px 44px 40px}
+.cover .label{color:#e3c14e;letter-spacing:3px;font-size:11px;text-transform:uppercase}
+.cover h1{margin:10px 0 6px;font-size:30px}
+.gold-bar{height:4px;width:120px;background:linear-gradient(90deg,var(--red),var(--gold));margin:14px 0}
+.cover .sub{color:#c7cdd8;font-size:15px}
+.meta{display:flex;gap:26px;margin-top:22px;flex-wrap:wrap}
+.meta div{font-size:12px;color:#9aa4b2}
+.meta strong{display:block;color:#fff;font-size:14px;margin-top:3px}
+.card{background:var(--card);border:1px solid var(--bd);border-left:4px solid var(--gold);border-radius:10px;padding:18px 22px;margin:18px 22px}
+.card h2{margin:0 0 10px;font-size:20px;color:#7a1d1d}
+.card h3{color:#9a7b13;margin:14px 0 4px}
+.card p,.card li{font-size:14px;line-height:1.6}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th,td{border:1px solid var(--bd);padding:8px 10px}
+th{background:#f0f1f5;color:#7a1d1d}
+.tbl{font-size:13px}
+.callout{border-radius:8px;padding:10px 14px;margin:10px 0;font-size:13px}
+.callout.note{background:#fff8e6;border-left:4px solid var(--gold)}
+.callout.warn{background:#fdeaea;border-left:4px solid var(--red)}
+pre.code{background:#11131a;color:#e9edf3;padding:12px 14px;border-radius:8px;overflow:auto;font-size:12px}
+</style></head><body><div class="page">
+<div class="cover"><span class="label">Dossie Tecnico de PDI — Nivel Senior</span>
+<h1>Resiliencia com Circuit Breaker e Retry/Backoff</h1><div class="gold-bar"></div>
+<p class="sub">Sistemas Distribuidos</p>
+<div class="meta"><div>Autor<br><strong>Marcos L. R. V. (Coordenador de Engenharia)</strong></div><div>Unidade<br><strong>V4 Company / Squad de Engenharia de IA</strong></div>
+<div>Data<br><strong>2026-08-27</strong></div><div>Status<br><strong>Entregue (desenvolvido)</strong></div></div></div>
+<p>Padrao de resiliencia para chamadas a servicos externos (LLM, CRM): Circuit Breaker + retry com backoff e jitter, fallback. Entrego o padrao e uma implementacao funcional.</p>
+<p>Sem breaker, 1 API lenta vira fila que derruba o proprio servico.</p>
+<ul><li>LLM/CRM lentos travavam o worker.</li><li>Retry sem backoff multiplicava a carga.</li><li>Sem fallback: erro virou 5xx.</li></ul>
+<table class="tbl"><thead><tr><th>Hoje</th><th>Alvo</th></tr></thead><tbody><tr><td>retry imediato</td><td>backoff + jitter</td></tr><tr><td>sem protecao</td><td>breaker</td></tr><tr><td>5xx seco</td><td>fallback</td></tr></tbody></table>
+<p>ADR-053 — Resiliencia</p>
+<table class="tbl"><thead><tr><th>Opcao</th><th>Pro</th><th>Contra</th><th>Decisao</th></tr></thead><tbody><tr><td>CB + backoff + fallback</td><td>protege cascata</td><td>estado</td><td>ESCOLHIDA</td></tr><tr><td>retry infinito</td><td>simples</td><td>piora outage</td><td>rejeitada</td></tr></tbody></table>
+<div class="callout note">Closed -&gt; Open apos N falhas; Half-Open testa; fallback em Open.</div>
+<ul><li>RESILIENCIA.md.</li><li>circuit_breaker.py.</li><li>retry.py.</li></ul>
+<ol><li>Simular API lenta; breaker abre apos limite.</li><li>Fallback em Open (sem 5xx).</li><li>API volta -&gt; Half-Open reabilita.</li></ol>
+<table class="tbl"><thead><tr><th>SLO</th><th>Alvo</th></tr></thead><tbody><tr><td>Breaker abre em</td><td>&lt;= 5 falhas</td></tr><tr><td>Fallback em outage</td><td>100%</td></tr></tbody></table>
+<table class="tbl"><thead><tr><th>Risco</th><th>Mitigacao</th></tr></thead><tbody><tr><td>Mal calibrado</td><td>tunar</td></tr><tr><td>Fallback mentiroso</td><td>explicito</td></tr></tbody></table>
+<ul><li>Aplicar em todas as saidas.</li><li>Metricas de breaker.</li></ul>
+<p style="margin-top:24px;color:var(--muted);font-size:12px">Dossie gerado em 2026-08-27 · PDI Marcos L. R. V. (Coordenador de Engenharia)</p>
+</div></body></html>

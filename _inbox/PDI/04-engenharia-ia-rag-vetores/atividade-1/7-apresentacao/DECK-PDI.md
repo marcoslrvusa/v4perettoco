@@ -1,65 +1,42 @@
-# PDI — Apresentação: Trilha NVIDIA Deep Learning Institute + Pipelines de Dados para IA
+# Deck PDI — Fundamentos de IA Generativa (NVIDIA DLI) aplicados a RAG
 
-> **Formato:** 5-6 slides | **Tempo:** 15-20 min
-> **Audiência:** Tech Lead + Squad
+Area: Engenharia de IA
 
----
-
-## Slide 1: Título
-
-```
-PDI: TRILHA NVIDIA DEEP LEARNING INSTITUTE + PIPELINES DE DADOS PARA IA
-
-Marcos Perettoco — V4 Company
-25/08/2026 | Engenharia de IA
-```
-
----
-
-## Slide 2: O Problema
-
-**Fundamentar a equipe em pipelines de dados eficientes para IA, base para os agentes e RAG.**
-
-## Diagnóstico
-
-- Ingestão ad-hoc sem chunking consistente
-- Embeddings sem batch assíncrono (estrangulamento de API)
-- Falta de versionamento de dataset de embeddings
-
-
----
-
-## Slide 3: Arquitetura da Solução
-
-## Abordagem
-
-- Estágios: ingest → chunk → embed → store → serve
-- Chunk semântico (512-1024 tokens, overlap 10%)
-- Embed em batch assíncrono
-- pgvector com índice HNSW
-
-
----
-
-## Slide 4: Entregas
-
-## Artefatos
-
-- DATA-PIPELINE-AI.md (guia)
-- TRILHA.md (registro de conclusão)
-
-
----
-
-## Slide 5: Métricas de Sucesso
-
-| Métrica | Antes | Depois |
-|--------|-------|--------|
-| Pipeline documentado | Não | Sim |
-| Trilha NVIDIA DLI | Em andamento | Concluída |
----
-
-## Slide 6: Próximos Passos
-
-- Aplicar o pipeline no RAG do Módulo 04-A2
-- Versionar dataset de embeddings
+## Slide 1: Resumo Executivo
+Conclusao do curso NVIDIA DLI 'Building RAG Agents with LLMs' com transposicao pratica. Entrego notas e um notebook funcional de RAG end-to-end.
+A base sustenta as proximas atividades (RAG hibrido, multi-agente, custos).
+## Slide 2: Contexto de Producao
+Time comenta 'RAG' mas sem padrao de chunking.
+Similaridade pura trazia contexto irrelevante.
+Sem metrica de qualidade.
+## Slide 3: Diagnostico
+Chunk grande -> ruido; pequeno -> perde contexto.
+Embedding sem normalizacao.
+Sem rerank -> top-k ruido.
+## Slide 4: Decisao Arquitetural (ADR)
+ADR-041 — Baseline RAG
+| Opcao | Pro | Contra | Decisao |
+| --- | --- | --- | --- |
+| Chunk 512 + overlap 64 + rerank | coeso | mais tokens | ESCOLHIDA |
+> Nota: Normalizar embeddings; top-k=20 + rerank para top-5.
+## Slide 5: Entregas
+DLI-NOTES.md.
+rag_baseline.py.
+CONCLUSAO.md.
+## Slide 6: Validacao
+Rodar rag_baseline.py.
+Medir faithfulness em 10 perguntas.
+Comparar com similaridade pura.
+## Slide 7: Metricas
+| SLO | Alvo |
+| --- | --- |
+| Faithfulness | >= 0.8 |
+| Chunk | 512/64 |
+## Slide 8: Riscos
+| Risco | Mitigacao |
+| --- | --- |
+| Contexto irrelevante | rerank |
+| Hallucination | cite trecho |
+## Slide 9: Proximos Passos
+RAG hibrido (04-A2).
+Avaliacao RAGAS.

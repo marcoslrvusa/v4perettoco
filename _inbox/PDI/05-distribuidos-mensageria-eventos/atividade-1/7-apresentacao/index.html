@@ -1,86 +1,27 @@
 <!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PDI — Arquitetura de Barramento de Mensageria (Pub/Sub, RabbitMQ ou Kafka)</title>
-<style>
-:root{--bg:#07080a;--surface:#14181d;--surface2:#1a1f26;--border:#232a33;--text:#e8ecf0;--text2:#8896a8;--gold:#c9a96e;--red:#ff4757;--green:#00e699;}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'JetBrains Mono',ui-monospace,monospace;overflow-x:hidden}
-.nav{position:fixed;top:0;left:0;right:0;height:46px;background:rgba(7,8,10,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:100;font-size:12px}
-.nav-logo{color:var(--gold);font-weight:700;letter-spacing:.5px}
-.progress{position:fixed;top:46px;left:0;right:0;height:2px;background:var(--border);z-index:100}
-.progress-bar{height:100%;background:var(--gold);width:0%}
-.slide{min-height:100vh;padding:84px 56px 48px;display:flex;flex-direction:column;justify-content:center;position:relative;border-bottom:1px solid var(--border)}
-.slide::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% -10%,rgba(201,169,110,.05),transparent 70%);pointer-events:none}
-.slide-num{position:absolute;top:60px;right:40px;font-size:11px;color:var(--text2);letter-spacing:2px}
-.tag{display:inline-block;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,169,110,.3);padding:5px 12px;background:rgba(201,169,110,.05)}
-h1{font-size:30px;font-weight:700;line-height:1.25;margin:18px 0}
-h2{font-size:22px;font-weight:700;color:var(--gold);margin-bottom:18px}
-p{font-size:15px;color:var(--text2);line-height:1.7;max-width:760px}
-ul{margin:8px 0 0 0;padding:0;list-style:none}
-li{font-size:14.5px;color:var(--text);padding:9px 0 9px 26px;position:relative;border-bottom:1px solid var(--border)}
-li::before{content:'▸';position:absolute;left:4px;color:var(--gold)}
-.meta{margin-top:22px;display:flex;gap:26px;flex-wrap:wrap;font-size:12.5px;color:var(--text2)}
-.meta strong{color:var(--text);font-weight:500}
-table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13px}
-th,td{border:1px solid var(--border);padding:9px 12px;text-align:left}
-th{background:var(--surface2);color:var(--gold)}
-.good{color:var(--green)}.bad{color:var(--red)}
-.cover-title{font-size:34px}
-footer{position:fixed;bottom:0;left:0;right:0;text-align:center;padding:8px;font-size:11px;color:var(--text2);background:rgba(7,8,10,.7);z-index:50}
+<title>Sistemas Distribuidos com Mensageria (fila, topico, DLQ) — Apresentacao</title><style>
+:root{--bg:#0e0f13;--card:#16181f;--gold:#c9a227;--red:#8b1e1e;--muted:#9aa4b2;--txt:#e9edf3}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font-family:'Segoe UI',system-ui,sans-serif}
+header{background:linear-gradient(135deg,#0e0f13,#1a1020);padding:48px 40px 28px;border-bottom:3px solid var(--gold)}
+header .tag{color:var(--gold);letter-spacing:2px;font-size:12px;text-transform:uppercase}
+header h1{margin:8px 0 4px;font-size:30px}
+header .meta{color:var(--muted);font-size:13px;margin-top:8px}
+.bar{height:4px;background:linear-gradient(90deg,var(--red),var(--gold))}
+main{max-width:980px;margin:24px auto;padding:0 24px}
+.card{background:var(--card);border:1px solid #232733;border-left:4px solid var(--gold);border-radius:10px;padding:18px 20px;margin:16px 0}
+.card h2{margin:0 0 6px;font-size:19px;color:var(--gold)}
+.card .badge{display:inline-block;font-size:11px;color:var(--muted);border:1px solid #2c3340;border-radius:20px;padding:2px 10px;margin-bottom:8px}
+.card p,.card li{font-size:14px;line-height:1.55;color:#d4dae3}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+th,td{border:1px solid #2a3140;padding:7px 9px;text-align:left}
+th{background:#1d2230;color:var(--gold)}
+footer{color:var(--muted);font-size:12px;text-align:center;padding:24px}
 </style></head><body>
-<div class="nav"><span class="nav-logo">PDI · Sistemas Distribuídos</span><span style="color:var(--text2)">Marcos Perettoco</span></div>
-<div class="progress"><div class="progress-bar" id="bar"></div></div>
-
-<section class="slide">
-  <span class="tag">Apresentação de Entrega</span>
-  <h1 class="cover-title">Arquitetura de Barramento de Mensageria (Pub/Sub, RabbitMQ ou Kafka)</h1>
-  <div class="meta">
-    <div>Autor<br><strong>Marcos Perettoco</strong></div>
-    <div>Unidade<br><strong>V4 Company / FV Marketing</strong></div>
-    <div>Data<br><strong>25/08/2026</strong></div>
-    <div>Status<br><strong>Entregue (desenvolvido)</strong></div>
-  </div>
-</section>
-
-<section class="slide">
-  <span class="slide-num">01</span>
-  <h2>O Problema</h2>
-  <p>Sistemas internos se integravam por chamadas síncronas frágeis, sem desacoplamento.</p>
-  <ul><li>Acoplamento síncrono ponto a ponto</li><li>Sem contrato de evento versionado</li><li>Cascata de falhas em chamadas diretas</li></ul>
-</section>
-
-<section class="slide">
-  <span class="slide-num">02</span>
-  <h2>A Solução / Arquitetura</h2>
-  <ul><li>Kafka como barramento (event log distribuído)</li><li>Produtores publicam em tópicos por domínio</li><li>Consumidores assinam tópicos de interesse</li><li>Particionamento por entity_id (ordem por chave)</li></ul>
-</section>
-
-<section class="slide">
-  <span class="slide-num">03</span>
-  <h2>Entregas desta atividade</h2>
-  <ul><li>MESH-ARCHITECTURE.md (arquitetura + diagrama)</li><li>topic_contracts.json (contratos)</li></ul>
-</section>
-
-<section class="slide">
-  <span class="slide-num">04</span>
-  <h2>Métricas de Sucesso</h2>
-  <table><thead><tr><th>Métrica</th><th>Antes</th><th>Depois</th></tr></thead><tbody><tr><td>Acoplamento</td><td class='bad'>Síncrono</td><td class='good'>Event-driven</td></tr><tr><td>Resiliência</td><td class='bad'>Baixa</td><td class='good'>Alta</td></tr></tbody></table>
-</section>
-
-<section class="slide">
-  <span class="slide-num">05</span>
-  <h2>Próximos Passos</h2>
-  <ul><li>Prototipar tópico crm.lead.created em staging</li><li>Adicionar Schema Registry</li></ul>
-</section>
-
-<footer>PDI Marcos Perettoco · V4 Company — padrão visual de apresentação</footer>
-<script>
-var secs=document.querySelectorAll('.slide');
-window.addEventListener('scroll',function(){
-  var h=document.documentElement;
-  var p=h.scrollTop/(h.scrollHeight-h.clientHeight);
-  document.getElementById('bar').style.width=(p*100)+'%';
-});
-</script>
-</body></html>
+<header><div class="tag">PDI Sistemas Distribuidos</div><h1>Sistemas Distribuidos com Mensageria (fila, topico, DLQ)</h1>
+<div class="meta">Autor: Marcos L. R. V. (Coordenador de Engenharia) · V4 Company / Squad de Engenharia de IA · 2026-08-27</div></header>
+<div class="bar"></div>
+<main><div class="card"><div class="badge">Dossie Senior</div><h2>Resumo Executivo</h2><p>Fundamentos de mensageria para desacoplar servicos: fila, topico, DLQ e ACK. Entrego o padrao e um consumidor com backpressure e DLQ.</p>
+<p>O ecossistema de agentes ja e distribuido; sem fila, falha de 1 servico propaga.</p></div><div class="card"><div class="badge">Dossie Senior</div><h2>Contexto de Producao</h2><ul><li>Agentes chamam uns aos outros via HTTP sincrono.</li><li>Falha de downstream derruba a cadeia.</li><li>Sem DLQ: mensagem ruim some.</li></ul></div><div class="card"><div class="badge">Dossie Senior</div><h2>Diagnostico</h2><table class="tbl"><thead><tr><th>Hoje</th><th>Alvo</th></tr></thead><tbody><tr><td>HTTP sincrono</td><td>fila desacoplada</td></tr><tr><td>sem DLQ</td><td>DLQ + retry</td></tr><tr><td>sem backpressure</td><td>prefetch limitado</td></tr></tbody></table></div><div class="card"><div class="badge">Dossie Senior</div><h2>Decisao Arquitetural (ADR)</h2><p>ADR-051 — Transporte de Eventos</p>
+<table class="tbl"><thead><tr><th>Opcao</th><th>Pro</th><th>Contra</th><th>Decisao</th></tr></thead><tbody><tr><td>Fila + topico + DLQ</td><td>desacopla</td><td>ops</td><td>ESCOLHIDA</td></tr><tr><td>HTTP sincrono</td><td>simples</td><td>cascata</td><td>rejeitada</td></tr></tbody></table>
+<div class="callout note">ACK explicito; prefetch limitado; DLQ apos N tentativas.</div></div><div class="card"><div class="badge">Dossie Senior</div><h2>Entregas</h2><ul><li>MESSAGING.md.</li><li>consumer.py.</li><li>broker.tf.</li></ul></div><div class="card"><div class="badge">Dossie Senior</div><h2>Validacao</h2><ol><li>Publicar 1k msg; derrubar consumer; confirmar reprocessamento.</li><li>Msg invalida -&gt; DLQ (nao perde).</li><li>Backpressure: consumer lento nao estoura.</li></ol></div><div class="card"><div class="badge">Dossie Senior</div><h2>Metricas e SLO</h2><table class="tbl"><thead><tr><th>SLO</th><th>Alvo</th></tr></thead><tbody><tr><td>Throughput</td><td>&gt;= 200 msg/s</td></tr><tr><td>Perdidas</td><td>0</td></tr><tr><td>DLQ revisitada</td><td>&lt; 24h</td></tr></tbody></table></div><div class="card"><div class="badge">Dossie Senior</div><h2>Riscos</h2><table class="tbl"><thead><tr><th>Risco</th><th>Mitigacao</th></tr></thead><tbody><tr><td>Duplicata</td><td>idempotencia (05-A2)</td></tr><tr><td>DLQ esquecida</td><td>alerta</td></tr></tbody></table></div><div class="card"><div class="badge">Dossie Senior</div><h2>Proximos Passos</h2><ul><li>Eventos de dominio do DDD (02-A3).</li><li>Tracing por trace_id.</li></ul></div></main>
+<footer>Dossie gerado em 2026-08-27 · PDI Marcos L. R. V. (Coordenador de Engenharia)</footer></body></html>

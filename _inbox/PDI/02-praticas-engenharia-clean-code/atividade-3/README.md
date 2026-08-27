@@ -1,22 +1,83 @@
-# PDI — Mapeamento de Domínios com Domain-Driven Design (DDD)
+# Mapeamento de Dominios com Domain-Driven Design (DDD)
 
-> **Área:** Engenharia de Software
-> **Unidade:** V4 Company / FV Marketing
-> **Autor:** Marcos Perettoco
-> **Data:** 25/08/2026
-> **Status:** **Entregue (desenvolvido) · NÃO publicado — aguardando homologação**
+Engenharia de Software
 
----
+## Resumo Executivo
 
-## Problema Resolvido
+Mapeamento dos dominios da empresa em DDD antes de novas codificacoes: bounded contexts, agregados, linguagem ubíqua e eventos de dominio. Entrego o mapa, modelos e um exemplo de invariante de agregado.
 
-Antes de codificar novas funcionalidades, os domínios de dados da empresa não estavam mapeados, gerando modelos duplicados e linguagem inconsistente entre times. Esta atividade aplica DDD para mapear os domínios (Lead, Campanha, Conta, Agente), seus bounded contexts e agregados, servindo de base para novas codificações.
+O objetivo e eliminar modelos duplicados e linguagem inconsistente entre squads.
 
-## Entregas desta PDI
+## Contexto de Producao
 
-- Documento de mapa de domínios (DDD)
-- Modelos de domínio em código
+- 4 squads tocam dados de Lead/Conta/agente sem vocabulario comum.
 
-## Validação
+- Mesma entidade 'Contato' tem 3 modelos diferentes.
 
-Artefatos desenvolvidos e versionados. Publicação em produção aguarda homologação.
+- Novas features recriam agregados ja existentes.
+
+## Diagnostico e Causa Raiz
+
+- Ausencia de bounded contexts -> tudo vira 'tabela unica'.
+
+- Linguagem ubíqua ausente -> 'lead' significa 3 coisas.
+
+- Sem agregado -> regras de consistencia espalhadas.
+
+## Decisao Arquitetural (ADR)
+
+ADR-023 — Mapa de Dominios
+
+| Opcao | Pro | Contra | Decisao |
+
+| --- | --- | --- | --- |
+
+| DDD explicito | consistencia, linguagem | governanca | ESCOLHIDA |
+
+| Schema unico | simples | acopla squads | rejeitada |
+
+> **Nota:** Cada bounded context tem seu modelo; integracao por eventos de dominio.
+
+## Entregas desta Atividade
+
+- DOMAIN-MAP.md.
+
+- domain_models.py — agregados com invariantes.
+
+- domain_events.py — eventos.
+
+## Plano de Validacao
+
+1. Workshop de linguagem ubíqua com Product + 2 squads.
+
+2. Validar agregados contra 3 user stories.
+
+3. Gerar schemas dos agregados aprovados.
+
+## Metricas e SLO
+
+| SLO | Alvo |
+
+| --- | --- |
+
+| Dominios mapeados | 4 |
+
+| Modelos duplicados | 0 |
+
+| Eventos definidos | >= 6 |
+
+## Riscos e Mitigacoes
+
+| Risco | Mitigacao |
+
+| --- | --- |
+
+| Mapa vira teoria | code review exige mapear |
+
+| Over-engineering | so modelar o que tem regra |
+
+## Proximos Passos
+
+- Adotar eventos no barramento (05-A1).
+
+- Testes de invariante de agregado.

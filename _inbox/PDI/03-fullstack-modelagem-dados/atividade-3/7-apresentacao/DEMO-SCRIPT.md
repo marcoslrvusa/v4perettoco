@@ -1,30 +1,10 @@
-# Script de Demonstração — Computação Serverless (Cloud Function/AWS Lambda) integrada com segurança ao banco
+# Roteiro de Demo — Arquitetura Serverless para Processamento Assincrono (event-driven)
 
-## Setup
-```bash
-# Estrutura da entrega
-tree 03-fullstack-modelagem-dados/atividade-3/
-```
+Abra o deck (index.html) e percorra os slides na ordem.
 
-## Passo 1: Contexto
-Explique o problema:
-> Tarefas pontuais (export, webhook) rodavam em instâncias always-on, desperdiçando custo e sem segurança de secrets.
+1. Slide de Resumo: abra com o problema de negocio e o blast radius.
+2. Slide do ADR: defenda a opcao escolhida vs as rejeitadas (trade-offs).
+3. Slide de Validacao/Rollout: mostre como provamos em producao.
+4. Slide de Riscos: apresente o plano de mitigacao.
 
-## Passo 2: Arquitetura
-Apresente os pontos-chave:
-- Cloud Function que conecta via Secret Manager
-- Pooler (PgBouncer) com TLS
-- IAM de minima privilégio
-- Idempotência por chave de evento
-
-## Passo 3: Entregas
-Mostre os artefatos gerados:
-- SERVERLESS-SECURITY.md (padrão)
-- main.py (Cloud Function segura)
-- Dockerfile
-
-## Passo 4: Métricas
-| Métrica | Antes | Depois |
-|--------|-------|--------|
-| Custo (jobs esporádicos) | Always-on | Por execução |
-| Secrets | Env var | Secret Manager |
+Material de apoio: pdi-fullstack-modelagem-dados-a3-report.pdf (dossie completo).

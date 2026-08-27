@@ -1,23 +1,83 @@
-# PDI — RAG Híbrido / GraphRAG com Supabase (pgvector)
+# RAG Hibrido (BM25 + Vetorial) e GraphRAG para Relacoes
 
-> **Área:** Engenharia de IA
-> **Unidade:** V4 Company / FV Marketing
-> **Autor:** Marcos Perettoco
-> **Data:** 25/08/2026
-> **Status:** **Entregue (desenvolvido) · NÃO publicado — aguardando homologação**
+Engenharia de IA
 
----
+## Resumo Executivo
 
-## Problema Resolvido
+Upgrade do RAG baseline para hibrido (BM25 + vetorial com RRF) e GraphRAG para relacoes. Entrego o padrao e implementacao.
 
-A busca interna por dados dependia de palavra-chave, perdendo contexto. Esta atividade entrega uma arquitetura de RAG híbrido (vetorial + BM25) e GraphRAG usando pgvector no Supabase, otimizando a busca semântica de dados internos.
+Similaridade falha em 'qual contrato do cliente X' — Grafos cobrem isso.
 
-## Entregas desta PDI
+## Contexto de Producao
 
-- Arquitetura RAG documentada
-- Código de busca híbrida
-- Schema pgvector
+- Relacionamento ('cliente->contrato->fatura') ruim.
 
-## Validação
+- Termos exatos (CNPJ) nao recuperados por embeddings.
 
-Artefatos desenvolvidos e versionados. Publicação em produção aguarda homologação.
+- BM25 sozinho perde sinonimos.
+
+## Diagnostico
+
+| Caso | Vetorial | BM25 | Hibrido |
+
+| --- | --- | --- | --- |
+
+| ID exato | ruim | otimo | otimo |
+
+| sinonimo | otimo | ruim | otimo |
+
+| relacao | ruim | ruim | grafo |
+
+## Decisao Arquitetural (ADR)
+
+ADR-042 — Recuperacao Hibrida + Grafo
+
+| Opcao | Pro | Contra | Decisao |
+
+| --- | --- | --- | --- |
+
+| BM25 + vetorial + GraphRAG | cobra todos | complexo | ESCOLHIDA |
+
+> **Nota:** RRF funde ranks; GraphRAG via traversal.
+
+## Entregas
+
+- HYBRID-RAG.md.
+
+- hybrid_rag.py.
+
+- graph_schema.cypher.
+
+## Validacao
+
+1. Avaliar em 30 perguntas (10 exatas, 10 sinonimos, 10 relacao).
+
+2. Comparar hit@5.
+
+3. Confirmar GraphRAG resolve relacoes.
+
+## Metricas e SLO
+
+| SLO | Alvo |
+
+| --- | --- |
+
+| hit@5 (relacao) | >= 0.9 |
+
+| hit@5 (exato) | >= 0.95 |
+
+## Riscos
+
+| Risco | Mitigacao |
+
+| --- | --- |
+
+| Grafo desatualizado | rebuild incremental |
+
+| RRF ruim | tunar |
+
+## Proximos Passos
+
+- RAGAS.
+
+- Cache de subgrafos.

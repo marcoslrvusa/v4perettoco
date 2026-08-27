@@ -1,22 +1,79 @@
-# PDI — Trilha NVIDIA Deep Learning Institute + Pipelines de Dados para IA
+# Fundamentos de IA Generativa (NVIDIA DLI) aplicados a RAG
 
-> **Área:** Engenharia de IA
-> **Unidade:** V4 Company / FV Marketing
-> **Autor:** Marcos Perettoco
-> **Data:** 25/08/2026
-> **Status:** **Entregue (desenvolvido) · NÃO publicado — aguardando homologação**
+Engenharia de IA
 
----
+## Resumo Executivo
 
-## Problema Resolvido
+Conclusao do curso NVIDIA DLI 'Building RAG Agents with LLMs' com transposicao pratica. Entrego notas e um notebook funcional de RAG end-to-end.
 
-Fundamentar a equipe em pipelines de dados eficientes para IA através da trilha do NVIDIA Deep Learning Institute. Esta atividade entrega o certificado/conclusão e um guia de pipelines de dados aplicado aos agentes (ingestão, chunking, embeddings).
+A base sustenta as proximas atividades (RAG hibrido, multi-agente, custos).
 
-## Entregas desta PDI
+## Contexto de Producao
 
-- Guia de pipelines de dados para IA
-- Registro de conclusão da trilha
+- Time comenta 'RAG' mas sem padrao de chunking.
 
-## Validação
+- Similaridade pura trazia contexto irrelevante.
 
-Artefatos desenvolvidos e versionados. Publicação em produção aguarda homologação.
+- Sem metrica de qualidade.
+
+## Diagnostico
+
+- Chunk grande -> ruido; pequeno -> perde contexto.
+
+- Embedding sem normalizacao.
+
+- Sem rerank -> top-k ruido.
+
+## Decisao Arquitetural (ADR)
+
+ADR-041 — Baseline RAG
+
+| Opcao | Pro | Contra | Decisao |
+
+| --- | --- | --- | --- |
+
+| Chunk 512 + overlap 64 + rerank | coeso | mais tokens | ESCOLHIDA |
+
+> **Nota:** Normalizar embeddings; top-k=20 + rerank para top-5.
+
+## Entregas
+
+- DLI-NOTES.md.
+
+- rag_baseline.py.
+
+- CONCLUSAO.md.
+
+## Validacao
+
+1. Rodar rag_baseline.py.
+
+2. Medir faithfulness em 10 perguntas.
+
+3. Comparar com similaridade pura.
+
+## Metricas
+
+| SLO | Alvo |
+
+| --- | --- |
+
+| Faithfulness | >= 0.8 |
+
+| Chunk | 512/64 |
+
+## Riscos
+
+| Risco | Mitigacao |
+
+| --- | --- |
+
+| Contexto irrelevante | rerank |
+
+| Hallucination | cite trecho |
+
+## Proximos Passos
+
+- RAG hibrido (04-A2).
+
+- Avaliacao RAGAS.
