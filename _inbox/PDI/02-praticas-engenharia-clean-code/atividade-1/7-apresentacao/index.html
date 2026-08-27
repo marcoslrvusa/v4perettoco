@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Refatoração de Módulo Legado com SOLID e Clean Architecture — PDI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--red:#e50914;--red-dark:#b40710;--gold:#c9a96e;--gold-light:#f7f2e9;--gold-border:#e8dcc8;--green:#1a8a3f;--ink:#2d2d2d;--muted:#6b6b6b;--bg:#faf9f6;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Ubuntu',sans-serif;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.7}
+.container{max-width:920px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:'Plus Jakarta Sans',sans-serif;color:#1d1d1d}
+a{color:var(--red);text-decoration:none}
+.cover{background:linear-gradient(135deg,#141414,#2e2e2e);color:#fff;padding:50px 0 80px;border-top:3px solid var(--gold)}
+.cover .label{display:inline-block;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,169,110,.45);padding:6px 16px;border-radius:20px;margin-bottom:16px}
+.cover h1{font-size:32px;font-weight:800;line-height:1.2}
+.cover h1 span{color:var(--gold)}
+.gold-bar{width:64px;height:4px;background:linear-gradient(90deg,var(--gold),var(--red));border-radius:2px;margin:14px 0}
+.cover p.sub{font-size:16px;color:#cfcfcf;max-width:680px;font-weight:300;margin-top:6px}
+.cover .meta{margin-top:22px;display:flex;flex-wrap:wrap;gap:28px;font-size:13.5px;color:#a8a8a8}
+.cover .meta strong{color:#fff;font-weight:500}
+.cover img.logo{height:54px;width:auto;margin-top:26px;opacity:.96}
+.card{background:#fff;border-radius:16px;box-shadow:0 3px 16px rgba(0,0,0,.05);margin:26px 0;overflow:hidden}
+.card-head{padding:20px 28px 16px;border-left:5px solid var(--red)}
+.card-head h2{font-size:20px}
+.card-head p{font-size:13.5px;color:var(--muted)}
+.card-body{padding:8px 28px 26px}
+.explain{background:var(--gold-light);border-radius:12px;padding:16px 20px;margin:14px 0;font-size:15px}
+.explain strong{color:#8a6d3b}
+.good{background:#eef8f1;border-left:4px solid var(--green);border-radius:0 10px 10px 0;padding:12px 18px;margin:12px 0}
+.files{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.fcard{background:#fbfaf7;border:1px solid #eceae4;border-radius:10px;padding:12px 14px}
+.fcard .ft{font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;color:#262626;word-break:break-all}
+.fcard .fd{font-size:12.5px;color:var(--muted);margin:6px 0 10px}
+.fcard a{display:inline-block;font-size:12px;font-weight:700;background:var(--red);color:#fff;padding:6px 14px;border-radius:8px}
+footer{text-align:center;padding:36px 20px 46px;color:#9a9a9a;font-size:13px}
+@media(max-width:760px){.files{grid-template-columns:1fr}.cover h1{font-size:25px}.container{padding:0 14px}}
+</style></head><body>
+<div class="cover"><div class="container">
+<span class="label">Entrega de PDI · Engenharia de Software</span>
+<h1>Refatoração de Módulo Legado com SOLID e Clean Architecture</h1>
+<div class="gold-bar"></div>
+<p class="sub">Atividade desenvolvida como parte do Plano de Desenvolvimento Individual — evidência em arquivos (sem publicação em produção).</p>
+<div class="meta">
+<div>Autor<br><strong>Marcos Perettoco</strong></div>
+<div>Unidade<br><strong>V4 Company / FV Marketing</strong></div>
+<div>Status<br><strong>**Entregue (desenvolvido) · NÃO publicado — aguardando homologação**</strong></div>
+<div>Data<br><strong>25/08/2026</strong></div>
+</div>
+<img class="logo" src="../../../v4logowhitepng.png" alt="V4 Company">
+</div></div>
+<div class="container">
+<div class="card"><div class="card-head"><h2>Problema Resolvido</h2><p>Contexto e objetivo da atividade</p></div>
+<div class="card-body"><div class="explain">Um módulo crítico de orquestração de campanhas estava acoplado: a classe `CampaignService` misturava regra de negócio, acesso a banco, envio de e-mail e chamadas de API de CRM em um único arquivo de 600+ linhas, impossível de testar. Esta atividade refatora o módulo aplicando os 5 princípios SOLID e separando em camadas (domain / application / infrastructure), documentando antes e depois.</div>
+<div class="good">✅ <strong>Entregue (desenvolvido):</strong> os artefatos abaixo documentam e implementam a solução proposta. Validação e publicação em produção ficam para etapa de homologação.</div>
+<h3 style="margin:18px 0 6px">Entregas desta atividade</h3>
+<ul style="font-size:14.5px;color:var(--muted);padding-left:20px;line-height:1.8"><li>Documentação SOLID antes/depois</li><li>Código legado (exemplo)</li><li>Código refatorado em Clean Architecture</li></ul>
+</div></div>
+<div class="card"><div class="card-head"><h2>Arquivos da entrega</h2><p>Clique para abrir ou baixar cada artefato</p></div>
+<div class="card-body"><div class="files"><div class="fcard"><div class="ft">SOLID-BEFORE-AFTER.md</div><div class="fd">Mapeamento SOLID antes/depois</div><a href="../1-standards/SOLID-BEFORE-AFTER.md" target="_blank" rel="noopener">Abrir / Baixar</a></div><div class="fcard"><div class="ft">before_campaign_service.py</div><div class="fd">Código legado (antes)</div><a href="../2-code/before_campaign_service.py" target="_blank" rel="noopener">Abrir / Baixar</a></div><div class="fcard"><div class="ft">after_campaign_service.py</div><div class="fd">Código refatorado (depois)</div><a href="../2-code/after_campaign_service.py" target="_blank" rel="noopener">Abrir / Baixar</a></div></div></div></div>
+<footer>PDI Marcos Perettoco · V4 Company — padrão visual V4</footer>
+</div></body></html>
