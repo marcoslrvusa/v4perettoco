@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auditoria AIO/GEO &mdash; Bioperfectus</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --red: rgb(229, 9, 20);
+    --red-dark: rgb(180, 7, 16);
+    --red-light: rgb(255, 60, 70);
+    --gold: #c9a96e;
+    --gold-light: #f5f0e6;
+    --gold-border: #e8dcc8;
+    --gray-50: #fafafa;
+    --gray-100: #f5f5f5;
+    --gray-200: #eeeeee;
+    --gray-300: #e0e0e0;
+    --gray-400: #bdbdbd;
+    --gray-500: #9e9e9e;
+    --gray-600: #757575;
+    --gray-700: #616161;
+    --gray-800: #424242;
+    --gray-900: #212121;
+  }
+
+  body {
+    font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f8f7f4;
+    color: var(--gray-900);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  .cover {
+    background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #2a2a2a 100%);
+    color: #fff;
+    padding: 64px 40px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(201,169,110,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .cover-content { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
+  .cover-content::before {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .cover-content::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin: 28px auto 0;
+    border-radius: 1px;
+  }
+
+  .cover .label {
+    display: inline-block;
+    background: rgba(201,169,110,0.12);
+    border: 1px solid rgba(201,169,110,0.3);
+    padding: 6px 20px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    color: var(--gold);
+  }
+  .cover h1 {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 14px;
+    letter-spacing: -0.5px;
+    font-family: 'Plus Jakarta Sans', serif;
+  }
+  .cover p {
+    font-size: 18px;
+    opacity: 0.85;
+    margin-bottom: 24px;
+    font-weight: 300;
+    letter-spacing: 0.2px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 14px;
+    opacity: 0.7;
+    letter-spacing: 0.5px;
+  }
+
+  .container { max-width: 960px; margin: -36px auto 48px; position: relative; z-index: 2; }
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+    margin-bottom: 28px;
+    overflow: hidden;
+    border: 1px solid var(--gray-300);
+    position: relative;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 40px;
+    right: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-border), var(--gold), var(--gold-border), transparent);
+    opacity: 0.6;
+  }
+  .card-body { padding: 44px 52px; }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--gold-border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -0.3px;
+    position: relative;
+  }
+  h2::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 1px;
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin: 36px 0 18px;
+    letter-spacing: -0.2px;
+  }
+  h4 { font-size: 16px; font-weight: 700; color: var(--gray-800); margin: 22px 0 12px; }
+  p { font-size: 16px; color: var(--gray-700); margin-bottom: 16px; line-height: 1.8; }
+  p:last-child { margin-bottom: 0; }
+
+  .badge {
+    display: inline-block;
+    padding: 5px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .badge-critico { background: #fef2f2; color: var(--red); border: 1px solid #fecaca; }
+  .badge-alto { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+  .badge-medio { background: #fefce8; color: #a16207; border: 1px solid #fef08a; }
+  .badge-baixo { background: var(--gold-light); color: #8b7a4a; border: 1px solid var(--gold-border); }
+  .badge-info { background: #f5f5f5; color: #616161; border: 1px solid #d4d4d4; }
+
+  .severity { display: inline-block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .sev-critico { color: var(--red); }
+  .sev-alto { color: #c2410c; }
+  .sev-medio { color: #a16207; }
+  .sev-baixo { color: #8b7a4a; }
+  .sev-info { color: #616161; }
+
+  table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 15px; }
+  th, td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--gray-100); }
+  th {
+    background: linear-gradient(135deg, var(--gray-50), #f8f7f4);
+    font-weight: 700;
+    color: var(--gray-700);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 2px solid var(--gold-border);
+    position: relative;
+  }
+  tr:hover td { background: #fcfaf7; }
+  tr:last-child td { border-bottom: none; }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .kpi-card {
+    background: #f2f0ec;
+    border-radius: 10px;
+    padding: 20px 12px 18px;
+    text-align: center;
+    border: 1px solid var(--gold-border);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .kpi-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 2px 12px rgba(201,169,110,0.1);
+  }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--red), var(--gold));
+  }
+  .kpi-card .value {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--red);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+  .kpi-card .label {
+    font-size: 12px;
+    color: var(--gray-600);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 8px;
+  }
+  .kpi-card .sub { font-size: 12px; color: var(--gray-600); margin-top: 4px; }
+
+  .risk-box {
+    background: linear-gradient(135deg, #fcfaf7, #f8f7f4);
+    border-left: 4px solid var(--red);
+    padding: 22px 26px;
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 18px;
+  }
+  .risk-box h4 { margin: 0 0 10px; color: var(--red); font-size: 16px; letter-spacing: -0.2px; }
+  .risk-box p { font-size: 15px; color: var(--gray-700); margin: 0; line-height: 1.7; }
+
+  .finding {
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 26px 30px;
+    margin-bottom: 18px;
+    background: #fcfcfc;
+    transition: box-shadow 0.2s, border-color 0.2s;
+    border-left: 3px solid transparent;
+  }
+  .finding:hover {
+    box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+    border-color: var(--gold-border);
+    border-left-color: var(--gold);
+  }
+  .finding-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    gap: 12px;
+  }
+  .finding-title { font-weight: 700; font-size: 17px; color: var(--gray-900); letter-spacing: -0.2px; }
+  .finding-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 32px;
+    font-size: 15px;
+  }
+  .finding-grid .field { font-weight: 600; color: var(--gray-800); }
+  .finding-grid .value { color: var(--gray-700); }
+  .finding-grid .full { grid-column: 1 / -1; }
+
+  .bar-container { margin: 22px 0; }
+  .bar-row { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+  .bar-label { width: 200px; font-size: 13px; font-weight: 700; color: var(--gray-700); text-align: right; flex-shrink: 0; letter-spacing: -0.2px; }
+  .bar-track { flex: 1; height: 30px; background: var(--gray-100); border-radius: 6px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding-right: 14px; font-size: 13px; font-weight: 700; color: #fff; letter-spacing: 0.3px; }
+  .bar-fill.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .bar-fill.orange { background: linear-gradient(90deg, #c2410c, #ea580c); }
+  .bar-fill.gold { background: linear-gradient(90deg, #b8963a, #d4b96a); }
+  .bar-fill.gray { background: linear-gradient(90deg, #616161, #9e9e9e); }
+
+  .timeline {
+    display: flex;
+    gap: 0;
+    margin: 32px 0 16px;
+    position: relative;
+    padding: 0 0 20px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 5%;
+    right: 5%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold-border), var(--gold), var(--gold-border));
+    border-radius: 2px;
+  }
+  .timeline-phase {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    padding: 0 8px;
+  }
+  .timeline-phase .dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    position: relative;
+    z-index: 1;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px var(--gold);
+  }
+  .timeline-phase .dot.red { background: var(--red); }
+  .timeline-phase .dot.orange { background: #c2410c; }
+  .timeline-phase .dot.gold { background: var(--gold); }
+  .timeline-phase .dot.gray { background: #757575; }
+  .timeline-phase .phase-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 2px;
+  }
+  .timeline-phase .phase-hours {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--red);
+    letter-spacing: -0.5px;
+  }
+  .timeline-phase .phase-pct {
+    font-size: 12px;
+    color: var(--gray-500);
+    font-weight: 600;
+  }
+  .timeline-phase .phase-bar {
+    height: 8px;
+    border-radius: 4px;
+    margin: 8px auto 6px;
+    max-width: 80%;
+  }
+  .timeline-phase .phase-bar.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .timeline-phase .phase-bar.orange { background: linear-gradient(90deg, #c2410c, #ea580c); }
+  .timeline-phase .phase-bar.gold { background: linear-gradient(90deg, #b8963a, #d4b96a); }
+  .timeline-phase .phase-bar.gray { background: linear-gradient(90deg, #616161, #9e9e9e); }
+  .timeline-deliverables {
+    display: flex;
+    gap: 0;
+    margin-top: 4px;
+  }
+  .timeline-deliverables .deliv {
+    flex: 1;
+    text-align: center;
+    padding: 0 6px;
+    font-size: 12px;
+    color: var(--gray-600);
+    line-height: 1.4;
+  }
+  .timeline-deliverables .deliv strong {
+    display: block;
+    color: var(--gray-700);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 2px;
+  }
+
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--gray-100);
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 14px;
+    color: var(--red);
+  }
+
+  .glossary-row { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--gray-100); }
+  .glossary-row:last-child { border: none; }
+  .glossary-row span:last-child { font-size: 15px; color: var(--gray-700); }
+
+  .footer {
+    text-align: center;
+    padding: 36px;
+    font-size: 14px;
+    color: var(--gray-500);
+    border-top: 1px solid var(--gold-border);
+    letter-spacing: 0.3px;
+    position: relative;
+  }
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 2px;
+  }
+
+  @media print {
+    body { background: #fff; padding: 0; font-size: 12px; }
+    .cover { padding: 40px 30px; }
+    .container { max-width: 100%; margin: 0; }
+    .card { box-shadow: none; border: 1px solid var(--gray-200); page-break-inside: avoid; }
+    .card-body { padding: 20px 24px; }
+    .finding { page-break-inside: avoid; }
+    table { page-break-inside: avoid; }
+    @page { margin: 1.5cm 1cm; }
+  }
+
+  @media (max-width: 640px) {
+    .cover h1 { font-size: 26px; }
+    .cover { padding: 40px 20px 32px; }
+    .card-body { padding: 20px; }
+    .finding-grid { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .bar-label { width: 90px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-content">
+    <img src="https://marcoslrvusa.github.io/v4perettoco/assets/logo-peretto.png" alt="Peretto" style="height:60px; width:auto; margin-bottom:28px; opacity:0.95;">
+    <div class="label">Confidencial &bull; Agosto 2026</div>
+    <h1>Auditoria AIO / GEO</h1>
+    <p>AI Optimization &amp; Generative Engine Optimization &mdash; Prontid&atilde;o de Cita&ccedil;&atilde;o em IAs</p>
+    <div class="cover-meta">
+      <span>&bull; Bioperfectus Brasil</span>
+      <span>&bull; 483 URLs rastreadas</span>
+      <span>&bull; 260 HTML &bull; pt/es/en</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Sum&aacute;rio Executivo</h2>
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="value">3.4 / 10</div>
+          <div class="label">AI Visibility</div>
+          <div class="sub">Score composto 0&ndash;100</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">15</div>
+          <div class="label">Problemas</div>
+          <div class="sub">6 Cr&iacute;ticos &bull; 5 Alto &bull; 4 M&eacute;dio</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">82 h</div>
+          <div class="label">Esfor&ccedil;o Total</div>
+          <div class="sub">M1+M2+M3+M4 (one-time)</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">+15</div>
+          <div class="label">Cita&ccedil;&otilde;es IA/m&ecirc;s</div>
+          <div class="sub">meta 6 meses p&oacute;s M3</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">6</div>
+          <div class="label">Quick Wins</div>
+          <div class="sub">at&eacute; 48h</div>
+        </div>
+      </div>
+
+      <h3>Pontua&ccedil;&atilde;o por Pilar de IA</h3>
+      <div class="bar-container">
+        <div class="bar-row">
+          <div class="bar-label">Acessibilidade p/ IAs</div>
+          <div class="bar-track"><div class="bar-fill red" style="width:35%;">35</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Extractability &amp; Schema</div>
+          <div class="bar-track"><div class="bar-fill red" style="width:10%;">10</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Entity Clarity &amp; E-E-A-T</div>
+          <div class="bar-track"><div class="bar-fill orange" style="width:40%;">40</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Answer-First Content</div>
+          <div class="bar-track"><div class="bar-fill orange" style="width:45%;">45</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Ecossistema &amp; Citability</div>
+          <div class="bar-track"><div class="bar-fill gold" style="width:30%;">30</div></div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:36px;">
+        <h2>Roteiro de Entrega (M1&ndash;M4 + Gest&atilde;o)</h2>
+        <p style="margin-bottom:20px; color:var(--gray-700);">Esfor&ccedil;o dimensionado por papel (J&uacute;nior/Pleno/Copy/S&ecirc;nior) conforme o produto AI Search. O combo completo reduz 12% sobre o somat&oacute;rio.</p>
+
+        <div class="timeline">
+          <div class="timeline-phase">
+            <div class="dot red"></div>
+            <div class="phase-bar red" style="width:37%;"></div>
+            <div class="phase-hours">12h</div>
+            <div class="phase-name">M1 Diagn&oacute;stico</div>
+            <div class="phase-pct">one-time</div>
+          </div>
+          <div class="timeline-phase">
+            <div class="dot orange"></div>
+            <div class="phase-bar orange" style="width:69%;"></div>
+            <div class="phase-hours">22h</div>
+            <div class="phase-name">M2 Funda&ccedil;&atilde;o</div>
+            <div class="phase-pct">one-time</div>
+          </div>
+          <div class="timeline-phase">
+            <div class="dot gold"></div>
+            <div class="phase-bar gold" style="width:100%;"></div>
+            <div class="phase-hours">32h</div>
+            <div class="phase-name">M3 Conte&uacute;do AEO</div>
+            <div class="phase-pct">one-time</div>
+          </div>
+          <div class="timeline-phase">
+            <div class="dot gray"></div>
+            <div class="phase-bar gray" style="width:50%;"></div>
+            <div class="phase-hours">16h</div>
+            <div class="phase-name">M4 Ecossistema</div>
+            <div class="phase-pct">one-time</div>
+          </div>
+          <div class="timeline-phase">
+            <div class="dot red"></div>
+            <div class="phase-bar red" style="width:56%;"></div>
+            <div class="phase-hours">18h</div>
+            <div class="phase-name">Gest&atilde;o/m&ecirc;s</div>
+            <div class="phase-pct">recorrente</div>
+          </div>
+        </div>
+
+        <div class="timeline-deliverables">
+          <div class="deliv"><strong>M1</strong>Crawl 5+ p&aacute;gs<br>20 queries em IA<br>Benchmark<br>Baseline citations</div>
+          <div class="deliv"><strong>M2</strong>Schema (Org/Prod/FAQ)<br>llms.txt + robots<br>Entity graph<br>Extractability</div>
+          <div class="deliv"><strong>M3</strong>Answer-first hubs<br>Definition blocks<br>FAQ/Q&A schema<br>Clusters AEO</div>
+          <div class="deliv"><strong>M4</strong>Diret&oacute;rios IA<br>GMB + Crunchbase<br>Wikipedia/Wikidata<br>Digital PR</div>
+          <div class="deliv"><strong>Gest&atilde;o</strong>Monitor citations<br>Ajustes t&eacute;c.<br>2&ndash;4 pe&ccedil;as/m&ecirc;s<br>QBR trimestral</div>
+        </div>
+
+        <div style="margin-top:24px; background:linear-gradient(135deg, #fcfaf7, #f8f7f4); border-radius:10px; padding:18px 22px; border:1px solid var(--gold-border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+          <div>
+            <div style="font-size:12px; color:var(--gray-500); font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Esfor&ccedil;o Combo M1+M2+M3+M4</div>
+            <div style="font-size:28px; font-weight:700; color:var(--red); letter-spacing:-0.5px;">82 h</div>
+          </div>
+          <div style="flex:1; max-width:360px;">
+            <div style="height:6px; background:var(--gray-200); border-radius:3px; overflow:hidden; margin-bottom:6px;">
+              <div style="height:100%; width:100%; background:linear-gradient(90deg, var(--red), var(--gold)); border-radius:3px;"></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--gray-500);">
+              <span>Diagn&oacute;stico</span>
+              <span style="font-weight:600; color:var(--gray-700);">82h de execu&ccedil;&atilde;o</span>
+              <span>Cita&ccedil;&atilde;o</span>
+            </div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:12px; color:var(--gray-500); font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">+15 cita&ccedil;&otilde;es/m&ecirc;s</div>
+            <div style="font-size:16px; font-weight:700; color:var(--gold);">Proje&ccedil;&atilde;o 6 meses</div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Top 3 Riscos que Exigem Aten&ccedil;&atilde;o Imediata do C-Level</h3>
+      <div class="risk-box">
+        <h4>1. Zero structured data em 100% das p&aacute;ginas (0/221)</h4>
+        <p>Sem Organization, Product, FAQ, Breadcrumb ou Article schema, os modelos de IA (ChatGPT, Perplexity, Gemini, Claude) n&atilde;o extraem entidades, especifica&ccedil;&otilde;es ou facts estruturados da Bioperfectus. Em segmento YMYL (diagn&oacute;stico in-vitro), a aus&ecirc;ncia de marca&ccedil;&otilde;es de entidade &eacute; o gargalo n&uacute;mero um para ser citado em respostas. <strong>Citability estimada pr&oacute;xima de zero hoje.</strong></p>
+      </div>
+      <div class="risk-box">
+        <h4>2. 42 p&aacute;ginas (incl. home, produtos, es) com TITLE vazio + 0 hreflang no site tril&iacute;ngue</h4>
+        <p>O t&iacute;tulo de 42 p&aacute;ginas renderiza apenas como &ldquo; - Bioperfectus Brasil&rdquo; (vazio). A entidade da p&aacute;gina fica indefinida para a IA. Pior: o site &eacute; pt/es/en (177/45/38 p&aacute;ginas) mas n&atilde;o tem <em>hreflang</em> nenhum &mdash; a IA n&atilde;o sabe qual vers&atilde;o de idioma citar, servindo a errada e destruindo a confian&ccedil;a em respostas multil&iacute;ngues.</p>
+      </div>
+      <div class="risk-box">
+        <h4>3. Nenhum llms.txt / robots.txt / sitemap detectado + 137 p&aacute;ginas thin (&lt;300 palavras)</h4>
+        <p>No crawl n&atilde;o h&aacute; robots.txt, llms.txt nem sitemap &mdash; crawlers de IA (GPTBot, Claude-Web, Google-Extended, PerplexityBot) n&atilde;o recebem instru&ccedil;&atilde;o de acesso nem mapa de URLs. Somado a 62% das p&aginas com conte&uacute;do raso (m&eacute;dia de 275 palavras), a extractability &eacute; baixa: a IA n&atilde;o encontra blocos de resposta limpos para treinar e citar.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Perfil do Site &amp; Contexto de IA</h2>
+      <table>
+        <tr><th>Caracter&iacute;stica</th><th>Detalhe</th></tr>
+        <tr><td><strong>Dom&iacute;nio</strong></td><td>bioperfectus.com.br</td></tr>
+        <tr><td><strong>Segmento</strong></td><td>Diagn&oacute;stico in-vitro (IVD) &mdash; reagentes, equipamentos EZiCare, testes gastrointestinais. Categoria YMYL (sa&uacute;de) &rarr; E-E-A-T rigoroso</td></tr>
+        <tr><td><strong>CMS</strong></td><td>WordPress + Elementor</td></tr>
+        <tr><td><strong>Idiomas</strong></td><td>pt-BR (177), es (45), en (38) &mdash; multil&iacute;ngue, <strong>sem hreflang</strong></td></tr>
+        <tr><td><strong>Total URLs rastreadas</strong></td><td>483</td></tr>
+        <tr><td><strong>HTML index&aacute;veis</strong></td><td>~260</td></tr>
+        <tr><td><strong>Structured data</strong></td><td><span class="severity sev-critico">0 / 221 p&aacute;ginas (0%)</span></td></tr>
+        <tr><td><strong>llms.txt</strong></td><td><span class="severity sev-critico">Ausente</span> (n&atilde;o detectado no crawl)</td></tr>
+        <tr><td><strong>robots.txt / sitemap</strong></td><td><span class="severity sev-critico">N&atilde;o detectado</span> no crawl &mdash; verificar em produ&ccedil;&atilde;o</td></tr>
+        <tr><td><strong>max-snippet</strong></td><td><code>max-snippet:-1</code> em 218 p&aacute;ginas &mdash; libera trecho ilimitado p/ IA (positivo)</td></tr>
+        <tr><td><strong>Performance</strong></td><td>~45% das p&aacute;ginas entre 1&ndash;2s; nenhuma acima de 2s (saud&aacute;vel)</td></tr>
+        <tr><td><strong>Erros</strong></td><td>22 x 404, 14 x 301, 9 x 302</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Diagn&oacute;stico T&eacute;cnico AIO / GEO</h2>
+
+      <h3><span class="badge badge-critico">Cr&iacute;ticos</span> &mdash; Bloqueiam a Cita&ccedil;&atilde;o em IAs</h3>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">C-A1. Aus&ecirc;ncia de llms.txt e de orienta&ccedil;&atilde;o a crawlers de IA</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">0 ocorr&ecirc;ncias de <code>robots.txt</code>, <code>llms.txt</code> ou <code>sitemap</code> no crawl de 483 URLs. Sem instru&ccedil;&atilde;o para GPTBot, Claude-Web, Google-Extended, PerplexityBot, Applebot-Extended.</span></div>
+          <div class="full"><span class="field">Impacto em IA:</span> <span class="value">Crawlers generativos n&atilde;o recebem mapa de URLs nem diretivas de acesso. P&aacute;ginas priorit&aacute;rias podem n&atilde;o ser ingeridas para treino/resposta. &Eacute; o equivalente GEO de um sitemap inexistente para o Google.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Criar <code>llms.txt</code> listando p&aacute;ginas-can&ocirc;nicas e instru&ccedil;&otilde;es de marca. (2) Revisar <code>robots.txt</code> para n&atilde;o bloquear crawlers de IA (manter <code>max-snippet:-1</code>). (3) Garantir sitemap XML indexado no GSC.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">4 h (M2 &mdash; Funda&ccedil;&atilde;o T&eacute;cnica)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">C-B1. Zero Structured Data (0/221 p&aacute;ginas)</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">100% das p&aacute;ginas sem qualquer JSON-LD/Microdata (<code>Total Types = 0</code> em todas as 221 linhas de structured_data). Nenhum rich result.</span></div>
+          <div class="full"><span class="field">Impacto em IA:</span> <span class="value">IAs n&atilde;o extraem entidade da marca, produtos, especifica&ccedil;&otilde;es, FAQs nem relacionamentos. Para um fabricante de IVD, isso impede que a Bioperfectus seja citada como fonte autoritativa em &ldquo;melhores reagentes para...&rdquo; ou &ldquo;o que &eacute; teste X&rdquo;.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) <code>Organization</code> + <code>MedicalOrganization</code> global. (2) <code>Product</code>/<code>Brand</code> nas p&aacute;ginas de produto. (3) <code>FAQPage</code> em p&aacute;ginas informacionais. (4) <code>BreadcrumbList</code> + <code>Article</code> no blog. (5) <code>HowTo</code>/<code>QAPage</code> onde houver procedimento.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">12 h (M2 &mdash; Schema avan&ccedil;ado)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">C-C1. 42 p&aacute;ginas com TITLE vazio (incl. home, produtos, es)</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">42 t&iacute;tulos renderizam apenas como &ldquo; - Bioperfectus Brasil&rdquo; (vazio). Inclui <code>/</code>, <code>/produtos/</code>, <code>/es/</code>, <code>/produtos/produtos-para-humanos/</code>, <code>/produtos/equipamentos/</code>.</span></div>
+          <div class="full"><span class="field">Impacto em IA:</span> <span class="value">A IA n&atilde;o tem o r&oacute;tulo de entidade da p&aacute;gina &mdash; n&atilde;o sabe o que citar nem como apresent&aacute;-lo. Em respostas do ChatGPT/AI Overviews, a Bioperfectus perde a attribui&ccedil;&atilde;o de marca.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Preencher <code>&lt;title&gt;</code> &uacute;nico e descritivo em todas as 42 p&aacute;ginas. (2) Padr&atilde;o &ldquo;Produto / Categoria &mdash; Bioperfectus&rdquo;. (3) Revisar template do Elementor que n&atilde;o injeta o t&iacute;tulo.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">6 h (M1 corre&ccedil;&atilde;o + M3)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">C-C2. Site tril&iacute;ngue (pt/es/en) sem nenhum hreflang</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">177 p&aacute;ginas pt, 45 es, 38 en &mdash; mas <code>Occurrences = 0</code> para HTML/HTTP/Sitemap hreflang em 100% das linhas.</span></div>
+          <div class="full"><span class="field">Impacto em IA:</span> <span class="value">Modelos multilingues (Gemini, ChatGPT) n&atilde;o mapeiam as vers&otilde;es de idioma &rarr; citam a p&aacute;gina errada para o usu&aacute;rio, ou n&atilde;o citam. Destroy a citability internacional da Bioperfectus.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Implementar <code>hreflang</code> bidirecional (pt&harr;es&harr;en) + <code>x-default</code>. (2) Validar no GSC (Relat&oacute;rio de Idiomas). (3) Manter paridade de URLs entre idiomas.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">8 h (M2 &mdash; internacionaliza&ccedil;&atilde;o)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">C-B2. 1 p&aacute;gina cr&iacute;tica sem H1 + 3 com H1 duplicado</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">1 p&aacute;gina sem H1 (home) e 3 com m&uacute;ltiplo H1. Hierarquia sem&acirc;ntica fraca para extra&ccedil;&atilde;o de t&oacute;pico.</span></div>
+          <div class="full"><span class="field">Impacto em IA:</span> <span class="value">Sem H1 &uacute;nico, a IA tem dificuldade em ancorar o t&oacute;pico principal da p&aacute;gina &mdash; reduz a chance de a p&aacute;gina ser a fonte da resposta.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) H1 &uacute;nico e com keyword de entidade em cada p&aacute;gina. (2) Corrigir template do Elementor para n&atilde;o duplicar H1.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">3 h (M2)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">C-A2. Sitemap XML n&atilde;o detectado no crawl</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">0 refer&ecirc;ncias a <code>sitemap.xml</code>/<code>sitemap_index.xml</code> entre 483 URLs. Sem mapa de URLs para crawlers de busca e de IA.</span></div>
+          <div class="full"><span class="field">Impacto em IA:</span> <span class="value">Descobrir e priorizar p&aacute;ginas fica a cargo apenas de links internos. P&aacute;ginas &oacute;rf;&atilde;s (ex.: 14 canonicalizadas, 9 redirecionadas) podem nunca ser ingeridas por motores generativos.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Gerar/validar sitemap XML (incluir as 3 vers&otilde;es de idioma). (2) Submeter no GSC e referenciar em <code>robots.txt</code>. (3) Referenciar no <code>llms.txt</code>.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">2 h (M2)</span></div>
+        </div>
+      </div>
+
+      <h3><span class="badge badge-alto">Alto</span> &mdash; Reduzem CTR e Extractability em IAs</h3>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">A-C3. 132 / 221 p&aacute;ginas sem meta description</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Apenas 89 de 221 p&aacute;ginas t&ecirc;m meta description; das presentes, m&eacute;dia de 272 caracteres (acima do limite de ~160).</span></div>
+          <div class="full"><span class="field">Impacto em IA:</span> <span class="value">Em AI Overviews e respostas citadas, o trecho exibido &eacute; gerado automaticamente &rarr; perda de controle da mensagem e da atribui&ccedil;&atilde;o de marca. Em YMYL, o texto de apoio precisa transmitir autoridade.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Escrever meta descriptions &uacute;nicas de 120&ndash;155 chars com entidade + benef&eacute;cio. (2) Incluir selos (ISO 13485, ANVISA) onde aplic&aacute;vel.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">8 h (M3 &mdash; Copy)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">A-D1. 137 / 221 p&aacute;ginas com conte&uacute;do raso (&lt; 300 palavras)</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Word count m&eacute;dio 275, mediana 255; 137 p&aacute;ginas abaixo de 300 palavras (60 abaixo de 150).</span></div>
+          <div class="full"><span class="field">Impacto em IA:</span> <span class="value">Conte&uacute;do raso n&atilde;o oferece &ldquo;answer blocks&rdquo; extra&iacute;veis. A IA prefere fontes densas e estruturadas &rarr; Bioperfectus perde para fabricantes com p&aacute;ginas de produto ricas em especifica&ccedil;&otilde;es.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Elevar p&aacute;ginas de produto a 400&ndash;800 palavras com spec t&eacute;cnica. (2) Criar hubs answer-first por categoria (EZiCare, Gastro, Humanos). (3) Adicionar definition blocks.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">20 h (M3 &mdash; Conte&uacute;do AEO)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">A-A3. 22 erros 404 + 14 301 + 9 302</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">22 p&aacute;ginas retornam 404; 14 redirecionam 301; 9 retornam 302 (tempor&aacute;rio).</span></div>
+          <div class="full"><span class="field">Impacto em IA:</span> <span class="value">Links quebrados e redirects tempor&aacute;rios confundem crawlers de IA e diluem o &ldquo;link equity&rdquo; da entidade. P&aacute;ginas cit&aacute;veis podem apontar para destinos mortos.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Corrigir 404 (restaurar ou 301 para p&aacute;gina equivalente). (2) Trocar 302 &rarr; 301. (3) Atualizar links internos quebrados.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">4 h (M2)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">A-B3. 141 p&aacute;ginas com m&uacute;ltiplos H2 sem estrutura answer-first</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">141 p&aacute;ginas com mais de 1 H2, mas sem padr&atilde;o de pergunta-resposta ou definition blocks extra&iacute;veis.</span></div>
+          <div class="full"><span class="field">Impacto em IA:</span> <span class="value">Estrutura existe, mas n&atilde;o &eacute; otimizada para ser &ldquo;copiada&rdquo; como resposta. IAs preferem H2 na forma de pergunta com resposta direta abaixo.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Reformatar H2s-chave como perguntas. (2) Resposta direta de 40&ndash;60 palavras abaixo. (3) Adicionar <code>FAQPage</code> schema espelhando o conte&uacute;do.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">10 h (M3)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">A-E1. Zero presen&ccedil;a em ecossistema de cita&ccedil;&atilde;o (diret&oacute;rios / entidade)</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Nenhuma men&ccedil;&atilde;o de perfis em Crunchbase, Wikipedia/Wikidata, G2/Capterra (IVD) ou diret&oacute;rios de IA detectados no crawl de links externos.</span></div>
+          <div class="full"><span class="field">Impacto em IA:</span> <span class="value">Modelos validam entidades cruzando fontes. Sem um grafo de entidade externo, a Bioperfectus &eacute; &ldquo;entidade fraca&rdquo; &rarr; menor probabilidade de ser citada como autoridade.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Criar/claim Wikidata + Wikipedia (empresa). (2) Perfis Crunchbase, LinkedIn Company. (3) Submiss&atilde;o a diret&oacute;rios de IA e G2/Capterra. (4) Digital PR com m&eacute;dia de sa&uacute;de.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">16 h (M4 &mdash; Ecossistema)</span></div>
+        </div>
+      </div>
+
+      <h3><span class="badge badge-medio">M&eacute;dio</span> &mdash; Oportunidades de Melhoria</h3>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">M-C4. E-E-A-T invis&iacedil;vel para IAs (YMYL)</span></div>
+          <div><span class="severity sev-medio">M&eacute;dio</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Site de sa&uacute;de (IVD) sem <code>Author</code>/<code>Person</code> schema, sem datas de revis&atilde;o, sem selos de certifica&ccedil;&atilde;o (ISO 13485, ANVISA) marcados para IA.</span></div>
+          <div class="full"><span class="field">Impacto em IA:</span> <span class="value">Em YMYL, modelos s&oacute; citam fontes com sinais claros de experi&ecirc;ncia/autoridade. A aus&ecirc;ncia reduz a confian&ccedil;a da cita&ccedil;&atilde;o.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) <code>Author</code> + <code>Person</code> com credentials nos artigos. (2) <code>dateModified</code> vis&iacute;vel + schema. (3) Destacar certifica&ccedil;&otilde;es com <code>MedicalOrganization</code>/<code>Brand</code>.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">6 h (M2 + M3)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">M-D2. Nenhum bloco FAQ / Q&amp;A / Definition estruturado</span></div>
+          <div><span class="severity sev-medio">M&eacute;dio</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">0 p&aacute;ginas com <code>FAQPage</code>/<code>QAPage</code> schema; conte&uacute;do n&atilde;o formatado em pergunta&rarr;resposta.</span></div>
+          <div class="full"><span class="field">Impacto em IA:</span> <span class="value">FAQs s&atilde;o os trechos mais copiados por AI Overviews. Sem eles, a Bioperfectus n&atilde;o compete por &ldquo;featured answers&rdquo;.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Criar se&ccedil;&atilde;o FAQ em p&aacute;ginas de produto/categoria. (2) Schema <code>FAQPage</code> espelhando o texto. (3) Mapear 20 queries-alvo (ChatGPT/Perplexity).</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">12 h (M3)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">M-D3. Conte&uacute;do n&atilde;o otimizado para perguntas (query coverage)</span></div>
+          <div><span class="severity sev-medio">M&eacute;dio</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">P&aacute;ginas n&atilde;o seguem arquitetura answer-first; baixa cobertura de queries informacionais do setor IVD.</span></div>
+          <div class="full"><span class="field">Impacto em IA:</span> <span class="value">Query Coverage Rate (meta 70%+) est&aacute; baixo &rarr; a marca n&atilde;o aparece nas perguntas que compradores B2B fazem &agrave;s IAs.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Mapear 30&ndash;50 queries-alvo por persona. (2) Produzir clusters answer-first (definition, comparison, step-by-step).</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">10 h (M3)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">M-E2. Grafo de links internos / entidade fraco</span></div>
+          <div><span class="severity sev-medio">M&eacute;dio</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Categorias (EZiCare, Gastro, Humanos, Equipamentos) n&atilde;o conectadas por hubs tem&aacute;ticos; 14 p&aacute;ginas canonicalizadas sugerem &oacute;rf;&atilde;s.</span></div>
+          <div class="full"><span class="field">Impacto em IA:</span> <span class="value">Links internos s&atilde;o sinais de relacionamento de entidade para a IA. Sem hubs, a autoridade n&atilde;o se concentra em t&oacute;picos de produto.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Criar 3&ndash;5 hubs answer-first. (2) Links contextuais produto&rarr;categoria&rarr;hub. (3) Anchor text com entidade.</span></div>
+          <div class="full"><span class="field">Esfor&ccedil;o:</span> <span class="value">8 h (M3 + M4)</span></div>
+        </div>
+      </div>
+
+      <h3><span class="badge badge-info">Informativo</span> &mdash; Pontos Positivos</h3>
+
+      <div class="finding" style="padding:14px 24px;">
+        <div class="finding-header" style="margin-bottom:6px;">
+          <div><span class="finding-title" style="font-size:16px;">I-01. max-snippet:-1 libera trechos para IA</span></div>
+          <div><span class="severity sev-info">Info</span></div>
+        </div>
+        <p style="font-size:15px; margin:0; color:var(--gray-700);">218 p&aacute;ginas com <code>max-snippet:-1</code> &mdash; permite que IAs exibam trechos ilimitados. Bom sinal de abertura a cita&ccedil;&atilde;o.</p>
+      </div>
+      <div class="finding" style="padding:14px 24px;">
+        <div class="finding-header" style="margin-bottom:6px;">
+          <div><span class="finding-title" style="font-size:16px;">I-02. Performance de carregamento saud&aacute;vel</span></div>
+          <div><span class="severity sev-info">Info</span></div>
+        </div>
+        <p style="font-size:15px; margin:0; color:var(--gray-700);">~45% das p&aacute;ginas entre 1&ndash;2s, nenhuma acima de 2s. Crawlers de IA n&atilde;o s&atilde;o penalizados por lentid&atilde;o.</p>
+      </div>
+      <div class="finding" style="padding:14px 24px;">
+        <div class="finding-header" style="margin-bottom:6px;">
+          <div><span class="finding-title" style="font-size:16px;">I-03. HTTPS v&aacute;lido e mobile responsivo</span></div>
+          <div><span class="severity sev-info">Info</span></div>
+        </div>
+        <p style="font-size:15px; margin:0; color:var(--gray-700);">Site em HTTPS, sem mixed content, responsivo. Pr&eacute;-requisito de confian&ccedil;a para cita&ccedil;&atilde;o em IA atendido.</p>
+      </div>
+      <div class="finding" style="padding:14px 24px;">
+        <div class="finding-header" style="margin-bottom:6px;">
+          <div><span class="finding-title" style="font-size:16px;">I-04. Metadados de idioma consistentes no conte&uacute;do</span></div>
+          <div><span class="severity sev-info">Info</span></div>
+        </div>
+        <p style="font-size:15px; margin:0; color:var(--gray-700);">Estrutura pt/es/en j&aacute; existe nas URLs &mdash; falta apenas o hreflang (C-C2) para fechar a citability multil&iacute;ngue.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Quick Wins (at&eacute; 48h)</h2>
+      <table>
+        <tr><th>#</th><th>A&ccedil;&atilde;o</th><th>Horas</th><th>Impacto em IA</th></tr>
+        <tr><td>1</td><td>Criar <code>llms.txt</code> raiz com p&aacute;ginas-can&ocirc;nicas</td><td>2</td><td>Libera ingest&atilde;o por GPTBot/Claude/Perplexity</td></tr>
+        <tr><td>2</td><td>Preencher os 42 t&iacute;tulos vazios (incl. home)</td><td>3</td><td>Define a entidade cit&aacute;vel da p&aacute;gina</td></tr>
+        <tr><td>3</td><td>Adicionar <code>Organization</code> + <code>MedicalOrganization</code> schema global</td><td>2</td><td>Ancora a marca como entidade</td></tr>
+        <tr><td>4</td><td>Verificar/criar robots.txt e sitemap + submeter no GSC</td><td>1</td><td>Mapa de URLs para crawlers de IA</td></tr>
+        <tr><td>5</td><td>Corrigir 22 erros 404 e trocar 302 &rarr; 301</td><td>3</td><td>Remove destinos mortos de cita&ccedil;&atilde;o</td></tr>
+        <tr><td>6</td><td>Implementar <code>hreflang</code> pt/es/en + x-default</td><td>4</td><td>Mapeia versoes de idioma para IAs</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h2>Gloss&aacute;rio AIO / GEO</h2>
+      <div class="glossary-row"><span style="font-weight:700; min-width:170px; color:var(--red);">AEO</span><span><strong>Answer Engine Optimization</strong> &mdash; otimizar conte&uacute;do para ser a resposta direta de assistentes/motores de busca.</span></div>
+      <div class="glossary-row"><span style="font-weight:700; min-width:170px; color:var(--red);">GEO</span><span><strong>Generative Engine Optimization</strong> &mdash; tornar a marca/entidade cit&aacute;vel e vis&iacute;vel em respostas de LLMs (ChatGPT, Perplexity, Gemini).</span></div>
+      <div class="glossary-row"><span style="font-weight:700; min-width:170px; color:var(--red);">llms.txt</span><span>Arquivo raiz que instrui crawlers de IA quais p&aacute;ginas ingerir e como citar a marca.</span></div>
+      <div class="glossary-row"><span style="font-weight:700; min-width:170px; color:var(--red);">Extractability</span><span>Facilidade com que um modelo extrai um fato/resposta limpo do HTML (sem ru&iacute;do de layout).</span></div>
+      <div class="glossary-row"><span style="font-weight:700; min-width:170px; color:var(--red);">Entity Clarity</span><span>Qu&atilde;o bem o site comunica quem &eacute; a entidade (marca, produto, autor) via schema e texto.</span></div>
+      <div class="glossary-row"><span style="font-weight:700; min-width:170px; color:var(--red);">AI Citation Count</span><span>M&eacute;trica de resultado: n&uacute;mero de vezes que a marca &eacute; citada como fonte por IAs/m&ecirc;s.</span></div>
+      <div class="glossary-row"><span style="font-weight:700; min-width:170px; color:var(--red);">SAIV</span><span><strong>Share of AI Voice</strong> &mdash; % das cita&ccedil;&otilde;es do setor que pertencem &agrave; marca (meta 30%+).</span></div>
+      <div class="glossary-row"><span style="font-weight:700; min-width:170px; color:var(--red);">E-E-A-T</span><span>Experience, Expertise, Authoritativeness, Trust &mdash; cr&iacute;tico em YMYL (sa&uacute;de/IVD).</span></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Auditoria AIO/GEO &bull; Bioperfectus Brasil &bull; Elaborado por Peretto / V4 &bull; Confidencial &mdash; Agosto 2026
+  </div>
+
+</div>
+
+</body>
+</html>
