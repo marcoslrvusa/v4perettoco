@@ -269,6 +269,33 @@
       z-index: 1000; transition: width 0.3s; width: 0%;
     }
 
+    /* cover arrojado */
+    #s1 h1 { font-size: 4.1rem; letter-spacing: -0.035em; margin-bottom: 28px; }
+    #s1 .stat-num { font-size: 2.7rem; }
+    #s1 .stat-card {
+      border-top: 3px solid rgba(229,9,20,0.5); padding-top: 30px;
+      background: linear-gradient(180deg, rgba(229,9,20,0.05) 0%, rgba(255,255,255,0.028) 100%);
+    }
+    #s1 .stat-card:hover { border-top-color: var(--red); box-shadow: 0 12px 40px rgba(229,9,20,0.15); }
+    .kicker {
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(255,255,255,0.32); margin-bottom: 24px;
+    }
+    .kicker em { font-style: normal; color: var(--red); margin: 0 6px; }
+    .cover-orb {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 700px; height: 700px; border: 1px solid rgba(229,9,20,0.10);
+      border-radius: 50%; z-index: 0; pointer-events: none;
+    }
+    .cover-orb::before {
+      content: ''; position: absolute; inset: 42px;
+      border: 1px dashed rgba(229,9,20,0.10); border-radius: 50%;
+    }
+    .cover-orb::after {
+      content: ''; position: absolute; inset: -42px;
+      border: 1px solid rgba(229,9,20,0.05); border-radius: 50%;
+    }
+
     @media (max-width: 900px) {
       .slide { padding: 60px 24px 48px; }
       h1 { font-size: 2rem; }
@@ -276,6 +303,9 @@
       .evi-grid, .two-col, .ba-grid { grid-template-columns: 1fr; }
       .slide-top { padding: 16px 24px; }
       .slide-top .logo-v4 { height: 26px; }
+      #s1 h1 { font-size: 2.2rem; }
+      #s1 .stat-num { font-size: 2rem; }
+      #s1 .cover-orb { display: none; }
     }
   </style>
 </head>
@@ -285,24 +315,25 @@
 
 <!-- ============ S1: CAPA ============ -->
 <section class="slide active glow-red" id="s1">
+  <div class="cover-orb"></div>
   <div class="slide-top">
     <img class="logo-v4" src="" data-logo alt="V4 Company">
     <span class="meta">Auditoria + Plano de Expansão · Set/2026</span>
   </div>
   <div class="slide-inner" style="text-align:center;">
-    <div class="badge"><span class="pulse"></span> Alto Calçados - Expansão em Marketplaces</div>
-    <h1>R$ 4 milhões por mês.<br>E ainda assim, fora dos <em>marketplaces</em>.</h1>
-    <p class="lead" style="margin:0 auto 40px;">
-      O próximo R$ 200 mil mensais estão em 4 canais que você ainda não abriu.<br>
-      A auditoria mostra o porquê. O plano de 12 semanas mostra o caminho.<br>
-      Tudo pronto antes da Black Friday.
+    <div class="badge"><span class="pulse"></span> Alto Calçados · Expansão em Marketplaces</div>
+    <h1>R$ 4 milhões por mês.<br>Fora dos <em>principais marketplaces</em> do país.</h1>
+    <div class="kicker">Amazon <em>·</em> TikTok Shop <em>·</em> Dafiti <em>·</em> Comparadores de preço</div>
+    <p class="lead" style="margin:0 auto 44px;">
+      A auditoria técnica está concluída.<br>
+      O plano de 12 semanas entrega a entrada nesses canais antes da Black Friday.
     </p>
-    <div class="stats-row" style="justify-content:center; max-width: 900px; margin: 0 auto 30px;">
-      <div class="stat-card green"><div class="stat-num green">R$ 200k</div><div class="stat-label">nova meta mensal</div></div>
-      <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">canais a abrir</div></div>
-      <div class="stat-card"><div class="stat-num">12</div><div class="stat-label">semanas de plano</div></div>
-      <div class="stat-card amber"><div class="stat-num amber">27/nov</div><div class="stat-label">Black Friday</div></div>
-      <div class="stat-card red"><div class="stat-num red">+5%</div><div class="stat-label">crescimento sobre os R$ 4M</div></div>
+    <div class="stats-row" style="justify-content:center; max-width: 940px; margin: 0 auto 30px;">
+      <div class="stat-card green"><div class="stat-num green">R$ 200k</div><div class="stat-label">nova receita mensal projetada</div></div>
+      <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">canais em abertura</div></div>
+      <div class="stat-card"><div class="stat-num">12</div><div class="stat-label">semanas de execução</div></div>
+      <div class="stat-card amber"><div class="stat-num amber">27/nov</div><div class="stat-label">janela Black Friday</div></div>
+      <div class="stat-card red"><div class="stat-num red">+5%</div><div class="stat-label">expansão sobre o faturamento</div></div>
     </div>
     <p style="font-size:0.78rem;color:rgba(255,255,255,0.25);">Marcos Luciano · Project Owner de SEO · Peretto&Co / V4 Company</p>
   </div>
@@ -752,9 +783,9 @@
 
   const NOTES = {
     0: `<ul>
-      <li><strong>Abertura (30s):</strong> "R$ 4 milhões por mês. Isso é obra rara no e-commerce brasileiro. E ainda assim, os maiores marketplaces do país estão fora do mapa de vocês. Hoje eu mostro por quê, e mostro o caminho."</li>
-      <li>Depois de ler o título, pausar 3 segundos. O contraste faz o cliente perguntar internamente "por quê?" — é essa curiosidade que conduz a apresentação.</li>
-      <li>Meta: R$ 200 mil/mês = 5% de crescimento. Pequeno para o tamanho da empresa, grande como primeiro passo multicanal. Factível em 12 semanas.</li>
+      <li><strong>Abertura (30s):</strong> "R$ 4 milhões por mês. Um resultado acima da média do e-commerce brasileiro. Ainda assim, a operação está fora dos principais marketplaces do país. Hoje mostro por que isso acontece, e mostro o caminho de entrada."</li>
+      <li>Depois de ler o título, pausar 3 segundos. O contraste gera a pergunta interna "por quê?" — é essa curiosidade que conduz a apresentação.</li>
+      <li>Meta: R$ 200 mil/mês = 5% de expansão sobre o faturamento atual. Conservadora para o porte da operação, e é o primeiro passo multicanal. Factível em 12 semanas.</li>
       <li>Janela: Black Friday em 27/nov. "A decisão tem prazo, e o prazo é bom para os dois lados."</li>
     </ul>`,
     1: `<ul>
