@@ -175,6 +175,26 @@
       padding: 13px 14px; border-bottom: 1px solid rgba(255,255,255,0.035);
     }
 
+    /* audit table corporate */
+    .audit-table { width: 100%; border-collapse: collapse; }
+    .audit-table th {
+      font-size: 0.6rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.13em; color: var(--dim);
+      text-align: left; padding: 12px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.02);
+    }
+    .audit-table td {
+      font-size: 0.8rem; padding: 13px 16px; vertical-align: top;
+      border-bottom: 1px solid rgba(255,255,255,0.045);
+      line-height: 1.5;
+    }
+    .audit-table tr:last-child td { border-bottom: none; }
+    .audit-table tr:hover td { background: rgba(229,9,20,0.03); }
+    .audit-table td.col-dm { color: #fff; font-weight: 700; white-space: nowrap; width: 22%; }
+    .audit-table td.col-found { color: var(--red); font-weight: 600; width: 38%; }
+    .audit-table td.col-impact { color: rgba(255,255,255,0.5); width: 40%; }
+
     /* quote */
     .quote-box {
       background: rgba(255,255,255,0.028);
@@ -331,40 +351,47 @@
     <h2>Nós <em>diagnosticamos</em> antes de propor.</h2>
     <p class="lead">Um médico não receita remédio antes de examinar. Por isso, antes de sugerir qualquer caminho, auditamos site, catálogo e canais de ponta a ponta. Assim o plano nasce dos fatos, não de suposições.</p>
 
-    <div class="stats-row">
-      <div class="stat-card"><div class="stat-num">288</div><div class="stat-label">páginas analisadas</div></div>
-      <div class="stat-card"><div class="stat-num">282</div><div class="stat-label">imagens verificadas</div></div>
-      <div class="stat-card"><div class="stat-num">7</div><div class="stat-label">canais mapeados</div></div>
-      <div class="stat-card"><div class="stat-num">24</div><div class="stat-label">SKUs catalogados</div></div>
-      <div class="stat-card red"><div class="stat-num red">5</div><div class="stat-label">dimensões técnicas auditadas</div></div>
-    </div>
-
-    <div class="evi-grid">
-      <div class="evi-card" style="border-top-color:rgba(255,255,255,0.3);">
-        <h3>1. Indexação</h3>
-        <p>Canonical, meta tags, títulos, arquitetura de URLs: como o Google e os marketplaces leem seu catálogo.</p>
-      </div>
-      <div class="evi-card" style="border-top-color:rgba(255,255,255,0.3);">
-        <h3>2. Imagens</h3>
-        <p>Peso, formato, alt text: os requisitos que as plataformas exigem para aceitar seu catálogo.</p>
-      </div>
-      <div class="evi-card" style="border-top-color:rgba(255,255,255,0.3);">
-        <h3>3. Segurança</h3>
-        <p>Headers HTTP, proteção de dados: pré-requisito de parceria e fator de confiança para o consumidor.</p>
-      </div>
-      <div class="evi-card" style="border-top-color:rgba(255,255,255,0.3);">
-        <h3>4. Dados estruturados</h3>
-        <p>Schema.org: o idioma que faz seu produto ser lido automaticamente por qualquer plataforma.</p>
-      </div>
-      <div class="evi-card" style="border-top-color:rgba(255,255,255,0.3);">
-        <h3>5. Identidade multicanal</h3>
-        <p>Nome, posicionamento e consistência da marca em cada ponto de contato.</p>
-      </div>
-      <div class="evi-card" style="border-top-color:rgba(255,255,255,0.3);">
-        <h3>6. Requisitos de canais</h3>
-        <p>Checklist de entrada de ML, Amazon, TikTok Shop, Dafiti, Shopee, Netshoes e comparadores.</p>
-      </div>
-    </div>
+    <table class="audit-table">
+      <thead>
+        <tr>
+          <th>O que auditamos</th>
+          <th>O que encontramos</th>
+          <th>Impacto no negócio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="col-dm">1 · Indexação</td>
+          <td class="col-found">Canonical errado em 51,55% das páginas · 23 metas ausentes · 29 duplicadas</td>
+          <td class="col-impact">Google e marketplaces leem URLs conflitantes e o catálogo aparece duplicado</td>
+        </tr>
+        <tr>
+          <td class="col-dm">2 · Imagens</td>
+          <td class="col-found">44% acima de 100 KB · maior arquivo 6,4 MB · 22% sem alt text</td>
+          <td class="col-impact">Listagens rejeitadas pelas plataformas antes mesmo de serem avaliadas</td>
+        </tr>
+        <tr>
+          <td class="col-dm">3 · Segurança</td>
+          <td class="col-found">288 páginas (74%) sem headers de proteção</td>
+          <td class="col-impact">Parceiros não integram e o consumidor tem menos confiança para comprar</td>
+        </tr>
+        <tr>
+          <td class="col-dm">4 · Dados estruturados</td>
+          <td class="col-found">Schema.org parcial em 4 de 5 tipos · 0 fichas de produto completas</td>
+          <td class="col-impact">Nenhum marketplace lê o produto automaticamente: integração manual e cara</td>
+        </tr>
+        <tr>
+          <td class="col-dm">5 · Identidade multicanal</td>
+          <td class="col-found">5 nomes diferentes da marca nos marketplaces</td>
+          <td class="col-impact">Marca fragmentada: vocês concorrem com a própria empresa</td>
+        </tr>
+        <tr>
+          <td class="col-dm">6 · Requisitos de canais</td>
+          <td class="col-found">Nenhum dos 5+ canais-alvo com checklist de entrada completo</td>
+          <td class="col-impact">Cada canal novo exige um projeto de adaptação do zero</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
   <div class="slide-footer"><span>Peretto&Co · V4 Company</span><span class="hint">→ para avançar</span><span>03 / 12</span></div>
 </section>
@@ -737,8 +764,8 @@
     </ul>`,
     2: `<ul>
       <li><strong>Doutrina do diagnóstico:</strong> "Antes de propor qualquer coisa, fomos entender a fundação. A diferença é tratar sintoma ou tratar a causa."</li>
-      <li>Mostrar credibilidade: 288 páginas, 282 imagens, 7 canais: números concretos da auditoria, não opinião.</li>
-      <li>Explicar as 5 dimensões em 1 frase cada. O cliente precisa entender QUE auditamos tudo, não o detalhe técnico.</li>
+      <li>Percorrer a tabela linha por linha, de cima para baixo. Não ler em voz alta: resumir cada linha em uma frase e pausar para o cliente absorver os números.</li>
+      <li>Guardar o detalhe técnico para os próximos slides. Aqui o objetivo é mostrar que auditamos tudo e que cada achado tem impacto em dinheiro.</li>
     </ul>`,
     3: `<ul>
       <li><strong>Analogia simples:</strong> "Canonical é o endereço oficial de uma página. Quando 51% das páginas têm endereço errado, o correio (o Google) entrega no lugar errado."</li>
