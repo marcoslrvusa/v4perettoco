@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alto Calçados | Expansão em Marketplaces</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #0a0a0c;
+      color: #ffffff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    :root {
+      --red: #E50914;
+      --red-soft: rgba(229,9,20,0.10);
+      --red-border: rgba(229,9,20,0.25);
+      --green: #22c55e;
+      --yellow: #f59e0b;
+      --dim: rgba(255,255,255,0.35);
+    }
+
+    .slide {
+      min-height: 100vh;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 72px 72px 56px;
+      position: relative;
+      overflow: hidden;
+      flex-direction: column;
+    }
+    .slide.active { display: flex; animation: slideIn 0.35s ease; }
+    @keyframes slideIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+    .slide::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none; z-index: 0;
+    }
+    .slide.glow-red::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 25% 45%, rgba(229,9,20,0.09) 0%, transparent 55%);
+      pointer-events: none; z-index: 0;
+    }
+    .slide.glow-green::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 75% 45%, rgba(34,197,94,0.07) 0%, transparent 55%);
+      pointer-events: none; z-index: 0;
+    }
+    .slide-inner { position: relative; z-index: 1; width: 100%; max-width: 1150px; }
+
+    /* header com logo */
+    .slide-top {
+      position: absolute; top: 0; left: 0; right: 0;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 22px 48px;
+      z-index: 10;
+    }
+    .slide-top .logo-v4 { height: 34px; display: block; }
+    .slide-top .meta {
+      font-size: 0.6rem; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(255,255,255,0.25);
+    }
+
+    /* tipografia */
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--red);
+      border: 1px solid var(--red-border);
+      background: var(--red-soft);
+      padding: 7px 18px; border-radius: 100px; margin-bottom: 22px;
+    }
+    .badge .pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--red); animation: pulse 1.6s infinite; }
+    @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(229,9,20,0.5); } 50% { box-shadow: 0 0 0 6px rgba(229,9,20,0); } }
+
+    h1 {
+      font-size: 3.1rem; font-weight: 900; color: #fff;
+      line-height: 1.06; letter-spacing: -0.03em; margin-bottom: 22px;
+    }
+    h1 em { font-style: normal; color: var(--red); }
+    h2 {
+      font-size: 2.1rem; font-weight: 800; color: #fff;
+      line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 16px;
+    }
+    h2 em { font-style: normal; color: var(--red); }
+    h3 { font-size: 1rem; font-weight: 700; color: rgba(255,255,255,0.75); margin-bottom: 10px; }
+    .lead {
+      font-size: 1.02rem; color: var(--dim);
+      line-height: 1.65; max-width: 640px; margin-bottom: 34px;
+    }
+
+    /* stats */
+    .stats-row { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 30px; }
+    .stat-card {
+      background: rgba(255,255,255,0.028);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px; padding: 26px 22px; flex: 1; min-width: 150px;
+      text-align: center; transition: border-color 0.3s, transform 0.3s;
+    }
+    .stat-card:hover { transform: translateY(-3px); }
+    .stat-card.red { border-color: var(--red-border); background: var(--red-soft); }
+    .stat-card.green { border-color: rgba(34,197,94,0.22); }
+    .stat-card.amber { border-color: rgba(245,158,11,0.22); }
+    .stat-num { font-size: 2.3rem; font-weight: 900; color: #fff; line-height: 1; margin-bottom: 8px; }
+    .stat-num.red { color: var(--red); }
+    .stat-num.green { color: var(--green); }
+    .stat-num.amber { color: var(--yellow); }
+    .stat-num.dim { color: rgba(255,255,255,0.18); }
+    .stat-label { font-size: 0.66rem; color: var(--dim); text-transform: uppercase; letter-spacing: 0.09em; }
+
+    /* evidence cards */
+    .evi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 30px; }
+    .evi-card {
+      background: rgba(255,255,255,0.028);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px; padding: 26px;
+      border-top: 3px solid var(--red);
+      transition: transform 0.3s;
+    }
+    .evi-card:hover { transform: translateY(-3px); }
+    .evi-card .evi-num { font-size: 2.6rem; font-weight: 900; color: var(--red); line-height: 1; margin-bottom: 10px; }
+    .evi-card .evi-num small { font-size: 1rem; color: var(--dim); font-weight: 600; }
+    .evi-card h3 { font-size: 0.9rem; color: #fff; margin-bottom: 8px; }
+    .evi-card p { font-size: 0.78rem; color: var(--dim); line-height: 1.55; }
+
+    /* consequence banner */
+    .consq {
+      display: flex; align-items: center; gap: 14px;
+      background: var(--red-soft); border: 1px solid var(--red-border);
+      border-radius: 12px; padding: 16px 20px;
+      font-size: 0.9rem; color: rgba(255,255,255,0.8);
+    }
+    .consq .icon { font-size: 1.1rem; flex-shrink: 0; }
+
+    /* two col */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items: start; }
+
+    /* timeline */
+    .timeline { position: relative; padding-left: 30px; }
+    .timeline::before { content: ''; position: absolute; left: 7px; top: 4px; bottom: 4px; width: 2px; background: rgba(255,255,255,0.07); }
+    .tl-item { position: relative; padding-bottom: 22px; }
+    .tl-item::before {
+      content: ''; position: absolute; left: -29px; top: 4px;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: #0a0a0c; border: 2px solid var(--red);
+    }
+    .tl-item.live::before { background: var(--green); border-color: var(--green); box-shadow: 0 0 10px rgba(34,197,94,0.5); }
+    .tl-date { font-size: 0.66rem; font-weight: 700; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; }
+    .tl-title { font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 2px; }
+    .tl-desc { font-size: 0.78rem; color: var(--dim); }
+
+    /* table */
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th {
+      font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--dim);
+      padding: 10px 14px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .data-table td {
+      font-size: 0.85rem; color: rgba(255,255,255,0.72);
+      padding: 13px 14px; border-bottom: 1px solid rgba(255,255,255,0.035);
+    }
+
+    /* quote */
+    .quote-box {
+      background: rgba(255,255,255,0.028);
+      border-left: 3px solid var(--red);
+      border-radius: 0 12px 12px 0;
+      padding: 22px 26px; margin-top: 26px;
+    }
+    .quote-box p { font-size: 0.95rem; font-style: italic; color: rgba(255,255,255,0.6); line-height: 1.65; }
+    .quote-box .attr { font-size: 0.72rem; color: var(--dim); margin-top: 10px; font-style: normal; }
+
+    /* before/after */
+    .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-bottom: 26px; }
+    .ba-card { border-radius: 16px; padding: 26px; }
+    .ba-card.before { background: rgba(229,9,20,0.055); border: 1px solid rgba(229,9,20,0.18); }
+    .ba-card.after { background: rgba(34,197,94,0.055); border: 1px solid rgba(34,197,94,0.18); }
+    .ba-label { font-size: 0.64rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; }
+    .ba-card.before .ba-label { color: var(--red); }
+    .ba-card.after .ba-label { color: var(--green); }
+    .ba-card li {
+      list-style: none; font-size: 0.82rem; color: rgba(255,255,255,0.7);
+      padding: 7px 0; display: flex; gap: 10px; align-items: flex-start;
+    }
+    .ba-card.before li::before { content: '✕'; color: var(--red); font-weight: 700; flex-shrink: 0; }
+    .ba-card.after li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+
+    /* cta */
+    .cta-box {
+      background: linear-gradient(135deg, rgba(229,9,20,0.13) 0%, rgba(229,9,20,0.04) 100%);
+      border: 1px solid var(--red-border);
+      border-radius: 20px; padding: 52px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 17px 44px; background: linear-gradient(135deg, #E50914, #b0060f);
+      color: #fff; border: none; border-radius: 12px;
+      font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 800;
+      cursor: pointer; text-decoration: none; transition: transform 0.2s, box-shadow 0.3s;
+    }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(229,9,20,0.4); }
+
+    /* footer */
+    .slide-footer {
+      position: absolute; bottom: 18px; left: 48px; right: 48px;
+      display: flex; justify-content: space-between; align-items: center; z-index: 1;
+    }
+    .slide-footer span { font-size: 0.6rem; color: rgba(255,255,255,0.14); letter-spacing: 0.1em; text-transform: uppercase; }
+    .slide-footer .hint { color: rgba(255,255,255,0.28); }
+
+    /* speaker notes */
+    #notes-panel {
+      position: fixed; left: 0; right: 0; bottom: 0;
+      background: rgba(8,8,10,0.97);
+      border-top: 1px solid var(--red-border);
+      padding: 18px 48px;
+      z-index: 999;
+      display: none;
+      max-height: 38vh; overflow-y: auto;
+    }
+    #notes-panel.show { display: block; }
+    #notes-panel .notes-title {
+      font-size: 0.6rem; font-weight: 800; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--red); margin-bottom: 10px;
+    }
+    #notes-panel .notes-body { font-size: 0.88rem; color: rgba(255,255,255,0.65); line-height: 1.6; max-width: 1100px; }
+    #notes-panel .notes-body li { margin: 6px 0 6px 18px; }
+
+    /* progress bar */
+    #progress {
+      position: fixed; top: 0; left: 0; height: 3px;
+      background: linear-gradient(90deg, #E50914, #ff4d4d);
+      z-index: 1000; transition: width 0.3s; width: 0%;
+    }
+
+    @media (max-width: 900px) {
+      .slide { padding: 60px 24px 48px; }
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.4rem; }
+      .evi-grid, .two-col, .ba-grid { grid-template-columns: 1fr; }
+      .slide-top { padding: 16px 24px; }
+      .slide-top .logo-v4 { height: 26px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- ============ S1: CAPA ============ -->
+<section class="slide active glow-red" id="s1">
+  <div class="slide-top">
+    <img class="logo-v4" src="" data-logo alt="V4 Company">
+    <span class="meta">Auditoria + Plano de Expansão · Set/2026</span>
+  </div>
+  <div class="slide-inner" style="text-align:center;">
+    <div class="badge"><span class="pulse"></span> Alto Calçados - Expansão em Marketplaces</div>
+    <h1>Destravando a escala<br>que o seu produto <em>merece</em></h1>
+    <p class="lead" style="margin:0 auto 40px;">
+      R$ 200 mil por mês estão esperando em 4 canais que você ainda não abriu.<br>
+      A auditoria mostra por que você ainda não está neles.<br>
+      O plano de 12 semanas mostra como chegar lá antes da Black Friday.
+    </p>
+    <div class="stats-row" style="justify-content:center; max-width: 900px; margin: 0 auto 30px;">
+      <div class="stat-card red"><div class="stat-num red">R$ 4M</div><div class="stat-label">Faturamento mensal</div></div>
+      <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Canais ativos</div></div>
+      <div class="stat-card green"><div class="stat-num green">R$ 200k</div><div class="stat-label">Meta mensal em novos canais</div></div>
+      <div class="stat-card amber"><div class="stat-num amber">11</div><div class="stat-label">Semanas até a Black Friday</div></div>
+      <div class="stat-card"><div class="stat-num">5+</div><div class="stat-label">Canais a ativar</div></div>
+    </div>
+    <p style="font-size:0.78rem;color:rgba(255,255,255,0.25);">Marcos Luciano · Project Owner de SEO · Peretto&Co / V4 Company</p>
+  </div>
+  <div class="slide-footer">
+    <span>Peretto&Co · V4 Company</span>
+    <span class="hint">→ para avançar · N notas · F tela cheia</span>
+    <span>01 / 12</span>
+  </div>
+</section>
+
+<!-- ============ S2: ONDE VOCÊ ESTÁ ============ -->
+<section class="slide" id="s2">
+  <div class="slide-top">
+    <img class="logo-v4" src="" data-logo alt="V4 Company">
+    <span class="meta">Contexto</span>
+  </div>
+  <div class="slide-inner">
+    <div class="badge"><span class="pulse"></span> Onde você está hoje</div>
+    <h2>Você construiu algo raro.<br><em>Mas ele está apoiado numa fundação que não aguenta o próximo andar.</em></h2>
+    <p class="lead">24 SKUs. 25 profissionais. 50 mil pedidos. Produto validado: calçados de elevação que o mercado quer. E ainda assim, toda a operação depende de 2 canais. Os outros 4 seguem inexplorados.</p>
+
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num">R$ 4M</div><div class="stat-label">faturamento/mês · 100% digital</div></div>
+      <div class="stat-card"><div class="stat-num">50 mil</div><div class="stat-label">pedidos no Shopify</div></div>
+      <div class="stat-card"><div class="stat-num">24</div><div class="stat-label">SKUs de alto tíquete</div></div>
+      <div class="stat-card"><div class="stat-num">25</div><div class="stat-label">profissionais no time</div></div>
+      <div class="stat-card red"><div class="stat-num red">1</div><div class="stat-label">canal bloqueado (ML)</div></div>
+    </div>
+
+    <div class="quote-box">
+      <p>"Você tem produto validado, equipe e margem. Não está nos canais que quer. O problema não está no negócio. Está na fundação."</p>
+      <div class="attr">Diagnóstico Peretto&Co, set/2026</div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>Peretto&Co · V4 Company</span><span class="hint">→ para avançar</span><span>02 / 12</span></div>
+</section>
+
+<!-- ============ S3: O QUE FIZEMOS ============ -->
+<section class="slide" id="s3">
+  <div class="slide-top">
+    <img class="logo-v4" src="" data-logo alt="V4 Company">
+    <span class="meta">Metodologia</span>
+  </div>
+  <div class="slide-inner">
+    <div class="badge"><span class="pulse"></span> Antes de propor qualquer coisa</div>
+    <h2>Nós <em>diagnosticamos</em>.<br>Não viemos anotar pedido.</h2>
+    <p class="lead">Um médico não receita remédio antes de examinar. Um consultor que propõe "abrir canais" sem auditar a fundação está vendendo atividade, não resultado.</p>
+
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num">288</div><div class="stat-label">páginas analisadas</div></div>
+      <div class="stat-card"><div class="stat-num">282</div><div class="stat-label">imagens verificadas</div></div>
+      <div class="stat-card"><div class="stat-num">7</div><div class="stat-label">canais mapeados</div></div>
+      <div class="stat-card"><div class="stat-num">24</div><div class="stat-label">SKUs catalogados</div></div>
+      <div class="stat-card red"><div class="stat-num red">5</div><div class="stat-label">dimensões técnicas auditadas</div></div>
+    </div>
+
+    <div class="evi-grid">
+      <div class="evi-card" style="border-top-color:rgba(255,255,255,0.3);">
+        <h3>1. Indexação</h3>
+        <p>Canonical, meta tags, títulos, arquitetura de URLs: como o Google e os marketplaces leem seu catálogo.</p>
+      </div>
+      <div class="evi-card" style="border-top-color:rgba(255,255,255,0.3);">
+        <h3>2. Imagens</h3>
+        <p>Peso, formato, alt text: os requisitos que as plataformas exigem para aceitar seu catálogo.</p>
+      </div>
+      <div class="evi-card" style="border-top-color:rgba(255,255,255,0.3);">
+        <h3>3. Segurança</h3>
+        <p>Headers HTTP, proteção de dados: pré-requisito de parceria e fator de confiança para o consumidor.</p>
+      </div>
+      <div class="evi-card" style="border-top-color:rgba(255,255,255,0.3);">
+        <h3>4. Dados estruturados</h3>
+        <p>Schema.org: o idioma que faz seu produto ser lido automaticamente por qualquer plataforma.</p>
+      </div>
+      <div class="evi-card" style="border-top-color:rgba(255,255,255,0.3);">
+        <h3>5. Identidade multicanal</h3>
+        <p>Nome, posicionamento e consistência da marca em cada ponto de contato.</p>
+      </div>
+      <div class="evi-card" style="border-top-color:rgba(255,255,255,0.3);">
+        <h3>6. Requisitos de canais</h3>
+        <p>Checklist de entrada de ML, Amazon, TikTok Shop, Dafiti, Shopee, Netshoes e comparadores.</p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>Peretto&Co · V4 Company</span><span class="hint">→ para avançar</span><span>03 / 12</span></div>
+</section>
+
+<!-- ============ S4: EVIDÊNCIA INDEXAÇÃO ============ -->
+<section class="slide glow-red" id="s4">
+  <div class="slide-top">
+    <img class="logo-v4" src="" data-logo alt="V4 Company">
+    <span class="meta">Evidência 1 · Indexação</span>
+  </div>
+  <div class="slide-inner">
+    <div class="badge"><span class="pulse"></span> O que encontramos</div>
+    <h2>1 em cada 2 páginas manda <em>sinais conflitantes</em> ao Google</h2>
+    <p class="lead">O canonical diz ao Google qual é a versão oficial da página. Quando ele está errado, o Google não sabe qual página indexar. E o que entra nos feeds dos marketplaces são URLs duplicadas ou incorretas.</p>
+
+    <div class="evi-grid">
+      <div class="evi-card">
+        <div class="evi-num">51,55%<small> do site</small></div>
+        <h3>Canonicalization errada</h3>
+        <p>Mais da metade das páginas aponta para uma URL diferente da que o usuário vê. O catálogo fica "duplicado" aos olhos das plataformas.</p>
+      </div>
+      <div class="evi-card">
+        <div class="evi-num">23<small> + 29</small></div>
+        <h3>Meta tags ausentes ou duplicadas</h3>
+        <p>Páginas sem meta description (23) e páginas com títulos/metas duplicados (29). As vitrines do seu produto aparecem vazias ou repetidas.</p>
+      </div>
+      <div class="evi-card">
+        <div class="evi-num">24<small> SKUs</small></div>
+        <h3>Sem arquitetura de produto padronizada</h3>
+        <p>Sem um padrão de ficha técnica único, cada canal novo exige trabalho manual de adaptação. É o que torna cada integração lenta e cara.</p>
+      </div>
+    </div>
+
+    <div class="consq">
+      <span class="icon">⚠</span>
+      <span><strong>Consequência:</strong> o Google não entende seu site. Os marketplaces recebem dados que não batem. E cada tentativa de integração vira retrabalho manual.</span>
+    </div>
+  </div>
+  <div class="slide-footer"><span>Peretto&Co · V4 Company</span><span class="hint">→ para avançar</span><span>04 / 12</span></div>
+</section>
+
+<!-- ============ S5: EVIDÊNCIA IMAGENS ============ -->
+<section class="slide" id="s5">
+  <div class="slide-top">
+    <img class="logo-v4" src="" data-logo alt="V4 Company">
+    <span class="meta">Evidência 2 · Imagens</span>
+  </div>
+  <div class="slide-inner">
+    <div class="badge"><span class="pulse"></span> O que encontramos</div>
+    <h2>Seu catálogo é <em>rejeitado</em> antes de ser avaliado</h2>
+    <p class="lead">Cada marketplace tem limites de imagem. Se o arquivo passa do limite, a plataforma simplesmente recusa a listagem. Sem te dizer o motivo.</p>
+
+    <div class="evi-grid">
+      <div class="evi-card">
+        <div class="evi-num">44%<small> das imagens</small></div>
+        <h3>Acima de 100 KB</h3>
+        <p>Peso excessivo derruba a velocidade do site e é barreira de entrada na maioria das plataformas.</p>
+      </div>
+      <div class="evi-card">
+        <div class="evi-num">6,4 MB<small> (maior arquivo)</small></div>
+        <h3>13× o limite da Shopee</h3>
+        <p>Shopee aceita até 1 MB. Amazon, até 5 MB. Seu maior arquivo não passa em nenhuma das duas.</p>
+      </div>
+      <div class="evi-card">
+        <div class="evi-num">22%<small> das imagens</small></div>
+        <h3>Sem alt text</h3>
+        <p>Sem texto alternativo, o produto fica invisível para busca de imagens e para acessibilidade: requisito obrigatório de marketplaces como a Amazon.</p>
+      </div>
+    </div>
+
+    <div class="consq">
+      <span class="icon">⚠</span>
+      <span><strong>Consequência:</strong> 282 imagens fora do padrão = centenas de listagens que as plataformas rejeitam ou penalizam. O trabalho de correção manual leva semanas, ou meses, sem método.</span>
+    </div>
+  </div>
+  <div class="slide-footer"><span>Peretto&Co · V4 Company</span><span class="hint">→ para avançar</span><span>05 / 12</span></div>
+</section>
+
+<!-- ============ S6: EVIDÊNCIA SEGURANÇA ============ -->
+<section class="slide" id="s6">
+  <div class="slide-top">
+    <img class="logo-v4" src="" data-logo alt="V4 Company">
+    <span class="meta">Evidência 3 · Segurança + Schema</span>
+  </div>
+  <div class="slide-inner">
+    <div class="badge"><span class="pulse"></span> O que encontramos</div>
+    <h2>Um e-commerce de R$ 4M <em>sem cofre</em></h2>
+    <p class="lead">Headers de segurança são a camada invisível que protege o site e que os parceiros exigem antes de fechar qualquer integração.</p>
+
+    <div class="evi-grid">
+      <div class="evi-card">
+        <div class="evi-num">288<small> páginas (74%)</small></div>
+        <h3>Sem headers de segurança</h3>
+        <p>CSP, X-Frame-Options e Referrer-Policy ausentes. Parceiros sérios não integram com lojas sem essa camada.</p>
+      </div>
+      <div class="evi-card">
+        <div class="evi-num">4<small> de 5 tipos</small></div>
+        <h3>Schema.org parcial</h3>
+        <p>Os tipos de dados estruturados existem, mas estão incompletos. O rich snippet não aparece, e o feed para marketplaces sai pela metade.</p>
+      </div>
+      <div class="evi-card">
+        <div class="evi-num">0<small> de 24 SKUs</small></div>
+        <h3>Ficha de produto completa</h3>
+        <p>Nenhum SKU tem a ficha técnica completa e padronizada. É a base que todas as integrações exigem. E ela não existe hoje.</p>
+      </div>
+    </div>
+
+    <div class="consq">
+      <span class="icon">⚠</span>
+      <span><strong>Consequência:</strong> sem Schema completo, sem ficha padronizada e sem segurança básica, cada novo canal exige um projeto de adaptação do zero. Não é "abrir uma conta". É reconstruir o catálogo.</span>
+    </div>
+  </div>
+  <div class="slide-footer"><span>Peretto&Co · V4 Company</span><span class="hint">→ para avançar</span><span>06 / 12</span></div>
+</section>
+
+<!-- ============ S7: CAUSA RAIZ ============ -->
+<section class="slide glow-red" id="s7">
+  <div class="slide-top">
+    <img class="logo-v4" src="" data-logo alt="V4 Company">
+    <span class="meta">Causa raiz</span>
+  </div>
+  <div class="slide-inner">
+    <div class="badge"><span class="pulse"></span> Ligando os pontos</div>
+    <h2>Não é falta de produto.<br>Não é falta de gente.<br>É <em>arquitetura</em>.</h2>
+    <p class="lead">A Teoria das Restrições diz: todo sistema tem um gargalo. Todos os sintomas que encontramos (indexação, imagens, segurança, Schema) apontam para o mesmo gargalo.</p>
+
+    <div class="two-col">
+      <div>
+        <h3>O gargalo: fundação técnica fragmentada</h3>
+        <div style="background:rgba(255,255,255,0.028);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:22px;">
+          <p style="font-size:0.86rem;color:rgba(255,255,255,0.55);line-height:1.7;">
+            Você opera com <strong style="color:#fff">5 nomes diferentes</strong> em marketplaces.
+            Alto Têxtil, Alto Calçados, Alto Elevação...
+          </p>
+          <p style="font-size:0.86rem;color:rgba(255,255,255,0.55);line-height:1.7;margin-top:10px;">
+            O consumidor que vê um anúncio no ML <strong style="color:#fff">não sabe que é a mesma empresa</strong>
+            do Shopify. E cada nome duplicado compete com você mesmo no Google.
+          </p>
+          <p style="font-size:0.86rem;color:var(--red);line-height:1.7;margin-top:10px;font-weight:600;">
+            Identidade fragmentada + catálogo não padronizado + base técnica incompleta = cada canal novo nasce caro, lento e instável.
+          </p>
+        </div>
+      </div>
+      <div>
+        <h3>Os 5 passos que aplicamos</h3>
+        <table class="data-table">
+          <tbody>
+            <tr><td style="color:var(--red);font-weight:700;width:130px;">1 · Identificar</td><td>O gargalo é a fundação. Não o produto, não a equipe.</td></tr>
+            <tr><td style="color:var(--red);font-weight:700;">2 · Explorar</td><td>Unificar identidade e padronizar catálogo antes de expandir</td></tr>
+            <tr><td style="color:var(--yellow);font-weight:700;">3 · Subordinar</td><td>Nada de canal novo sem fundação pronta</td></tr>
+            <tr><td style="color:var(--green);font-weight:700;">4 · Elevar</td><td>Ativar canais conforme cada pré-requisito fica pronto</td></tr>
+            <tr><td style="color:rgba(255,255,255,0.4);font-weight:700;">5 · Repetir</td><td>Consolidar com PIM e gestão centralizada</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>Peretto&Co · V4 Company</span><span class="hint">→ para avançar</span><span>07 / 12</span></div>
+</section>
+
+<!-- ============ S8: CUSTO DA INAÇÃO ============ -->
+<section class="slide" id="s8">
+  <div class="slide-top">
+    <img class="logo-v4" src="" data-logo alt="V4 Company">
+    <span class="meta">Urgência</span>
+  </div>
+  <div class="slide-inner">
+    <div class="badge"><span class="pulse"></span> A janela está fechando</div>
+    <h2>O custo não é contratar.<br>É <em>não estar pronto</em>.</h2>
+    <p class="lead">A Black Friday é em 27 de novembro. São 11 semanas. A meta de R$ 200 mil/mês em novos canais representa 5% de crescimento, quando os canais estiverem no ar a tempo.</p>
+
+    <div class="stats-row">
+      <div class="stat-card amber"><div class="stat-num amber">R$ 50k</div><div class="stat-label">por semana parado (meta R$ 200k/mês)</div></div>
+      <div class="stat-card red"><div class="stat-num red">27/nov</div><div class="stat-label">Black Friday</div></div>
+      <div class="stat-card"><div class="stat-num">11</div><div class="stat-label">semanas de trabalho</div></div>
+      <div class="stat-card"><div class="stat-num">S11</div><div class="stat-label">deadline do plano</div></div>
+    </div>
+
+    <div class="quote-box">
+      <p>"Cada semana parada custa R$ 50 mil. Cada concorrente com fundação pronta ativa o mesmo canal em uma semana. Cada Black Friday perdida demora um ano para voltar."</p>
+      <div class="attr">Peretto&Co, análise de expansão, set/2026</div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>Peretto&Co · V4 Company</span><span class="hint">→ para avançar</span><span>08 / 12</span></div>
+</section>
+
+<!-- ============ S9: O PLANO ============ -->
+<section class="slide" id="s9">
+  <div class="slide-top">
+    <img class="logo-v4" src="" data-logo alt="V4 Company">
+    <span class="meta">O plano</span>
+  </div>
+  <div class="slide-inner">
+    <div class="badge"><span class="pulse"></span> Como resolvemos</div>
+    <h2>12 semanas. 420 horas. <em>Resultado antes da BF.</em></h2>
+    <p class="lead">Fundação e integração rodam em paralelo. Cada canal entra no ar assim que o pré-requisito mínimo é cumprido. Nada de esperar o projeto inteiro terminar.</p>
+
+    <div class="stats-row">
+      <div class="stat-card red"><div class="stat-num red">190h</div><div class="stat-label">Frente A · Fundação técnica</div></div>
+      <div class="stat-card amber"><div class="stat-num amber">155h</div><div class="stat-label">Frente B · Integração de canais</div></div>
+      <div class="stat-card green"><div class="stat-num green">75h</div><div class="stat-label">Fase 2 · Operação + war prep BF</div></div>
+      <div class="stat-card"><div class="stat-num">420h</div><div class="stat-label">Total em 12 semanas</div></div>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <h3>Frente A: o que consertamos</h3>
+        <ul style="list-style:none;">
+          <li style="display:flex;gap:10px;padding:8px 0;font-size:0.85rem;color:rgba(255,255,255,0.7);border-bottom:1px solid rgba(255,255,255,0.04);"><span style="color:var(--red);font-weight:700;">✓</span> Canonical, meta tags e arquitetura de URLs corrigidos</li>
+          <li style="display:flex;gap:10px;padding:8px 0;font-size:0.85rem;color:rgba(255,255,255,0.7);border-bottom:1px solid rgba(255,255,255,0.04);"><span style="color:var(--red);font-weight:700;">✓</span> 282 imagens otimizadas (WebP, &lt;200 KB)</li>
+          <li style="display:flex;gap:10px;padding:8px 0;font-size:0.85rem;color:rgba(255,255,255,0.7);border-bottom:1px solid rgba(255,255,255,0.04);"><span style="color:var(--red);font-weight:700;">✓</span> Headers de segurança ativados nas 288 páginas</li>
+          <li style="display:flex;gap:10px;padding:8px 0;font-size:0.85rem;color:rgba(255,255,255,0.7);border-bottom:1px solid rgba(255,255,255,0.04);"><span style="color:var(--red);font-weight:700;">✓</span> Schema.org Product completo em 100% dos SKUs</li>
+          <li style="display:flex;gap:10px;padding:8px 0;font-size:0.85rem;color:rgba(255,255,255,0.7);"><span style="color:var(--red);font-weight:700;">✓</span> Identidade unificada + ficha técnica padronizada</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Frente B: o que ativamos</h3>
+        <ul style="list-style:none;">
+          <li style="display:flex;gap:10px;padding:8px 0;font-size:0.85rem;color:rgba(255,255,255,0.7);border-bottom:1px solid rgba(255,255,255,0.04);"><span style="color:var(--yellow);font-weight:700;">→</span> ML + TikTok Shop (S2)</li>
+          <li style="display:flex;gap:10px;padding:8px 0;font-size:0.85rem;color:rgba(255,255,255,0.7);border-bottom:1px solid rgba(255,255,255,0.04);"><span style="color:var(--yellow);font-weight:700;">→</span> Amazon FBM + Brand Registry (S4)</li>
+          <li style="display:flex;gap:10px;padding:8px 0;font-size:0.85rem;color:rgba(255,255,255,0.7);border-bottom:1px solid rgba(255,255,255,0.04);"><span style="color:var(--yellow);font-weight:700;">→</span> Comparadores: Buscapé, Zoom, Bondfaro (S4–S5)</li>
+          <li style="display:flex;gap:10px;padding:8px 0;font-size:0.85rem;color:rgba(255,255,255,0.7);border-bottom:1px solid rgba(255,255,255,0.04);"><span style="color:var(--yellow);font-weight:700;">→</span> Dafiti via API feed (S6)</li>
+          <li style="display:flex;gap:10px;padding:8px 0;font-size:0.85rem;color:rgba(255,255,255,0.7);"><span style="color:var(--green);font-weight:700;">●</span> War prep BF: flash, cupons, mídia, SAC (S7–S11)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>Peretto&Co · V4 Company</span><span class="hint">→ para avançar</span><span>09 / 12</span></div>
+</section>
+
+<!-- ============ S10: CRONOGRAMA ============ -->
+<section class="slide glow-green" id="s10">
+  <div class="slide-top">
+    <img class="logo-v4" src="" data-logo alt="V4 Company">
+    <span class="meta">Cronograma</span>
+  </div>
+  <div class="slide-inner">
+    <div class="badge"><span class="pulse"></span> Semana a semana</div>
+    <h2>De <em>2 para 7 canais</em> em 12 semanas</h2>
+    <p class="lead">Da primeira semana à Black Friday, cada marco é um canal faturando, não um slide bonito.</p>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-date">S1 · 14–18/set</div>
+        <div class="tl-title">Kickoff + baseline + fundação começa</div>
+        <div class="tl-desc">Correções de indexação e identidade em produção</div>
+      </div>
+      <div class="tl-item live">
+        <div class="tl-date">S2 · 21–25/set</div>
+        <div class="tl-title" style="color:var(--green);">O seu ML reativado + a sua loja TikTok no ar</div>
+        <div class="tl-desc">24 SKUs otimizados + loja social ativa</div>
+      </div>
+      <div class="tl-item live">
+        <div class="tl-date">S4 · 05–09/out</div>
+        <div class="tl-title" style="color:var(--green);">A sua Amazon no ar (FBM)</div>
+        <div class="tl-desc">Brand Registry, GTIN, variações, A+ Content</div>
+      </div>
+      <div class="tl-item live">
+        <div class="tl-date">S4–S5 · out</div>
+        <div class="tl-title" style="color:var(--green);">Seus comparadores de preço no ar</div>
+        <div class="tl-desc">Buscapé, Zoom, Bondfaro: tráfego comparativo grátis</div>
+      </div>
+      <div class="tl-item live">
+        <div class="tl-date">S6 · 19–23/out</div>
+        <div class="tl-title" style="color:var(--green);">A sua Dafiti no ar</div>
+        <div class="tl-desc">API feed, sincronização de estoque, logística</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">S7–S11 · 26/out–26/nov</div>
+        <div class="tl-title">War prep Black Friday</div>
+        <div class="tl-desc">Flash sales, cupons, mídia paga, SAC reforçado</div>
+      </div>
+      <div class="tl-item" style="padding-bottom:0;">
+        <div class="tl-date" style="color:var(--red);font-weight:800;">S11 · 27/nov</div>
+        <div class="tl-title" style="color:var(--red);font-size:1.1rem;">BLACK FRIDAY: todos os canais operando</div>
+        <div class="tl-desc">War room dedicado da Peretto&Co</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>Peretto&Co · V4 Company</span><span class="hint">→ para avançar</span><span>10 / 12</span></div>
+</section>
+
+<!-- ============ S11: POR QUE NÓS ============ -->
+<section class="slide" id="s11">
+  <div class="slide-top">
+    <img class="logo-v4" src="" data-logo alt="V4 Company">
+    <span class="meta">Por que nós</span>
+  </div>
+  <div class="slide-inner">
+    <div class="badge"><span class="pulse"></span> Credenciais</div>
+    <h2>Já fizemos o que você precisa,<br>em escala <em>500× maior</em></h2>
+    <p class="lead">Não é teoria. É a mesma fundação técnica que sustentou operações bilionárias, aplicada ao seu nicho de calçados.</p>
+
+    <div class="two-col">
+      <div>
+        <div class="stat-card red" style="text-align:left;margin-bottom:16px;">
+          <div class="stat-num red" style="font-size:1.6rem;">Web Continental</div>
+          <div class="stat-label" style="letter-spacing:0.02em;text-transform:none;line-height:1.5;">R$ 2 bi de GMV · 2M+ SKUs · 3.000 lojistas. Project Owner de SEO responsável pela camada que conecta Produto, Canais e TI. O mesmo elo que sua operação precisa.</div>
+        </div>
+        <div class="stat-card" style="text-align:left;">
+          <div class="stat-num" style="font-size:1.6rem;">Benchmarks de calçados</div>
+          <div class="stat-label" style="letter-spacing:0.02em;text-transform:none;line-height:1.5;">Bibi, Oscar/Diadora, Havaianas e Grupo Dass são referências públicas de mercado que estudamos de perto: ruptura de estoque, feed de catálogo e sincronização de canais.</div>
+        </div>
+      </div>
+      <div>
+        <div class="stat-card" style="text-align:left;margin-bottom:16px;">
+          <div class="stat-num" style="font-size:1.6rem;">V4 Company</div>
+          <div class="stat-label" style="letter-spacing:0.02em;text-transform:none;line-height:1.5;">A maior assessoria de marketing digital do Brasil. 6.000+ clientes ativos. Metodologia de 4 Vs, Teoria das Restrições e 4 Pilares. Decisão orientada a uma única pergunta: <strong style="color:#fff;">isso faz o cliente vender mais?</strong></div>
+        </div>
+        <div class="stat-card" style="text-align:left;">
+          <div class="stat-num" style="font-size:1.6rem;">20 anos</div>
+          <div class="stat-label" style="letter-spacing:0.02em;text-transform:none;line-height:1.5;">de marketplaces e e-commerce, da Netshoes à Web Continental. Sei exatamente o que quebra uma integração, porque já quebrei e consertei todas.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>Peretto&Co · V4 Company</span><span class="hint">→ para avançar</span><span>11 / 12</span></div>
+</section>
+
+<!-- ============ S12: CTA ============ -->
+<section class="slide glow-red" id="s12">
+  <div class="slide-top">
+    <img class="logo-v4" src="" data-logo alt="V4 Company">
+    <span class="meta">Próximo passo</span>
+  </div>
+  <div class="slide-inner">
+    <div class="cta-box">
+      <div class="badge" style="margin:0 auto 20px;"><span class="pulse"></span> A decisão</div>
+      <h2 style="font-size:2.3rem;">O diagnóstico está feito.<br>O plano está pronto.<br><em>A janela não espera.</em></h2>
+      <p style="font-size:0.95rem;color:rgba(255,255,255,0.45);margin-bottom:28px;">
+        Kickoff em 14/set. Primeiro canal no ar em 2 semanas.<br>
+        Todos os canais operando na Black Friday de 27/nov.
+      </p>
+      <p style="font-size:0.9rem;color:rgba(255,255,255,0.55);margin-bottom:28px;font-style:italic;">
+        Imagine 27 de novembro: 7 canais abertos, estoque sincronizado,<br>a primeira Black Friday multicanal da história da Alto Calçados.
+      </p>
+      <a href="#" class="cta-btn">Vamos começar?</a>
+      <p style="font-size:0.72rem;color:rgba(255,255,255,0.3);margin-top:24px;">
+        Marcos Luciano · Project Owner de SEO · Peretto&Co / V4 Company
+      </p>
+    </div>
+  </div>
+  <div class="slide-footer"><span>Peretto&Co · V4 Company</span><span class="hint">Obrigado!</span><span>12 / 12</span></div>
+</section>
+
+<!-- ============ SPEAKER NOTES ============ -->
+<div id="notes-panel">
+  <div class="notes-title">Notas do apresentador (pressione N para fechar)</div>
+  <div class="notes-body" id="notes-body"></div>
+</div>
+
+<script>
+  const LOGO_B64 = "iVBORw0KGgoAAAANSUhEUgAAAgAAAACLCAYAAAAXkCHIAABbLUlEQVR42u29d3gd130m/L5n5jYUgmhsAAkWVcvdsi25Ss4mu8mmuFHp2U2+5Es2ccqTZDdlNxZlx6mbONVPdr1O2WS/JKQTO31dYlGWZUu25KpimRQpkgBJEIUCAdw6c97vj5kBLiHg3rmVIDnv88xzQRB35sw5v/Nr51eABAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIMG1AG6GQQjgoU0ylmZwCNCh4B3aiiMADwJqbCoBNvadBAkSJEiQoDnhLcAIcA4DTjIjm2JNjABHgMFVrFglSJAgQYJN6AGIhAsBv8XnaxqjffOZ8kg/jX+1TqQj69CafgGqtEHo0mWvlUm5YBxrXsb3njMpd25bfmZm7ZooUMxs4hlIkCBBggQR3GYs/iOAiYTM40B6a2r0BTD+y0GTHy/O/lXcex0GzD2AX8r53z+i1LtKUImBYnHVwaMxdJAB2vMCBNMkDCDFWBP4jilZa5emsiNTU+QzDvTpijH3716+8OVorRSsm03IPkGCBAkSNGSpVguQk+mhW1PG3EPgmwXd2kfTuywVYVMvGyuf++q9gLmvjrAR4BDwz2SHfmGQzq9cgq7qM4R2SlY1sZAGQAqES8AKWILNA/wUhD8eK84eCX/ttOi1SZAgQYIE15MHIBL+s0NDWyoF/gzEd/SQQz6AIoAlyJJIi6VxAF+9rQHlwoB+BZAFfJvEETQNH0AFEgQBoAP2ZMFv8IhvOJcb/oHT0C+xMP/ZxBOQIEGCBAliKQCRwJjsGXlZOY/395GvyFNYhPzIi2AAI6EMOnkAaCR63QaxBMTqZ4LmwSqFQMuQBcB+mG8oSK+czIz8LEuzf5woAQkSJEhwfaPucXUkKM72jbwhZfF/e8hXLEC+B4iBO9kAoAn+tmQdbzGZ1k2jCTBao0XIBzGYNfzAmezwz4fHASaZpQQJEiRIFIANhf90z+hL5eGDDrltCfJMIFS45m8BiEQqseA3pzLgeIAtQ7aH5lcnc8M/RsAmqZsJEiRIkCgAa4U/AejUwMCgb/W/esjRAuSzicyBBJtGCTAWYAWyLvhbZ3qH33QP4CeegAQJEiRIFIDL5AUBpcruz/aRr1iGfJNYi9eCEkAfUArMGJ+//bWhoS0Icg0Tz02CBAkSXO8KQGgR6nTv4AsB/mg+yEVPBMS1A6cA+X3kS3J5/FhYIChZ3wQJEiRIPABBPXnHd36sn9xaCarImTqWJQDKReVqjiy3au26mirtmSIkA/74qdzwriQoMEGCBAmuLzzvPP/eMPBvqm/niLzKtxQkmRjWYWhCurIme9VJ/SCjAWnAmDWvamp/7zIFSABKNXSAUEHQespW3LGu46pvKnWSACuA30+zc1H2uwH85pHEC5AgQYIE168CsFLAx6t8fYYcC6zE+pahDaRKxrfoB4JOdlfDBAiwGcAARBk6TagQ6gOQ4IG4uO7XxLQhBqLsB4F+6CW5eaPnEDBpgNVKBtHYRK3VICpQ02X9GCo/It78+Ate8LsvfPLJssLYj2RrJEiQIMF1pgBUFfB5Y4ZQSbCIEfzHGhbuJhb+fg50ytKkL/+XSq77L2b5wsJeAM8CqACa2qBsbj/AYcBxQvl9AfB2ZEd+K03cXA40CFYL/xxoihBKwEnKLqwoTmTeAIXQ2aC60yz0A4rWTQImXHLIW/PMuN4EL6jhMLplcrIPwHyyJRIkSJDgOlQAQuvPCjBngZd7athAvWogwO8BnSJ0QgYHx/Pzn0ep4dtUoh+mssO/nSV/vLimeY8A2wuaguznZXivn688NIGFi20YPwloMjv8P3PgDy0GFf+azdKQyMTqT5AgQYLr2QMAAGf7+obkY7sHXZPSX4DfCzol4GnfmHt2L1/4soK5iOVND70dPALwIGCnssPv7aH5yTxkVXUmL8DvA51l6R/8dOU/7rl0ab6GMI859MuHweDoIUGCBAkSJGgIZh3ZBlvODkLos1g36OyqF/79oJOXHi7a8jeGwt8h4DFwo9e9Iil8D+BPZYbf0xsIf3+t8O8FnTx0vxlwvnPPpUvz9wPuevPJ1aOTetd6yohJTPcECRIkSNCqAhAgZXKAso0IFq1RIjah4AdC4b8k+y9epvJNe0sLJ8Nyx34D94maFtnJ7MgvZY35hUJg+Ztq4d8DOgXo6Qr0PTunp5cPA87doZLR5vdK5H+CBAkSJGgYbSvrG0aUE5tQICmw3G0f6CxZ/UW51PdD+4qnio12xKsW/lO54fuy4DtLkLVrLP9sEFtwpmL8t00sXzzbqJLR6OslRwAJEiRIkKA9HoAmLezQut1UxWRC4a/ewO3/vl2l2e/fh+aE/6FQ+J/JDb87C7Ou8M+BTkWYrEBvnVi++EQX2u4m0XsJEiRIkODKKAAMhJBSgEODXgA4uImEfxY0eeg3dhRnf5yAF2U7NGr53xdY/u/qh/lvJchfK/x7QKcCnQHN2yYKc4+GsQWdroyYeAASJEiQIMGV8wBsNkTCP8i/t7+8qzD7cwib3jRRec8QsGeyQ7/QA/NL+UD4m7Vu/wr0bAl6687C9GdD4e8nJNaWtaQAcxhwtM4V/t5s5oBVAbw3GOOG7yHA3LvJ3+N6pT+EV0iLKz8ns5PgaoZ7jW5YmdDyL8C+e6ww986owVETwp8E/Mns8M9myF8pBG7/NcIfji87XYD57r3F2UfvB1wCXkJerTHdI4A5GMZvIOa63QuYQyspkrBXcvyR0DhU9Q73xfjufcH3nSMADgYVJNXGcbVL6Ve7xiXAtFo5NPQ4xpqrSKmv/2ern9E/uPpv8nI6xVGAd63J2ul2Vc3o3Y606X4doL+mx3dwle5sC/uxafqOSTcb3cteyTm8ZwNj9JpTANYI//e0IvyPAOYewD+VHfqFLM2vlCFVu/0tYLOAY4XpsvAde0szn45SChMR3prgD70nfvi71OnM6B5S4wbYToOBkMHSiM/B2llfnGI5NTmGc/n7nq9E2G4w4lpKy2mM55zs8ih8Z8Q1dqRCM0iDfgCktWUYM2Otf9GSp3cX5i+wqsiUggJPbXmHK6kUbZYxhfPYlHfuMODcA/hcFfCoda/DgHMQwKFA+bOb+d02+9y34bm6Fua2neO4phSASPhnAuH/rrHC3L3tEP69dH6lvCbgLxT+xgozHnBwd2nuwcTt37olGAoD/1EgtbN36C76/KYp8DUOdXMKGHDBlajHMPMEviEssIBs5fQkh77oWOcTnvQQy7PHqpSITgZjUmuUllkMbSnk8AID3C6YO42Kt1mYXXAxYuAwh6roTTqwAkp0YKTps9mRk5PEJz2rj0yU5h6MlIFI+LQwv+7ZnpEXy5qM6NlmNr8Hlx489PXwidG5ucVWe0cISJ3LjtwJwx4B1m/CE+AASkFOxfpPjBUvnt5oTNHvz/btGLWe9yYTKJLB/1ltFZh1iH5fypLoEZiGlCWQC3gIJWlgkiwSKAkyAAoELlly3sCeAjhpoXNpOqe25Wemq/lB6J1qizDa6N3OpEduTLs8UAwUxqa8Kk6oXHvw5WX0yIGLFxfasM4koNOZ0RsyDm5odHxOwMNNxWJpT3Hm03H38spzc0NjktlvaMtuTfoGKNfYdPrpPZcm56NjHgI6n9m2H/Tv9GjKjuT4wTs4ChRCR4DvAMYPxkYENdudsmMe37N84SvtmsPzvdu2U3qZF2O/OPAg0s9k+cjo3Nwi1mTqudeQ8FgR/sU2Cf/J7PB/zpC/UoKk9YX/dAn49j3F2UT4t4jD4fwdBpzXZEcOEvopY/nqHhIegqZHFUBesBbV2jAE0AUGUuSLHDgvksH3FoT5qdzwx0n7JzvzFz9GwK/ezG12xyG8v3u2Z+hNsObbisCbDHBTL2iAgEN4oXZQCmpJrR0DCTBFbnfB7SnijmWD/3I2O/zIpMz/OFaa+cu7gWIzSsCKcMgNbTdW/2xoRy2M7zfVRdKqF8YU8/Y7AHzwaOCd8JqYtyCupnfbLca3H+8RUh6AdBNrYAH0wuA52p8C8Luhm/Z5c3Qk/L2tVF6cM+avjFayl8CwFqcBQEMoamyypkanJat8yVxdOABWDrxgfb2K1fTZ3MixKeAxH/qUgM9OFObO3ofL44raaxhCxuHPD4A/IKnpuuARsnCQL+mbAfzTRnPaAAwA34X9/i1wfrHR8QlACoCFXZrqH74di3NPx1TqDQCflj/cb/hLyzAlv0bJdANYh0pVKqV7AHwQqz1a5AMHemn+wg/poh6t+gC2kpix/l8B+M42rLEB4Pu+fmDI8FcuSTXHIAAZuFi0dtovOi8BsHhvEMx+bSkAa4T/fWOFuUMtnPmbewD/TG7oJzPgb1TCyn9rhb8vzJSBe/YUZz+ZCP+WBSgJ+Gdzw7cb8Ndd8E0GRB5S2OOAVXz2eWWTGUggeVBUqZEuMZSFuack3nMuN/KJM1bvZmnuaDu9AdX3mcwNf+s54L844mtzJCoAyhCWgvGr+h1Y4zyyAqgCqSCIgJOlebUhXn1LbuQHp8SfGyvOfOpewNzXvBWZcgFTCcbejLC1GdB4Crpe3tW8MkUAMNbfm6JJ5VfXuRnYUgMCSoAtBM+L+CRZfda/TlUzVSmbXOUJwf/psj+nAdwUMZYCxwxwVwn8mbLs+ancyEco/DGLs58Mv9YuJSDq4cJz0HhBkA/5XvO9QcAwq4lWt4YKQLv2u1eC5DUxvjJgszR9FR93Ani6QXoxqWABU7W624bZbPQks0aWwt2izywu6qkscXNplW6qaeMy85qAXRCMgNtPDQwMcmHhYotegJBWdEdJUAXyUXsO/RToAPzSjuUL0+tlv5mNJuEqE/42A5oC9c5WhT8Bfyoz9I4MzG9XsMKVqoQ/jRWmffhvSYR/26xneyY38pOO+PEM+KYiZPOQDYWlw6qgyxoMi2E7ZoeA8QAtQX4lyAR5k2v40XPZkT88iYGtIbN0Why7IWC/2rdz5Gxu9P+kYf4uC/NaD9Ai5BeD6pAKxx7rHarfg+H4CsFc+BnwNSnqI1O5kZ+4L2T2TUahWxsIH2sD+m7oCo1gidxfzRybn0ftz4Q/skpBauSqUg4bEXAmpJfo0wlp57Kr+vcRbWGd/6teYwuoDCgP+YuQX4aUInf0gf8BxCfOZ0c+eLJv6Nao8Vob9hEAYG5oqF/Qfm+Vl7GFOYVLEFxpb942mcA1ynADl9IAfNnXxR3T0So9zVbRfy36ts8frwSY7TMzSw70sVTo1VtDP5d9RnRShmjA/cZzX1pL5jbi/rfQq8pB9repty8MQBCf3+jZl/3iUPQwr7QMIG82vwCRCbrtOQXgV8bzs+9uNdp/KjfyU64xv+cFGxlrivwYX/ZcAf5bx4oXH0qEf+vCHwDPZEf+oBf8HREDy5BftYFaYjIhU+ZyIIxTPeSP5rKpj57qHbwtOm5oRfifymw5MOCVP9oHfFcFsoVg7CtKC9qQJhYxkjzk+0BPDvzd05nhX+bqOWMzjKRZBkwE3i8KuLGqeyibm0bAkbnhWstFrpqrSDFgJVQMBThZ8m29nvnkmezQ97VJCSAAFCtmh8QRH2pHDxf6QZjjRKSkoz1pj63cw5SDW7xG2NkTh/aqPVRc9ZbUUyafh5UsFcP/G3Z8jdW+XYDtJY3x8ao2uP/hWf9VKZrtYcv5mp4MAiYPScSD4TugpgIQoZ/GM5s8kr0qz99ZlP2dTxdm3tmi5W/PpId+IgX8to8Var+swp8ne86HPbi3ePHTifBvDWGkv6ayw789SP5YIXAJWqLlo8t1hagNGXCWfGXaOv9yOjf8ynuCc/uGmO+9Ia1MZQf3uEz/fQ/Nyy5BHlatyE4JFccDVIRsnzH/9XR2+GfaZUE2OpQKBIr7zvXtGGnVcPWhvddDJctIMQSAJcgHMZKm+cCpzPCPELCHW6OdwGK3ZsIhtvjtKQ7GCgBCe89t397bRhdAS0Fw5aBD7YFT2eJLIz4S0wOwYs038+yDoevcyfNBD3g2AzKmp5zhedHrIw8cWlCYAb42txr/XIsglALpC2fplB6pfoe6CkAR4iYvqiICNgeaZdnfGyvO/XT4cs3kJq+6/R3nd7w1wj90+zsVacoHvz2x/NuyflGQ5c/20fzkJchTG6z+OAx4EfLT4O4U+MGp9PAtjQjRsBw0To+P53yYP+onX7AIeexSLI0B6AMsQTZD/uqZzPDdV0IJ8IK5GIFfmWjGqluJzB4fz5HcV2ndMrzalAGnDFgLujnD35vKDb+5GWV0LSqy+zJgdWxjSx46H4LEbX7eG0f71oit7GEBfi+ZTsG8DkE79m6tmQRwO2aWDHR/Or4ywxIECS8/lRveRUD3NrdfwoZzutPGmEcBygR/9PnxxcW5jWIPrjrvW0jZtg90CtL7xopzP9WsdhcJ8jOZkR9KGfNeD4K/xvLvAY0nnS2C3z5WnH0wLPKTCP8WhD8BO50dfI1LvissrOSwSwLAAE4B8nLgHhj+2fzg4ADCzR3Ta2HNbOFHB2i+sZvCv1oJ8AC4YMoQ7z29ZctQlSerK5asBZQms4TZ1yRTD5TrmcoOCDv9y1LqrxslwHiQNWAK4HtP54bGEAiHhnnykRVTEwfcFq3s6nX2ATnEgPGDdT7SnjVSq18O02dfH/7TdpF2DABaHx+OewwQHf+kaHY4wO0AcKjJ/XIqMzAh4UWlGPsljBECoQdqyfqrSgEINVvbAzrLsu/fVZz9yVaF/1Rm5IcyBu/zQccPGWwk/LOg40FnPPDg3uLMQwpb+iZivHmrAoA0Pp4r0/xmFsyF7squMn8C7hLk95OvKhTNzzCGxRR5LU5kt04Q+NnSKgPoOgxgCpDfT/MSp5z6IXaXCYKATQPwZA808/1IkJB2jMTA9bqhVtYR3EvwpwnoUBP3iVy7BPe1kwoUFFSD5N8QPqdN5NPatJUgCHzpVN/OEV6WhNFxWACy2cpDZWAyvZoEUPd7OYAGjB28uN5+cZl6dZpm0KvDMxXUHzDLsgUZ3l/rmVeNAhC5/XtBk5f+aGdx7j9Flnijwj/KOT/TM/L/pgze5wOOB60I/8jt70lTZZh7xoszyZl/GxCd+5+bLbytB+Y1S0Gkv3OFhmMKkKX446e3jN4QRfrW24RpuN/XR7OjHDAD0wo9t5JtQ4BFSCJ/+PSWLUMtBOM1NXwHgCFuaoahjUYMDdqdBR21ULTmWvAEFCBR+N5nBwb2NXqkU5WW6EDaV1FbhOyKoucG1QVuqfY0XEkPAAGUA8/EGG3lld2UY9ExwJ5Ll+YJfSrD2BlzDOLKdEcrgbMEXpcLNopfb90yQTzjl3blZ79US0ZeFQpAtds/L/3RruLsOxBMYlOWf5DnP/zDGeEPA+GPy4R/LnD7T1Vo3r67cOHhRPi3x/o/GKbfWeIHTZOMQME9/PCz+vLVQE515JrrI7e6Ffv9tRiTAN4D+FM7d/YQervXxBlrKPCjMUYpjqx+h0YVmDKgHnCfU0q/pcv7mYHVzn0Rw2lkPmaiuaZuaZfLuks0bGtcEU029C4EWAbUb8yoW3Lf3qyVfKFndFTQWDuPUxRkfIDEjcBKPfmWswva8H3bA9IKb2ijYtKA4wbwxb8rK/ZcsxSoCi+a6h++qZF5iHhP2CzslRXV7+chBOfUIP81LFDmXLUegJDT+r2gsyz9z13F2R/HisurObf/6czID6TBP/QBdyPhX6bekgj/9lv/Z7OjdxJ8bSEIVG5UiNoMYPpJJwua6qufdMIAqIaUgBIEC37H6S3jG1rRK5HGF72Xgbyt2ODYBdgUwH7Q6QFNJswjNgCyoOkFTU8YvNWgAJEDSMS3KEZkcDsVgAoAQXsvDgxsbVSCH1yNaN4bFke4KhSAXNVa5ao+e0GzhcHaRkpdwxJNEMk3RyWlG7AQCQBl+RMGHGz3cUoYFL1bYZHGNixUO9aagSaiN0YGXRe9XxYAcgafLEoXUkH3zrpxAB5gczRb4Zs7G1SECADn+oZuBnRbvfP/KP1vWfKstZ+opyBt6kqAkfDvA50l6X/sKs7+WKvCfzI7ck+KeJ8N06rM2lQ/6HSZevuewtznEuHfgTWlvmkL6F4KcuadBuhAvaDJQyfL0t9Y8BFj/UvBPc1gCbid0JtzMDcUgoqAcTaYKQUVJPdXKqU3YbX052VrPrpCI/bOPhhnuYGx26gltexMhfp7x/IzZdgzLp1lQU7Ben2O49wM6C0Z8PUVNGROm0KQsfO605mBfROlhRMd7nmwYpX4gUWz7WIlPQHgOaypMV7ru9H4BOz3tBIYunlJNgh8tAXoNwGdMlLeB60DyMq4MtrqWO0V+BoSrwwqkso2kNXCIkRJLznXt+MWLJ1/Mu58RqRCmb1pMltq7LkxPD0ChJ1nMqN7UJo53sC4OuUBAMJ0QIm3TfWPHMDi7NfaMK64gw/Kwudnz53NjjycBb+lEtQYcup8z6YIU7D2tQD+tIGxBrzHmtf0kL35+usbVMSVPZbr1aMorZ/+t+kVgKozf2dJ+sMw4K8l4T+VHf6uFPEBC2Q2EP5nStDbJgpzjybCv70CI5pLA77Ob5ARMFyrZeF3jeu+Z9fS+Zl1/uyvz/bt+I2S7/1ODvyuPLSyvvVkdAZwylKkADyPtu6KNhDNLU7AZmLRnw1c9CxJj5Utvnt/ee7pDf70nx8H/nAoN/yDAN/rAKnqbJQ6loWy5HCR6ZcBOIEuWEJRhHiK7AG0G8CXGn3uxYGBrctl7Kls8gyAqrMeycUHdi/OHdvob78GZHozQ28ok7+Ro3lpXBoM59PmaHqL1rsTwJNNzMlNKQJFtaUGwMoG9QEYYitkJwAcb0MmQFsyFAKLmltKFfuqYOq7R0NHo/4X0r9Y8lvjPFuAqQgg+WoBaQLlmGWBA2VZeKMTb/6UBlAEHxyZn7tUzyAwm3TTrQj/vPQHu4qzP9G68B/5zhT5xxbIeoBd4/Z3POhUCfbtifDvHM727Ri1sjeUG2P6NgPSQu8aL8781K6l8zPhedjay921dH5GhdQPFaXHs0GhjjiWMMO89lednJjIrnMMsGKxGmiPHzPIKozERUW6ZA1/cH957mkBbjTew2vG/0KgvKsw9z6Bv9ZAdDEQRuQTekU31zIKNKLVC5qxABe97Dikoatpkxkf/eF6parX7nB43QSUxkrzHys4zr8rSY/1xKdBAFCKgCxe2aCgVOimOGBi8kfF7yNBBQHRoNGtQFsyAdolqOWu6OergrJLCoAFAF/812VpwY1xDIDwuJHSgamekdvizMVKgOf4eI7AS7143zHhMcEn4jxj0ykAUYW/HtBZkv29nYHlr2aEf5SzP5kd+fYqy3/FhaIgtsD40Kki9PY9hfnPdlr46/qMdg6ULc/eQHLYjz9Xfg9oitY+sKsw924FG80waK639vLuB9wxnMuLel8DhM1ww9yUOrf0vMI2qtpYVhr246+hzYGsQJ8ez898Mcw88aLx3rNm/NG7+anM7xagU+kG4hnCaMIbu8kIFfo82Xit+LAJkLcvRfZdiTTQ5t+ZNmr5XL1294RXKDBTB5YvTFuZn/OkchgTEEvYhtWwbosULMUTEJFhdIMXI0AMANyoRnwDgpZybmiTBd8uNz0rACx5x/ToaB9j1vJoB6JeHOPl2WdIfC67YkvW9lrYwMvTA+kO1GgItnavnJsr3AaoruGkwPpnUZrrQeozcfhB2xUAv7VFkAnPTPOw7x4vzrUk/O8GvFD4/6nAXLXwt6tu/5MFoitu/1b7QV/tCgBgd2fAdANpX0GwD533h910WcuddVcYDCToH/KyczEDdBAWPOlzXN5QQ2tuuOFMcFzALytGxbLovfZcmpyH1QPZ+MySXvBXu0PlqFuMMGDA4E1xBdYaYXogvXICd81ABDwBZqx04f4y9WguaDRs42yQwBOl8ZNhYGVczA8ODhDaVYkhUQwAD7rgQ3F7vTBUem+qolO2zgtap7+wLPDN/pJza5vvHcshRMBKONrAQxV6ae7GahGjunMlmDt7YLJ+fb5p0yAM8NnB4rnJOPKmrQqAABiyKQFqg8kxKdAsC784Vph7Z7P926OCPWd6Br/JEO8nmC1XBU+Elr9TgZ4tEAcn8rOPdVr4hxagTmJ0x9eAzHWoBIDk9jgdNCJt1gVMUbroCJ8Jy/DWFeYEtLswP2nIL8QUMERQ8ISS9sRwncZ+XU8AqZkG6JcCaIknGjGng2IY2vbcwMCWbmp0HgBCY40IrNWqdTrgclXxuZaUgEhQOuIXUvHpPSy9i22Ol41bepcAUCqnd0sYrdcESNGxjfBbBB/JgYjjZfIBiGpXJoDaRH+0AR93fXivuwIKQLjOPLosVRgzG6AcfPHlJwcGtsZQ1oO1ke4yMecuuJkeZMw6JaZNMyETWAQWvparN3rMxfQzAe+uFGDfsbs486uRK6vpaP+ekW925fyVC/aXIGtWLX/bAzpl2K/5xNu6IfzvB9x7AP9UZujrM1n9z8Hh4WgjXVfHAZIGHcZmAnJBkJrRVk6HVdLqBsBETVUs9GUnPsOJmn+P16BdorGg2aD4h+F83P1wJKR3x/CiF5OhrUbkc0uxmN0KNFVqtClvlg0E1qjxsmNxGfDBlQwAToRJ89fiHoh8whfiJs5HOZwO2ZPyvG2NPMePd5wiAqYCyJE+D4szbry9GGUC7DqdGd3dBkHbzvWmABjp66rSYLtWDAsAMOh+QdAT2XhxOyxDMOBet+i+LNzzZqP9RUCT/buGRbyiFHg76qb/FSDfh3korrJl2kz1TWl3BsxVggJP37WnMPeHIRNXK8LfEf4/Z43wj878i9JXPJffMpaf/Xw3hP/dgHcmN3RHluaIiL0X5+bK16UHQDKNcgoJSzump4txv7PqaueZRrMNIGwJ77EO3d3gkOiNy2Ei2jXi4uXjimfdNGFS9VRMZVuoAHRDwtELegL0peTHagpUVbXONcT10ATIb2h7ADYFwne4tyFhKdycqXMOHdWt9mBLgHuCBlNxauhWZQIMgtoVCq2WjnnbSYaVoCzwy873bh/tZlngqHLo2LlzeQIPpOK9GwX4PaRD8vW1+EKkGKhceokBdsfYK0oHwdInlKl8pesKgFatHtPo1wSdWIA9uKsw/7dRYYemG/v0DP77GsLfKUhPVjLmzeOLs1/rlvB/Njv62pTM3/UaMwBhOTs+bnB9wjSx0ZpiNoZYtA1sZkNA5JY27gcKAmErnZ7UMAosay3728CgG3rNVHD6HysTIPJMzOWGdkgavR6bANWjwxQAWeyI8/dHVg2oG+tlABCQAwLi/FOlC6d9i5MxA3EYHh3QMWxHTwC2cb5YDrIndkn25Z0wauO8i4j7C6G+H0sJCDTh11elR3MjQ8Yh7+wljepXYVQakBUenFhYuBjFA3VNAQitNS9rnPzGVtTzvmMBYKw4938mCnN/H0V4N8Fs3aDC3+C/S8v8tQP2l9cR/kXpK07GfMvEwoUTh7sk/Cezg6/JQh825La8JF252vdXnsGRWx10rfIbm6CjtgojC8CQsYuzHWySCSJk0C453AYG3dCUmeA9Y/UEiDwTRbm7G8kGuV4Q1RxwoG0x5pNh5gFE3BjD26VUIH5O3Q14rtH5khRlDdQ9WksBkHRbteKxCTwAQJimaGVf34axNaV7yy1/yoPOpBs4BpD0otnc8E4AWKc9cFgcEhT1Ohsj9Tj0yFEx0//argCENyqVTWWpSapoqoJZaMV7p7Nb35im8+cGpre0TsBfQfpKWebNO0Lhf09no/2du8MxOXA+7JAjJchzr3Nrx14/769mGN4K85IaPgIIEg402GWLNTh0ZewI8cBicvwDGdC1V1EKYDcJR8T2erQT/cf06GgfoN31YkZW0jbBEwBQ8ZxnK1LBWemuG0OZVbDOB1sL3Gz3ejPo4so3RLFWXWyNLQFmfHFxDpb3Z2KU8l5tD8xtFfIl1Z6xCPeGR2VnckO7JLw8TvqfA5iCdEkyD4f3jMV32nwEIOPJdZqczGaFv38mM3xXGu4RhxwprrH8+wLL/4uU860Tpe4I/+oxueRosb3lORNcBUzcBBq5by2fi6sIrFjuNEU1yIicwAO3pcvvacLzjd2nBgYG42o79HkgVWVBJVidGgtA4FC0rjUYfxAAWPB3S9xWLwMg9BTAh54FgHQaF0Scd2JmygSpgJpQUCyrlVTTRo92YxXYsdDLbkwPH+iQkrEhjoZ83YBH/Xi5/ZHXghK+br05ObTSLtu8OEVuq9RXlJUOfIGf31OaOQkA93VbAQjenOW0Z4tdYj6BoO0dvjtFHnFCQfv8M398oSzztp2l6We7Jfyneoe+3l1nTAmuMw+F4BsarzESAiS70Mj5+IrrmIEC0E03aJi6tj3tZXfFYL5BRUXixsTur7GWwoBQWzJHcR6qYNwhtsTINqAvgFbPAMD25QtzACZTiHUkxwoEgmPnpkvb17NaO+EBMADSdQopRWWUe2B6afCKaqHcJQUgrAqoh/LSJSdmVcBQCN0ZFqu7rIbGaqos7opTZAhRfQHpX8J7ObgSCgCgco+xhZBAuiH835TyecQNXOz+8y1/+3nIvK2blv9Ubugtjm8+FLr9E+F/FcEJUtvbRxOE8RvLfFjpTcHGvhQygO56AKIjAJfstZ4dqxZM6+wPMrBkYIG9fhv71l9jSigE9QJIxfEWWWNuzazm82809yJgipAc8GQ48R4sTsatyxEGmg5Z+GMt8vfYgsmHlsrA6RhHpwol3t1AVe+OLiCqCjhWnn0GwCMxBfZKe+Db0iP71+z9qP2vIVC3b0qYgu/koTIMP96ol6XtwqnYvl4U6yIq7/tsdvS1KZ9/7ZDDxarubKsBf/hCSe7bd5amT3bN7Z8beqsD8+eG7C0lbv+mN38bHyaE53J1LviCKF1qq0IslWFUaPy7arhJV1hurqfL67lSKx4myASoF4D47MDAIKAxL5H+tdYyMzc0lI2zlxzxgBtjb5lgIywZmMkqGj0Zk5ZpQ7c1DBrqZ9+kB8CmQBA4Z4Tv9aXzqUDJ0cYeCoDgHY8HZYGtul8V0Bfs/TFThMPmT+yvGL1yjdeCADCTHjkg4UWl+p5ApUFIenI5P/vEFVMAQoXerSjdsSj3KLjuRG7o1Rnor93wzH8d4f+YZN66t8vCPwXz5wR6rz7Ln7IdFM5HVik73WkNoCqQbkYQDeCYsPb5RhcAYwBaqljLim2cy9Gz9LzGaYpegzQYFEQhegHgie4qWgpDluv1BAjONb3sGGJWrdN1GiMQQ3itlBe20K1xMgBcEKKmM9ny3IqUpU7Y+EJZLgAje+Nl+6xDRkDY4ShXKPpfIviZDFHLsmY5mLWbB5ZMrEY7nTBsCOeBfMj7YxwDRF6Lu9Z4LQgABYOXZ8l+W7/8r1IASH7sJqAUN/2vIwqAoJ6U8YdbdBHVFLQnckOv7pH5mzQ5Vlg31Q+fz8N9687S9LMCTJeFf0856DR4tQh/KtCrezN+LtWph6ykhBJZobPV36JnGeM+UxIuAago2BjljS4CpQrgS7wYx4rtgMXTsgcgcHUwFe69bioADNIda2cCREqV41V2umTNgkoCkAVNLmiIdP1Y/qvSsV5BJQBBBgCpiRgMLkgBFJ8ZWFhY0ErgmvNMAYKJ2TMjpLGbwz1iO7kfwo7b7EHaE+0najGNqrLAKcp/7ZVSAJwB8yVfeioTMx0wCKDlHee2b++t8lpEBQVeH5aRVh3l2+QhydqPNWO8uG0i3Kg/eK4C7Wj3AlQJ2jtc8UMuuSO/fp7/YwW4bztQPHe62bTCRsc0lRt6i3N1Cv/LFLdlv5zp1kbpMBO1ADC3PP21gZ6tb7CWPSJtLUL3ACxKTtrNRL3e7ZVdEzbuNRAgKHclxhsMVuPzg4MDQxcvLqwXul59Zp0Dkd/giEyAMiCLsA8CYAZ8Xek6SReM5o0x+1fgEraL3OaxfsBoeN9nq4LEYGTO+vAvucQWW39sYeCaDpweH89xcrLQZHOzhv7ehWdE8+mw3n6qXuoogTcKeC+6WBY4Sgfk9PTyVHbkAQe4DTHrAZC42V/0bwLwBYRHCafHx3OYLbzWW2mFs+FEKgOaEuxxP+s/ilLjipnbxnmwWdLxLV4i4B/bLWhPZgfvdMQPpWi2r2/561GP9i37C+cnuyX8z+SG3ubA/AWBbOUqFP7VhJS9xroUvhAoI//cl5rd0O3iDWwiJibwALCR8Ub5+H1V449jhdSli8jKqPV4L3jM7uIyxwAsbPDs8MwaN9SrQe8CKBm9i+D2jPi6kiRcBwrAipUN0NSoBRFZeWXYCYcciNtvQAgyAB4LY+wWeytzPXlzxgVv81B3jlkJyGqPM7s8CuD0oeZorBHCtl6vm5tbnn58a27keBa8tbjxOE0ZgqBXTvdu27Zj+cK0AB7t7vLBoz5aAX4UdWRB5LXoA1NLsq8B8IUnAsXM53zpJoe8Jd75P1C+vPpfQ3Kv3ZUAAeL1YbRvyxrYannfrS/Jwv2bzDrCvy8o8vNZl/q23YX5jgv/w6vC/+0pmT+PhH8S8LcpFRvT4MW2cgOoaD0tAY0diTXjAQieybZmMbgAc2A9RhY0sQFzltxZww0Zlf3eZ2soHAZgEYJTTp2zFn3SdUWvUTp1afDixQ3TqSNvijG6LQdSdXgtI3czzbMAsBjm8d80P38J0Ok4QYQrbjFiyGFqV6M03bQHwHruC4Eypc9kanSPJIJmMi653cq+Ipqiu7pn2FgAyNI8UpQupOqkL671WgBAccX9r9t7wGyM839TAWCNjtbYd91RABSkmUDCq09nttzQ6llvtfBPyflQitiZX1/4f86nfdtoYe5sNyz/ewB/MjPyA2mY/w0iV65vISW4chaVbfBqN7Pwsk46HzJLxR93YzEAURCggJ56+eNxLX8XgCfMlmA/Um+4AvwsCBneVi2gqscXuknTIvfXqloXFjS66Gfz5wk4uv5oFhCWAVTqCVGKB+q1iY1SAEsQHJjTADBTVWBI4LMxxxVlAsCXv79ha74JD4AAFUIPGqEHyoFENbV00R7QSEFgHQAc7e4xALfnZ8474MPpIIvB1pvTwGvBVy/07xq+PVxz+XgDYqxrCmBBds7YQAFoJvi3nR4AVgDbRw4Yk/7BVpjpitu/Z+BlaTkfSsHsW8/yz0uftfDf3g3Lf6XTYG7bj6QN3y8g5wVu/ySbKcGG26KZI4CmYgAAQMq1aU8HlcWAkyJ/UUA5zBevVZBlpVQsNqhsNp8d3A5ppEaRIzlButf5scXFi4SuOwXAABAxxxWDez2aijIAeGucKP5AqdJFX+WzoYK26jEgjjVAoIFmuprx0XEPgMJKxdbykby06NYIWIw6Fwq6I/LU3tX95QOof45pALMSeNr25MulFwPAxYGBrTR4dczufzDkl8aKF08D8av/dUQBiJSAAiRH+H8m+4dvJmAPN9j8ZrWl78DLcnIj4e+vI/wfLsA/OFa8eDpc7E4Jf64K/9EfTcH+vg/RS9z+CTqEkMk1YVaxgjZ5MYLNpAytN0dg2g0smg0Zb7j5bok8L9XM61D4WaLZAXLErydgoFMErIVxr7OlD6pGSVMhr3tenZ7oH+e2b+8FsTtOBkBY7neKg9m556+zTpRXO9nVv1mQNHvrZWTSIQ8AAGRpLAB8ujx3nNSXMzUsa4WeDokvuXNNgZ1urR8AeMZ9KC9biFEVkAL8HAhr8EYBLJfStxlgf6XO+X9UVEvEA5HcxGZQACqAcuSIKvxNATzYQN3oSNA+2zPyclepD6dgJvJrivz0gU4e+rRPe/BAKPw7mOrHqEPhZG70x1LAH1jADYuYJMI/QVsR5VZXDPpNg3xLq/KzfQyPdHcWR84DOOPW4C5C6LKg9jwzODiw1syLziY94cYMaGpFcodn4M+Em+9q9641xCNWX3bFLf+894+8KeXntJ3CDi9GoFhIFKfGzp3LV0XuB0GZ5Oky4Jl4Z9a0AiTtO9l8T4CGhFQ+/AxbxD9SS8qFHfFsD7nFMboDAI51l08H0bDL008T/FIm5mlcmF55BwH5sHf2gCkbvG+tyo5OHvJ8y080M68dUQDCG5olyPaS3zKZGX43AXskRoBVJPxPpQZvywofTIN78muK/PSDTgH6dJlYcft3SvgL4OFQ+E/lRt+RAn7fh+CFgUqJuErQKdCizzSxqRX1bGnjdiaOl6zFMaf2eOgF8T87+5edbWuF10rQGnhjurblSBtYpSer7M2rdhkNNOQ0sI5RHBWoL2/0N7etNIqxuw0xGCcDIAzVP7FmXQQAaeA8pJmYbtowE0ATzoXF4ebtxGaJkffng1DzWhWMlQpcBG8EgsDAri04oNAbXSHxQMy1D7wWwCume0Z3WOLlrD9DSoPwgWf2FHse3VQKQDQXRcimjfmvk9mRnw6FNDdSAqLzmrPpoRdkHOeDaXBffo3bvxd0lqWHy9DBvfnZc5088xfAI6FycTo3+uMu8Hs+hKDtZCL8E3QGB1cZnW2OAclplwcgiBILPNKGelJ1OLoNrMm+EjVebfWjSuBTOFDnPlFu9PFrYDllgVss4gVDhy1d6QmL8PnVjZh6RCMudUu2Tg+AaqUKxNPrCeDR/OwsgPNuTGvVB0ByJCNnokmB3rRANuCjFel8unYLY1YC4r1jenS077bawZQdg7X62PKqAVuzmZEXaNrDnq9vhvDiSkAwddP/DPgl4lSxyXoMnVMAwohR40NKk791Jjv0i1GU9doozsiFP5UevsUx5oMZ8pb8OrX9C9LDFeptEx2O9l8r/DPA7ybCP8FVIXHa7AGINpgMn6xzTkyEZ5k0QYDYaFVzk2jfy2D/RkFroVuTHlASzanwzzZVDCAhcxhwHgOcw+tcApxHgVSUveSAr6myWGNZdYKOnS/PntxIWEbHRBJujmNhMrTaRZ5ca62Ga1MBeMKgfv2L6p4AHjQBNNV5j83RNsy2/Mw0wc9kajfcYQmCEW+wS+Y2drm+SVSIx896n/ehM6mYipUBKOonSOyNEZMRWgh6qFU57nZuswQz4UG2j857JrPD+5yi+1PE9HIkwCPhfzI9fIsx+PsUeePy+mf+n3EM37orP3u+08IfYTemqdzIT7jA7yTCP8HVgnZ6AEKLKzwn9k+WZQoOmPM3OL+vyit7AfD8jmxn+/qG6GuXFwRxrccv5AYxRBd82QsAIG6u4lRysBR6M2sdO/rnB7bt90v2f6TJLYX4TcGUAlACP317UL56XT5XVentpnpnn1FdhTJQSXGlCZCqlAkDwBftMQMHMastRTEFB8J17mglwAiPAc7tQGUSeljgW+soKX4/mVmS90YAj3TO1F2fjgWQCwsXp3Kjj2SIibLqn2WFXTVf5KO2cAvX1OSlIqnPtOpVWVcBoMR2nL6Fi4FlyPbR/GA+5+8/g7H/wMLUpAJNuXI2PXQrDf4uTXPjWsu/H3SWYR8sGOfggaCyU0eF/yGA9wF2Kjv6cw70qz5Em5z5J7hOPQBhp0ReTGOyUMR5F9xnN67EFrqag1rxVZkAQbByOb1NDndETYC4jlRwQZSlc4vFudmQZ2+uLMCyfc1UdnDUyKTEy7wTMlLKg/aI5lVeyX9rlmZbAYpbI0QIa7rT4CPY2EtCAjq3fXuvv+BP1EsBrFKqzi8D02uFRXScQJrjXoPtma3QSiZAw1gMx+3SebAgWzZEulYwafiSbwDwG9XzuR7tdQBBN2Orj/qG98SdVy9eyWulQRapZ1N95ikUWlMALiPOQ9GNXC8PoswaqT+NKAEMAgP9HvBNLkr/dL5324sIVE5lRg8YxxzJ0txYWFf466PWLb+lG8IfofCfzI68M0P8WqiJXRc1yBM05Ni6bjwAkVwO6/ufqVcxLsiO0d7ZoaEt0R9GsQCiO+YAuRoH1jKB8XHyhUB5Ey04Q43HcY35E4fOp4zh/Q5xtOp6gIYfzxrnj7cY/kiK3BZ2KY2b/aQsiArwtXzGf3AjwXoovJ95zu4AsKdeqlikVEk4t3/5wuza/4+OE3yL42UoymyqmwngB0/d32QmQFP0GXmUnB7/CR94Ol3btW4CNzpferJndEfwUDpdJBuFStIn89IlN153QMShFwI2HXx+bvvMzNK9DXb/q6kARKg4jtfuVpwEnCXIz4Iv9qz/D6d7hr7fcfSXWfC25XWE/5LsP2cL/j3ji4tz3RD+DIT/L+XI+8qQVcwFSXC94LgFWGy5wP5V5AEAgGO4wYQ3P1Yn0TjIBADG81WZAAdXpLt/Y6ZO0JoJTOmVs+rN1gvYA+QBqmxwFSG7KPmVxquDKg3QAT584OLFhTAo+nlTfdtqD4DdDrElRgbAilIV9Ku/PFgs6pyZszpvpSUTj3hYCZSFPZxZHmxWODaKQ8EXzejc3CKgh9M17kUEkX+G2JmB99JuK+/RHI+XZ58B9YVMjKqADUyeCYsdPVytFLZVAajViKJVJWAZsilwIivzx2nhlUvrpPoty/5TpqjvHMLFhS4K/3fmyHeVIGuD3yXCP0E1rKTiZiaKDngAcCMq0f2+auuYdWFPgB7C7qn6dViiADfXSW1kBYBDc2wTu39Y5zIMhHdD5W5TAJekBevqT6oF81pEgZUOtScTLwMg7PvL06HFb9YTxm7OmwZxrpFMAAGjaWmsCeHaFH0eAnR0pY0xHqxTKY9h8LiRzNdfAc+dwrR2S+ABp02RiKvn/7YgmodaUahqKgAd3kSmAqgcXlxT4W9J9p+yRfvdI5i/1OHyvoyaFoVu//tKkBe6/aWgbWbbLoSfnXifqGubGrxQ9ZnI93gCoFFLQF2MZO+EB+DZ8NMx/Gpx1U28EWP3c8Ff3Pg8BQC4oU4TIFOErG9XUuCuG8UyCxqf+v3xxbmna/G8mWguiVtj5pgHpSGJr4aKxboYXFh4juC0E3MPKOj8mvJh9jYh1Jumz7vCeUlZfLYgu1Sn0h49ABJfD0Cw8ru5qEdWNBF+Yknywr4Wre5NZUFY4ClvtOfpq1IBWKtJh29ggzx/+4/Fov3uTlv+AHgvwMfxgvTZ3MivDZD3AYQLulnQSYMmC5pMGz/Twb1N0Hm3vQqVE8yl6wJs5HJWv5suSUllw/YqZRCYLXvq75YLshMegApSwXmmp+Ne4CbesGLcSjc74bboVwQ0tXNnD4A9fo15MIE2+pwVLlw3kj9Mcb4kPVbO2v+uOmfwUQaAZG6MQ4IMz8KNDeoqHFlHQb03lAHW4kQDRYuUAuBINzfHslraVjhVnjtB8it1Ku0xiAPQC072jO4AWeqmGyBaq6Xi7MNW+mq29R5dwEoGBh/ad+pUUS2e/wMdTANsYEVtD2jy0sO9Ge/7xooLnRb+uDcM+PuRzIXvMcB3LsI+E1rFbnhW5rT7E4BH0BV4opjN2vYxERbLUgFAyWuw7wIB6wMpAMfdjF1EMRHcbaZtFykv172QtvZ7AG7EcQHAcp/O9hY47YJ9NTIBoofvr/6nLhaHATNWqwmQC9KnZjL9OI+Z64I2/BzoFKXzNPihAxdXjJ6NlCsS0MmJiayml/d6dYSpEDaXl5YyNsgAWO9o4VDAC2EaKL4U3UTSjU1YoU3TZ1RpL0gHxAMucCc2jgOgB6iXpjcv/04LVIjuxQFGtS8IlCbB+1PACwut701TAGDIo+0yKtwrvAnkAqYsXaRrf2DrwsLFSGh28rn3hcpFb8r9hzmn8LcmSGHSIEBrjDXWmnZ/XgTkA8wupCs3HT9eioikBQILomId855llD7ggn6lQYJIAarIdTPAhfGFhedaHVP9MdPiOgIB2S4dAYQ9U9vWDCjCE+HnTfPzl87mRk6lgAPlOm5XgHtmhof7OTe3GJiiqTEDO+jXmKfQdTG5fWZmqRs84ArzPS8Lup70XAX4jj352S8cjvnO7oXFEYAT9RSAgLkTos6nct6FUAnduLAQcLy86oypS2sWgAz2VxlrceNjWxJaB1fdG58sST9fZ7zWJRxavoHgnK4ICwBk8JGC9A604HFXGChakj2XMfzMqhPpKlYAANgc6FyC/nr30vxT3d74W5bOX/W2xs7l6QvApnebMrQYCoYEk5iDtisaIVctRHPbLnfnbasV4yThacfgTUGw/0YKgABgT37JbAOwGIxFuzMgShsUxRGCjQ+tNMEJ8qivPcEvBrFOblG6UJG+Y09p7oGYfI8AZOXsdamheF0AwRJwbuvCwsUaAjUoO0fnRAm+NYCJkf7MMAhv4ljfjmEsnZ9RfJprde8HrZClLxWFmTQ5Wtl4vPSCSX81pM96YrejAS0ALJvUI/Qrp9PARCX4XTOKgM2QxgPu3xaUwmc7+Ki5woyLleDzqK5A1L3C/gTdvjrwDqbFi91igIm47ig6up998klPK21q15VQPiCH6Hdg964uvG5K11h/IoqWDVIAn7jGMnDCQGA/BbAPdIuwnyr7ztftLs3dH9foORrOuQs7kQs6KtarMxCkANqgBPBGAuPQyhKVzkOadWLyHC9QZ3b0+djboGXf0tqGbgbuKcydI/BYrXoADJsrCXgJybcWGmh73C7FXABvWTo3a8CHw94NzfJAVgRK+Md27nVzhTcGbcBOlq+EVRhaTl2/OvAOtsUrEcwdJfPO76NuPMsljpdqF7hh6NUzxuCG1fHpBtUevwmi1fl06HXY1FZ81VWd5eNrnQsAMqDpBx0rzC1K75wspP/tnsr044cb8HjeteLZ4QGH8dY6/LOTtXj9ofA+88XnzoGccWIEq4UVXpUm0z78PQ0KdrVhP5ngeA3/Wu+egbnNHhfYbRsbZzuVcgL2Ab/559tMoMycout+vNq70PKe3hy7SknOfYJOCsaGFKr2SX0ZI7fje6zqCMDv1P0BwHo64RsspogBr05PACvcEv7bOUvu3ShhfaVevVR0qGe7pTQ1K/wNwJCjw4A0qxwehtUsLfhchlCGnq5YfMgDP7CnNHM8UnoaPO4MMgCoW2N2STZlAAiVqiN1rFQC5UnxWZe4LaZyYdOAU5G9oQkjvi3bKw3noQKsNYBTryxw5cpVdRUAueTDeauiIbKNVpgVoExQJvtfdgXHLW0LkneRIME1iivp2QjMNWZhmevGs0wQmbUQKT6dePdKufd0Orc07cAM+DUyAcK5vwEApvr7t9LTbi9wf65bh90BUIGec9dpWLOJaAluEOToe0IeQJG0eYiXQF0UsARhgeIlEEsSLrkG5z2Lr/bl/C8NXby4AATdTw82WA+kqqOie1bc57O2II0UlRJkRecEsHFxoarXk4GedWJSTkRzhLmpwTVTu7ZXOld5slA0J9IwN5Tq0yOvJCsoDmW/ytnCU70wL8vXGet6U12AQMO/02p/jbYgUQASXJN4HEj3D+zppSwBYAuNLm3wMwCc9+edgaXewk5ML7dx66vLHe069qx7AbMPp4pTGnk6TdxUwoZ2aBggxr33Ay5K6RE53O3VSQH0oHPb8jOzAHB0k1n9DkBfynsy76Dxn6LxS8bm5q27vJRazJa2YTZfU6AXA08IwiDAZsdyOje8zZX2VmJY0g4AK806KJ0HVs/6a1nlPu0xT04sK50Izjgs7A0NZgK0LLxWvBYXLy5M5kYeSQM3lDap12glHXBysnAmO/KIC7yswX2qwP2PU/2p8iNRkbpEAUiQYB1ELaYHs6OvQmn5TwBYgFqGVrqBLGO1YEIg7ekPMtvrZ/33o4hfbpeLjez6BuuYlXMozBcXcMoE5eBqZgII2HNT386ttlIeSwNpb2OmJxeABc8Q8BQ/nazLk8oSjf+x3YX50EuxgKBuxuKKlX4EMKMA77q85S5Ci99vcQgycHcLfswMALJCzOwsPHc2XD/dt8EfR8cDDs3XylJca5lB8yfsWdiyZSsuXZqP2064TctiAPiG9mOenO/GJg4cPRqM1RqDz/uNn0sqBaIC+0iYJt9W716iACS4plDt6szQ3LDKcTbedj6AARLzWgloao/1KGBN29iOwpIdS507uiIH+dUoE4A15jNFbPFtZQLEWA+JS1rt+bHWQgoUistSADelMWd89oUZEAZhKnz1e6BzqYtBmQf5E1kytVE65VoPgAHOHgmCFJ2jNSo4IsgEwhRw3kpFh8z6dc6po0wACaNLHvcAmO+WB6BakSgbfM56Nu+QPf4m7d56VxS/Yc3jBVqPgBs3DqAqpubRasWnXWNLyr8muCbhAipBtgTZMuRHP693+VC5DFmR6bZybcJY2a4EAQZd3+xiaNF1bF+TOF7V6lbrjIUKMgHgi/tcYKxWfVsBxhMA2qc3O00JjM7uV7JnOpHZs/E6a38KsdJp5QaD+vI9gE/AvxvwGP68zlUh4J/Pzz4O4qwbow08g7KTypC9krO/AeGuti0HgIml+WMAn0y3p9Ru50gHgOvghITzDdYjNEUIxpivdIhPJkjQJROqi9p5WCktjI2ra80EBpPQ1w4mtZImBThlo8E2Wz7dYK4bWjG+j2dEXHKJrV6NOIAiAEr/2Qd689p47RkEq0lc8QAk2GBdo8DKOCRYFmChsanc8LdJzKHekRYpB4BkbSj9GcednwJZFm9obHu0R+kNvVCVKdhHXDi3Y5OnM29fvjA/lRt+Jg0z7kEWdUq3R8GcHlBxyLOd2OOJApCgi1xMlW625W6oRZkAtblRU1AI/xpLcR3NTHGuOJkCt3obRDMzbMSSIV8lAKUNugiGpcDpCQsy/pmqaUvSgi+nYyvAnCUPxJmcqABOCvwOF/yORmazTKKMeHEABKxDGKqhTIC2CbAj4Rg9mAdLwI9hk3q0q1ItK5PglGmAyB0AnjTv+5XngLrBnA0jOQJI0L2NICyE3Wq6Yg030aGkXd1CVh7tdDEGwHTWApIA7pmcLEh4JlWHmTMQ/La8sZcg7AFAkJrfnTXPdtqLcdWa/gDObNmyFdB4pYH94wEqQraRq8E9Y4JSu9oXKQTx9JP2IIr3ScF9uCTNpmrHOVxRrB7L6VQjU+yAEHmxnLGXQgVAbeYZCRJcs5ZT7L+1wTf6q3KuW2FUXbVgBdAGNc8XO2/MAKKeidn1xdQrV+sG4z8dNQ5KsP6cp3xnl8TtXgOtHsKW66aRq9GBeQAE7ZsfHByIqb2pjRMjANhZPH/aEF9OB7ELm7Lh2MGVMXO68Q2nErZu7Uiv1kQBSHDNGk+Kv8lCK1VqVzOdyLqVmO3WCxPsaAOdoyG/MOSTFm3RcuQG8e2nIosyKUu9vgzw5ex1iT4f2DRnStWZAOVyKm5J4HYOX2E5ZRF82GDzEs/R8L0NudDI3gmq/rC499SpUqIAJEjQAQ/AqrXPlZ/bxUgqUteakHf6aGUmnBbf4lgB8gE4rbhcI88FhGeuhOfkaoKV3ZcJSHrTxEhEmQBpsteTnYi5hm2V0ZFl7RGfLMRIj7xSuGtl76jQcE8Ads6rkSgACa57D0DElTqxGdKkvVYm9ImQiVXgP+tLF9ug2YTFZHS82kpKsIqoSI+Rc8DpgABtxz7LgJTiZyi0WzcCAOOkHvWEs5s5DqAZBajTL5IoAAmuNYYZuNpkM3GjbVea3QTRz205Aojgd9ED0GnL8FDUO377lgsGOJNqwVkShCzAFCEfMKerPQwJLrNwg/AUaN9mzCcJMwHgSLfFlFnt7oYKARxfPDtH6MuZTRwHAADOJlNyN4sCwKjClq79q60EoGDuWr42q4AKtXk1wDABAJ7RkLv6fdbjSE7ww2I0p60yqsijQNqRLjLjSofvLwHcd+pUETTH3BYZuht8+7kSnDPVHoYEq3s7nPOUoH0VNbeHOjzGMBOA+yOFoM4Y2f4hBHJM4KexSYNIjobvbQ22pFrcN9ecAkCaUlhZq9KG3vab/Wq3Bqx2XF1hFmS5idS8zDEg1TBh0wyYBixUEgDNUru1HQsTu9bGkcuVnoYQNKTXQrUS1CEPS8gz7LFWycEJss3P7xtxL1R7GBJcjrPZwZ0CdvjtdU61DcGZtsZPYzwXY8N1bI3p2M/mJS+MA9hUtHTXagzAFmyiwW2KQkDW2pee7t121si6wrVzZroWaQDb8uY429hx7hy29xZ7bL9tMt/cSHTcUnnPpUvzHV9ncsHGt2IYuOQ5uKV321YsX2gsfUZym+CVly73LLbFtdW4ki2bZWMlCRi2H853eg1Ho0kVnvLYkkWnFICSdJKTk4VOtTC+yhHSoTNhgK0NpHjYFs/B2UAwXZgJwJ1u2tuHMp6ss386ocBYAMil9dl8UaczMPvLQaW9TacsGahnMxG5e4WpmxUAJN9trH9vkAaka3EXS2HA05ms/i2KeCDqWteC38sQsDbjH9pq8X3LsH4TEbA2CzqFcvoLJycm3rzv1KliJxmxYzTnB1144xYygQGGYbFPwIUjMRthCOCkNOwyvsURJP7bc6GV246WpdYNavNMxP1OVNiEMje5XHGnxllTloLOwyc7TcvROb0HcyqKulaTTVhC/eFUu5Wua0wBAKGJDE2qGCPKXQAyoGmlqYUFkI+5FAw3pEP0+yzvAvBknf2jDkzSanvg7MiX08T+0iZKlwx5SqhZmS2m4T1yjXsADJAimLpWd3F0SKXAMm3rsQuprVmabUU0XsbOAkiDyMtuc3yfnSZ+6+lcxcBWuehYSzkU4PeSmUvQvyfwcEzOIQI6C+5tJNfWAhB58jIrt8Wl8YKbv0Krj9hQyEVxB18DMhZ6fSVISTQxcqqicrrzvrwnOsVkI0Tn9GV4p3IyMy65vdnAg6Crjj3eJV531cIDD/TGWNeIFsqyXy6RjzNwsqgBPkUDeFYYBPlvDODG+DIF2AxoSoY3A/j4wSsg046GVXMBPQTwzZuYmBoamgBYKXcscCC3vRbA5jgCuPY1f0Vd0trNnAV6ZcBawLdN6AClQMi4S4VCx2hhtWSnc9qTXXCJQS/eTmAJgIG+91zv9t/n8vQFBYU//A02iwPAzg8ODuSL+PpSjA0XWq9OHrK0OFZt5T6PTMliA7UFTB6SK95+NjvyurHi7IP3A+7dK32KLsdjgHs7UDmbG/r3KfDFhaAoUazuahmQlvaJseLCyU4rAIfCvvKl/RencyeHj6fB7ZUNegLU0/vLAAieSER8bWvZAfaaQHWsG2GfBlkw+P3x/Oz/avqhr0Bq8onhh7M0L8/H8DoQsC5hCpYvjEF/HaHNmZXsHf+RpaAglqNN1B541btns2J8Nk0ABizdCJQ7ZHxvCpWI1/IVriPDfujswPyZqj7lsa8oM4FE1q9UUp1mZNtLF06TDaWPmRKkHDhhrfd7AlwC/v2AezjY4NE7OJFiQEDFgntfDmZvKWZhkCAaXReWaU9WW7mXuRcD9jsV91hhpSMgmSH1npNA9m7AE+CsN/bbgcq5zPZ9gPl1NFbwJWgFDNzPqspoHdyrEsAXPokywBOmCaYedTmrSKU0OdlppeUqBVfS2Yi9XszYmcDbSC+kLbeJjCCXj6EC4mjcLA8B9IOgg+pMgK56AKJ0yWKOXwZ0Ih2jpfGVMXYbqwwaajVJIaBrRJ3frAGO6u9g05qq1p0eLL6YYvzUPgMwD9kszLefzQ7/5dns1om7AS/scx5lVvgE/HOZ7fumcsN/4hA/WQwsaBNjbDYdqKBP3FiYnwKA+54/tjDNCF+yjW0uk4dsBub1qezQX53JDY0T8Ncb++nc0KtE/0MZ8Ia4Yw89S2YZ8mHwQMgIu4GwJLA91iw3D22gWaEzbU6vCdMfwBR29gAa8xCr0iM9AL7sPKNTrQavo+FzXPFz5fgCOyjoREycw/Ze1B6rOshjeODixQWCn0ujuWyaLi5tbA9AJ+VG0g64u54Oo+v69QHB3u/J+b4459vV81aAbC/N2wviHVO54T+B+DFfPBcKkwOi/XcW3nf2wGxfDl3SjLkbDQAKRyMLem1w5kp6Hu3H8jL/1QBZG9O9uDp259vy0Isne0b+zKU+hbJzwbp+hsBOT/wmA31PhuwrQNbEVMwFKAeaguwTi1l8DsuhkdFhHI1ymq05VmkuE0ApkBVocmbv6DyenEmYwwa8X+nybojbfdZOAVztHa8y5MxU020juCtMVT5H50RJfskQmRi0Tj/oCbDdS/u7UMaxQxvHu3TSJW8A+IJ9xML5Ll79BBAFMi61u0BZogAkHoArovn6hh9dlp1Ok9u9+FHuYGBN+yliPEPzS4vQf3Ng5wNLlMO9NChIyEM+Y8ZChEzTWYbKoD6y0d8dDNKqiML8o1O54Ud7YV673MC5d2il2zSwLw0eKljAd/1lgq4LZHoMkRfQRC1zpQCUhQ/fOje3eLhGfEQ7cVdIx5b2RAHGN4BjGztvlQOA1KkXPvlkOUkBfD6OrHRexJhD9MdZVAdARVhyQsX4YBNzeij8LFpcSBF5B8jEYVo+AEMMwGAngGOHAk9a1zwA1QqPDzxcgIpsQFHvtiEUl2GGVlMx8qowaQd8dXsANunI1IV3twLMRGHurAE/mAui3Bt9rlMB7KLkE6BLDjvksA/okuRXqor6xd1jOVBW+PTOfdu/JID3rKOkhZvOEPBF/nkzE8Yg6M0uS74F4IC9BDJlQIuSH3Z5Mw0wBzmAWYRdrrjOB5tl+K0ocxk6pyHNOE3fRCe6YBVelVhpH+twbwZkjIA2uUFhpXPYiplmhe2hKGA3nV8EdcnEOEuPApyzIC31gjpryg7OmQWA5R4+ZYFn0u3t69Uugdtw2+tOKjCJApB4AAAoRXUnbVYAjeP80ZJ0yQlzyBulWYYRvhVA3qprzGFzpYZpoA/wySfLqF1BzAqgl6ocXpKezsWsSbCOAugIkA8osk6aHLvtJSmYv9yzfOErUV2IblLNzN7ReRDHG2W0UU4kaI4Bq22GE6xD7D4PpALKqLe2CoNZn90xPZ1v1VpMZbMlgItO/IWVC8AIN1db4930ABDQvYC5dW5ukcDnNlPJ3VWPDv3NpO0mG+/69gDQQrDCACpurhteAADcuTz9uKAP9AaWjW3yXmszLRqTnoDNgWZZ9gsccD9Ulau/IXMBYPYtLDxnhN8yLSjlrYw7sv5dgEtWi74xv3MF6DjMBHiyTOF4g5kAAuAUIMnXs0DSBKiWoLTG7ou9LgQMzHG2oWXwtj17SgQusbE9BYEHqq3xbnoAQg9GKGjtg17iXUoUgMQDsLlwaMUL4P7aMuzXcqDT7XkJ3efyIEvDd+6cnl5GPIvJCjC7dm/938vSx/pAx3bhzH29cfSAxof91Ynl6SeuhPVfxTu+2qhUcwD4UAHimTrC4rq1FcIMERCY8OJ166IvAEZPtiJoV7702GOepEsNKHdB4Sto70kgGymJ3fQAVN+fhp8uyC416WXs5PCSboCJB+D6xX2rXoALnnX/kw+VnDBnvpsCtB90StIfjOdn/1HVOdd1LF8A4PHjJWP1EwXpQjZQYLqmBAjw+kFnQfpXr9j/Xl3hxice8dVyA7yEURMgYLLc619IuMLGEvJskFK33a8v0EWABcj3qZabNEXHB6RZMPHFFb3A8bDbyYyOV1vj3fQARPt4ecfgSYBPZjZhHECiACQegOtdEbICnN2l6U9UoJ9OgXQCxmM7PP8C4G0BnUvSP6QG3F9stBVyFMw4Vp77asmx32OBhUyXlAAL+P2gm5eeJPzv34dTRXSxm+N6cipt3GdKUNkJAsHijEMpAAY8feDixYWOS4SrEJHg9NL+LonDflACsFYKIFyAVpqDDRSAQy02AwpubM+qgbuEmQBbXWosHAOugAcAAsxNx4+XDO0n3C49sx6ioE5fXNhM2kiiACQegCs1F74AM16Ye19J9udTgEkF7jq/Q0zBElA/jLsE+4+ZHvs9oeu/4YphBOxhwJlYnv9YmfpOX5rpDZWATrgbFSgddgB08rJf9K3eOl68eCZ0/V8pfiIA6KU5D+GC08CXggT34Pxfm7B16yZQAALmbLiNxJYYWnGQAQCeKYzNz7SqAByN+BR1wsa02qNMgDQI3wSBgLgCHoDq8VuZL5a79MwGtk0xUQASD0ACrFYIHCvO/Xpe/I8Q5vtWYwL8ds25AD8LmjRoluC/3xvO3TMyP3+pFQF6TyDsnd352X8pGXxjUfrcFtBJhU2M1GJL1vC7vsJgxRxg8tIHjTHfOF6eezrM+W+GnvxQyfK1wVX1N3Xv3790bo7EcTc4Aq6oxn0VVD30wns/XU8gmOD5HurcM6QVj/FbiSv8js/V76978fLPrmC1m572pIJsEQ8hHa9zWQCeC4jEkzcdR+neFhXDu6JUQJkvhx0ILcJ1q7MOngP49IOSwOtOPBmb/pqd87tCujXUiTIUKfjeOs+wG9J+Byuj1nt/PX+PJpUArxUPQAeoilex+aSVMsHFmT87lRt+wgd+NQP+GxdBS9JwI0S9FOo2x9MqgxcBJwcaB0BResoD7hsvzv01JleKatgW19M/DDgT+dnHnsLw1zGLnxTwn/rJXR6AEgS7WpI1cuNyA0Vo5ROAcQGGRwsoSU/5sL8+Xpz/s8hqboY5GskAHOgDnUoNyWsBpwdECeqvp7wRsFMWpwcdugb1izBYwMmJWELQA+BojTW1Ym7ABPc1de7ZD2LZ2liZLBZK9cM4UdqHWeOdqP7ZAkgBeA4aINQVg2nVXYwX7zDGWZA2fP9w/OlAY9HfhtY/72ttCFYAzxZTjypb+fw2Y25fqjGG6nXoBbFs9Kqq4V1Og0TPFtAR4TgbC0gnDWDeaqAI28ycSwAvFMxTXtZ+YdQ4L1uWVta2Ot2H6zw7B6IgP92JtTVgZgvpABu//4qmDjhbQCxLvYkCcI14AAiY+wF3tHVlwNwfMOC2tK69wopR4FIvzD0K4BvOZIe/2xA/CvDVW0DHA1CG4K/xoqyJNKYB6AJwQUYKREn2yyD/tFKs/OkEFi5qpcd6e9zOoSfAEHOLKOKXp7KD/zsv810+cJDEbX0wmahgQFDPXSuNELhq6ZIg3PB3FQBF6JIPPSrLv8iX7N/chPlLIeNqWnHxM3bJLZsPX4KGBHraMCKZKsGmAD17NM48GX1o1tq+ElWKc8y1BKDi4ouhteZvYKEDRl+ZtfqbClWpQ6MqiSlr3JrtkKNsA8E/vgy+K5T9suG9TZVgMKvCVUFTHS1Vcv75sCdbR3XuQ+H9XaMzz8l+vAiWVaV8RDV2DUBB/Q5MqQR7ZKIw9+FQsfVb3I+BZw7n8lNm5Ifnrf1Fj+gn6KtmFDtVgU1BOFaVmUIAOrRSr0OfumD9YQ8s1KCVIKyBmh3NaQmFxsd/L2Duw8zSaX/w++bJn/WhEYQKdaCFqw8ALbiMMOMi+D+qCOtmYE7VoqXm2D/gyz5ywep/+WAxxl5RATYj8XMd5L2XjZAMe5L35Ea+mAVvKTZenjTBOu7cSFD70Kv2FObatqBnsyO/10f++KUGSuBWjysFsCKcdR3z8h3LF6avZFnW6nS2w4DzuuzI63ziW4zwelE3EBzKBZXJLrPUFDLrImQhzRE8AeJTsvb/Vkr9nwqD5aAOlsoNFYsVy/xxvCA92HPhhZB9DcBXANwLYKekLQjGkRbgEfAtWTLCAomzVnqSwKOyeGy8PPd0tWXCDrSTTnDV8xaHVyYV9Spxuq6/X+4FzCHU7Vx4XUzQ8xQAAeZcduSzGfIVhUQBaJsCIECQfhfE04TS1cTp43LpXe/fFjAOTUG+/kPGmNeUoNh19as9EhnQlGG/5qW9OyYWAgv5StZlF8AjgKluyCPAnc4M7PGZ3gVoN2iHfZpBSmkKlyRcMgbnITPr0392d2F+moHBvcIkQy2/4+8VMpZ1rbDHMdo31Ofk5JVysKbHoVP2WKmUcriUuthb3oPJwnoMvp1jV1Wv4TiWVAPKT8MNgerdv4n7xsqIiGiskc6JRwJvT9cVsPXWq6pX9Mqv12ti1S6lPPLSKX7vC9Wb+zj3ORisp211/EcAHgz30HoeQK3pv602eghbef92zkMsBaBaY5rMjXy0F/z6PLRW9iRoAbnQ1WurJn+jDR7n30UI9fyjV5MCsB6TbsbCORzS7MEuCf4awotoYAMLcI5gpa5/R1L82sHIE3SVjq74WjWSLrtJ6aahWKnrhfbXxgCsBPYQmHYCSZMwgTYiH1jq7ZzTluIATLDohXQ2W8bCwmZyTUWR2mstwZpnwYcQnKFeabcoV08nnsdADwE8tPrzZSlb3Rh3ItivHmyWtboGaEZJvYn6CkAVg9WzEFfcIwnatpHMJhsPSC5PjY+XMT29mZlgbAZ03+Z9hxVmdN8mH2+CBAmufTxPGEVdnCz0xfBAMnH/X8PWRUgA+dsfe6xSz7xOkCBBggTXsAIQ9RTPAQ+XZS+kIn0gwTWHMJVIAqbDfydV2RIkSJDgelUACNh7ATNSmJ8i8a85EEqEwrWqANAPcokfXF3+BAkSJEhwXSoAQFVPZYv3F6GyqZFPmeCqFf42C3AZOuXR/F2VUyBBggQJElyvCkCU87m7NHd/BfrbXtAkdeyvNfkPpUjS4j378jPnW6gtnyBBggQJrkLUajFpAOhCZnS/Rz2UJrcXIWuSokDXgvT3+kF3EThyrDDzXXet1qtPPAAJEiRIcD17ACIvAABuL80841M/Iqjihi0fk2m7ehH1lF+WHqPj/ujdYYn6RPgnSJAgQaIAXKYEHAacPYW5D5eIdxhAbgd7tifoqNUvAX7QU16fK8J729jSudkr3FM+QYIECRJcIcSK+o6qA05mRv+ja+zvp2H6whLBTPoEbH7BD8A6YYvXJenvy4Y/vC8/c766+U6CBAkSJEgUgJpKwKns6Otc6L195O1lAKXV0rbNNARJ0FHZDzHs0V2CCp7Vb3ytNPfLdwNeIvwTJEiQIFEAGpEohoB9ani4f+syfoTED6ZgbnIJVAR4EKq1gaYfFEOy1XupTuQtblZXh13n/VMgUgAWIQ/QRyz0y7sL8w9Xr2NC/gkSJEiQKACxUd128tTAwGCq5HyrYL6ZxIsssAtADkH5YP+ylotSKeyI27IuQDJT+51Ukei1s/8DQdmgJsKmEpxBkxlmqt+VYIXQKUEPEebwruLsJyPBjyTgL0GCBAkSNGuYh53NTHXnsnPY3ove8t6y7wwFHYYu775ofV5yUfErLRrSRIrG0ZYaoyOpgufZYrsdD9akl12WvU22gDQ++qvmVdbY5YnSwiSBStWaJVZ/ggQJEiRon/UpwFFy9r9Z18ccTtYnQYIECRK0ywNQwyvAI+E9D14hN/MRgJ169qHg0qFNJlAPbTDOxNWfIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBNc2/n81Jslp/XT4nQAAAABJRU5ErkJggg==";
+  document.querySelectorAll("[data-logo]").forEach(img => img.src = "data:image/png;base64," + LOGO_B64);
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let idx = 0;
+  let showingNotes = false;
+
+  const NOTES = {
+    0: `<ul>
+      <li><strong>Abertura (30s):</strong> "Vocês faturam R$ 4 milhões por mês com produto próprio. Isso é raro no e-commerce brasileiro. Mas existe uma diferença entre crescer e escalar. E é sobre isso que eu vim falar hoje."</li>
+      <li>Contextualizar a meta: R$ 200 mil/mês em novos canais = 5% de crescimento. Factível, mas depende da fundação.</li>
+      <li>Mencionar a janela: Black Friday em 27/nov. A decisão tem prazo.</li>
+    </ul>`,
+    1: `<ul>
+      <li><strong>Tom:</strong> respeito pelo que já construíram. Não atacar. "Vocês têm um ativo excepcional: R$ 4M em canal próprio, 50 mil pedidos, produto validado."</li>
+      <li>O gancho: "Então por que a operação ainda depende de 2 canais, e um deles está bloqueado?"</li>
+      <li>Pausa dramática na frase da fundação. Deixa o silêncio trabalhar.</li>
+      <li>Se perguntarem sobre ML: o bloqueio é sintoma. O canal não falha sozinho: falha quando dados e catálogo não estão em ordem.</li>
+    </ul>`,
+    2: `<ul>
+      <li><strong>Doutrina médico vs garçom:</strong> "Não vim anotar pedido de 'abre um canal pra mim'. Vim diagnosticar. É a diferença entre tratar sintoma e tratar a causa."</li>
+      <li>Mostrar credibilidade: 288 páginas, 282 imagens, 7 canais: números concretos da auditoria, não opinião.</li>
+      <li>Explicar as 5 dimensões em 1 frase cada. O cliente precisa entender QUE auditamos tudo, não o detalhe técnico.</li>
+    </ul>`,
+    3: `<ul>
+      <li><strong>Analogia simples:</strong> "Canonical é o endereço oficial de uma página. Quando 51% das páginas têm endereço errado, o correio (o Google) entrega no lugar errado."</li>
+      <li>Conectar com o negócio: "Quando o feed do catálogo sai com URL errada, o marketplace rejeita ou duplica o produto. E vocês nem ficam sabendo por quê."</li>
+      <li>Meta tags: "A vitrine do seu produto aparece vazia ou repetida na busca. É dinheiro não capturado."</li>
+       <li>Pergunta retórica: "Quanto já custou o ML bloqueado no último ano?" Deixa ele responder mentalmente.</li>
+    </ul>`,
+    4: `<ul>
+      <li><strong>Frase de impacto:</strong> "O catálogo de vocês é rejeitado antes de ser avaliado. Ninguém olha o produto. O sistema barra o arquivo."</li>
+      <li>Concretizar: 6,4 MB vs limite de 1 MB da Shopee. "É como mandar um pallet num correio de cartas."</li>
+      <li>Isso explica frustrações passadas com integração. Provavelmente eles já tentaram e falharam sem saber o motivo.</li>
+    </ul>`,
+    5: `<ul>
+      <li><strong>Frase de impacto:</strong> "Um e-commerce de R$ 4 milhões sem headers de segurança é um banco sem cofre."</li>
+      <li>Schema: "É o idioma universal que faz qualquer plataforma ler seu produto automaticamente. Hoje vocês falam pela metade."</li>
+      <li>Encerrar com a consequência: cada canal novo vira um projeto de reconstrução. É isso que trava a expansão.</li>
+    </ul>`,
+    6: `<ul>
+      <li><strong>Momento-chave da apresentação.</strong> Recapitular as 3 evidências e conectar: "Três problemas diferentes, uma causa só."</li>
+      <li>Explicar TOC em linguagem simples: "Todo sistema tem um gargalo. Melhorar o que não é gargalo não muda nada."</li>
+      <li>Identidade fragmentada: mostrar os 5 nomes. "Vocês competem com vocês mesmos, e o consumidor não sabe que é a mesma empresa."</li>
+      <li>Fechar: "O gargalo é a fundação. Destrava isso e os canais destravam junto."</li>
+    </ul>`,
+    7: `<ul>
+      <li><strong>Criar urgência sem desespero:</strong> números, não pressão. R$ 50k/semana parado × 11 semanas.</li>
+      <li>Lembrar: eles já disseram na Discovery que querem 5% em novos canais. O plano entrega exatamente isso.</li>
+      <li>"O custo não é o projeto. O custo é passar a Black Friday com 2 canais enquanto o mercado compra em 7."</li>
+    </ul>`,
+    8: `<ul>
+      <li><strong>Vender a arquitetura paralela:</strong> "Não vamos esperar a fundação ficar 100% pronta pra abrir o primeiro canal. Cada canal entra quando o pré-requisito dele estiver pronto."</li>
+      <li>420 horas em 12 semanas é viável. Mostrar que é um plano dimensionado, não chute.</li>
+      <li>Destacar o resultado tangível de cada frente. Nada de jargão, só "o que fica pronto".</li>
+    </ul>`,
+    9: `<ul>
+      <li><strong>Ritmo de confiança:</strong> passar marco por marco com datas concretas. "S2: ML e TikTok. S4: Amazon. S6: Dafiti."</li>
+      <li>Enfatizar que os go-lives são o compromisso do plano. Se o cliente fechar hoje, essas são as datas.</li>
+      <li>BF: war room dedicado. A Peretto&Co opera junto no dia D.</li>
+    </ul>`,
+    10: `<ul>
+      <li><strong>Transferir confiança:</strong> Web Continental = escala. Benchmarks de calçados = nicho. V4 = método. 20 anos = execução.</li>
+      <li>Posicionar o elo transversal: "O que trava marketplace não é só SEO, não é só TI, não é só catálogo. É a costura entre os três. É exatamente o que eu faço."</li>
+      <li>Não citar a Web Continental como "cliente". É a minha experiência, não promessa de resultado com marca de terceiro.</li>
+    </ul>`,
+    11: `<ul>
+      <li><strong>Fechamento direto:</strong> "O diagnóstico está feito. O plano está pronto. A pergunta que sobra é: vamos começar?"</li>
+      <li>Se houver objeção de preço: reconduzir ao custo da inação (slide 8).</li>
+      <li>Se houver objeção de urgência: "O primeiro canal entra no ar em 2 semanas. Se não deu certo até lá, vocês encerram."</li>
+      <li>Combinar próximo passo concreto: data do kickoff + quem participa.</li>
+    </ul>`,
+  };
+
+  function renderNotes() {
+    document.getElementById('notes-body').innerHTML = NOTES[idx] || '';
+  }
+
+  function goTo(i) {
+    idx = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, j) => s.classList.toggle('active', j === idx));
+    document.getElementById('progress').style.width = ((idx + 1) / slides.length * 100) + '%';
+    if (showingNotes) renderNotes();
+  }
+
+  function toggleNotes() {
+    showingNotes = !showingNotes;
+    document.getElementById('notes-panel').classList.toggle('show', showingNotes);
+    if (showingNotes) renderNotes();
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); goTo(idx + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); goTo(idx - 1); }
+    if (e.key === 'Home') { goTo(0); }
+    if (e.key === 'End') { goTo(slides.length - 1); }
+    if (e.key.toLowerCase() === 'n') { toggleNotes(); }
+    if (e.key.toLowerCase() === 'f') {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+  });
+
+  document.addEventListener('wheel', (e) => {
+    if (showingNotes) return;
+    // gentle scroll navigation with debounce
+    if (navLock) return;
+    navLock = true;
+    if (e.deltaY > 30) goTo(idx + 1);
+    if (e.deltaY < -30) goTo(idx - 1);
+    setTimeout(() => navLock = false, 700);
+  }, { passive: true });
+
+  let navLock = false;
+  goTo(0);
+  renderNotes();
+</script>
+
+</body>
+</html>
