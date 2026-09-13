@@ -2,111 +2,488 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>v4perettoco · Relatórios</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Central de Entregas · V4 Peretto &amp; Co</title>
+<meta name="description" content="Sistema de gestão de entregas publicadas — relatórios, auditorias, tráfego, conteúdo, SDR IA e AI Visibility. V4 Peretto & Co.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="logo-peretto-red.png">
 <style>
+:root{
+  --color-bg:#ffffff;
+  --color-sidebar:#fafafa;
+  --color-border:#e8e8e8;
+  --color-text:#111111;
+  --color-text-secondary:#555555;
+  --color-accent:#b91c1c;
+  --color-accent-dark:#7f1d1d;
+  --color-accent-light:#fef2f2;
+  --color-accent-gradient:linear-gradient(135deg,#b91c1c 0%,#dc2626 100%);
+  --color-code-bg:#f5f5f5;
+  --color-table-border:#e5e5e5;
+  --font-sans:'Montserrat',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --font-mono:'JetBrains Mono','SF Mono',monospace;
+  --sidebar-width:300px;
+  --header-height:68px;
+  --radius-sm:6px;
+  --radius-md:10px;
+  --radius-lg:16px;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.04);
+  --shadow-md:0 4px 12px rgba(0,0,0,.06);
+  --shadow-lg:0 8px 30px rgba(0,0,0,.08);
+}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;background:#0D0D0D;color:#E8E8E8;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px}
-h1{font-size:2.4rem;font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
-p{color:#9E9E9E;font-size:.9rem;margin-bottom:32px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;width:100%;max-width:800px}
-.card{background:#1A1A1A;border:1px solid #333;border-radius:12px;padding:24px;text-decoration:none;color:inherit;transition:all .2s}
-.card:hover{border-color:#C8923E;transform:translateY(-2px)}
-.card h2{font-size:1.1rem;font-weight:700;margin-bottom:4px;color:#fff}
-.card .tag{display:inline-block;font-size:.6rem;text-transform:uppercase;letter-spacing:2px;padding:3px 10px;border-radius:4px;font-weight:600;margin-bottom:10px}
-.tag-conserva{background:rgba(208,16,16,.2);color:#EF5350;border:1px solid rgba(208,16,16,.3)}
-.tag-allover{background:rgba(200,146,62,.2);color:#FFD54F;border:1px solid rgba(200,146,62,.3)}
-.tag-v4{background:rgba(227,25,25,.2);color:#FF6B6B;border:1px solid rgba(227,25,25,.3)}
-.tag-marcos{background:rgba(227,25,25,.15);color:#E31919;border:1px solid rgba(227,25,25,.3)}
-.tag-atlas{background:rgba(25,118,210,.2);color:#64B5F6;border:1px solid rgba(25,118,210,.3)}
-.tag-metal{background:rgba(200,146,62,.2);color:#FFD54F;border:1px solid rgba(200,146,62,.3)}
-.tag-seo{background:rgba(229,9,20,.2);color:#FF6B6B;border:1px solid rgba(229,9,20,.3)}
-.card p{font-size:.78rem;color:#9E9E9E;margin:0}
-footer{margin-top:40px;font-size:.65rem;color:#666}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-sans);font-size:14.5px;line-height:1.65;color:var(--color-text);background:var(--color-bg);display:flex;min-height:100vh;-webkit-font-smoothing:antialiased}
+/* ===== HEADER ===== */
+.header{position:fixed;top:0;left:var(--sidebar-width);right:0;height:var(--header-height);background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--color-border);display:flex;align-items:center;padding:0 32px;z-index:100;gap:14px}
+.header h1{font-size:15px;font-weight:800;color:var(--color-accent);letter-spacing:-.2px;white-space:nowrap}
+.header .subtitle{font-size:12.5px;color:var(--color-text-secondary);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.header-search{margin-left:auto;display:flex;align-items:center;gap:10px}
+.header-search input{font-family:var(--font-sans);font-size:13px;padding:9px 14px 9px 36px;border:1px solid var(--color-border);border-radius:20px;width:280px;background:#fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="%23999" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>') no-repeat 12px center;outline:none;transition:border-color .2s, box-shadow .2s}
+.header-search input:focus{border-color:var(--color-accent);box-shadow:0 0 0 3px var(--color-accent-light)}
+.header-badge{font-size:11px;font-weight:700;color:#fff;background:var(--color-accent-gradient);padding:5px 13px;border-radius:20px;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
+.menu-btn{display:none;background:none;border:1px solid var(--color-border);border-radius:8px;padding:7px 11px;font-size:15px;cursor:pointer;color:var(--color-text)}
+/* ===== SIDEBAR ===== */
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-width);background:var(--color-sidebar);border-right:1px solid var(--color-border);overflow-y:auto;z-index:200;display:flex;flex-direction:column}
+.sidebar::-webkit-scrollbar{width:5px}
+.sidebar::-webkit-scrollbar-thumb{background:#d4d4d4;border-radius:4px}
+.sidebar-logo{padding:26px 22px 20px;border-bottom:1px solid var(--color-border);display:flex;flex-direction:column;align-items:center;text-align:center;background:#fff}
+.sidebar-logo .logo-img{width:132px;height:auto;object-fit:contain;margin-bottom:12px}
+.sidebar-logo .sys-name{font-size:13px;font-weight:800;color:var(--color-text);letter-spacing:-.2px;line-height:1.3}
+.sidebar-logo .version{font-size:10.5px;color:var(--color-text-secondary);font-weight:600;text-transform:uppercase;letter-spacing:.6px;margin-top:4px}
+.sidebar nav{flex:1;padding:10px 0 20px}
+.sidebar nav ul{list-style:none}
+.sidebar .nav-link{display:flex;align-items:center;gap:8px;padding:8px 22px;font-size:13px;font-weight:500;color:var(--color-text);text-decoration:none;transition:all .18s ease;border-left:3px solid transparent;line-height:1.4;cursor:pointer}
+.sidebar .nav-link:hover{background:var(--color-accent-light);color:var(--color-accent);border-left-color:var(--color-accent)}
+.sidebar .nav-link.level-0{font-weight:700;font-size:11px;padding:14px 22px 6px;color:var(--color-accent);text-transform:uppercase;letter-spacing:.7px;cursor:default}
+.sidebar .nav-link.level-0:hover{background:none;padding-left:22px}
+.sidebar .nav-link .count{margin-left:auto;font-size:10.5px;font-weight:700;background:#fff;border:1px solid var(--color-border);color:var(--color-text-secondary);border-radius:10px;padding:1px 8px;min-width:26px;text-align:center}
+.sidebar .nav-link:hover .count{border-color:var(--color-accent);color:var(--color-accent)}
+.sidebar-foot{padding:14px 22px;border-top:1px solid var(--color-border);font-size:11px;color:var(--color-text-secondary);line-height:1.5;background:#fff}
+.sidebar-foot code{font-family:var(--font-mono);font-size:10.5px;background:var(--color-code-bg);padding:1px 6px;border-radius:4px;color:var(--color-accent)}
+/* ===== MAIN ===== */
+.main{margin-left:var(--sidebar-width);margin-top:var(--header-height);flex:1;min-width:0;background:#fff}
+.main-inner{max-width:1180px;margin:0 auto;padding:36px 44px 90px}
+/* Hero */
+.hero{background:linear-gradient(180deg,#fff 0%,var(--color-accent-light) 130%);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:34px 36px 30px;margin-bottom:26px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--color-accent-gradient)}
+.hero-eyebrow{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--color-accent);background:#fff;border:1px solid #fecaca;border-radius:20px;padding:4px 13px;margin-bottom:14px}
+.hero h2{font-size:clamp(22px,3.2vw,31px);font-weight:800;letter-spacing:-.6px;line-height:1.2;margin-bottom:10px}
+.hero h2 span{color:var(--color-accent)}
+.hero p{font-size:13.5px;color:var(--color-text-secondary);max-width:760px;margin-bottom:4px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.hero-meta .pill{font-size:11px;font-weight:700;background:#fff;border:1px solid var(--color-border);border-radius:20px;padding:4px 12px;color:var(--color-text-secondary)}
+.hero-meta .pill strong{color:var(--color-accent)}
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:26px}
+.kpi{background:#fff;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:18px 20px;box-shadow:var(--shadow-sm);border-top:3px solid var(--color-accent);transition:box-shadow .2s, transform .2s}
+.kpi:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.kpi.alt{border-top-color:#111}
+.kpi .k-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--color-text-secondary);margin-bottom:6px}
+.kpi .k-value{font-size:30px;font-weight:800;letter-spacing:-.8px;line-height:1;color:var(--color-text)}
+.kpi .k-value.red{color:var(--color-accent)}
+.kpi .k-desc{font-size:11.5px;color:var(--color-text-secondary);margin-top:5px}
+/* Filter bar */
+.filterbar{position:sticky;top:var(--header-height);z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:14px 16px;margin-bottom:26px;box-shadow:var(--shadow-sm)}
+.filter-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.filter-row input[type=text]{flex:1;min-width:220px;font-family:var(--font-sans);font-size:13px;padding:10px 14px 10px 36px;border:1px solid var(--color-border);border-radius:9px;background:#fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="%23999" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>') no-repeat 12px center;outline:none}
+.filter-row input[type=text]:focus{border-color:var(--color-accent);box-shadow:0 0 0 3px var(--color-accent-light)}
+.filter-row select{font-family:var(--font-sans);font-size:12.5px;font-weight:600;padding:10px 12px;border:1px solid var(--color-border);border-radius:9px;background:#fff;color:var(--color-text);outline:none;cursor:pointer}
+.cat-pills{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}
+.cat-pill{font-size:11.5px;font-weight:700;padding:6px 13px;border-radius:20px;border:1px solid var(--color-border);background:var(--color-sidebar);color:var(--color-text-secondary);cursor:pointer;transition:all .18s;font-family:var(--font-sans)}
+.cat-pill:hover{border-color:var(--color-accent);color:var(--color-accent)}
+.cat-pill.active{background:var(--color-accent);border-color:var(--color-accent);color:#fff}
+.result-line{font-size:12px;color:var(--color-text-secondary);margin-top:10px}
+.result-line strong{color:var(--color-accent)}
+/* Sections */
+section.block{margin-bottom:34px;scroll-margin-top:calc(var(--header-height) + 76px)}
+.sec-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:6px}
+.sec-num{flex-shrink:0;width:38px;height:38px;border-radius:10px;background:var(--color-accent-gradient);color:#fff;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm)}
+.sec-head h3{font-size:19px;font-weight:800;letter-spacing:-.4px;line-height:1.25}
+.sec-head h3 span{color:var(--color-accent)}
+.sec-sub{font-size:12.5px;color:var(--color-text-secondary);margin:2px 0 16px 52px;max-width:800px}
+.sec-divider{width:56px;height:3px;background:var(--color-accent-gradient);border-radius:2px;margin:0 0 18px 52px}
+.deliv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+.card{background:#fafafa;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:18px 19px 15px;display:flex;flex-direction:column;transition:all .22s ease;position:relative}
+.card:hover{border-color:var(--color-accent);box-shadow:var(--shadow-lg);transform:translateY(-2px);background:#fff}
+.card-top{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.tag{font-size:9.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:3px 9px;border-radius:5px;border:1px solid}
+.tag-client{background:#fff;color:var(--color-accent);border-color:#fecaca}
+.tag-type{background:#111;color:#fff;border-color:#111}
+.tag-type.t-report{background:#fff;color:#15803d;border-color:#bbf7d0}
+.tag-type.t-audit{background:#fff;color:#92400e;border-color:#fde68a}
+.tag-type.t-ads{background:#fff;color:#1d4ed8;border-color:#bfdbfe}
+.tag-type.t-content{background:#fff;color:#6d28d9;border-color:#ddd6fe}
+.tag-type.t-auto{background:#fff;color:#0e7490;border-color:#a5f3fc}
+.tag-type.t-hub{background:var(--color-accent);color:#fff;border-color:var(--color-accent)}
+.card h4{font-size:14px;font-weight:700;line-height:1.4;margin-bottom:6px;letter-spacing:-.2px}
+.card h4 a{color:var(--color-text);text-decoration:none}
+.card h4 a:hover{color:var(--color-accent)}
+.card p.desc{font-size:12.5px;color:var(--color-text-secondary);line-height:1.55;margin-bottom:10px;flex:1}
+.card .path{font-family:var(--font-mono);font-size:10.5px;color:var(--color-accent);background:#fff;border:1px solid var(--color-border);border-radius:6px;padding:5px 9px;margin-bottom:12px;word-break:break-all;line-height:1.5}
+.card-foot{display:flex;gap:8px}
+.btn{flex:1;text-align:center;font-size:12px;font-weight:700;padding:9px 12px;border-radius:8px;text-decoration:none;transition:all .18s;cursor:pointer;font-family:var(--font-sans);border:1px solid transparent}
+.btn-open{background:var(--color-accent);color:#fff}
+.btn-open:hover{background:var(--color-accent-dark)}
+.btn-copy{background:#fff;color:var(--color-text);border-color:var(--color-border)}
+.btn-copy:hover{border-color:var(--color-accent);color:var(--color-accent)}
+.sublinks{margin-top:10px;border-top:1px dashed var(--color-border);padding-top:10px}
+.sublinks details{font-size:12px}
+.sublinks summary{cursor:pointer;font-weight:700;font-size:11.5px;color:var(--color-accent);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px}
+.sublinks ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px}
+.sublinks li a{display:flex;justify-content:space-between;gap:8px;text-decoration:none;font-size:12px;font-weight:600;color:var(--color-text);background:#fff;border:1px solid var(--color-border);border-radius:7px;padding:7px 10px;transition:all .15s}
+.sublinks li a:hover{border-color:var(--color-accent);color:var(--color-accent)}
+.sublinks li a span.arrow{color:var(--color-accent);font-weight:800}
+.mirror{font-size:11px;color:var(--color-text-secondary);margin-top:8px;line-height:1.5}
+.mirror code{font-family:var(--font-mono);font-size:10px;background:#fff;border:1px solid var(--color-border);padding:1px 6px;border-radius:4px;color:#666}
+/* Empty */
+.empty{display:none;text-align:center;border:1px dashed var(--color-border);border-radius:var(--radius-md);padding:44px 20px;background:var(--color-sidebar)}
+.empty.show{display:block}
+.empty h4{font-size:16px;font-weight:800;margin-bottom:6px}
+.empty p{font-size:13px;color:var(--color-text-secondary)}
+/* Footer */
+.footer{border-top:1px solid var(--color-border);padding:26px 44px;background:var(--color-sidebar);display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.footer img{height:30px;width:auto}
+.footer .f-text{font-size:11.5px;color:var(--color-text-secondary)}
+.footer .f-text strong{color:var(--color-text)}
+.footer .f-right{margin-left:auto;font-size:11px;color:var(--color-text-secondary);font-family:var(--font-mono)}
+/* Toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;font-size:12.5px;font-weight:600;padding:11px 20px;border-radius:10px;opacity:0;pointer-events:none;transition:all .25s;z-index:999;box-shadow:var(--shadow-lg)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:1100px){.kpi-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%);transition:transform .25s ease}
+  .sidebar.open{transform:translateX(0);box-shadow:var(--shadow-lg)}
+  .header{left:0;padding:0 16px}
+  .header .subtitle{display:none}
+  .header-search input{width:150px}
+  .menu-btn{display:block}
+  .main{margin-left:0}
+  .main-inner{padding:22px 16px 70px}
+  .hero{padding:24px 20px}
+  .deliv-grid{grid-template-columns:1fr}
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .footer{padding:22px 16px}
+}
+@media(max-width:560px){.kpi-grid{grid-template-columns:1fr}.header-search input{display:none}.header-search.mobile-show input{display:flex}}
 </style>
 </head>
 <body>
-<h1>v4perettoco</h1>
-<p>Relatórios de Performance · V4 Company</p>
-<div class="grid">
-<a class="card" href="hub-de-agentes/">
-<div class="tag tag-v4">Hub V4</div>
-<h2>Hub de Agentes · 101 Skills · 36 Agentes</h2>
-<p>Ecossistema completo de agentes de IA orquestrados: 101 skills em 12 categorias, 36 agentes OpenCode, 8 times operacionais, Opensquad como backbone. Documentação + ZIP export.</p>
-</a>
-<a class="card" href="projetos/seo/seo-problems-hub/">
-<div class="tag tag-seo">SEO</div>
-<h2>SEO Problems Hub · 29 Problemas</h2>
-<p>Catálogo completo de problemas de SEO, da infraestrutura ao JavaScript. Cada entrada com causa raiz, diagnóstico, solução, POP e FAQ. SSL, SPA, Core Web Vitals, Schema e mais.</p>
-</a>
-<a class="card" href="atlas-copco/relatorio-consolidado.html">
-<div class="tag tag-atlas">Atlas Copco</div>
-<h2>Traffic Report · Primeira Quinzena Jun/2026</h2>
-<p>Google Ads Search. US$ 725 gastos, 337 cliques, 0 conversões. Diagnóstico crítico de tracking, análise estratégica e roadmap de médio prazo para otimização e expansão de funil.</p>
-</a>
-<a class="card" href="conserva-irrigation/relatorio-dark.html">
-<div class="tag tag-conserva">Conserva Irrigation</div>
-<h2>Performance Analítica H1 2025 → H1 2026</h2>
-<p>1.347 pedidos · $997.6K líquidos · 18 meses de dados do ServiceMinder. Análise de canais, serviços, sazonalidade e teoria das restrições.</p>
-</a>
-<a class="card" href="conserva/analise-otimizacoes.html">
-<div class="tag tag-conserva">Conserva Irrigation</div>
-<h2>ROPRE Check-in · Mídia Paga</h2>
-<p>Junho 2026 · Performance Google Ads com análise 80/20, otimizações de 5 minutos e plano para os próximos 15 dias.</p>
-</a>
-<a class="card" href="conserva-irrigation/conserva-posts.html">
-<div class="tag tag-conserva">Conserva Irrigation</div>
-<h2>Blog Posts · Lote Combinado</h2>
-<p>Posts de blog produzidos para a Conserva Irrigation — conteúdo editorial e estratégia de conteúdo.</p>
-</a>
-<a class="card" href="conserva/bing-ads-planning.html">
-<div class="tag tag-conserva">Conserva Irrigation</div>
-<h2>Bing Ads Planning · Jun–Set 2026</h2>
-<p>Planejamento de abertura de canal Bing Ads: estrutura de campanhas, budget faseado e projeção de performance para 3 meses.</p>
-</a>
-<a class="card" href="allover-overview/">
-<div class="tag tag-allover">All Over Exterior Roofing</div>
-<h2>Overview Estratégico 360°</h2>
-<p>Análise completa de performance, canais e recomendações para a All Over Exterior Roofing.</p>
-</a>
-<a class="card" href="allover-revenue/">
-<div class="tag tag-allover">All Over Exterior Roofing</div>
-<h2>Receita por Canais</h2>
-<p>Detalhamento de receita por canal, ticket médio e comparativos.</p>
-</a>
-<a class="card" href="allover-seo/">
- <div class="tag tag-allover">All Over Exterior Roofing</div>
- <h2>SEO · Prestação de Contas</h2>
- <p>9 meses de evolução: AS 8, +106% domínios de referência, 40+ artigos, topic clusters e roadmap de crescimento.</p>
-</a>
-<a class="card" href="indianapolis-seo-audit/">
-  <div class="tag tag-metal">Metal Indianápolis</div>
-  <h2>Auditoria Técnica SEO · Q2 2026</h2>
-  <p>Diagnóstico completo: Screaming Frog, 260 URLs, 25 problemas (7 críticos, 6 alto). Quick wins de pré-lançamento, schema markup, headings, performance e plano de ação 90 dias.</p>
-</a>
-<a class="card" href="brasland-seo-audit/">
-  <div class="tag tag-seo">Brasland</div>
-  <h2>Auditoria Técnica SEO · Agosto 2026</h2>
-  <p>Diagnóstico completo: 18 URLs, 19 problemas (6 críticos, 7 alto). noindex global, robots.txt quebrado, conteúdo de teste, plano de ação 90 dias e Fase 0 de go-live.</p>
-</a>
-<a class="card" href="premium-audit/">
-  <div class="tag tag-allover">Premium Cleaning Services</div>
-  <h2>Auditoria SEO Completa · Julho 2026</h2>
-  <p>Diagnóstico completo: Screaming Frog, 211 URLs, 28 problemas (6 críticos, 7 alto). Quick wins, schema markup, plano de ação 90 dias.</p>
-</a>
-<a class="card" href="allover-audit/">
-  <div class="tag tag-allover">All Over Exterior Roofing</div>
-  <h2>Auditoria SEO Completa · Julho 2026</h2>
-  <p>Diagnóstico completo: Screaming Frog, 413 URLs, 35 problemas (7 críticos, 8 alto). Quick wins, schema markup, plano de ação 90 dias.</p>
-</a>
-<a class="card" href="gestao-marketplace-marcos-light.html">
- <div class="tag tag-marcos">Marcos Luciano</div>
- <h2>Pattern Detection · Gestão de Marketplace</h2>
- <p>Framework pessoal de avaliação e operação de marketplaces no Brasil. 5 Dimensões, 8 Padrões Detectáveis, métricas RMPE/ROPE, Caso BRG e Playbook 90 dias.</p>
-</a>
+
+<div class="header">
+  <button class="menu-btn" id="menuBtn" aria-label="Abrir menu">☰</button>
+  <h1>Central de Entregas</h1>
+  <span class="subtitle">Sistema de gestão de entregas publicadas · V4 Peretto &amp; Co</span>
+  <div class="header-search">
+    <input type="text" id="topSearch" placeholder="Buscar entrega, cliente, tipo...">
+  </div>
+  <span class="header-badge" id="totalBadge">— entregas</span>
 </div>
-<footer>V4 Company · Relatórios Analíticos</footer>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <img class="logo-img" src="logo-peretto-red.png" alt="Peretto &amp; Co.">
+    <div class="sys-name">Central de Entregas<br>V4 Peretto &amp; Co</div>
+    <div class="version">GitHub Pages · 2026</div>
+  </div>
+  <nav><ul id="sideNav">
+    <li><a class="nav-link level-0">Sistema</a></li>
+    <li><a class="nav-link" href="#visao-geral">Visão geral</a></li>
+    <li><a class="nav-link level-0">Categorias</a></li>
+  </ul></nav>
+  <div class="sidebar-foot">
+    Base pública: <code>marcoslrvusa.github.io/v4perettoco/</code><br>
+    Links relativos — funcionam no Pages e local.
+  </div>
+</aside>
+
+<div class="main">
+  <div class="main-inner">
+
+    <section class="hero" id="visao-geral">
+      <span class="hero-eyebrow">Sistema de gestão de entregas</span>
+      <h2>Todas as entregas publicadas, <span>organizadas como operação.</span></h2>
+      <p>Este painel substitui a lista antiga do GitHub Pages. Cada entrega tem cliente, tipo, descrição e link direto — com busca instantânea e filtro por categoria. O visual segue o padrão do <strong>Hub de Agentes</strong>: tons claros, tipografia Montserrat e identidade Peretto.</p>
+      <div class="hero-meta">
+        <span class="pill"><strong id="pillTotal">—</strong>&nbsp;URLs catalogadas</span>
+        <span class="pill"><strong id="pillCats">9</strong>&nbsp;categorias</span>
+        <span class="pill"><strong id="pillClients">—</strong>&nbsp;clientes &amp; frentes</span>
+        <span class="pill">Padrão Hub · Montserrat · Light</span>
+      </div>
+    </section>
+
+    <div class="kpi-grid">
+      <div class="kpi"><div class="k-label">Entregas no sistema</div><div class="k-value red" id="kpiTotal">—</div><div class="k-desc">Cards + sublinks internos</div></div>
+      <div class="kpi alt"><div class="k-label">Auditorias SEO / AIO / GEO</div><div class="k-value" id="kpiAudit">—</div><div class="k-desc">Diagnósticos técnicos completos</div></div>
+      <div class="kpi"><div class="k-label">Relatórios &amp; Tráfego</div><div class="k-value" id="kpiReports">—</div><div class="k-desc">Prestação de contas + mídia paga</div></div>
+      <div class="kpi alt"><div class="k-label">SDR IA + AI Visibility</div><div class="k-value" id="kpiAuto">—</div><div class="k-desc">Automação, correções e produto IA</div></div>
+    </div>
+
+    <div class="filterbar" id="filtros">
+      <div class="filter-row">
+        <input type="text" id="search" placeholder="Filtrar por título, cliente, descrição ou caminho... (ex: conserva, auditoria, meta ads)">
+        <select id="typeFilter">
+          <option value="">Todos os tipos</option>
+          <option value="hub">Hub / Sistema</option>
+          <option value="auditoria">Auditoria</option>
+          <option value="relatorio">Relatório</option>
+          <option value="trafego">Tráfego pago</option>
+          <option value="conteudo">Conteúdo</option>
+          <option value="automacao">Automação / IA</option>
+          <option value="site">Site / Template</option>
+          <option value="estrategia">Estratégia</option>
+        </select>
+      </div>
+      <div class="cat-pills" id="catPills"></div>
+      <div class="result-line" id="resultLine"></div>
+    </div>
+
+    <div id="blocks"></div>
+
+    <div class="empty" id="empty">
+      <h4>Nenhuma entrega encontrada</h4>
+      <p>Ajuste o termo de busca ou limpe os filtros para ver o catálogo completo.</p>
+    </div>
+
+  </div>
+  <footer class="footer">
+    <img src="logo-peretto-red.png" alt="Peretto &amp; Co.">
+    <div class="f-text"><strong>V4 Peretto &amp; Co · Central de Entregas</strong><br>Catálogo operacional de tudo que está publicado no GitHub Pages.</div>
+    <div class="f-right" id="footCount"></div>
+  </footer>
+</div>
+
+<div class="toast" id="toast">Link copiado</div>
+
+<script>
+const BASE = 'https://marcoslrvusa.github.io/v4perettoco/';
+const CATS = [
+  {id:'hub', n:'01', label:'Hub de Agentes & Infraestrutura', short:'Hub & Sistema', desc:'Ecossistema de agentes, documentação operacional, PDI e automações corporativas. Porta de entrada da operação.'},
+  {id:'seo-auditoria', n:'02', label:'SEO · Auditorias Técnicas', short:'Auditorias SEO', desc:'Diagnósticos completos — Screaming Frog, Core Web Vitals, schema, headings e plano de ação 90 dias.'},
+  {id:'seo-reports', n:'03', label:'SEO · Prestação de Contas & Relatórios', short:'Reports SEO', desc:'Evolução, receita, overview estratégico e apresentações executivas por cliente.'},
+  {id:'trafego', n:'04', label:'Tráfego Pago · Google / Meta / Bing', short:'Tráfego pago', desc:'Auditorias de mídia, estratégias de search, planejamento de canais e reports de performance.'},
+  {id:'conteudo', n:'05', label:'Conteúdo · Blog & Editorial', short:'Conteúdo', desc:'Artigos, lotes de blog, definition blocks AIO e kits de otimização on-page e schema.'},
+  {id:'sdr-ia', n:'06', label:'SDR IA · Hub & Correções', short:'SDR IA', desc:'Hub de correções das SDRs IA por cliente + entregas de confiabilidade da operação Signor.'},
+  {id:'ai-visibility', n:'07', label:'AI Visibility · AIO / GEO', short:'AI Visibility', desc:'Produto de visibilidade em IAs — arquitetura, landing, portal de diagnóstico e templates.'},
+  {id:'marketplace', n:'08', label:'Marketplaces & Estratégia', short:'Marketplaces', desc:'Auditorias de expansão, pattern detection e frameworks de operação em marketplaces.'},
+  {id:'sites', n:'09', label:'Sites, Landing Pages & Templates', short:'Sites & Templates', desc:'Websites entregues, front-ends de campanha e templates operacionais reutilizáveis.'}
+];
+/* type: hub | auditoria | relatorio | trafego | conteudo | automacao | site | estrategia */
+const D = [
+/* ============ 01 HUB ============ */
+{cat:'hub', client:'V4 Peretto', type:'hub', t:'Tipo', title:'Hub de Agentes V4 Peretto — Portal Principal', desc:'Ecossistema completo: 37 agentes, 102 skills, 8 times e Opensquad. Documentação navegável + export ZIP.', href:'hub-de-agentes/'},
+{cat:'hub', client:'V4 Peretto', type:'hub', t:'Docs', title:'Documentação Completa do Agent Hub', desc:'Referência integral do hub — arquitetura, camadas, skills, agentes e governança.', href:'hub-de-agentes/documentacao-completa.html'},
+{cat:'hub', client:'V4 Peretto', type:'hub', t:'Infra', title:'Infraestrutura Inteligente — 11 Skills Técnicas', desc:'Camada técnica do hub: skills de infra, integrações, MCPs e operação.', href:'hub-de-agentes/infra-skills-completa.html'},
+{cat:'hub', client:'V4 Peretto', type:'hub', t:'Operação', title:'Manual Operacional — Times de Agentes', desc:'Rotina de operação dos times: papéis, ritos, checkpoints e qualidade.', href:'hub-de-agentes/manual-operacional-times.html'},
+{cat:'hub', client:'V4 Peretto', type:'hub', t:'Legado', title:'Agents Hub — Versão Legada (101 skills)', desc:'Versão anterior do hub mantida para referência histórica e links externos.', href:'agents-hub.html'},
+{cat:'hub', client:'V4 Peretto', type:'hub', t:'PDI', title:'Portal de Entregas — PDI Marcos Perettoco', desc:'Índice das atividades do PDI: orquestração n8n, clean code, dados e IA.', href:'pdi-portal.html'},
+{cat:'hub', client:'V4 Peretto', type:'hub', t:'PDI', title:'PDI — Padrão Universal de Erros n8n', desc:'Padrão corporativo de tratamento de erros em workflows n8n + apresentações.', href:'pdi-err-n8n/', sub:[['Apresentação A1 — Orquestração corporativa','pdi-err-n8n/pdi-orquestracao-corporativa-n8n-a1.html']]},
+{cat:'hub', client:'V4 Peretto', type:'automacao', t:'Rotina', title:'P·I·A — Análise de Rotinas × Agentes de Operação', desc:'Mapeamento de rotinas internas versus capacidade dos agentes de operação v4.', href:'projetos/Rotinas%20P.I.A/pia-analise-completa.html'},
+{cat:'hub', client:'V4 Peretto', type:'automacao', t:'AI Ops', title:'AI Ops V4 — Apresentação Principal', desc:'Visão da infraestrutura de AI Ops corporativa da operação.', href:'projetos/Infraestrutura%20AI/v4-automations/documenta%C3%A7%C3%A3o/AI-OPS-APRESENTACAO.html', sub:[['AI Ops — Case Mata Leão','projetos/Infraestrutura%20AI/v4-automations/documenta%C3%A7%C3%A3o/AI-OPS-APRESENTACAO-2.html'],['AI Ops — Infraestrutura corporativa','projetos/Infraestrutura%20AI/v4-automations/documenta%C3%A7%C3%A3o/AI-OPS-APRESENTACAO-3.html'],['AI Ops — Fórum de operações','projetos/Infraestrutura%20AI/v4-automations/documenta%C3%A7%C3%A3o/AI-OPS-APRESENTACAO-4.html']]},
+/* ============ 02 AUDITORIAS ============ */
+{cat:'seo-auditoria', client:'All Over Exterior', type:'auditoria', t:'Auditoria', title:'Auditoria SEO Completa — All Over Exterior', desc:'413 URLs, 35 problemas (7 críticos, 8 altos). Quick wins, schema e plano 90 dias.', href:'allover-audit/'},
+{cat:'seo-auditoria', client:'All Over Exterior', type:'auditoria', t:'Auditoria', title:'Auditoria SEO Completa — All Over (mirror S1)', desc:'Variação de escopo da auditoria All Over para segunda leitura executiva.', href:'allover-seo-audit/'},
+{cat:'seo-auditoria', client:'Premium Cleaning', type:'auditoria', t:'Auditoria', title:'Auditoria SEO — Premium Cleaning Services NJ', desc:'211 URLs, 28 problemas (6 críticos, 7 altos). Schema local + plano 90 dias.', href:'premium-audit/'},
+{cat:'seo-auditoria', client:'Premium Cleaning', type:'auditoria', t:'Auditoria', title:'Auditoria SEO — Premium Cleaning (variação)', desc:'Segunda variação da auditoria Premium para comparação de escopo.', href:'premium-seo-audit/'},
+{cat:'seo-auditoria', client:'Brasland', type:'auditoria', t:'Auditoria', title:'Auditoria Técnica SEO — Brasland', desc:'18 URLs, 19 problemas (6 críticos). noindex global, robots quebrado e Fase 0 de go-live.', href:'brasland-seo-audit/', sub:[['Entrega espelho — auditoria Brasland (projetos)','projetos/seo/clientes/brasland/entregas/auditoria-seo-brasland.html']]},
+{cat:'seo-auditoria', client:'Metal Indianápolis', type:'auditoria', t:'Auditoria', title:'Auditoria Técnica SEO — Metal Indianápolis', desc:'260 URLs, 25 problemas (7 críticos). Quick wins de pré-lançamento e roadmap.', href:'indianapolis-seo-audit/', sub:[['Versão arquivo Q2 2026','metal-indianapolis/auditoria-seo-metal-indianapolis-Q2-2026.html']]},
+{cat:'seo-auditoria', client:'Lola Aviamentos', type:'auditoria', t:'Auditoria', title:'Auditoria Completa — SEO + AIO + GEO · Lola', desc:'Auditoria full-funnel de conteúdo, técnica e citabilidade em IAs.', href:'lola-seo-audit/'},
+{cat:'seo-auditoria', client:'Lola Aviamentos', type:'auditoria', t:'AIO/GEO', title:'Auditoria AIO + GEO — Lola Aviamentos', desc:'Foco em AI Search: definition blocks, extractability e share of AI voice.', href:'lola-seo-aiogeo-audit/'},
+{cat:'seo-auditoria', client:'Bioperfectus', type:'auditoria', t:'AIO/GEO', title:'Auditoria AIO/GEO — Bioperfectus', desc:'Diagnóstico de citabilidade e autoridade temática para respostas de IA.', href:'bioperfectus-aio-geo-audit/'},
+{cat:'seo-auditoria', client:'TekSea', type:'auditoria', t:'Auditoria', title:'Auditoria Técnica SEO — TekSea', desc:'Diagnóstico técnico completo + backlog priorizado de correção.', href:'audit-teksea/', sub:[['Variação TekSea (mirror)','teksea-audit/'],['Arquivo em projetos','projetos/SEO/clientes/tek%20sea/auditoria-seo-teksea.html']]},
+{cat:'seo-auditoria', client:'Grupo R1', type:'auditoria', t:'Auditoria', title:'Auditoria Técnica SEO — Grupo R1 (Q2 2026)', desc:'Diagnóstico técnico e plano de correção trimestral do Grupo R1.', href:'projetos/SEO/clientes/grupo-r1/auditoria-seo-r1grupo-Q2-2026.html'},
+{cat:'seo-auditoria', client:'V4 Peretto', type:'auditoria', t:'Base', title:'SEO Problems Hub — Knowledge Base (29 problemas)', desc:'Catálogo operacional de problemas de SEO com causa, diagnóstico, solução e POP.', href:'projetos/seo/seo-problems-hub/', sub:[['Mirror — SEO/seo-problems-hub','projetos/SEO/seo-problems-hub/'],['Mirror — clientes/seo-problems-hub','projetos/SEO/clientes/seo-problems-hub/']]},
+/* ============ 03 REPORTS ============ */
+{cat:'seo-reports', client:'All Over Exterior', type:'relatorio', t:'Report', title:'SEO · Prestação de Contas — All Over (Jun 2026)', desc:'9 meses de evolução: AS 8, +106% referring domains, 40+ artigos e roadmap.', href:'allover-seo/'},
+{cat:'seo-reports', client:'All Over Exterior', type:'relatorio', t:'Overview', title:'Overview Estratégico 360° — All Over', desc:'Performance, canais e recomendações executivas consolidadas.', href:'allover-overview/'},
+{cat:'seo-reports', client:'All Over Exterior', type:'relatorio', t:'Receita', title:'Receita por Canais — All Over', desc:'Ticket médio, mix de canais e comparativos de receita.', href:'allover-revenue/'},
+{cat:'seo-reports', client:'All Over Exterior', type:'relatorio', t:'Apresentação', title:'Presença Digital na Era da IA — All Over (v4)', desc:'Deck executivo da estratégia de presença digital orientada a IA.', href:'projetos/SEO/clientes/allover-seo/entregas/all-over-exterior-presentation-v4.html', sub:[['Versão anterior da apresentação','projetos/SEO/clientes/allover-seo/entregas/all-over-exterior-presentation.html']]},
+{cat:'seo-reports', client:'Conserva Irrigation', type:'relatorio', t:'Histórico', title:'Histórico de Check-ins — Conserva Irrigation', desc:'Linha do tempo de check-ins e combinados da operação.', href:'conserva-irrigation-report.html'},
+{cat:'seo-reports', client:'Conserva Irrigation', type:'relatorio', t:'Consolidado', title:'Relatório Consolidado — Conserva (Jul 2026)', desc:'Consolidação mensal de performance, canais e próximos passos.', href:'consolidado-conserva-junho-2026.html'},
+{cat:'seo-reports', client:'Conserva Irrigation', type:'relatorio', t:'Performance', title:'Performance Analítica H1 2025 → H1 2026 (Dark)', desc:'1.347 pedidos · $997.6K líquidos · 18 meses de ServiceMinder.', href:'conserva-irrigation/relatorio-dark.html'},
+{cat:'seo-reports', client:'Conserva Irrigation', type:'relatorio', t:'Semanal', title:'Relatório Analítico — Semana 2 · Conserva', desc:'Leitura semanal de performance com teoria das restrições.', href:'conserva-irrigation/analise-conserva-new-structure.html'},
+{cat:'seo-reports', client:'Conserva Irrigation', type:'relatorio', t:'Mídia', title:'ROPRE Check-in · Mídia Paga — Conserva', desc:'Junho 2026: análise 80/20, otimizações de 5 minutos e plano 15 dias.', href:'conserva/analise-otimizacoes.html'},
+{cat:'seo-reports', client:'Premium Cleaning', type:'relatorio', t:'Report', title:'Relatório Unificado — Premium Cleaning (Jun 2026)', desc:'Consolidação de SEO + mídia + próximos passos da conta.', href:'premium-cleaning-junho-2026.html'},
+{cat:'seo-reports', client:'Diamond Tint', type:'relatorio', t:'Report', title:'Otimizações Executadas — Diamond Tint (Jun 2026)', desc:'Antes/depois das otimizações aplicadas no período.', href:'diamond-tint-optimization-jun26/'},
+{cat:'seo-reports', client:'Metal Indianápolis', type:'relatorio', t:'Conteúdo', title:'Metal Indianápolis — SEO & Conteúdo', desc:'Hub de conteúdo e SEO da operação Metal Indianápolis.', href:'metal-indianapolis.html'},
+{cat:'seo-reports', client:'Metal Indianápolis', type:'relatorio', t:'Inteligência', title:'Channel Intelligence Report — Metal Indianapolis', desc:'Relatório de inteligência de canais com narrativa executiva.', href:'projetos/SEO/clientes/metal-indianapolis/entregas/metal-indianapolis-storytelling.html'},
+/* ============ 04 TRÁFEGO ============ */
+{cat:'trafego', client:'Atlas Copco', type:'trafego', t:'Google Ads', title:'Traffic Report — Atlas Copco (1ª quinz. Jun/2026)', desc:'US$ 725 · 337 cliques · 0 conversões. Diagnóstico de tracking e roadmap.', href:'atlas-copco/relatorio-consolidado.html'},
+{cat:'trafego', client:'All Over Exterior', type:'trafego', t:'Google Ads', title:'Auditoria Google Ads — All Over Exterior', desc:'Estrutura, desperdício, termos e plano de reestruturação da conta.', href:'allover-google-ads-audit/'},
+{cat:'trafego', client:'All Over Exterior', type:'trafego', t:'Estratégia', title:'Google Ads Search Strategy — Install · Replace · Repair', desc:'Arquitetura de campanhas search por intenção e serviço.', href:'allover-search-strategy/'},
+{cat:'trafego', client:'Conserva Irrigation', type:'trafego', t:'Bing Ads', title:'Bing Ads Planning — Conserva (Jun–Set 2026)', desc:'Abertura de canal: estrutura, budget faseado e projeção 3 meses.', href:'conserva/bing-ads-planning.html'},
+{cat:'trafego', client:'Conserva Irrigation', type:'trafego', t:'Google Ads', title:'Nova Estrutura de Campanhas Search — Conserva Q3', desc:'Reestruturação de campanhas search para o trimestre.', href:'nova-estrutura-campanhas-conserva-2026-q3.html'},
+{cat:'trafego', client:'GSET Tennis', type:'trafego', t:'Meta Ads', title:'Meta Ads Report — GSET Tennis Academy (Jun 2026)', desc:'Performance de Meta Ads com criativos, CPL e próximos testes.', href:'gset-meta-ads-junho-2026.html'},
+{cat:'trafego', client:'Construction Florida', type:'trafego', t:'Auditoria', title:'Auditoria de Mídia Paga — Construction Florida', desc:'Diagnóstico de conta e plano de correção da operação de mídia.', href:'projetos/ajuda%20rede%20v4/auditoria-media-construction-florida.html'},
+/* ============ 05 CONTEÚDO ============ */
+{cat:'conteudo', client:'Lola Aviamentos', type:'conteudo', t:'Blog', title:'Blog AG04 — Aviamentos (v1)', desc:'Peça editorial do lote AG04 para o blog da Lola.', href:'lola-blog-ag04-aviamentos.html'},
+{cat:'conteudo', client:'Lola Aviamentos', type:'conteudo', t:'Blog', title:'Blog AG04 — Aviamentos (v2)', desc:'Segunda versão do artigo AG04 com ajustes editoriais.', href:'lola-blog-ag04-aviamentos-v2.html'},
+{cat:'conteudo', client:'Lola Aviamentos', type:'conteudo', t:'Blog', title:'Blog AG04 — Aviamentos (v3)', desc:'Versão final do artigo AG04 aprovada para publicação.', href:'lola-blog-ag04-aviamentos-v3.html'},
+{cat:'conteudo', client:'Lola Aviamentos', type:'conteudo', t:'AIO', title:'AG-02 — Definition Blocks — Lola Aviamentos', desc:'Blocos de definição otimizados para citação em IAs.', href:'projetos/SEO/clientes/lola/entregas/AIO-B1-AG02-definition-blocks.html'},
+{cat:'conteudo', client:'Marcos V4', type:'conteudo', t:'Blog', title:'marcosv4.cloud — Blog Posts', desc:'Compilado de posts do blog pessoal / autoridade.', href:'marcosv4-blog-posts.html'},
+{cat:'conteudo', client:'Conserva Irrigation', type:'conteudo', t:'Blog', title:'Blog Posts — Lote Combinado · Conserva', desc:'Lote de posts produzidos para a operação de conteúdo.', href:'conserva-irrigation/conserva-posts.html'},
+{cat:'conteudo', client:'Metal Indianápolis', type:'conteudo', t:'Coleção', title:'Coleção Metal — 12 Artigos de Blog', desc:'Todos os 12 textos da operação de conteúdo Metal Indianápolis em um só lugar.', href:'projetos/SEO/clientes/metal-indianapolis/blog-textos/01-ferro-fundido-cinzento.html', sub:[['02 — Preço do ferro fundido (kg)','projetos/SEO/clientes/metal-indianapolis/blog-textos/02-preco-do-ferro-fundido-kg.html'],['03 — Fábrica de roldanas','projetos/SEO/clientes/metal-indianapolis/blog-textos/03-fabrica-de-roldanas.html'],['04 — Camisa de compressor','projetos/SEO/clientes/metal-indianapolis/blog-textos/04-camisa-compressor.html'],['05 — Cabeçote para compressor','projetos/SEO/clientes/metal-indianapolis/blog-textos/05-cabecote-para-compressor.html'],['06 — Anel de segmento do motor','projetos/SEO/clientes/metal-indianapolis/blog-textos/06-anel-de-segmento-do-motor.html'],['07 — Anel de segmento preço','projetos/SEO/clientes/metal-indianapolis/blog-textos/07-anel-de-segmento-preco.html'],['08 — Preço ferro fundido','projetos/SEO/clientes/metal-indianapolis/blog-textos/08-preco-ferro-fundido.html'],['09 — Peças para tratores','projetos/SEO/clientes/metal-indianapolis/blog-textos/09-pecas-para-tratores.html'],['10 — Fundição de ferros','projetos/SEO/clientes/metal-indianapolis/blog-textos/10-fundicao-de-ferros.html'],['11 — Anel de segmento','projetos/SEO/clientes/metal-indianapolis/blog-textos/11-anel-de-segmento.html'],['12 — Fabricante de peças automotivas','projetos/SEO/clientes/metal-indianapolis/blog-textos/12-fabricante-de-pecas-automotivas.html']]},
+{cat:'conteudo', client:'Metal Indianápolis', type:'conteudo', t:'On-page', title:'Page Titles — Planilha Operacional · Metal', desc:'Mapa de titles por página para implantação on-page.', href:'projetos/SEO/clientes/metal-indianapolis/page-titles-planilha.html'},
+{cat:'conteudo', client:'Metal Indianápolis', type:'conteudo', t:'Imagem', title:'Relatório Alt-Text — Metal Indianápolis', desc:'Inventário e reescrita de alt-texts das imagens do site.', href:'projetos/SEO/clientes/metal-indianapolis/docs/alt-text/relatorio-alt-text.html'},
+{cat:'conteudo', client:'Metal Indianápolis', type:'conteudo', t:'Schema', title:'Kit SEO JSON — Metal (implantação + schemas)', desc:'Pacote de implantação: conteúdo otimizado de produtos + schemas.', href:'projetos/SEO/clientes/metal-indianapolis/seo-json/implantacao.html', sub:[['Produtos — conteúdo otimizado','projetos/SEO/clientes/metal-indianapolis/seo-json/produtos-conteudo-otimizado.html'],['Schema — Contato','projetos/SEO/clientes/metal-indianapolis/seo-json/schemas/contato.html'],['Schema — Empresa','projetos/SEO/clientes/metal-indianapolis/seo-json/schemas/empresa.html'],['Schema — Homepage','projetos/SEO/clientes/metal-indianapolis/seo-json/schemas/homepage.html'],['Schema — Produtos','projetos/SEO/clientes/metal-indianapolis/seo-json/schemas/produtos.html']]},
+/* ============ 06 SDR IA ============ */
+{cat:'sdr-ia', client:'V4 Company', type:'automacao', t:'Hub', title:'SDR IA — Hub de Correções', desc:'Índice de todos os fixes das SDRs IA por cliente, com causa e solução.', href:'sdr-ia-hub/'},
+{cat:'sdr-ia', client:'Adplan', type:'automacao', t:'Fix', title:'ADPLAN · Correção de Fluxo — SDR IA', desc:'Correção documentada do fluxo da SDR IA da Adplan.', href:'sdr-ia-hub/fixes/adplan-001.html'},
+{cat:'sdr-ia', client:'Genics', type:'automacao', t:'Fix', title:'GENICS · Redis DNS — SDR IA', desc:'Correção de resolução DNS do Redis na operação Genics.', href:'sdr-ia-hub/fixes/genics-001.html'},
+{cat:'sdr-ia', client:'Pro Análises', type:'automacao', t:'Fix', title:'PRO ANÁLISES · toDateTime Undefined — SDR IA', desc:'Correção de erro de data no pipeline da SDR.', href:'sdr-ia-hub/fixes/pro-analises-001.html'},
+{cat:'sdr-ia', client:'Schwalm', type:'automacao', t:'Fix', title:'SCHWALM · Null Constraint Telefone — SDR IA', desc:'Correção de constraint nula no campo telefone.', href:'sdr-ia-hub/fixes/schwalm-001.html'},
+{cat:'sdr-ia', client:'Signor', type:'automacao', t:'Fix', title:'SIGNOR · Task Runner — SDR IA', desc:'Correção do task runner da SDR IA da Signor.', href:'sdr-ia-hub/fixes/signor-001.html'},
+{cat:'sdr-ia', client:'Sofia', type:'automacao', t:'Fix', title:'SOFIA · Rate Limit Chatwoot — SDR IA', desc:'Tratamento de rate limit da integração Chatwoot.', href:'sdr-ia-hub/fixes/sofia-001.html'},
+{cat:'sdr-ia', client:'V4 Interno', type:'automacao', t:'Fix', title:'V4 INTERNO · Ekyte 404 — SDR IA', desc:'Correção de 404 na integração com o Ekyte.', href:'sdr-ia-hub/fixes/v4-interno-001.html'},
+{cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Entrega', title:'Signor × V4 — Alinhamento SDR IA', desc:'Engenharia de confiabilidade: alinhamento técnico da operação.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-alinhamento-ia.html'},
+{cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Entrega', title:'Signor · A obra por trás da conversa (v4)', desc:'Narrativa de confiança da SDR IA — versão executiva v4.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-checkin-confianca-v4.html'},
+{cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Entrega', title:'Signor · Check-in de Confiança', desc:'Leitura de confiança da operação SDR IA no check-in.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-checkin-confianca.html'},
+{cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Report', title:'SDR IA Signor · Relatório de Melhorias', desc:'Backlog de melhorias aplicadas e planejadas na SDR.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-checkin-relatorio-melhorias.html'},
+{cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Story', title:'Signor · A história da SDR IA (storytelling)', desc:'Versão narrativa da evolução da SDR IA da Signor.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-checkin-storytelling.html'},
+/* ============ 07 AI VISIBILITY ============ */
+{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Produto', title:'AI Visibility — Arquitetura de Agentes', desc:'Desenho técnico do produto de visibilidade em IAs.', href:'projetos/AEO-GEO/ai-visibility-agent-architecture.html'},
+{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Docs', title:'AI Visibility — Documentação Técnica (dev)', desc:'Especificação para implementação do produto.', href:'projetos/AEO-GEO/ai-visibility-dev.html'},
+{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Landing', title:'AI Visibility — Landing Comercial', desc:'Página de venda: sua marca citada por inteligências artificiais.', href:'projetos/AEO-GEO/ai-visibility-landing.html'},
+{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Produto', title:'AI Visibility — Documentação Cliente', desc:'Visão do produto para apresentação a clientes.', href:'projetos/AEO-GEO/ai-visibility-produto.html'},
+{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Portal', title:'AI Visibility — Portal de Diagnóstico Gratuito', desc:'Ferramenta de entrada: diagnóstico gratuito de visibilidade em IA.', href:'projetos/AEO-GEO/portal/'},
+{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Template', title:'Template — Dashboard de Auditoria AI Visibility', desc:'Modelo reutilizável de dashboard de diagnóstico.', href:'projetos/AEO-GEO/docs/templates/dashboard-auditoria.html'},
+{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Template', title:'Template — Kickoff AIO/GEO', desc:'Formulário padrão de kickoff para projetos AIO/GEO.', href:'projetos/AEO-GEO/docs/templates/kickoff-aio-geo.html'},
+{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Base', title:'MASTER AIO/GEO — Documentação Completa', desc:'Referência-mãe de AIO/GEO da operação.', href:'docs/seo/MASTER_AIO_GEO.html'},
+/* ============ 08 MARKETPLACE ============ */
+{cat:'marketplace', client:'Alto Calçados', type:'estrategia', t:'Apresentação', title:'Alto Calçados — Expansão em Marketplaces', desc:'Deck de expansão: canais, sortimento e operação.', href:'alto-calcados-apresentacao.html'},
+{cat:'marketplace', client:'Alto Calçados', type:'estrategia', t:'Auditoria', title:'Alto Calçados — Auditoria & Expansão', desc:'Diagnóstico + plano de expansão em marketplaces.', href:'alto-calcados-auditoria.html'},
+{cat:'marketplace', client:'Marcos Luciano', type:'estrategia', t:'Framework', title:'Pattern Detection — Gestão de Marketplace (light)', desc:'Framework pessoal: 5 dimensões, 8 padrões, RMPE/ROPE e playbook 90 dias.', href:'gestao-marketplace-marcos-light.html'},
+{cat:'marketplace', client:'Marcos Luciano', type:'estrategia', t:'Framework', title:'Pattern Detection — Gestão de Marketplace (dark)', desc:'Versão dark do framework para apresentação.', href:'gestao-marketplace-marcos-dark.html'},
+{cat:'marketplace', client:'Amiguros', type:'estrategia', t:'Experiência', title:'Amiguros — Experiência de Conexão', desc:'Entrega de experiência / posicionamento da operação Amiguros.', href:'experiencia-amiguros.html'},
+/* ============ 09 SITES ============ */
+{cat:'sites', client:'Premium Contractors', type:'site', t:'Website', title:'Premium Contractors LLC — Website (Newark, NJ)', desc:'Website comercial de construção entregue em produção.', href:'projetos/Websites/premium-contractors-website/'},
+{cat:'sites', client:'Brinks / Cofres', type:'site', t:'Landing', title:'Rede Brinks Pay — Front', desc:'Front-end da campanha Rede Brinks Pay.', href:'mkt_landpages/redebrinkspay-front/redebrinkspay-front/index.html'},
+{cat:'sites', client:'Brinks / Cofres', type:'site', t:'Landing', title:'Valores que se Completam — Front', desc:'Front-end institucional da campanha.', href:'mkt_landpages/valoresquesecompletam-front/valoresquesecompletam-front/index.html'},
+{cat:'sites', client:'Brinks / Cofres', type:'site', t:'E-mail', title:'Meu Cofre Inteligente — E-mail Marketing', desc:'Template de e-mail da campanha Meu Cofre Inteligente.', href:'mkt_landpages/meucofreinteligente-front/meucofreinteligente-front/email.html'},
+{cat:'sites', client:'V4 Peretto', type:'site', t:'Template', title:'Dashboard Gestão de Projetos SEO (template)', desc:'Modelo de dashboard executivo reutilizável por cliente.', href:'dashboard/'}
+];
+
+const TYPE_CLASS = {hub:'t-hub', auditoria:'t-audit', relatorio:'t-report', trafego:'t-ads', conteudo:'t-content', automacao:'t-auto', site:'', estrategia:''};
+const TYPE_LABEL = {hub:'Hub / Sistema', auditoria:'Auditoria', relatorio:'Relatório', trafego:'Tráfego pago', conteudo:'Conteúdo', automacao:'Automação / IA', site:'Site / Template', estrategia:'Estratégia'};
+
+const blocksEl = document.getElementById('blocks');
+const sideNav = document.getElementById('sideNav');
+const catPills = document.getElementById('catPills');
+const searchInput = document.getElementById('search');
+const topSearch = document.getElementById('topSearch');
+const typeFilter = document.getElementById('typeFilter');
+const resultLine = document.getElementById('resultLine');
+const emptyEl = document.getElementById('empty');
+let activeCat = '';
+
+/* Build sidebar + pills */
+CATS.forEach(c=>{
+  const count = D.filter(d=>d.cat===c.id).length;
+  const li = document.createElement('li');
+  li.innerHTML = `<a class="nav-link" href="#cat-${c.id}">${c.n} · ${c.short}<span class="count">${count}</span></a>`;
+  sideNav.appendChild(li);
+});
+function renderPills(){
+  catPills.innerHTML = '';
+  const all = document.createElement('button');
+  all.className = 'cat-pill' + (activeCat==='' ? ' active' : '');
+  all.textContent = `Todas (${D.length})`;
+  all.onclick = ()=>{activeCat=''; renderPills(); render();};
+  catPills.appendChild(all);
+  CATS.forEach(c=>{
+    const count = D.filter(d=>d.cat===c.id).length;
+    const b = document.createElement('button');
+    b.className = 'cat-pill' + (activeCat===c.id ? ' active' : '');
+    b.textContent = `${c.short} (${count})`;
+    b.onclick = ()=>{
+      activeCat = (activeCat===c.id) ? '' : c.id;
+      renderPills(); render();
+      if(activeCat){ document.getElementById('cat-'+c.id)?.scrollIntoView({behavior:'smooth'}); }
+    };
+    catPills.appendChild(b);
+  });
+}
+
+function cardHTML(d, idx){
+  const subs = (d.sub||[]).map(s=>`<li><a href="${s[1]}" target="_blank" rel="noopener"><span>${s[0]}</span><span class="arrow">→</span></a></li>`).join('');
+  const subBlock = subs ? `<div class="sublinks"><details><summary>+${d.sub.length} link(s) vinculado(s)</summary><ul>${subs}</ul></details></div>` : '';
+  return `<article class="card" data-idx="${idx}">
+    <div class="card-top"><span class="tag tag-client">${d.client}</span><span class="tag tag-type ${TYPE_CLASS[d.type]||''}">${d.t || TYPE_LABEL[d.type]||d.type}</span></div>
+    <h4><a href="${d.href}" target="_blank" rel="noopener">${d.title}</a></h4>
+    <p class="desc">${d.desc}</p>
+    <div class="path">${d.href}</div>
+    <div class="card-foot"><a class="btn btn-open" href="${d.href}" target="_blank" rel="noopener">Abrir entrega →</a><button class="btn btn-copy" onclick="copyLink('${d.href.replace(/'/g,"\\'")}', this)">Copiar link</button></div>
+    ${subBlock}
+  </article>`;
+}
+
+function matches(d, q, t){
+  if(activeCat && d.cat!==activeCat) return false;
+  if(t && d.type!==t) return false;
+  if(!q) return true;
+  const hay = (d.title+' '+d.client+' '+d.desc+' '+d.href+' '+(d.sub||[]).map(s=>s[0]+' '+s[1]).join(' ')).toLowerCase();
+  return q.toLowerCase().split(/\s+/).every(w=>hay.includes(w));
+}
+
+function render(){
+  const q = searchInput.value.trim();
+  const t = typeFilter.value;
+  blocksEl.innerHTML = '';
+  let totalShown = 0, totalUrls = 0;
+  CATS.forEach(c=>{
+    const items = D.map((d,i)=>({...d,_i:i})).filter(d=>d.cat===c.id && matches(d,q,t));
+    if(!items.length) return;
+    totalShown += items.length;
+    const sec = document.createElement('section');
+    sec.className = 'block';
+    sec.id = 'cat-'+c.id;
+    sec.innerHTML = `<div class="sec-head"><div class="sec-num">${c.n}</div><h3>${c.label}</h3></div><div class="sec-divider"></div><p class="sec-sub">${c.desc} — <strong>${items.length}</strong> entrega(s) nesta categoria.</p><div class="deliv-grid">${items.map(d=>cardHTML(d,d._i)).join('')}</div>`;
+    blocksEl.appendChild(sec);
+    items.forEach(d=>{ totalUrls += 1 + (d.sub?d.sub.length:0); });
+  });
+  emptyEl.classList.toggle('show', totalShown===0);
+  const allUrls = D.reduce((a,d)=>a+1+(d.sub?d.sub.length:0),0);
+  resultLine.innerHTML = q||t||activeCat
+    ? `Exibindo <strong>${totalShown}</strong> entrega(s) · <strong>${totalUrls}</strong> URL(s) no filtro — de <strong>${D.length}</strong> entregas · <strong>${allUrls}</strong> URLs no total.`
+    : `Catálogo completo: <strong>${D.length}</strong> entregas · <strong>${allUrls}</strong> URLs publicadas no GitHub Pages.`;
+  document.getElementById('totalBadge').textContent = allUrls + ' URLs';
+  document.getElementById('pillTotal').textContent = allUrls;
+  document.getElementById('kpiTotal').textContent = allUrls;
+  document.getElementById('kpiAudit').textContent = D.filter(d=>d.type==='auditoria').reduce((a,d)=>a+1+(d.sub?d.sub.length:0),0);
+  document.getElementById('kpiReports').textContent = D.filter(d=>d.type==='relatorio'||d.type==='trafego').reduce((a,d)=>a+1+(d.sub?d.sub.length:0),0);
+  document.getElementById('kpiAuto').textContent = D.filter(d=>d.type==='automacao').reduce((a,d)=>a+1+(d.sub?d.sub.length:0),0);
+  const clients = new Set(D.map(d=>d.client)).size;
+  document.getElementById('pillClients').textContent = clients;
+  document.getElementById('footCount').textContent = `${D.length} entregas · ${allUrls} URLs · ${clients} clientes/frentes`;
+}
+
+function copyLink(href, btn){
+  const url = href.startsWith('http') ? href : BASE + href;
+  navigator.clipboard.writeText(url).then(()=>{
+    const toast = document.getElementById('toast');
+    toast.textContent = 'Link copiado: ' + url;
+    toast.classList.add('show');
+    setTimeout(()=>toast.classList.remove('show'), 2200);
+    if(btn){ const o=btn.textContent; btn.textContent='Copiado ✓'; setTimeout(()=>btn.textContent=o,1600); }
+  }).catch(()=>{
+    prompt('Copie o link:', url);
+  });
+}
+
+searchInput.addEventListener('input', render);
+typeFilter.addEventListener('change', render);
+topSearch.addEventListener('input', e=>{ searchInput.value = e.target.value; render(); });
+searchInput.addEventListener('input', e=>{ if(topSearch.value!==e.target.value) topSearch.value = e.target.value; });
+
+document.getElementById('menuBtn').onclick = ()=>document.getElementById('sidebar').classList.toggle('open');
+document.querySelectorAll('.sidebar .nav-link[href^="#"]').forEach(a=>{
+  a.addEventListener('click', ()=>{ if(window.innerWidth<=900) document.getElementById('sidebar').classList.remove('open'); });
+});
+
+renderPills();
+render();
+</script>
 </body>
 </html>
