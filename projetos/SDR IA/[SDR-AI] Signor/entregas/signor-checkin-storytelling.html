@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signor · A história da SDR IA · Storytelling</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0E0D0B;
+  --bg2:#14120F;
+  --card:#1A1713;
+  --line:#2C2822;
+  --paper:#E8E3D8;
+  --muted:#A39C8C;
+  --red:#E31919;
+  --red-bright:#FF3B2E;
+  --orange:#FF6B00;
+  --concrete:#8A857A;
+  --display:'Barlow Condensed',sans-serif;
+  --body:'Barlow',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  background-image:radial-gradient(1000px 500px at 80% -10%,rgba(227,25,25,.10),transparent 60%),
+    radial-gradient(800px 400px at -10% 30%,rgba(255,107,0,.06),transparent 60%);
+  color:var(--paper);font-family:var(--body);line-height:1.6;overflow-x:hidden;
+}
+::selection{background:var(--red);color:#fff}
+
+/* ---------- progress bar ---------- */
+#progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--red),var(--orange));width:0%;z-index:100}
+
+/* ---------- nav ---------- */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:90;display:flex;justify-content:space-between;align-items:center;
+  padding:14px 28px;font-family:var(--display);text-transform:uppercase;letter-spacing:.12em;font-weight:700;font-size:13px;
+  background:linear-gradient(180deg,rgba(14,13,11,.9),transparent);
+}
+nav .brand b{color:var(--red)}
+nav .tag{color:var(--muted)}
+
+/* ---------- reveal ---------- */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+.reveal.vis{opacity:1;transform:none}
+.reveal[data-delay="1"]{transition-delay:.12s}
+.reveal[data-delay="2"]{transition-delay:.24s}
+.reveal[data-delay="3"]{transition-delay:.36s}
+
+/* ---------- hero ---------- */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 8vw;position:relative}
+.hero .kicker{
+  font-family:var(--display);font-weight:700;letter-spacing:.28em;text-transform:uppercase;font-size:13px;
+  color:var(--red-bright);display:flex;align-items:center;gap:14px;
+}
+.hero .kicker::before{content:"";width:44px;height:2px;background:var(--red-bright)}
+.hero h1{
+  font-family:var(--display);font-weight:900;text-transform:uppercase;line-height:.9;
+  font-size:clamp(54px,11vw,150px);letter-spacing:.01em;margin:22px 0 26px;
+}
+.hero h1 .outline{color:transparent;-webkit-text-stroke:2px var(--red);}
+.hero h1 .dim{color:var(--muted)}
+.hero p{max-width:560px;font-size:18px;color:var(--muted);font-weight:300}
+.hero .scroll-hint{
+  position:absolute;bottom:34px;left:8vw;font-family:var(--display);letter-spacing:.24em;text-transform:uppercase;
+  font-size:12px;color:var(--concrete);display:flex;align-items:center;gap:12px;
+}
+.hero .scroll-hint::after{content:"";width:1px;height:46px;background:linear-gradient(var(--concrete),transparent);animation:drop 1.6s ease-in-out infinite}
+@keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ---------- big numbers ---------- */
+.bignum{font-family:var(--display);font-weight:900;font-size:clamp(64px,13vw,170px);line-height:.85;color:var(--red);-webkit-text-stroke:1px var(--red);letter-spacing:.02em}
+
+/* ---------- acts ---------- */
+.act{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:110px 8vw;position:relative}
+.act-num{
+  font-family:var(--display);font-weight:900;font-size:clamp(120px,22vw,280px);line-height:.8;
+  color:transparent;-webkit-text-stroke:1.5px #3A332B;position:absolute;top:40px;right:4vw;user-select:none;z-index:-1;
+}
+.act .kicker{
+  font-family:var(--display);font-weight:700;letter-spacing:.26em;text-transform:uppercase;font-size:13px;color:var(--orange);
+  display:flex;align-items:center;gap:14px;margin-bottom:18px;
+}
+.act .kicker::before{content:"";width:38px;height:2px;background:var(--orange)}
+.act h2{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(38px,6.5vw,84px);line-height:.95;margin-bottom:26px;letter-spacing:.01em}
+.act h2 .hl{color:var(--red-bright)}
+.act .lede{font-size:19px;color:var(--muted);max-width:680px;margin-bottom:34px;font-weight:300}
+.act .lede b{color:var(--paper);font-weight:600}
+
+/* ---------- corrente (ato 1) ---------- */
+.chain{display:flex;flex-direction:column;gap:10px;max-width:720px;margin:10px 0 30px}
+.link{
+  display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--line);
+  padding:16px 20px;position:relative;transition:all .3s ease;cursor:pointer;
+}
+.link::before{content:"";position:absolute;top:50%;right:-9px;width:18px;height:18px;border-top:2px solid var(--concrete);border-right:2px solid var(--concrete);transform:translateY(-50%) rotate(45deg);background:var(--bg);z-index:2}
+.link:last-child::before{display:none}
+.link .idx{font-family:var(--mono,var(--display));font-weight:900;font-size:17px;color:var(--concrete);min-width:26px}
+.link .txt{font-size:15px;color:var(--paper)}
+.link .txt small{display:block;color:var(--muted);font-size:12.5px}
+.link:hover{border-color:var(--red);transform:translateX(6px)}
+.link.break{border-color:var(--red);background:rgba(227,25,25,.08);animation:shake .4s ease}
+.link.break .idx{color:var(--red-bright)}
+.link.break .txt{color:var(--red-bright)}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.chain-hint{font-family:var(--display);letter-spacing:.18em;text-transform:uppercase;font-size:12px;color:var(--concrete);margin-bottom:26px}
+.chain-hint b{color:var(--red-bright)}
+
+/* ---------- split (ato 2) ---------- */
+.split{display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:stretch;margin:14px 0 10px}
+.split .side{background:var(--card);border:1px solid var(--line);padding:28px 26px;position:relative}
+.split .left-side{border-right:none}
+.split .right-side{border-left:none}
+.split .side h3{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:26px;letter-spacing:.03em;margin-bottom:16px}
+.split .left-side h3{color:var(--muted)}
+.split .right-side h3{color:var(--red-bright)}
+.split .side ul{list-style:none;display:grid;gap:12px}
+.split .side li{font-size:14.5px;color:var(--muted);padding-left:22px;position:relative}
+.split .left-side li::before{content:"◆";position:absolute;left:0;color:var(--concrete)}
+.split .right-side li::before{content:"◆";position:absolute;left:0;color:var(--red)}
+.split .side li b{color:var(--paper);font-weight:600}
+.split .divider{display:flex;align-items:center;justify-content:center;padding:0 18px;font-family:var(--display);font-weight:900;font-size:30px;color:var(--red-bright)}
+@media(max-width:800px){.split{grid-template-columns:1fr}.split .divider{transform:rotate(90deg);padding:10px 0}}
+
+/* ---------- stats (ato 3) ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;max-width:900px}
+.stat{background:var(--card);border:1px solid var(--line);padding:30px 26px;position:relative;overflow:hidden;transition:border-color .3s ease}
+.stat:hover{border-color:var(--red)}
+.stat .num{font-family:var(--display);font-weight:900;font-size:clamp(52px,7vw,84px);line-height:1;color:var(--red-bright)}
+.stat .num small{font-size:.45em;color:var(--concrete);font-weight:700}
+.stat .lbl{font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:14px;margin-top:10px;color:var(--paper)}
+.stat .sub{font-size:13px;color:var(--muted);margin-top:6px}
+.stat .glow{position:absolute;top:-40px;right:-40px;width:110px;height:110px;background:radial-gradient(circle,rgba(227,25,25,.22),transparent 70%)}
+
+/* ---------- why (maturidade) ---------- */
+.why{background:var(--bg2);border:1px solid var(--line);padding:40px 38px;max-width:820px;position:relative;margin:14px 0 0}
+.why::before{content:"“";position:absolute;top:-38px;left:22px;font-family:var(--display);font-weight:900;font-size:130px;color:var(--red);opacity:.5}
+.why h3{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:24px;letter-spacing:.04em;margin-bottom:16px}
+.why p{font-size:16px;color:var(--muted);margin-bottom:14px;font-weight:300}
+.why p b{color:var(--paper);font-weight:600}
+.why ul{list-style:none;display:grid;gap:10px;margin-top:18px}
+.why li{font-size:15px;color:var(--muted);padding-left:24px;position:relative}
+.why li::before{content:"✓";position:absolute;left:0;color:var(--orange);font-weight:700}
+.why li b{color:var(--paper)}
+
+/* ---------- quote ---------- */
+.quote{max-width:900px;margin:0 auto;text-align:center;padding:60px 4vw}
+.quote .q{font-family:var(--display);font-weight:700;font-size:clamp(26px,4.6vw,54px);line-height:1.1;text-transform:uppercase;letter-spacing:.02em}
+.quote .q .hl{color:var(--red-bright)}
+.quote .who{margin-top:20px;font-family:var(--display);letter-spacing:.22em;text-transform:uppercase;font-size:12px;color:var(--concrete)}
+
+/* ---------- final ---------- */
+.final{background:linear-gradient(160deg,#1A0D0C 0%,var(--bg) 55%);border-top:1px solid var(--line);padding:120px 8vw}
+.final .kicker{font-family:var(--display);font-weight:700;letter-spacing:.26em;text-transform:uppercase;font-size:13px;color:var(--orange);display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.final .kicker::before{content:"";width:38px;height:2px;background:var(--orange)}
+.final h2{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(40px,7vw,90px);line-height:.92;margin-bottom:30px}
+.final h2 .hl{color:var(--red-bright)}
+.commit-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;max-width:1000px}
+.commit{background:rgba(26,23,19,.7);border:1px solid var(--line);padding:22px 24px;transition:border-color .3s ease}
+.commit:hover{border-color:var(--red)}
+.commit .n{font-family:var(--display);font-weight:900;font-size:34px;color:var(--red);line-height:1}
+.commit h4{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:18px;letter-spacing:.05em;margin:8px 0 6px}
+.commit p{font-size:13.5px;color:var(--muted);font-weight:300}
+.final .outro{margin-top:52px;font-size:19px;color:var(--muted);max-width:640px;font-weight:300;border-left:3px solid var(--red);padding-left:22px}
+.final .outro b{color:var(--paper)}
+
+footer{padding:30px 8vw 44px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-family:var(--display);letter-spacing:.16em;text-transform:uppercase;font-size:12px;color:var(--concrete);border-top:1px solid var(--line)}
+footer b{color:var(--red)}
+
+@media(max-width:640px){
+  .act{padding:90px 7vw}
+  .hero{padding:0 7vw}
+  .why{padding:30px 24px}
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<nav>
+  <span class="brand">SIGNOR · <b>SDR IA</b></span>
+  <span class="tag">A história por trás da entrega · Jul/2026</span>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="kicker reveal vis">V4 Peretto · Tech Lead · SDR IA</div>
+  <h1 class="reveal vis" data-delay="1">Uma conversa<br><span class="outline">que não</span><br><span class="dim">chegava</span></h1>
+  <p class="reveal vis" data-delay="2">O atendimento funcionava. O cliente conversava, respondia, pedia orçamento. Só havia um problema: <b>nem sempre aquilo virava um lead no sistema.</b> E ninguém sabia.</p>
+  <div class="scroll-hint">Role para ler a história</div>
+</header>
+
+<!-- ================= ATO 1 ================= -->
+<section class="act">
+  <div class="act-num">01</div>
+  <div class="kicker reveal">Ato 01 · O passado</div>
+  <h2 class="reveal" data-delay="1">Uma corrente de <span class="hl">dependências</span></h2>
+  <p class="lede reveal" data-delay="2">A SDR da Signor nasceu como um MVP: um fluxo único onde <b>cada elo dependia do outro</b>. Uma conversa só virava lead se todas as peças funcionassem — ao mesmo tempo, na mesma hora.</p>
+
+  <div class="chain-hint reveal" data-delay="2">Clique nos elos para ver o que acontecia quando quebravam ↓</div>
+  <div class="chain reveal" data-delay="3" id="chain">
+    <div class="link" data-msg="Sem esse elo, a mensagem do cliente não entrava no sistema.">
+      <span class="idx">1</span>
+      <span class="txt">API do WhatsApp responde<small>Meta Cloud API sempre disponível</small></span>
+    </div>
+    <div class="link" data-msg="Token expirado = download de foto e PDF falhava. A conversa morria ali.">
+      <span class="idx">2</span>
+      <span class="txt">Token de mídia válido<small>expirava sem ninguém avisar</small></span>
+    </div>
+    <div class="link" data-msg="Áudio chegava vazio para a IA. O cliente falava, a IA ouvia silêncio.">
+      <span class="idx">3</span>
+      <span class="txt">Transcrição de áudio conectada<small>estava solta, sem entrada</small></span>
+    </div>
+    <div class="link" data-msg="Sem retry: um timeout de 5s da OpenAI matava o atendimento inteiro.">
+      <span class="idx">4</span>
+      <span class="txt">Modelo de IA responde na hora<small>sem retry, sem timeout</small></span>
+    </div>
+    <div class="link" data-msg="O prompt precisava 'lembrar' de tudo. Esquecia = repetia pergunta. E sem histórico completo, ficava cego.">
+      <span class="idx">5</span>
+      <span class="txt">IA lembra de todas as regras<small>histórico truncado em 72h</small></span>
+    </div>
+    <div class="link" data-msg="Lead pronto, mas sem e-mail? Ficava preso. 1.180 leads ficaram retidos assim.">
+      <span class="idx">6</span>
+      <span class="txt">Entrega perfeita no Bitrix<small>trava: sem e-mail, não encaminhava</small></span>
+    </div>
+  </div>
+  <p class="lede reveal" style="margin-bottom:0" data-delay="2">Qualquer elo quebrando, a conversa morria — <b>em silêncio</b>. O lead não chegava, mas ninguém sabia que não chegava.</p>
+</section>
+
+<!-- ================= ATO 2 ================= -->
+<section class="act">
+  <div class="act-num">02</div>
+  <div class="kicker reveal">Ato 02 · A decisão</div>
+  <h2 class="reveal" data-delay="1">Não refazer.<br><span class="hl">Engenheirar.</span></h2>
+  <p class="lede reveal" data-delay="2">Avaliamos reconstruir tudo do zero. Conclusão: os problemas estavam nos pontos de lógica e no comportamento — <b>não na estrutura</b>. Refazer reproduziria os mesmos bugs. A decisão foi outra: <b>separar papéis</b>.</p>
+
+  <div class="split reveal" data-delay="2">
+    <div class="side left-side">
+      <h3>A IA conversa</h3>
+      <ul>
+        <li>Entende o cliente: obra, <b>12.000 m²</b>, prazo, foto</li>
+        <li>Pergunta só o que <b>não sabe</b> (histórico completo)</li>
+        <li>Humanizada: nome só no "Olá", e-mail opcional</li>
+        <li>Escala irritação para <b>atendente humano</b></li>
+      </ul>
+    </div>
+    <div class="divider">→</div>
+    <div class="side right-side">
+      <h3>A regra garante</h3>
+      <ul>
+        <li><b>Retry 3x</b> em toda chamada crítica (IA, banco, API)</li>
+        <li><b>Timeout 30s</b> — nada trava para sempre</li>
+        <li><b>Fallback</b> para qualquer tipo de mídia inesperada</li>
+        <li><b>Isolamento</b> por cliente no Redis compartilhado</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="lede reveal" data-delay="3" style="margin-top:34px;margin-bottom:0">Em resumo: <b>a IA fica com o que ela faz de melhor — conversar. A regra clássica, determinística, fica com o que não pode falhar — entregar.</b></p>
+</section>
+
+<!-- ================= ATO 3 ================= -->
+<section class="act">
+  <div class="act-num">03</div>
+  <div class="kicker reveal">Ato 03 · Os números</div>
+  <h2 class="reveal" data-delay="1">O que mudou, <span class="hl">medido</span></h2>
+  <p class="lede reveal" data-delay="2">Nada de promessa: os resultados estão no sistema. Metade do código, zero ponto sem blindagem e uma recuperação que já começou.</p>
+
+  <div class="stats reveal" data-delay="2">
+    <div class="stat">
+      <div class="glow"></div>
+      <div class="num"><span class="counter" data-to="142">0</span><small> → </small><span class="counter" data-to="68">0</span></div>
+      <div class="lbl">Nós no workflow</div>
+      <div class="sub">Pipelines duplicados consolidados em um fluxo único. Manutenção 2x mais rápida.</div>
+    </div>
+    <div class="stat">
+      <div class="glow"></div>
+      <div class="num"><span class="counter" data-to="1180">0</span></div>
+      <div class="lbl">Leads encontrados</div>
+      <div class="sub">Qualificados, represados desde dezembro. ~130 por mês que não chegavam ao Bitrix.</div>
+    </div>
+    <div class="stat">
+      <div class="glow"></div>
+      <div class="num"><span class="counter" data-to="20">0</span></div>
+      <div class="lbl">Nós blindados</div>
+      <div class="sub">Retry + timeout em LLM, Supabase e HTTP. Falha de API não derruba mais a conversa.</div>
+    </div>
+    <div class="stat">
+      <div class="glow"></div>
+      <div class="num"><span class="counter" data-to="214">0</span><small> / </small><span class="counter" data-to="1180">0</span></div>
+      <div class="lbl">Leads quentes em recuperação</div>
+      <div class="sub">214 imediatos no Bitrix, 267 mornos na sequência, 699 frios em campanha de reativação.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= POR QUE NUNCA FOI FEITO ================= -->
+<section class="act" style="padding-top:60px">
+  <div class="act-num">?</div>
+  <div class="kicker reveal">A pergunta certa</div>
+  <h2 class="reveal" data-delay="1">Por que isso <span class="hl">nunca foi feito?</span></h2>
+  <div class="why reveal" data-delay="2">
+    <h3>Porque o produto cresceu mais rápido que a engenharia</h3>
+    <p>Era um produto novo, de tecnologia nova, implementado sob medida cliente a cliente. A prioridade era <b>fazer funcionar</b> — não fazer <b>não-quebrar</b>.</p>
+    <p>E o pior tipo de falha é a invisível: o cliente conversava normalmente, parecia tudo certo. Só o lead que não chegava. <b>Bug silencioso não incomoda ninguém</b> — e sem monitoramento, só aparecia no fim do mês, na comparação de volume.</p>
+    <ul>
+      <li><b>Padrão novo:</b> toda SDR IA V4 agora nasce com essa camada de engenharia — a Signor é o caso de referência</li>
+      <li><b>Monitoramento:</b> análise ponta a ponta faz parte do acompanhamento, detecção em horas</li>
+      <li><b>Documentação:</b> cada correção registrada — nada de conhecimento que se perde</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= QUOTE ================= -->
+<section class="quote reveal">
+  <div class="q">A corrente deixou de existir.<br><span class="hl">Agora cada elo se defende sozinho —<br>e a entrega é garantida.</span></div>
+  <div class="who">Princípio da nova arquitetura</div>
+</section>
+
+<!-- ================= FINAL ================= -->
+<section class="final">
+  <div class="kicker reveal">O que vem agora</div>
+  <h2 class="reveal" data-delay="1">Previsibilidade,<br><span class="hl">de forma contínua</span></h2>
+  <div class="commit-list reveal" data-delay="2">
+    <div class="commit">
+      <div class="n">01</div>
+      <h4>Recuperação em etapas</h4>
+      <p>214 quentes agora, 267 mornos na sequência, 699 frios em reativação — decisão com o comercial.</p>
+    </div>
+    <div class="commit">
+      <div class="n">02</div>
+      <h4>Monitoramento semanal</h4>
+      <p>Conversas × leads entregues conferidos toda semana. Represamento aparece em horas, não meses.</p>
+    </div>
+    <div class="commit">
+      <div class="n">03</div>
+      <h4>Token de longa validade</h4>
+      <p>Credencial migrada para System User. O elo que mais expirava deixa de existir.</p>
+    </div>
+    <div class="commit">
+      <div class="n">04</div>
+      <h4>Status no check-in</h4>
+      <p>O que foi feito, o que está em curso e o que vem a seguir — transparente, toda reunião.</p>
+    </div>
+  </div>
+  <div class="outro reveal" data-delay="3">
+    <b>O volume de leads que combinamos é o volume que a Signor recebe.</b> Isso agora é uma garantia de engenharia — não uma esperança.
+  </div>
+</section>
+
+<footer>
+  <span>SIGNOR · <b>SDR IA</b> · Jul/2026</span>
+  <span>V4 Peretto · Tech Lead · Acompanhamento contínuo</span>
+</footer>
+
+<script>
+// progress bar
+const bar=document.getElementById('progress');
+addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const p=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  bar.style.width=p+'%';
+},{passive:true});
+
+// reveal on scroll
+const io=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target)}});
+},{threshold:.18});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// chain interaction (Ato 1)
+const links=document.querySelectorAll('.chain .link');
+links.forEach(l=>{
+  l.addEventListener('click',()=>{
+    if(l.classList.contains('break')){l.classList.remove('break');return}
+    l.classList.add('break');
+    const orig=l.querySelector('.txt').innerHTML;
+    l.querySelector('.txt').innerHTML=l.dataset.msg;
+    setTimeout(()=>{
+      l.classList.remove('break');
+      l.querySelector('.txt').innerHTML=orig;
+    },2600);
+  });
+});
+
+// counters (Ato 3)
+function animate(el){
+  const to=+el.dataset.to;
+  const dur=1400;
+  const t0=performance.now();
+  const tick=(t)=>{
+    const p=Math.min((t-t0)/dur,1);
+    const eased=1-Math.pow(1-p,3);
+    el.textContent=Math.round(to*eased).toLocaleString('pt-BR');
+    if(p<1)requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+const cio=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.counter').forEach(animate);cio.unobserve(e.target)}});
+},{threshold:.4});
+document.querySelectorAll('.stats .stat').forEach(s=>cio.observe(s));
+</script>
+</body>
+</html>

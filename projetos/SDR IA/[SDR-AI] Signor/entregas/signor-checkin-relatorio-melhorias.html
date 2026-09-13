@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SDR IA Signor · Relatório de Melhorias</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Barlow:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F0E9;
+  --paper:#FBF9F4;
+  --ink:#161614;
+  --ink-soft:#4A4A44;
+  --line:#D9D4C8;
+  --line-strong:#B9B2A2;
+  --orange:#FF6B00;
+  --orange-dark:#D95500;
+  --graphite:#26261F;
+  --green:#1E7A46;
+  --red:#C23321;
+  --amber:#B97A00;
+  --mono:'JetBrains Mono',monospace;
+  --display:'Barlow Condensed',sans-serif;
+  --body:'Barlow',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:48px 48px;
+  font-family:var(--body);
+  color:var(--ink);
+  line-height:1.55;
+}
+.wrap{max-width:1060px;margin:0 auto;padding:0 28px 80px}
+/* ---------- topbar ---------- */
+.topbar{
+  background:var(--graphite);
+  color:#F3F0E9;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:8px 28px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.topbar b{color:var(--orange);font-weight:800}
+/* ---------- header ---------- */
+.masthead{
+  background:var(--paper);
+  border:2px solid var(--ink);
+  margin:36px 0 0;position:relative;
+}
+.masthead::before,.masthead::after{content:"";position:absolute;width:14px;height:14px;border:2px solid var(--orange);background:var(--paper)}
+.masthead::before{top:-8px;left:-8px}
+.masthead::after{bottom:-8px;right:-8px}
+.masthead-inner{padding:34px 40px 30px;display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}
+.doc-id{font-family:var(--mono);font-size:11px;color:var(--ink-soft);letter-spacing:.12em;text-transform:uppercase}
+.doc-id b{color:var(--orange-dark)}
+h1{
+  font-family:var(--display);font-weight:900;font-size:clamp(34px,5vw,54px);
+  line-height:.98;text-transform:uppercase;margin:10px 0 6px;letter-spacing:.01em;
+}
+h1 .thin{color:var(--ink-soft);font-weight:600}
+.sub{font-size:17px;color:var(--ink-soft);max-width:620px}
+.meta{margin-top:18px;font-family:var(--mono);font-size:12px;display:flex;gap:24px;flex-wrap:wrap;color:var(--ink-soft)}
+.meta span b{color:var(--ink)}
+/* ---------- sections ---------- */
+section{margin-top:52px}
+.sec-head{display:flex;align-items:baseline;gap:14px;border-bottom:3px solid var(--ink);padding-bottom:8px;margin-bottom:26px}
+.sec-num{font-family:var(--display);font-weight:900;font-size:26px;color:var(--orange);line-height:1}
+.sec-title{font-family:var(--display);font-weight:800;font-size:30px;text-transform:uppercase;letter-spacing:.02em}
+.sec-tag{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--line-strong);padding:3px 8px;background:var(--paper)}
+/* ---------- resumo ---------- */
+.resumo{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.card{
+  background:var(--paper);border:2px solid var(--ink);padding:20px 18px;position:relative;
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--ink)}
+.card::after{content:"";position:absolute;top:0;right:0;width:34px;height:34px;background:repeating-linear-gradient(45deg,var(--line-strong) 0 2px,transparent 2px 4px);opacity:.35}
+.card .k{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+.card .v{font-family:var(--display);font-weight:900;font-size:44px;line-height:1;margin:6px 0 4px;letter-spacing:.01em}
+.card .v em{font-style:normal;color:var(--orange)}
+.card .d{font-size:13px;color:var(--ink-soft)}
+.card.ok{border-color:var(--green)}
+.card.ok .v{color:var(--green)}
+.card.warn .v{color:var(--red)}
+/* ---------- tabela pilares ---------- */
+.tbl-wrap{overflow-x:auto;background:var(--paper);border:2px solid var(--ink)}
+table{width:100%;border-collapse:collapse;min-width:760px}
+thead th{
+  background:var(--graphite);color:#F3F0E9;font-family:var(--display);font-weight:700;
+  text-transform:uppercase;letter-spacing:.06em;font-size:14px;padding:12px 14px;text-align:left;
+}
+thead th:first-child{color:var(--orange)}
+tbody td{padding:14px;border-top:1px solid var(--line);vertical-align:top;font-size:14.5px}
+tbody tr:nth-child(even){background:#F5F2EA}
+td.pilar{font-family:var(--display);font-weight:800;font-size:19px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap}
+td.num{font-family:var(--mono);font-weight:700;font-size:14px;white-space:nowrap}
+td.num.good{color:var(--green)}
+td.num.bad{color:var(--red)}
+td .tag{
+  display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--ink);padding:2px 7px;margin-right:6px;background:#fff;
+}
+td .tag.fix{background:var(--orange);color:#fff;border-color:var(--orange)}
+/* ---------- timeline ---------- */
+.tl{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;border:2px solid var(--ink);background:var(--paper)}
+.tl .ph{padding:22px 18px;border-right:1px dashed var(--line-strong);position:relative}
+.tl .ph:last-child{border-right:none}
+.tl .ph::before{content:"";position:absolute;top:-1px;left:18px;width:12px;height:12px;background:var(--orange);border:2px solid var(--ink);transform:rotate(45deg)}
+.tl .when{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--orange-dark);font-weight:700}
+.tl .who{font-family:var(--display);font-weight:900;font-size:20px;text-transform:uppercase;margin:4px 0 8px;letter-spacing:.02em}
+.tl ul{list-style:none}
+.tl li{font-size:12.8px;color:var(--ink-soft);padding-left:14px;position:relative;margin-bottom:5px}
+.tl li::before{content:"▸";position:absolute;left:0;color:var(--orange);font-weight:700}
+/* ---------- recuperacao ---------- */
+.rec{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.rec .stage{background:var(--paper);border:2px solid var(--ink);padding:20px;display:flex;flex-direction:column;gap:6px;position:relative}
+.rec .stage .bar{height:10px;background:var(--line);position:relative;overflow:hidden}
+.rec .stage .bar i{display:block;height:100%;background:var(--orange)}
+.rec .stage.hot .bar i{background:var(--red)}
+.rec .stage.warm .bar i{background:var(--orange)}
+.rec .stage.cold .bar i{background:var(--line-strong)}
+.rec .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+.rec .qty{font-family:var(--display);font-weight:900;font-size:38px;line-height:1}
+.rec .status{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:15px;letter-spacing:.04em}
+.rec .status.doing{color:var(--red)}
+.rec .status.next{color:var(--orange-dark)}
+.rec .status.plan{color:var(--ink-soft)}
+.rec .desc{font-size:12.8px;color:var(--ink-soft)}
+/* ---------- blindagem ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{
+  background:var(--paper);border:2px solid var(--ink);padding:12px 16px;font-size:14px;
+  display:flex;align-items:center;gap:10px;transition:transform .15s ease;
+}
+.chip:hover{transform:translateY(-2px)}
+.chip .ic{font-family:var(--display);font-weight:900;font-size:20px;color:var(--orange)}
+.chip b{font-family:var(--mono);font-size:12px;display:block;color:var(--ink-soft);font-weight:500}
+/* ---------- compromissos ---------- */
+.commit{background:var(--graphite);color:#F3F0E9;padding:30px 34px;border:2px solid var(--ink);position:relative}
+.commit::before{content:"";position:absolute;top:-1px;left:-1px;border-top:18px solid var(--orange);border-right:18px solid transparent}
+.commit ol{margin:14px 0 0 20px;display:grid;gap:10px}
+.commit li{font-size:15.5px}
+.commit li b{color:var(--orange)}
+.commit .c-title{font-family:var(--display);font-weight:900;font-size:26px;text-transform:uppercase;letter-spacing:.02em}
+/* ---------- footer ---------- */
+footer{margin-top:60px;padding-top:18px;border-top:2px solid var(--ink);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.1em}
+.stamp{font-family:var(--display);font-weight:900;font-size:15px;color:var(--orange-dark);letter-spacing:.12em;border:2px solid var(--orange-dark);padding:4px 12px;transform:rotate(-2deg)}
+@media print{
+  body{background:#fff;background-image:none}
+  .masthead,.card,.tbl-wrap,.tl,.rec .stage,.chip,.commit{box-shadow:none}
+  .card:hover{transform:none;box-shadow:none}
+}
+@media(max-width:640px){
+  .masthead-inner{padding:24px 22px}
+  h1{font-size:34px}
+  .sec-title{font-size:24px}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span>SDR IA · <b>V4</b> Peretto</span>
+  <span>Documento interno · Check-in</span>
+</div>
+
+<div class="wrap">
+
+  <!-- ============ MASTHEAD ============ -->
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div>
+        <div class="doc-id">Doc <b>V4-SDR-002</b> · Relatório técnico · Confidencial</div>
+        <h1>Signor Concretos<br><span class="thin">SDR IA — Relatório de Melhorias</span></h1>
+        <p class="sub">Consolidação do histórico de problemas, correções aplicadas e plano de recuperação da automação de atendimento. Estrutura consolidada, resiliente e observável.</p>
+        <div class="meta">
+          <span><b>Status:</b> Estável</span>
+          <span><b>Fases:</b> 4 · jun/2025 → jul/2026</span>
+          <span><b>Elaborado:</b> Marcos · Tech Lead</span>
+          <span><b>V2.0</b></span>
+        </div>
+      </div>
+      <div class="stamp" style="align-self:flex-start">APROVADO<br>P/ OPERAÇÃO</div>
+    </div>
+  </header>
+
+  <!-- ============ 01 RESUMO ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <span class="sec-title">Resumo executivo</span>
+      <span class="sec-tag">60s read</span>
+    </div>
+    <div class="resumo">
+      <div class="card">
+        <div class="k">Nós do workflow</div>
+        <div class="v">142 → <em>68</em></div>
+        <div class="d">Pipelines duplicados consolidados em um único fluxo. Metade do código, manutenção 2x mais rápida.</div>
+      </div>
+      <div class="card ok">
+        <div class="k">Leads encontrados</div>
+        <div class="v"><em>1.180</em></div>
+        <div class="d">Qualificados e represados desde dez/2025 (~130/mês). Causa corrigida na origem + recuperação em andamento.</div>
+      </div>
+      <div class="card ok">
+        <div class="k">Pontos sem blindagem</div>
+        <div class="v"><em>0</em></div>
+        <div class="d">Retry e timeout em todos os nós críticos (LLM, Supabase, HTTP). Falha de API não derruba mais a conversa.</div>
+      </div>
+      <div class="card warn">
+        <div class="k">Detecção de falha</div>
+        <div class="v">mês → <em>horas</em></div>
+        <div class="d">Antes: bugs silenciosos descobertos no fim do mês. Agora: monitoramento ponta a ponta conversas × leads entregues.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 PILARES ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <span class="sec-title">Pilares de melhoria</span>
+      <span class="sec-tag">antes × depois</span>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Pilar</th>
+            <th>Antes</th>
+            <th>Depois</th>
+            <th>Número-chave</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="pilar">Estrutura</td>
+            <td>Dois pipelines idênticos rodando em paralelo: lead duplicado no Bitrix, IA respondia o cliente duas vezes, correção sempre em dobro.</td>
+            <td><span class="tag fix">Corrigido</span>Um pipeline consolidado, sem referências cruzadas entre cópias.</td>
+            <td class="num good">142 → 68 nós</td>
+          </tr>
+          <tr>
+            <td class="pilar">Resiliência</td>
+            <td>Qualquer falha da API (Meta, OpenAI, Bitrix) matava a conversa no meio. Zero retry, zero timeout.</td>
+            <td><span class="tag fix">Corrigido</span>Retry 3x em nós LLM, Supabase e HTTP; timeout 30s nas chamadas externas.</td>
+            <td class="num good">20 nós blindados</td>
+          </tr>
+          <tr>
+            <td class="pilar">Mídia</td>
+            <td>Download de imagem/PDF falhava (token expirado, domínio não liberado); áudio chegava vazio para a IA.</td>
+            <td><span class="tag fix">Corrigido</span>Cadeia de mídia validada ponta a ponta: imagem, áudio, PDF, vídeo e fallback para tipos inesperados.</td>
+            <td class="num good">100% dos formatos</td>
+          </tr>
+          <tr>
+            <td class="pilar">Entrega</td>
+            <td>Trava de e-mail segurava leads completos no sistema: 1.180 atendimentos não chegaram ao Bitrix.</td>
+            <td><span class="tag fix">Corrigido</span>E-mail 100% opcional; lead vira MQL com dados essenciais e vai direto ao CRM.</td>
+            <td class="num bad">1.180 → recuperação</td>
+          </tr>
+          <tr>
+            <td class="pilar">Isolamento</td>
+            <td>Redis e infraestrutura compartilhados entre clientes, sem separação.</td>
+            <td><span class="tag fix">Corrigido</span>Prefixo <code>signor:</code> nas chaves Redis — dados e sessões isolados por cliente.</td>
+            <td class="num good">sem colisão</td>
+          </tr>
+          <tr>
+            <td class="pilar">Visibilidade</td>
+            <td>Falhas silenciosas: lead não chegava e ninguém sabia. Descoberta levava meses.</td>
+            <td><span class="tag fix">Novo</span>Análise ponta a ponta (conversas × leads encaminhados) no acompanhamento contínuo.</td>
+            <td class="num good">detecção em horas</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ 03 TIMELINE ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <span class="sec-title">Histórico de fases</span>
+      <span class="sec-tag">jun/2025 → jul/2026</span>
+    </div>
+    <div class="tl">
+      <div class="ph">
+        <div class="when">Jun / 2025</div>
+        <div class="who">Fase 1 · Consolidação</div>
+        <ul>
+          <li>Pipelines duplicados (142 nós) causando lead duplo e resposta dupla</li>
+          <li>16 nós órfãos legados removidos</li>
+          <li>Bug de referência entre cópias corrigido</li>
+          <li>Token de mídia expirado identificado</li>
+        </ul>
+      </div>
+      <div class="ph">
+        <div class="when">Nov / 2025</div>
+        <div class="who">Fase 2 · Comportamento</div>
+        <ul>
+          <li>11 correções de comportamento da IA documentadas em report</li>
+          <li>Slot filling, prazos, arquivos, muros, irritação, 3D</li>
+          <li>E-mail redefinido como opcional</li>
+          <li>Regras anti-repetição e escalonamento humano</li>
+        </ul>
+      </div>
+      <div class="ph">
+        <div class="when">Jul / 2026</div>
+        <div class="who">Fase 3 · Blindagem</div>
+        <ul>
+          <li>Histórico truncado em 72h — causa raiz de repetição de perguntas</li>
+          <li>Trava de e-mail — 1.180 leads represados encontrados</li>
+          <li>Retry/timeout em 20 nós críticos</li>
+          <li>Isolamento Redis por cliente</li>
+        </ul>
+      </div>
+      <div class="ph">
+        <div class="when">Jul / 2026</div>
+        <div class="who">Fase 4 · Recuperação</div>
+        <ul>
+          <li>Plano em etapas: quentes → mornos → frios</li>
+          <li>214 leads quentes encaminhados ao Bitrix</li>
+          <li>Causa corrigida na origem (prevenção)</li>
+          <li>Monitoramento contínuo ativado</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 RECUPERACAO ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <span class="sec-title">Recuperação de leads</span>
+      <span class="sec-tag">1.180 no total</span>
+    </div>
+    <div class="rec">
+      <div class="stage hot">
+        <div class="lbl">Quentes · Jun–Jul</div>
+        <div class="qty">214</div>
+        <div class="status doing">Em andamento</div>
+        <div class="bar"><i style="width:100%"></i></div>
+        <div class="desc">Atendimentos recentes, encaminhados completos ao Bitrix com prioridade.</div>
+      </div>
+      <div class="stage warm">
+        <div class="lbl">Mornos · Abr–Mai</div>
+        <div class="qty">267</div>
+        <div class="status next">Próxima etapa</div>
+        <div class="bar"><i style="width:0%"></i></div>
+        <div class="desc">Encaminhamento conforme resultado da etapa 1 e validação do time comercial.</div>
+      </div>
+      <div class="stage cold">
+        <div class="lbl">Frios · Dez–Mar</div>
+        <div class="qty">699</div>
+        <div class="status plan">Reativação</div>
+        <div class="bar"><i style="width:0%"></i></div>
+        <div class="desc">Ação de reativação em vez de encaminhamento direto — decisão com o comercial.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 BLINDAGEM ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">05</span>
+      <span class="sec-title">Blindagem aplicada</span>
+      <span class="sec-tag">arquitetura</span>
+    </div>
+    <p style="margin-bottom:18px;font-size:15px;color:var(--ink-soft);max-width:780px">
+      <b style="color:var(--ink)">Princípio:</b> a IA fica com o que ela faz de melhor — entender e conversar com o cliente. Regras determinísticas garantem o que não pode falhar — entregar o lead no CRM.
+    </p>
+    <div class="chips">
+      <div class="chip"><span class="ic">LLM</span><span>Retry 3x / 2s em nós de IA<b>contra timeout da OpenAI</b></span></div>
+      <div class="chip"><span class="ic">DB</span><span>Retry 3x / 2s em 12 nós Supabase<b>contra ECONNRESET de pool</b></span></div>
+      <div class="chip"><span class="ic">API</span><span>Retry + timeout 30s em 5 nós HTTP<b>Bitrix e WhatsApp resilientes</b></span></div>
+      <div class="chip"><span class="ic">FMT</span><span>Fallback em roteadores de mídia<b>tipos inesperados não se perdem</b></span></div>
+      <div class="chip"><span class="ic">ISO</span><span>Isolamento Redis por cliente<b>prefixo signor: — zero colisão</b></span></div>
+    </div>
+  </section>
+
+  <!-- ============ 06 COMPROMISSOS ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">06</span>
+      <span class="sec-title">Compromissos</span>
+      <span class="sec-tag">ritual</span>
+    </div>
+    <div class="commit">
+      <div class="c-title">Acompanhamento contínuo</div>
+      <ol>
+        <li><b>Monitoramento ponta a ponta:</b> análise semanal de conversas × leads entregues — qualquer represamento é detectado em horas, não meses.</li>
+        <li><b>Token de longa validade:</b> credencial do WhatsApp migrada para System User, eliminando expiração recorrente.</li>
+        <li><b>Testes de regressão:</b> cenários críticos (muro, foto, irritação, prazo) validados a cada mudança de prompt.</li>
+        <li><b>Recuperação concluída:</b> 214 quentes agora, 267 mornos na sequência, 699 frios em campanha de reativação.</li>
+        <li><b>Transparência:</b> relatório de status no check-in, com o que foi feito, o que está em curso e o que vem a seguir.</li>
+      </ol>
+    </div>
+  </section>
+
+  <footer>
+    <span>V4 Peretto · Tech Lead · SDR IA</span>
+    <span>Signor Concretos · Check-in · Jul/2026</span>
+    <span class="stamp" style="transform:none;border:none;color:var(--ink-soft);font-family:var(--mono);font-size:11px">SIG-SDR-2026-07</span>
+  </footer>
+
+</div>
+</body>
+</html>

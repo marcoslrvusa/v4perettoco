@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signor Concretos · A obra por trás da conversa · V4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Barlow:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F1EA;
+  --paper:#FCFAF5;
+  --ink:#171614;
+  --ink-soft:#4E4B43;
+  --line:#DDD8CB;
+  --line-strong:#BFB8A6;
+  --orange:#FF6B00;
+  --orange-dark:#D95500;
+  --graphite:#23211C;
+  --graphite-2:#2E2B24;
+  --red:#E31919;
+  --green:#1E7A46;
+  --concrete:#8A857A;
+  --display:'Barlow Condensed',sans-serif;
+  --body:'Barlow',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:52px 52px;
+  font-family:var(--body);color:var(--ink);line-height:1.6;overflow-x:hidden;
+}
+::selection{background:var(--orange);color:#fff}
+#progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--red),var(--orange));width:0%;z-index:100}
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+.reveal.vis{opacity:1;transform:none}
+.reveal[data-d="1"]{transition-delay:.12s}
+.reveal[data-d="2"]{transition-delay:.24s}
+.reveal[data-d="3"]{transition-delay:.36s}
+
+/* ---------- topbar ---------- */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:90;background:rgba(23,22,20,.97);
+  display:flex;justify-content:space-between;align-items:center;padding:10px 30px;
+  border-bottom:1px solid #3A362C;
+}
+.topbar .brand{display:flex;align-items:center;gap:14px}
+.topbar img.brand-logo{height:26px;width:auto}
+.topbar .divider{width:1px;height:22px;background:#4A463A}
+.topbar .client{font-family:var(--display);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:14px;color:#F4F1EA}
+.topbar .client b{color:var(--orange)}
+.topbar .tag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#A9A292}
+
+/* ---------- hero ---------- */
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px 8vw 80px;position:relative;background:
+  radial-gradient(900px 480px at 85% -5%,rgba(227,25,25,.10),transparent 60%),
+  radial-gradient(700px 400px at -5% 40%,rgba(255,107,0,.07),transparent 60%)}
+.hero-inner{max-width:1080px;width:100%}
+.hero .kicker{display:flex;align-items:center;gap:14px;font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--orange-dark);font-weight:700}
+.hero .kicker::before{content:"";width:44px;height:2px;background:var(--orange)}
+.hero h1{
+  font-family:var(--display);font-weight:900;text-transform:uppercase;line-height:.92;
+  font-size:clamp(52px,9vw,128px);letter-spacing:.005em;margin:24px 0 8px;
+}
+.hero h1 .thin{color:var(--ink-soft);font-weight:600}
+.hero h1 .hl{color:var(--red)}
+.hero .lede{max-width:640px;font-size:18.5px;color:var(--ink-soft);font-weight:300;margin-top:18px}
+.hero .lede b{color:var(--ink);font-weight:600}
+.hero .seal-row{display:flex;gap:14px;margin-top:40px;flex-wrap:wrap}
+.seal{
+  border:2px solid var(--ink);background:var(--paper);padding:14px 20px;display:flex;align-items:center;gap:12px;
+  font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-size:15px;
+}
+.seal .n{font-family:var(--mono);font-weight:800;font-size:24px;color:var(--orange);letter-spacing:0}
+.seal .d{font-size:12px;color:var(--ink-soft);font-weight:600;letter-spacing:.1em}
+.hero .sides{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center}
+.hero .v4-mark{width:150px;opacity:.9}
+
+/* ---------- section base ---------- */
+section{padding:100px 8vw}
+.sec-head{margin-bottom:48px;max-width:820px}
+.sec-num{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--orange-dark);font-weight:700;display:flex;align-items:center;gap:12px}
+.sec-num::before{content:"";width:34px;height:2px;background:var(--orange)}
+.sec-head h2{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(38px,6vw,72px);line-height:.94;margin:14px 0 14px;letter-spacing:.01em}
+.sec-head h2 .hl{color:var(--red)}
+.sec-head .sub{font-size:17px;color:var(--ink-soft);max-width:680px;font-weight:300}
+.sec-head .sub b{color:var(--ink);font-weight:600}
+
+/* ---------- porquê: lab / jornada ---------- */
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.why-card{background:var(--paper);border:2px solid var(--ink);padding:30px 26px;position:relative;overflow:hidden;transition:transform .2s ease,box-shadow .2s ease}
+.why-card:hover{transform:translateY(-5px);box-shadow:8px 8px 0 rgba(23,22,20,.14)}
+.why-card .n{
+  position:absolute;top:16px;right:20px;font-family:var(--display);font-weight:900;font-size:64px;line-height:1;
+  color:transparent;-webkit-text-stroke:1.5px var(--line-strong);
+}
+.why-card .ic{font-family:var(--display);font-weight:900;font-size:34px;color:var(--orange);display:block;margin-bottom:10px}
+.why-card h3{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:26px;letter-spacing:.03em;margin-bottom:10px}
+.why-card h3 small{display:block;font-weight:600;font-size:14px;color:var(--orange-dark);letter-spacing:.14em;margin-bottom:2px}
+.why-card p{font-size:14.5px;color:var(--ink-soft);margin-bottom:12px}
+.why-card .analogy{
+  background:#FFF4E6;border-left:4px solid var(--orange);padding:12px 14px;font-size:13.5px;color:#6B4A1F;
+}
+.why-card .analogy b{font-weight:700}
+.why-card .tag-line{margin-top:12px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);font-weight:700}
+.why-concl{
+  margin-top:22px;background:var(--graphite);color:#F4F1EA;padding:24px 28px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;
+}
+.why-concl .lab{
+  font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:22px;letter-spacing:.05em;color:var(--orange);
+  display:flex;align-items:center;gap:12px;white-space:nowrap;
+}
+.why-concl .lab::before{content:"⬢";color:var(--red)}
+.why-concl p{font-size:15px;color:#C9C2B2;font-weight:300;max-width:720px}
+.why-concl p b{color:#fff;font-weight:600}
+
+/* ---------- didatico: camadas ---------- */
+.layers{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.layer{background:var(--paper);border:2px solid var(--ink);padding:30px 26px;position:relative;overflow:hidden;transition:transform .2s ease,box-shadow .2s ease}
+.layer:hover{transform:translateY(-5px);box-shadow:8px 8px 0 rgba(23,22,20,.14)}
+.layer .n{
+  position:absolute;top:16px;right:20px;font-family:var(--display);font-weight:900;font-size:64px;line-height:1;
+  color:transparent;-webkit-text-stroke:1.5px var(--line-strong);
+}
+.layer .ic{font-family:var(--display);font-weight:900;font-size:34px;color:var(--orange);display:block;margin-bottom:10px}
+.layer h3{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:27px;letter-spacing:.03em;margin-bottom:10px}
+.layer h3 small{display:block;font-weight:600;font-size:14px;color:var(--orange-dark);letter-spacing:.14em;margin-bottom:2px}
+.layer p{font-size:14.5px;color:var(--ink-soft);margin-bottom:12px}
+.layer .analogy{
+  background:#FFF4E6;border-left:4px solid var(--orange);padding:12px 14px;font-size:13.5px;color:#6B4A1F;
+}
+.layer .analogy b{font-weight:700}
+.layer .tag-line{margin-top:12px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);font-weight:700}
+
+/* ---------- como funciona (3 passos) ---------- */
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch;gap:0;margin-top:10px}
+.fstep{background:var(--graphite);color:#F4F1EA;padding:34px 28px;position:relative;min-height:300px;display:flex;flex-direction:column}
+.fstep .fn{font-family:var(--display);font-weight:900;font-size:74px;line-height:1;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.25);position:absolute;top:14px;right:20px}
+.fstep h3{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:26px;letter-spacing:.04em;margin-bottom:12px}
+.fstep p{font-size:14.5px;color:#C9C2B2;font-weight:300}
+.fstep .role{margin-top:auto;padding-top:18px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--orange)}
+.fstep .role b{color:#fff}
+.farrow{display:flex;align-items:center;justify-content:center;padding:0 14px;font-family:var(--display);font-weight:900;font-size:38px;color:var(--orange)}
+@media(max-width:900px){.flow{grid-template-columns:1fr}.farrow{transform:rotate(90deg);padding:8px 0}}
+
+/* resiliência cards */
+.resil{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:26px}
+.resil .r{background:var(--paper);border:2px solid var(--ink);padding:20px 22px;display:flex;gap:16px;align-items:flex-start}
+.resil .r .ic{font-size:26px;line-height:1.2}
+.resil .r b{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:17px;letter-spacing:.04em;display:block}
+.resil .r p{font-size:13.5px;color:var(--ink-soft)}
+.resil .r .ex{font-size:12.5px;color:var(--concrete);font-style:italic;margin-top:6px}
+
+/* ---------- garantias ---------- */
+.guarantee-section{background:var(--graphite);color:#F4F1EA;position:relative;overflow:hidden}
+.guarantee-section::before{content:"";position:absolute;top:-120px;right:-120px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(227,25,25,.16),transparent 70%)}
+.guarantee-section .sec-head h2{color:#fff}
+.guarantee-section .sec-head .sub{color:#B9B2A2}
+.guarantee-section .sec-head .sub b{color:#fff}
+.guarantees{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.g{
+  background:var(--graphite-2);border:1px solid #4A463A;padding:28px 26px;position:relative;
+  transition:border-color .25s ease,transform .25s ease;
+}
+.g:hover{border-color:var(--orange);transform:translateY(-4px)}
+.g .gn{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);font-weight:700}
+.g .gnum{font-family:var(--display);font-weight:900;font-size:64px;line-height:1;color:#fff;margin:10px 0 4px}
+.g .gnum small{font-size:.38em;color:#8F8A7C;font-weight:700}
+.g .gt{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:20px;letter-spacing:.04em;color:var(--orange);margin-bottom:8px}
+.g p{font-size:14px;color:#C9C2B2;font-weight:300}
+.g p b{color:#fff;font-weight:600}
+
+/* ---------- reconexao ---------- */
+.reconnect{display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:start}
+.reconnect .story p{font-size:16px;color:var(--ink-soft);margin-bottom:16px;font-weight:300}
+.reconnect .story p b{color:var(--ink);font-weight:600}
+.reconnect .story .promise{
+  background:var(--paper);border:2px solid var(--ink);border-left:8px solid var(--green);
+  padding:22px 24px;font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:19px;letter-spacing:.04em;line-height:1.3;margin-top:22px;
+}
+.phases{display:grid;gap:12px}
+.phase{background:var(--paper);border:2px solid var(--ink);padding:20px 22px;display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;position:relative}
+.phase .pn{font-family:var(--display);font-weight:900;font-size:44px;line-height:1;color:var(--orange);width:56px;text-align:center;border-right:2px dashed var(--line-strong)}
+.phase h4{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:19px;letter-spacing:.04em}
+.phase p{font-size:13.5px;color:var(--ink-soft)}
+.phase .st{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;padding:5px 10px;border:1.5px solid var(--ink)}
+.phase .st.go{color:var(--green);border-color:var(--green)}
+.phase .st.next{color:var(--orange-dark);border-color:var(--orange)}
+.phase .st.warm{color:var(--ink-soft)}
+@media(max-width:900px){.reconnect{grid-template-columns:1fr}.phase{grid-template-columns:1fr;gap:8px}.phase .pn{border-right:none;border-bottom:2px dashed var(--line-strong);width:100%;text-align:left}}
+
+/* ---------- rito / acompanhamento ---------- */
+.rituals{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.ritual{background:var(--paper);border:2px solid var(--ink);padding:26px 24px;position:relative}
+.ritual .rn{position:absolute;top:-14px;left:20px;background:var(--red);color:#fff;font-family:var(--mono);font-weight:800;font-size:11px;letter-spacing:.12em;padding:4px 10px;text-transform:uppercase}
+.ritual h4{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:20px;letter-spacing:.04em;margin-bottom:8px}
+.ritual p{font-size:14px;color:var(--ink-soft)}
+
+/* ---------- final ---------- */
+.final{background:var(--red);color:#fff;padding:110px 8vw;position:relative;overflow:hidden}
+.final::before{content:"";position:absolute;top:-60px;left:-60px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.12),transparent 70%)}
+.final h2{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(42px,7vw,96px);line-height:.92;max-width:900px;letter-spacing:.01em}
+.final h2 .hl{color:#FFB4A6}
+.final .fs{font-size:18px;max-width:620px;margin-top:22px;font-weight:300;color:#FFD9D2}
+.final .fs b{font-weight:700;color:#fff}
+.final .sign{margin-top:48px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.final .sign .who{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:20px;letter-spacing:.1em}
+.final .sign .role{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#FFC9C0}
+.final img.v4-foot{height:34px;width:auto;opacity:.9;margin-left:auto}
+
+footer{padding:26px 8vw 40px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--concrete)}
+footer b{color:var(--ink)}
+
+/* print */
+@media print{
+  body{background:#fff;background-image:none}
+  .topbar{position:static}
+  .reveal{opacity:1;transform:none}
+}
+@media(max-width:640px){
+  section{padding:70px 7vw}
+  .hero{padding:110px 7vw 60px}
+  .topbar .tag{display:none}
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- ============ TOPBAR ============ -->
+<div class="topbar">
+  <div class="brand">
+    <img class="brand-logo" src="logo-v4-white.png" alt="V4 Company">
+    <span class="divider"></span>
+    <span class="client">Signor Concretos · <b>SDR IA</b></span>
+  </div>
+  <span class="tag">Check-in · Ago/2026 · V4</span>
+</div>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="kicker reveal vis">V4 Company · Engenharia de Confiabilidade · SDR IA</div>
+    <h1 class="reveal vis" data-d="1">A obra por trás<br>da <span class="hl">conversa</span></h1>
+    <p class="lede reveal vis" data-d="2">Começamos pelo que o mercado valida — <b>os benchmarks de OpenAI, Nvidia e Google</b>. Mas nenhum benchmark cobre a especificidade da sua operação, e o protocolo padrão não é seguro contra falhas silenciosas. Como pioneiros, construímos um <b>lab próprio</b> — documentação, diagnóstico e proteções que nenhum benchmark oferece. Este documento explica, em linguagem de obra, <b>por que existe engenharia por trás da conversa</b> — o que foi construído, o que isso garante e como você acompanha.</p>
+    <div class="seal-row reveal vis" data-d="3">
+      <div class="seal"><span class="n">1</span><span class="d">Fluxo único<br>sem duplicação</span></div>
+      <div class="seal"><span class="n">0</span><span class="d">Pontos de falha<br>sem proteção</span></div>
+      <div class="seal"><span class="n">24/7</span><span class="d">Atendimento<br>vigilante</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ PORQUÊ: O LAB ============ -->
+<section>
+  <div class="sec-head reveal">
+    <div class="sec-num">01 · O porquê</div>
+    <h2>O mercado valida. <span class="hl">Nós construímos.</span></h2>
+    <p class="sub">Quando o projeto começou, seguimos o que havia de mais validado no mercado: <b>os benchmarks de OpenAI, Nvidia e Google</b>. Referência séria, mas limitada — ela diz o que funciona <b>no geral</b>, não o que sustenta <b>a sua operação</b>. E há um perigo que o protocolo padrão não cobre. Veja a jornada:</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card reveal" data-d="1">
+      <span class="n">01</span>
+      <span class="ic">▤</span>
+      <h3><small>O ponto de partida</small>Benchmark valida o geral</h3>
+      <p>Começamos pelo padrão do mercado: <b>OpenAI, Nvidia, Google</b>. Eles provam o que a tecnologia faz de melhor — e são a nossa base.</p>
+      <div class="analogy"><b>A norma técnica:</b> a ABNT define o padrão de toda obra. Necessária, séria — mas ela <b>não constrói a sua obra</b>. Quem constrói é o engenheiro que conhece o terreno.</div>
+      <div class="tag-line">✓ Base validada pelo mercado</div>
+    </div>
+    <div class="why-card reveal" data-d="2">
+      <span class="n">02</span>
+      <span class="ic">◌</span>
+      <h3><small>O limite</small>Nenhum cobre a sua operação</h3>
+      <p>Benchmark é feito para o caso médio. Ele <b>não conhece o WhatsApp da Signor, o áudio do pedreiro, o formato do lead, o seu setor</b>. E o protocolo padrão <b>não é seguro contra falhas silenciosas</b> — a falha que não dá erro, mas corrompe o resultado.</p>
+      <div class="analogy"><b>A infiltração:</b> não aparece no acabamento, corrói por dentro durante meses. Com SDR é igual: conversa que morre, lead que não chega — <b>sem aviso</b>.</div>
+      <div class="tag-line">✓ O que o benchmark não enxerga</div>
+    </div>
+    <div class="why-card reveal" data-d="3">
+      <span class="n">03</span>
+      <span class="ic">▣</span>
+      <h3><small>A decisão</small>Um lab próprio</h3>
+      <p>Como toda onda disruptiva, <b>fomos pioneiros</b> — não existia manual pronto. Criamos um <b>lab próprio de engenharia</b>: documentação e diagnóstico próprios daquilo que nenhum benchmark cobre. Cada problema real virou um caso documentado.</p>
+      <div class="analogy"><b>O laboratório:</b> em vez de esperar a falha acontecer, nós <b>mapeamos o que pode acontecer</b> — e protegemos antes.</div>
+      <div class="tag-line">✓ Pioneiros · diagnóstico próprio</div>
+    </div>
+  </div>
+  <div class="why-concl reveal" data-d="1">
+    <span class="lab">⬢ Repositório de problemas → Circuit Breaker</span>
+    <p>O resultado desse lab é um <b>grande repositório de problemas possíveis</b> — e um workflow de <b>circuit breaker</b> que interrompe a falha antes que ela atinja você. Em linguagem de obra: <b>o disjuntor do quadro elétrico.</b> Quando a corrente passa do limite, desarma — antes de queimar a instalação. A conversa não queima.</p>
+  </div>
+</section>
+
+<!-- ============ DIDÁTICO: CAMADAS ============ -->
+<section>
+  <div class="sec-head reveal">
+    <div class="sec-num">02 · Como uma obra de qualidade</div>
+    <h2>Toda entrega sólida tem <span class="hl">três camadas</span></h2>
+    <p class="sub">Vocês constroem com concreto de qualidade — e sabem que uma obra boa exige <b>fundação, estrutura e acabamento</b>. A SDR IA da Signor passou pela mesma lógica. Cada camada tem um papel, e nenhuma depende de "sorte".</p>
+  </div>
+  <div class="layers">
+    <div class="layer reveal" data-d="1">
+      <span class="n">01</span>
+      <span class="ic">▣</span>
+      <h3><small>Fundação</small>Estrutura única</h3>
+      <p>O sistema trabalhava com dois fluxos paralelos fazendo a mesma coisa — era como construir <b>dois prédios iguais lado a lado</b>: o dobro de material, o dobro de manutenção, e resultado imprevisível. Consolidamos em um único fluxo.</p>
+      <div class="analogy"><b>Na prática:</b> um fluxo só, enxuto e padronizado. Menos peças = menos lugares para as coisas darem errado. Manutenção 2x mais rápida.</div>
+      <div class="tag-line">✓ Fundação assente</div>
+    </div>
+    <div class="layer reveal" data-d="2">
+      <span class="n">02</span>
+      <span class="ic">▤</span>
+      <h3><small>Estrutura</small>Resiliência de concreto</h3>
+      <p>Nenhuma obra depende de um único elemento aguentar tudo — as <b>vigas se apoiam umas nas outras</b>. Aplicamos o mesmo: cada etapa crítica agora tem proteção própria contra falhas.</p>
+      <div class="analogy"><b>Na prática:</b> se a API de um fornecedor falhar por 5 segundos, o sistema tenta de novo sozinho — o cliente nem percebe. Nada trava, nada morre no meio.</div>
+      <div class="tag-line">✓ Cada viga se defende sozinha</div>
+    </div>
+    <div class="layer reveal" data-d="3">
+      <span class="n">03</span>
+      <span class="ic">◫</span>
+      <h3><small>Acabamento</small>Conversa humana</h3>
+      <p>O que o cliente sente é o acabamento. A IA entende a conversa como uma pessoa: <b>não repete o que já foi dito, aceita "não sei", reconhece foto e áudio, e transfere para um humano quando necessário.</b></p>
+      <div class="analogy"><b>Na prática:</b> quem conversa com a Signor é atendido com atenção — e qualquer sinal de insatisfação escala imediatamente para o seu time.</div>
+      <div class="tag-line">✓ Acabamento de primeira</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMO FUNCIONA ============ -->
+<section style="padding-top:0">
+  <div class="sec-head reveal">
+    <div class="sec-num">03 · Didático</div>
+    <h2>Como funciona <span class="hl">hoje</span>, em 3 passos</h2>
+    <p class="sub">O desenho é simples: <b>a IA conversa, a regra garante.</b> São dois times em campo — a inteligência faz o atendimento, e a engenharia garante a entrega. Entenda o fluxo:</p>
+  </div>
+  <div class="flow reveal" data-d="1">
+    <div class="fstep">
+      <span class="fn">1</span>
+      <h3>O cliente fala</h3>
+      <p>WhatsApp, áudio, foto, PDF — qualquer formato é recebido e entendido. Se chegar um tipo inesperado de arquivo, o sistema não trava: ele reconhece e segue a conversa.</p>
+      <div class="role">Papel: <b>entrada aberta</b></div>
+    </div>
+    <div class="farrow">→</div>
+    <div class="fstep">
+      <span class="fn">2</span>
+      <h3>A IA entende</h3>
+      <p>A IA conversa com contexto completo: lembra de toda a conversa, não pergunta o que já foi dito, qualifica a obra (tamanho, prazo, tipo) com naturalidade.</p>
+      <div class="role">Papel: <b>inteligência</b></div>
+    </div>
+    <div class="farrow">→</div>
+    <div class="fstep">
+      <span class="fn">3</span>
+      <h3>A regra entrega</h3>
+      <p>O momento em que o atendimento vira lead é garantido por regras determinísticas — não depende do "humor" da IA. Dados essenciais presentes? Chegou ao seu CRM. Sem exceção.</p>
+      <div class="role">Papel: <b>garantia</b></div>
+    </div>
+  </div>
+  <div class="resil reveal" data-d="2">
+    <div class="r">
+      <span class="ic">↻</span>
+      <div><b>Se falhar, tenta de novo</b><p>Cada chamada crítica tem retry automático. O sistema "respira" e refaz.</p><p class="ex">Como o elevador: se falhar, tem escada. Nunca fica preso.</p></div>
+    </div>
+    <div class="r">
+      <span class="ic">⏱</span>
+      <div><b>Nada trava para sempre</b><p>Limite de tempo em toda operação. Lento demais? Reinicia e segue.</p><p class="ex">Como o freio de segurança: evita o acidente antes de acontecer.</p></div>
+    </div>
+    <div class="r">
+      <span class="ic">◌</span>
+      <div><b>Formato inesperado? Sem pânico</b><p>Qualquer tipo de mídia tem caminho definido. Nada se perde no caminho.</p><p class="ex">Como a obra: chuva atrasa, mas o cronograma tem folga.</p></div>
+    </div>
+    <div class="r">
+      <span class="ic">▥</span>
+      <div><b>Isolamento por cliente</b><p>A operação da Signor roda separada das demais — uma ilha com recursos próprios.</p><p class="ex">Como prédios com caixa d'água própria.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GARANTIAS ============ -->
+<section class="guarantee-section">
+  <div class="sec-head reveal">
+    <div class="sec-num" style="color:var(--orange)">04 · A garantia</div>
+    <h2>O que isso garante <span class="hl" style="-webkit-text-stroke:0;color:var(--orange)">para a Signor</span></h2>
+    <p class="sub">Esqueça detalhe técnico por um momento. Em linguagem de resultado, o que muda no seu dia a dia está aqui — <b>e tudo isso é acompanhado de perto, toda semana.</b></p>
+  </div>
+  <div class="guarantees">
+    <div class="g reveal" data-d="1">
+      <div class="gn">Garantia 01</div>
+      <div class="gnum">0<small> conversas perdidas</small></div>
+      <div class="gt">Nenhuma conversa morre</div>
+      <p>Falha de fornecedor, instabilidade, formato estranho — <b>nada disso interrompe mais um atendimento.</b> O cliente sempre recebe resposta.</p>
+    </div>
+    <div class="g reveal" data-d="2">
+      <div class="gn">Garantia 02</div>
+      <div class="gnum">100%<small> dos qualificados</small></div>
+      <div class="gt">Todo lead chega ao CRM</div>
+      <p>Atendimento qualificado = lead registrado, <b>independente de detalhes como e-mail.</b> A entrega é garantida por regra, não por esperança.</p>
+    </div>
+    <div class="g reveal" data-d="3">
+      <div class="gn">Garantia 03</div>
+      <div class="gnum">2x<small> mais enxuto</small></div>
+      <div class="gt">Estrutura padronizada</div>
+      <p>Fluxo único, consolidado e documentado. <b>Correções ficam mais rápidas e baratas</b> — e toda mudança é testada antes de ir ao ar.</p>
+    </div>
+    <div class="g reveal" data-d="1">
+      <div class="gn">Garantia 04</div>
+      <div class="gnum">24/7<small> vigilância</small></div>
+      <div class="gt">Você acompanha tudo</div>
+      <p>Monitoramento contínuo + relatório no check-in: <b>você sabe o que está acontecendo antes de precisar perguntar.</b></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RECONEXÃO ============ -->
+<section>
+  <div class="sec-head reveal">
+    <div class="sec-num">05 · Relacionamento</div>
+    <h2>Nenhum contato <span class="hl">fica para trás</span></h2>
+    <p class="sub">Ao revisar a operação, mapeamos toda a base de contatos da Signor. Encontramos conversas que ficaram <b>sem continuidade</b> — atendimentos que aconteceram, mas não tiveram o retorno que mereciam. Isso não ficou como estava: <b>estamos retomando o contato, com prioridade e critério.</b></p>
+  </div>
+  <div class="reconnect">
+    <div class="story reveal" data-d="1">
+      <p>O princípio é o mesmo de uma obra parada: <b>não se abandona, retoma-se</b> — começando pelo que está mais perto de virar resultado.</p>
+      <p>A retomada acontece em três ondas, das mais recentes para as mais antigas. <b>Os contatos dos últimos 60 dias já estão em prioridade máxima</b>, sendo acionados com a urgência que merecem.</p>
+      <div class="promise">Compromisso daqui pra frente: <b>nenhum atendimento sem continuidade</b> — e qualquer novo contato retomado é comunicado no check-in.</div>
+    </div>
+    <div class="phases reveal" data-d="2">
+      <div class="phase">
+        <span class="pn">1</span>
+        <div><h4>Contatos recentes</h4><p>Últimos 60 dias. Retomada imediata, tratamento prioritário — é onde está o maior potencial.</p></div>
+        <span class="st go">● em curso</span>
+      </div>
+      <div class="phase">
+        <span class="pn">2</span>
+        <div><h4>Contatos intermediários</h4><p>Retomada na sequência, com abordagem aquecida e contexto da conversa original.</p></div>
+        <span class="st next">● próxima</span>
+      </div>
+      <div class="phase">
+        <span class="pn">3</span>
+        <div><h4>Base mais antiga</h4><p>Campanha de reaquecimento com conteúdo e reabertura de canal — decisão em conjunto com o comercial.</p></div>
+        <span class="st warm">● planejada</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RITO ============ -->
+<section style="padding-top:0">
+  <div class="sec-head reveal">
+    <div class="sec-num">06 · O rito</div>
+    <h2>Como você <span class="hl">acompanha</span></h2>
+    <p class="sub">Segurança não é promessa de um dia — é <b>um ritual contínuo</b>. Isso é o que a Signor passa a ter de agora em diante:</p>
+  </div>
+  <div class="rituals">
+    <div class="ritual reveal" data-d="1">
+      <span class="rn">Ritual 01</span>
+      <h4>Monitoramento semanal</h4>
+      <p>Conversas × leads entregues conferidos toda semana. Qualquer variação aparece em horas — não no fim do mês.</p>
+    </div>
+    <div class="ritual reveal" data-d="2">
+      <span class="rn">Ritual 02</span>
+      <h4>Testes antes de mudar</h4>
+      <p>Toda alteração passa por testes de regressão: os cenários que já deram problema são validados antes de ir ao ar.</p>
+    </div>
+    <div class="ritual reveal" data-d="3">
+      <span class="rn">Ritual 03</span>
+      <h4>Status no check-in</h4>
+      <p>O que foi feito, o que está em curso, o que vem a seguir. Transparente, em todas as reuniões.</p>
+    </div>
+    <div class="ritual reveal" data-d="1">
+      <span class="rn">Ritual 04</span>
+      <h4>Linha direta</h4>
+      <p>Qualquer dúvida ou sinal de problema tem canal direto com a engenharia — sem fila, sem espera.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL ============ -->
+<section class="final">
+  <h2 class="reveal">O volume que combinamos<br><span class="hl">é o volume que você recebe.</span></h2>
+  <p class="fs reveal" data-d="1">Isso agora é uma <b>garantia de engenharia</b> — não uma esperança. Trabalhamos para deixar a operação 100% redonda e robusta, e ela fica assim porque alguém cuida dela todos os dias.</p>
+  <div class="sign reveal" data-d="2">
+    <div>
+      <div class="who">Marcos · Tech Lead</div>
+      <div class="role">SDR IA · V4 Company</div>
+    </div>
+    <img class="v4-foot" src="logo-v4-white.png" alt="V4 Company">
+  </div>
+</section>
+
+<footer>
+  <span>V4 Company · Engenharia de Confiabilidade · SDR IA</span>
+  <span>Signor Concretos · Check-in · Ago/2026</span>
+</footer>
+
+<script>
+const bar=document.getElementById('progress');
+addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  bar.style.width=((h.scrollTop)/(h.scrollHeight-h.clientHeight)*100)+'%';
+},{passive:true});
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target)}});
+},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

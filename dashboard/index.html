@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard Gestão de Projetos SEO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red: rgb(229, 9, 20);
+      --red-dark: #B80F0F;
+      --red-light: #FF4D4D;
+      --red-gradient: linear-gradient(135deg, #E31919 0%, #FF4D4D 100%);
+      --gold: #c9a96e;
+      --gold-light: #f5f0e6;
+      --gray-50: #fafafa;
+      --gray-100: #f5f5f5;
+      --gray-200: #e5e5e5;
+      --gray-300: #d4d4d4;
+      --gray-400: #a3a3a3;
+      --gray-500: #737373;
+      --gray-600: #525252;
+      --gray-700: #404040;
+      --gray-800: #272727;
+      --gray-900: #181818;
+      --white: #ffffff;
+      --white3: #B0B0B0;
+      --text-muted: #6b6b6b;
+      --green: #22C55E;
+      --green-dark: #16A34A;
+      --amber: #D97706;
+      --yellow: #EAB308;
+      --purple: #A855F7;
+      --radius: 8px;
+      --border-radius: 12px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--gray-900); color: var(--white);
+      font-family: 'Barlow', sans-serif; font-size: 14px; line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    ::selection { background: var(--red); color: var(--white); }
+
+    .topbar {
+      background: var(--gray-800); padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase; border-bottom: 1px solid var(--gray-700);
+    }
+    .topbar-logo { display: flex; align-items: center; gap: 12px; }
+    .topbar-logo img { height: 32px; width: auto; }
+    .topbar-title { color: var(--white); }
+    .topbar-badge {
+      background: var(--red); color: var(--white);
+      padding: 4px 10px; border-radius: 4px; font-size: 11px;
+      font-weight: 700; text-transform: uppercase;
+    }
+
+    .hero {
+      padding: 48px 24px; text-align: center; border-bottom: 1px solid var(--gray-700);
+    }
+    .hero-label {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(229, 9, 20, 0.12); border: 1px solid rgba(229, 9, 20, 0.25);
+      color: var(--red-light); font-family: 'Barlow Condensed', sans-serif; font-size: 11px;
+      font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 6px 14px; margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(28px, 5vw, 42px); font-weight: 800;
+      line-height: 1.1; letter-spacing: -0.02em; text-transform: uppercase; margin-bottom: 8px;
+    }
+    .hero h1 span { background: var(--red-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-sub { font-size: 14px; color: var(--text-muted); max-width: 560px; margin: 0 auto; }
+
+    .section { padding: 40px 24px; border-bottom: 1px solid var(--gray-700); }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+    .section-header { margin-bottom: 32px; }
+    .section-tag {
+      display: inline-block;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 4px 10px; margin-bottom: 12px;
+    }
+    .section-tag.seo { background: rgba(229, 9, 20, 0.12); color: var(--red-light); border: 1px solid rgba(229, 9, 20, 0.2); }
+    .section-tag.tech { background: rgba(34, 197, 94, 0.12); color: var(--green); border: 1px solid rgba(34, 197, 94, 0.2); }
+    .section-tag.content { background: rgba(168, 85, 247, 0.12); color: var(--purple); border: 1px solid rgba(168, 85, 247, 0.2); }
+    .section-tag.link { background: rgba(217, 119, 6, 0.12); color: var(--amber); border: 1px solid rgba(217, 119, 6, 0.2); }
+    .section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(24px, 4vw, 36px); font-weight: 800;
+      line-height: 1; letter-spacing: -0.02em; text-transform: uppercase; margin-bottom: 8px;
+    }
+    .section-title span { background: var(--red-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .section-desc { font-size: 13px; color: var(--text-muted); max-width: 520px; margin-top: 6px; line-height: 1.5; }
+
+    /* KPI Grid */
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+    .kpi-card {
+      background: var(--gray-800); border: 1px solid var(--gray-700);
+      border-radius: var(--radius); padding: 24px; position: relative; overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .kpi-card:hover { border-color: var(--red); }
+    .kpi-card.critical { border-left: 3px solid var(--red); }
+    .kpi-card.good { border-left: 3px solid var(--green); }
+    .kpi-card.warning { border-left: 3px solid var(--amber); }
+    .kpi-icon { width: 32px; height: 32px; margin-bottom: 12px; }
+    .kpi-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; display: block; }
+    .kpi-value { font-family: 'Barlow Condensed', sans-serif; font-size: 36px; font-weight: 800; line-height: 1; margin-bottom: 4px; }
+    .kpi-value.critical { color: var(--red); }
+    .kpi-value.good { color: var(--green); }
+    .kpi-value.warning { color: var(--amber); }
+    .kpi-value.warning { color: var(--amber); }
+    .kpi-desc { font-size: 12px; color: var(--text-muted); }
+
+    /* Bar KPI */
+    .bar-kpi { width: 100%; height: 8px; background: var(--gray-700); border-radius: 4px; margin: 12px 0; overflow: hidden; }
+    .bar-kpi-fill { height: 100%; border-radius: 4px; transition: width 1s ease; }
+    .bar-kpi-fill.critical { background: var(--red); }
+    .bar-kpi-fill.warning { background: var(--amber); }
+    .bar-kpi-fill.good { background: var(--green); }
+    .bar-kpi-label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; display: block; }
+    .bar-kpi-value { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; }
+
+    /* Metric Table */
+    .metric-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    .metric-table th {
+      text-align: left; font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text-muted); padding: 10px 12px; border-bottom: 1px solid var(--gray-600);
+    }
+    .metric-table td { padding: 10px 12px; border-bottom: 1px solid var(--gray-600); font-size: 13px; }
+    .metric-table tr:last-child td { border-bottom: none; }
+    .metric-table .status {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 11px; font-weight: 600; padding: 2px 6px; border-radius: 3px;
+    }
+    .metric-table .status.ok { background: rgba(34, 197, 94, 0.12); color: var(--green); }
+    .metric-table .status.warn { background: rgba(217, 119, 6, 0.12); color: var(--amber); }
+    .metric-table .status.fail { background: rgba(229, 9, 20, 0.12); color: var(--red); }
+
+    /* Priority List */
+    .priority-list { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+    .priority-item {
+      background: var(--gray-800); border: 1px solid var(--gray-700);
+      border-radius: var(--radius); padding: 14px 18px; display: grid;
+      grid-template-columns: 32px 1fr auto; gap: 12px; align-items: center;
+    }
+    .priority-pill {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; text-align: center;
+    }
+    .priority-pill.critical { background: rgba(229, 9, 20, 0.14); color: var(--red); }
+    .priority-pill.high { background: rgba(217, 119, 6, 0.14); color: var(--amber); }
+    .priority-pill.medium { background: rgba(34, 197, 94, 0.14); color: var(--green); }
+    .priority-pill.low { background: rgba(168, 85, 247, 0.14); color: var(--purple); }
+    .priority-detail { font-size: 12px; color: var(--text-muted); }
+
+    /* Findings */
+    .findings-list { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+    .finding {
+      background: var(--gray-800); border: 1px solid var(--gray-700);
+      border-radius: var(--radius); padding: 14px 16px;
+    }
+    .finding-icon { font-size: 16px; flex-shrink: 0; margin-right: 10px; }
+    .finding-content { flex: 1; }
+    .finding-title { font-weight: 600; margin-bottom: 4px; font-size: 13px; }
+    .finding-desc { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
+
+    /* Client Info */
+    .client-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 32px; }
+    .client-field { font-size: 12px; }
+    .client-field strong { display: block; font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
+
+    /* Footer */
+    .footer { padding: 32px 24px; background: var(--gray-800); border-top: 1px solid var(--gray-700); text-align: center; }
+    .footer-brand { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 8px; }
+    .footer-brand img { height: 24px; opacity: 0.6; }
+    .footer-brand span { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--white3); }
+    .footer-text { font-size: 11px; color: var(--text-muted); }
+
+    @media (max-width: 640px) {
+      .topbar { padding: 12px 16px; }
+      .topbar-logo img { height: 28px; }
+      .hero { padding: 32px 16px; }
+      .section { padding: 32px 16px; }
+      .kpi-grid { grid-template-columns: 1fr 1fr; }
+      .client-info { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .kpi-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-logo">
+    <img src="assets/logo-v4-white.png" alt="V4 Company" onerror="this.style.display='none'">
+    <span class="topbar-title">Dashboard Gestão de Projetos SEO</span>
+  </div>
+  <span class="topbar-badge">V4 Company</span>
+</header>
+
+<section class="hero">
+  <div class="hero-label">📊 Dashboard Executivo</div>
+  <h1>Projeto <span>[Nome do Cliente]</span></h1>
+  <p class="hero-sub">Painel de controle de projetos SEO — Métricas técnicas, conteúdo e autoridade</p>
+</section>
+
+<main>
+
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-tag seo">SEO Técnico</div>
+        <h2 class="section-title">Saúde <span>do Site</span></h2>
+        <p class="section-desc">Indicadores de indexabilidade, Core Web Vitals e estruturas técnicas</p>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card critical">
+          <div class="kpi-icon">🔍</div>
+          <div class="kpi-label">Indexação</div>
+          <div class="kpi-value critical">42%</div>
+          <div class="kpi-desc">Páginas indexadas vs total</div>
+        </div>
+        <div class="kpi-card warning">
+          <div class="kpi-icon">⚡</div>
+          <div class="kpi-label">Core Web Vitals</div>
+          <div class="kpi-value warning">68</div>
+          <div class="kpi-desc">Score geral (0-100)</div>
+        </div>
+        <div class="kpi-card good">
+          <div class="kpi-icon">📄</div>
+          <div class="kpi-label">HTML Size</div>
+          <div class="kpi-value good">2.4 KB</div>
+          <div class="kpi-desc">Tamanho médio da página</div>
+        </div>
+        <div class="kpi-card critical">
+          <div class="kpi-icon">🛠️</div>
+          <div class="kpi-label">Erros Crawl</div>
+          <div class="kpi-value critical">34</div>
+          <div class="kpi-desc">Erros reportados no GSC</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-tag tech">Performance Técnica</div>
+        <h2 class="section-title">Métricas <span>Principais</span></h2>
+        <p class="section-desc">Evolução de posições, tráfego orgânico e taxa de cliques</p>
+      </div>
+
+      <div class="metric-table">
+        <thead>
+          <tr>
+            <th>Métrica</th>
+            <th>Valor Atual</th>
+            <th>Meta</th>
+            <th>Status</th>
+            <th>Var. %</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Tráfego Orgânico</td>
+            <td>12.4K</td>
+            <td>15K</td>
+            <td><span class="status warn">Atenção</span></td>
+            <td>-8.2%</td>
+          </tr>
+          <tr>
+            <td>Palavras-chave Top 10</td>
+            <td>34</td>
+            <td>50</td>
+            <td><span class="status fail">Crítico</span></td>
+            <td>+3.5%</td>
+          </tr>
+          <tr>
+            <td>CTR Médio</td>
+            <td>3.8%</td>
+            <td>4.5%</td>
+            <td><span class="status warn">Atenção</span></td>
+            <td>-1.1 pp</td>
+          </tr>
+          <tr>
+            <td>Posição Média</td>
+            <td>18.5</td>
+            <td>15</td>
+            <td><span class="status fail">Crítico</span></td>
+            <td>-2.1 pos</td>
+          </tr>
+        </tbody>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-tag content">Estratégia de Conteúdo</div>
+        <h2 class="section-title">Desempenho <span>de Conteúdo</span></h2>
+        <p class="section-desc">Artigos publicados, atualizados e tráfego gerado por conteúdo</p>
+      </div>
+
+      <div class="priority-list">
+        <div class="priority-item">
+          <span class="priority-pill critical">Crítico</span>
+          <div>
+            <strong>Corrigir robots.txt</strong>
+            <div class="priority-detail">Disallow: / bloqueia indexação total — remover imediatamente</div>
+          </div>
+          <span class="badge seo">SEO</span>
+        </div>
+        <div class="priority-item">
+          <span class="priority-pill high">Alta</span>
+          <div>
+            <strong>Implementar schema markup</strong>
+            <div class="priority-detail">Organization + Article + FAQPage em 100% das páginas de produto</div>
+          </div>
+          <span class="badge seo">SEO</span>
+        </div>
+        <div class="priority-item">
+          <span class="priority-pill medium">Média</span>
+          <div>
+            <strong>Otimizar H1 e meta descriptions</strong>
+            <div class="priority-detail">67 páginas sem H1 — adicionar heading hierárquico por página</div>
+          </div>
+          <span class="badge seo">SEO</span>
+        </div>
+        <div class="priority-item">
+          <span class="priority-pill low">Baixa</span>
+          <div>
+            <strong>Velocidade de carregamento</strong>
+            <div class="priority-detail">LCP 3.2s — otimizar imagens e recursos críticos</div>
+          </div>
+          <span class="badge seo">SEO</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-tag link">Link Building</div>
+        <h2 class="section-title">Perfil de <span>Backlinks</span></h2>
+        <p class="section-desc">Domínios referenciadores, autoridade do link e crescimento mensal</p>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card good">
+          <div class="kpi-icon">🔗</div>
+          <div class="kpi-label">Domínios Referenciadores</div>
+          <div class="kpi-value good">47</div>
+          <div class="kpi-desc">Domínios únicos com link</div>
+        </div>
+        <div class="kpi-card warning">
+          <div class="kpi-icon">📈</div>
+          <div class="kpi-label">Authority Score</div>
+          <div class="kpi-value warning">34</div>
+          <div class="kpi-desc">Em escala 0-100</div>
+        </div>
+        <div class="kpi-card critical">
+          <div class="kpi-icon">📅</div>
+          <div class="kpi-label">Links Novos (30d)</div>
+          <div class="kpi-value critical">12</div>
+          <div class="kpi-desc">Novos links conquistados</div>
+        </div>
+        <div class="kpi-card good">
+          <div class="kpi-icon">🌐</div>
+          <div class="kpi-label">Referral Domains</div>
+          <div class="kpi-value good">23</div>
+          <div class="kpi-desc">Domínios relevantes (setor)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-brand">
+    <img src="assets/logo-v4-white.png" alt="V4 Company" onerror="this.style.display='none'">
+    <span>✦</span>
+    <img src="../../assets/images/v4-logo.png" alt="V4" onerror="this.style.display='none'">
+  </div>
+  <p>Dashboard Gestão de Projetos SEO · V4 Company · peretto.co</p>
+  <p style="margin-top: 4px;">Dados atualizados em <span id="last-update">Agora</span></p>
+</footer>
+
+<script>
+  // Animação de fade-in para cards
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target) }
+    })
+  }, { threshold: 0.1 })
+  document.querySelectorAll('.kpi-card, .metric-table tr, .priority-item, .finding').forEach(el => observer.observe(el))
+
+  // Atualizar data/hora
+  function updateTime() {
+    document.getElementById('last-update').textContent = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+  }
+  setInterval(updateTime, 1000);
+  updateTime();
+</script>
+
+</body>
+</html>

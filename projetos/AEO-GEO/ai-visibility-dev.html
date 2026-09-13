@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Visibility – Documentação Técnica</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #E31919;
+    --red-dark: #B80F0F;
+    --red-light: #FF2424;
+    --black: #0A0A0A;
+    --black2: #111111;
+    --black3: #1A1A1A;
+    --black4: #222222;
+    --gray: #2E2E2E;
+    --gray2: #3D3D3D;
+    --gray3: #555;
+    --white: #FFFFFF;
+    --white2: #F0F0F0;
+    --white3: #C8C8C8;
+    --text-muted: #888;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--black); color: var(--white); font-family: 'Barlow', sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+  .topbar { background: var(--red); padding: 8px 48px; display: flex; align-items: center; justify-content: space-between; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+  header { background: var(--black2); border-bottom: 1px solid var(--gray); padding: 20px 48px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo img { height: 32px; width: auto; display: block; object-fit: contain; }
+  .nav { display: flex; gap: 32px; list-style: none; }
+  .nav a { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white3); text-decoration: none; transition: color 0.2s; }
+  .nav a:hover { color: var(--red); }
+  .hero { padding: 80px 48px 64px; background: var(--black2); border-bottom: 3px solid var(--red); position: relative; overflow: hidden; }
+  .hero-tag { display: inline-block; background: var(--red); color: var(--white); font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 12px; margin-bottom: 24px; }
+  .hero h1 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(52px, 8vw, 96px); font-weight: 900; line-height: 0.9; letter-spacing: -0.02em; text-transform: uppercase; margin-bottom: 24px; }
+  .hero h1 span { color: var(--red); }
+  .hero-sub { font-size: 17px; color: var(--white3); max-width: 680px; line-height: 1.55; margin-bottom: 40px; }
+  section { padding: 72px 48px; border-bottom: 1px solid var(--gray); }
+  section:nth-child(even) { background: var(--black3); }
+  .section-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--red); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+  .section-label::before { content: ''; display: block; width: 24px; height: 2px; background: var(--red); }
+  .section-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(36px, 5vw, 56px); font-weight: 900; line-height: 0.95; letter-spacing: -0.01em; text-transform: uppercase; margin-bottom: 48px; }
+  .section-title span { color: var(--red); }
+  .card { background: var(--black3); padding: 32px; position: relative; transition: background 0.2s; }
+  .card:hover { background: var(--black4); }
+  .card-number { font-family: 'Barlow Condensed', sans-serif; font-size: 72px; font-weight: 900; color: rgba(227,25,25,0.15); position: absolute; top: 16px; right: 20px; line-height: 1; }
+  .card-tag { display: inline-block; background: var(--red); color: var(--white); font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; margin-bottom: 16px; }
+  .card h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: 12px; line-height: 1.1; }
+  .card p { font-size: 14px; color: var(--white3); line-height: 1.6; }
+  .card-metric { font-family: 'Barlow Condensed', sans-serif; font-size: 36px; font-weight: 900; color: var(--red); margin-top: 16px; display: block; }
+  pre { background: var(--black3); padding: 16px; overflow-x: auto; color: var(--white3); }
+  code { font-family: monospace; }
+  .footer-brand { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+  .footer-brand strong { display: block; font-size: 24px; color: var(--white); margin-bottom: 4px; }
+  .footer-brand strong span { color: var(--red); }
+  .footer-note { font-size: 12px; color: var(--text-muted); text-align: right; max-width: 400px; line-height: 1.6; }
+  @media (max-width: 900px) { header, .topbar, section, .hero, footer { padding-left: 24px; padding-right: 24px; } .nav { display: none; } }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span>Documentação técnica – uso interno V4</span>
+  <span>Atualizado: Maio 2026</span>
+</div>
+<header>
+  <div class="logo"><img src="../assets/images/v4-logo.png" alt="V4 Logo"></div>
+  <ul class="nav">
+    <li><a href="#arquitetura">Arquitetura</a></li>
+    <li><a href="#frontend">Frontend (Portal)</a></li>
+    <li><a href="#functions">Vercel Functions</a></li>
+    <li><a href="#scripts">Scripts de Automação</a></li>
+    <li><a href="#cicd">CI/CD & Deploy</a></li>
+    <li><a href="#boas-praticas">Boas‑práticas AIO</a></li>
+    <li><a href="#monitoramento">Monitoramento</a></li>
+  </ul>
+</header>
+<section class="hero">
+  <div class="hero-tag">Arquitetura Técnica AI Visibility</div>
+  <h1>AI Visibility<br><span>Technical Docs</span></h1>
+  <p class="hero-sub">Guia completo de implementação, componentes, deploy e operação da plataforma AI Visibility.</p>
+</section>
+<section id="arquitetura">
+  <div class="section-label">Visão geral da arquitetura</div>
+  <h2 class="section-title">Camadas da solução<br><span>Front‑end, API, automação.</span></h2>
+  <ul style="list-style:none;color:var(--white3);font-size:15px;">
+    <li>• <strong>Frontend (Portal)</strong> – React SPA hospedado no Vercel, usando <code>portal/</code> (HTML, CSS, JS) para captura de dados e visualização.</li>
+    <li>• <strong>API Serverless</strong> – Vercel Functions (<code>/api/crawl.js</code>, <code>/api/visibility.js</code>) responsáveis por crawling de resultados IA, extração de citações e cálculo de métricas.</li>
+    <li>• <strong>Automação</strong> – Scripts em <code>scripts/</code> (Node.js) que rodam jobs diários (extrairability, citation‑checker, dashboard‑generator) via cron ou GitHub Actions.</li>
+    <li>• <strong>Data Store</strong> – JSON files em <code>data/</code> (ou bucket S3) como fonte de verdade para relatórios.</li>
+    <li>• <strong>CI/CD</strong> – GitHub Actions que lint, testam (Jest) e deployam no Vercel automaticamente.</li>
+  </ul>
+</section>
+<section id="frontend">
+  <div class="section-label">Frontend – Portal</div>
+  <h2 class="section-title">Componentes principais<br><span>HTML, CSS, JS.</span></h2>
+  <p>O portal está em <code>ai-visibility-v4/portal/</code> e inclui:</p>
+  <ul style="color:var(--white3);">
+    <li><code>index.html</code> – página de entrada com form de captura de domínio.</li>
+    <li><code>app.js</code> – lógica de interação, consumo da API <code>/api/visibility</code>, renderização de tabelas e gráficos.</li>
+    <li><code>proposer.js</code> – módulo que gera propostas personalizadas a partir de dados de diagnóstico.</li>
+    <li><code>styles.css</code> – estilos baseados no tema V4 (cores, tipografia, responsividade).</li>
+  </ul>
+  <p>Para desenvolver localmente:</p>
+  <pre>cd ai-visibility-v4/portal
+npm install   # instala dependências de build (esbuild, tailwind opcional)
+npm run dev   # servidor local na porta 3000</pre>
+</section>
+<section id="functions">
+  <div class="section-label">Vercel Functions</div>
+  <h2 class="section-title">Endpoints serverless<br><span>Implementação.</span></h2>
+  <p><code>/api/crawl.js</code> – realiza crawling de URLs fornecidas, extrai texto limpo (via <code>defuddle</code>) e devolve snippets.</p>
+  <p><code>/api/visibility.js</code> – consulta engines de IA (OpenAI, Perplexity) para buscar citações da marca, calcula score de visibilidade e devolve JSON estruturado.</p>
+  <p>Exemplo de chamada:</p>
+  <pre>curl -X POST https://your‑project.vercel.app/api/visibility \
+  -H "Content-Type: application/json" \
+  -d '{"brand":"V4","domains":["v4.com","blog.v4.com"]}'</pre>
+</section>
+<section id="scripts">
+  <div class="section-label">Scripts de automação</div>
+  <h2 class="section-title">Rotinas de backend<br><span>Agendamento.</span></h2>
+  <ul style="color:var(--white3);">
+    <li><code>extractability.js</code> – varre URLs cadastradas, extrai conteúdo e grava em <code>data/extracts/</code>.</li>
+    <li><code>citation-checker.js</code> – consulta a API de IA para citar a marca; grava resultados em <code>data/citations/</code>.</li>
+    <li><code>dashboard-generator.sh</code> – combina métricas e gera relatórios HTML estáticos em <code>public/reports/</code>.</li>
+  </ul>
+  <p>Agendamento recomendado via GitHub Actions (cron @daily) ou serviço externo (Cronitor).</p>
+</section>
+<section id="cicd">
+  <div class="section-label">CI / CD</div>
+  <h2 class="section-title">Fluxo de entrega<br><span>Automatizado.</span></h2>
+  <pre># .github/workflows/deploy.yml
+name: Deploy AI Visibility
+on:
+  push:
+    branches: [main]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run test
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+</pre>
+</section>
+<section id="boas-praticas">
+  <div class="section-label">Boas‑práticas AIO</div>
+  <h2 class="section-title">Checklist técnico<br><span>Garantia de qualidade.</span></h2>
+  <ul style="color:var(--white3);font-size:15px;">
+    <li>✅ Conteúdo estruturado com schema.org (FAQ, Article, Product) para melhorar extração.</li>
+    <li>✅ URLs canônicas, hreflang e sitemap XML devidamente configurados.</li>
+    <li>✅ Responsividade e performance (LCP < 2 s, CLS < 0.1).</li>
+    <li>✅ Multilinguismo – verifique traduções e hreflang.</li>
+    <li>✅ Acessibilidade – contraste, aria‑labels, WCAG 2.1 AA.</li>
+    <li>✅ CSP restritiva – apenas scripts necessários.</li>
+    <li>✅ Revisão de conteúdo trimestral – atualizar factual e otimizar para novas consultas IA.</li>
+    <li>✅ Monitoramento de citações via <code>citation-checker.js</code> – alertas Slack.</li>
+    <li>✅ Backups diários de <code>data/</code> para preservar histórico de métricas.</li>
+  </ul>
+</section>
+<section id="monitoramento">
+  <div class="section-label">Monitoramento & Alertas</div>
+  <h2 class="section-title">Observabilidade<br><span>Visibilidade operacional.</span></h2>
+  <p>Utilizamos:</p>
+  <ul style="color:var(--white3);">
+    <li>Vercel Logs – monitoramento de erros de funções.</li>
+    <li>Prometheus + Grafana – métricas customizadas (citações por dia, tempo de crawling).</li>
+    <li>Slack Webhooks – alertas de falhas críticas (crawling falhou, quota excedida).</li>
+    <li>GitHub Issues – automação cria issue para falhas recorrentes.</li>
+  </ul>
+</section>
+<footer>
+  <div class="footer-brand">
+    <strong>V4 <span>AI Visibility</span></strong>
+    Documentação Técnica – Maio 2026
+  </div>
+  <div class="footer-note">
+    Material interno, confidencial. Distribuição restrita à equipe de desenvolvimento e clientes autorizados.
+  </div>
+</footer>
+</body>
+</html>

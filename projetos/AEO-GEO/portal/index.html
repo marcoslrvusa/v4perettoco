@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Visibility &mdash; Diagn&oacute;stico Gratuito | V4 Company</title>
+<meta name="description" content="Descubra como sua marca aparece em respostas de Intelig&ecirc;ncia Artificial. Diagn&oacute;stico gratuito de AI Visibility (AEO + GEO).">
+<meta property="og:title" content="AI Visibility &mdash; Diagn&oacute;stico Gratuito">
+<meta property="og:description" content="Descubra como sua marca aparece em respostas de IA. Diagn&oacute;stico gratuito.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="container">
+    <div class="header-logo">
+      <span>AI Visibility</span>
+    </div>
+    <span class="header-badge">V4 Company</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <h1><span>Diagn&oacute;stico Gratuito</span> de AI Visibility</h1>
+    <p>Descubra como sua marca aparece em respostas de Intelig&ecirc;ncia Artificial &mdash; ChatGPT, Perplexity, Gemini, Claude e Google AI Overviews.</p>
+
+    <form class="diag-form" id="diag-form">
+      <div class="form-row">
+        <input type="url" id="diag-url" placeholder="URL do site (ex: meusite.com.br)" autocomplete="url">
+        <button type="submit" id="btn-analyze">Analisar</button>
+      </div>
+      <div class="form-hint">
+        <span id="mode-url">URL do site</span>
+        <span id="mode-brand">OU nome da marca</span>
+      </div>
+      <input type="text" id="diag-brand" placeholder="Nome da marca (ex: Nome da Empresa)" style="display:none;" disabled>
+    </form>
+  </div>
+</section>
+
+<div class="loading" id="loading">
+  <div class="loading-spinner"></div>
+  <p>Analisando o site...</p>
+  <div class="loading-progress">
+    <div class="bar"><div class="bar-fill"></div></div>
+    <div class="steps">
+      <span class="done">Crawling</span>
+      <span>Scoring</span>
+      <span>NLP</span>
+      <span>Resultado</span>
+    </div>
+  </div>
+</div>
+
+<section class="results" id="results">
+  <div class="container">
+    <div class="results-header">
+      <h2>Resultado da An&aacute;lise</h2>
+      <span class="url" id="result-url"></span>
+    </div>
+
+    <div class="scores-grid">
+      <div class="score-gauge">
+        <h3>Score Geral</h3>
+        <div class="gauge" id="gauge-geral"></div>
+      </div>
+      <div class="scores-sub">
+        <div class="score-gauge tec">
+          <h3>T&eacute;cnico</h3>
+          <div class="gauge" id="gauge-tec"></div>
+        </div>
+        <div class="score-gauge conteudo" style="margin-top:12px;">
+          <h3>Conte&uacute;do</h3>
+          <div class="gauge" id="gauge-conteudo"></div>
+        </div>
+        <div class="score-gauge eco" style="margin-top:12px;">
+          <h3>Ecossistema</h3>
+          <div class="gauge" id="gauge-eco"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-scores" id="sub-scores"></div>
+
+    <div class="findings">
+      <h3>Principais Achados</h3>
+      <div class="findings-grid" id="findings-list"></div>
+    </div>
+  </div>
+</section>
+
+<section class="cart" id="cart">
+  <div class="container">
+    <h2>Service Cart</h2>
+    <p class="cart-subtitle">Monte o pacote ideal para sua marca ou siga nossa recomenda&ccedil;&atilde;o.</p>
+
+    <div class="recommendation" id="recommendation"></div>
+
+    <div class="modules" id="modules-list"></div>
+
+    <div class="cart-summary">
+      <div class="cart-total">
+        <div class="label" id="cart-hours"></div>
+        <div class="value" id="cart-total-value">R$ 0</div>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <button class="btn-primary" id="btn-proposal" onclick="App.showProposalForm()" disabled>Solicitar Proposta</button>
+        <button class="btn-primary" style="background:transparent;border:1px solid var(--border);" onclick="App.reset()">Nova An&aacute;lise</button>
+      </div>
+    </div>
+
+    <div class="proposal-form" id="proposal-form">
+      <h3>Dados para Proposta</h3>
+      <div class="form-row">
+        <input type="text" id="prop-name" placeholder="Seu nome" required>
+        <input type="text" id="prop-company" placeholder="Empresa" required>
+        <input type="email" id="prop-email" placeholder="Email" required>
+        <input type="tel" id="prop-phone" placeholder="Telefone">
+      </div>
+      <button class="btn-primary" onclick="App.generateProposal()">Gerar Proposta Comercial</button>
+    </div>
+
+    <div class="proposal" id="proposal">
+      <div id="proposal-content"></div>
+      <div class="proposal-actions">
+        <button class="btn-print" onclick="App.printProposal()">Imprimir / PDF</button>
+        <button onclick="App.showProposalForm()">Editar Dados</button>
+        <button onclick="App.reset()">Nova An&aacute;lise</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <p>V4 Company &mdash; AI Visibility &bull; <a href="#" onclick="App.reset()">Nova an&aacute;lise</a></p>
+  </div>
+</footer>
+
+<script type="importmap">
+{
+  "imports": {
+    "@xenova/transformers": "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.0"
+  }
+}
+</script>
+<script src="proposer.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

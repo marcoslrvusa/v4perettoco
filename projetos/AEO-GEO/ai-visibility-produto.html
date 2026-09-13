@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Visibility – Documentação Cliente</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #E31919;
+    --red-dark: #B80F0F;
+    --red-light: #FF2424;
+    --black: #0A0A0A;
+    --black2: #111111;
+    --black3: #1A1A1A;
+    --black4: #222222;
+    --gray: #2E2E2E;
+    --gray2: #3D3D3D;
+    --gray3: #555;
+    --white: #FFFFFF;
+    --white2: #F0F0F0;
+    --white3: #C8C8C8;
+    --text-muted: #888;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--black); color: var(--white); font-family: 'Barlow', sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+  .topbar { background: var(--red); padding: 8px 48px; display: flex; align-items: center; justify-content: space-between; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+  header { background: var(--black2); border-bottom: 1px solid var(--gray); padding: 20px 48px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo img { height: 32px; width: auto; display: block; object-fit: contain; }
+  .nav { display: flex; gap: 32px; list-style: none; }
+  .nav a { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white3); text-decoration: none; transition: color 0.2s; }
+  .nav a:hover { color: var(--red); }
+  .hero { padding: 80px 48px 64px; background: var(--black2); border-bottom: 3px solid var(--red); position: relative; overflow: hidden; }
+  .hero-tag { display: inline-block; background: var(--red); color: var(--white); font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 12px; margin-bottom: 24px; }
+  .hero h1 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(52px, 8vw, 96px); font-weight: 900; line-height: 0.9; letter-spacing: -0.02em; text-transform: uppercase; margin-bottom: 24px; }
+  .hero h1 span { color: var(--red); }
+  .hero-sub { font-size: 17px; color: var(--white3); max-width: 680px; line-height: 1.55; margin-bottom: 40px; }
+  section { padding: 72px 48px; border-bottom: 1px solid var(--gray); }
+  section:nth-child(even) { background: var(--black3); }
+  .section-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--red); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+  .section-label::before { content: ''; display: block; width: 24px; height: 2px; background: var(--red); }
+  .section-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(36px, 5vw, 56px); font-weight: 900; line-height: 0.95; letter-spacing: -0.01em; text-transform: uppercase; margin-bottom: 48px; }
+  .section-title span { color: var(--red); }
+  .card { background: var(--black3); padding: 32px; position: relative; transition: background 0.2s; }
+  .card:hover { background: var(--black4); }
+  .card-number { font-family: 'Barlow Condensed', sans-serif; font-size: 72px; font-weight: 900; color: rgba(227,25,25,0.15); position: absolute; top: 16px; right: 20px; line-height: 1; }
+  .card-tag { display: inline-block; background: var(--red); color: var(--white); font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; margin-bottom: 16px; }
+  .card h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: 12px; line-height: 1.1; }
+  .card p { font-size: 14px; color: var(--white3); line-height: 1.6; }
+  .card-metric { font-family: 'Barlow Condensed', sans-serif; font-size: 36px; font-weight: 900; color: var(--red); margin-top: 16px; display: block; }
+  .funil-container { max-width: 900px; }
+  .funil-step { display: flex; gap: 0; margin-bottom: 2px; position: relative; }
+  .funil-num { width: 60px; background: var(--red); display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 900; flex-shrink: 0; }
+  .funil-content { flex: 1; background: var(--black3); padding: 24px 32px; display: flex; align-items: flex-start; gap: 24px; }
+  .funil-main { flex: 1; }
+  .funil-stage { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); margin-bottom: 4px; }
+  .funil-title { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; }
+  .funil-desc { font-size: 13px; color: var(--white3); line-height: 1.55; }
+  .footer-brand { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+  .footer-brand strong { display: block; font-size: 24px; color: var(--white); margin-bottom: 4px; }
+  .footer-brand strong span { color: var(--red); }
+  .footer-note { font-size: 12px; color: var(--text-muted); text-align: right; max-width: 400px; line-height: 1.6; }
+  @media (max-width: 900px) { header, .topbar, section, .hero, footer { padding-left: 24px; padding-right: 24px; } .nav { display: none; } }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span>Documento estratégico confidencial · Uso interno V4 Company</span>
+  <span>Atualizado: Maio 2026</span>
+</div>
+<header>
+  <div class="logo"><img src="../assets/images/v4-logo.png" alt="V4 Logo"></div>
+  <ul class="nav">
+    <li><a href="#overview">Visão Geral</a></li>
+    <li><a href="#pilares">Pilares Estratégicos</a></li>
+    <li><a href="#modulos">Módulos & Precificação</a></li>
+    <li><a href="#fluxo">Fluxo de Diagnóstico</a></li>
+    <li><a href="#valor">Proposta de Valor</a></li>
+    <li><a href="#jornada">Jornada do Cliente</a></li>
+  </ul>
+</header>
+<section class="hero">
+  <div class="hero-tag">Inteligência Estratégica AI Visibility</div>
+  <h1>AI Visibility<br><span>Visibilidade em IA</span></h1>
+  <p class="hero-sub">Plataforma completa para rastrear, otimizar e garantir que sua marca apareça nas respostas geradas por IA (ChatGPT, Perplexity, Google AI Overviews, etc.).</p>
+</section>
+<section id="overview">
+  <div class="section-label">Visão geral</div>
+  <h2 class="section-title">AI Visibility<br><span>Visibilidade em respostas de IA.</span></h2>
+  <p>A AI Visibility monitora a presença da sua marca nos principais modelos de linguagem, analisa citações, recomenda otimizações de conteúdo e gera relatórios de performance em tempo real.</p>
+</section>
+<section id="pilares">
+  <div class="section-label">Pilares Estratégicos</div>
+  <h2 class="section-title">Estrutura AIO<br><span>E‑E‑A‑I + extensões.</span></h2>
+  <div class="grid-2" style="gap:2px;background:var(--gray);margin-bottom:32px;">
+    <div class="card"><div class="card-tag">E‑E</div><h3>Expertise & Experiência</h3><p>Conteúdo profundo, autoridade e prova social que alimentam LLMs.</p></div>
+    <div class="card"><div class="card-tag">A</div><h3>Autoridade</h3><p>Backlinks, menções em fontes de alta confiança e domínio de referência.</p></div>
+    <div class="card"><div class="card-tag">I</div><h3>Interatividade</h3><p>Conteúdo rico, multimídia e estruturado que facilita a extração por IA.</p></div>
+    <div class="card"><div class="card-tag">E</div><h3>Eficiência</h3><p>Performance de página, SEO técnico e velocidade para melhorar o rank.</p></div>
+    <div class="card"><div class="card-tag">Multilinguismo</div><h3>Idiomas</h3><p>Versões traduzidas e otimizadas para diferentes línguas.</p></div>
+    <div class="card"><div class="card-tag">Acessibilidade</div><h3>WCAG</h3><p>Conformidade com padrões de acessibilidade para melhorar a indexação.</p></div>
+    <div class="card"><div class="card-tag">Segurança CSP</div><h3>Segurança</h3><p>Políticas de Content‑Security‑Policy que evitam conteúdo malicioso.</p></div>
+    <div class="card"><div class="card-tag">Governança</div><h3>Governança de Conteúdo</h11><p>Processos de revisão, aprovação e auditoria de conteúdo.</p></div>
+    <div class="card"><div class="card-tag">Revisão Periódica</div><h3>Auditoria</h3><p>Revisões trimestrais de presença IA e ajustes estratégicos.</p></div>
+    <div class="card"><div class="card-tag">Monitoramento IA</div><h3>Alertas IA</h3><p>Notificações de novas citações ou perdas de posicionamento.</p></div>
+    <div class="card"><div class="card-tag">Link‑Building Niche</div><h3>Autoridade de Nicho</h3><p>Backlinks estratégicos de sites especializados.</p></div>
+  </div>
+</section>
+<section id="modulos">
+  <div class="section-label">Módulos & Precificação</div>
+  <h2 class="section-title">Oferta de Produto<br><span>Planos escaláveis.</span></h2>
+  <div class="grid-3" style="gap:2px;background:var(--gray);">
+    <div class="card"><div class="card-tag">Diagnóstico</div><h3>Diagnóstico AI</h3><p>Análise inicial da presença, gaps e oportunidades.</p></div>
+    <div class="card"><div class="card-tag">Implementação</div><h3>Implementação</h3><p>Recomendações técnicas, schema, conteúdo e links.</p></div>
+    <div class="card"><div class="card-tag">Monitoramento</div><h3>Monitoramento Contínuo</h3><p>Dashboard em tempo real, alertas e relatórios mensais.</p></div>
+    <div class="card"><div class="card-tag">Consultoria</div><h3>Consultoria Estratégica</h3><p>Workshops, revisão de personas e alinhamento de IA.</p></div>
+  </div>
+  <p>Preços a partir de <strong>R$ 12.000/mês</strong>, personalizados por escopo.</p>
+</section>
+<section id="fluxo">
+  <div class="section-label">Fluxo de Diagnóstico</div>
+  <h2 class="section-title">Etapas da Análise<br><span>Do levantamento ao plano.</span></h2>
+  <div class="funil-container">
+    <div class="funil-step"><div class="funil-num">1</div><div class="funil-content"><div class="funil-main"><div class="funil-stage">Coleta</div><div class="funil-title">Inventário de ativos digitais</div><div class="funil-desc">Mapeamento de sites, blogs, docs, perfis sociais e links existentes.</div></div></div></div>
+    <div class="funil-step"><div class="funil-num">2</div><div class="funil-content"><div class="funil-main"><div class="funil-stage">Análise</div><div class="funil-title">Visibilidade em LLMs</div><div class="funil-desc">Rastreamento de citações, respostas e gaps de conteúdo nos principais modelos de IA.</div></div></div></div>
+    <div class="funil-step"><div class="funil-num">3</div><div class="funil-content"><div class="funil-main"><div class="funil-stage">Recomendação</div><div class="funil-title">Roadmap de otimização</div><div class="funil-desc">Ações de SEO, schema, conteúdo, backlinks e monitoramento contínuo.</div></div></div></div>
+    <div class="funil-step"><div class="funil-num">4</div><div class="funil-content"><div class="funil-main"><div class="funil-stage">Entrega</div><div class="funil-title">Dashboard & Relatórios</div><div class="funil-desc">Dashboard interativo, alerts por Slack/Email e relatórios mensais para stakeholders.</div></div></div></div>
+  </div>
+</section>
+<section id="valor">
+  <div class="section-label">Proposta de Valor</div>
+  <h2 class="section-title">Benefícios Estratégicos<br><span>Por que adotar AI Visibility?</span></h2>
+  <ul style="list-style:none;padding-left:0;color:var(--white3);font-size:15px;">
+    <li>• Apareça nas respostas de IA quando usuários buscam soluções.
+    <li>• Aumente a autoridade da marca com citações em fontes de alta confiança.
+    <li>• Reduza o custo de aquisição ao focar em tráfego de alta intenção gerado por LLMs.
+    <li>• Métricas claras de visibilidade IA (citações, relevância, engajamento).
+    <li>• Alinhamento com estratégias de SEO técnico e de conteúdo.
+  </ul>
+</section>
+<section id="jornada">
+  <div class="section-label">Jornada do Cliente</div>
+  <h2 class="section-title">Funil de Conversão<br><span>De descoberta a referência.</span></h2>
+  <div class="funil-container">
+    <div class="funil-step"><div class="funil-num">A</div><div class="funil-content"><div class="funil-main"><div class="funil-stage">Awareness</div><div class="funil-title">A marca aparece nas respostas de IA.</div><div class="funil-desc">Citações em ChatGPT, Perplexity, Gemini, etc.</div></div></div></div>
+    <div class="funil-step"><div class="funil-num">C</div><div class="funil-content"><div class="funil-main"><div class="funil-stage">Consideração</div><div class="funil-title">Leads capturam conteúdo técnico.</div><div class="funil-desc">Landing pages, calculadoras, guias que são recomendados pela IA.</div></div></div></div>
+    <div class="funil-step"><div class="funil-num">D</div><div class="funil-content"><div class="funil-main"><div class="funil-stage">Decisão</div><div class="funil-title">Conversão via fluxo otimizado.</div><div class="funil-desc">Formulários, chat, demonstrações integradas ao CRM.</div></div></div></div>
+    <div class="funil-step"><div class="funul-num">R</div><div class="funil-content"><div class="funul-main"><div class="funul-stage">Retenção</div><div class="funul-title">Feedback e novos pontos de citação.</div><div class="funul-desc">Monitoramento pós‑venda, conteúdo de suporte e novos prompts IA.</div></div></div></div>
+  </div>
+</section>
+<footer>
+  <div class="footer-brand">
+    <strong>V4 <span>AI Visibility</span></strong>
+    Soluções de visibilidade em IA – abril 2026
+  </div>
+  <div class="footer-note">
+    Todos os direitos reservados. Material confidencial, uso interno da V4 e clientes autorizados.
+  </div>
+</footer>
+</body>
+</html>
