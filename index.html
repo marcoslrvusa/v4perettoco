@@ -123,6 +123,8 @@ section.block{margin-bottom:34px;scroll-margin-top:calc(var(--header-height) + 7
 .card h4 a:hover{color:var(--color-accent)}
 .card p.desc{font-size:12.5px;color:var(--color-text-secondary);line-height:1.55;margin-bottom:10px;flex:1}
 .card .path{font-family:var(--font-mono);font-size:10.5px;color:var(--color-accent);background:#fff;border:1px solid var(--color-border);border-radius:6px;padding:5px 9px;margin-bottom:12px;word-break:break-all;line-height:1.5}
+.card .path a{color:var(--color-accent);text-decoration:none}
+.card .path a:hover{text-decoration:underline}
 .card-foot{display:flex;gap:8px}
 .btn{flex:1;text-align:center;font-size:12px;font-weight:700;padding:9px 12px;border-radius:8px;text-decoration:none;transition:all .18s;cursor:pointer;font-family:var(--font-sans);border:1px solid transparent}
 .btn-open{background:var(--color-accent);color:#fff}
@@ -135,7 +137,11 @@ section.block{margin-bottom:34px;scroll-margin-top:calc(var(--header-height) + 7
 .sublinks ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px}
 .sublinks li a{display:flex;justify-content:space-between;gap:8px;text-decoration:none;font-size:12px;font-weight:600;color:var(--color-text);background:#fff;border:1px solid var(--color-border);border-radius:7px;padding:7px 10px;transition:all .15s}
 .sublinks li a:hover{border-color:var(--color-accent);color:var(--color-accent)}
+.sublinks li{display:flex;gap:6px;align-items:stretch}
+.sublinks li a{flex:1}
 .sublinks li a span.arrow{color:var(--color-accent);font-weight:800}
+.mini-copy{font-family:var(--font-sans);font-size:13px;font-weight:700;background:#fff;border:1px solid var(--color-border);border-radius:7px;padding:0 10px;cursor:pointer;color:var(--color-text-secondary);transition:all .15s}
+.mini-copy:hover{border-color:var(--color-accent);color:var(--color-accent)}
 .mirror{font-size:11px;color:var(--color-text-secondary);margin-top:8px;line-height:1.5}
 .mirror code{font-family:var(--font-mono);font-size:10px;background:#fff;border:1px solid var(--color-border);padding:1px 6px;border-radius:4px;color:#666}
 /* Empty */
@@ -406,15 +412,18 @@ function renderPills(){
   });
 }
 
+function absUrl(h){ return h.startsWith('http') ? h : BASE + h; }
+function escQ(s){ return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
+
 function cardHTML(d, idx){
-  const subs = (d.sub||[]).map(s=>`<li><a href="${s[1]}" target="_blank" rel="noopener"><span>${s[0]}</span><span class="arrow">→</span></a></li>`).join('');
+  const subs = (d.sub||[]).map(s=>`<li><a href="${s[1]}" target="_blank" rel="noopener"><span>${s[0]}</span><span class="arrow">→</span></a><button class="mini-copy" title="Copiar link publicado" onclick="copyLink('${escQ(s[1])}', this)">⧉</button></li>`).join('');
   const subBlock = subs ? `<div class="sublinks"><details><summary>+${d.sub.length} link(s) vinculado(s)</summary><ul>${subs}</ul></details></div>` : '';
   return `<article class="card" data-idx="${idx}">
     <div class="card-top"><span class="tag tag-client">${d.client}</span><span class="tag tag-type ${TYPE_CLASS[d.type]||''}">${d.t || TYPE_LABEL[d.type]||d.type}</span></div>
     <h4><a href="${d.href}" target="_blank" rel="noopener">${d.title}</a></h4>
     <p class="desc">${d.desc}</p>
-    <div class="path">${d.href}</div>
-    <div class="card-foot"><a class="btn btn-open" href="${d.href}" target="_blank" rel="noopener">Abrir entrega →</a><button class="btn btn-copy" onclick="copyLink('${d.href.replace(/'/g,"\\'")}', this)">Copiar link</button></div>
+    <div class="path"><a href="${d.href}" target="_blank" rel="noopener">${absUrl(d.href)}</a></div>
+    <div class="card-foot"><a class="btn btn-open" href="${d.href}" target="_blank" rel="noopener">Abrir entrega →</a><button class="btn btn-copy" onclick="copyLink('${escQ(d.href)}', this)">Copiar link</button></div>
     ${subBlock}
   </article>`;
 }
@@ -460,16 +469,29 @@ function render(){
 }
 
 function copyLink(href, btn){
-  const url = href.startsWith('http') ? href : BASE + href;
-  navigator.clipboard.writeText(url).then(()=>{
+  const url = absUrl(href);
+  const done = ()=>{
     const toast = document.getElementById('toast');
-    toast.textContent = 'Link copiado: ' + url;
+    toast.textContent = 'Link publicado copiado: ' + url;
     toast.classList.add('show');
-    setTimeout(()=>toast.classList.remove('show'), 2200);
-    if(btn){ const o=btn.textContent; btn.textContent='Copiado ✓'; setTimeout(()=>btn.textContent=o,1600); }
-  }).catch(()=>{
-    prompt('Copie o link:', url);
-  });
+    setTimeout(()=>toast.classList.remove('show'), 2400);
+    if(btn){
+      const isMini = btn.classList.contains('mini-copy');
+      if(!isMini){ const o=btn.textContent; btn.textContent='Copiado ✓'; setTimeout(()=>btn.textContent=o,1600); }
+      else { btn.textContent='✓'; setTimeout(()=>btn.textContent='⧉',1400); }
+    }
+  };
+  const fallback = ()=>{
+    try{
+      const ta = document.createElement('textarea');
+      ta.value = url; ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta); done();
+    }catch(e){ prompt('Copie o link publicado:', url); }
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(url).then(done).catch(fallback);
+  } else fallback();
 }
 
 searchInput.addEventListener('input', render);
