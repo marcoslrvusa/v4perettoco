@@ -3,8 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Central de Entregas · V4 Peretto &amp; Co — Gestão Operacional</title>
-<meta name="description" content="Gestão operacional das entregas publicadas — auditorias, relatórios, tráfego, conteúdo, SDR IA e AI Visibility. V4 Peretto & Co.">
+<title>Marcos Luciano · Investidor V4 — Portfólio Operacional</title>
+<meta name="description" content="Portfólio operacional de Marcos Luciano, investidor e operador V4: 83 entregas publicadas, 110 URLs, 29 clientes e frentes, ecossistema de 74 skills.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Marcos Luciano · Investidor V4 — Portfólio Operacional">
+<meta property="og:description" content="83 entregas publicadas · 110 URLs · 29 clientes e frentes · 74 skills. Operação auditável, links verificados.">
+<meta property="og:url" content="https://marcoslrvusa.github.io/v4perettoco/">
+<meta property="og:image" content="https://marcoslrvusa.github.io/v4perettoco/assets/images/foto-marcos-perettoco.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Marcos Luciano · Investidor V4 — Portfólio Operacional">
+<meta name="twitter:description" content="83 entregas publicadas · 110 URLs · 29 clientes e frentes · 74 skills.">
+<meta name="twitter:image" content="https://marcoslrvusa.github.io/v4perettoco/assets/images/foto-marcos-perettoco.jpg">
+<meta name="theme-color" content="#b91c1c">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -133,6 +143,28 @@ table.mini td.n{text-align:right;font-weight:800}
 .footer{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:11.5px;color:var(--ink-2);padding:4px 2px}
 .footer img{height:24px;width:auto}
 .footer .r{margin-left:auto;font-family:var(--mono);font-size:10.5px}
+/* ===== PERSONAL BRAND ===== */
+.topbar .avatar{width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid var(--accent);flex-shrink:0}
+.hero-personal{background:var(--dark);color:#fff;border-radius:12px;padding:26px 28px;margin-bottom:14px;display:flex;gap:22px;align-items:center;position:relative;overflow:hidden}
+.hero-personal::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#e50914,#ff222d)}
+.hero-personal .photo{width:104px;height:104px;border-radius:50%;object-fit:cover;border:3px solid #e50914;flex-shrink:0;background:#222}
+.hero-personal .who{min-width:0;flex:1}
+.hero-personal .role{font-size:10.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#ff6b74;margin-bottom:4px}
+.hero-personal h2{font-size:clamp(22px,3vw,30px);font-weight:800;letter-spacing:-.6px;line-height:1.15;color:#fff}
+.hero-personal .bio{font-size:12.5px;color:#c9c9d1;margin-top:8px;max-width:640px}
+.hero-personal .bio strong{color:#fff}
+.pstats{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.pstat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:8px 14px;min-width:104px}
+.pstat .n{font-size:19px;font-weight:800;letter-spacing:-.4px;color:#fff}
+.pstat .n.red{color:#ff6b74}
+.pstat .l{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:#a7a7b3}
+.hero-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.btn-ghost-w{background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff}
+.btn-ghost-w:hover{border-color:#fff}
+.sb-profile{display:flex;gap:10px;align-items:center;padding:4px 20px 2px}
+.sb-profile img{width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid var(--accent)}
+.sb-profile .n{font-size:12px;font-weight:800}
+.sb-profile .s{font-size:10px;color:var(--ink-2);font-weight:600}
 /* TOAST */
 .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--dark);color:#fff;font-size:12px;font-weight:600;padding:11px 18px;border-radius:8px;opacity:0;pointer-events:none;transition:all .25s;z-index:999;max-width:90vw;word-break:break-all}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -146,6 +178,7 @@ table.mini td.n{text-align:right;font-weight:800}
   .main{margin-left:0}
   .wrap{padding:18px 14px 60px}
   .kpis{grid-template-columns:1fr 1fr}
+  .hero-personal{flex-direction:column;align-items:flex-start;padding:22px 20px}
 }
 </style>
 </head>
@@ -154,8 +187,8 @@ table.mini td.n{text-align:right;font-weight:800}
 <header class="topbar">
   <button class="menu-btn" id="menuBtn" aria-label="Abrir menu">☰</button>
   <div class="brand-mini">
-    <img src="logo-peretto-red.png" alt="Peretto &amp; Co.">
-    <div><div class="t1">Central de Entregas <span>· V4 Peretto &amp; Co</span></div><div class="t2">Gestão operacional das entregas publicadas</div></div>
+    <img class="avatar" src="assets/images/foto-marcos-perettoco.jpg" alt="Marcos Luciano">
+    <div><div class="t1">Marcos Luciano <span>· Investidor V4</span></div><div class="t2">Portfólio operacional · Peretto &amp; Co</div></div>
   </div>
   <div class="spacer"></div>
   <span class="env-badge">Produção · GitHub Pages</span>
@@ -167,6 +200,9 @@ table.mini td.n{text-align:right;font-weight:800}
     <div><div class="n">Central de Entregas</div><div class="s">Operação · 2026</div></div>
   </div>
   <nav class="sb-nav"><ul id="sideNav">
+    <li class="sb-sec">Marcos Luciano</li>
+    <li><div class="sb-profile"><img src="assets/images/foto-marcos-perettoco.jpg" alt="Marcos Luciano"><div><div class="n">Marcos Luciano</div><div class="s">Investidor · V4 Company</div></div></div></li>
+    <li><a class="sb-link" href="#sobre">Sobre e portfólio</a></li>
     <li class="sb-sec">Sistema</li>
     <li><a class="sb-link" href="#topo" data-nav="">Visão geral</a></li>
     <li class="sb-sec">Categorias</li>
@@ -176,9 +212,27 @@ table.mini td.n{text-align:right;font-weight:800}
 
 <div class="main" id="topo"><div class="wrap">
 
+  <div class="hero-personal" id="sobre">
+    <img class="photo" src="assets/images/foto-marcos-perettoco.jpg" alt="Marcos Luciano — Investidor V4">
+    <div class="who">
+      <div class="role">Investidor · V4 Company — Operação Peretto &amp; Co</div>
+      <h2>Marcos Luciano</h2>
+      <p class="bio">Eu transformo operação de marketing em <strong>ativo auditável</strong>: cada auditoria, relatório e entrega que produzo é publicada aqui com data, situação e link verificado. Este portal é meu portfólio vivo — e minha ferramenta diária de organização.</p>
+      <div class="pstats">
+        <div class="pstat"><div class="n">83</div><div class="l">Entregas</div></div>
+        <div class="pstat"><div class="n red">110</div><div class="l">URLs públicas</div></div>
+        <div class="pstat"><div class="n">29</div><div class="l">Clientes/frentes</div></div>
+        <div class="pstat"><div class="n">74</div><div class="l">Skills no hub</div></div>
+      </div>
+      <div class="hero-actions">
+        <button class="btn btn-red" id="btnShare">Compartilhar portfólio</button>
+        <button class="btn btn-ghost-w" id="btnGoCsv">Exportar CSV</button>
+      </div>
+    </div>
+  </div>
   <div class="page-head">
     <h2>Gestão operacional <span>das entregas</span></h2>
-    <p>Todas as entregas publicadas no GitHub Pages, organizadas por categoria, cliente e tipo — com busca, filtros, ordenação, cópia imediata de links e exportação. Padrão executivo para operação high-ticket.</p>
+    <p>Todas as entregas publicadas no GitHub Pages, organizadas por categoria, cliente e tipo — com busca, filtros, ordenação, cópia imediata de links e exportação.</p>
     <div class="meta"><span class="bdg" id="headCount">—</span></div>
   </div>
 
@@ -245,7 +299,7 @@ table.mini td.n{text-align:right;font-weight:800}
 
   <div class="footer">
     <img src="logo-peretto-red.png" alt="Peretto &amp; Co.">
-    <span><strong>V4 Peretto &amp; Co · Central de Entregas</strong> — operação, portfólio e distribuição de links.</span>
+    <span><strong>Marcos Luciano · Investidor V4</strong> — portfólio operacional Peretto &amp; Co. O que eu faço está publicado aqui.</span>
     <span class="r" id="footLine"></span>
   </div>
 
@@ -558,6 +612,8 @@ document.querySelectorAll('[data-nav]').forEach(a => a.addEventListener('click',
   document.querySelector('.panel').scrollIntoView({behavior:'smooth'});
   if (window.innerWidth <= 900) $('sidebar').classList.remove('open');
 }));
+$('btnShare').onclick = function(){ writeText(BASE, 'Link do portfólio copiado'); this.textContent='Link copiado ✓'; setTimeout(()=>this.textContent='Compartilhar portfólio',1500); };
+$('btnGoCsv').onclick = () => $('btnCsv').click();
 $('menuBtn').onclick = () => $('sidebar').classList.toggle('open');
 
 render();
