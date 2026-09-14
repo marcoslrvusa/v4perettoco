@@ -62,7 +62,7 @@ Do not reconstruct `workflowsPath` from environment name/id, instance identifier
 Never write `n8nac-config.json`, `~/.n8n-manager`, or n8n-manager secret files by hand.
 <!-- n8n-as-code-end -->
 
-## ekyte MCP — Formatação de Comentários
+## ekyte MCP: Formatação de Comentários
 
 Sempre que criar comentários no ekyte via MCP, use HTML formatado no campo `description`. O ekyte renderiza HTML nos comentários.
 
@@ -73,7 +73,7 @@ Sempre que criar comentários no ekyte via MCP, use HTML formatado no campo `des
 - Use `<ul>` + `<li>` para listas com marcadores
 - Use `<hr>` para separadores entre seções
 - Use `<a href="url">texto</a>` para links clicáveis
-- Nunca envie texto puro sem tags HTML — fica tudo emendado e ilegível
+- Nunca envie texto puro sem tags HTML, fica tudo emendado e ilegível
 
 **Exemplo:**
 ```html
@@ -91,9 +91,9 @@ Toda sessão deve ser salva obrigatoriamente na pasta `log/` no raiz do projeto.
 
 ### Funcionamento
 
-- **Salvar sessão atual**: `/session-save` — exporta a sessão atual do OpenCode para `log/` como JSON
-- **Listar sessões salvas**: `/session-list` — mostra todas as sessões em `log/` + sessões ativas no OpenCode
-- **Carregar contexto**: `/session-load` — exibe as sessões disponíveis e carrega o contexto de uma anterior
+- **Salvar sessão atual**: `/session-save`: exporta a sessão atual do OpenCode para `log/` como JSON
+- **Listar sessões salvas**: `/session-list`: mostra todas as sessões em `log/` + sessões ativas no OpenCode
+- **Carregar contexto**: `/session-load`: exibe as sessões disponíveis e carrega o contexto de uma anterior
 
 ### Regras obrigatórias
 
