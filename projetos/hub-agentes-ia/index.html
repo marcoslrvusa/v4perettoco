@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hub de Agentes V4 Peretto — Documentação de Software (v2 canônica)</title>
+<meta name="description" content="Documentação técnica canônica do Hub de Agentes: arquitetura, inventário verificado de 74 skills, convenções, manutenção e roadmap.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="../../logo-peretto-red.png">
+<style>
+:root{
+  --sans:'Montserrat',-apple-system,'Segoe UI',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --accent:#e50914; --accent-dark:#b0060f; --accent-soft:rgba(229,9,20,.07);
+  --accent-grad:linear-gradient(135deg,#e50914 0%,#ff222d 100%);
+  --sb-bg:#0a0a0f; --sb-line:#1a1a26; --sb-tx:#9494a8; --sb-hd:#e4e4ec; --sb-hv:#1a1a22;
+  --bg:#fff; --ink:#1a1a2e; --mut:#6a6a84; --line:#e2e2ec; --card:#f8f8fc;
+  --sbw:292px; --tbh:62px; --r:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);font-size:14.5px;line-height:1.7;color:var(--ink);background:var(--bg);display:flex;min-height:100vh;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.topbar{position:fixed;top:0;left:var(--sbw);right:0;height:var(--tbh);background:var(--sb-bg);border-bottom:1px solid var(--sb-line);display:flex;align-items:center;gap:12px;padding:0 32px;z-index:100}
+.topbar h1{font-size:14px;font-weight:800;color:var(--sb-hd);letter-spacing:-.2px;white-space:nowrap}
+.topbar .sub{font-size:12px;color:var(--sb-tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar .spacer{flex:1}
+.ver-badge{font-size:10.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#fff;background:var(--accent);padding:4px 12px;border-radius:20px;white-space:nowrap}
+.menu-btn{display:none;background:none;border:1px solid var(--sb-line);color:var(--sb-hd);border-radius:8px;padding:6px 11px;font-size:15px;cursor:pointer}
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sbw);background:var(--sb-bg);border-right:1px solid var(--sb-line);overflow-y:auto;z-index:200;display:flex;flex-direction:column}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-thumb{background:#2a2a3e;border-radius:4px}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid var(--sb-line);display:flex;gap:12px;align-items:center}
+.sb-logo img{width:46px;height:auto}
+.sb-logo .n{font-size:13px;font-weight:800;color:var(--sb-hd);line-height:1.3}
+.sb-logo .s{font-size:10px;font-weight:600;color:var(--sb-tx);text-transform:uppercase;letter-spacing:.7px;margin-top:2px}
+.sb-nav{flex:1;padding:10px 0 18px}
+.sb-nav ul{list-style:none}
+.sb-sec{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--accent);padding:14px 20px 6px}
+.sb-link{display:block;padding:7px 20px;font-size:12.5px;font-weight:500;color:var(--sb-tx);text-decoration:none;border-left:3px solid transparent;cursor:pointer;line-height:1.45}
+.sb-link:hover{background:var(--sb-hv);color:var(--sb-hd);border-left-color:var(--accent)}
+.sb-link.active{color:#fff;border-left-color:var(--accent);background:var(--sb-hv)}
+.sb-foot{padding:14px 20px;border-top:1px solid var(--sb-line);font-size:11px;color:var(--sb-tx);line-height:1.6}
+.sb-foot code{font-family:var(--mono);font-size:10px;background:#1a1a26;padding:1px 6px;border-radius:4px;color:#ffb3b8}
+.main{margin-left:var(--sbw);margin-top:var(--tbh);flex:1;min-width:0}
+.wrap{max-width:1020px;margin:0 auto;padding:36px 48px 90px}
+.hero{border:1px solid var(--line);border-radius:16px;padding:30px 34px;margin-bottom:24px;background:linear-gradient(180deg,#fff 0%,var(--accent-soft) 160%);position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--accent-grad)}
+.hero .kicker{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;color:var(--accent);background:#fff;border:1px solid #f3c2c2;border-radius:20px;padding:4px 13px;margin-bottom:12px}
+.hero h2{font-size:clamp(22px,3vw,30px);font-weight:800;letter-spacing:-.6px;line-height:1.2;margin-bottom:10px}
+.hero h2 span{color:var(--accent)}
+.hero p{font-size:13.5px;color:var(--mut);max-width:760px}
+section.block{margin-bottom:30px;scroll-margin-top:calc(var(--tbh) + 14px)}
+.sec-head{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+.sec-num{flex-shrink:0;min-width:36px;height:36px;border-radius:9px;background:var(--accent-grad);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;padding:0 10px}
+.sec-head h2{font-size:19px;font-weight:800;letter-spacing:-.4px}
+.sec-sub{font-size:12.5px;color:var(--mut);margin:2px 0 16px 48px;max-width:820px}
+h3{font-size:15px;font-weight:700;margin:22px 0 10px}
+h3 .cnt{font-size:11px;font-weight:800;color:var(--accent);background:var(--accent-soft);border:1px solid #f3c2c2;border-radius:12px;padding:1px 9px;margin-left:6px}
+p{margin-bottom:10px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:12px 0 18px;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+th{background:var(--accent);color:#fff;font-weight:700;text-align:left;padding:9px 13px;font-size:10.5px;text-transform:uppercase;letter-spacing:.5px}
+td{padding:8px 13px;border-bottom:1px solid var(--line);vertical-align:top;background:#fff}
+tr:last-child td{border-bottom:none}
+tr:nth-child(even) td{background:var(--card)}
+td.c{text-align:center;white-space:nowrap}
+code{font-family:var(--mono);font-size:11.5px;background:var(--card);padding:2px 7px;border-radius:4px;color:var(--accent);border:1px solid var(--line)}
+pre{background:#0d1117;color:#e6edf3;padding:16px 20px;border-radius:10px;overflow-x:auto;margin:12px 0;font-size:12.5px;line-height:1.6;font-family:var(--mono)}
+pre code{background:none;color:inherit;padding:0;border:none}
+.callout{padding:12px 16px;border-radius:8px;margin:12px 0;font-size:13px;border-left:3px solid}
+.callout.info{background:var(--accent-soft);border-color:var(--accent)}
+.callout.good{background:rgba(34,197,94,.07);border-color:#22c55e}
+.callout.warn{background:#fff8e6;border-color:#d9a400}
+.cmd{position:relative}
+.cmd button{position:absolute;top:10px;right:10px;font-family:var(--sans);font-size:11px;font-weight:700;background:#21262d;color:#e6edf3;border:1px solid #30363d;border-radius:6px;padding:5px 11px;cursor:pointer}
+.cmd button:hover{border-color:var(--accent);color:#fff}
+ul.tight,ol.tight{margin:8px 0 12px 22px}
+ul.tight li,ol.tight li{margin-bottom:5px}
+li::marker{color:var(--accent)}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:14px 0}
+.kv .k{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px 15px}
+.kv .k .l{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:var(--mut);margin-bottom:3px}
+.kv .k .v{font-size:15px;font-weight:800}
+.kv .k .v.red{color:var(--accent)}
+.footer{border-top:1px solid var(--line);margin-top:26px;padding-top:18px;font-size:11.5px;color:var(--mut);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.footer img{height:24px}
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%);transition:transform .25s}
+  .sidebar.open{transform:translateX(0)}
+  .topbar{left:0;padding:0 14px}
+  .topbar .sub{display:none}
+  .menu-btn{display:block}
+  .main{margin-left:0}
+  .wrap{padding:22px 16px 70px}
+  .hero{padding:22px 20px}
+}
+
+</style>
+</head>
+<body>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Abrir menu">☰</button>
+  <h1>Hub de Agentes V4 Peretto</h1>
+  <span class="sub">Documentação de software · v2 canônica · base permanente da empresa</span>
+  <div class="spacer"></div>
+  <span class="ver-badge">v2 · Set 2026</span>
+</header>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sb-logo">
+    <img src="../../logo-peretto-red.png" alt="Peretto &amp; Co.">
+    <div><div class="n">Hub de Agentes<br>V4 Peretto</div><div class="s">Docs de software · v2</div></div>
+  </div>
+  <nav class="sb-nav"><ul>
+    <li class="sb-sec">Leitura</li>
+    <li><a class="sb-link" href="#visao">00 · Visão geral e ficha técnica</a></li>
+    <li class="sb-sec">Existência</li>
+    <li><a class="sb-link" href="#proposito">01 · Propósito e escopo</a></li>
+    <li><a class="sb-link" href="#arquitetura">02 · Arquitetura e repositórios</a></li>
+    <li class="sb-sec">Referência</li>
+    <li><a class="sb-link" href="#inventario">03 · Inventário verificado (74 skills)</a></li>
+    <li><a class="sb-link" href="#convencoes">04 · Convenções de desenvolvimento</a></li>
+    <li class="sb-sec">Operação</li>
+    <li><a class="sb-link" href="#manutencao">05 · Manutenção e operação</a></li>
+    <li><a class="sb-link" href="#roadmap">06 · Melhorias, expansões e otimizações</a></li>
+    <li><a class="sb-link" href="#legado">07 · Legado e decisões registradas</a></li>
+    <li><a class="sb-link" href="#faq">08 · FAQ do desenvolvedor</a></li>
+  </ul></nav>
+  <div class="sb-foot">Catálogo de entregas: <code>Central de Entregas</code> na raiz do Pages.<br>Base pública: <code>marcoslrvusa.github.io/v4perettoco/</code></div>
+</aside>
+
+<div class="main"><div class="wrap">
+
+  <div class="hero">
+    <span class="kicker">Documentação canônica · substitui as versões anteriores do hub</span>
+    <h2>O Hub de Agentes como <span>produto de software</span></h2>
+    <p>Este documento descreve a existência, a arquitetura, a operação e a evolução do Hub de Agentes V4 Peretto — o sistema de skills e agentes que executa a operação. Escrito para que qualquer desenvolvedor entenda, opere e evolua o sistema sem depender de conhecimento tribal. Números abaixo verificados diretamente no repositório em 14/09/2026.</p>
+  </div>
+
+  <section class="block" id="visao">
+    <div class="sec-head"><div class="sec-num">00</div><h2>Visão geral e ficha técnica</h2></div>
+    <p class="sec-sub">O retrato oficial do sistema. Se um número aqui divergir do que você vê no disco, o disco está errado ou esta doc precisa de revisão — abra o processo de manutenção (§05).</p>
+    <div class="kv">
+      <div class="k"><div class="l">Skills verificadas</div><div class="v red">74</div></div>
+      <div class="k"><div class="l">Duplo-write</div><div class="v">100%</div></div>
+      <div class="k"><div class="l">Catálogo de agentes</div><div class="v">a reconstruir</div></div>
+      <div class="k"><div class="l">Publicação</div><div class="v">GitHub Pages</div></div>
+    </div>
+    <table>
+      <tr><th style="width:220px">Atributo</th><th>Valor</th></tr>
+      <tr><td><strong>Nome</strong></td><td>Hub de Agentes V4 Peretto</td></tr>
+      <tr><td><strong>Natureza</strong></td><td>Sistema de instruções executáveis (skills) + agentes orquestradores para operação de marketing, vendas e entrega</td></tr>
+      <tr><td><strong>Onde vive o código</strong></td><td><code>.agents/skills/</code> (runtime OpenCode) espelhado 1:1 em <code>.claude/skills/</code> (runtime Claude)</td></tr>
+      <tr><td><strong>Onde vive a publicação</strong></td><td>Branch <code>gh-pages</code> do repo <code>marcoslrvusa/v4perettoco</code> → <code>marcoslrvusa.github.io/v4perettoco/</code></td></tr>
+      <tr><td><strong>Documentação canônica</strong></td><td>Esta página (<code>projetos/hub-agentes-ia/</code>) — substitui <code>hub-de-agentes/</code> e <code>agents-hub.html</code> (ver §07)</td></tr>
+      <tr><td><strong>Origem</strong></td><td>Derivado do Builders Hub da matriz (<code>upstream → V4-Company/builders-hub</code>), customizado pela operação Peretto</td></tr>
+      <tr><td><strong>Dono</strong></td><td>Marcos Perettoco — operação V4 Peretto &amp; Co</td></tr>
+    </table>
+    <div class="callout warn"><strong> Correção histórica registrada:</strong> as páginas antigas do hub afirmavam “37 agentes · 102 skills”. A auditoria de 14/09/2026 encontrou <strong>74 skills reais</strong> e <strong>nenhum diretório <code>.opencode/agents/</code></strong> (apenas <code>.github/agents/n8n-architect.agent.md</code>). Os números antigos foram aposentados como legado (§07) e o duplo-write foi completado (9 skills → <code>.claude</code>, 1 skill → <code>.agents</code>).</div>
+  </section>
+
+  <section class="block" id="proposito">
+    <div class="sec-head"><div class="sec-num">01</div><h2>Propósito e escopo</h2></div>
+    <p class="sec-sub">Por que este software existe — a seção que justifica cada linha das próximas.</p>
+    <h3>Problemas que o Hub resolve</h3>
+    <ol class="tight">
+      <li><strong>Dispersão de know-how:</strong> playbooks de account, tráfego, copy, SEO e vendas viviam na cabeça das pessoas. Skills transformam esse saber em instruções executáveis versionadas.</li>
+      <li><strong>Inconsistência de entrega:</strong> sem padrão, cada check-in, auditoria e relatório saía de um jeito. O Hub impõe estrutura (ROPRE, 80/20, frameworks V4) embutida nas instruções.</li>
+      <li><strong>Custo de onboarding:</strong> um operador novo (humano ou agente) lê <code>/contexto</code> + skills e opera no padrão da casa em horas, não meses.</li>
+    </ol>
+    <h3>O que o Hub não é</h3>
+    <ul class="tight">
+      <li>Não é um produto SaaS vendável como está — é <strong>infraestrutura operacional interna</strong>.</li>
+      <li>Não executa nada sozinho — skills são <strong>instruções</strong>; quem executa são os agentes/operadores nos runtimes.</li>
+      <li>Não substitui o Mission Control do cliente (OKRs, apostas, combinados) — ele <strong>lê e escreve</strong> nele via Ekyte/Drive.</li>
+    </ul>
+  </section>
+
+  <section class="block" id="arquitetura">
+    <div class="sec-head"><div class="sec-num">02</div><h2>Arquitetura e repositórios</h2></div>
+    <p class="sec-sub">Como as peças se encaixam e onde cada coisa mora. Leia esta seção antes de tocar em qualquer arquivo.</p>
+    <h3>Camadas do sistema</h3>
+    <table>
+      <tr><th>Camada</th><th>O que é</th><th>Onde mora</th></tr>
+      <tr><td><strong>Runtimes</strong></td><td>Os dois motores que executam: OpenCode e Claude</td><td>estações de trabalho + CI</td></tr>
+      <tr><td><strong>Skills</strong></td><td>As 74 instruções especializadas (o “como fazer”)</td><td><code>.agents/skills/</code> ⟷ <code>.claude/skills/</code> (espelho 1:1 obrigatório)</td></tr>
+      <tr><td><strong>Agentes</strong></td><td>Executores que seguem skills (catálogo em reconstrução)</td><td><code>.github/agents/</code> (+ convenção §04)</td></tr>
+      <tr><td><strong>Memória viva</strong></td><td>Estado compartilhado entre execuções</td><td>Ekyte (tasks/histórico) + Google Drive (arquivos de cliente)</td></tr>
+      <tr><td><strong>Publicação</strong></td><td>Entregas navegáveis para clientes e time</td><td>branch <code>gh-pages</code> → GitHub Pages</td></tr>
+    </table>
+    <h3>Repositórios e remotes</h3>
+    <table>
+      <tr><th>Remote</th><th>Repo</th><th>Função</th></tr>
+      <tr><td><code>origin</code></td><td><code>marcoslrvusa/v4perettoco</code></td><td>Operação diária + publicação (branch <code>gh-pages</code>)</td></tr>
+      <tr><td><code>upstream</code></td><td><code>V4-Company/builders-hub</code></td><td>Matriz — origem das skills importadas; fonte de <code>/sync-hub</code></td></tr>
+      <tr><td><code>hub-agentes</code> / <code>peretto</code></td><td><code>PerettoCo/hub-agentes</code></td><td>Repo institucional do hub (branches <code>main</code>, infra)</td></tr>
+      <tr><td><code>hub-agentes-ia</code></td><td><code>PerettoCo/hub-agentes-ia</code></td><td>Repo do produto Hub-IA; esta documentação espelha seu padrão visual</td></tr>
+    </table>
+    <h3>Regra de ouro</h3>
+    <div class="callout info"><strong>Duplo-write obrigatório:</strong> toda skill existe idêntica em <code>.agents/skills/&lt;nome&gt;/</code> e <code>.claude/skills/&lt;nome&gt;/</code>. Se existe de um lado só, é bug — rode a auditoria do §05.</div>
+  </section>
+
+  <section class="block" id="inventario">
+    <div class="sec-head"><div class="sec-num">03</div><h2>Inventário verificado — 74 skills</h2></div>
+    <p class="sec-sub">Gerado a partir do disco em 14/09/2026. Descrições extraídas do frontmatter de cada <code>SKILL.md</code>. Se adicionar uma skill, ela aparece aqui após regenerar (§05).</p>
+    <h3>Account — gestão do cliente <span class="cnt">5</span></h3><table><tr><th>Skill</th><th>O que faz (gatilho de uso)</th><th>.agents</th><th>.claude</th><th>Versão</th></tr><tr><td><code>account-checkin-review</code></td><td>Pos-call de check-in. Le o transcript do Gemini Notes (ou texto colado) da call que acabou e atualiza o Mission Control do cliente — registra combinados, atualiza apostas vivas (vivas/mortas/novas), refina…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.0.0</td></tr><tr><td><code>account-checkin-roleplay</code></td><td>Prepara o account pra reunião de check-in com cliente seguindo ROPRE V4 e roda roleplay realista simulando as personas reais do cliente. Use sempre que o usuário mencionar reunião de check-in, ROPRE,…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.0.0</td></tr><tr><td><code>account-evolucao-checkins</code></td><td>Relatorio de evolucao entre check-ins. Le o historico de check-ins, combinados e apostas do Mission Control e gera um relatorio de progressao — quais combinados foram cumpridos, quais apostas…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.0.0</td></tr><tr><td><code>account-handoff</code></td><td>&#x27;Primeira skill que o account roda quando recebe um cliente novo de vendas. Le form de kickoff + transcript da reuniao de vendas (+ proposta comercial opcional) e gera a primeira versao da KB do cliente:…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.0.0</td></tr><tr><td><code>account-pesquisa-profunda-cliente</code></td><td>Pesquisa profunda de cliente para KB acionavel. PREMISSA OBRIGATORIA - dados do cliente ja na pasta (no minimo formulario de kickoff + transcricao de reuniao de vendas). Sem isso a skill nao roda. Usa esses…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.5.0</td></tr></table>
+<h3>Tráfego &amp; Analytics <span class="cnt">5</span></h3><table><tr><th>Skill</th><th>O que faz (gatilho de uso)</th><th>.agents</th><th>.claude</th><th>Versão</th></tr><tr><td><code>gt-media-buyer-completo</code></td><td>&gt;- Skill completa de gestão de tráfego e media buying com 20+ anos de expertise integrando publicidade, ciência de dados, teoria das restrições e PNL. Use quando o usuário precisar estruturar campanhas de…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.0.0</td></tr><tr><td><code>gt-relatorios-trafego</code></td><td>Relatorio consolidado de trafego multicanal — Google Ads, Meta Ads, Bing Ads. Gera reports HTML/JSON, envia por email, salva no Drive e entrega analise com IA. Inclui deteccao de anomalias, pace de verba e…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.0.0</td></tr><tr><td><code>v4mos-dados-meta-ads</code></td><td>Puxa qualquer dado de Meta Ads (Facebook + Instagram) via API V4mos pra um cliente especifico. Use sempre que o usuario pedir dado de Meta Ads — metricas de campanhas, anuncios, keywords, breakdowns por…</td><td class="c">✓</td><td class="c">✓</td><td class="c">2.0.0</td></tr><tr><td><code>analytics-tracking</code></td><td>When the user wants to set up, improve, or audit analytics tracking and measurement. Also use when the user mentions &quot;set up tracking,&quot; &quot;GA4,&quot; &quot;Google Analytics,&quot; &quot;conversion tracking,&quot; &quot;event tracking,&quot;…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.1.0</td></tr><tr><td><code>paid-ads</code></td><td>&quot;When the user wants help with paid advertising campaigns on Google Ads, Meta (Facebook/Instagram), LinkedIn, Twitter/X, or other ad platforms. Also use when the user mentions &#x27;PPC,&#x27; &#x27;paid media,&#x27; &#x27;ROAS,&#x27;…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.2.0</td></tr></table>
+<h3>Copy &amp; Conteúdo <span class="cnt">13</span></h3><table><tr><th>Skill</th><th>O que faz (gatilho de uso)</th><th>.agents</th><th>.claude</th><th>Versão</th></tr><tr><td><code>copywriting</code></td><td>When the user wants to write, rewrite, or improve marketing copy for any page — including homepage, landing pages, pricing pages, feature pages, about pages, or product pages. Also use when the user says…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.1.0</td></tr><tr><td><code>copy-editing</code></td><td>&quot;When the user wants to edit, review, or improve existing marketing copy, or refresh outdated content. Also use when the user mentions &#x27;edit this copy,&#x27; &#x27;review my copy,&#x27; &#x27;copy feedback,&#x27; &#x27;proofread,&#x27;…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.3.0</td></tr><tr><td><code>copy-pipeline-conteudo</code></td><td>Pipeline completo de conteudo editorial — cria calendario, produz blog posts e email marketing via IA, envia para aprovacao no Google Drive e gera JSONs finais. Inclui fluxo de aprovacao com notificacao por…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.0.0</td></tr><tr><td><code>content-strategy</code></td><td>When the user wants to plan a content strategy, decide what content to create, or figure out what topics to cover. Also use when the user mentions &quot;content strategy,&quot; &quot;what should I write about,&quot; &quot;content…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.1.0</td></tr><tr><td><code>email-sequence</code></td><td>When the user wants to create or optimize an email sequence, drip campaign, automated email flow, or lifecycle email program. Also use when the user mentions &quot;email sequence,&quot; &quot;drip campaign,&quot; &quot;nurture…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.1.0</td></tr><tr><td><code>social-content</code></td><td>&quot;When the user wants help creating, scheduling, or optimizing social media content for LinkedIn, Twitter/X, Instagram, TikTok, Facebook, or other platforms. Also use when the user mentions &#x27;LinkedIn post,&#x27;…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.3.0</td></tr><tr><td><code>video</code></td><td>&quot;When the user wants to create, generate, or produce video content using AI tools or programmatic frameworks. Also use when the user mentions &#x27;video production,&#x27; &#x27;AI video,&#x27; &#x27;Remotion,&#x27; &#x27;Hyperframes,&#x27;…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.0.0</td></tr><tr><td><code>image</code></td><td>&quot;When the user wants to create, generate, edit, or optimize images for marketing — blog heroes, social graphics, product mockups, profile banners, listing visuals, or brand assets. Also use when the user…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.0.0</td></tr><tr><td><code>ad-creative</code></td><td>&quot;When the user wants to generate, iterate, or scale ad creative — headlines, descriptions, primary text, or full ad variations — for any paid advertising platform. Also use when the user mentions &#x27;ad copy…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.1.0</td></tr><tr><td><code>lead-magnets</code></td><td>When the user wants to create, plan, or optimize a lead magnet for email capture or lead generation. Also use when the user mentions &quot;lead magnet,&quot; &quot;gated content,&quot; &quot;content upgrade,&quot; &quot;downloadable,&quot;…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.0.0</td></tr><tr><td><code>free-tool-strategy</code></td><td>When the user wants to plan, evaluate, or build a free tool for marketing purposes — lead generation, SEO value, or brand awareness. Also use when the user mentions &quot;engineering as marketing,&quot; &quot;free tool,&quot;…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.1.0</td></tr><tr><td><code>cold-email</code></td><td>Write B2B cold emails and follow-up sequences that get replies. Use when the user wants to write cold outreach emails, prospecting emails, cold email campaigns, sales development emails, or SDR emails. Also…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.1.0</td></tr><tr><td><code>product-marketing-context</code></td><td>&quot;When the user wants to create or update their product marketing context document. Also use when the user mentions &#x27;product context,&#x27; &#x27;marketing context,&#x27; &#x27;set up context,&#x27; &#x27;positioning,&#x27; &#x27;who is my target…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.1.0</td></tr></table>
+<h3>Estratégia &amp; Pesquisa <span class="cnt">11</span></h3><table><tr><th>Skill</th><th>O que faz (gatilho de uso)</th><th>.agents</th><th>.claude</th><th>Versão</th></tr><tr><td><code>marketing-ideas</code></td><td>&quot;When the user needs marketing ideas, inspiration, or strategies for their SaaS or software product. Also use when the user asks for &#x27;marketing ideas,&#x27; &#x27;growth ideas,&#x27; &#x27;how to market,&#x27; &#x27;marketing…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.1.0</td></tr><tr><td><code>marketing-psychology</code></td><td>&quot;When the user wants to apply psychological principles, mental models, or behavioral science to marketing. Also use when the user mentions &#x27;psychology,&#x27; &#x27;mental models,&#x27; &#x27;cognitive bias,&#x27; &#x27;persuasion,&#x27;…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.1.0</td></tr><tr><td><code>customer-research</code></td><td>When the user wants to conduct, analyze, or synthesize customer research. Use when the user mentions &quot;customer research,&quot; &quot;ICP research,&quot; &quot;talk to customers,&quot; &quot;analyze transcripts,&quot; &quot;customer interviews,&quot;…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.0.0</td></tr><tr><td><code>competitor-alternatives</code></td><td>&quot;When the user wants to create competitor comparison or alternative pages for SEO and sales enablement. Also use when the user mentions &#x27;alternative page,&#x27; &#x27;vs page,&#x27; &#x27;competitor comparison,&#x27; &#x27;comparison…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.1.0</td></tr><tr><td><code>competitor-profiling</code></td><td>&quot;When the user wants to research, profile, or analyze competitors from their URLs. Also use when the user mentions &#x27;competitor profile,&#x27; &#x27;competitor research,&#x27; &#x27;competitor analysis,&#x27; &#x27;profile this…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.0.0</td></tr><tr><td><code>launch-strategy</code></td><td>&quot;When the user wants to plan a product launch, feature announcement, or release strategy. Also use when the user mentions &#x27;launch,&#x27; &#x27;Product Hunt,&#x27; &#x27;feature release,&#x27; &#x27;announcement,&#x27; &#x27;go-to-market,&#x27; &#x27;beta…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.1.0</td></tr><tr><td><code>directory-submissions</code></td><td>When the user wants to submit their product to startup, SaaS, AI, agent, MCP, no-code, or review directories for backlinks, domain rating, and discovery. Also use when the user mentions &quot;directory…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.0.0</td></tr><tr><td><code>co-marketing</code></td><td>&quot;When the user wants to find co-marketing partners, plan joint campaigns, or brainstorm partnership opportunities. Use when the user says &#x27;co-marketing,&#x27; &#x27;partner marketing,&#x27; &#x27;joint campaign,&#x27; &#x27;who should…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.0.0</td></tr><tr><td><code>community-marketing</code></td><td>&quot;Build and leverage online communities to drive product growth and brand loyalty. Use when the user wants to create a community strategy, grow a Discord or Slack community, manage a forum or subreddit,…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.0.0</td></tr><tr><td><code>programmatic-seo</code></td><td>When the user wants to create SEO-driven pages at scale using templates and data. Also use when the user mentions &quot;programmatic SEO,&quot; &quot;template pages,&quot; &quot;pages at scale,&quot; &quot;directory pages,&quot; &quot;location pages,&quot;…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.1.0</td></tr><tr><td><code>aso-audit</code></td><td>&quot;When the user wants to audit or optimize an App Store or Google Play listing. Also use when the user mentions &#x27;ASO audit,&#x27; &#x27;app store optimization,&#x27; &#x27;optimize my app listing,&#x27; &#x27;improve app visibility,&#x27;…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.0.0</td></tr></table>
+<h3>Receita &amp; Vendas <span class="cnt">6</span></h3><table><tr><th>Skill</th><th>O que faz (gatilho de uso)</th><th>.agents</th><th>.claude</th><th>Versão</th></tr><tr><td><code>pricing-strategy</code></td><td>&quot;When the user wants help with pricing decisions, packaging, or monetization strategy. Also use when the user mentions &#x27;pricing,&#x27; &#x27;pricing tiers,&#x27; &#x27;freemium,&#x27; &#x27;free trial,&#x27; &#x27;packaging,&#x27; &#x27;price increase,&#x27;…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.1.0</td></tr><tr><td><code>churn-prevention</code></td><td>&quot;When the user wants to reduce churn, build cancellation flows, set up save offers, recover failed payments, or implement retention strategies. Also use when the user mentions &#x27;churn,&#x27; &#x27;cancel flow,&#x27;…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.1.0</td></tr><tr><td><code>referral-program</code></td><td>&quot;When the user wants to create, optimize, or analyze a referral program, affiliate program, or word-of-mouth strategy. Also use when the user mentions &#x27;referral,&#x27; &#x27;affiliate,&#x27; &#x27;ambassador,&#x27; &#x27;word of mouth,&#x27;…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.1.0</td></tr><tr><td><code>revops</code></td><td>&quot;When the user wants help with revenue operations, lead lifecycle management, or marketing-to-sales handoff processes. Also use when the user mentions &#x27;RevOps,&#x27; &#x27;revenue operations,&#x27; &#x27;lead scoring,&#x27; &#x27;lead…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.1.0</td></tr><tr><td><code>sales-enablement</code></td><td>&quot;When the user wants to create sales collateral, pitch decks, one-pagers, objection handling docs, or demo scripts. Also use when the user mentions &#x27;sales deck,&#x27; &#x27;pitch deck,&#x27; &#x27;one-pager,&#x27; &#x27;leave-behind,&#x27;…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.1.0</td></tr><tr><td><code>paywall-upgrade-cro</code></td><td>When the user wants to create or optimize in-app paywalls, upgrade screens, upsell modals, or feature gates. Also use when the user mentions &quot;paywall,&quot; &quot;upgrade screen,&quot; &quot;upgrade modal,&quot; &quot;upsell,&quot; &quot;feature…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.1.0</td></tr></table>
+<h3>CRO &amp; Experimentação <span class="cnt">6</span></h3><table><tr><th>Skill</th><th>O que faz (gatilho de uso)</th><th>.agents</th><th>.claude</th><th>Versão</th></tr><tr><td><code>ab-test-setup</code></td><td>When the user wants to plan, design, or implement an A/B test or experiment, or build a growth experimentation program. Also use when the user mentions &quot;A/B test,&quot; &quot;split test,&quot; &quot;experiment,&quot; &quot;test this…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.2.0</td></tr><tr><td><code>form-cro</code></td><td>When the user wants to optimize any form that is NOT signup/registration — including lead capture forms, contact forms, demo request forms, application forms, survey forms, or checkout forms. Also use when…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.1.0</td></tr><tr><td><code>onboarding-cro</code></td><td>When the user wants to optimize post-signup onboarding, user activation, first-run experience, or time-to-value. Also use when the user mentions &quot;onboarding flow,&quot; &quot;activation rate,&quot; &quot;user activation,&quot;…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.1.0</td></tr><tr><td><code>page-cro</code></td><td>When the user wants to optimize, improve, or increase conversions on any marketing page — including homepage, landing pages, pricing pages, feature pages, or blog posts. Also use when the user says &quot;CRO,&quot;…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.1.0</td></tr><tr><td><code>popup-cro</code></td><td>When the user wants to create or optimize popups, modals, overlays, slide-ins, or banners for conversion purposes. Also use when the user mentions &quot;exit intent,&quot; &quot;popup conversions,&quot; &quot;modal optimization,&quot;…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.1.0</td></tr><tr><td><code>signup-flow-cro</code></td><td>When the user wants to optimize signup, registration, account creation, or trial activation flows. Also use when the user mentions &quot;signup conversions,&quot; &quot;registration friction,&quot; &quot;signup form optimization,&quot;…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.1.0</td></tr></table>
+<h3>SEO &amp; AI Search <span class="cnt">8</span></h3><table><tr><th>Skill</th><th>O que faz (gatilho de uso)</th><th>.agents</th><th>.claude</th><th>Versão</th></tr><tr><td><code>seo</code></td><td>&quot;Análise SEO abrangente para qualquer site ou tipo de negócio. Auditorias completas de site, análise de página única, SEO técnico (crawlability, indexability, Core Web Vitals com INP), schema markup,…</td><td class="c">✓</td><td class="c">✓</td><td class="c">&quot;2.2.0&quot;</td></tr><tr><td><code>seo-audit</code></td><td>When the user wants to audit, review, or diagnose SEO issues on their site. Also use when the user mentions &quot;SEO audit,&quot; &quot;technical SEO,&quot; &quot;why am I not ranking,&quot; &quot;SEO issues,&quot; &quot;on-page SEO,&quot; &quot;meta tags…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.2.0</td></tr><tr><td><code>seo-google</code></td><td>&gt; APIs de SEO do Google: Search Console (Search Analytics, URL Inspection, Sitemaps), PageSpeed Insights v5, dados de campo CrUX com histórico de 25 semanas, Indexing API v3 e tráfego orgânico do GA4.…</td><td class="c">✓</td><td class="c">✓</td><td class="c">&quot;2.2.0&quot;</td></tr><tr><td><code>seo-technical</code></td><td>&gt; Auditoria técnica de SEO em 9 categorias: crawlability, indexability, segurança, estrutura de URL, mobile, Core Web Vitals, dados estruturados, renderização JavaScript e protocolo IndexNow. Use quando o…</td><td class="c">✓</td><td class="c">✓</td><td class="c">&quot;2.2.0&quot;</td></tr><tr><td><code>schema-markup</code></td><td>When the user wants to add, fix, or optimize schema markup and structured data on their site. Also use when the user mentions &quot;schema markup,&quot; &quot;structured data,&quot; &quot;JSON-LD,&quot; &quot;rich snippets,&quot; &quot;schema.org,&quot;…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.1.0</td></tr><tr><td><code>ai-seo</code></td><td>&quot;When the user wants to optimize content for AI search engines, get cited by LLMs, or appear in AI-generated answers. Also use when the user mentions &#x27;AI SEO,&#x27; &#x27;AEO,&#x27; &#x27;GEO,&#x27; &#x27;LLMO,&#x27; &#x27;answer engine…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.2.0</td></tr><tr><td><code>ai-search</code></td><td>Setor completo de AI Search (AEO + GEO + AI SEO) — diagnose, implementa e gerencia a presenca de marcas em respostas de IA (ChatGPT, Perplexity, Google AI Overviews, Gemini, Claude, Copilot). Use quando o…</td><td class="c">✓</td><td class="c">✓</td><td class="c">—</td></tr><tr><td><code>site-architecture</code></td><td>When the user wants to plan, map, or restructure their website&#x27;s page hierarchy, navigation, URL structure, or internal linking. Also use when the user mentions &quot;sitemap,&quot; &quot;site map,&quot; &quot;visual sitemap,&quot;…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.1.0</td></tr></table>
+<h3>Base, Setup &amp; Infra <span class="cnt">20</span></h3><table><tr><th>Skill</th><th>O que faz (gatilho de uso)</th><th>.agents</th><th>.claude</th><th>Versão</th></tr><tr><td><code>onboarding</code></td><td>Configura todo o ambiente do usuario pra trabalhar com IA na V4 via o Builders Hub — valida e conserta git 100% (identity, gh CLI, remote, push), instala dependencias (Node, Python, Claude Code,…</td><td class="c">✓</td><td class="c">✓</td><td class="c">—</td></tr><tr><td><code>contexto</code></td><td>Le todos os arquivos em uma KB (cliente, squad ou projeto), gera CLAUDE.md e AGENTS.md, e quando for cliente cria/atualiza mission-control/ com OKRs, apostas vivas, combinados, personas e historico de…</td><td class="c">✓</td><td class="c">✓</td><td class="c">—</td></tr><tr><td><code>sync-hub</code></td><td>Atualiza o Builders Hub local puxando as skills mais recentes do repo publico, mostra diff do que mudou desde a ultima sync e regenera o REGISTRY.md. Use quando o usuario rodar /sync-hub, quiser &quot;baixar as…</td><td class="c">✓</td><td class="c">✓</td><td class="c">—</td></tr><tr><td><code>criador-de-skills</code></td><td>Cria skills novas e melhora skills existentes no Builders Hub. Use quando o usuario quiser criar uma skill do zero, transformar um workflow que funcionou em skill reutilizavel, editar uma skill existente,…</td><td class="c">✓</td><td class="c">✓</td><td class="c">—</td></tr><tr><td><code>compartilhar-skill</code></td><td>Empacota uma skill local e abre Pull Request no Builders Hub publico automaticamente. Use quando o usuario rodar /compartilhar-skill, disser que quer &quot;compartilhar essa skill com o time&quot;, &quot;publicar no hub&quot;,…</td><td class="c">✓</td><td class="c">✓</td><td class="c">—</td></tr><tr><td><code>novo-cliente</code></td><td>Cria uma nova pasta de cliente dentro de um squad com estrutura padrao, CLAUDE.md/AGENTS.md iniciais, links.md, calls/, checkins/, docs/ e campanhas/. Pergunta squad, nome e links uteis (NotebookLM, Drive,…</td><td class="c">✓</td><td class="c">✓</td><td class="c">—</td></tr><tr><td><code>novo-projeto</code></td><td>Cria uma nova pasta de projeto com estrutura padrao em bases/. Use quando o usuario rodar /novo-projeto ou disser que quer adicionar um projeto novo, uma area de trabalho ou qualquer base que nao seja cliente.</td><td class="c">✓</td><td class="c">✓</td><td class="c">—</td></tr><tr><td><code>novo-squad</code></td><td>Cria uma nova pasta de squad em squads/ com entry point e estrutura padrao. Pergunta nome do squad e quem e quem. Use quando o usuario rodar /novo-squad ou disser que quer criar um squad novo.</td><td class="c">✓</td><td class="c">✓</td><td class="c">—</td></tr><tr><td><code>geral-sabatina</code></td><td>Entrevista o usuario de forma implacavel sobre cada aspecto de um plano ou design ate atingir entendimento compartilhado. Percorre cada ramo da arvore de decisao, resolvendo dependencias uma a uma. Use…</td><td class="c">✓</td><td class="c">✓</td><td class="c">—</td></tr><tr><td><code>geral-brainstormar-sobre-minha-funcao</code></td><td>Entrevista o usuario sobre seu trabalho para descobrir como usar IA no dia a dia dele. Configura agenda, analisa tarefas e sugere skills. Atualiza o CLAUDE.md raiz com o perfil do usuario. Use quando rodar…</td><td class="c">✓</td><td class="c">✓</td><td class="c">—</td></tr><tr><td><code>geral-log-sessoes</code></td><td>&gt;- Configura o sistema de log de sessões do OpenCode no repositório local. Cria a pasta log/, scripts de export/import, comandos /session-save, /session-list e /session-load, e registra instruções de…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.0.0</td></tr><tr><td><code>geral-memoria-agentes</code></td><td><em>— ver SKILL.md —</em></td><td class="c">✓</td><td class="c">✓</td><td class="c">—</td></tr><tr><td><code>geral-leitor-arquivos</code></td><td>Leitor universal de arquivos — extrai texto de PDF, DOCX, DOC, ODT, ODS, ODP, PPTX, XLSX, XLS, RTF, imagens (OCR), HTML, CSV e código-fonte. Use quando o usuário enviar ou pedir para ler qualquer arquivo…</td><td class="c">✓</td><td class="c">✓</td><td class="c">—</td></tr><tr><td><code>geral-template-v4-soft</code></td><td>Gera reports HTML internos no padrao visual V4 Company (vermelho + dourado + Ubuntu). Use quando o usuario quiser criar um report, relatorio, dashboard, overview, analise, prestacao de contas, ou qualquer…</td><td class="c">✓</td><td class="c">✓</td><td class="c">1.0.0</td></tr><tr><td><code>geral-copy-cliente</code></td><td>Padrão de criação de copy para clientes da operação. Use quando o usuário pedir copy para cliente — anúncio do Google, anúncio do Meta, ou outros formatos (e-mail, landing page, post, WhatsApp, etc.). Para…</td><td class="c">✓</td><td class="c">✓</td><td class="c">—</td></tr><tr><td><code>geral-frontend-design</code></td><td>Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, or applications. Generates creative, polished code that…</td><td class="c">✓</td><td class="c">✓</td><td class="c">—</td></tr><tr><td><code>geral-ai-visibility</code></td><td>Skill migrada para ai-search. Use ai-search para acesso ao setor completo de AI Search (AEO + GEO + AI SEO).</td><td class="c">✓</td><td class="c">✓</td><td class="c">—</td></tr><tr><td><code>dados-modelo</code></td><td>Modelo de dados completo do Supabase DADOS — CSM, Tráfego, Operação, BSC. Use quando o usuário perguntar sobre dados de performance, métricas, NPS, CSAT, ROI, tráfego pago, OKRs ou qualquer consulta a dados…</td><td class="c">✓</td><td class="c">✓</td><td class="c">—</td></tr><tr><td><code>n8n-architect</code></td><td>Use when the user explicitly wants to create, edit, validate, sync, or troubleshoot n8n workflows, asks about n8n nodes or automation, or wants to use n8n-as-code in the current context root.</td><td class="c">✓</td><td class="c">✓</td><td class="c">—</td></tr><tr><td><code>pia-csm-inteligente</code></td><td><em>— ver SKILL.md —</em></td><td class="c">✓</td><td class="c">✓</td><td class="c">—</td></tr></table>
+    <h3>Catálogo de agentes — estado real</h3>
+    <div class="callout warn"><strong>Situação honesta:</strong> não existe diretório <code>.opencode/agents/</code> neste repo; o único agent file versionado é <code>.github/agents/n8n-architect.agent.md</code>. O catálogo de “36/37 agentes” das páginas antigas não tem lastro e foi aposentado (§07). Ação prevista no roadmap: reconstruir o catálogo de agentes a partir das skills acima (§06).</div>
+  </section>
+
+  <section class="block" id="convencoes">
+    <div class="sec-head"><div class="sec-num">04</div><h2>Convenções de desenvolvimento</h2></div>
+    <p class="sec-sub">As leis do repo. Quem contribui sem segui-las gera retrabalho.</p>
+    <table>
+      <tr><th style="width:200px">Convenção</th><th>Regra</th></tr>
+      <tr><td><strong>Nome da skill</strong></td><td>Prefixo obrigatório <code>{papel}-{nome}</code> ou <code>{fonte}-{nome}</code> (ex: <code>account-*</code>, <code>gt-*</code>, <code>geral-*</code>, <code>seo-*</code>). Sem prefixo, não entra no catálogo.</td></tr>
+      <tr><td><strong>Duplo-write</strong></td><td>Criar/editar sempre nos dois lados: <code>.agents/skills/X/</code> e <code>.claude/skills/X/</code> com conteúdo idêntico.</td></tr>
+      <tr><td><strong>Frontmatter</strong></td><td>Todo <code>SKILL.md</code> abre com <code>name</code>, <code>description</code> (quando usar — gatilhos entre aspas) e <code>metadata.version</code>.</td></tr>
+      <tr><td><strong>Português operacional</strong></td><td>Docs e skills da operação em pt-BR; termos de mercado mantidos em inglês quando consagrados (pipeline, churn, backlog).</td></tr>
+      <tr><td><strong>Nada de segredo versionado</strong></td><td>Tokens e credenciais nunca entram em commit. Dados de cliente vivem no Drive/Ekyte, nunca no repo.</td></tr>
+      <tr><td><strong>Publicação</strong></td><td>Entregas HTML vão para a branch <code>gh-pages</code> (raiz ou <code>projetos/</code>) e entram na Central de Entregas com data e situação.</td></tr>
+    </table>
+    <h3>Criar uma skill nova (passo a passo)</h3>
+    <ol class="tight">
+      <li>Escolha o prefixo pela função (tabela acima) e crie <code>.agents/skills/&lt;nome&gt;/SKILL.md</code> com frontmatter válido.</li>
+      <li>Espelhe idêntico em <code>.claude/skills/&lt;nome&gt;/SKILL.md</code>.</li>
+      <li>Rode a auditoria de duplo-write (§05) — deve dar 100%.</li>
+      <li>Regenere esta documentação para incluir a skill no inventário.</li>
+    </ol>
+  </section>
+
+  <section class="block" id="manutencao">
+    <div class="sec-head"><div class="sec-num">05</div><h2>Manutenção e operação</h2></div>
+    <p class="sec-sub">Rotinas que mantêm o sistema saudável. Frequência sugerida inclusa — ajuste à realidade da operação.</p>
+    <table>
+      <tr><th>Rotina</th><th>Quando</th><th>Como</th></tr>
+      <tr><td><strong>Auditoria de duplo-write</strong></td><td>Semanal / após criar skill</td><td>Comando abaixo — as duas listagens devem ser idênticas</td></tr>
+      <tr><td><strong>Sync com a matriz</strong></td><td>Semanal</td><td><code>/sync-hub</code> — puxa skills novas do Builders Hub</td></tr>
+      <tr><td><strong>Revisão da Central</strong></td><td>Mensal</td><td>Conferir datas, situações de legado e links (verificação HTTP das 100+ URLs)</td></tr>
+      <tr><td><strong>Regenerar inventário</strong></td><td>A cada skill nova/removida</td><td>Regerar §03 desta página a partir do disco</td></tr>
+      <tr><td><strong>Backup</strong></td><td>Contínuo</td><td>Branches <code>backup-*</code> + remotes institucionais; nunca commitar <code>log/</code></td></tr>
+    </table>
+    <h3>Comando de auditoria (copie e rode na raiz)</h3>
+    <div class="cmd"><button onclick="copyCmd('cmd1',this)">Copiar</button><pre id="cmd1">diff &lt;(ls .agents/skills/ | sort) &lt;(ls .claude/skills/ | sort) && echo "DUPLO-WRITE OK"</pre></div>
+    <h3>Checklist de publicação de entrega</h3>
+    <ol class="tight">
+      <li>Arquivo HTML na branch <code>gh-pages</code> (raiz para clientes, <code>projetos/</code> para internos).</li>
+      <li>Entrada na Central de Entregas com <strong>data</strong> (data real da entrega) e <strong>situação</strong> (atual / legado parcial / legado).</li>
+      <li>Link testado via HTTP 200 na URL publicada.</li>
+      <li>Se substitui versão anterior: marcar a antiga como legado (parcial ou total) com motivo.</li>
+    </ol>
+  </section>
+
+  <section class="block" id="roadmap">
+    <div class="sec-head"><div class="sec-num">06</div><h2>Melhorias, expansões e otimizações</h2></div>
+    <p class="sec-sub">O backlog oficial do produto. Base para planejar ampliações sem improviso.</p>
+    <table>
+      <tr><th style="width:90px">Prioridade</th><th>Frente</th><th>Escopo</th></tr>
+      <tr><td><strong>P0</strong></td><td>Reconstruir catálogo de agentes</td><td>Mapear executores reais por skill em <code>.github/agents/</code> (ou novo <code>.agents/agents/</code>), com papel, escopo e skills vinculadas. Elimina a lacuna documentada no §03.</td></tr>
+      <tr><td><strong>P0</strong></td><td>Versionamento das skills</td><td>Preencher <code>metadata.version</code> nas skills sem versão + changelog por skill relevante.</td></tr>
+      <tr><td><strong>P1</strong></td><td>Testes de fumaça</td><td>Script que valida frontmatter de todas as skills + links da Central via HTTP (o que hoje é manual).</td></tr>
+      <tr><td><strong>P1</strong></td><td>Skill de domínio faltante</td><td>Avaliar cobertura real por função (ex: SDR IA, AI Visibility) e criar skills onde há execução sem instrução.</td></tr>
+      <tr><td><strong>P2</strong></td><td>Internacionalização</td><td>Estrutura bilíngue pt-BR/en para skills de entrega a clientes internacionais.</td></tr>
+      <tr><td><strong>P2</strong></td><td>Métricas de uso</td><td>Registrar qual skill resolve qual entrega (rastreabilidade skill → entrega → resultado).</td></tr>
+    </table>
+  </section>
+
+  <section class="block" id="legado">
+    <div class="sec-head"><div class="sec-num">07</div><h2>Legado e decisões registradas</h2></div>
+    <p class="sec-sub">Histórico oficial do que foi aposentado e por quê. Nada aqui deve ser “ressuscitado” sem revisão.</p>
+    <table>
+      <tr><th>Item</th><th>Situação</th><th>Motivo</th><th>Substituto</th></tr>
+      <tr><td><code>agents-hub.html</code> (37 agentes · 102 skills)</td><td><strong>Legado total</strong></td><td>Números sem lastro no repo; layout antigo</td><td>Esta documentação + Central de Entregas</td></tr>
+      <tr><td><code>hub-de-agentes/*</code> (4 páginas, ago/2026)</td><td><strong>Legado parcial</strong></td><td>Conteúdo útil, mas números (37/102) desatualizados vs 74 verificadas</td><td>Esta documentação (v2 canônica)</td></tr>
+      <tr><td>Espelhos <code>docs/agent-hub/*</code> e <code>docs/agents/agent-hub/*</code></td><td><strong>Legado parcial</strong></td><td>Cópias desatualizadas do hub antigo</td><td>Esta documentação</td></tr>
+      <tr><td>Catálogo “36/37 agentes”</td><td><strong>Legado total</strong></td><td>Sem diretório de agentes no repo</td><td>Reconstrução prevista (§06, P0)</td></tr>
+      <tr><td>Versões superadas de entregas (ex: blog Lola v1/v2, check-in Signor anterior)</td><td><strong>Legado parcial</strong></td><td>Substituídas por versão final aprovada</td><td>Versão final correspondente na Central</td></tr>
+    </table>
+  </section>
+
+  <section class="block" id="faq">
+    <div class="sec-head"><div class="sec-num">08</div><h2>FAQ do desenvolvedor</h2></div>
+    <p class="sec-sub">Respostas curtas para as dúvidas que todo dev novo tem na primeira semana.</p>
+    <table>
+      <tr><th style="width:280px">Pergunta</th><th>Resposta</th></tr>
+      <tr><td><strong>Por onde começo?</strong></td><td>Leia §01→§02, rode <code>/contexto</code> no cliente da vez e execute uma skill simples (ex: uma de CRO) antes de tocar em infra.</td></tr>
+      <tr><td><strong>Onde crio uma skill?</strong></td><td>Sempre nos dois: <code>.agents/skills/&lt;nome&gt;/</code> + <code>.claude/skills/&lt;nome&gt;/</code> (§04).</td></tr>
+      <tr><td><strong>Como publico uma entrega?</strong></td><td>Checklist do §05: HTML na <code>gh-pages</code> + entrada na Central com data e situação + teste HTTP 200.</td></tr>
+      <tr><td><strong>Quebrei o duplo-write, e agora?</strong></td><td>Rode o <code>diff</code> do §05, copie o lado correto para o lado faltante, commite. Nunca “resolva” apagando o lado que tem conteúdo.</td></tr>
+      <tr><td><strong>Posso editar <code>hub-de-agentes/</code>?</strong></td><td>Não — é legado parcial congelado. Evolua esta documentação e a Central.</td></tr>
+      <tr><td><strong>Onde ficam os agentes?</strong></td><td>Catálogo em reconstrução (§06 P0). Hoje: <code>.github/agents/</code>. Não invente agentes fora da convenção.</td></tr>
+    </table>
+    <div class="footer">
+      <img src="../../logo-peretto-red.png" alt="Peretto &amp; Co.">
+      <span><strong>V4 Peretto &amp; Co · Hub de Agentes</strong> — documentação de software v2, base permanente da empresa. Gerada a partir do estado verificado do repositório.</span>
+    </div>
+  </section>
+
+</div></div>
+
+<script>
+document.getElementById('menuBtn').onclick = () => document.getElementById('sidebar').classList.toggle('open');
+document.querySelectorAll('.sb-link').forEach(a => a.addEventListener('click', () => {
+  document.querySelectorAll('.sb-link').forEach(x => x.classList.remove('active'));
+  a.classList.add('active');
+  if (window.innerWidth <= 900) document.getElementById('sidebar').classList.remove('open');
+}));
+function copyCmd(id, btn) {
+  const t = document.getElementById(id).innerText;
+  const done = () => { btn.textContent = 'Copiado ✓'; setTimeout(() => btn.textContent = 'Copiar', 1400); };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done);
+  else { const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); done(); } catch(e) {} document.body.removeChild(ta); }
+}
+</script>
+</body>
+</html>

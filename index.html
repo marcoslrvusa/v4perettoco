@@ -206,8 +206,15 @@ table.mini td.n{text-align:right;font-weight:800}
         <option value="site">Site / Template</option>
         <option value="estrategia">Estratégia</option>
       </select>
+      <select id="fStatus">
+        <option value="">Todas as situações</option>
+        <option value="atual">Atuais</option>
+        <option value="parcial">Legado parcial</option>
+        <option value="legado">Legado total</option>
+      </select>
       <select id="fSort">
         <option value="cat">Ordenar: Categoria</option>
+        <option value="date">Ordenar: Mais recentes</option>
         <option value="title">Ordenar: Título A–Z</option>
         <option value="client">Ordenar: Cliente A–Z</option>
         <option value="type">Ordenar: Tipo</option>
@@ -219,12 +226,12 @@ table.mini td.n{text-align:right;font-weight:800}
   </div>
 
   <div class="panel" id="panel">
-    <div class="panel-head"><h3>Registro de entregas</h3><span class="hint">Abrir em nova aba · copiar URL publicada · expandir vinculadas</span>
+    <div class="panel-head"><h3>Registro de entregas</h3><span class="hint">Abrir em nova aba · copiar URL publicada · expandir vinculadas · <strong>Atual</strong> = vigente · <strong>Legado parcial</strong> = espelho/versão superada · <strong>Legado</strong> = descontinuado</span>
       <div class="right"><span class="bdg" id="tblCount">—</span></div>
     </div>
     <div class="tbl-wrap"><table class="grid" id="grid">
       <thead><tr>
-        <th>ID</th><th>Entrega</th><th>Categoria</th><th>Tipo</th><th style="text-align:right">URLs</th><th>Ações</th>
+        <th>ID</th><th>Entrega</th><th>Categoria</th><th>Tipo</th><th>Data</th><th>Situação</th><th style="text-align:right">URLs</th><th>Ações</th>
       </tr></thead>
       <tbody id="rows"></tbody>
     </table></div>
@@ -259,96 +266,97 @@ const CATS = [
 ];
 const D = [
 /* ============ 01 HUB ============ */
-{cat:'hub', client:'V4 Peretto', type:'hub', t:'Tipo', title:'Hub de Agentes V4 Peretto — Portal Principal', desc:'Ecossistema completo: 37 agentes, 102 skills, 8 times e Opensquad. Documentação navegável + export ZIP.', href:'hub-de-agentes/'},
-{cat:'hub', client:'V4 Peretto', type:'hub', t:'Docs', title:'Documentação Completa do Agent Hub', desc:'Referência integral do hub — arquitetura, camadas, skills, agentes e governança.', href:'hub-de-agentes/documentacao-completa.html'},
-{cat:'hub', client:'V4 Peretto', type:'hub', t:'Infra', title:'Infraestrutura Inteligente — 11 Skills Técnicas', desc:'Camada técnica do hub: skills de infra, integrações, MCPs e operação.', href:'hub-de-agentes/infra-skills-completa.html'},
-{cat:'hub', client:'V4 Peretto', type:'hub', t:'Operação', title:'Manual Operacional — Times de Agentes', desc:'Rotina de operação dos times: papéis, ritos, checkpoints e qualidade.', href:'hub-de-agentes/manual-operacional-times.html'},
-{cat:'hub', client:'V4 Peretto', type:'hub', t:'Legado', title:'Agents Hub — Versão Legada (101 skills)', desc:'Versão anterior do hub mantida para referência histórica e links externos.', href:'agents-hub.html'},
-{cat:'hub', client:'V4 Peretto', type:'hub', t:'PDI', title:'Portal de Entregas — PDI Marcos Perettoco', desc:'Índice das atividades do PDI: orquestração n8n, clean code, dados e IA.', href:'pdi-portal.html'},
-{cat:'hub', client:'V4 Peretto', type:'hub', t:'PDI', title:'PDI — Padrão Universal de Erros n8n', desc:'Padrão corporativo de tratamento de erros em workflows n8n + apresentações.', href:'pdi-err-n8n/', sub:[['Apresentação A1 — Orquestração corporativa','pdi-err-n8n/pdi-orquestracao-corporativa-n8n-a1.html']]},
-{cat:'hub', client:'V4 Peretto', type:'automacao', t:'Rotina', title:'P·I·A — Análise de Rotinas × Agentes de Operação', desc:'Mapeamento de rotinas internas versus capacidade dos agentes de operação v4.', href:'projetos/Rotinas%20P.I.A/pia-analise-completa.html'},
-{cat:'hub', client:'V4 Peretto', type:'automacao', t:'AI Ops', title:'AI Ops V4 — Apresentação Principal', desc:'Visão da infraestrutura de AI Ops corporativa da operação.', href:'projetos/Infraestrutura%20AI/v4-automations/documenta%C3%A7%C3%A3o/AI-OPS-APRESENTACAO.html', sub:[['AI Ops — Case Mata Leão','projetos/Infraestrutura%20AI/v4-automations/documenta%C3%A7%C3%A3o/AI-OPS-APRESENTACAO-2.html'],['AI Ops — Infraestrutura corporativa','projetos/Infraestrutura%20AI/v4-automations/documenta%C3%A7%C3%A3o/AI-OPS-APRESENTACAO-3.html'],['AI Ops — Fórum de operações','projetos/Infraestrutura%20AI/v4-automations/documenta%C3%A7%C3%A3o/AI-OPS-APRESENTACAO-4.html']]},
+{cat:'hub', client:'V4 Peretto', type:'hub', t:'Tipo', title:'Hub de Agentes V4 Peretto — Portal Principal', desc:'Ecossistema completo: 37 agentes, 102 skills, 8 times e Opensquad. Documentação navegável + export ZIP.', href:'hub-de-agentes/',dt:'17/08/2026',st:'parcial'},
+{cat:'hub', client:'V4 Peretto', type:'hub', t:'Docs', title:'Documentação Completa do Agent Hub', desc:'Referência integral do hub — arquitetura, camadas, skills, agentes e governança.', href:'hub-de-agentes/documentacao-completa.html',dt:'17/08/2026',st:'parcial'},
+{cat:'hub', client:'V4 Peretto', type:'hub', t:'Infra', title:'Infraestrutura Inteligente — 11 Skills Técnicas', desc:'Camada técnica do hub: skills de infra, integrações, MCPs e operação.', href:'hub-de-agentes/infra-skills-completa.html',dt:'17/08/2026',st:'parcial'},
+{cat:'hub', client:'V4 Peretto', type:'hub', t:'Operação', title:'Manual Operacional — Times de Agentes', desc:'Rotina de operação dos times: papéis, ritos, checkpoints e qualidade.', href:'hub-de-agentes/manual-operacional-times.html',dt:'17/08/2026',st:'parcial'},
+{cat:'hub', client:'V4 Peretto', type:'hub', t:'Legado', title:'Agents Hub — Versão Legada (101 skills)', desc:'Versão anterior do hub mantida para referência histórica e links externos.', href:'agents-hub.html',dt:'17/08/2026',st:'legado'},
+{cat:'hub', client:'V4 Peretto', type:'hub', t:'PDI', title:'Portal de Entregas — PDI Marcos Perettoco', desc:'Índice das atividades do PDI: orquestração n8n, clean code, dados e IA.', href:'pdi-portal.html',dt:'27/08/2026'},
+{cat:'hub', client:'V4 Peretto', type:'hub', t:'PDI', title:'PDI — Padrão Universal de Erros n8n', desc:'Padrão corporativo de tratamento de erros em workflows n8n + apresentações.', href:'pdi-err-n8n/',dt:'25/08/2026', sub:[['Apresentação A1 — Orquestração corporativa','pdi-err-n8n/pdi-orquestracao-corporativa-n8n-a1.html']]},
+{cat:'hub', client:'V4 Peretto', type:'automacao', t:'Rotina', title:'P·I·A — Análise de Rotinas × Agentes de Operação', desc:'Mapeamento de rotinas internas versus capacidade dos agentes de operação v4.', href:'projetos/Rotinas%20P.I.A/pia-analise-completa.html',dt:'08/06/2026'},
+{cat:'hub', client:'V4 Peretto', type:'automacao', t:'AI Ops', title:'AI Ops V4 — Apresentação Principal', desc:'Visão da infraestrutura de AI Ops corporativa da operação.', href:'projetos/Infraestrutura%20AI/v4-automations/documenta%C3%A7%C3%A3o/AI-OPS-APRESENTACAO.html',dt:'13/07/2026', sub:[['AI Ops — Case Mata Leão','projetos/Infraestrutura%20AI/v4-automations/documenta%C3%A7%C3%A3o/AI-OPS-APRESENTACAO-2.html'],['AI Ops — Infraestrutura corporativa','projetos/Infraestrutura%20AI/v4-automations/documenta%C3%A7%C3%A3o/AI-OPS-APRESENTACAO-3.html'],['AI Ops — Fórum de operações','projetos/Infraestrutura%20AI/v4-automations/documenta%C3%A7%C3%A3o/AI-OPS-APRESENTACAO-4.html']]},
 /* ============ 02 AUDITORIAS ============ */
-{cat:'seo-auditoria', client:'All Over Exterior', type:'auditoria', t:'Auditoria', title:'Auditoria SEO Completa — All Over Exterior', desc:'413 URLs, 35 problemas (7 críticos, 8 altos). Quick wins, schema e plano 90 dias.', href:'allover-audit/'},
-{cat:'seo-auditoria', client:'All Over Exterior', type:'auditoria', t:'Auditoria', title:'Auditoria SEO Completa — All Over (mirror S1)', desc:'Variação de escopo da auditoria All Over para segunda leitura executiva.', href:'allover-seo-audit/'},
-{cat:'seo-auditoria', client:'Premium Cleaning', type:'auditoria', t:'Auditoria', title:'Auditoria SEO — Premium Cleaning Services NJ', desc:'211 URLs, 28 problemas (6 críticos, 7 altos). Schema local + plano 90 dias.', href:'premium-audit/'},
-{cat:'seo-auditoria', client:'Premium Cleaning', type:'auditoria', t:'Auditoria', title:'Auditoria SEO — Premium Cleaning (variação)', desc:'Segunda variação da auditoria Premium para comparação de escopo.', href:'premium-seo-audit/'},
-{cat:'seo-auditoria', client:'Brasland', type:'auditoria', t:'Auditoria', title:'Auditoria Técnica SEO — Brasland', desc:'18 URLs, 19 problemas (6 críticos). noindex global, robots quebrado e Fase 0 de go-live.', href:'brasland-seo-audit/', sub:[['Entrega espelho — auditoria Brasland (projetos)','projetos/seo/clientes/brasland/entregas/auditoria-seo-brasland.html']]},
-{cat:'seo-auditoria', client:'Metal Indianápolis', type:'auditoria', t:'Auditoria', title:'Auditoria Técnica SEO — Metal Indianápolis', desc:'260 URLs, 25 problemas (7 críticos). Quick wins de pré-lançamento e roadmap.', href:'indianapolis-seo-audit/', sub:[['Versão arquivo Q2 2026','metal-indianapolis/auditoria-seo-metal-indianapolis-Q2-2026.html']]},
-{cat:'seo-auditoria', client:'Lola Aviamentos', type:'auditoria', t:'Auditoria', title:'Auditoria Completa — SEO + AIO + GEO · Lola', desc:'Auditoria full-funnel de conteúdo, técnica e citabilidade em IAs.', href:'lola-seo-audit/'},
-{cat:'seo-auditoria', client:'Lola Aviamentos', type:'auditoria', t:'AIO/GEO', title:'Auditoria AIO + GEO — Lola Aviamentos', desc:'Foco em AI Search: definition blocks, extractability e share of AI voice.', href:'lola-seo-aiogeo-audit/'},
-{cat:'seo-auditoria', client:'Bioperfectus', type:'auditoria', t:'AIO/GEO', title:'Auditoria AIO/GEO — Bioperfectus', desc:'Diagnóstico de citabilidade e autoridade temática para respostas de IA.', href:'bioperfectus-aio-geo-audit/'},
-{cat:'seo-auditoria', client:'TekSea', type:'auditoria', t:'Auditoria', title:'Auditoria Técnica SEO — TekSea', desc:'Diagnóstico técnico completo + backlog priorizado de correção.', href:'audit-teksea/', sub:[['Variação TekSea (mirror)','teksea-audit/'],['Arquivo em projetos','projetos/SEO/clientes/tek%20sea/auditoria-seo-teksea.html']]},
-{cat:'seo-auditoria', client:'Grupo R1', type:'auditoria', t:'Auditoria', title:'Auditoria Técnica SEO — Grupo R1 (Q2 2026)', desc:'Diagnóstico técnico e plano de correção trimestral do Grupo R1.', href:'projetos/SEO/clientes/grupo-r1/auditoria-seo-r1grupo-Q2-2026.html'},
-{cat:'seo-auditoria', client:'V4 Peretto', type:'auditoria', t:'Base', title:'SEO Problems Hub — Knowledge Base (29 problemas)', desc:'Catálogo operacional de problemas de SEO com causa, diagnóstico, solução e POP.', href:'projetos/seo/seo-problems-hub/', sub:[['Mirror — SEO/seo-problems-hub','projetos/SEO/seo-problems-hub/'],['Mirror — clientes/seo-problems-hub','projetos/SEO/clientes/seo-problems-hub/']]},
+{cat:'seo-auditoria', client:'All Over Exterior', type:'auditoria', t:'Auditoria', title:'Auditoria SEO Completa — All Over Exterior', desc:'413 URLs, 35 problemas (7 críticos, 8 altos). Quick wins, schema e plano 90 dias.', href:'allover-audit/',dt:'25/08/2026'},
+{cat:'seo-auditoria', client:'All Over Exterior', type:'auditoria', t:'Auditoria', title:'Auditoria SEO Completa — All Over (mirror S1)', desc:'Variação de escopo da auditoria All Over para segunda leitura executiva.', href:'allover-seo-audit/',dt:'17/08/2026',st:'parcial'},
+{cat:'seo-auditoria', client:'Premium Cleaning', type:'auditoria', t:'Auditoria', title:'Auditoria SEO — Premium Cleaning Services NJ', desc:'211 URLs, 28 problemas (6 críticos, 7 altos). Schema local + plano 90 dias.', href:'premium-audit/',dt:'17/08/2026'},
+{cat:'seo-auditoria', client:'Premium Cleaning', type:'auditoria', t:'Auditoria', title:'Auditoria SEO — Premium Cleaning (variação)', desc:'Segunda variação da auditoria Premium para comparação de escopo.', href:'premium-seo-audit/',dt:'17/08/2026',st:'parcial'},
+{cat:'seo-auditoria', client:'Brasland', type:'auditoria', t:'Auditoria', title:'Auditoria Técnica SEO — Brasland', desc:'18 URLs, 19 problemas (6 críticos). noindex global, robots quebrado e Fase 0 de go-live.', href:'brasland-seo-audit/',dt:'25/08/2026', sub:[['Entrega espelho — auditoria Brasland (projetos)','projetos/seo/clientes/brasland/entregas/auditoria-seo-brasland.html','parcial']]},
+{cat:'seo-auditoria', client:'Metal Indianápolis', type:'auditoria', t:'Auditoria', title:'Auditoria Técnica SEO — Metal Indianápolis', desc:'260 URLs, 25 problemas (7 críticos). Quick wins de pré-lançamento e roadmap.', href:'indianapolis-seo-audit/',dt:'17/08/2026', sub:[['Versão arquivo Q2 2026','metal-indianapolis/auditoria-seo-metal-indianapolis-Q2-2026.html']]},
+{cat:'seo-auditoria', client:'Lola Aviamentos', type:'auditoria', t:'Auditoria', title:'Auditoria Completa — SEO + AIO + GEO · Lola', desc:'Auditoria full-funnel de conteúdo, técnica e citabilidade em IAs.', href:'lola-seo-audit/',dt:'25/08/2026'},
+{cat:'seo-auditoria', client:'Lola Aviamentos', type:'auditoria', t:'AIO/GEO', title:'Auditoria AIO + GEO — Lola Aviamentos', desc:'Foco em AI Search: definition blocks, extractability e share of AI voice.', href:'lola-seo-aiogeo-audit/',dt:'25/08/2026'},
+{cat:'seo-auditoria', client:'Bioperfectus', type:'auditoria', t:'AIO/GEO', title:'Auditoria AIO/GEO — Bioperfectus', desc:'Diagnóstico de citabilidade e autoridade temática para respostas de IA.', href:'bioperfectus-aio-geo-audit/',dt:'28/08/2026'},
+{cat:'seo-auditoria', client:'TekSea', type:'auditoria', t:'Auditoria', title:'Auditoria Técnica SEO — TekSea', desc:'Diagnóstico técnico completo + backlog priorizado de correção.', href:'audit-teksea/',dt:'25/08/2026', sub:[['Variação TekSea (mirror)','teksea-audit/','parcial'],['Arquivo em projetos','projetos/SEO/clientes/tek%20sea/auditoria-seo-teksea.html','parcial']]},
+{cat:'seo-auditoria', client:'Grupo R1', type:'auditoria', t:'Auditoria', title:'Auditoria Técnica SEO — Grupo R1 (Q2 2026)', desc:'Diagnóstico técnico e plano de correção trimestral do Grupo R1.', href:'projetos/SEO/clientes/grupo-r1/auditoria-seo-r1grupo-Q2-2026.html',dt:'20/07/2026'},
+{cat:'seo-auditoria', client:'V4 Peretto', type:'auditoria', t:'Base', title:'SEO Problems Hub — Knowledge Base (29 problemas)', desc:'Catálogo operacional de problemas de SEO com causa, diagnóstico, solução e POP.', href:'projetos/seo/seo-problems-hub/',dt:'17/08/2026', sub:[['Mirror — SEO/seo-problems-hub','projetos/SEO/seo-problems-hub/','parcial'],['Mirror — clientes/seo-problems-hub','projetos/SEO/clientes/seo-problems-hub/','parcial']]},
 /* ============ 03 REPORTS ============ */
-{cat:'seo-reports', client:'All Over Exterior', type:'relatorio', t:'Report', title:'SEO · Prestação de Contas — All Over (Jun 2026)', desc:'9 meses de evolução: AS 8, +106% referring domains, 40+ artigos e roadmap.', href:'allover-seo/'},
-{cat:'seo-reports', client:'All Over Exterior', type:'relatorio', t:'Overview', title:'Overview Estratégico 360° — All Over', desc:'Performance, canais e recomendações executivas consolidadas.', href:'allover-overview/'},
-{cat:'seo-reports', client:'All Over Exterior', type:'relatorio', t:'Receita', title:'Receita por Canais — All Over', desc:'Ticket médio, mix de canais e comparativos de receita.', href:'allover-revenue/'},
-{cat:'seo-reports', client:'All Over Exterior', type:'relatorio', t:'Apresentação', title:'Presença Digital na Era da IA — All Over (v4)', desc:'Deck executivo da estratégia de presença digital orientada a IA.', href:'projetos/SEO/clientes/allover-seo/entregas/all-over-exterior-presentation-v4.html', sub:[['Versão anterior da apresentação','projetos/SEO/clientes/allover-seo/entregas/all-over-exterior-presentation.html']]},
-{cat:'seo-reports', client:'Conserva Irrigation', type:'relatorio', t:'Histórico', title:'Histórico de Check-ins — Conserva Irrigation', desc:'Linha do tempo de check-ins e combinados da operação.', href:'conserva-irrigation-report.html'},
-{cat:'seo-reports', client:'Conserva Irrigation', type:'relatorio', t:'Consolidado', title:'Relatório Consolidado — Conserva (Jul 2026)', desc:'Consolidação mensal de performance, canais e próximos passos.', href:'consolidado-conserva-junho-2026.html'},
-{cat:'seo-reports', client:'Conserva Irrigation', type:'relatorio', t:'Performance', title:'Performance Analítica H1 2025 → H1 2026 (Dark)', desc:'1.347 pedidos · $997.6K líquidos · 18 meses de ServiceMinder.', href:'conserva-irrigation/relatorio-dark.html'},
-{cat:'seo-reports', client:'Conserva Irrigation', type:'relatorio', t:'Semanal', title:'Relatório Analítico — Semana 2 · Conserva', desc:'Leitura semanal de performance com teoria das restrições.', href:'conserva-irrigation/analise-conserva-new-structure.html'},
-{cat:'seo-reports', client:'Conserva Irrigation', type:'relatorio', t:'Mídia', title:'ROPRE Check-in · Mídia Paga — Conserva', desc:'Junho 2026: análise 80/20, otimizações de 5 minutos e plano 15 dias.', href:'conserva/analise-otimizacoes.html'},
-{cat:'seo-reports', client:'Premium Cleaning', type:'relatorio', t:'Report', title:'Relatório Unificado — Premium Cleaning (Jun 2026)', desc:'Consolidação de SEO + mídia + próximos passos da conta.', href:'premium-cleaning-junho-2026.html'},
-{cat:'seo-reports', client:'Diamond Tint', type:'relatorio', t:'Report', title:'Otimizações Executadas — Diamond Tint (Jun 2026)', desc:'Antes/depois das otimizações aplicadas no período.', href:'diamond-tint-optimization-jun26/'},
-{cat:'seo-reports', client:'Metal Indianápolis', type:'relatorio', t:'Conteúdo', title:'Metal Indianápolis — SEO & Conteúdo', desc:'Hub de conteúdo e SEO da operação Metal Indianápolis.', href:'metal-indianapolis.html'},
-{cat:'seo-reports', client:'Metal Indianápolis', type:'relatorio', t:'Inteligência', title:'Channel Intelligence Report — Metal Indianapolis', desc:'Relatório de inteligência de canais com narrativa executiva.', href:'projetos/SEO/clientes/metal-indianapolis/entregas/metal-indianapolis-storytelling.html'},
+{cat:'seo-reports', client:'All Over Exterior', type:'relatorio', t:'Report', title:'SEO · Prestação de Contas — All Over (Jun 2026)', desc:'9 meses de evolução: AS 8, +106% referring domains, 40+ artigos e roadmap.', href:'allover-seo/',dt:'17/08/2026'},
+{cat:'seo-reports', client:'All Over Exterior', type:'relatorio', t:'Overview', title:'Overview Estratégico 360° — All Over', desc:'Performance, canais e recomendações executivas consolidadas.', href:'allover-overview/',dt:'17/08/2026'},
+{cat:'seo-reports', client:'All Over Exterior', type:'relatorio', t:'Receita', title:'Receita por Canais — All Over', desc:'Ticket médio, mix de canais e comparativos de receita.', href:'allover-revenue/',dt:'17/08/2026'},
+{cat:'seo-reports', client:'All Over Exterior', type:'relatorio', t:'Apresentação', title:'Presença Digital na Era da IA — All Over (v4)', desc:'Deck executivo da estratégia de presença digital orientada a IA.', href:'projetos/SEO/clientes/allover-seo/entregas/all-over-exterior-presentation-v4.html',dt:'27/07/2026', sub:[['Versão anterior da apresentação','projetos/SEO/clientes/allover-seo/entregas/all-over-exterior-presentation.html']]},
+{cat:'seo-reports', client:'Conserva Irrigation', type:'relatorio', t:'Histórico', title:'Histórico de Check-ins — Conserva Irrigation', desc:'Linha do tempo de check-ins e combinados da operação.', href:'conserva-irrigation-report.html',dt:'17/08/2026'},
+{cat:'seo-reports', client:'Conserva Irrigation', type:'relatorio', t:'Consolidado', title:'Relatório Consolidado — Conserva (Jul 2026)', desc:'Consolidação mensal de performance, canais e próximos passos.', href:'consolidado-conserva-junho-2026.html',dt:'17/08/2026'},
+{cat:'seo-reports', client:'Conserva Irrigation', type:'relatorio', t:'Performance', title:'Performance Analítica H1 2025 → H1 2026 (Dark)', desc:'1.347 pedidos · $997.6K líquidos · 18 meses de ServiceMinder.', href:'conserva-irrigation/relatorio-dark.html',dt:'17/08/2026'},
+{cat:'seo-reports', client:'Conserva Irrigation', type:'relatorio', t:'Semanal', title:'Relatório Analítico — Semana 2 · Conserva', desc:'Leitura semanal de performance com teoria das restrições.', href:'conserva-irrigation/analise-conserva-new-structure.html',dt:'17/08/2026'},
+{cat:'seo-reports', client:'Conserva Irrigation', type:'relatorio', t:'Mídia', title:'ROPRE Check-in · Mídia Paga — Conserva', desc:'Junho 2026: análise 80/20, otimizações de 5 minutos e plano 15 dias.', href:'conserva/analise-otimizacoes.html',dt:'17/08/2026'},
+{cat:'seo-reports', client:'Premium Cleaning', type:'relatorio', t:'Report', title:'Relatório Unificado — Premium Cleaning (Jun 2026)', desc:'Consolidação de SEO + mídia + próximos passos da conta.', href:'premium-cleaning-junho-2026.html',dt:'17/08/2026'},
+{cat:'seo-reports', client:'Diamond Tint', type:'relatorio', t:'Report', title:'Otimizações Executadas — Diamond Tint (Jun 2026)', desc:'Antes/depois das otimizações aplicadas no período.', href:'diamond-tint-optimization-jun26/',dt:'17/08/2026'},
+{cat:'seo-reports', client:'Metal Indianápolis', type:'relatorio', t:'Conteúdo', title:'Metal Indianápolis — SEO & Conteúdo', desc:'Hub de conteúdo e SEO da operação Metal Indianápolis.', href:'metal-indianapolis.html',dt:'17/08/2026'},
+{cat:'seo-reports', client:'Metal Indianápolis', type:'relatorio', t:'Inteligência', title:'Channel Intelligence Report — Metal Indianapolis', desc:'Relatório de inteligência de canais com narrativa executiva.', href:'projetos/SEO/clientes/metal-indianapolis/entregas/metal-indianapolis-storytelling.html',dt:'19/08/2026'},
 /* ============ 04 TRÁFEGO ============ */
-{cat:'trafego', client:'Atlas Copco', type:'trafego', t:'Google Ads', title:'Traffic Report — Atlas Copco (1ª quinz. Jun/2026)', desc:'US$ 725 · 337 cliques · 0 conversões. Diagnóstico de tracking e roadmap.', href:'atlas-copco/relatorio-consolidado.html'},
-{cat:'trafego', client:'All Over Exterior', type:'trafego', t:'Google Ads', title:'Auditoria Google Ads — All Over Exterior', desc:'Estrutura, desperdício, termos e plano de reestruturação da conta.', href:'allover-google-ads-audit/'},
-{cat:'trafego', client:'All Over Exterior', type:'trafego', t:'Estratégia', title:'Google Ads Search Strategy — Install · Replace · Repair', desc:'Arquitetura de campanhas search por intenção e serviço.', href:'allover-search-strategy/'},
-{cat:'trafego', client:'Conserva Irrigation', type:'trafego', t:'Bing Ads', title:'Bing Ads Planning — Conserva (Jun–Set 2026)', desc:'Abertura de canal: estrutura, budget faseado e projeção 3 meses.', href:'conserva/bing-ads-planning.html'},
-{cat:'trafego', client:'Conserva Irrigation', type:'trafego', t:'Google Ads', title:'Nova Estrutura de Campanhas Search — Conserva Q3', desc:'Reestruturação de campanhas search para o trimestre.', href:'nova-estrutura-campanhas-conserva-2026-q3.html'},
-{cat:'trafego', client:'GSET Tennis', type:'trafego', t:'Meta Ads', title:'Meta Ads Report — GSET Tennis Academy (Jun 2026)', desc:'Performance de Meta Ads com criativos, CPL e próximos testes.', href:'gset-meta-ads-junho-2026.html'},
-{cat:'trafego', client:'Construction Florida', type:'trafego', t:'Auditoria', title:'Auditoria de Mídia Paga — Construction Florida', desc:'Diagnóstico de conta e plano de correção da operação de mídia.', href:'projetos/ajuda%20rede%20v4/auditoria-media-construction-florida.html'},
+{cat:'trafego', client:'Atlas Copco', type:'trafego', t:'Google Ads', title:'Traffic Report — Atlas Copco (1ª quinz. Jun/2026)', desc:'US$ 725 · 337 cliques · 0 conversões. Diagnóstico de tracking e roadmap.', href:'atlas-copco/relatorio-consolidado.html',dt:'17/08/2026'},
+{cat:'trafego', client:'All Over Exterior', type:'trafego', t:'Google Ads', title:'Auditoria Google Ads — All Over Exterior', desc:'Estrutura, desperdício, termos e plano de reestruturação da conta.', href:'allover-google-ads-audit/',dt:'25/08/2026'},
+{cat:'trafego', client:'All Over Exterior', type:'trafego', t:'Estratégia', title:'Google Ads Search Strategy — Install · Replace · Repair', desc:'Arquitetura de campanhas search por intenção e serviço.', href:'allover-search-strategy/',dt:'11/09/2026'},
+{cat:'trafego', client:'Conserva Irrigation', type:'trafego', t:'Bing Ads', title:'Bing Ads Planning — Conserva (Jun–Set 2026)', desc:'Abertura de canal: estrutura, budget faseado e projeção 3 meses.', href:'conserva/bing-ads-planning.html',dt:'17/08/2026'},
+{cat:'trafego', client:'Conserva Irrigation', type:'trafego', t:'Google Ads', title:'Nova Estrutura de Campanhas Search — Conserva Q3', desc:'Reestruturação de campanhas search para o trimestre.', href:'nova-estrutura-campanhas-conserva-2026-q3.html',dt:'17/08/2026'},
+{cat:'trafego', client:'GSET Tennis', type:'trafego', t:'Meta Ads', title:'Meta Ads Report — GSET Tennis Academy (Jun 2026)', desc:'Performance de Meta Ads com criativos, CPL e próximos testes.', href:'gset-meta-ads-junho-2026.html',dt:'17/08/2026'},
+{cat:'trafego', client:'Construction Florida', type:'trafego', t:'Auditoria', title:'Auditoria de Mídia Paga — Construction Florida', desc:'Diagnóstico de conta e plano de correção da operação de mídia.', href:'projetos/ajuda%20rede%20v4/auditoria-media-construction-florida.html',dt:'25/08/2026'},
 /* ============ 05 CONTEÚDO ============ */
-{cat:'conteudo', client:'Lola Aviamentos', type:'conteudo', t:'Blog', title:'Blog AG04 — Aviamentos (v1)', desc:'Peça editorial do lote AG04 para o blog da Lola.', href:'lola-blog-ag04-aviamentos.html'},
-{cat:'conteudo', client:'Lola Aviamentos', type:'conteudo', t:'Blog', title:'Blog AG04 — Aviamentos (v2)', desc:'Segunda versão do artigo AG04 com ajustes editoriais.', href:'lola-blog-ag04-aviamentos-v2.html'},
-{cat:'conteudo', client:'Lola Aviamentos', type:'conteudo', t:'Blog', title:'Blog AG04 — Aviamentos (v3)', desc:'Versão final do artigo AG04 aprovada para publicação.', href:'lola-blog-ag04-aviamentos-v3.html'},
-{cat:'conteudo', client:'Lola Aviamentos', type:'conteudo', t:'AIO', title:'AG-02 — Definition Blocks — Lola Aviamentos', desc:'Blocos de definição otimizados para citação em IAs.', href:'projetos/SEO/clientes/lola/entregas/AIO-B1-AG02-definition-blocks.html'},
-{cat:'conteudo', client:'Marcos V4', type:'conteudo', t:'Blog', title:'marcosv4.cloud — Blog Posts', desc:'Compilado de posts do blog pessoal / autoridade.', href:'marcosv4-blog-posts.html'},
-{cat:'conteudo', client:'Conserva Irrigation', type:'conteudo', t:'Blog', title:'Blog Posts — Lote Combinado · Conserva', desc:'Lote de posts produzidos para a operação de conteúdo.', href:'conserva-irrigation/conserva-posts.html'},
-{cat:'conteudo', client:'Metal Indianápolis', type:'conteudo', t:'Coleção', title:'Coleção Metal — 12 Artigos de Blog', desc:'Todos os 12 textos da operação de conteúdo Metal Indianápolis em um só lugar.', href:'projetos/SEO/clientes/metal-indianapolis/blog-textos/01-ferro-fundido-cinzento.html', sub:[['02 — Preço do ferro fundido (kg)','projetos/SEO/clientes/metal-indianapolis/blog-textos/02-preco-do-ferro-fundido-kg.html'],['03 — Fábrica de roldanas','projetos/SEO/clientes/metal-indianapolis/blog-textos/03-fabrica-de-roldanas.html'],['04 — Camisa de compressor','projetos/SEO/clientes/metal-indianapolis/blog-textos/04-camisa-compressor.html'],['05 — Cabeçote para compressor','projetos/SEO/clientes/metal-indianapolis/blog-textos/05-cabecote-para-compressor.html'],['06 — Anel de segmento do motor','projetos/SEO/clientes/metal-indianapolis/blog-textos/06-anel-de-segmento-do-motor.html'],['07 — Anel de segmento preço','projetos/SEO/clientes/metal-indianapolis/blog-textos/07-anel-de-segmento-preco.html'],['08 — Preço ferro fundido','projetos/SEO/clientes/metal-indianapolis/blog-textos/08-preco-ferro-fundido.html'],['09 — Peças para tratores','projetos/SEO/clientes/metal-indianapolis/blog-textos/09-pecas-para-tratores.html'],['10 — Fundição de ferros','projetos/SEO/clientes/metal-indianapolis/blog-textos/10-fundicao-de-ferros.html'],['11 — Anel de segmento','projetos/SEO/clientes/metal-indianapolis/blog-textos/11-anel-de-segmento.html'],['12 — Fabricante de peças automotivas','projetos/SEO/clientes/metal-indianapolis/blog-textos/12-fabricante-de-pecas-automotivas.html']]},
-{cat:'conteudo', client:'Metal Indianápolis', type:'conteudo', t:'On-page', title:'Page Titles — Planilha Operacional · Metal', desc:'Mapa de titles por página para implantação on-page.', href:'projetos/SEO/clientes/metal-indianapolis/page-titles-planilha.html'},
-{cat:'conteudo', client:'Metal Indianápolis', type:'conteudo', t:'Imagem', title:'Relatório Alt-Text — Metal Indianápolis', desc:'Inventário e reescrita de alt-texts das imagens do site.', href:'projetos/SEO/clientes/metal-indianapolis/docs/alt-text/relatorio-alt-text.html'},
-{cat:'conteudo', client:'Metal Indianápolis', type:'conteudo', t:'Schema', title:'Kit SEO JSON — Metal (implantação + schemas)', desc:'Pacote de implantação: conteúdo otimizado de produtos + schemas.', href:'projetos/SEO/clientes/metal-indianapolis/seo-json/implantacao.html', sub:[['Produtos — conteúdo otimizado','projetos/SEO/clientes/metal-indianapolis/seo-json/produtos-conteudo-otimizado.html'],['Schema — Contato','projetos/SEO/clientes/metal-indianapolis/seo-json/schemas/contato.html'],['Schema — Empresa','projetos/SEO/clientes/metal-indianapolis/seo-json/schemas/empresa.html'],['Schema — Homepage','projetos/SEO/clientes/metal-indianapolis/seo-json/schemas/homepage.html'],['Schema — Produtos','projetos/SEO/clientes/metal-indianapolis/seo-json/schemas/produtos.html']]},
+{cat:'conteudo', client:'Lola Aviamentos', type:'conteudo', t:'Blog', title:'Blog AG04 — Aviamentos (v1)', desc:'Peça editorial do lote AG04 para o blog da Lola.', href:'lola-blog-ag04-aviamentos.html',dt:'31/08/2026',st:'parcial'},
+{cat:'conteudo', client:'Lola Aviamentos', type:'conteudo', t:'Blog', title:'Blog AG04 — Aviamentos (v2)', desc:'Segunda versão do artigo AG04 com ajustes editoriais.', href:'lola-blog-ag04-aviamentos-v2.html',dt:'01/09/2026',st:'parcial'},
+{cat:'conteudo', client:'Lola Aviamentos', type:'conteudo', t:'Blog', title:'Blog AG04 — Aviamentos (v3)', desc:'Versão final do artigo AG04 aprovada para publicação.', href:'lola-blog-ag04-aviamentos-v3.html',dt:'01/09/2026'},
+{cat:'conteudo', client:'Lola Aviamentos', type:'conteudo', t:'AIO', title:'AG-02 — Definition Blocks — Lola Aviamentos', desc:'Blocos de definição otimizados para citação em IAs.', href:'projetos/SEO/clientes/lola/entregas/AIO-B1-AG02-definition-blocks.html',dt:'10/08/2026'},
+{cat:'conteudo', client:'Marcos V4', type:'conteudo', t:'Blog', title:'marcosv4.cloud — Blog Posts', desc:'Compilado de posts do blog pessoal / autoridade.', href:'marcosv4-blog-posts.html',dt:'17/08/2026'},
+{cat:'conteudo', client:'Conserva Irrigation', type:'conteudo', t:'Blog', title:'Blog Posts — Lote Combinado · Conserva', desc:'Lote de posts produzidos para a operação de conteúdo.', href:'conserva-irrigation/conserva-posts.html',dt:'17/08/2026'},
+{cat:'conteudo', client:'Metal Indianápolis', type:'conteudo', t:'Coleção', title:'Coleção Metal — 12 Artigos de Blog', desc:'Todos os 12 textos da operação de conteúdo Metal Indianápolis em um só lugar.', href:'projetos/SEO/clientes/metal-indianapolis/blog-textos/01-ferro-fundido-cinzento.html',dt:'27/07/2026', sub:[['02 — Preço do ferro fundido (kg)','projetos/SEO/clientes/metal-indianapolis/blog-textos/02-preco-do-ferro-fundido-kg.html'],['03 — Fábrica de roldanas','projetos/SEO/clientes/metal-indianapolis/blog-textos/03-fabrica-de-roldanas.html'],['04 — Camisa de compressor','projetos/SEO/clientes/metal-indianapolis/blog-textos/04-camisa-compressor.html'],['05 — Cabeçote para compressor','projetos/SEO/clientes/metal-indianapolis/blog-textos/05-cabecote-para-compressor.html'],['06 — Anel de segmento do motor','projetos/SEO/clientes/metal-indianapolis/blog-textos/06-anel-de-segmento-do-motor.html'],['07 — Anel de segmento preço','projetos/SEO/clientes/metal-indianapolis/blog-textos/07-anel-de-segmento-preco.html'],['08 — Preço ferro fundido','projetos/SEO/clientes/metal-indianapolis/blog-textos/08-preco-ferro-fundido.html'],['09 — Peças para tratores','projetos/SEO/clientes/metal-indianapolis/blog-textos/09-pecas-para-tratores.html'],['10 — Fundição de ferros','projetos/SEO/clientes/metal-indianapolis/blog-textos/10-fundicao-de-ferros.html'],['11 — Anel de segmento','projetos/SEO/clientes/metal-indianapolis/blog-textos/11-anel-de-segmento.html'],['12 — Fabricante de peças automotivas','projetos/SEO/clientes/metal-indianapolis/blog-textos/12-fabricante-de-pecas-automotivas.html']]},
+{cat:'conteudo', client:'Metal Indianápolis', type:'conteudo', t:'On-page', title:'Page Titles — Planilha Operacional · Metal', desc:'Mapa de titles por página para implantação on-page.', href:'projetos/SEO/clientes/metal-indianapolis/page-titles-planilha.html',dt:'28/07/2026'},
+{cat:'conteudo', client:'Metal Indianápolis', type:'conteudo', t:'Imagem', title:'Relatório Alt-Text — Metal Indianápolis', desc:'Inventário e reescrita de alt-texts das imagens do site.', href:'projetos/SEO/clientes/metal-indianapolis/docs/alt-text/relatorio-alt-text.html',dt:'25/08/2026'},
+{cat:'conteudo', client:'Metal Indianápolis', type:'conteudo', t:'Schema', title:'Kit SEO JSON — Metal (implantação + schemas)', desc:'Pacote de implantação: conteúdo otimizado de produtos + schemas.', href:'projetos/SEO/clientes/metal-indianapolis/seo-json/implantacao.html',dt:'27/07/2026', sub:[['Produtos — conteúdo otimizado','projetos/SEO/clientes/metal-indianapolis/seo-json/produtos-conteudo-otimizado.html'],['Schema — Contato','projetos/SEO/clientes/metal-indianapolis/seo-json/schemas/contato.html'],['Schema — Empresa','projetos/SEO/clientes/metal-indianapolis/seo-json/schemas/empresa.html'],['Schema — Homepage','projetos/SEO/clientes/metal-indianapolis/seo-json/schemas/homepage.html'],['Schema — Produtos','projetos/SEO/clientes/metal-indianapolis/seo-json/schemas/produtos.html']]},
 /* ============ 06 SDR IA ============ */
-{cat:'sdr-ia', client:'V4 Company', type:'automacao', t:'Hub', title:'SDR IA — Hub de Correções', desc:'Índice de todos os fixes das SDRs IA por cliente, com causa e solução.', href:'sdr-ia-hub/'},
-{cat:'sdr-ia', client:'Adplan', type:'automacao', t:'Fix', title:'ADPLAN · Correção de Fluxo — SDR IA', desc:'Correção documentada do fluxo da SDR IA da Adplan.', href:'sdr-ia-hub/fixes/adplan-001.html'},
-{cat:'sdr-ia', client:'Genics', type:'automacao', t:'Fix', title:'GENICS · Redis DNS — SDR IA', desc:'Correção de resolução DNS do Redis na operação Genics.', href:'sdr-ia-hub/fixes/genics-001.html'},
-{cat:'sdr-ia', client:'Pro Análises', type:'automacao', t:'Fix', title:'PRO ANÁLISES · toDateTime Undefined — SDR IA', desc:'Correção de erro de data no pipeline da SDR.', href:'sdr-ia-hub/fixes/pro-analises-001.html'},
-{cat:'sdr-ia', client:'Schwalm', type:'automacao', t:'Fix', title:'SCHWALM · Null Constraint Telefone — SDR IA', desc:'Correção de constraint nula no campo telefone.', href:'sdr-ia-hub/fixes/schwalm-001.html'},
-{cat:'sdr-ia', client:'Signor', type:'automacao', t:'Fix', title:'SIGNOR · Task Runner — SDR IA', desc:'Correção do task runner da SDR IA da Signor.', href:'sdr-ia-hub/fixes/signor-001.html'},
-{cat:'sdr-ia', client:'Sofia', type:'automacao', t:'Fix', title:'SOFIA · Rate Limit Chatwoot — SDR IA', desc:'Tratamento de rate limit da integração Chatwoot.', href:'sdr-ia-hub/fixes/sofia-001.html'},
-{cat:'sdr-ia', client:'V4 Interno', type:'automacao', t:'Fix', title:'V4 INTERNO · Ekyte 404 — SDR IA', desc:'Correção de 404 na integração com o Ekyte.', href:'sdr-ia-hub/fixes/v4-interno-001.html'},
-{cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Entrega', title:'Signor × V4 — Alinhamento SDR IA', desc:'Engenharia de confiabilidade: alinhamento técnico da operação.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-alinhamento-ia.html'},
-{cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Entrega', title:'Signor · A obra por trás da conversa (v4)', desc:'Narrativa de confiança da SDR IA — versão executiva v4.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-checkin-confianca-v4.html'},
-{cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Entrega', title:'Signor · Check-in de Confiança', desc:'Leitura de confiança da operação SDR IA no check-in.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-checkin-confianca.html'},
-{cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Report', title:'SDR IA Signor · Relatório de Melhorias', desc:'Backlog de melhorias aplicadas e planejadas na SDR.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-checkin-relatorio-melhorias.html'},
-{cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Story', title:'Signor · A história da SDR IA (storytelling)', desc:'Versão narrativa da evolução da SDR IA da Signor.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-checkin-storytelling.html'},
+{cat:'sdr-ia', client:'V4 Company', type:'automacao', t:'Hub', title:'SDR IA — Hub de Correções', desc:'Índice de todos os fixes das SDRs IA por cliente, com causa e solução.', href:'sdr-ia-hub/',dt:'17/08/2026'},
+{cat:'sdr-ia', client:'Adplan', type:'automacao', t:'Fix', title:'ADPLAN · Correção de Fluxo — SDR IA', desc:'Correção documentada do fluxo da SDR IA da Adplan.', href:'sdr-ia-hub/fixes/adplan-001.html',dt:'17/08/2026'},
+{cat:'sdr-ia', client:'Genics', type:'automacao', t:'Fix', title:'GENICS · Redis DNS — SDR IA', desc:'Correção de resolução DNS do Redis na operação Genics.', href:'sdr-ia-hub/fixes/genics-001.html',dt:'17/08/2026'},
+{cat:'sdr-ia', client:'Pro Análises', type:'automacao', t:'Fix', title:'PRO ANÁLISES · toDateTime Undefined — SDR IA', desc:'Correção de erro de data no pipeline da SDR.', href:'sdr-ia-hub/fixes/pro-analises-001.html',dt:'17/08/2026'},
+{cat:'sdr-ia', client:'Schwalm', type:'automacao', t:'Fix', title:'SCHWALM · Null Constraint Telefone — SDR IA', desc:'Correção de constraint nula no campo telefone.', href:'sdr-ia-hub/fixes/schwalm-001.html',dt:'17/08/2026'},
+{cat:'sdr-ia', client:'Signor', type:'automacao', t:'Fix', title:'SIGNOR · Task Runner — SDR IA', desc:'Correção do task runner da SDR IA da Signor.', href:'sdr-ia-hub/fixes/signor-001.html',dt:'17/08/2026'},
+{cat:'sdr-ia', client:'Sofia', type:'automacao', t:'Fix', title:'SOFIA · Rate Limit Chatwoot — SDR IA', desc:'Tratamento de rate limit da integração Chatwoot.', href:'sdr-ia-hub/fixes/sofia-001.html',dt:'17/08/2026'},
+{cat:'sdr-ia', client:'V4 Interno', type:'automacao', t:'Fix', title:'V4 INTERNO · Ekyte 404 — SDR IA', desc:'Correção de 404 na integração com o Ekyte.', href:'sdr-ia-hub/fixes/v4-interno-001.html',dt:'17/08/2026'},
+{cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Entrega', title:'Signor × V4 — Alinhamento SDR IA', desc:'Engenharia de confiabilidade: alinhamento técnico da operação.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-alinhamento-ia.html',dt:'19/08/2026'},
+{cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Entrega', title:'Signor · A obra por trás da conversa (v4)', desc:'Narrativa de confiança da SDR IA — versão executiva v4.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-checkin-confianca-v4.html',dt:'13/08/2026'},
+{cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Entrega', title:'Signor · Check-in de Confiança', desc:'Leitura de confiança da operação SDR IA no check-in.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-checkin-confianca.html',dt:'04/08/2026',st:'parcial'},
+{cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Report', title:'SDR IA Signor · Relatório de Melhorias', desc:'Backlog de melhorias aplicadas e planejadas na SDR.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-checkin-relatorio-melhorias.html',dt:'04/08/2026'},
+{cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Story', title:'Signor · A história da SDR IA (storytelling)', desc:'Versão narrativa da evolução da SDR IA da Signor.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-checkin-storytelling.html',dt:'04/08/2026'},
 /* ============ 07 AI VISIBILITY ============ */
-{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Produto', title:'AI Visibility — Arquitetura de Agentes', desc:'Desenho técnico do produto de visibilidade em IAs.', href:'projetos/AEO-GEO/ai-visibility-agent-architecture.html'},
-{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Docs', title:'AI Visibility — Documentação Técnica (dev)', desc:'Especificação para implementação do produto.', href:'projetos/AEO-GEO/ai-visibility-dev.html'},
-{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Landing', title:'AI Visibility — Landing Comercial', desc:'Página de venda: sua marca citada por inteligências artificiais.', href:'projetos/AEO-GEO/ai-visibility-landing.html'},
-{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Produto', title:'AI Visibility — Documentação Cliente', desc:'Visão do produto para apresentação a clientes.', href:'projetos/AEO-GEO/ai-visibility-produto.html'},
-{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Portal', title:'AI Visibility — Portal de Diagnóstico Gratuito', desc:'Ferramenta de entrada: diagnóstico gratuito de visibilidade em IA.', href:'projetos/AEO-GEO/portal/'},
-{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Template', title:'Template — Dashboard de Auditoria AI Visibility', desc:'Modelo reutilizável de dashboard de diagnóstico.', href:'projetos/AEO-GEO/docs/templates/dashboard-auditoria.html'},
-{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Template', title:'Template — Kickoff AIO/GEO', desc:'Formulário padrão de kickoff para projetos AIO/GEO.', href:'projetos/AEO-GEO/docs/templates/kickoff-aio-geo.html'},
-{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Base', title:'MASTER AIO/GEO — Documentação Completa', desc:'Referência-mãe de AIO/GEO da operação.', href:'docs/seo/MASTER_AIO_GEO.html'},
+{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Produto', title:'AI Visibility — Arquitetura de Agentes', desc:'Desenho técnico do produto de visibilidade em IAs.', href:'projetos/AEO-GEO/ai-visibility-agent-architecture.html',dt:'31/05/2026'},
+{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Docs', title:'AI Visibility — Documentação Técnica (dev)', desc:'Especificação para implementação do produto.', href:'projetos/AEO-GEO/ai-visibility-dev.html',dt:'31/05/2026'},
+{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Landing', title:'AI Visibility — Landing Comercial', desc:'Página de venda: sua marca citada por inteligências artificiais.', href:'projetos/AEO-GEO/ai-visibility-landing.html',dt:'31/05/2026'},
+{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Produto', title:'AI Visibility — Documentação Cliente', desc:'Visão do produto para apresentação a clientes.', href:'projetos/AEO-GEO/ai-visibility-produto.html',dt:'31/05/2026'},
+{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Portal', title:'AI Visibility — Portal de Diagnóstico Gratuito', desc:'Ferramenta de entrada: diagnóstico gratuito de visibilidade em IA.', href:'projetos/AEO-GEO/portal/',dt:'31/05/2026'},
+{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Template', title:'Template — Dashboard de Auditoria AI Visibility', desc:'Modelo reutilizável de dashboard de diagnóstico.', href:'projetos/AEO-GEO/docs/templates/dashboard-auditoria.html',dt:'31/05/2026'},
+{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Template', title:'Template — Kickoff AIO/GEO', desc:'Formulário padrão de kickoff para projetos AIO/GEO.', href:'projetos/AEO-GEO/docs/templates/kickoff-aio-geo.html',dt:'31/05/2026'},
+{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Base', title:'MASTER AIO/GEO — Documentação Completa', desc:'Referência-mãe de AIO/GEO da operação.', href:'docs/seo/MASTER_AIO_GEO.html',dt:'27/07/2026'},
 /* ============ 08 MARKETPLACE ============ */
-{cat:'marketplace', client:'Alto Calçados', type:'estrategia', t:'Apresentação', title:'Alto Calçados — Expansão em Marketplaces', desc:'Deck de expansão: canais, sortimento e operação.', href:'alto-calcados-apresentacao.html'},
-{cat:'marketplace', client:'Alto Calçados', type:'estrategia', t:'Auditoria', title:'Alto Calçados — Auditoria & Expansão', desc:'Diagnóstico + plano de expansão em marketplaces.', href:'alto-calcados-auditoria.html'},
-{cat:'marketplace', client:'Marcos Luciano', type:'estrategia', t:'Framework', title:'Pattern Detection — Gestão de Marketplace (light)', desc:'Framework pessoal: 5 dimensões, 8 padrões, RMPE/ROPE e playbook 90 dias.', href:'gestao-marketplace-marcos-light.html'},
-{cat:'marketplace', client:'Marcos Luciano', type:'estrategia', t:'Framework', title:'Pattern Detection — Gestão de Marketplace (dark)', desc:'Versão dark do framework para apresentação.', href:'gestao-marketplace-marcos-dark.html'},
-{cat:'marketplace', client:'Amiguros', type:'estrategia', t:'Experiência', title:'Amiguros — Experiência de Conexão', desc:'Entrega de experiência / posicionamento da operação Amiguros.', href:'experiencia-amiguros.html'},
+{cat:'marketplace', client:'Alto Calçados', type:'estrategia', t:'Apresentação', title:'Alto Calçados — Expansão em Marketplaces', desc:'Deck de expansão: canais, sortimento e operação.', href:'alto-calcados-apresentacao.html',dt:'12/09/2026'},
+{cat:'marketplace', client:'Alto Calçados', type:'estrategia', t:'Auditoria', title:'Alto Calçados — Auditoria & Expansão', desc:'Diagnóstico + plano de expansão em marketplaces.', href:'alto-calcados-auditoria.html',dt:'10/09/2026'},
+{cat:'marketplace', client:'Marcos Luciano', type:'estrategia', t:'Framework', title:'Pattern Detection — Gestão de Marketplace (light)', desc:'Framework pessoal: 5 dimensões, 8 padrões, RMPE/ROPE e playbook 90 dias.', href:'gestao-marketplace-marcos-light.html',dt:'17/08/2026'},
+{cat:'marketplace', client:'Marcos Luciano', type:'estrategia', t:'Framework', title:'Pattern Detection — Gestão de Marketplace (dark)', desc:'Versão dark do framework para apresentação.', href:'gestao-marketplace-marcos-dark.html',dt:'17/08/2026'},
+{cat:'marketplace', client:'Amiguros', type:'estrategia', t:'Experiência', title:'Amiguros — Experiência de Conexão', desc:'Entrega de experiência / posicionamento da operação Amiguros.', href:'experiencia-amiguros.html',dt:'29/07/2026'},
 /* ============ 09 SITES ============ */
-{cat:'sites', client:'Premium Contractors', type:'site', t:'Website', title:'Premium Contractors LLC — Website (Newark, NJ)', desc:'Website comercial de construção entregue em produção.', href:'projetos/Websites/premium-contractors-website/'},
-{cat:'sites', client:'Brinks / Cofres', type:'site', t:'Landing', title:'Rede Brinks Pay — Front', desc:'Front-end da campanha Rede Brinks Pay.', href:'mkt_landpages/redebrinkspay-front/redebrinkspay-front/index.html'},
-{cat:'sites', client:'Brinks / Cofres', type:'site', t:'Landing', title:'Valores que se Completam — Front', desc:'Front-end institucional da campanha.', href:'mkt_landpages/valoresquesecompletam-front/valoresquesecompletam-front/index.html'},
-{cat:'sites', client:'Brinks / Cofres', type:'site', t:'E-mail', title:'Meu Cofre Inteligente — E-mail Marketing', desc:'Template de e-mail da campanha Meu Cofre Inteligente.', href:'mkt_landpages/meucofreinteligente-front/meucofreinteligente-front/email.html'},
-{cat:'sites', client:'V4 Peretto', type:'site', t:'Template', title:'Dashboard Gestão de Projetos SEO (template)', desc:'Modelo de dashboard executivo reutilizável por cliente.', href:'dashboard/'}
+{cat:'sites', client:'Premium Contractors', type:'site', t:'Website', title:'Premium Contractors LLC — Website (Newark, NJ)', desc:'Website comercial de construção entregue em produção.', href:'projetos/Websites/premium-contractors-website/',dt:'13/05/2026'},
+{cat:'sites', client:'Brinks / Cofres', type:'site', t:'Landing', title:'Rede Brinks Pay — Front', desc:'Front-end da campanha Rede Brinks Pay.', href:'mkt_landpages/redebrinkspay-front/redebrinkspay-front/index.html',dt:'01/06/2026'},
+{cat:'sites', client:'Brinks / Cofres', type:'site', t:'Landing', title:'Valores que se Completam — Front', desc:'Front-end institucional da campanha.', href:'mkt_landpages/valoresquesecompletam-front/valoresquesecompletam-front/index.html',dt:'01/06/2026'},
+{cat:'sites', client:'Brinks / Cofres', type:'site', t:'E-mail', title:'Meu Cofre Inteligente — E-mail Marketing', desc:'Template de e-mail da campanha Meu Cofre Inteligente.', href:'mkt_landpages/meucofreinteligente-front/meucofreinteligente-front/email.html',dt:'01/06/2026'},
+{cat:'sites', client:'V4 Peretto', type:'site', t:'Template', title:'Dashboard Gestão de Projetos SEO (template)', desc:'Modelo de dashboard executivo reutilizável por cliente.', href:'dashboard/',dt:'02/09/2026'},
+{cat:'hub', client:'V4 Peretto', type:'hub', t:'Docs v2', title:'Documentação de Software — Hub de Agentes (v2 canônica)', desc:'Documentação séria de software: existência, arquitetura, inventário verificado, manutenção e roadmap. Base permanente da empresa.', href:'projetos/hub-agentes-ia/',dt:'14/09/2026'},
 ];
 /* ===== Central de Entregas — app ===== */
 const $ = id => document.getElementById(id);
@@ -357,14 +365,18 @@ const escQ = s => s.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
 const TYPE_LABEL = {hub:'Hub / Sistema', auditoria:'Auditoria', relatorio:'Relatório', trafego:'Tráfego pago', conteudo:'Conteúdo', automacao:'Automação / IA', site:'Site / Template', estrategia:'Estratégia'};
 const CATMAP = {}; CATS.forEach(c => CATMAP[c.id] = c);
 const CODE = {}; CATS.forEach(c => CODE[c.id] = c.short.split(' ')[0].slice(0,3).toUpperCase());
+const ST_LABEL = {atual:'Atual', parcial:'Legado parcial', legado:'Legado'};
+const ST_CLASS = {atual:'', parcial:'t-audit', legado:'t-hub'};
+const dtKey = s => { const m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(s || ''); return m ? (m[3]+m[2]+m[1]) : '00000000'; };
 
 /* Flatten: each URL (main + sublinks) is a row; children collapse under parent */
 let ROWS = [];
 D.forEach((d, i) => {
   const code = (CODE[d.cat] || 'IT') + '-' + String(i + 1).padStart(2, '0');
-  ROWS.push({code, parent:i, child:-1, cat:d.cat, client:d.client, type:d.type, tlabel:d.t || TYPE_LABEL[d.type] || d.type, title:d.title, desc:d.desc, href:d.href});
+  const pst = d.st || 'atual';
+  ROWS.push({code, parent:i, child:-1, cat:d.cat, client:d.client, type:d.type, tlabel:d.t || TYPE_LABEL[d.type] || d.type, title:d.title, desc:d.desc, href:d.href, dt:d.dt || '—', st:pst});
   (d.sub || []).forEach((s, j) => {
-    ROWS.push({code:code + '.' + (j + 1), parent:i, child:j, cat:d.cat, client:d.client, type:d.type, tlabel:'Vinculada', title:s[0], desc:'Link vinculado a “' + d.title + '”.', href:s[1]});
+    ROWS.push({code:code + '.' + (j + 1), parent:i, child:j, cat:d.cat, client:d.client, type:d.type, tlabel:'Vinculada', title:s[0], desc:'Link vinculado a “' + d.title + '”.', href:s[1], dt:d.dt || '—', st:s[2] || pst});
   });
 });
 const openKids = new Set();
@@ -391,8 +403,9 @@ CATS.forEach(c => { const o=document.createElement('option'); o.value=c.id; o.te
   $('kUrls').textContent = urls;
   $('kClients').textContent = nClients;
   $('kAudit').textContent = audits;
-  $('kHealth').textContent = '100%';
-  $('kHealthD').textContent = urls + ' URLs verificadas · 0 com 404';
+  const leg = D.filter(d=>(d.st||'atual')!=='atual').length + ROWS.filter(r=>r.child>=0 && r.st!=='atual').length;
+  $('kHealth').textContent = leg;
+  $('kHealthD').textContent = 'itens em legado (total/parcial)';
   $('headCount').textContent = D.length + ' entregas · ' + urls + ' URLs';
   $('footLine').textContent = D.length + ' entregas · ' + urls + ' URLs · ' + nClients + ' clientes/frentes';
 })();
@@ -417,12 +430,13 @@ CATS.forEach(c => { const o=document.createElement('option'); o.value=c.id; o.te
 
 function filtered(){
   const q = $('q').value.trim().toLowerCase();
-  const fc = $('fClient').value, fk = $('fCat').value, ft = $('fType').value;
+  const fc = $('fClient').value, fk = $('fCat').value, ft = $('fType').value, fs = $('fStatus').value;
   const words = q ? q.split(/\s+/) : [];
   return ROWS.filter(r => {
     if (fc && r.client !== fc) return false;
     if (fk && r.cat !== fk) return false;
     if (ft && r.type !== ft) return false;
+    if (fs && r.st !== fs) return false;
     if (r.child >= 0 && !openKids.has(r.parent) && !q) return false;
     if (!words.length) return true;
     const hay = (r.title+' '+r.client+' '+r.desc+' '+r.href+' '+(CATMAP[r.cat]?CATMAP[r.cat].label:'')+' '+r.tlabel).toLowerCase();
@@ -435,6 +449,7 @@ function sorted(rows){
   if (m === 'title') arr.sort((a,b)=>a.title.localeCompare(b.title,'pt-BR'));
   else if (m === 'client') arr.sort((a,b)=>a.client.localeCompare(b.client,'pt-BR')||a.title.localeCompare(b.title,'pt-BR'));
   else if (m === 'type') arr.sort((a,b)=>a.tlabel.localeCompare(b.tlabel,'pt-BR')||a.title.localeCompare(b.title,'pt-BR'));
+  else if (m === 'date') arr.sort((a,b)=>(dtKey(b.dt).localeCompare(dtKey(a.dt)))||(a.parent-b.parent)||(a.child-b.child));
   else arr.sort((a,b)=>(CATS.findIndex(c=>c.id===a.cat)-CATS.findIndex(c=>c.id===b.cat))||(a.parent-b.parent)||(a.child-b.child));
   return arr;
 }
@@ -450,7 +465,7 @@ function render(){
       lastCat = r.cat;
       const c = CATMAP[r.cat];
       const n = rows.filter(x=>x.cat===r.cat && x.child<0).length;
-      html += '<tr class="grp"><td colspan="6">' + c.n + ' · ' + c.label + ' <span class="cnt">— ' + n + ' entrega(s)</span><button class="gcopy" onclick="copyCat(\''+c.id+'\',this)">Copiar links da categoria</button></td></tr>';
+      html += '<tr class="grp"><td colspan="8">' + c.n + ' · ' + c.label + ' <span class="cnt">— ' + n + ' entrega(s)</span><button class="gcopy" onclick="copyCat(\''+c.id+'\',this)">Copiar links da categoria</button></td></tr>';
     }
     if (r.child >= 0){
       html += '<tr class="data child"><td class="id">' + r.code + '</td>'
@@ -458,6 +473,8 @@ function render(){
         + '<div class="pp"><a href="' + r.href + '" target="_blank" rel="noopener">' + absUrl(r.href) + '</a></div></td>'
         + '<td><span class="bdg">' + CATMAP[r.cat].short + '</span></td>'
         + '<td><span class="bdg">Vinculada</span></td>'
+        + '<td style="white-space:nowrap">' + r.dt + '</td>'
+        + '<td><span class="bdg ' + ST_CLASS[r.st] + '">' + ST_LABEL[r.st] + '</span></td>'
         + '<td style="text-align:right">—</td>'
         + '<td class="acts"><a class="icon-btn go" href="' + r.href + '" target="_blank" rel="noopener">Abrir ↗</a><button class="icon-btn" onclick="copyLink(\'' + escQ(r.href) + '\',this)">Copiar ⧉</button></td></tr>';
     } else {
@@ -471,6 +488,8 @@ function render(){
         + '</td>'
         + '<td><span class="bdg">' + CATMAP[r.cat].short + '</span></td>'
         + '<td><span class="bdg t-' + r.type + '">' + r.tlabel + '</span></td>'
+        + '<td style="white-space:nowrap">' + r.dt + '</td>'
+        + '<td><span class="bdg ' + ST_CLASS[r.st] + '">' + ST_LABEL[r.st] + '</span></td>'
         + '<td style="text-align:right"><strong>' + (1 + kc) + '</strong></td>'
         + '<td class="acts"><a class="icon-btn go" href="' + r.href + '" target="_blank" rel="noopener">Abrir ↗</a><button class="icon-btn" onclick="copyLink(\'' + escQ(r.href) + '\',this)">Copiar ⧉</button></td></tr>';
     }
@@ -479,7 +498,7 @@ function render(){
   tb.innerHTML = html;
   $('empty').classList.toggle('show', !rows.length);
   $('tblCount').textContent = rows.length + ' linha(s)';
-  const scope = ($('q').value || $('fClient').value || $('fCat').value || $('fType').value)
+  const scope = ($('q').value || $('fClient').value || $('fCat').value || $('fType').value || $('fStatus').value)
     ? 'Exibindo <strong>' + rows.filter(r=>r.child<0).length + '</strong> entrega(s) no filtro — de <strong>' + D.length + '</strong> no total.'
     : 'Catálogo completo: <strong>' + D.length + '</strong> entregas · <strong>' + ROWS.length + '</strong> URLs publicadas.';
   $('statusLine').innerHTML = scope;
@@ -512,7 +531,7 @@ function copyCat(catId, btn){
   if (btn){ const o=btn.textContent; btn.textContent='Copiado ✓'; setTimeout(()=>btn.textContent=o,1400); }
 }
 
-['q','fClient','fCat','fType','fSort'].forEach(id => $(id).addEventListener('input', render));
+['q','fClient','fCat','fType','fStatus','fSort'].forEach(id => $(id).addEventListener('input', render));
 $('btnCopyAll').onclick = function(){
   const list = sorted(filtered()).map(r=>absUrl(r.href)).join('\n');
   if (!list) { toast('Nada para copiar no filtro atual'); return; }
@@ -522,8 +541,8 @@ $('btnCopyAll').onclick = function(){
 $('btnCsv').onclick = function(){
   const rows = sorted(filtered());
   const esc = v => '"' + String(v).replace(/"/g,'""') + '"';
-  const csv = 'ID;Categoria;Cliente;Tipo;Titulo;URL publicada\n'
-    + rows.map(r=>[r.code, CATMAP[r.cat].label, r.client, r.child>=0?'Vinculada':r.tlabel, r.title, absUrl(r.href)].map(esc).join(';')).join('\n');
+  const csv = 'ID;Categoria;Cliente;Tipo;Data;Situacao;Titulo;URL publicada\n'
+    + rows.map(r=>[r.code, CATMAP[r.cat].label, r.client, r.child>=0?'Vinculada':r.tlabel, r.dt, ST_LABEL[r.st], r.title, absUrl(r.href)].map(esc).join(';')).join('\n');
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob(["\uFEFF"+csv], {type:'text/csv;charset=utf-8'}));
   a.download = 'central-entregas-v4.csv'; a.click();
