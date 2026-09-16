@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Over — Estudo de canais: método e rotas · V4 · Set 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#E50914; --red2:#E31919; --red-grad:linear-gradient(135deg,#E31919 0%,#FF4D4D 100%);
+  --gold:#c9a96e;
+  --dark:#0A0A0A; --dark3:#141414; --dark4:#1C1C1C;
+  --border:#2A2A2A; --sep:#383838;
+  --txt:#fff; --txt2:#E8E8E8; --muted:#9a9a9a; --dim:#666;
+  --green:#22C55E; --amber:#F59E0B;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+::selection{background:var(--red2);color:#fff}
+html{scroll-behavior:smooth}
+body{background:var(--dark);color:var(--txt2);font-family:'Barlow',sans-serif;font-size:17px;line-height:1.7}
+.mono{font-family:'JetBrains Mono',monospace}
+a{color:#FF6B6B}
+.wrap{max-width:1000px;margin:0 auto;padding:0 24px}
+.topbar{background:var(--red-grad);padding:9px 0;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#fff}
+.topbar .wrap{display:flex;gap:16px;flex-wrap:wrap}
+.site-header{background:rgba(14,14,14,.96);border-bottom:1px solid var(--border);padding:14px 0;position:sticky;top:0;z-index:100}
+.site-header .wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.site-header .logos{display:flex;align-items:center;gap:14px}
+.site-header .logos img{height:30px;width:auto}
+.site-header .logos .div{width:1px;height:26px;background:var(--sep)}
+.site-header nav{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.site-header nav a{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.05em;color:var(--txt2);text-decoration:none;padding:6px 10px;border:1px solid var(--border);border-radius:999px;text-transform:uppercase}
+.site-header nav a:hover{background:var(--red2);border-color:var(--red2);color:#fff}
+.cover{padding:52px 0 24px;background:linear-gradient(180deg,#141414 0%,#0A0A0A 70%);border-bottom:1px solid var(--border)}
+.cover .logos-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px;flex-wrap:wrap;gap:12px}
+.cover .logos-row img{height:36px;width:auto}
+.cover .logos-row .client-logo{height:50px;border-radius:8px}
+.conf-badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,169,110,.4);background:rgba(201,169,110,.08);padding:7px 14px;border-radius:4px;margin-bottom:18px}
+.cover h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(38px,5.5vw,64px);font-weight:700;line-height:.96;text-transform:uppercase;color:#fff}
+.cover h1 .red{color:var(--red)}
+.cover .sub{font-family:'Barlow Condensed',sans-serif;font-size:19px;letter-spacing:.05em;text-transform:uppercase;color:var(--gold);margin-top:8px}
+.cover .meta{display:flex;gap:20px;flex-wrap:wrap;margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)}
+.cover .meta b{color:var(--txt2)}
+section{padding:50px 0;border-bottom:1px solid var(--border)}
+.s-label{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.s-label .line{width:28px;height:2px;background:var(--red)}
+.s-label span{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
+.s-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(28px,3.6vw,42px);font-weight:700;text-transform:uppercase;color:#fff;margin-bottom:6px}
+.s-title .red{color:var(--red)}
+.s-note{color:var(--muted);font-size:15px;margin-bottom:22px;max-width:78ch}
+/* method steps */
+.method{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+@media(max-width:820px){.method{grid-template-columns:1fr}}
+.method .m{background:var(--dark3);border:1px solid var(--border);border-top:3px solid var(--red);border-radius:10px;padding:18px}
+.method .m .n{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.1em}
+.method .m h4{font-family:'Barlow Condensed',sans-serif;font-size:19px;text-transform:uppercase;color:#fff;margin:4px 0 6px}
+.method .m p{font-size:14px;color:var(--muted)}
+/* conclusion */
+.concl{border:1px solid var(--border);border-left:4px solid var(--red);border-radius:0 10px 10px 0;background:var(--dark3);padding:20px 22px;margin:12px 0}
+.concl ol{padding-left:22px}
+.concl li{margin:10px 0;font-size:16.5px;color:var(--txt2)}
+.concl li b{color:#fff}
+.concl .tag{font-family:'JetBrains Mono',monospace;font-size:10px;border:1px solid var(--sep);border-radius:4px;padding:1px 7px;margin-left:8px;color:var(--muted);white-space:nowrap}
+/* tables */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:10px;margin:16px 0}
+table{width:100%;border-collapse:collapse;font-size:14.5px;background:var(--dark3);min-width:700px}
+th{background:#000;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--gold);padding:12px 10px;text-align:left;border-bottom:1px solid var(--border)}
+td{border-bottom:1px solid var(--border);padding:11px 10px;vertical-align:top;color:var(--txt2)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(229,9,20,.04)}
+td b,td strong{color:#fff}
+td .mono{font-size:12.5px;color:var(--gold)}
+td.num{font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap}
+tr.you td{background:rgba(229,9,20,.06)}
+tr.win td{background:rgba(34,197,94,.05)}
+.src{font-size:12.5px;color:var(--dim);margin-top:10px}
+/* findings / boxes */
+.finding{border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin:12px 0;background:#0E0E0E}
+.finding h4{font-family:'Barlow Condensed',sans-serif;font-size:19px;text-transform:uppercase;color:#fff;margin-bottom:6px}
+.finding p{font-size:15.5px;color:var(--muted)}
+.finding p b{color:var(--txt2)}
+.eq{background:#000;border:1px solid var(--sep);border-radius:10px;padding:18px 22px;margin:14px 0;font-family:'JetBrains Mono',monospace;font-size:14px;line-height:2;color:var(--txt2);overflow-x:auto}
+.eq b{color:#FF6B6B}
+.pill{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.p-ok{background:rgba(34,197,94,.14);color:#4ADE80;border:1px solid var(--green)}
+.p-no{background:rgba(229,9,20,.14);color:#FF6B6B;border:1px solid var(--red)}
+.p-warn{background:rgba(245,158,11,.12);color:#FBBF24;border:1px solid var(--amber)}
+.p-info{background:rgba(255,255,255,.05);color:var(--muted);border:1px solid var(--border)}
+/* swot */
+.swot{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+@media(max-width:760px){.swot{grid-template-columns:1fr}}
+.swot .q{border:1px solid var(--border);border-radius:10px;padding:18px 20px;background:var(--dark3)}
+.swot .q h4{font-family:'Barlow Condensed',sans-serif;font-size:20px;text-transform:uppercase;margin-bottom:8px}
+.swot .q ul{padding-left:18px;font-size:14.5px;color:var(--muted)}
+.swot .q li{margin:5px 0}
+.swot .q li b{color:var(--txt2)}
+.q.s h4{color:#4ADE80} .q.w h4{color:#FBBF24} .q.o h4{color:var(--gold)} .q.t h4{color:#FF6B6B}
+/* bars */
+.bar-row{margin:12px 0}
+.bar-row .bl{display:flex;justify-content:space-between;font-size:15px;margin-bottom:5px;gap:10px}
+.bar-row .bl b{color:#fff}
+.bar-row .bl .v{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--gold);white-space:nowrap}
+.bar-track{background:#000;border:1px solid var(--border);border-radius:7px;height:26px;overflow:hidden}
+.bar-fill{height:100%;width:0;transition:width 1s ease}
+/* routes */
+.routes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}
+@media(max-width:860px){.routes{grid-template-columns:1fr}}
+.route{border:2px solid var(--sep);border-radius:12px;padding:20px;background:#111}
+.route.ra{border-color:var(--green)} .route.rb{border-color:var(--gold)} .route.rc{border-color:var(--amber)}
+.route h4{font-family:'Barlow Condensed',sans-serif;font-size:21px;text-transform:uppercase;color:#fff}
+.route .budget{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);margin:4px 0 10px}
+.route ul{padding-left:18px;font-size:14px;color:var(--muted)}
+.route li{margin:6px 0} .route b{color:var(--txt2)}
+/* rule */
+.rule{border:1px solid var(--sep);border-radius:10px;padding:16px 20px;margin:12px 0;background:#000;font-size:15.5px;color:var(--txt2)}
+.rule .k{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:6px}
+details{border:1px solid var(--border);border-radius:10px;padding:13px 17px;margin:10px 0;font-size:14px;color:var(--muted)}
+summary{cursor:pointer;color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:12px}
+footer{border-top:1px solid var(--border);padding:30px 0 40px;background:#000}
+footer .wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+footer img{height:28px;width:auto}
+footer .fdiv{width:1px;height:24px;background:var(--sep)}
+footer .ft{font-family:'Barlow Condensed',sans-serif;font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:#fff}
+footer .fm{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--dim);text-align:right;line-height:1.9}
+.reveal{opacity:0;transform:translateY(12px);transition:all .45s ease}
+.reveal.vis{opacity:1;transform:none}
+@media print{.site-header nav{display:none}}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+<span>V4 Company · Peretto &amp; Co</span><span>All Over Exterior Roofing · Houston TX 77092</span><span style="margin-left:auto">Estudo de canais · Set 2026 · v5</span>
+</div></div>
+
+<header class="site-header"><div class="wrap">
+<div class="logos"><img src="logo-v4-white.png" alt="V4 Company"><span class="div"></span><img src="logo-allover.jpg" alt="All Over" style="border-radius:6px"></div>
+<nav><a href="#metodo">Método</a><a href="#conclusao">Conclusão</a><a href="#funil">Funil</a><a href="#swot">SWOT</a><a href="#porter">Mercado</a><a href="#matriz">Matriz</a><a href="#rotas">Rotas</a><a href="#migracao">Migração</a><a href="#okr">OKR</a></nav>
+</div></header>
+
+<div class="cover"><div class="wrap">
+<div class="logos-row"><img src="logo-v4-white.png" alt="V4 Company"><img class="client-logo" src="logo-allover.jpg" alt="All Over Exterior Roofing"></div>
+<div class="conf-badge">Confidencial · Setembro / 2026 · allover-canais-v5</div>
+<h1>O que fazer com<br>a verba: <span class="red">método e rotas</span></h1>
+<div class="sub">All Over Exterior Roofing — estudo decisório de canais de mídia</div>
+<div class="meta"><span>Pergunta: <b>tráfego estável, vendas em queda, lead mais caro — onde alocar US$ 1,5–5k?</b></span><span>Método: <b>decomposição → ambiente → portfólio → rotas → governança</b></span></div>
+</div></div>
+
+<main class="wrap">
+
+<!-- MÉTODO -->
+<section id="metodo">
+<div class="s-label"><span class="line"></span><span>Método do estudo</span></div>
+<div class="s-title">Como esta análise <span class="red">foi construída</span></div>
+<p class="s-note">Arcabouço de administração/marketing para decisão de mix de mídia: parte do sintoma auditado, decompõe a equação, lê o ambiente (SWOT + 5 forças), pontua o portfólio (matriz ponderada) e converte em rotas com governança (OKR). Nada aqui é opinião sem etiqueta de origem.</p>
+<div class="method">
+<div class="m reveal"><div class="n">ETAPA 1</div><h4>Decompor o sintoma</h4><p>Vendas = tráfego × conversão × qualificação × fechamento. Isolar qual termo quebrou antes de mover verba.</p></div>
+<div class="m reveal"><div class="n">ETAPA 2</div><h4>Ler o ambiente</h4><p>SWOT da operação de mídia + 5 forças de Porter no NW Houston + 20 players mapeados.</p></div>
+<div class="m reveal"><div class="n">ETAPA 3</div><h4>Pontuar o portfólio</h4><p>Matriz de decisão com 6 critérios ponderados. Nota fria por canal, com restrição explícita.</p></div>
+<div class="m reveal"><div class="n">ETAPA 4</div><h4>Desenhar rotas</h4><p>Três rotas orçamentárias (eficiência / equilíbrio / crescimento) em lógica 70-20-10.</p></div>
+<div class="m reveal"><div class="n">ETAPA 5</div><h4>Protocolar testes</h4><p>Hipótese, custo, prazo e critério de corte antes do primeiro dólar. Sem exceção.</p></div>
+<div class="m reveal"><div class="n">ETAPA 6</div><h4>Governar</h4><p>OKR + cadência de revisão. Decisão revisitada com dado, não com sensação.</p></div>
+</div>
+</section>
+
+<!-- CONCLUSÃO -->
+<section id="conclusao">
+<div class="s-label"><span class="line"></span><span>Conclusão</span></div>
+<div class="s-title">Cinco afirmações <span class="red">sustentáveis</span></div>
+<div class="concl reveal"><ol>
+<li><b>O problema não é volume, é eficiência.</b> Tráfego estável com vendas em queda e CPL em alta significa quebra em conversão, qualificação ou fechamento — não em alcance. Comprar mais tráfego antes do diagnóstico amplifica o vazamento. <span class="tag">[interno · auditoria]</span></li>
+<li><b>O canal pago mais barato é o LSA</b> (~US$ 79/ligação, ROAS fechado 4,82×), não o Search (~US$ 124, ROAS 2,07×). <span class="tag">[benchmark · SearchLight Q1/26]</span></li>
+<li><b>Agregadores são o destino mais caro da verba</b> (US$ 500–2.400/obra): pedido dividido com até 8 concorrentes, seleção por preço — incompatível com ticket premium. <span class="tag">[benchmark]</span></li>
+<li><b>A medição não sustenta realocação imediata</b> (48 × 144 × 531/344). Primeiro reconciliar, depois mover. <span class="tag">[interno]</span></li>
+<li><b>O teto é aritmética:</b> US$ 17,5 mil × 30% × 25% ≈ US$ 437/pedido. A matriz da seção 05 aplica esse teto a cada canal. <span class="tag">[interno × benchmark]</span></li>
+</ol></div>
+</section>
+
+<!-- FUNIL -->
+<section id="funil">
+<div class="s-label"><span class="line"></span><span>01 · Decomposição (etapa 1)</span></div>
+<div class="s-title">Onde <span class="red">quebrou</span>: a equação</div>
+<p class="s-note">Achado da sua auditoria, formalizado. Se o tráfego (T) está constante e as vendas (V) caíram, a quebra está necessariamente em um dos três termos seguintes.</p>
+<div class="eq reveal">V = T &nbsp;×&nbsp; <b>CVR</b> (visita→pedido) &nbsp;×&nbsp; <b>Q</b> (pedido→qualificado) &nbsp;×&nbsp; <b>F</b> (qualificado→obra)<br>CPL = Spend ÷ (T × CVR) &nbsp;&nbsp;·&nbsp;&nbsp; CAC = Spend ÷ V</div>
+<div class="tbl-wrap reveal"><table>
+<tr><th>Hipótese</th><th>Termo afetado</th><th>Sintoma esperado</th><th>Como provar (dado necessário)</th></tr>
+<tr><td><b>H1 — CPC inflacionado</b><br>Leilão mais caro, mesmo tráfego</td><td>CPL sobe, V cai se orçamento fixo</td><td>Impressões = , cliques = , CPC ↑</td><td>Histórico CPC/impressão por campanha (credenciais Julio)</td></tr>
+<tr><td><b>H2 — Conversão do site caiu</b><br>Página, oferta ou fricção</td><td><b>CVR</b> ↓</td><td>Mesmas sessões, menos envios/ligações</td><td>CVR por LP e por mês (GA4 + CRM)</td></tr>
+<tr><td><b>H3 — Qualidade do lead caiu</b><br>Curiosos, fora de área, repair mix</td><td><b>Q</b> ↓</td><td>Pedidos = , qualificados ↓ ; 40% "lixo"</td><td>Reclassificação própria das gravações (dossiê terça)</td></tr>
+<tr><td><b>H4 — Fechamento caiu</b><br>Preço, concorrência, follow-up, ciclo</td><td><b>F</b> ↓</td><td>Orçamentos = , obras ↓ ; ciclo alongado</td><td>Taxa orçamento→obra por mês (CRM)</td></tr>
+</table></div>
+<div class="finding reveal"><h4>Implicação direta para a verba</h4>
+<p>Se H1: o remédio é leilão (negativas, geo, split repair×replacement, LSA). Se H2: nenhum canal novo resolve — é página e oferta. Se H3: o remédio é qualificação (perguntas do survey, filtros, LSA exclusivo). Se H4: é comercial (follow-up, financiamento, proposta). <b>Alocar verba antes de saber qual H é apostar no escuro com dinheiro do cliente.</b> O dossiê de ligações + credenciais testa H1–H4 em uma semana.</p></div>
+</section>
+
+<!-- SWOT -->
+<section id="swot">
+<div class="s-label"><span class="line"></span><span>02 · Ambiente interno (etapa 2a)</span></div>
+<div class="s-title">SWOT da operação <span class="red">de mídia</span></div>
+<div class="swot">
+<div class="q s reveal"><h4>Forças</h4><ul><li><b>Ticket US$ 15–20k</b> absorve CPL alto com folga (teto ~US$ 437)</li><li><b>Posicionamento premium</b> (honestidade/rapidez) — não compete em preço</li><li><b>Bing já converte</b>; base Google existente</li></ul></div>
+<div class="q w reveal"><h4>Fraquezas</h4><ul><li><b>Medição quebrada</b> (48×144×531) — decide-se no escuro</li><li><b>Prova social deficitária</b> vs rivais 500–1.200+ reviews</li><li><b>Meta saturado</b> sem retorno; gargalo no dono (vende + opera)</li></ul></div>
+<div class="q o reveal"><h4>Oportunidades</h4><ul><li><b>LSA subexplorado</b> — canal mais barato, inventário local</li><li><b>Storm/claim</b> como tese (Houston, seguradoras)</li><li><b>ChatGPT/Nextdoor/Bing</b> com concorrência ainda baixa</li></ul></div>
+<div class="q t reveal"><h4>Ameaças</h4><ul><li><b>20 players</b> no raio, elite certificada como piso</li><li><b>CPC em alta</b> estrutural em home services</li><li><b>Agregadores</b> comprando demanda com seu dinheiro</li></ul></div>
+</div>
+<div class="finding reveal"><h4>TOWS — da análise à ação</h4>
+<p><b>SO:</b> tese storm/claim em LSA + Nextdoor por CEP (força premium × oportunidade). <b>WO:</b> programa de reviews + indicação formal antes de escalar mídia (oportunidade LSA × fraqueza prova social). <b>ST:</b> split repair×replacement + negativas para defender leilão contra 20 rivais. <b>WT:</b> congelar Meta-vendas e agregadores até medição sanada — não financiar ameaça com verba própria.</p></div>
+</section>
+
+<!-- PORTER + 20 -->
+<section id="porter">
+<div class="s-label"><span class="line"></span><span>03 · Ambiente externo (etapa 2b)</span></div>
+<div class="s-title">Cinco forças no <span class="red">NW Houston</span> + 20 players</div>
+<div class="tbl-wrap reveal"><table>
+<tr><th>Força</th><th>Intensidade</th><th>Evidência</th><th>Efeito na verba</th></tr>
+<tr><td><b>Rivalidade</b></td><td><span class="pill p-no">Alta</span></td><td>20 players mapeados; Master Elite é o piso; 500–1.200 reviews nos líderes</td><td>CPC alto; diferenciação por prova e velocidade, nunca preço</td></tr>
+<tr><td><b>Poder do cliente</b></td><td><span class="pill p-no">Alto</span></td><td>66% pegam 3 orçamentos; 1% fecha no primeiro (RC 2026)</td><td>Resposta em 48h e proposta comparável valem mais que +US$ 500 de mídia</td></tr>
+<tr><td><b>Substitutos</b></td><td><span class="pill p-warn">Média</span></td><td>Agregadores, reparo parcial, "deixar para depois", seguradora indicando</td><td>Não financiar substituto (agregador) com própria verba</td></tr>
+<tr><td><b>Novos entrantes</b></td><td><span class="pill p-warn">Média</span></td><td>Baixo capex; storm chasers pós-evento</td><td>Pós-tempestade: acelerar Nextdoor/LSA por CEP, não branding</td></tr>
+<tr><td><b>Fornecedores (Google/Meta)</b></td><td><span class="pill p-no">Alto</span></td><td>CPC US$ 25–50; inventário LSA finito; Meta sem transparência de retorno</td><td>Diversificar captura (LSA + orgânico + Bing) reduz dependência</td></tr>
+</table></div>
+<p class="s-note" style="margin-top:18px">Base: 10050 Northwest Fwy Suite 130, Houston TX 77092 (NAP no HTML, 14/09). Raio: NW Houston, Cypress, Spring, Katy, Tomball, Jersey Village. Reviews Google salvo indicação, set/26.</p>
+<div class="tbl-wrap reveal"><table>
+<tr><th>#</th><th>Empresa</th><th>Base</th><th>Fatos</th><th>Implicação</th></tr>
+<tr class="you"><td class="num">—</td><td><b>All Over</b></td><td class="mono">77092</td><td>Ticket US$ 15–20k · premium</td><td>Gap nº 1: prova social</td></tr>
+<tr><td class="num">01</td><td><b>Amstill</b></td><td class="mono">77079</td><td class="mono">50 anos · 1.200+ 4,9 · ~40 mil telhados · GAF ME · OC Platinum · 24/7</td><td>Rival estrutural</td></tr>
+<tr><td class="num">02</td><td><b>Telge</b></td><td class="mono">77429</td><td class="mono">4,8 (716+) · GAF ME + President's Club · 17a · BBB A+ 2010</td><td>Rival direto NW</td></tr>
+<tr><td class="num">03</td><td><b>Precision Roof Crafters</b></td><td class="mono">HOU</td><td class="mono">3.000+ 5★ · 33 mil projetos · 30+a · GAF + OC · financiamento</td><td>Benchmark de escala</td></tr>
+<tr><td class="num">04</td><td><b>Houston Roofing &amp; Const.</b></td><td class="mono">77065</td><td class="mono">GAF ME President's Club · 20+a · +comercial · FORTIFIED</td><td>Manter commercial separado</td></tr>
+<tr><td class="num">05</td><td><b>Craddock</b></td><td class="mono">77092</td><td class="mono">4,9 (148) · GAF · garantia 5a mão de obra</td><td>Mesmo CEP: vigiar LSA local</td></tr>
+<tr><td class="num">06</td><td><b>Innpreccon</b></td><td class="mono">77090</td><td class="mono">4,9 (404) · GAF · FORTIFIED · 1 dia de obra</td><td>Padrão velocidade+claim</td></tr>
+<tr><td class="num">07</td><td><b>Achilles</b></td><td class="mono">77429</td><td class="mono">5,0 (382) · GAF Plus · calhas+siding</td><td>Cross-sell como rotina</td></tr>
+<tr><td class="num">08</td><td><b>FairClaims</b></td><td class="mono">Spring</td><td class="mono">4,9 (567) · GAF ME + President's Club</td><td>Batalha do posicionamento claim</td></tr>
+<tr><td class="num">09</td><td><b>Home Team</b></td><td class="mono">Tomball</td><td class="mono">4,9 (548) · GAF</td><td>Meta de paridade de reviews</td></tr>
+<tr><td class="num">10</td><td><b>Shamrock</b></td><td class="mono">77388</td><td class="mono">4,8 (430+) · GAF · preço agressivo</td><td>Âncora de preço: não brigar</td></tr>
+<tr><td class="num">11</td><td><b>Kidd</b></td><td class="mono">Cypress</td><td class="mono">5,0 (276) · GAF ME + President's Club</td><td>Gap de selo explícito</td></tr>
+<tr><td class="num">12</td><td><b>Remedy</b></td><td class="mono">Katy</td><td class="mono">4,6 (431) · GAF ME + President's Club</td><td>Cobertura do oeste</td></tr>
+<tr><td class="num">13</td><td><b>Lifetime</b></td><td class="mono">77373</td><td class="mono">5,0 (380) · same-day pós-storm</td><td>Padrão de resposta</td></tr>
+<tr><td class="num">14</td><td><b>Roof 1</b></td><td class="mono">Tomball</td><td class="mono">5,0 (188) · GAF ME + President's Club</td><td>Densidade de elite</td></tr>
+<tr><td class="num">15</td><td><b>Adams</b></td><td class="mono">Cypress</td><td class="mono">5,0 (208) · GAF</td><td>Prova social local</td></tr>
+<tr><td class="num">16</td><td><b>Cayne</b></td><td class="mono">77429</td><td class="mono">5,0 (113) · GAF ME · FORTIFIED</td><td>Avaliar cert. FORTIFIED</td></tr>
+<tr><td class="num">17</td><td><b>Rose</b></td><td class="mono">77040</td><td class="mono">601 GuildQuality (auditado) · OC · proposta ilustrada</td><td>Padrão de orçamento</td></tr>
+<tr><td class="num">18</td><td><b>North American</b></td><td class="mono">Spring</td><td class="mono">4,9 · CertainTeed SSM · 20+a · BBB A+ · HOAs</td><td>HOAs exigem playbook próprio</td></tr>
+<tr><td class="num">19</td><td><b>State / Ideal</b></td><td class="mono">HOU</td><td class="mono">4,9/4,6 · ambos ME + President's Club</td><td>Elite é piso, não exceção</td></tr>
+<tr><td class="num">20</td><td><b>Apollo / Southern / Shingle Hut / Merit</b></td><td class="mono">Cypress</td><td class="mono">OC Preferred · Southern 2000 · Shingle Hut BBB 2016 · Merit 4,9 (60)</td><td>Cauda longa: bairro decide</td></tr>
+</table></div>
+<div class="finding reveal"><h4>Verificação de anúncios (método, 2 min/rival)</h4>
+<p>Meta: facebook.com/ads/library (EUA, "Todos os anúncios", nome). Google/YouTube: adstransparency.google.com (domínio). TikTok: creativecenter Top Ads. Sem dados de gasto — <b>proxy: longevidade</b>. Prioridade: Amstill, Telge, Craddock, FairClaims, Precision (3 mais antigos de cada, semana 1).</p></div>
+</section>
+
+<!-- MATRIZ -->
+<section id="matriz">
+<div class="s-label"><span class="line"></span><span>04 · Portfólio (etapa 3)</span></div>
+<div class="s-title">Matriz de decisão <span class="red">ponderada</span></div>
+<p class="s-note">Critérios e pesos declarados. Notas 1–5 por evidência; incerteza penaliza (ChatGPT e Nextdoor perdem pontos exatamente por serem desconhecidos — o teste existe para movê-los).</p>
+<div class="tbl-wrap reveal"><table>
+<tr><th>Canal</th><th>Custo/obra 30%</th><th>Volume 20%</th><th>Controle 15%</th><th>Fit ICP 15%</th><th>Aprendiz. 10%</th><th>Risco 10%</th><th>Total</th><th></th></tr>
+<tr class="win"><td><b>Perfil + mapa</b></td><td class="num">5</td><td class="num">4</td><td class="num">3</td><td class="num">5</td><td class="num">2</td><td class="num">5</td><td class="num"><b>4,20</b></td><td><span class="pill p-ok">1º</span></td></tr>
+<tr class="win"><td><b>Indicação</b></td><td class="num">5</td><td class="num">2</td><td class="num">5</td><td class="num">5</td><td class="num">2</td><td class="num">5</td><td class="num"><b>4,10</b></td><td><span class="pill p-ok">2º</span></td></tr>
+<tr class="win"><td><b>LSA</b></td><td class="num">4</td><td class="num">3</td><td class="num">4</td><td class="num">5</td><td class="num">4</td><td class="num">4</td><td class="num"><b>3,95</b></td><td><span class="pill p-ok">3º</span></td></tr>
+<tr><td><b>Search</b></td><td class="num">3</td><td class="num">4</td><td class="num">5</td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num"><b>3,85</b></td><td><span class="pill p-ok">4º</span></td></tr>
+<tr><td><b>Bing</b></td><td class="num">3</td><td class="num">2</td><td class="num">4</td><td class="num">4</td><td class="num">3</td><td class="num">3</td><td class="num"><b>3,10</b></td><td><span class="pill p-warn">Teste</span></td></tr>
+<tr><td><b>Nextdoor</b></td><td class="num">3</td><td class="num">2</td><td class="num">3</td><td class="num">4</td><td class="num">3</td><td class="num">3</td><td class="num"><b>2,95</b></td><td><span class="pill p-warn">Teste</span></td></tr>
+<tr><td><b>Meta</b></td><td class="num">2</td><td class="num">3</td><td class="num">4</td><td class="num">2</td><td class="num">3</td><td class="num">2</td><td class="num"><b>2,60</b></td><td><span class="pill p-no">Congelar</span></td></tr>
+<tr><td><b>ChatGPT</b></td><td class="num">2</td><td class="num">2</td><td class="num">3</td><td class="num">3</td><td class="num">4</td><td class="num">2</td><td class="num"><b>2,50</b></td><td><span class="pill p-warn">Testar</span></td></tr>
+<tr><td><b>Agregadores</b></td><td class="num">1</td><td class="num">4</td><td class="num">1</td><td class="num">2</td><td class="num">3</td><td class="num">1</td><td class="num"><b>1,95</b></td><td><span class="pill p-no">Não alocar</span></td></tr>
+</table></div>
+<div class="finding reveal"><h4>Leitura executiva da matriz</h4>
+<p>O ranking confirma a intuição do cliente com aritmética: o próprio (mapa + indicação) supera qualquer mídia paga; LSA vence Search; testes ficam no meio por incerteza — não por mérito ou demérito; Meta perde por evidência interna negativa; agregador perde por estrutura. <b>ChatGPT em 8º não é condenação: é o preço da ignorância, e o protocolo da seção 07 existe para precificá-lo.</b></p></div>
+</section>
+
+<!-- ROTAS -->
+<section id="rotas">
+<div class="s-label"><span class="line"></span><span>05 · Rotas (etapa 4)</span></div>
+<div class="s-title">Três rotas, <span class="red">uma lógica</span> 70-20-10</div>
+<p class="s-note">70% no comprovado, 20% no operacional que multiplica (reviews, indicação, proposta), 10% em testes com corte. Execução com a equipe; rota com o decisor.</p>
+<div class="routes">
+<div class="route ra reveal"><h4>Rota A — Eficiência</h4><div class="budget">US$ 1.500–2.000/mês</div><ul><li><b>70%:</b> LSA + Search splitado (repair×replacement)</li><li><b>20%:</b> operação reviews + indicação formal + proposta Rose-padrão</li><li><b>10%:</b> um teste (Bing ou Nextdoor)</li><li>Condição: H3/H4 confirmadas no dossiê</li></ul></div>
+<div class="route rb reveal"><h4>Rota B — Equilíbrio</h4><div class="budget">US$ 3.000/mês</div><ul><li><b>70%:</b> base A escalada (LSA teto de inventário)</li><li><b>20%:</b> item anterior + FORTIFIED/claim como tese</li><li><b>10%:</b> dois testes em paralelo (ChatGPT + Nextdoor)</li><li>Condição: CAC de volta ao teto em 60 dias</li></ul></div>
+<div class="route rc reveal"><h4>Rota C — Crescimento</h4><div class="budget">US$ 5.000/mês</div><ul><li><b>70%:</b> base + expansão geo pós-auditoria AB</li><li><b>20%:</b> conteúdo storm/claim + HOAs (Bridgeland/Towne Lake)</li><li><b>10%:</b> portfólio de testes + vencedor do ChatGPT se ≥1 SQL</li><li>Condição: só após medição sanada e CAC no teto</li></ul></div>
+</div>
+<div class="rule reveal"><span class="k">Trava metodológica</span>Nenhuma rota sobe de letra sem o dossiê de ligações + 30 dias de CAC dentro do teto. Subir de rota sem dado é trocar hipótese sem testá-la.</div>
+</section>
+
+<!-- GPT -->
+<section id="gpt">
+<div class="s-label"><span class="line"></span><span>06 · Teste protocolado (etapa 5)</span></div>
+<div class="s-title">ChatGPT Ads: <span class="red">protocolo</span>, não aposta</div>
+<div class="finding reveal"><h4>Objeto 1 — cartão patrocinado. Fatos.</h4>
+<p>Abaixo da resposta, rotulado, sem influenciar conteúdo. Free/Go logados, adultos, EUA. Roofing permitido (<i>local services</i>). CPC US$ 3–5 (abaixo de US$ 3 não entrega), CPM US$ 25–60, mínimo US$ 25/dia, geo até CEP. Direcionamento por <i>context hints</i>. Pixel + CAPI; agregado de volta, nunca a conversa.</p></div>
+<div class="finding reveal"><h4>Objeto 2 — citação orgânica. Não é mídia.</h4>
+<p>Referência nas respostas via conteúdo, reviews e dados estruturados. Custo zero. Operação SEO.</p></div>
+<div class="rule reveal"><span class="k">Protocolo — US$ 300–500 · 30–45 dias · Houston + CEPs nobres</span>
+Hipótese: captar dúvida inicial (claim/custo) a CPL ≤ US$ 200.<br>
+Semana 0: tracking + 2 páginas; sem tracking, não liga. Semanas 1–2: CPC US$ 15–20/dia, 4 grupos, corte de frios. Semanas 3–4: dobrar no vencedor.<br>
+<b>Corte:</b> CPL replacement &gt; US$ 200 sem SQL em 30 dias → pausa. <b>Escala:</b> ≥1 SQL → US$ 800–1.000.</div>
+</section>
+
+<!-- MIGRAÇÃO -->
+<section id="migracao">
+<div class="s-label"><span class="line"></span><span>Decisão · Migração Google → ChatGPT</span></div>
+<div class="s-title">A migração, <span class="red">faseada e com trava</span></div>
+<p class="s-note">Decisão do estudo: migrar progressivamente a verba de Search para ChatGPT Ads. Migração aqui significa <b>transferência em fases com critério de corte</b> — não desligamento. Motivo frio: o Search captura quem já decidiu (fundo), o ChatGPT captura quem está decidindo (meio). São estoques diferentes de demanda; esvaziar um antes de provar o outro é trocar receita certa por CPL desconhecido. O LSA, canal mais barato, não entra na migração: permanece.</p>
+
+<div class="finding reveal"><h4>Como funciona — em 3 passos</h4>
+<p><b>1. A pessoa conversa.</b> "Meu vizinho trocou o telhado depois do granizo. Como sei se o meu danificou?" — dúvida em linguagem natural, estágio anterior ao Google.<br>
+<b>2. O ChatGPT responde + exibe o cartão.</b> Resposta imparcial e gratuita; abaixo dela, o cartão <i>patrocinado</i> da All Over: inspeção grátis + ajuda com seguro + [Ligar]. Só aparece para adultos, contas gratuitas, temas permitidos (local services), geo Houston por CEP.<br>
+<b>3. O clique vira pedido rastreado.</b> Página dedicada por tema (claim, custo), telefone acima da dobra, pixel + Conversions API + call tracking. Cada dólar é atribuído no CRM — o painel da OpenAI é secundário.</p></div>
+
+<div class="tbl-wrap reveal"><table>
+<tr><th>Dimensão</th><th>Google Search</th><th>ChatGPT Ads</th><th>Implicação da migração</th></tr>
+<tr><td><b>Momento da demanda</b></td><td>Decidido ("telhadista Houston")</td><td>Decidindo ("será que preciso?")</td><td>ChatGPT amplia o topo; não canibaliza o fundo de imediato</td></tr>
+<tr><td><b>Direcionamento</b></td><td>Palavra-chave + lance + geo</td><td><i>Context hints</i> (temas) + lance + geo até CEP</td><td>Operação nova: 4 grupos temáticos, não lista de keywords</td></tr>
+<tr><td><b>Custo do clique</b></td><td class="num">US$ 25–50</td><td class="num">US$ 3–5</td><td>~8× mais barato por clique; conversão é o que falta provar</td></tr>
+<tr><td><b>Concorrência</b></td><td>20 players + agregadores no leilão</td><td>Praticamente vazia em roofing Houston</td><td>Janela de first-mover: CPC baixo enquanto dura</td></tr>
+<tr><td><b>Mensuração</b></td><td>Madura (anos de histórico)</td><td>Nascente (pixel + CAPI; agregado)</td><td>Atribuição própria no CRM é obrigatória, não opcional</td></tr>
+<tr><td><b>Volume</b></td><td>Alto e previsível</td><td>Limitado e sazonal a conversa</td><td>Não comporta 100% da verba no mês 1 — por isso é faseado</td></tr>
+</table></div>
+
+<div class="finding reveal"><h4>Por que estamos prontos — domínio operacional</h4>
+<p>Estrutura pronta para operar em <b>ads.openai.com</b>: 1 campanha CPC → 4 grupos (storm/claim, repair urgente, metal premium, custo) com <i>hints</i> em inglês prontos; 2 páginas dedicadas; pixel + CAPI + UTMs + call tracking; revisão de política (<i>local services</i> permitido; sem <i>health claims</i>, sem imitar o ChatGPT); rotina semanal de corte de temas frios. Playbook completo no anexo técnico. <b>O que falta é só verba de teste e 30 dias de calendário.</b></p></div>
+
+<div class="tbl-wrap reveal"><table>
+<tr><th>Budget mês 1 (mídia)</th><th>Conta aberta</th><th>Resultado esperado</th><th>Veredito</th></tr>
+<tr><td class="num"><b>US$ 750</b> (mínimo, US$ 25/dia)</td><td class="mono">~190 cliques → ~5 pedidos → ~1 SQL</td><td>Aprendizado apenas; sem leitura estatística</td><td><span class="pill p-no">Insuficiente p/ resultado</span></td></tr>
+<tr class="win"><td class="num"><b>US$ 1.500–2.000</b> (recomendado)</td><td class="mono">~400–500 cliques → ~11–15 pedidos → ~3–4 SQLs → ~1 obra</td><td>1 obra de ~US$ 17,5 mil; CAC ~US$ 1,8 mil &lt; margem ~US$ 5,2 mil</td><td><span class="pill p-ok">Satisfatório</span></td></tr>
+<tr><td class="num"><b>US$ 3.000+</b></td><td class="mono">Só após o corte do mês 1</td><td>Escala do tema vencedor</td><td><span class="pill p-warn">Mês 2, se ≥1 SQL</span></td></tr>
+</table></div>
+<p class="src">Premissas declaradas: CPC US$ 4 · conversão clique→pedido 3% · pedido→SQL 30% · SQL→obra 25%. Se a conversão real vier menor, o budget do mês 2 recalcula — a planilha, não a opinião, decide.</p>
+
+<div class="rule reveal"><span class="k">Fases da migração</span>
+<b>Fase 1 (mês 1):</b> ChatGPT com US$ 1,5–2k em paralelo; Search e LSA intactos. <b>Corte:</b> CPL replacement &gt; US$ 200 sem SQL em 30 dias → pausa e verba retorna.<br>
+<b>Fase 2 (mês 2–3):</b> tema vencedor escala a US$ 800–1k+; transfere-se 20–30% do Search non-brand — limitado ao que o ChatGPT provar em CPL.<br>
+<b>Fase 3:</b> migração total do Search non-brand somente se CPL ChatGPT ≤ CPL Search por 60 dias. LSA nunca migra: é o piso de custo.</div>
+</section>
+
+<!-- OKR -->
+<section id="okr">
+<div class="s-label"><span class="line"></span><span>08 · Governança (etapa 6)</span></div>
+<div class="s-title">OKR + <span class="red">cadência</span></div>
+<div class="tbl-wrap reveal"><table>
+<tr><th>Objetivo</th><th>KR (mensurável)</th><th>Dono</th><th>Prazo</th></tr>
+<tr><td><b>O1 — Decidir com dado</b></td><td>100% das ligações com origem verificada; H1–H4 classificadas (causa raiz nomeada)</td><td>Marcos</td><td class="num">15 dias</td></tr>
+<tr><td><b>O2 — CAC de volta ao teto</b></td><td>CAC ≤ US$ 437 (cenário base) por 30 dias; repair×replacement splitados; migração Fase 2 só com CPL ChatGPT ≤ Search</td><td>Equipe</td><td class="num">60 dias</td></tr>
+<tr><td><b>O3 — Paridade de prova</b></td><td>+40 reviews Google; indicação formal ativa; proposta itemizada padrão</td><td>Equipe + Julio</td><td class="num">90 dias</td></tr>
+</table></div>
+<div class="tbl-wrap reveal"><table>
+<tr><th>Semana</th><th>Ação</th><th>Pronto quando</th></tr>
+<tr><td class="num">1–2</td><td>Dossiê de ligações; espionagem top-5; split + reviews</td><td>Causa H1–H4 nomeada; prints arquivados</td></tr>
+<tr><td class="num">3–4</td><td>Testes ChatGPT + Nextdoor + Bing (tracking antes do 1º dólar)</td><td>Hipóteses em teste, não em slide</td></tr>
+<tr><td class="num">4</td><td>Painel 1 página: gasto × pedidos × obras × custo/obra</td><td>Decisão de rota em 5 minutos</td></tr>
+</table></div>
+<details><summary>Fontes e limites ▸</summary>
+<p style="margin-top:10px">SearchLight Q1/26 · LocaliQ 2025 · WebFX 09/26 + SERP 07/26 · BaaDigi · WhatConverts · RC Journey 05/26 + AccuLynx · Verisk 2025 · Insurify 2026 · OpenAI Help Center/Terms/Policies · Digiday/SEJ · chron.com 03/26 · GAF/Owens Corning/BBB/GuildQuality · Meta Ad Library · Google Transparency · TikTok Creative Center · Internos: Planning Q1 + Check-in 08. Limite: benchmarks são médias; CPLs reais só após medição corrigida. Pesos da matriz são julgamento declarado — sensibilidade: inverter custo/volume não move o top-4.</p></details>
+<details><summary>Anexos técnicos (equipe) ▸</summary>
+<p style="margin-top:10px">Seeds: <span class="mono">allover-keywords-seed-2026-09-15.csv</span>. Operação ChatGPT: <span class="mono">allover-gpt-ads-playbook-2026-09-15.md</span>.</p></details>
+</section>
+
+</main>
+
+<footer><div class="wrap">
+<img src="logo-v4-white.png" alt="V4 Company"><span class="fdiv"></span><img src="logo-allover.jpg" alt="All Over" style="border-radius:6px"><span class="fdiv"></span>
+<span class="ft">V4 Company &amp; peretto.co</span>
+<span class="fm">Confidencial · Set 2026 · allover-canais-v5<br>Método antes de verba.</span>
+</div></footer>
+
+<script>
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}}),{threshold:.06});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+document.querySelectorAll('.bar-fill').forEach(b=>{setTimeout(()=>{b.style.width=b.dataset.w+'%';},500);});
+</script>
+</body>
+</html>
