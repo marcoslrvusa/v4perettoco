@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metal Indianápolis | Estratégia SEO Topic Clusters + Pillar Pages | Ubersuggest IA</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --red: rgb(229, 9, 20);
+    --red-dark: rgb(180, 7, 16);
+    --red-light: rgb(255, 60, 70);
+    --gold: #c9a96e;
+    --gold-light: #f5f0e6;
+    --gold-border: #e8dcc8;
+    --gray-50: #fafafa;
+    --gray-100: #f5f5f5;
+    --gray-200: #eeeeee;
+    --gray-300: #e0e0e0;
+    --gray-400: #bdbdbd;
+    --gray-500: #9e9e9e;
+    --gray-600: #757575;
+    --gray-700: #616161;
+    --gray-800: #424242;
+    --gray-900: #212121;
+  }
+
+  body {
+    font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f8f7f4;
+    color: var(--gray-900);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  .cover {
+    background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #2a2a2a 100%);
+    color: #fff;
+    padding: 64px 40px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(201,169,110,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .cover-content { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; }
+  .cover-content::before {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .cover-content::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin: 28px auto 0;
+    border-radius: 1px;
+  }
+  .cover .label {
+    display: inline-block;
+    background: rgba(201,169,110,0.12);
+    border: 1px solid rgba(201,169,110,0.3);
+    padding: 6px 20px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    color: var(--gold);
+  }
+  .cover h1 {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 14px;
+    letter-spacing: -0.5px;
+    font-family: 'Plus Jakarta Sans', serif;
+  }
+  .cover p {
+    font-size: 17px;
+    opacity: 0.85;
+    margin-bottom: 24px;
+    font-weight: 300;
+    letter-spacing: 0.2px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 13px;
+    opacity: 0.7;
+    letter-spacing: 0.5px;
+  }
+
+  .container { max-width: 1020px; margin: -36px auto 48px; position: relative; z-index: 2; }
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+    margin-bottom: 28px;
+    overflow: hidden;
+    border: 1px solid var(--gray-300);
+    position: relative;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 40px;
+    right: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-border), var(--gold), var(--gold-border), transparent);
+    opacity: 0.6;
+  }
+  .card-body { padding: 44px 52px; }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--gold-border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -0.3px;
+    position: relative;
+  }
+  h2::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 1px;
+  }
+  h2 .slide-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--red);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin: 36px 0 18px;
+    letter-spacing: -0.2px;
+  }
+  h4 { font-size: 16px; font-weight: 700; color: var(--gray-800); margin: 22px 0 12px; }
+  p { font-size: 16px; color: var(--gray-700); margin-bottom: 16px; line-height: 1.8; }
+  p:last-child { margin-bottom: 0; }
+
+  .badge {
+    display: inline-block;
+    padding: 5px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .badge-critico { background: #fef2f2; color: var(--red); border: 1px solid #fecaca; }
+  .badge-alto { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+  .badge-medio { background: #fefce8; color: #a16207; border: 1px solid #fef08a; }
+  .badge-baixo { background: var(--gold-light); color: #8b7a4a; border: 1px solid var(--gold-border); }
+  .badge-info { background: #f5f5f5; color: #616161; border: 1px solid #d4d4d4; }
+  .badge-ok { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+  .badge-exec { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+  .badge-pend { background: #f5f5f5; color: #6b7280; border: 1px solid #d1d5db; }
+  .badge-pilar { background: linear-gradient(135deg, #fef2f2, #fff7ed); color: var(--red); border: 1px solid #fecaca; }
+  .badge-hub { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+  .badge-cluster { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+
+  .severity { display: inline-block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .sev-critico { color: var(--red); }
+  .sev-alto { color: #c2410c; }
+  .sev-medio { color: #a16207; }
+  .sev-baixo { color: #8b7a4a; }
+  .sev-info { color: #616161; }
+
+  table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 14px; }
+  th, td { padding: 13px 14px; text-align: left; border-bottom: 1px solid var(--gray-100); vertical-align: top; }
+  th {
+    background: linear-gradient(135deg, var(--gray-50), #f8f7f4);
+    font-weight: 700;
+    color: var(--gray-700);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 2px solid var(--gold-border);
+    position: relative;
+  }
+  tr:hover td { background: #fcfaf7; }
+  tr:last-child td { border-bottom: none; }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .kpi-card {
+    background: #f2f0ec;
+    border-radius: 10px;
+    padding: 20px 12px 18px;
+    text-align: center;
+    border: 1px solid var(--gold-border);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .kpi-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 2px 12px rgba(201,169,110,0.1);
+  }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--red), var(--gold));
+  }
+  .kpi-card .value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--red);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+  .kpi-card .label {
+    font-size: 11px;
+    color: var(--gray-600);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 8px;
+  }
+  .kpi-card .sub { font-size: 11px; color: var(--gray-600); margin-top: 4px; line-height: 1.4; }
+
+  .risk-box {
+    background: linear-gradient(135deg, #fcfaf7, #f8f7f4);
+    border-left: 4px solid var(--red);
+    padding: 22px 26px;
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 18px;
+  }
+  .risk-box h4 { margin: 0 0 10px; color: var(--red); font-size: 16px; letter-spacing: -0.2px; }
+  .risk-box p { font-size: 15px; color: var(--gray-700); margin: 0; line-height: 1.7; }
+
+  .finding {
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 26px 30px;
+    margin-bottom: 18px;
+    background: #fcfcfc;
+    transition: box-shadow 0.2s, border-color 0.2s;
+    border-left: 3px solid transparent;
+  }
+  .finding:hover {
+    box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+    border-color: var(--gold-border);
+    border-left-color: var(--gold);
+  }
+  .finding-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    gap: 12px;
+  }
+  .finding-title { font-weight: 700; font-size: 17px; color: var(--gray-900); letter-spacing: -0.2px; }
+  .finding-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 32px;
+    font-size: 15px;
+  }
+  .finding-grid .field { font-weight: 600; color: var(--gray-800); }
+  .finding-grid .value { color: var(--gray-700); }
+  .finding-grid .full { grid-column: 1 / -1; }
+
+  .bar-container { margin: 22px 0; }
+  .bar-row { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+  .bar-label { width: 160px; font-size: 14px; font-weight: 700; color: var(--gray-700); text-align: right; flex-shrink: 0; letter-spacing: -0.2px; }
+  .bar-track { flex: 1; height: 30px; background: var(--gray-100); border-radius: 6px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding-right: 14px; font-size: 13px; font-weight: 700; color: #fff; letter-spacing: 0.3px; }
+  .bar-fill.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .bar-fill.orange { background: linear-gradient(90deg, #c2410c, #ea580c); }
+  .bar-fill.gold { background: linear-gradient(90deg, #b8963a, #d4b96a); }
+  .bar-fill.gray { background: linear-gradient(90deg, #616161, #9e9e9e); }
+  .bar-fill.green { background: linear-gradient(90deg, #15803d, #22c55e); }
+
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--gray-100);
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 13px;
+    color: var(--red);
+  }
+
+  .glossary-row { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--gray-100); }
+  .glossary-row:last-child { border: none; }
+  .glossary-row span:last-child { font-size: 15px; color: var(--gray-700); }
+
+  .footer {
+    text-align: center;
+    padding: 36px;
+    font-size: 14px;
+    color: var(--gray-500);
+    border-top: 1px solid var(--gold-border);
+    letter-spacing: 0.3px;
+    position: relative;
+  }
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 2px;
+  }
+
+  .slide-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 18px 0 0;
+    justify-content: center;
+  }
+  .slide-nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.9);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .slide-nav a:hover { background: rgba(201,169,110,0.18); border-color: var(--gold); color: #fff; }
+  .slide-nav a span { font-size: 10px; opacity: 0.7; }
+
+  .callout {
+    background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+    color: #fff;
+    border-radius: 12px;
+    padding: 26px 28px;
+    margin: 20px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .callout::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--red), var(--gold)); }
+  .callout h4 { color: var(--gold); margin: 0 0 8px; font-size: 15px; text-transform: uppercase; letter-spacing: 0.6px; }
+  .callout p { color: rgba(255,255,255,0.82); font-size: 15px; line-height: 1.7; margin: 0; }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 1px solid;
+  }
+  .pill-pilar { background: #fef2f2; color: var(--red); border-color: #fecaca; }
+  .pill-hub { background: #fffbeb; color: #92400e; border-color: #fde68a; }
+  .pill-satelite { background: #eff6ff; color: #1e40af; border-color: #bfdbfe; }
+  .pill-alta { background: #fef2f2; color: var(--red); border-color: #fecaca; }
+  .pill-media { background: #fffbeb; color: #92400e; border-color: #fde68a; }
+
+  .arch-diagram {
+    display: grid;
+    grid-template-columns: 1fr 120px 1fr;
+    gap: 0;
+    align-items: center;
+    margin: 22px 0;
+    text-align: center;
+  }
+  .arch-box {
+    border-radius: 12px;
+    padding: 18px 14px;
+    border: 1px solid;
+  }
+  .arch-box.pilar { background: linear-gradient(135deg, #fef2f2, #fff7ed); border-color: #fecaca; }
+  .arch-box.hub { background: linear-gradient(135deg, #fffbeb, #fef3c7); border-color: #fde68a; }
+  .arch-box.cluster { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-color: #bfdbfe; }
+  .arch-arrow { font-size: 22px; color: var(--gold); font-weight: 700; }
+  .arch-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 4px; }
+  .arch-title { font-size: 15px; font-weight: 800; color: var(--gray-900); }
+  .arch-desc { font-size: 12px; color: var(--gray-600); margin-top: 4px; line-height: 1.4; }
+
+  .current-task-box {
+    background: linear-gradient(135deg, #fef2f2 0%, #fffbeb 100%);
+    border: 2px solid var(--gold);
+    border-radius: 14px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .current-task-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--red), var(--gold));
+  }
+  .task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .task-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gray-500);
+    letter-spacing: 0.5px;
+  }
+
+  @media (max-width: 900px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .arch-diagram { grid-template-columns: 1fr; gap: 12px; }
+    .arch-arrow { transform: rotate(90deg); }
+  }
+  @media (max-width: 640px) {
+    .cover h1 { font-size: 26px; }
+    .cover { padding: 40px 20px 32px; }
+    .card-body { padding: 20px; }
+    .finding-grid { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: 1fr 1fr; }
+    table { font-size: 12px; }
+    th, td { padding: 8px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-content">
+    <img src="../assets/logo-peretto.png" alt="Peretto" style="height:60px; width:auto; margin-bottom:28px; opacity:0.95;" onerror="this.style.display='none'">
+    <div class="label">Estrategia SEO | Ubersuggest IA | Setembro 2026</div>
+    <h1>Metal Indianápolis<br>Topic Clusters e Pillar Pages</h1>
+    <p>Arquitetura completa de conteúdo para transformar 2 hubs existentes em um sistema de pilares que concentra autoridade, organiza navegação e captura intenção específica. Leitura consolidada da análise Ubersuggest IA para direcionar a expansão.</p>
+    <div class="cover-meta">
+      <span>• Estratégia de expansão | Fase 2 em execução, Fase 3 planejada</span>
+      <span>• 8 clusters | 4 pillars a criar | 2 hubs a otimizar</span>
+      <span>• Tarefa atual: Malha de links internos entre hubs</span>
+    </div>
+    <div class="slide-nav">
+      <a href="#racional">01 <span>Racional</span></a>
+      <a href="#clusters">02 <span>8 Clusters</span></a>
+      <a href="#gap">03 <span>Gap concorrentes</span></a>
+      <a href="#hubs">04 <span>Hubs existentes</span></a>
+      <a href="#pillars">05 <span>4 Pillars</span></a>
+      <a href="#tabela">06 <span>Tabela estratégica</span></a>
+      <a href="#visao">07 <span>Otimizar vs Criar</span></a>
+      <a href="#malha">08 <span>Malha de links</span></a>
+      <a href="#atual">09 <span>Tarefa atual</span></a>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- 01 RACIONAL -->
+  <div class="card" id="racional">
+    <div class="card-body">
+      <h2><span class="slide-num">01</span> O racional técnico</h2>
+      <p>A estrutura atual da Metal Indianápolis conta com dois <strong>hub pages</strong> que organizam a navegação: <code>guia-ferro-fundido</code> e <code>usinagem-cnc</code>. Esses hubs cumprem o papel de mapa do conteúdo e sustentam a próxima etapa, a criação das <strong>pillar pages</strong> que concentram autoridade nos temas principais.</p>
+
+      <div class="arch-diagram">
+        <div class="arch-box pilar">
+          <div class="arch-label" style="color:var(--red);">Pillar Page</div>
+          <div class="arch-title">Página mais ampla e definitiva</div>
+          <div class="arch-desc">Concentra autoridade no tema mãe. É o destino final de ranking para a keyword principal.</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-box hub">
+          <div class="arch-label" style="color:#92400e;">Hub Page</div>
+          <div class="arch-title">Página organizadora</div>
+          <div class="arch-desc">Distribui navegação e conecta subtemas. Atua como mapa do cluster.</div>
+        </div>
+      </div>
+      <div class="arch-diagram" style="margin-top:0;">
+        <div class="arch-box hub">
+          <div class="arch-label" style="color:#92400e;">Hub Page</div>
+          <div class="arch-title">Organiza e distribui</div>
+          <div class="arch-desc">Liga pilares a conteúdos satélite. Ex: guia-ferro-fundido organiza o técnico.</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-box cluster">
+          <div class="arch-label" style="color:#1e40af;">Cluster Pages</div>
+          <div class="arch-title">Páginas específicas</div>
+          <div class="arch-desc">Focadas em intenção e conversão. Capturam cauda longa e fundo de funil.</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <h4>Síntese executiva da estratégia</h4>
+        <p>A arquitetura combina pilares que concentram autoridade, hubs que organizam a navegação e conteúdos satélite que capturam intenção específica. Dois hubs já estruturam a base da Metal Indianápolis. A próxima etapa completa o sistema com pilares definidos, otimização das páginas existentes e uma malha interna que distribui relevância entre negócio, técnica e conversão.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:12px; margin-top:16px;">
+        <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:16px; text-align:center;">
+          <div style="font-size:28px; font-weight:800; color:#15803d;">4</div>
+          <div style="font-size:11px; font-weight:700; color:var(--gray-600); text-transform:uppercase; letter-spacing:0.5px;">Pillars a criar</div>
+          <div style="font-size:11px; color:var(--gray-600); margin-top:4px;">Páginas mãe que faltam</div>
+        </div>
+        <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:10px; padding:16px; text-align:center;">
+          <div style="font-size:28px; font-weight:800; color:#b45309;">2</div>
+          <div style="font-size:11px; font-weight:700; color:var(--gray-600); text-transform:uppercase; letter-spacing:0.5px;">Hubs existentes</div>
+          <div style="font-size:11px; color:var(--gray-600); margin-top:4px;">A otimizar e conectar</div>
+        </div>
+        <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px; padding:16px; text-align:center;">
+          <div style="font-size:28px; font-weight:800; color:#1e40af;">8</div>
+          <div style="font-size:11px; font-weight:700; color:var(--gray-600); text-transform:uppercase; letter-spacing:0.5px;">Clusters mapeados</div>
+          <div style="font-size:11px; color:var(--gray-600); margin-top:4px;">Cobertura total</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 CLUSTERS -->
+  <div class="card" id="clusters">
+    <div class="card-body">
+      <h2><span class="slide-num">02</span> Estrutura estratégica por clusters | 8 clusters</h2>
+      <p>Organização completa do site em torno de pilares comerciais, técnicos e de nicho defensável. Cada cluster tem keyword principal, apoios, tipo de página e ação definida.</p>
+
+      <div style="overflow-x:auto;">
+      <table>
+        <tr><th>Cluster</th><th>Keyword principal</th><th>Keywords de apoio</th><th>Tipo de página</th><th>Ação no site</th><th>Prioridade</th></tr>
+        <tr>
+          <td><strong>Pilar institucional / comercial</strong></td>
+          <td><code>fundição de ferro fundido</code></td>
+          <td style="font-size:12px;">fundição de peças em ferro fundido; empresa de fundição de ferro fundido; fundição industrial; fundição sob encomenda; soluções em fundição; fundição em São Paulo</td>
+          <td><span class="pill pill-pilar">Pilar</span><br><span style="font-size:11px; color:var(--gray-600);">Homepage + institucional</span></td>
+          <td>Fortalecer homepage e criar página institucional robusta</td>
+          <td><span class="badge badge-critico">Alta</span></td>
+        </tr>
+        <tr>
+          <td><strong>Pilar técnico / materiais</strong></td>
+          <td><code>ferro fundido cinzento</code></td>
+          <td style="font-size:12px;">ferro fundido nodular; GG20; GG25; GGG40; GGG50; diferença cinzento e nodular; propriedades ferro fundido</td>
+          <td><span class="pill pill-pilar">Pilar</span><br><span style="font-size:11px; color:var(--gray-600);">Pilar técnico + satélites</span></td>
+          <td>Expandir conteúdo técnico, comparativos e FAQ</td>
+          <td><span class="badge badge-critico">Alta</span></td>
+        </tr>
+        <tr>
+          <td><strong>Niche defensável</strong></td>
+          <td><code>anel de segmento</code></td>
+          <td style="font-size:12px;">anel de segmento do motor; tipos; para compressor; preço; como especificar; motor diesel</td>
+          <td><span class="pill pill-pilar">Pilar</span><br><span style="font-size:11px; color:var(--gray-600);">Pilar + blog + produto</span></td>
+          <td>Consolidar URL principal e ampliar conteúdo</td>
+          <td><span class="badge badge-critico">Alta</span></td>
+        </tr>
+        <tr>
+          <td><strong>Produtos industriais / compressores</strong></td>
+          <td><code>camisa para compressor</code></td>
+          <td style="font-size:12px;">cabeçote para compressor; peças para compressor; camisa GG25; fabricante peças compressor; preço</td>
+          <td><span class="pill pill-satelite">Produto</span><br><span style="font-size:11px; color:var(--gray-600);">Categoria / produto</span></td>
+          <td>Criar páginas completas por item</td>
+          <td><span class="badge badge-critico">Alta</span></td>
+        </tr>
+        <tr>
+          <td><strong>Construção civil e equipamentos</strong></td>
+          <td><code>rolo de apoio para betoneira</code></td>
+          <td style="font-size:12px;">bucha do rolo; peças bomba concreto; curva bomba; tirante elevador; soquete; placa ancoragem; peças betoneira</td>
+          <td><span class="pill pill-satelite">Produto</span><br><span style="font-size:11px; color:var(--gray-600);">Produto + técnico</span></td>
+          <td>Estruturar páginas por aplicação</td>
+          <td><span class="badge badge-medio">Média</span></td>
+        </tr>
+        <tr>
+          <td><strong>Expansão por aplicação industrial</strong></td>
+          <td><code>peças agrícolas em ferro fundido</code></td>
+          <td style="font-size:12px;">peças tratores; fabricante peças automotivas; fábrica de roldanas; roldana industrial; indústria vidreira</td>
+          <td><span class="pill pill-satelite">Cluster</span><br><span style="font-size:11px; color:var(--gray-600);">Expansão</span></td>
+          <td>Criar páginas por vertical</td>
+          <td><span class="badge badge-medio">Média</span></td>
+        </tr>
+        <tr>
+          <td><strong>Customização / sob desenho</strong></td>
+          <td><code>usinagem CNC ferro fundido</code></td>
+          <td style="font-size:12px;">peças sob medida; sob desenho; sob encomenda; terceirização usinagem; precisão industrial; desenvolvimento peças fundidas</td>
+          <td><span class="pill pill-pilar">Pilar</span><br><span style="font-size:11px; color:var(--gray-600);">Landing alto ticket</span></td>
+          <td>Criar página de projeto e engenharia</td>
+          <td><span class="badge badge-critico">Alta</span></td>
+        </tr>
+        <tr>
+          <td><strong>Fundo de funil B2B / geográfico</strong></td>
+          <td><code>fabricante de peças em ferro fundido</code></td>
+          <td style="font-size:12px;">fornecedor; fábrica; cotar; orçamento; preço kg; sob encomenda; SP</td>
+          <td><span class="pill pill-pilar">Pilar</span><br><span style="font-size:11px; color:var(--gray-600);">Comercial / conversão</span></td>
+          <td>Criar páginas fortes de lead e orçamento</td>
+          <td><span class="badge badge-critico">Alta</span></td>
+        </tr>
+      </table>
+      </div>
+
+      <h3>Leitura executiva da estratégia</h3>
+      <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:14px;">
+        <div style="background: linear-gradient(135deg, #f0fdf4, #dcfce7); border:1px solid #bbf7d0; border-radius:10px; padding:18px;">
+          <div style="font-size:12px; font-weight:700; color:#15803d; text-transform:uppercase; letter-spacing:0.5px;">O que manter e fortalecer</div>
+          <ul style="margin-top:8px; font-size:13px; color:var(--gray-700); padding-left:16px; line-height:1.6;">
+            <li>Homepage e página institucional como base comercial</li>
+            <li><code>/aneis-segmento</code> como pilar de nicho</li>
+            <li><code>/produto/fundicao-ferro-fundido/</code> como conversão principal</li>
+            <li>Conteúdo técnico de ferro fundido como autoridade</li>
+          </ul>
+        </div>
+        <div style="background: linear-gradient(135deg, #fffbeb, #fef3c7); border:1px solid #fde68a; border-radius:10px; padding:18px;">
+          <div style="font-size:12px; font-weight:700; color:#92400e; text-transform:uppercase; letter-spacing:0.5px;">O que consolidar</div>
+          <ul style="margin-top:8px; font-size:13px; color:var(--gray-700); padding-left:16px; line-height:1.6;">
+            <li>Páginas parecidas sobre anéis de segmento</li>
+            <li>Conteúdos sobre fundição com intenção próxima</li>
+            <li>URLs com pouca autoridade que podem virar satélites</li>
+          </ul>
+        </div>
+        <div style="background: linear-gradient(135deg, #eff6ff, #dbeafe); border:1px solid #bfdbfe; border-radius:10px; padding:18px;">
+          <div style="font-size:12px; font-weight:700; color:#1e40af; text-transform:uppercase; letter-spacing:0.5px;">O que criar</div>
+          <ul style="margin-top:8px; font-size:13px; color:var(--gray-700); padding-left:16px; line-height:1.6;">
+            <li>Página institucional robusta</li>
+            <li>Pilar técnico cinzento e nodular</li>
+            <li>Landings comerciais e de orçamento</li>
+            <li>Páginas por aplicação e por setor</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 GAP -->
+  <div class="card" id="gap">
+    <div class="card-body">
+      <h2><span class="slide-num">03</span> Gap de concorrentes orgânicos | com dados das keywords</h2>
+      <p>Análise Ubersuggest IA mapeou onde concorrentes ganham tráfego que a Metal ainda não captura. Volume, CPC, SD (SEO Difficulty), PD (Paid Difficulty) e competição.</p>
+
+      <div style="overflow-x:auto;">
+      <table>
+        <tr><th>Concorrente</th><th>Keyword</th><th>Volume</th><th>CPC</th><th>SD</th><th>PD</th><th>Competição</th></tr>
+        <tr><td>favfundicao.ind.br</td><td>fundição de ferro fundido em curitiba</td><td>20</td><td>0.48</td><td>22</td><td>54</td><td>0.54</td></tr>
+        <tr><td>favfundicao.ind.br</td><td>fundição de ferro fundido no rio grande do sul</td><td>10</td><td>0</td><td>21</td><td>52</td><td>0.52</td></tr>
+        <tr><td>favfundicao.ind.br</td><td>forno para fundição de ferro fundido</td><td>10</td><td>0</td><td>21</td><td>50</td><td>0.50</td></tr>
+        <tr><td>favfundicao.ind.br</td><td>fundição de ferro fundido cinzento</td><td>10</td><td>0</td><td>5</td><td>1</td><td>0.00</td></tr>
+        <tr><td>favfundicao.ind.br</td><td>fundição de ferro fundido em santa catarina</td><td>10</td><td>0.31</td><td>17</td><td>38</td><td>0.38</td></tr>
+        <tr><td>favfundicao.ind.br</td><td>processo de fundição de ferro fundido</td><td>10</td><td>0</td><td>5</td><td>1</td><td>0.00</td></tr>
+        <tr><td>fundicaoomil.com.br</td><td>fundição de ferro fundido em minas gerais</td><td>90</td><td>0.70</td><td>24</td><td>62</td><td>0.62</td></tr>
+        <tr><td>fundicaoomil.com.br</td><td>fundição de ferro fundido em cláudio minas gerais</td><td>70</td><td>0.35</td><td>27</td><td>71</td><td>0.71</td></tr>
+        <tr><td>fundicaoomil.com.br</td><td>empresa de fundição de ferro fundido</td><td>20</td><td>0.71</td><td>28</td><td>74</td><td>0.74</td></tr>
+        <tr><td>fundicaoomil.com.br</td><td>fundição de ferro fundido em curitiba</td><td>20</td><td>0.48</td><td>22</td><td>54</td><td>0.54</td></tr>
+        <tr><td>fundicaoomil.com.br</td><td>fundição de ferro fundido no rio grande do sul</td><td>10</td><td>0</td><td>21</td><td>52</td><td>0.52</td></tr>
+        <tr><td>fundicaoomil.com.br</td><td>forno para fundição de ferro fundido</td><td>10</td><td>0</td><td>21</td><td>50</td><td>0.50</td></tr>
+        <tr><td>fundicaoomil.com.br</td><td>fundição de ferro fundido cinzento</td><td>10</td><td>0</td><td>5</td><td>1</td><td>0.00</td></tr>
+        <tr><td>fundicaoomil.com.br</td><td>fundição de ferro fundido em santa catarina</td><td>10</td><td>0.31</td><td>17</td><td>38</td><td>0.38</td></tr>
+        <tr><td>fundicaoomil.com.br</td><td>fundição de ferro fundido no rio de janeiro</td><td>10</td><td>0</td><td>25</td><td>64</td><td>0.64</td></tr>
+        <tr><td>fundicaoomil.com.br</td><td>processo de fundição de ferro fundido</td><td>10</td><td>0</td><td>5</td><td>1</td><td>0.00</td></tr>
+        <tr><td>poliasriodoce.com.br</td><td>fundição de ferro fundido em minas gerais</td><td>90</td><td>0.70</td><td>24</td><td>62</td><td>0.62</td></tr>
+        <tr><td>poliasriodoce.com.br</td><td>fundição de ferro fundido em cláudio minas gerais</td><td>70</td><td>0.35</td><td>27</td><td>71</td><td>0.71</td></tr>
+        <tr><td>poliasriodoce.com.br</td><td>fundição de ferro fundido em são paulo</td><td>50</td><td>0.70</td><td>30</td><td>80</td><td>0.80</td></tr>
+        <tr><td>poliasriodoce.com.br</td><td>empresa de fundição de ferro fundido</td><td>20</td><td>0.71</td><td>28</td><td>74</td><td>0.74</td></tr>
+        <tr><td>poliasriodoce.com.br</td><td>fundição de ferro fundido em curitiba</td><td>20</td><td>0.48</td><td>22</td><td>54</td><td>0.54</td></tr>
+        <tr><td>poliasriodoce.com.br</td><td>fundição de ferro fundido no rio grande do sul</td><td>10</td><td>0</td><td>21</td><td>52</td><td>0.52</td></tr>
+        <tr><td>poliasriodoce.com.br</td><td>forno para fundição de ferro fundido</td><td>10</td><td>0</td><td>21</td><td>50</td><td>0.50</td></tr>
+        <tr><td>poliasriodoce.com.br</td><td>fundição de ferro fundido cinzento</td><td>10</td><td>0</td><td>5</td><td>1</td><td>0.00</td></tr>
+        <tr><td>poliasriodoce.com.br</td><td>fundição de ferro fundido em santa catarina</td><td>10</td><td>0.31</td><td>17</td><td>38</td><td>0.38</td></tr>
+        <tr><td>poliasriodoce.com.br</td><td>fundição de ferro fundido no rio de janeiro</td><td>10</td><td>0</td><td>25</td><td>64</td><td>0.64</td></tr>
+        <tr><td>poliasriodoce.com.br</td><td>processo de fundição de ferro fundido</td><td>10</td><td>0</td><td>5</td><td>1</td><td>0.00</td></tr>
+      </table>
+      </div>
+
+      <h3>O que o gap mostra</h3>
+      <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:12px;">
+        <div style="background: linear-gradient(135deg, #fef2f2, #fff7ed); border:1px solid #fecaca; border-radius:10px; padding:18px;">
+          <div style="font-size:12px; font-weight:700; color:var(--red); text-transform:uppercase; letter-spacing:0.5px;">Termos institucionais e comerciais</div>
+          <p style="font-size:13px; margin-top:8px; color:var(--gray-700);">empresa de fundição de ferro fundido e fundição de ferro fundido com volume consistente e SD baixo a médio. Concorrentes ranqueiam por geografia, a Metal pode centralizar com pilar institucional forte.</p>
+          <div style="margin-top:10px;"><span class="badge badge-critico">Maior oportunidade</span></div>
+        </div>
+        <div style="background: linear-gradient(135deg, #eff6ff, #dbeafe); border:1px solid #bfdbfe; border-radius:10px; padding:18px;">
+          <div style="font-size:12px; font-weight:700; color:#1e40af; text-transform:uppercase; letter-spacing:0.5px;">Termos técnicos de processo</div>
+          <p style="font-size:13px; margin-top:8px; color:var(--gray-700);">processo de fundição e forno para fundição com SD 5, competição 0.00. Conteúdo educacional com barreira quase zero.</p>
+          <div style="margin-top:10px;"><span class="badge badge-info">SD 5 | Oportunidade rápida</span></div>
+        </div>
+        <div style="background: linear-gradient(135deg, #fffbeb, #fef3c7); border:1px solid #fde68a; border-radius:10px; padding:18px;">
+          <div style="font-size:12px; font-weight:700; color:#92400e; text-transform:uppercase; letter-spacing:0.5px;">Termos geográficos</div>
+          <p style="font-size:13px; margin-top:8px; color:var(--gray-700);">Minas Gerais com 90 de volume, São Paulo com 50, Curitiba, Santa Catarina e Rio. Estratégia de páginas geográficas se fizer sentido operacional e de frete.</p>
+          <div style="margin-top:10px;"><span class="badge badge-medio">Volume 90 em MG</span></div>
+        </div>
+      </div>
+
+      <div class="risk-box" style="border-left-color: var(--gold);">
+        <h4 style="color:#8b7a4a;">Interpretação prática</h4>
+        <p>Esses termos confirmam que a estratégia não deve ficar restrita ao portfólio atual. Há espaço para criar páginas de intenção comercial, criar páginas geográficas se fizer sentido operacional e desenvolver conteúdo de processo para capturar demanda educacional que sustenta a autoridade da marca. É exatamente o que os 4 pillars propostos resolvem.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 HUBS -->
+  <div class="card" id="hubs">
+    <div class="card-body">
+      <h2><span class="slide-num">04</span> Diagnóstico dos hubs existentes</h2>
+      <p>Os dois hubs já funcionam como modelo, mas precisam evoluir para conectar pilares e satélites. Avaliação do papel estratégico e do que otimizar em cada um.</p>
+
+      <div class="finding" style="border-left-color: var(--gold);">
+        <div class="finding-header">
+          <div><span class="finding-title">A: <code>guia-ferro-fundido/</code></span> <span class="pill pill-hub" style="margin-left:8px;">Hub técnico</span></div>
+          <div><span class="badge badge-medio">Otimizar e conectar</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Papel estratégico:</span> <span class="value">Organiza o cluster técnico, apoia o pilar institucional e comercial, conecta materiais, processos, aplicações e comparativos. Deve ser o mapa técnico do tema, mas não o destino final.</span></div>
+          <div class="full"><span class="field">O que otimizar:</span>
+            <span class="value">
+              <ul style="margin-top:6px; padding-left:18px; line-height:1.7;">
+                <li>Expandir para cobrir <strong>ferro fundido cinzento, nodular, propriedades, diferença cinzento e nodular, processo de fundição</strong></li>
+                <li>Adicionar blocos com links para páginas pilar e para conteúdos satélite</li>
+                <li>Inserir sumário navegável, FAQs, comparativos e CTAs de orçamento</li>
+              </ul>
+            </span>
+          </div>
+          <div class="full"><span class="field">Para onde deve apontar:</span> <span class="value"><code>/fundicao-de-ferro-fundido/</code> (pilar comercial) e <code>/ferro-fundido-cinzento-nodular/</code> (pilar de materiais), além de artigos satélite de processos e aplicações.</span></div>
+        </div>
+      </div>
+
+      <div class="finding" style="border-left-color: var(--gold);">
+        <div class="finding-header">
+          <div><span class="finding-title">B: <code>usinagem-cnc/</code></span> <span class="pill pill-hub" style="margin-left:8px;">Hub de engenharia</span></div>
+          <div><span class="badge badge-medio">Otimizar e conectar</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Papel estratégico:</span> <span class="value">Estrutura o cluster de engenharia, liga usinagem, peça sob desenho, desenvolvimento e terceirização. Serve como porta de entrada para lead B2B de alto ticket.</span></div>
+          <div class="full"><span class="field">O que otimizar:</span>
+            <span class="value">
+              <ul style="margin-top:6px; padding-left:18px; line-height:1.7;">
+                <li>Ampliar para incluir <strong>usinagem CNC ferro fundido, usinagem de precisão industrial, peças usinadas sob medida, fabricação sob encomenda, desenvolvimento de peças fundidas</strong></li>
+                <li>Criar blocos de aplicação por setor (agrícola, automotivo, vidreiro, construção)</li>
+                <li>Adicionar CTA de orçamento e prova técnica com cases</li>
+              </ul>
+            </span>
+          </div>
+          <div class="full"><span class="field">Para onde deve apontar:</span> <span class="value"><code>/usinagem-cnc-ferro-fundido/</code> (pilar de customização) e páginas de peças sob desenho.</span></div>
+        </div>
+      </div>
+
+      <div style="background: var(--gold-light); border:1px solid var(--gold-border); border-radius:10px; padding:16px 20px; margin-top:10px;">
+        <p style="margin:0; font-size:14px; color:var(--gray-700);"><strong style="color:var(--gray-900);">Conclusão:</strong> esses hubs são a base organizacional. Otimizados corretamente, eles viram distribuidores de autoridade. Sem pills e sem malha interna, porém, eles dispersam tráfego. Por isso a tarefa atual de malha de links é o conector que transforma dois hubs isolados em um sistema.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 PILLARS -->
+  <div class="card" id="pillars">
+    <div class="card-body">
+      <h2><span class="slide-num">05</span> O que precisa ser criado | 4 pillar pages</h2>
+      <p>A estratégia ficou concentrada nos clusters, mas faltaram as pillars que sustentam todo o sistema. Essas são as 4 páginas mãe que ainda não existem e que precisam ancorar os clusters.</p>
+
+      <div class="finding" style="border-left-color: var(--red); background: linear-gradient(135deg, #fef2f2, #fff);">
+        <div class="finding-header">
+          <div><span class="finding-title">01. Pillar institucional / comercial</span> <span class="pill pill-pilar">A criar</span></div>
+          <div><span class="badge badge-critico">Transacional</span></div>
+        </div>
+        <div class="finding-grid">
+          <div><span class="field">Keyword foco:</span> <span class="value"><code>fundição de ferro fundido</code></span></div>
+          <div><span class="field">Volume:</span> <span class="value"><strong>210</strong></span></div>
+          <div class="full"><span class="field">Por que criar:</span> <span class="value">é a página central de negócio, onde a empresa se apresenta como fornecedora e captura demanda de fundo de funil. Sem ela, o site compete com páginas satélite fragmentadas.</span></div>
+          <div class="full"><span class="field">Apoios principais:</span> <span class="value">empresa de fundição de ferro fundido; fundição industrial; fundição sob encomenda; soluções em fundição; fundição em São Paulo</span></div>
+          <div><span class="field">Volume total de apoio:</span> <span class="value">20+ (estratégico por intenção)</span></div>
+          <div><span class="field">URL sugerida:</span> <span class="value"><code>/fundicao-de-ferro-fundido/</code></span></div>
+        </div>
+      </div>
+
+      <div class="finding" style="border-left-color: var(--red); background: linear-gradient(135deg, #fef2f2, #fff);">
+        <div class="finding-header">
+          <div><span class="finding-title">02. Pillar técnico de materiais</span> <span class="pill pill-pilar">A criar</span></div>
+          <div><span class="badge badge-info">Informacional</span></div>
+        </div>
+        <div class="finding-grid">
+          <div><span class="field">Keyword foco:</span> <span class="value"><code>ferro fundido cinzento</code></span></div>
+          <div><span class="field">Volume:</span> <span class="value"><strong>590</strong></span></div>
+          <div class="full"><span class="field">Por que criar:</span> <span class="value">é o pilar de autoridade técnica que sustenta todo o cluster de materiais. Sem ele, comparativos GG20, GG25, GGG40 e GGG50 ficam órfãos.</span></div>
+          <div class="full"><span class="field">Apoios principais:</span> <span class="value">ferro fundido nodular; diferença ferro cinzento e nodular; propriedades ferro fundido; GG20; GG25; GGG40; GGG50</span></div>
+          <div><span class="field">Volume total de apoio:</span> <span class="value">0+ cauda longa, alto potencial</span></div>
+          <div><span class="field">URL sugerida:</span> <span class="value"><code>/ferro-fundido-cinzento-nodular/</code></span></div>
+        </div>
+      </div>
+
+      <div class="finding" style="border-left-color: var(--red); background: linear-gradient(135deg, #fef2f2, #fff);">
+        <div class="finding-header">
+          <div><span class="finding-title">03. Pillar de nicho defensável</span> <span class="pill pill-pilar">A criar</span></div>
+          <div><span class="badge badge-critico">Transacional</span></div>
+        </div>
+        <div class="finding-grid">
+          <div><span class="field">Keyword foco:</span> <span class="value"><code>anel de segmento</code></span></div>
+          <div><span class="field">Volume:</span> <span class="value"><strong>2400</strong></span></div>
+          <div class="full"><span class="field">Por que criar:</span> <span class="value">já existe tração real, então vale consolidar um pilar forte para dominar o nicho. Volume mais alto entre todos os clusters.</span></div>
+          <div class="full"><span class="field">Apoios principais:</span> <span class="value">anel de segmento do motor; para compressor; preço; tipos; como especificar</span></div>
+          <div><span class="field">Volume total de apoio:</span> <span class="value">500+ considerando principais termos</span></div>
+          <div><span class="field">URL sugerida:</span> <span class="value"><code>/aneis-de-segmento/</code></span></div>
+        </div>
+      </div>
+
+      <div class="finding" style="border-left-color: var(--red); background: linear-gradient(135deg, #fef2f2, #fff);">
+        <div class="finding-header">
+          <div><span class="finding-title">04. Pillar de customização / engenharia</span> <span class="pill pill-pilar">A criar</span></div>
+          <div><span class="badge badge-critico">Comercial</span></div>
+        </div>
+        <div class="finding-grid">
+          <div><span class="field">Keyword foco:</span> <span class="value"><code>usinagem CNC ferro fundido</code></span></div>
+          <div><span class="field">Volume:</span> <span class="value">estratégico (não medido direto)</span></div>
+          <div class="full"><span class="field">Por que criar:</span> <span class="value">é um pilar de alto valor B2B, focado em projeto, customização e ticket maior. Captura terceirização de usinagem e desenvolvimento sob desenho.</span></div>
+          <div class="full"><span class="field">Apoios principais:</span> <span class="value">peças usinadas sob medida; peças em ferro fundido sob desenho; fabricação sob encomenda; terceirização de usinagem; usinagem de precisão industrial; desenvolvimento de peças fundidas</span></div>
+          <div><span class="field">Volume total de apoio:</span> <span class="value">estratégico, não só volume</span></div>
+          <div><span class="field">URL sugerida:</span> <span class="value"><code>/usinagem-cnc-ferro-fundido/</code></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 06 TABELA ESTRATEGICA -->
+  <div class="card" id="tabela">
+    <div class="card-body">
+      <h2><span class="slide-num">06</span> Tabela estratégica | Volume, intenção e volume de apoio</h2>
+      <p>Consolidação para priorização. Pilares a criar e hubs a otimizar na mesma visão.</p>
+
+      <div style="overflow-x:auto;">
+      <table>
+        <tr><th>Tipo</th><th>Cluster</th><th>Keyword foco</th><th>Volume</th><th>Intenção</th><th>Keywords de apoio</th><th>Volume apoio</th><th>Ação</th><th>URL sugerida</th></tr>
+        <tr>
+          <td><span class="pill pill-pilar">Pilar a criar</span></td>
+          <td>Institucional / comercial</td>
+          <td><code>fundição de ferro fundido</code></td>
+          <td><strong>210</strong></td>
+          <td>Transacional / Comercial</td>
+          <td style="font-size:11px;">empresa de fundição; fundição industrial; sob encomenda; soluções; SP</td>
+          <td>20+</td>
+          <td><span class="badge badge-critico">Criar</span></td>
+          <td><code>/fundicao-de-ferro-fundido/</code></td>
+        </tr>
+        <tr>
+          <td><span class="pill pill-pilar">Pilar a criar</span></td>
+          <td>Materiais</td>
+          <td><code>ferro fundido cinzento</code></td>
+          <td><strong>590</strong></td>
+          <td>Informacional</td>
+          <td style="font-size:11px;">nodular; diferença; propriedades; GG20; GG25; GGG40; GGG50</td>
+          <td>0+</td>
+          <td><span class="badge badge-critico">Criar</span></td>
+          <td><code>/ferro-fundido-cinzento-nodular/</code></td>
+        </tr>
+        <tr>
+          <td><span class="pill pill-pilar">Pilar a criar</span></td>
+          <td>Nicho defensável</td>
+          <td><code>anel de segmento</code></td>
+          <td><strong>2400</strong></td>
+          <td>Transacional</td>
+          <td style="font-size:11px;">motor; compressor; preço; tipos; como especificar</td>
+          <td>500+</td>
+          <td><span class="badge badge-critico">Criar</span></td>
+          <td><code>/aneis-de-segmento/</code></td>
+        </tr>
+        <tr>
+          <td><span class="pill pill-pilar">Pilar a criar</span></td>
+          <td>Customização</td>
+          <td><code>usinagem CNC ferro fundido</code></td>
+          <td>estratégico</td>
+          <td>Comercial</td>
+          <td style="font-size:11px;">sob medida; sob desenho; sob encomenda; terceirização; precisão</td>
+          <td>estratégico</td>
+          <td><span class="badge badge-critico">Criar</span></td>
+          <td><code>/usinagem-cnc-ferro-fundido/</code></td>
+        </tr>
+        <tr>
+          <td><span class="pill pill-hub">Hub existente</span></td>
+          <td>Ferro fundido</td>
+          <td><code>guia ferro fundido</code></td>
+          <td>,</td>
+          <td>Informacional</td>
+          <td style="font-size:11px;">cinzento; nodular; propriedades; processos</td>
+          <td>,</td>
+          <td><span class="badge badge-medio">Otimizar</span></td>
+          <td><code>/guia-ferro-fundido/</code></td>
+        </tr>
+        <tr>
+          <td><span class="pill pill-hub">Hub existente</span></td>
+          <td>Engenharia</td>
+          <td><code>usinagem CNC</code></td>
+          <td>,</td>
+          <td>Comercial</td>
+          <td style="font-size:11px;">CNC ferro fundido; sob medida; desenvolvimento</td>
+          <td>,</td>
+          <td><span class="badge badge-medio">Otimizar</span></td>
+          <td><code>/usinagem-cnc/</code></td>
+        </tr>
+      </table>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin-top:16px;">
+        <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:10px; padding:16px;">
+          <div style="font-size:12px; font-weight:700; color:var(--red); text-transform:uppercase; letter-spacing:0.5px;">Prioridade absoluta</div>
+          <p style="font-size:14px; margin-top:6px;">Anel de segmento com volume 2400 e ferro fundido cinzento com 590 são os que mais rapidamente escalam tráfego qualificado. Fundição de ferro fundido com 210 garante conversão.</p>
+        </div>
+        <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:10px; padding:16px;">
+          <div style="font-size:12px; font-weight:700; color:#92400e; text-transform:uppercase; letter-spacing:0.5px;">Alta conversão B2B</div>
+          <p style="font-size:14px; margin-top:6px;">Usinagem CNC ferro fundido não tem volume direto alto, mas concentra ticket maior e intenção de projeto sob desenho. É a landing de alto valor.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 07 VISAO SEPARADA -->
+  <div class="card" id="visao">
+    <div class="card-body">
+      <h2><span class="slide-num">07</span> Visão separada | Otimizações vs novas criações</h2>
+      <p>Separação clara entre o que já existe e precisa ser corrigido e o que ainda precisa nascer para a arquitetura ficar completa.</p>
+
+      <h3>A) Páginas existentes para otimizar</h3>
+      <table>
+        <tr><th>Página atual</th><th>Papel</th><th>O que fazer</th><th>Para qual pillar deve apontar</th></tr>
+        <tr>
+          <td><code>/guia-ferro-fundido/</code></td>
+          <td>Hub técnico</td>
+          <td>Ampliar, estruturar sumário, FAQ, links internos, blocos comparativos</td>
+          <td>ferro fundido cinzento e institucional</td>
+        </tr>
+        <tr>
+          <td><code>/usinagem-cnc/</code></td>
+          <td>Hub comercial</td>
+          <td>Ampliar, incluir casos de uso, CTA, blocos por setor</td>
+          <td>usinagem CNC ferro fundido</td>
+        </tr>
+        <tr>
+          <td><code>/aneis-segmento</code></td>
+          <td>Página que já traz tráfego</td>
+          <td>Consolidar como cluster principal de nicho</td>
+          <td>anel de segmento</td>
+        </tr>
+        <tr>
+          <td><code>/produto/fundicao-ferro-fundido/</code></td>
+          <td>Página comercial importante</td>
+          <td>Enriquecer com prova técnica e autoridade</td>
+          <td>fundição de ferro fundido</td>
+        </tr>
+        <tr>
+          <td><code>/fundicao-de-ferro-cinzento-e-nodular/</code></td>
+          <td>Página técnica</td>
+          <td>Transformar em conteúdo pilar técnico ou satélite forte</td>
+          <td>ferro fundido cinzento e nodular</td>
+        </tr>
+      </table>
+
+      <h3>B) Páginas pilares que precisam ser criadas</h3>
+      <table>
+        <tr><th>Pilar</th><th>Motivo</th><th>Função</th><th>Prioridade</th></tr>
+        <tr>
+          <td><strong>Fundição de ferro fundido</strong></td>
+          <td>é a página mãe comercial da operação</td>
+          <td>Capturar fundo de funil e organizar serviços</td>
+          <td><span class="badge badge-critico">Alta</span></td>
+        </tr>
+        <tr>
+          <td><strong>Ferro fundido cinzento e nodular</strong></td>
+          <td>é a base técnica do tema</td>
+          <td>Concentrar autoridade e sustentar cluster de materiais</td>
+          <td><span class="badge badge-critico">Alta</span></td>
+        </tr>
+        <tr>
+          <td><strong>Anel de segmento</strong></td>
+          <td>já existe tração e volume alto (2400)</td>
+          <td>Dominar o nicho e distribuir para satélites</td>
+          <td><span class="badge badge-critico">Alta</span></td>
+        </tr>
+        <tr>
+          <td><strong>Usinagem CNC ferro fundido</strong></td>
+          <td>alto ticket e estratégia B2B</td>
+          <td>Captar projeto, engenharia e customização</td>
+          <td><span class="badge badge-critico">Alta</span></td>
+        </tr>
+      </table>
+
+      <div style="margin-top:16px; background: linear-gradient(135deg, #f0fdf4, #dcfce7); border:1px solid #bbf7d0; border-radius:10px; padding:18px;">
+        <div style="font-size:12px; font-weight:700; color:#15803d; text-transform:uppercase; letter-spacing:0.5px;">Ordem de prioridade recomendada</div>
+        <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;">
+          <span class="pill" style="background:var(--red); color:#fff; border-color:var(--red);">1. Anel de segmento</span>
+          <span class="pill" style="background:var(--red); color:#fff; border-color:var(--red);">2. Ferro fundido cinzento x nodular</span>
+          <span class="pill" style="background:var(--red); color:#fff; border-color:var(--red);">3. Fundição de ferro fundido</span>
+          <span class="pill" style="background:#fff; color:var(--gray-700); border-color:var(--gray-300);">4. Produtos atuais</span>
+          <span class="pill" style="background:#fff; color:var(--gray-700); border-color:var(--gray-300);">5. Customização sob desenho</span>
+          <span class="pill" style="background:#fff; color:var(--gray-700); border-color:var(--gray-300);">6. Fundo de funil B2B</span>
+          <span class="pill" style="background:#fff; color:var(--gray-700); border-color:var(--gray-300);">7. Expansão por setor</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 08 MALHA -->
+  <div class="card" id="malha">
+    <div class="card-body">
+      <h2><span class="slide-num">08</span> Malha de links internos que precisa existir</h2>
+      <p>Arquitetura de links que distribui autoridade entre negócio, técnica e conversão. Esta é a espinha dorsal da estratégia de clusters. Sem ela, pillars e hubs ficam isolados.</p>
+
+      <table>
+        <tr><th style="width:28%;">Origem</th><th style="width:28%;">Linkar para</th><th>Objetivo</th></tr>
+        <tr><td><code>/guia-ferro-fundido/</code></td><td><code>/fundicao-de-ferro-fundido/</code></td><td>Empurrar autoridade editorial para o pilar comercial</td></tr>
+        <tr><td><code>/guia-ferro-fundido/</code></td><td><code>/ferro-fundido-cinzento-nodular/</code></td><td>Conectar o hub técnico ao pilar de materiais</td></tr>
+        <tr><td><code>/guia-ferro-fundido/</code></td><td>Artigos satélite de processos e aplicações</td><td>Ampliar cobertura temática e cauda longa</td></tr>
+        <tr><td><code>/usinagem-cnc/</code></td><td><code>/usinagem-cnc-ferro-fundido/</code></td><td>Converter hub em entrada para alto ticket</td></tr>
+        <tr><td><code>/usinagem-cnc/</code></td><td>Páginas de peças sob desenho</td><td>Aprofundar intenção comercial e prova técnica</td></tr>
+        <tr style="background: linear-gradient(135deg, #fef2f2, #fffbeb); border: 2px solid var(--gold);">
+          <td><strong><code>/aneis-segmento</code></strong></td><td>Páginas de apoio: motor, compressor, preço, tipos</td><td><strong>Ampliar cluster defensável e reduzir canibalização</strong></td>
+        </tr>
+        <tr><td><code>/fundicao-de-ferro-fundido/</code></td><td>Produtos e páginas de setores</td><td>Distribuir autoridade e gerar conversão</td></tr>
+        <tr><td><code>/fundicao-de-ferro-cinzento-e-nodular/</code></td><td><code>/fundicao-de-ferro-fundido/</code> e <code>/guia-ferro-fundido/</code></td><td>Conectar técnico ao comercial</td></tr>
+        <tr><td><code>/produto/fundicao-ferro-fundido/</code></td><td>Cases, aplicações, materiais, FAQ</td><td>Aumentar confiança e relevância</td></tr>
+        <tr><td>Páginas satélite</td><td>Pillars correspondentes</td><td>Consolidar autoridade por tema e concentrar ranking</td></tr>
+      </table>
+
+      <div style="margin-top:16px; border:1px solid var(--gold-border); border-radius:10px; overflow:hidden;">
+        <div style="background:linear-gradient(135deg, #0d0d0d, #1a1a1a); color:#fff; padding:14px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px;">
+          <div>
+            <div style="font-size:11px; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:0.6px;">Como a malha será implementada</div>
+            <div style="font-size:14px; font-weight:700; margin-top:4px;">Blocos de links contextuais + navegação de cluster + breadcrumbs com schema</div>
+          </div>
+          <div style="width:36px; height:36px; border-radius:50%; background:var(--gold); display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0;">🔗</div>
+        </div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:0; font-size:13px; text-align:center;">
+          <div style="padding:16px; border-right:1px solid var(--gray-200);">
+            <div style="font-weight:800; color:var(--red);">Links contextuais</div>
+            <div style="color:var(--gray-600); margin-top:4px; font-size:12px;">Dentro do texto, ancoragem semântica com keyword exata e variação</div>
+          </div>
+          <div style="padding:16px; border-right:1px solid var(--gray-200);">
+            <div style="font-weight:800; color:var(--red);">Blocos de navegação</div>
+            <div style="color:var(--gray-600); margin-top:4px; font-size:12px;">Cards ao final do hub listando satélites e pilar correspondente</div>
+          </div>
+          <div style="padding:16px;">
+            <div style="font-weight:800; color:var(--red);">Breadcrumbs + schema</div>
+            <div style="color:var(--gray-600); margin-top:4px; font-size:12px;">BreadcrumbList JSON LD reforçando hierarquia para o Google</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 09 TAREFA ATUAL -->
+  <div class="card" id="atual">
+    <div class="card-body">
+      <h2><span class="slide-num">09</span> Tarefa atual em destaque | Onde estamos agora</h2>
+
+      <div class="current-task-box">
+        <div class="task-header">
+          <div>
+            <div class="task-id">PROJETO 309016 | TAREFA 9693100 | FASE 2 | 4,0h ESTIMADAS</div>
+            <div style="font-size:22px; font-weight:800; color:var(--gray-900); margin-top:6px; line-height:1.2;">Malha de links internos entre hubs e conteúdo existente</div>
+            <div style="font-size:13px; color:var(--gray-600); margin-top:6px;">Dependência: Produzir 2 páginas hub (9693096) concluída em 09.09.2026. Próxima: Substituir placeholder.png e Apresentação de resultados.</div>
+          </div>
+          <div style="text-align:right; flex-shrink:0;">
+            <div><span class="badge badge-exec" style="font-size:13px; padding:6px 14px;">Em execução</span></div>
+            <div style="font-size:11px; color:var(--gray-500); margin-top:8px; font-weight:600;">Executor: Marcos Luciano</div>
+            <div style="font-size:11px; color:var(--gray-500);">Phase: Execução [TECH]</div>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-top:18px;">
+          <div style="background:#fff; border:1px solid var(--gold-border); border-radius:10px; padding:16px;">
+            <div style="font-size:11px; font-weight:700; color:var(--red); text-transform:uppercase; letter-spacing:0.5px;">O que será feito nesta tarefa</div>
+            <ul style="margin-top:8px; font-size:13px; color:var(--gray-700); padding-left:16px; line-height:1.7;">
+              <li>Conectar <code>guia-ferro-fundido</code> aos pilares <code>fundicao-de-ferro-fundido</code> e <code>ferro-fundido-cinzento-nodular</code></li>
+              <li>Conectar <code>usinagem-cnc</code> ao pilar <code>usinagem-cnc-ferro-fundido</code> e páginas sob desenho</li>
+              <li>Amarrar <code>aneis-segmento</code> a satélites de motor, compressor e preço</li>
+              <li>Inserir sumário navegável, FAQs e blocos de cards nos dois hubs</li>
+              <li>Validar BreadcrumbList existente após inserção dos links</li>
+            </ul>
+          </div>
+          <div style="background:#fff; border:1px solid var(--gold-border); border-radius:10px; padding:16px;">
+            <div style="font-size:11px; font-weight:700; color:var(--red); text-transform:uppercase; letter-spacing:0.5px;">Critério de aceite</div>
+            <ul style="margin-top:8px; font-size:13px; color:var(--gray-700); padding-left:16px; line-height:1.7;">
+              <li>Cada hub com no mínimo 8 links contextuais para pilares e satélites</li>
+              <li>Âncoras com variação semântica, sem repetição exata excessiva</li>
+              <li>Malha validada no Screaming Frog sem órfãos e sem 404</li>
+              <li>BreadcrumbList validado em Rich Results Test</li>
+              <li>Tempo apontado e tarefa movida para Conclusão Fluxo [GP]</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+          <span style="font-size:12px; font-weight:700; color:var(--gray-600);">Relação com a estratégia:</span>
+          <span class="pill" style="background:linear-gradient(135deg, #fef2f2, #fff7ed); color:var(--red); border-color:#fecaca;">Conecta os 2 hubs aos 4 pillars</span>
+          <span class="pill" style="background:#eff6ff; color:#1e40af; border-color:#bfdbfe;">Distribui autoridade</span>
+          <span class="pill" style="background:#f0fdf4; color:#15803d; border-color:#bbf7d0;">Pré requisito da Fase 3</span>
+        </div>
+      </div>
+
+      <div class="risk-box" style="margin-top:18px; border-left-color: var(--red);">
+        <h4>Por que esta tarefa é o gargalo da expansão</h4>
+        <p>Já existem dois hubs criados como base editorial, falta agora a malha que os transforma em distribuidores de relevância. Sem essa malha, os 2 hubs ficam isolados, os pilares a criar não recebem autoridade e os 4 spokes da Fase 3 nascem órfãos. Finalizar esta entrega libera a Fase 3 completa com eficiência, pois os novos hubs e spokes já nascem conectados.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:16px;">
+        <div style="background: linear-gradient(135deg, #fcfaf7, #f8f7f4); border:1px solid var(--gold-border); border-radius:10px; padding:16px;">
+          <div style="font-size:11px; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:0.5px;">Timeline imediata</div>
+          <p style="font-size:13px; margin-top:6px;"><strong>Imediato:</strong> executar malha (4,0h), depois placeholder (0,5h) e fechar relatório de apresentação. Na sequência, iniciar mapeamento dos 2 clusters complementares da Fase 3.</p>
+        </div>
+        <div style="background: linear-gradient(135deg, #f0fdf4, #f8f7f4); border:1px solid #bbf7d0; border-radius:10px; padding:16px;">
+          <div style="font-size:11px; font-weight:700; color:#15803d; text-transform:uppercase; letter-spacing:0.5px;">Próximo entregável visível</div>
+          <p style="font-size:13px; margin-top:6px;"><strong>Resultado tangível:</strong> navegação entre hubs funcionando, com sumário clicável, cards de satélites e FAQs com schema. Demonstração ao vivo da arquitetura em reunião.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10 PLANO CSV -->
+  <div class="card">
+    <div class="card-body">
+      <h2><span class="slide-num">10</span> Plano de execução e formato de entrega</h2>
+      <p>Próximo passo prático é transformar a estratégia em planilha operacional. Formato já definido para importação direta e acompanhamento no eKyte.</p>
+
+      <h3>Formato operacional para acompanhamento</h3>
+      <div style="background:#0d0d0d; color:#c9a96e; border-radius:10px; padding:18px 20px; font-family:'JetBrains Mono', monospace; font-size:12px; line-height:1.8; overflow-x:auto;">
+        Tipo | Cluster | Página | Keyword foco | Volume | Intenção | Keywords de apoio | Volume apoio | Ação | URL sugerida | Observação<br>
+        Pilar | Institucional | Fundição de ferro fundido | fundição de ferro fundido | 210 | Transacional | empresa de fundição, industrial, sob encomenda | 20+ | Criar | /fundicao-de-ferro-fundido/ | Página mãe comercial<br>
+        Pilar | Materiais | Ferro fundido cinzento | ferro fundido cinzento | 590 | Informacional | nodular, GG20, GG25, GGG40, propriedades | 0+ | Criar | /ferro-fundido-cinzento-nodular/ | Base técnica<br>
+        Pilar | Nicho | Anel de segmento | anel de segmento | 2400 | Transacional | motor, compressor, preço, tipos | 500+ | Criar | /aneis-de-segmento/ | Maior volume<br>
+        Pilar | Customização | Usinagem CNC | usinagem CNC ferro fundido | estratégico | Comercial | sob medida, sob desenho, terceirização | estratégico | Criar | /usinagem-cnc-ferro-fundido/ | Alto ticket<br>
+        Hub | Ferro fundido | Guia ferro fundido | guia ferro fundido | 0 | Informacional | cinzento, nodular, processos | 0 | Otimizar | /guia-ferro-fundido/ | Existente<br>
+        Hub | Engenharia | Usinagem CNC | usinagem CNC | 0 | Comercial | CNC ferro fundido, sob medida | 0 | Otimizar | /usinagem-cnc/ | Existente
+      </div>
+
+      <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
+        <a href="index.html" style="display:inline-flex; align-items:center; gap:8px; padding:10px 18px; background: linear-gradient(135deg, #0d0d0d, #1a1a1a); color:#fff; border-radius:8px; text-decoration:none; font-size:13px; font-weight:700;"><span style="color:var(--gold);">←</span> Voltar para Apresentação de Execução</a>
+        <a href="../indianapolis-seo-audit/index.html" style="display:inline-flex; align-items:center; gap:8px; padding:10px 18px; background:#fff; border:1px solid var(--gold-border); color:var(--gray-700); border-radius:8px; text-decoration:none; font-size:13px; font-weight:700;">Ver Auditoria Técnica →</a>
+        <a href="https://app.ekyte.com/#/projects/309016/edit" target="_blank" style="display:inline-flex; align-items:center; gap:8px; padding:10px 18px; background:#fff; border:1px solid var(--gold-border); color:var(--gray-700); border-radius:8px; text-decoration:none; font-size:13px; font-weight:700;">Abrir projeto no eKyte →</a>
+      </div>
+
+      <p style="margin-top:14px; font-size:13px; color:var(--gray-500);">Material consolidado a partir da análise Ubersuggest IA e da estrutura do projeto 309016. Mantém o mesmo padrão visual da auditoria técnica de junho de 2026 para consistência na apresentação.</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    Estratégia Topic Clusters e Pillar Pages gerada em Setembro de 2026 pela equipe de SEO da <strong>V4 Company</strong> | Análise Ubersuggest IA consolidada | Layout espelho da auditoria técnica | Projeto 309016 | Tarefa atual 9693100 em execução
+  </div>
+</div>
+
+</body>
+</html>

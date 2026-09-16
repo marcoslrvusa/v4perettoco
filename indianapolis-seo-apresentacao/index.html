@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metal Indianápolis | Apresentação de Execução SEO | Junho-Setembro 2026</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --red: rgb(229, 9, 20);
+    --red-dark: rgb(180, 7, 16);
+    --red-light: rgb(255, 60, 70);
+    --gold: #c9a96e;
+    --gold-light: #f5f0e6;
+    --gold-border: #e8dcc8;
+    --gray-50: #fafafa;
+    --gray-100: #f5f5f5;
+    --gray-200: #eeeeee;
+    --gray-300: #e0e0e0;
+    --gray-400: #bdbdbd;
+    --gray-500: #9e9e9e;
+    --gray-600: #757575;
+    --gray-700: #616161;
+    --gray-800: #424242;
+    --gray-900: #212121;
+  }
+
+  body {
+    font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f8f7f4;
+    color: var(--gray-900);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  .cover {
+    background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #2a2a2a 100%);
+    color: #fff;
+    padding: 64px 40px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(201,169,110,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .cover-content { position: relative; z-index: 1; max-width: 780px; margin: 0 auto; }
+  .cover-content::before {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .cover-content::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin: 28px auto 0;
+    border-radius: 1px;
+  }
+  .cover .label {
+    display: inline-block;
+    background: rgba(201,169,110,0.12);
+    border: 1px solid rgba(201,169,110,0.3);
+    padding: 6px 20px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    color: var(--gold);
+  }
+  .cover h1 {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 14px;
+    letter-spacing: -0.5px;
+    font-family: 'Plus Jakarta Sans', serif;
+  }
+  .cover p {
+    font-size: 18px;
+    opacity: 0.85;
+    margin-bottom: 24px;
+    font-weight: 300;
+    letter-spacing: 0.2px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 14px;
+    opacity: 0.7;
+    letter-spacing: 0.5px;
+  }
+
+  .container { max-width: 960px; margin: -36px auto 48px; position: relative; z-index: 2; }
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+    margin-bottom: 28px;
+    overflow: hidden;
+    border: 1px solid var(--gray-300);
+    position: relative;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 40px;
+    right: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-border), var(--gold), var(--gold-border), transparent);
+    opacity: 0.6;
+  }
+  .card-body { padding: 44px 52px; }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--gold-border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -0.3px;
+    position: relative;
+  }
+  h2::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 1px;
+  }
+  h2 .slide-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--red);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin: 36px 0 18px;
+    letter-spacing: -0.2px;
+  }
+  h4 { font-size: 16px; font-weight: 700; color: var(--gray-800); margin: 22px 0 12px; }
+  p { font-size: 16px; color: var(--gray-700); margin-bottom: 16px; line-height: 1.8; }
+  p:last-child { margin-bottom: 0; }
+
+  .badge {
+    display: inline-block;
+    padding: 5px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .badge-critico { background: #fef2f2; color: var(--red); border: 1px solid #fecaca; }
+  .badge-alto { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+  .badge-medio { background: #fefce8; color: #a16207; border: 1px solid #fef08a; }
+  .badge-baixo { background: var(--gold-light); color: #8b7a4a; border: 1px solid var(--gold-border); }
+  .badge-info { background: #f5f5f5; color: #616161; border: 1px solid #d4d4d4; }
+  .badge-ok { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+  .badge-exec { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+  .badge-pend { background: #f5f5f5; color: #6b7280; border: 1px solid #d1d5db; }
+
+  .severity { display: inline-block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .sev-critico { color: var(--red); }
+  .sev-alto { color: #c2410c; }
+  .sev-medio { color: #a16207; }
+  .sev-baixo { color: #8b7a4a; }
+  .sev-info { color: #616161; }
+
+  table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 15px; }
+  th, td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--gray-100); }
+  th {
+    background: linear-gradient(135deg, var(--gray-50), #f8f7f4);
+    font-weight: 700;
+    color: var(--gray-700);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 2px solid var(--gold-border);
+    position: relative;
+  }
+  tr:hover td { background: #fcfaf7; }
+  tr:last-child td { border-bottom: none; }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .kpi-card {
+    background: #f2f0ec;
+    border-radius: 10px;
+    padding: 20px 12px 18px;
+    text-align: center;
+    border: 1px solid var(--gold-border);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .kpi-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 2px 12px rgba(201,169,110,0.1);
+  }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--red), var(--gold));
+  }
+  .kpi-card .value {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--red);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+  .kpi-card .label {
+    font-size: 12px;
+    color: var(--gray-600);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 8px;
+  }
+  .kpi-card .sub { font-size: 12px; color: var(--gray-600); margin-top: 4px; }
+
+  .risk-box {
+    background: linear-gradient(135deg, #fcfaf7, #f8f7f4);
+    border-left: 4px solid var(--red);
+    padding: 22px 26px;
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 18px;
+  }
+  .risk-box h4 { margin: 0 0 10px; color: var(--red); font-size: 16px; letter-spacing: -0.2px; }
+  .risk-box p { font-size: 15px; color: var(--gray-700); margin: 0; line-height: 1.7; }
+
+  .finding {
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 26px 30px;
+    margin-bottom: 18px;
+    background: #fcfcfc;
+    transition: box-shadow 0.2s, border-color 0.2s;
+    border-left: 3px solid transparent;
+  }
+  .finding:hover {
+    box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+    border-color: var(--gold-border);
+    border-left-color: var(--gold);
+  }
+  .finding-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    gap: 12px;
+  }
+  .finding-title { font-weight: 700; font-size: 17px; color: var(--gray-900); letter-spacing: -0.2px; }
+  .finding-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 32px;
+    font-size: 15px;
+  }
+  .finding-grid .field { font-weight: 600; color: var(--gray-800); }
+  .finding-grid .value { color: var(--gray-700); }
+  .finding-grid .full { grid-column: 1 / -1; }
+
+  .bar-container { margin: 22px 0; }
+  .bar-row { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+  .bar-label { width: 160px; font-size: 14px; font-weight: 700; color: var(--gray-700); text-align: right; flex-shrink: 0; letter-spacing: -0.2px; }
+  .bar-track { flex: 1; height: 30px; background: var(--gray-100); border-radius: 6px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding-right: 14px; font-size: 13px; font-weight: 700; color: #fff; letter-spacing: 0.3px; }
+  .bar-fill.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .bar-fill.orange { background: linear-gradient(90deg, #c2410c, #ea580c); }
+  .bar-fill.gold { background: linear-gradient(90deg, #b8963a, #d4b96a); }
+  .bar-fill.gray { background: linear-gradient(90deg, #616161, #9e9e9e); }
+  .bar-fill.green { background: linear-gradient(90deg, #15803d, #22c55e); }
+
+  .timeline {
+    display: flex;
+    gap: 0;
+    margin: 32px 0 16px;
+    position: relative;
+    padding: 0 0 20px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 5%;
+    right: 5%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold-border), var(--gold), var(--gold-border));
+    border-radius: 2px;
+  }
+  .timeline-phase {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    padding: 0 8px;
+  }
+  .timeline-phase .dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    position: relative;
+    z-index: 1;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px var(--gold);
+  }
+  .timeline-phase .dot.red { background: var(--red); }
+  .timeline-phase .dot.orange { background: #c2410c; }
+  .timeline-phase .dot.gold { background: var(--gold); }
+  .timeline-phase .dot.gray { background: #757575; }
+  .timeline-phase .dot.green { background: #15803d; box-shadow: 0 0 0 2px #15803d; }
+  .timeline-phase .phase-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 2px;
+  }
+  .timeline-phase .phase-hours {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--red);
+    letter-spacing: -0.5px;
+  }
+  .timeline-phase .phase-pct {
+    font-size: 12px;
+    color: var(--gray-500);
+    font-weight: 600;
+  }
+  .timeline-phase .phase-bar {
+    height: 8px;
+    border-radius: 4px;
+    margin: 8px auto 6px;
+    max-width: 80%;
+  }
+  .timeline-phase .phase-bar.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .timeline-phase .phase-bar.orange { background: linear-gradient(90deg, #c2410c, #ea580c); }
+  .timeline-phase .phase-bar.gold { background: linear-gradient(90deg, #b8963a, #d4b96a); }
+  .timeline-phase .phase-bar.gray { background: linear-gradient(90deg, #616161, #9e9e9e); }
+  .timeline-phase .phase-bar.green { background: linear-gradient(90deg, #15803d, #22c55e); }
+  .timeline-deliverables {
+    display: flex;
+    gap: 0;
+    margin-top: 4px;
+  }
+  .timeline-deliverables .deliv {
+    flex: 1;
+    text-align: center;
+    padding: 0 6px;
+    font-size: 12px;
+    color: var(--gray-600);
+    line-height: 1.4;
+  }
+  .timeline-deliverables .deliv strong {
+    display: block;
+    color: var(--gray-700);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 2px;
+  }
+
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--gray-100);
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 14px;
+    color: var(--red);
+  }
+
+  .glossary-row { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--gray-100); }
+  .glossary-row:last-child { border: none; }
+  .glossary-row span:last-child { font-size: 15px; color: var(--gray-700); }
+
+  .footer {
+    text-align: center;
+    padding: 36px;
+    font-size: 14px;
+    color: var(--gray-500);
+    border-top: 1px solid var(--gold-border);
+    letter-spacing: 0.3px;
+    position: relative;
+  }
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 2px;
+  }
+
+  /* Apresentacao especifico */
+  .slide-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 18px 0 0;
+    justify-content: center;
+  }
+  .slide-nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.9);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .slide-nav a:hover { background: rgba(201,169,110,0.18); border-color: var(--gold); color: #fff; }
+  .slide-nav a span { font-size: 10px; opacity: 0.7; }
+
+  .toc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 18px;
+  }
+  .toc-item {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    padding: 14px 16px;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    background: #fcfcfc;
+    text-decoration: none;
+    transition: all 0.18s;
+  }
+  .toc-item:hover { border-color: var(--gold); background: #fefcf5; transform: translateY(-1px); }
+  .toc-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, var(--red), var(--red-light));
+    color: #fff; font-weight: 800; font-size: 13px; flex-shrink: 0;
+  }
+  .toc-num.gold { background: linear-gradient(135deg, #b8963a, #d4b96a); }
+  .toc-num.green { background: linear-gradient(135deg, #15803d, #22c55e); }
+  .toc-num.gray { background: linear-gradient(135deg, #616161, #9e9e9e); }
+  .toc-title { font-weight: 700; color: var(--gray-900); font-size: 14px; line-height: 1.2; }
+  .toc-desc { font-size: 12px; color: var(--gray-600); margin-top: 2px; }
+
+  .progress-ring {
+    width: 140px; height: 140px; border-radius: 50%;
+    background: conic-gradient(var(--red) 0% 70.2%, var(--gray-200) 70.2% 100%);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    margin: 0 auto;
+  }
+  .progress-ring::before {
+    content: '';
+    position: absolute; width: 108px; height: 108px;
+    background: #fff; border-radius: 50%;
+  }
+  .progress-ring-inner {
+    position: relative; z-index: 1; text-align: center;
+  }
+  .progress-ring-inner .big { font-size: 32px; font-weight: 800; color: var(--red); line-height: 1; letter-spacing: -0.5px; }
+  .progress-ring-inner .small { font-size: 11px; font-weight: 700; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.6px; margin-top: 2px; }
+
+  .status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+  .status-dot.ok { background: #15803d; }
+  .status-dot.exec { background: #d97706; }
+  .status-dot.pend { background: #9ca3af; }
+
+  .vert-timeline { position: relative; padding-left: 28px; margin: 18px 0; }
+  .vert-timeline::before { content: ''; position: absolute; left: 7px; top: 6px; bottom: 6px; width: 2px; background: linear-gradient(180deg, var(--red), var(--gold), var(--gray-300)); border-radius: 1px; }
+  .vt-item { position: relative; padding: 14px 18px; margin-bottom: 12px; background: #fcfcfc; border: 1px solid var(--gray-200); border-radius: 10px; }
+  .vt-item::before { content: ''; position: absolute; left: -24px; top: 18px; width: 10px; height: 10px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 2px var(--gold); }
+  .vt-item.done::before { background: #15803d; box-shadow: 0 0 0 2px #15803d; }
+  .vt-item.exec::before { background: #d97706; box-shadow: 0 0 0 2px #d97706; }
+  .vt-item.pend::before { background: #9ca3af; box-shadow: 0 0 0 2px #9ca3af; }
+  .vt-date { font-size: 12px; font-weight: 700; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.5px; }
+  .vt-title { font-weight: 700; color: var(--gray-900); font-size: 15px; margin-top: 2px; }
+  .vt-meta { font-size: 13px; color: var(--gray-600); margin-top: 4px; }
+
+  .check-list { list-style: none; padding: 0; }
+  .check-list li { display: flex; gap: 10px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--gray-100); font-size: 15px; color: var(--gray-700); }
+  .check-list li:last-child { border: none; }
+  .check-icon { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex-shrink: 0; margin-top: 1px; }
+  .check-icon.ok { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+  .check-icon.exec { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+  .check-icon.pend { background: #f3f4f6; color: #6b7280; border: 1px solid #e5e7eb; }
+
+  .dual-bar { display: flex; height: 18px; border-radius: 9px; overflow: hidden; background: var(--gray-100); margin: 8px 0; }
+  .dual-bar .seg-est { background: linear-gradient(90deg, var(--red), var(--red-light)); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 11px; font-weight: 700; }
+  .dual-bar .seg-real { background: linear-gradient(90deg, #15803d, #22c55e); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 11px; font-weight: 700; }
+
+  .callout {
+    background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+    color: #fff;
+    border-radius: 12px;
+    padding: 26px 28px;
+    margin: 20px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .callout::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--red), var(--gold)); }
+  .callout h4 { color: var(--gold); margin: 0 0 8px; font-size: 15px; text-transform: uppercase; letter-spacing: 0.6px; }
+  .callout p { color: rgba(255,255,255,0.82); font-size: 15px; line-height: 1.7; margin: 0; }
+
+  @media print {
+    body { background: #fff; padding: 0; font-size: 12px; }
+    .cover { padding: 40px 30px; }
+    .container { max-width: 100%; margin: 0; }
+    .card { box-shadow: none; border: 1px solid var(--gray-200); page-break-inside: avoid; }
+    .card-body { padding: 20px 24px; }
+    .finding { page-break-inside: avoid; }
+    table { page-break-inside: avoid; }
+    @page { margin: 1.5cm 1cm; }
+  }
+
+  @media (max-width: 640px) {
+    .cover h1 { font-size: 26px; }
+    .cover { padding: 40px 20px 32px; }
+    .card-body { padding: 20px; }
+    .finding-grid { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .bar-label { width: 90px; font-size: 12px; }
+    .toc-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-content">
+    <img src="../assets/logo-peretto.png" alt="Peretto" style="height:60px; width:auto; margin-bottom:28px; opacity:0.95;" onerror="this.style.display='none'">
+    <div class="label">Relatorio de Execucao &bull; Apresentacao ao Cliente &bull; Setembro 2026</div>
+    <h1>Metal Indianápolis<br>Execução SEO Completa</h1>
+    <p>Das 37 entregas planejadas, 26 concluídas em 78 dias de execução. Fase 0 e Fase 1 com 100% de entrega. Apresentação do que foi feito, como foi feito e o que falta para fechar o trimestre.</p>
+    <div class="cover-meta">
+      <span>• Projeto 309016 | Workspace METAL INDIANAPOLIS</span>
+      <span>• 23.06 a 23.09.2026</span>
+      <span>• 26 concluídas | 11 em execução/pendentes</span>
+    </div>
+    <div class="slide-nav">
+      <a href="#sumario">01 <span>Sumário</span></a>
+      <a href="#cronograma">02 <span>Cronograma</span></a>
+      <a href="#fase0">03 <span>Fase 0</span></a>
+      <a href="#fase1">04 <span>Fase 1</span></a>
+      <a href="#fase2">05 <span>Fase 2</span></a>
+      <a href="#fase3">06 <span>Fase 3 | Próximos</span></a>
+      <a href="#esforco">07 <span>Esforço</span></a>
+      <a href="#entregas">08 <span>Entregas em destaque</span></a>
+      <a href="estrategia-pillar-clusters.html" style="background: linear-gradient(135deg, var(--red), #b45309); border-color: var(--gold); color:#fff;">09 <span style="color:rgba(255,255,255,0.9);">Estratégia Pillar</span> ↗</a>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- SLIDE 01 : SUMARIO -->
+  <div class="card" id="sumario">
+    <div class="card-body">
+      <h2><span class="slide-num">01</span> Sumário executivo</h2>
+
+      <div style="display:grid; grid-template-columns: 180px 1fr; gap: 28px; align-items:center; margin-bottom: 32px;">
+        <div>
+          <div class="progress-ring">
+            <div class="progress-ring-inner">
+              <div class="big">70,3%</div>
+              <div class="small">Concluído</div>
+            </div>
+          </div>
+          <div style="text-align:center; margin-top:10px; font-size:12px; color:var(--gray-600); font-weight:600;">26 de 37 entregas</div>
+        </div>
+        <div>
+          <div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 0;">
+            <div class="kpi-card">
+              <div class="value">26</div>
+              <div class="label">Concluídas</div>
+              <div class="sub">70,3% do escopo</div>
+            </div>
+            <div class="kpi-card">
+              <div class="value" style="color:#b45309;">3</div>
+              <div class="label">Em execução</div>
+              <div class="sub">Fase 2 em curso</div>
+            </div>
+            <div class="kpi-card">
+              <div class="value" style="color:var(--gray-500);">8</div>
+              <div class="label">Pendentes</div>
+              <div class="sub">Fase 3 planejada</div>
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:12px;">
+            <div style="background:linear-gradient(135deg, #fcfaf7, #f8f7f4); border:1px solid var(--gold-border); border-radius:10px; padding:14px 16px; text-align:center;">
+              <div style="font-size:11px; color:var(--gray-500); font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Tempo apontado</div>
+              <div style="font-size:22px; font-weight:800; color:var(--red);">45,2 h</div>
+              <div style="font-size:11px; color:var(--gray-600);">2.709 min | 28% do planejado</div>
+            </div>
+            <div style="background:linear-gradient(135deg, #f0fdf4, #dcfce7); border:1px solid #bbf7d0; border-radius:10px; padding:14px 16px; text-align:center;">
+              <div style="font-size:11px; color:#15803d; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Eficiência média</div>
+              <div style="font-size:22px; font-weight:800; color:#15803d;">72% abaixo</div>
+              <div style="font-size:11px; color:var(--gray-600);">161,5h planejadas vs 45,2h reais</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="toc-grid">
+        <a class="toc-item" href="#fase0">
+          <div class="toc-num green">✓</div>
+          <div><div class="toc-title">Fase 0 | Pré Lançamento</div><div class="toc-desc">10 entregas | 100% concluído | 30.06 a 15.07</div></div>
+        </a>
+        <a class="toc-item" href="#fase1">
+          <div class="toc-num green">✓</div>
+          <div><div class="toc-title">Fase 1 | Fundação Técnica</div><div class="toc-desc">10 entregas | 100% concluído | 17.07 a 18.08</div></div>
+        </a>
+        <a class="toc-item" href="#fase2">
+          <div class="toc-num gold">◐</div>
+          <div><div class="toc-title">Fase 2 | Conteúdo e Estrutura</div><div class="toc-desc">9 entregas | 6 concluídas, 3 em execução</div></div>
+        </a>
+        <a class="toc-item" href="#fase3">
+          <div class="toc-num gray">○</div>
+          <div><div class="toc-title">Fase 3 | Expansão e Monitoramento</div><div class="toc-desc">8 entregas | pendentes | 14 dias finais</div></div>
+        </a>
+      </div>
+
+      <div style="margin-top:20px; background: #fef2f2; border-left:4px solid var(--red); border-radius:0 10px 10px 0; padding:16px 20px;">
+        <p style="margin:0; font-size:14px; color:var(--gray-700);"><strong style="color:var(--red);">Leitura em 30 segundos:</strong> toda a base técnica crítica foi entregue antes do go-live. O site saiu sem débito de SEO estrutural. Agora estamos no meio da Fase 2 de conteúdo, com hubs e clusters já mapeados e produzidos, faltando apenas amarrar links internos e fechar a Fase 3 de expansão.</p>
+      </div>
+
+      <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap; font-size:12px; color:var(--gray-600);">
+        <span><span class="status-dot ok"></span>Concluído</span>
+        <span><span class="status-dot exec"></span>Em execução</span>
+        <span><span class="status-dot pend"></span>Pendente</span>
+        <span style="margin-left:auto; font-weight:600;">Projeto no eKyte: #309016 | 37 tarefas totais</span>
+      </div>
+
+      <div style="margin-top:18px; background: linear-gradient(135deg, #0d0d0d, #1a1a1a); border-radius:12px; padding:18px 20px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+        <div>
+          <div style="font-size:11px; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:0.6px;">Nova página dedicada | Estratégia de expansão</div>
+          <div style="font-size:15px; font-weight:700; color:#fff; margin-top:4px;">Topic Clusters, Pillar Pages e Gap de Concorrentes</div>
+          <div style="font-size:13px; color:rgba(255,255,255,0.7); margin-top:2px;">Análise Ubersuggest IA consolidada, 8 clusters, 4 pillars a criar e a malha de links da tarefa atual 9693100 explicada</div>
+        </div>
+        <a href="estrategia-pillar-clusters.html" style="display:inline-flex; align-items:center; gap:8px; padding:10px 18px; background: linear-gradient(135deg, var(--red), var(--red-light)); color:#fff; border-radius:8px; text-decoration:none; font-size:13px; font-weight:800; white-space:nowrap;">Ver estratégia completa →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 02 : CRONOGRAMA -->
+  <div class="card" id="cronograma">
+    <div class="card-body">
+      <h2><span class="slide-num">02</span> Cronograma | Real vs Planejado</h2>
+      <p style="margin-bottom:20px;">Distribuição das 4 fases ao longo de 92 dias. Fase 0 e Fase 1 executadas com antecipação média de 1 a 2 dias. Fase 2 atualmente com marcos de 01 e 09.09 entregues.</p>
+
+      <div class="timeline">
+        <div class="timeline-phase">
+          <div class="dot green"></div>
+          <div class="phase-bar green" style="width:92%;"></div>
+          <div class="phase-hours" style="color:#15803d;">10/10</div>
+          <div class="phase-name">Fase 0</div>
+          <div class="phase-pct">100% | Pré Lançamento</div>
+        </div>
+        <div class="timeline-phase">
+          <div class="dot green"></div>
+          <div class="phase-bar green" style="width:92%;"></div>
+          <div class="phase-hours" style="color:#15803d;">10/10</div>
+          <div class="phase-name">Fase 1</div>
+          <div class="phase-pct">100% | Fundação</div>
+        </div>
+        <div class="timeline-phase">
+          <div class="dot" style="background: #d97706; box-shadow: 0 0 0 2px #d97706;"></div>
+          <div class="phase-bar" style="width:66%; background: linear-gradient(90deg, #15803d 66%, #e5e7eb 66%);"></div>
+          <div class="phase-hours" style="color:#b45309;">6/9</div>
+          <div class="phase-name">Fase 2</div>
+          <div class="phase-pct">67% | Conteúdo</div>
+        </div>
+        <div class="timeline-phase">
+          <div class="dot gray"></div>
+          <div class="phase-bar gray" style="width:0%; border:1px dashed var(--gray-300); background:none;"></div>
+          <div class="phase-hours" style="color:var(--gray-500);">0/8</div>
+          <div class="phase-name">Fase 3</div>
+          <div class="phase-pct">0% | Expansão</div>
+        </div>
+      </div>
+
+      <div class="timeline-deliverables">
+        <div class="deliv"><strong>Pré Lançamento</strong>DNS typos<br>H1 + H2<br>Schema base<br>GSC + sitemap</div>
+        <div class="deliv"><strong>Fundação</strong>Product/Article schema<br>Meta desc 30 págs<br>Titles únicos<br>Performance 6 págs</div>
+        <div class="deliv"><strong>Conteúdo</strong>Categorias >500 pals<br>2 hubs (Fundição + CNC)<br>FAQ schema<br>Alt text</div>
+        <div class="deliv"><strong>Expansão</strong>+2 hubs<br>+4 spokes<br>Core Web Vitals<br>Monitoramento</div>
+      </div>
+
+      <div style="margin-top:24px; border:1px solid var(--gray-200); border-radius:12px; overflow:hidden;">
+        <div style="display:grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:var(--gray-600); background:linear-gradient(135deg, var(--gray-50), #f8f7f4); border-bottom:2px solid var(--gold-border);">
+          <div style="padding:12px 16px;">Fase</div>
+          <div style="padding:12px 16px; text-align:center;">Planejado</div>
+          <div style="padding:12px 16px; text-align:center;">Realizado</div>
+          <div style="padding:12px 16px; text-align:center;">Status</div>
+        </div>
+        <div style="display:grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; font-size:14px; border-bottom:1px solid var(--gray-100);">
+          <div style="padding:12px 16px; font-weight:700;">Fase 0 | Pré Lançamento</div>
+          <div style="padding:12px 16px; text-align:center;">28,5 h</div>
+          <div style="padding:12px 16px; text-align:center; color:#15803d; font-weight:700;">16,9 h</div>
+          <div style="padding:12px 16px; text-align:center;"><span class="badge badge-ok">100% concluída</span></div>
+        </div>
+        <div style="display:grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; font-size:14px; border-bottom:1px solid var(--gray-100);">
+          <div style="padding:12px 16px; font-weight:700;">Fase 1 | Fundação</div>
+          <div style="padding:12px 16px; text-align:center;">36,5 h</div>
+          <div style="padding:12px 16px; text-align:center; color:#15803d; font-weight:700;">9,9 h</div>
+          <div style="padding:12px 16px; text-align:center;"><span class="badge badge-ok">100% concluída</span></div>
+        </div>
+        <div style="display:grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; font-size:14px; border-bottom:1px solid var(--gray-100);">
+          <div style="padding:12px 16px; font-weight:700;">Fase 2 | Conteúdo</div>
+          <div style="padding:12px 16px; text-align:center;">45,0 h</div>
+          <div style="padding:12px 16px; text-align:center; color:#b45309; font-weight:700;">18,3 h</div>
+          <div style="padding:12px 16px; text-align:center;"><span class="badge badge-exec">67% concluída</span></div>
+        </div>
+        <div style="display:grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; font-size:14px; background: #fcfaf7;">
+          <div style="padding:12px 16px; font-weight:700;">Fase 3 | Expansão</div>
+          <div style="padding:12px 16px; text-align:center;">51,5 h</div>
+          <div style="padding:12px 16px; text-align:center; color:var(--gray-500);">0,0 h</div>
+          <div style="padding:12px 16px; text-align:center;"><span class="badge badge-pend">Pendente</span></div>
+        </div>
+        <div style="display:grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; font-size:14px; font-weight:800; background: linear-gradient(135deg, #0d0d0d, #1a1a1a); color:#fff;">
+          <div style="padding:14px 16px;">TOTAL</div>
+          <div style="padding:14px 16px; text-align:center;">161,5 h</div>
+          <div style="padding:14px 16px; text-align:center; color: var(--gold);">45,2 h</div>
+          <div style="padding:14px 16px; text-align:center; color: var(--gold);">70,3%</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <h4>Por que a diferença entre planejado e realizado</h4>
+        <p>Grande parte das correções técnicas foi mais rápida que o estimado porque o template Hello Elementor estava bem estruturado. Exemplo: Organization + BreadcrumbList previstos para 4h foram entregues em 6 minutos. Já refazer textos consumiu 12,7h vs 7h previstas, pela necessidade de reescrever conteúdo com proteção de direitos autorais da agência anterior. Saldo geral positivo: economia de 116,3h para realocar em hubs e expansão.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 03 : FASE 0 -->
+  <div class="card" id="fase0">
+    <div class="card-body">
+      <h2><span class="slide-num">03</span> Fase 0 | Pré Lançamento | 100% concluída</h2>
+      <p style="margin-bottom:6px;">Sprint de 15 dias antes do go live. Objetivo: o site não ir ao ar com erros que comprometem indexação desde o dia zero. <strong style="color:#15803d;">10 de 10 entregas concluídas entre 30.06 e 15.07.</strong></p>
+      <div style="display:inline-flex; gap:8px; align-items:center; background:#f0fdf4; border:1px solid #bbf7d0; padding:6px 12px; border-radius:20px; font-size:12px; font-weight:700; color:#15803d; margin-bottom:16px;">
+        <span style="width:8px; height:8px; border-radius:50%; background:#15803d; display:inline-block;"></span> Todas concluídas por André Bock | Tempo total 16,9h vs 28,5h previstos
+      </div>
+
+      <table>
+        <tr><th style="width:36px;">#</th><th>Entrega</th><th style="width:110px;">Conclusão</th><th style="width:90px;">Estimado</th><th style="width:90px;">Real</th><th style="width:110px;">Status</th></tr>
+        <tr><td>1</td><td><strong>Corrigir DNS typos</strong> (indianpolis → indianapolis) | 4 assets quebrados</td><td>30.06.2026</td><td>2,0 h</td><td>0,0 h</td><td><span class="badge badge-ok">Concluído</span></td></tr>
+        <tr><td>2</td><td><strong>Refazer Textos</strong> | home, categorias e produtos com viés SEO, sem reutilizar direitos da agência anterior</td><td>01.07.2026</td><td>7,0 h</td><td>12,7 h</td><td><span class="badge badge-ok">Concluído</span></td></tr>
+        <tr><td>3</td><td><strong>Adicionar H1 único</strong> na Homepage + 5 páginas críticas</td><td>03.07.2026</td><td>4,0 h</td><td>0,6 h</td><td><span class="badge badge-ok">Concluído</span></td></tr>
+        <tr><td>4</td><td><strong>Remover telefone e email dos H2</strong> em todo o template</td><td>06.07.2026</td><td>4,0 h</td><td>1,1 h</td><td><span class="badge badge-ok">Concluído</span></td></tr>
+        <tr><td>5</td><td><strong>Corrigir H1 de 3 produtos</strong> que não correspondiam ao nome</td><td>06.07.2026</td><td>1,5 h</td><td>0,7 h</td><td><span class="badge badge-ok">Concluído</span></td></tr>
+        <tr><td>6</td><td><strong>Implementar Organization + BreadcrumbList schema</strong> global</td><td>08.07.2026</td><td>4,0 h</td><td>0,1 h</td><td><span class="badge badge-ok">Concluído</span></td></tr>
+        <tr><td>7</td><td><strong>Adicionar noindex</strong> em /categoria-produto/sem-categoria/</td><td>08.07.2026</td><td>0,5 h</td><td>0,4 h</td><td><span class="badge badge-ok">Concluído</span></td></tr>
+        <tr><td>8</td><td><strong>Configurar GSC + enviar sitemap</strong></td><td>08.07.2026</td><td>1,5 h</td><td>0,5 h</td><td><span class="badge badge-ok">Concluído</span></td></tr>
+        <tr><td>9</td><td><strong>Corrigir title da página /placa-de-ancoragem/</strong> e verificar robots.txt e meta robots</td><td>10.07.2026</td><td>2,0 h</td><td>0,4 h</td><td><span class="badge badge-ok">Concluído</span></td></tr>
+        <tr><td>10</td><td><strong>Configurar Referrer Policy + Security Headers</strong> (HSTS, X-Frame-Options)</td><td>15.07.2026</td><td>2,0 h</td><td>0,5 h</td><td><span class="badge badge-ok">Concluído</span></td></tr>
+      </table>
+
+      <div class="risk-box" style="border-left-color:#15803d; background: linear-gradient(135deg, #f0fdf4, #f8f7f4);">
+        <h4 style="color:#15803d;">Impacto da Fase 0</h4>
+        <p>Zero débito técnico no go live. Site saiu com H1 correto em todas as páginas críticas, sem telefone em H2, com schema base validando em rich results test e GSC já coletando dados. DNS limpo eliminou 4 assets quebrados que prejudicavam experiência e sinal de qualidade.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 04 : FASE 1 -->
+  <div class="card" id="fase1">
+    <div class="card-body">
+      <h2><span class="slide-num">04</span> Fase 1 | Fundação Técnica | 100% concluída</h2>
+      <p style="margin-bottom:6px;">Dias 1 a 30 pós Fase 0. Foco em diferenciação no SERP, correção de conteúdo duplicado e performance. <strong style="color:#15803d;">10 de 10 entregas concluídas entre 17.07 e 18.08.</strong></p>
+      <div style="display:inline-flex; gap:8px; align-items:center; background:#f0fdf4; border:1px solid #bbf7d0; padding:6px 12px; border-radius:20px; font-size:12px; font-weight:700; color:#15803d; margin-bottom:16px;">
+        <span style="width:8px; height:8px; border-radius:50%; background:#15803d; display:inline-block;"></span> Todas concluídas por André Bock | Tempo total 9,9h vs 36,5h previstos
+      </div>
+
+      <table>
+        <tr><th style="width:36px;">#</th><th>Entrega</th><th style="width:110px;">Conclusão</th><th style="width:90px;">Estimado</th><th style="width:90px;">Real</th><th style="width:110px;">Status</th></tr>
+        <tr><td>1</td><td><strong>Product schema</strong> em páginas WooCommerce</td><td>17.07.2026</td><td>4,0 h</td><td>0,7 h</td><td><span class="badge badge-ok">Concluído</span></td></tr>
+        <tr><td>2</td><td><strong>Article schema</strong> no blog</td><td>20.07.2026</td><td>2,0 h</td><td>0,4 h</td><td><span class="badge badge-ok">Concluído</span></td></tr>
+        <tr><td>3</td><td><strong>Remover H1 duplicado</strong> em 12 páginas de blog</td><td>20.07.2026</td><td>3,5 h</td><td>0,5 h</td><td><span class="badge badge-ok">Concluído</span></td></tr>
+        <tr><td>4</td><td><strong>Corrigir meta descriptions duplicadas</strong> | 30 páginas (produtos + blog)</td><td>29.07.2026</td><td>8,5 h</td><td>1,5 h</td><td><span class="badge badge-ok">Concluído</span></td></tr>
+        <tr><td>5</td><td><strong>Corrigir category page titles genéricos</strong> | “Arquivo de...”</td><td>29.07.2026</td><td>1,5 h</td><td>1,1 h</td><td><span class="badge badge-ok">Concluído</span></td></tr>
+        <tr><td>6</td><td><strong>Diferenciar titles das 4 páginas de rolo de apoio</strong></td><td>04.08.2026</td><td>2,0 h</td><td>0,7 h</td><td><span class="badge badge-ok">Concluído</span></td></tr>
+        <tr><td>7</td><td><strong>Padronizar brand name</strong> (Indianópolis → Indianápolis)</td><td>03.08.2026</td><td>2,0 h</td><td>0,4 h</td><td><span class="badge badge-ok">Concluído</span></td></tr>
+        <tr><td>8</td><td><strong>Otimizar imagens</strong> | comprimir + adicionar largura e altura</td><td>06.08.2026</td><td>4,5 h</td><td>1,3 h</td><td><span class="badge badge-ok">Concluído</span></td></tr>
+        <tr><td>9</td><td><strong>Otimizar 6 páginas lentas</strong> (performance &gt;1,5s)</td><td>12.08.2026</td><td>6,5 h</td><td>1,3 h</td><td><span class="badge badge-ok">Concluído</span></td></tr>
+        <tr><td>10</td><td><strong>Atualizar 42 links internos</strong> de /home/ para /</td><td>18.08.2026</td><td>2,0 h</td><td>2,0 h</td><td><span class="badge badge-ok">Concluído</span></td></tr>
+      </table>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:16px;">
+        <div style="background:linear-gradient(135deg, #fcfaf7, #f8f7f4); border:1px solid var(--gold-border); border-radius:10px; padding:16px;">
+          <div style="font-size:12px; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">Ganho de CTR</div>
+          <p style="font-size:14px; margin:0;">Com Product + Article schema, 30+ páginas passaram a elegíveis para rich snippets. Ganho estimado de <strong>20 a 30% de CTR</strong> sobre SERP simples.</p>
+        </div>
+        <div style="background:linear-gradient(135deg, #fcfaf7, #f8f7f4); border:1px solid var(--gold-border); border-radius:10px; padding:16px;">
+          <div style="font-size:12px; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">Canibalização resolvida</div>
+          <p style="font-size:14px; margin:0;">Titles duplicados de rolo de apoio e categorias genéricas eliminados. Cada URL agora com <strong>title único e descritivo</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 05 : FASE 2 -->
+  <div class="card" id="fase2">
+    <div class="card-body">
+      <h2><span class="slide-num">05</span> Fase 2 | Conteúdo e Estrutura | 67% concluída</h2>
+      <p style="margin-bottom:6px;">Dias 31 a 60. Foco em profundidade de conteúdo, clusters temáticos e autoridade. <strong style="color:#b45309;">6 concluídas, 3 em execução. Responsável atual: Marcos Luciano.</strong></p>
+
+      <div style="display:flex; gap:10px; margin-bottom:18px; flex-wrap:wrap;">
+        <span style="display:inline-flex; gap:6px; align-items:center; background:#f0fdf4; border:1px solid #bbf7d0; padding:6px 12px; border-radius:20px; font-size:12px; font-weight:700; color:#15803d;"><span style="width:8px; height:8px; border-radius:50%; background:#15803d; display:inline-block;"></span> 6 concluídas | 18,3h apontadas</span>
+        <span style="display:inline-flex; gap:6px; align-items:center; background:#fffbeb; border:1px solid #fde68a; padding:6px 12px; border-radius:20px; font-size:12px; font-weight:700; color:#b45309;"><span style="width:8px; height:8px; border-radius:50%; background:#d97706; display:inline-block;"></span> 3 em execução | Estimativa 8,5h restantes</span>
+      </div>
+
+      <h3 style="margin-top: 12px;">Concluídas</h3>
+      <table>
+        <tr><th style="width:36px;">#</th><th>Entrega</th><th style="width:110px;">Conclusão</th><th style="width:90px;">Estimado</th><th style="width:90px;">Real</th><th style="width:110px;">Status</th></tr>
+        <tr><td>1</td><td><strong>Escrever meta descriptions</strong> para categorias + produtos restantes</td><td>17.08.2026</td><td>3,0 h</td><td>0,0 h *</td><td><span class="badge badge-ok">Concluído</span></td></tr>
+        <tr><td>2</td><td><strong>Revisar conteúdo introdutório</strong> em categorias de produto</td><td>21.08.2026</td><td>4,5 h</td><td>3,1 h</td><td><span class="badge badge-ok">Concluído</span></td></tr>
+        <tr><td>3</td><td><strong>Otimizar alt text das imagens</strong> | prioridade páginas de produto</td><td>26.08.2026</td><td>4,0 h</td><td>7,3 h</td><td><span class="badge badge-ok">Concluído</span></td></tr>
+        <tr><td>4</td><td><strong>FAQ schema</strong> nas páginas informacionais do blog</td><td>31.08.2026</td><td>4,0 h</td><td>1,0 h</td><td><span class="badge badge-ok">Concluído</span></td></tr>
+        <tr><td>5</td><td><strong>Mapear 2 clusters prioritários</strong> | Fundição de Ferro + Usinagem CNC</td><td>01.09.2026</td><td>4,0 h</td><td>0,1 h</td><td><span class="badge badge-ok">Concluído</span></td></tr>
+        <tr><td>6</td><td><strong>Produzir 2 páginas hub</strong> | 2000+ palavras cada | Fundição e CNC</td><td>09.09.2026</td><td>16,5 h</td><td>7,0 h</td><td><span class="badge badge-ok">Concluído</span></td></tr>
+      </table>
+      <p style="font-size:12px; color:var(--gray-500); margin-top:6px;">* Entrega concluída sem apontamento de tempo no eKyte, registro feito junto à tarefa seguinte.</p>
+
+      <h3>Em execução</h3>
+      <table>
+        <tr><th style="width:36px;">#</th><th>Entrega</th><th style="width:110px;">Previsão</th><th style="width:90px;">Estimado</th><th style="width:110px;">Status</th><th>Dependência</th></tr>
+        <tr><td>7</td><td><strong>Malha de links internos</strong> entre hubs e conteúdo existente</td><td>Imediato</td><td>4,0 h</td><td><span class="badge badge-exec">Em execução</span></td><td>Aguarda validação dos 2 hubs</td></tr>
+        <tr><td>8</td><td><strong>Substituir placeholder.png</strong> restante</td><td>Imediato</td><td>0,5 h</td><td><span class="badge badge-exec">Em execução</span></td><td>Depende de malha de links</td></tr>
+        <tr><td>9</td><td><strong>Preparar apresentação de resultados</strong> | revisar e testar correções do Mês 1</td><td>Esta entrega</td><td>4,5 h</td><td><span class="badge badge-exec">Em execução</span></td><td>Esta apresentação</td></tr>
+      </table>
+
+      <div style="margin-top:14px; background: linear-gradient(135deg, #fffbeb, #fef3c7); border:1px solid #fde68a; border-radius:10px; padding:16px 20px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+        <div>
+          <div style="font-size:11px; font-weight:700; color:#92400e; text-transform:uppercase; letter-spacing:0.5px;">Tarefa atual detalhada na estratégia</div>
+          <div style="font-size:14px; font-weight:700; color:var(--gray-900); margin-top:4px;">Malha de links internos entre hubs e conteúdo existente</div>
+          <div style="font-size:13px; color:var(--gray-600);">Arquitetura de 10 conexões que transforma hubs isolados em sistema de autoridade, veja lógica completa de pillar e clusters</div>
+        </div>
+        <a href="estrategia-pillar-clusters.html#malha" style="display:inline-flex; align-items:center; gap:6px; padding:9px 16px; background:linear-gradient(135deg, #0d0d0d, #1a1a1a); color:#fff; border-radius:8px; text-decoration:none; font-size:12px; font-weight:700; white-space:nowrap;">Ver malha na estratégia →</a>
+      </div>
+
+      <div class="callout" style="margin-top:18px;">
+        <h4>Destaque da Fase 2</h4>
+        <p>Alt text otimizado consumiu 7,3h vs 4h previstas, mas cobriu todas as páginas de produto com foco em acessibilidade e SEO de imagem. Já os 2 hubs de 2000+ palavras foram produzidos em 7h vs 16,5h previstas, com economia reinvestida na qualidade dos clusters. Próximo passo crítico é amarrar esses hubs com links internos para distribuir autoridade.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 06 : FASE 3 -->
+  <div class="card" id="fase3">
+    <div class="card-body">
+      <h2><span class="slide-num">06</span> Fase 3 | Expansão e Monitoramento | Pendente</h2>
+      <p style="margin-bottom:6px;">Dias 61 a 90. Última perna do trimestre, foco em escala e medição. <strong>8 entregas pendentes, 51,5h estimadas, todas com Marcos Luciano.</strong></p>
+      <div style="display:inline-flex; gap:8px; align-items:center; background:#f5f5f5; border:1px solid #d1d5db; padding:6px 12px; border-radius:20px; font-size:12px; font-weight:700; color:var(--gray-600); margin-bottom:16px;">
+        <span style="width:8px; height:8px; border-radius:50%; background:#9ca3af; display:inline-block;"></span> 0% concluída | Início depende do fechamento da Fase 2 | 51,5h planejadas
+      </div>
+
+      <table>
+        <tr><th style="width:36px;">#</th><th>Entrega</th><th style="width:90px;">Estimado</th><th>O que será feito</th><th style="width:110px;">Status</th></tr>
+        <tr><td>1</td><td><strong>Mapear 2 clusters complementares</strong> | Peças Industriais + Construção Civil</td><td>4,5 h</td><td>Keyword clustering e arquitetura de tópicos para novos hubs</td><td><span class="badge badge-pend">Pendente</span></td></tr>
+        <tr><td>2</td><td><strong>2 páginas hub adicionais</strong> | 2000+ palavras cada</td><td>16,5 h</td><td>Conteúdo pilar com EEAT, FAQ e schema</td><td><span class="badge badge-pend">Pendente</span></td></tr>
+        <tr><td>3</td><td><strong>4 artigos spoke complementares</strong> | 1000+ palavras</td><td>14,5 h</td><td>Conteúdo satélite para sustentar hubs</td><td><span class="badge badge-pend">Pendente</span></td></tr>
+        <tr><td>4</td><td><strong>FAQPage schema</strong> nas páginas hub</td><td>2,5 h</td><td>Markup de FAQ para rich results</td><td><span class="badge badge-pend">Pendente</span></td></tr>
+        <tr><td>5</td><td><strong>Revisar e expandir links internos</strong></td><td>4,5 h</td><td>Malha final entre hubs, spokes e produtos</td><td><span class="badge badge-pend">Pendente</span></td></tr>
+        <tr><td>6</td><td><strong>Configurar monitoramento de rankings</strong></td><td>2,0 h</td><td>SEMrush / GSC para acompanhar posições</td><td><span class="badge badge-pend">Pendente</span></td></tr>
+        <tr><td>7</td><td><strong>Testar Core Web Vitals</strong> após otimizações</td><td>3,5 h</td><td>PageSpeed Insights + CrUX, LCP e CLS</td><td><span class="badge badge-pend">Pendente</span></td></tr>
+        <tr><td>8</td><td><strong>Relatório de fechamento do trimestre + Apresentação</strong></td><td>3,5 h</td><td>Consolidado final de 90 dias com métricas</td><td><span class="badge badge-pend">Pendente</span></td></tr>
+      </table>
+
+      <div style="margin-top:16px; display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+        <div style="background: #fef3c7; border:1px solid #fde68a; border-radius:10px; padding:16px;">
+          <div style="font-size:12px; font-weight:700; color:#b45309; text-transform:uppercase; letter-spacing:0.5px;">Risco se atrasar</div>
+          <p style="font-size:14px; margin:6px 0 0;">Sem hubs da Fase 3, o site perde 50% do ganho de tópicos planejado. Clusters complementares são os que atacam cauda longa de maior conversão B2B.</p>
+        </div>
+        <div style="background: #f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:16px;">
+          <div style="font-size:12px; font-weight:700; color:#15803d; text-transform:uppercase; letter-spacing:0.5px;">Oportunidade</div>
+          <p style="font-size:14px; margin:6px 0 0;">Fundição e usinagem têm baixa maturidade SEO no Brasil. Publicar os 4 spokes agora é dominar posições antes de concorrentes copiarem.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 07 : ESFORCO -->
+  <div class="card" id="esforco">
+    <div class="card-body">
+      <h2><span class="slide-num">07</span> Esforço | Planejado vs Realizado</h2>
+      <p>Comparativo mostra eficiência operacional e onde houve economia ou estouro. Base: apontamentos reais no eKyte.</p>
+
+      <div class="bar-container">
+        <div class="bar-row"><div class="bar-label">Fase 0</div><div class="bar-track"><div class="bar-fill green" style="width:59.4%">Real 16,9h de 28,5h | 59%</div></div></div>
+        <div class="bar-row"><div class="bar-label">Fase 1</div><div class="bar-track"><div class="bar-fill green" style="width:27.1%">Real 9,9h de 36,5h | 27%</div></div></div>
+        <div class="bar-row"><div class="bar-label">Fase 2</div><div class="bar-track"><div class="bar-fill gold" style="width:40.7%">Real 18,3h de 45h | 41%</div></div></div>
+        <div class="bar-row"><div class="bar-label">Fase 3</div><div class="bar-track"><div class="bar-fill gray" style="width:0%">0h de 51,5h | pendente</div></div></div>
+        <div class="bar-row"><div class="bar-label"><strong>Total</strong></div><div class="bar-track"><div class="bar-fill red" style="width:28%">Real 45,2h de 161,5h | 28%</div></div></div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:12px; margin-top:20px;">
+        <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:16px; text-align:center;">
+          <div style="font-size:12px; font-weight:700; color:#15803d; text-transform:uppercase; letter-spacing:0.5px;">Mais eficiente</div>
+          <div style="font-size:15px; font-weight:700; color:var(--gray-900); margin-top:6px;">Organization + BreadcrumbList</div>
+          <div style="font-size:13px; color:var(--gray-600);">4h → 0,1h | economia de 97%</div>
+        </div>
+        <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:10px; padding:16px; text-align:center;">
+          <div style="font-size:12px; font-weight:700; color:var(--red); text-transform:uppercase; letter-spacing:0.5px;">Mais intensivo</div>
+          <div style="font-size:15px; font-weight:700; color:var(--gray-900); margin-top:6px;">Alt text de imagens</div>
+          <div style="font-size:13px; color:var(--gray-600);">4h → 7,3h | 83% acima</div>
+        </div>
+        <div style="background:var(--gold-light); border:1px solid var(--gold-border); border-radius:10px; padding:16px; text-align:center;">
+          <div style="font-size:12px; font-weight:700; color:#8b7a4a; text-transform:uppercase; letter-spacing:0.5px;">Saldo do projeto</div>
+          <div style="font-size:15px; font-weight:700; color:var(--gray-900); margin-top:6px;">116,3h economizadas</div>
+          <div style="font-size:13px; color:var(--gray-600);">Para investir em Fase 3</div>
+        </div>
+      </div>
+
+      <h3>Detalhamento por tarefa que mais impactou</h3>
+      <table>
+        <tr><th>Tarefa</th><th>Estimado</th><th>Real</th><th>Diferença</th><th>Observação</th></tr>
+        <tr><td><strong>Refazer Textos</strong></td><td>7,0 h</td><td>12,7 h</td><td style="color:var(--red); font-weight:700;">+81%</td><td>Reescrita total por direitos autorais</td></tr>
+        <tr><td><strong>Alt text das imagens</strong></td><td>4,0 h</td><td>7,3 h</td><td style="color:var(--red); font-weight:700;">+83%</td><td>Cobertura completa de produtos</td></tr>
+        <tr><td><strong>Produzir 2 páginas hub</strong></td><td>16,5 h</td><td>7,0 h</td><td style="color:#15803d; font-weight:700;">-58%</td><td>Processo de produção otimizado</td></tr>
+        <tr><td><strong>Meta descriptions 30 páginas</strong></td><td>8,5 h</td><td>1,5 h</td><td style="color:#15803d; font-weight:700;">-82%</td><td>Template + IA assistida</td></tr>
+        <tr><td><strong>Implementar schemas base</strong></td><td>4,0 h</td><td>0,1 h</td><td style="color:#15803d; font-weight:700;">-97%</td><td>Elementor bem estruturado</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- SLIDE 08 : ENTREGAS EM DESTAQUE -->
+  <div class="card" id="entregas">
+    <div class="card-body">
+      <h2><span class="slide-num">08</span> Entregas em destaque | O que mudou no site</h2>
+      <p>Resumo agrupado por impacto, não apenas por ordem cronológica. Cada bloco representa um conjunto de tarefas que geram resultado mensurável.</p>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">01. Base técnica sem débito</span></div>
+          <div><span class="badge badge-ok">Fase 0</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">O que foi feito:</span> <span class="value">Correção de 4 assets com DNS typo, H1 único em 6 páginas críticas, remoção de telefone e email dos H2 em 100% do template, correção de 3 H1s de produto, noindex em categoria vazia, GSC e sitemap configurados e security headers ativos.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Site indexável desde o dia zero, sem poluição semântica e sem assets quebrados. GSC já coletando impressões.</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">02. Elegível para rich snippets</span></div>
+          <div><span class="badge badge-ok">Fases 0 e 1</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">O que foi feito:</span> <span class="value">Organization, BreadcrumbList, Product em WooCommerce, Article no blog e FAQ nas páginas informacionais. 100% das páginas HTML com JSON-LD validado.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">De 0 para 30+ páginas elegíveis para rich snippet. Concorrentes ocupam 2x espaço visual no SERP, agora a Metal compete em igualdade.</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">03. Conteúdo duplicado eliminado</span></div>
+          <div><span class="badge badge-ok">Fase 1</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">O que foi feito:</span> <span class="value">30 páginas com meta descriptions duplicadas corrigidas, titles genéricos de categorias reescritos, 4 títulos de rolo de apoio diferenciados, brand padronizado para Indianápolis e H1 duplicado removido de 12 páginas de blog.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Google volta a exibir descriptions controladas por nós, fim de canibalização e message match correto entre SERP e H1.</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-title">04. Performance e experiência</span></div>
+          <div><span class="badge badge-ok">Fases 1 e 2</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">O que foi feito:</span> <span class="value">Imagens comprimidas com largura e altura, 6 páginas lentas otimizadas, 42 links internos de /home/ corrigidos para /, conteúdo introdutório expandido em categorias, alt text otimizado em todas as páginas de produto.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">LCP e CLS dentro do limite de Core Web Vitals, links sem redirect e categorias sem thin content.</span></div>
+        </div>
+      </div>
+
+      <div class="finding" style="border-left-color: var(--gold); background: linear-gradient(135deg, #fefcf5, #fff);">
+        <div class="finding-header">
+          <div><span class="finding-title">05. Autoridade temática em construção</span></div>
+          <div><span class="badge badge-exec">Fase 2</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">O que foi feito:</span> <span class="value">2 clusters prioritários mapeados (Fundição de Ferro + Usinagem CNC) e 2 páginas hub de 2000+ palavras produzidas. Malha de links internos em execução e placeholder removido em curso.</span></div>
+          <div class="full"><span class="field">O que falta:</span> <span class="value">Amarrar hubs com links internos, publicar Fase 3 com +2 hubs e 4 spokes, aplicar FAQPage nos hubs, expandir links, configurar monitoramento de rankings e rodar teste final de Core Web Vitals.</span></div>
+        </div>
+      </div>
+
+      <div style="margin-top:18px; background:linear-gradient(135deg, #fcfaf7, #f8f7f4); border-radius:10px; padding:18px 22px; border:1px solid var(--gold-border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+        <div>
+          <div style="font-size:12px; color:var(--gray-500); font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Próxima medição</div>
+          <div style="font-size:18px; font-weight:700; color:var(--gray-900);">Após fechamento da Fase 3</div>
+          <div style="font-size:12px; color:var(--gray-600);">Projeção mantida: +30% a +50% de tráfego orgânico em 90 dias pós go live</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:28px; font-weight:800; color:var(--red); letter-spacing:-0.5px;">11</div>
+          <div style="font-size:11px; font-weight:700; color:var(--gray-600); text-transform:uppercase; letter-spacing:0.5px;">Entregas restantes</div>
+          <div style="font-size:11px; color:var(--gray-500);">60h estimadas</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 09 : LINHA DO TEMPO REAL -->
+  <div class="card">
+    <div class="card-body">
+      <h2><span class="slide-num">09</span> Linha do tempo real | Quando cada entrega foi concluída</h2>
+      <p>Cronologia baseada nas datas de resolução no eKyte. Mostra ritmo de execução e ausência de gargalos.</p>
+
+      <div class="vert-timeline">
+        <div class="vt-item done">
+          <div class="vt-date">30.06 a 03.07.2026</div>
+          <div class="vt-title">Arranque da Fase 0</div>
+          <div class="vt-meta">DNS typos corrigidos (30.06), textos refeitos (01.07), H1s críticos adicionados (03.07). Três entregas críticas nos primeiros 4 dias.</div>
+        </div>
+        <div class="vt-item done">
+          <div class="vt-date">06 a 08.07.2026</div>
+          <div class="vt-title">Limpeza semântica e schema base</div>
+          <div class="vt-meta">Telefone removido dos H2, H1s de produto alinhados, Organization + BreadcrumbList, noindex e GSC. 5 entregas em 3 dias.</div>
+        </div>
+        <div class="vt-item done">
+          <div class="vt-date">10 a 20.07.2026</div>
+          <div class="vt-title">Virada para Fase 1</div>
+          <div class="vt-meta">Title da placa de ancoragem corrigido (10.07), security headers (15.07), Product schema (17.07), Article schema e H1 de blog corrigido (20.07).</div>
+        </div>
+        <div class="vt-item done">
+          <div class="vt-date">29.07 a 06.08.2026</div>
+          <div class="vt-title">Sprint de conteúdo duplicado</div>
+          <div class="vt-meta">Meta descriptions de 30 páginas (29.07), titles de categoria (29.07), diferenciação de rolos e padronização de marca (03 e 04.08), imagens otimizadas (06.08).</div>
+        </div>
+        <div class="vt-item done">
+          <div class="vt-date">12 a 26.08.2026</div>
+          <div class="vt-title">Performance e base de conteúdo</div>
+          <div class="vt-meta">6 páginas lentas (12.08), meta descriptions restantes (17.08), links de /home/ (18.08), conteúdo de categorias (21.08), alt text completo (26.08).</div>
+        </div>
+        <div class="vt-item done">
+          <div class="vt-date">31.08 a 09.09.2026</div>
+          <div class="vt-title">Clusters e hubs</div>
+          <div class="vt-meta">FAQ schema do blog (31.08), clusters Fundição + CNC (01.09), 2 hubs de 2000+ palavras (09.09). Fase 2 com 67% concluída.</div>
+        </div>
+        <div class="vt-item exec">
+          <div class="vt-date">09.09 em diante</div>
+          <div class="vt-title">Em execução agora</div>
+          <div class="vt-meta">Malha de links internos entre hubs, placeholder e esta apresentação. Três tarefas com Marcos Luciano.</div>
+        </div>
+        <div class="vt-item pend">
+          <div class="vt-date">Próximos 14 dias</div>
+          <div class="vt-title">Fase 3 pendente</div>
+          <div class="vt-meta">8 entregas: +2 hubs, 4 spokes, FAQPage, links, monitoramento, Core Web Vitals e relatório final.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10 : PROXIMOS PASSOS -->
+  <div class="card">
+    <div class="card-body">
+      <h2><span class="slide-num">10</span> Próximos passos | Como fechar os 30% restantes</h2>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:20px;">
+        <div style="background: linear-gradient(135deg, #0d0d0d, #1a1a1a); color:#fff; border-radius:12px; padding:20px; position:relative; overflow:hidden;">
+          <div style="position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--red), var(--gold));"></div>
+          <div style="font-size:11px; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:0.6px;">Prioridade 1 | Esta semana</div>
+          <div style="font-size:16px; font-weight:700; margin-top:8px;">Fechar Fase 2</div>
+          <p style="color:rgba(255,255,255,0.75); font-size:14px; margin-top:8px;">Malha de links internos entre os 2 hubs e conteúdo existente, remover placeholder.png e validar esta apresentação com cliente.</p>
+          <div style="margin-top:12px; font-size:12px; color:var(--gold); font-weight:700;">8,5h | 3 tarefas | Marcos Luciano</div>
+        </div>
+        <div style="background: linear-gradient(135deg, #fcfaf7, #f8f7f4); border:1px solid var(--gold-border); border-radius:12px; padding:20px;">
+          <div style="font-size:11px; font-weight:700; color:var(--red); text-transform:uppercase; letter-spacing:0.6px;">Prioridade 2 | Próximos 14 dias</div>
+          <div style="font-size:16px; font-weight:700; color:var(--gray-900); margin-top:8px;">Executar Fase 3 completa</div>
+          <p style="font-size:14px; margin-top:8px;">Mapear clusters complementares, produzir 2 hubs + 4 spokes, aplicar FAQPage, expandir links, configurar monitoramento, testar Core Web Vitals e entregar relatório final.</p>
+          <div style="margin-top:12px; font-size:12px; color:var(--gray-600); font-weight:700;">51,5h | 8 tarefas | Marcos Luciano</div>
+        </div>
+      </div>
+
+      <h3>Checklist de fechamento</h3>
+      <ul class="check-list">
+        <li><span class="check-icon exec">◐</span><span><strong>Malha de links internos entre hubs</strong>, conectar Fundição e CNC com produtos e blog para distribuir autoridade</span></li>
+        <li><span class="check-icon exec">◐</span><span><strong>Substituir placeholder.png</strong>, varredura final em templates Elementor</span></li>
+        <li><span class="check-icon exec">◐</span><span><strong>Apresentação e revisão Mês 1</strong>, esta entrega, validação com cliente</span></li>
+        <li><span class="check-icon pend">○</span><span><strong>Mapear clusters Peças Industriais + Construção Civil</strong>, base para próxima expansão</span></li>
+        <li><span class="check-icon pend">○</span><span><strong>Produzir 2 hubs adicionais + 4 spokes</strong>, 8000+ palavras novas com EEAT</span></li>
+        <li><span class="check-icon pend">○</span><span><strong>FAQPage nos hubs + links expandidos</strong>, fechar malha semântica completa</span></li>
+        <li><span class="check-icon pend">○</span><span><strong>Monitoramento de rankings + Core Web Vitals</strong>, estabelecer linha de base para 90 dias</span></li>
+        <li><span class="check-icon pend">○</span><span><strong>Relatório de fechamento do trimestre</strong>, consolidado final com métricas de GSC</span></li>
+      </ul>
+
+      <div class="risk-box" style="border-left-color: var(--gold); background: linear-gradient(135deg, #fefcf5, #f8f7f4);">
+        <h4 style="color:#8b7a4a;">Recomendação</h4>
+        <p>Manter o ritmo atual. Fase 0 e 1 mostraram que o time entrega acima do estimado quando o escopo é técnico. Para a Fase 3, proteger agenda de copywriter para os hubs é o gargalo principal. Sugerimos travar datas de produção dos 2 hubs complementares já nesta semana e agendar teste de Core Web Vitals para o dia seguinte à publicação dos spokes, para capturar LCP real de produção.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11 : GLOSSARIO E FONTE -->
+  <div class="card">
+    <div class="card-body">
+      <h2><span class="slide-num">11</span> Notas e fonte dos dados</h2>
+      <table>
+        <tr><td><strong>Projeto</strong></td><td>Metal Indianapolis - SEO | ID 309016 | Workspace METAL INDIANAPOLIS (122067) | V4 Peretto</td></tr>
+        <tr><td><strong>Período</strong></td><td>23.06.2026 a 23.09.2026 | 92 dias corridos | 37 tarefas no cronograma</td></tr>
+        <tr><td><strong>Fonte</strong></td><td>eKyte API | list_project_tasks em 16.09.2026 | Campos effort, actualTime, resolvedAt, phase</td></tr>
+        <tr><td><strong>Horas</strong></td><td>Planejado: effort em minutos somado por fase. Realizado: actualTime em minutos apontado. 1h = 60 min. Valores arredondados a 0,1h.</td></tr>
+        <tr><td><strong>Status</strong></td><td>Concluída = situation 30 | Em execução = phase Execução [TECH] (11863) | Pendente = sem resolvedAt</td></tr>
+        <tr><td><strong>Responsáveis</strong></td><td>André Bock (Fase 0 e 1, 20 entregas) e Marcos Luciano (Fase 2 e 3, 17 entregas)</td></tr>
+        <tr><td><strong>Layout</strong></td><td>Clone idêntico do CSS da auditoria técnica em indianapolis-seo-audit/index.html | Ubuntu + Plus Jakarta Sans + JetBrains Mono | Paleta vermelho #E50914 e dourado #c9a96e</td></tr>
+      </table>
+
+      <div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap;">
+        <a href="../indianapolis-seo-audit/index.html" style="display:inline-flex; align-items:center; gap:8px; padding:10px 18px; background: linear-gradient(135deg, #0d0d0d, #1a1a1a); color:#fff; border-radius:8px; text-decoration:none; font-size:13px; font-weight:700; letter-spacing:0.3px;"><span style="color:var(--gold);">←</span> Voltar para Auditoria Técnica</a>
+        <a href="https://app.ekyte.com/#/projects/309016/edit" target="_blank" style="display:inline-flex; align-items:center; gap:8px; padding:10px 18px; background:#fff; border:1px solid var(--gold-border); color:var(--gray-800); border-radius:8px; text-decoration:none; font-size:13px; font-weight:700;">Abrir projeto no eKyte →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Apresentação de Execução SEO gerada em Setembro de 2026 pela equipe de SEO da <strong>V4 Company</strong> | Projeto 309016 | Baseado em dados reais do eKyte | Layout espelho da auditoria técnica de Junho 2026
+  </div>
+</div>
+
+</body>
+</html>
