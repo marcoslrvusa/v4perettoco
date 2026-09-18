@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Share of Search | Relatório Inicial de Produtização | V4 Company | Set 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--red:rgb(229,9,20);--red-dark:rgb(180,7,16);--red-light:rgb(255,60,70);--gold:#c9a96e;--gold-light:#f5f0e6;--gold-border:#e8dcc8;--gray-50:#fafafa;--gray-100:#f5f5f5;--gray-200:#eee;--gray-300:#e0e0e0;--gray-500:#9e9e9e;--gray-600:#757575;--gray-700:#616161;--gray-800:#424242;--gray-900:#212121}
+body{font-family:'Ubuntu',-apple-system,BlinkMacSystemFont,sans-serif;background:#f8f7f4;color:var(--gray-900);line-height:1.7;font-size:16px}
+.cover{background:linear-gradient(135deg,#0d0d0d 0%,#1a1a1a 50%,#2a2a2a 100%);color:#fff;padding:64px 40px 48px;text-align:center;position:relative;overflow:hidden}
+.cover::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(201,169,110,.06) 0%,transparent 60%);pointer-events:none}
+.cover-content{position:relative;z-index:1;max-width:840px;margin:0 auto}
+.cover-content::before{content:'';position:absolute;top:-16px;left:50%;transform:translateX(-50%);width:200px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.cover-content::after{content:'';display:block;width:60px;height:2px;background:var(--gold);margin:28px auto 0;border-radius:1px}
+.cover .label{display:inline-block;background:rgba(201,169,110,.12);border:1px solid rgba(201,169,110,.3);padding:6px 20px;border-radius:20px;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:20px;color:var(--gold)}
+.cover h1{font-size:42px;font-weight:700;line-height:1.15;margin-bottom:14px;letter-spacing:-.5px;font-family:'Plus Jakarta Sans',serif}
+.cover p{font-size:18px;opacity:.85;margin-bottom:24px;font-weight:300}
+.cover-meta{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;font-size:14px;opacity:.7}
+.container{max-width:980px;margin:-36px auto 48px;position:relative;z-index:2;padding:0 12px}
+.card{background:#fff;border-radius:16px;box-shadow:0 2px 20px rgba(0,0,0,.05);margin-bottom:28px;overflow:hidden;border:1px solid var(--gray-300);position:relative}
+.card::before{content:'';position:absolute;top:0;left:40px;right:40px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-border),var(--gold),var(--gold-border),transparent);opacity:.6}
+.card-body{padding:44px 52px}
+h2{font-size:24px;font-weight:700;color:var(--red);margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--gold-border);display:flex;align-items:center;gap:10px;position:relative}
+h2::after{content:'';position:absolute;bottom:-1px;left:0;width:40px;height:2px;background:var(--gold);border-radius:1px}
+h2 .slide-num{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--red);color:#fff;font-size:13px;font-weight:800;flex-shrink:0}
+h3{font-size:18px;font-weight:700;color:var(--gray-900);margin:36px 0 18px}
+h4{font-size:16px;font-weight:700;color:var(--gray-800);margin:22px 0 12px}
+p{font-size:16px;color:var(--gray-700);margin-bottom:16px;line-height:1.8}
+.badge{display:inline-block;padding:5px 16px;border-radius:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px}
+.badge-critico{background:#fef2f2;color:var(--red);border:1px solid #fecaca}
+.badge-alto{background:#fff7ed;color:#c2410c;border:1px solid #fed7aa}
+.badge-ok{background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0}
+.badge-exec{background:#fffbeb;color:#b45309;border:1px solid #fde68a}
+.badge-pend{background:#f5f5f5;color:#6b7280;border:1px solid #d1d5db}
+.badge-info{background:#f5f5f5;color:#616161;border:1px solid #d4d4d4}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14px}
+th,td{padding:13px 15px;text-align:left;border-bottom:1px solid var(--gray-100);vertical-align:top}
+th{background:linear-gradient(135deg,var(--gray-50),#f8f7f4);font-weight:700;color:var(--gray-700);font-size:11px;text-transform:uppercase;letter-spacing:.7px;border-bottom:2px solid var(--gold-border)}
+tr:hover td{background:#fcfaf7}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px}
+.kpi-grid.g3{grid-template-columns:repeat(3,1fr)}
+.kpi-card{background:#f2f0ec;border-radius:10px;padding:20px 12px 18px;text-align:center;border:1px solid var(--gold-border);position:relative;overflow:hidden}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),var(--gold))}
+.kpi-card .value{font-size:28px;font-weight:700;color:var(--red);line-height:1.1}
+.kpi-card .label{font-size:12px;color:var(--gray-600);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:8px}
+.kpi-card .sub{font-size:12px;color:var(--gray-600);margin-top:4px}
+.risk-box{background:linear-gradient(135deg,#fcfaf7,#f8f7f4);border-left:4px solid var(--red);padding:22px 26px;border-radius:0 12px 12px 0;margin-bottom:18px}
+.risk-box.green{border-left-color:#15803d;background:linear-gradient(135deg,#f0fdf4,#f8f7f4)}
+.risk-box.goldbox{border-left-color:var(--gold);background:linear-gradient(135deg,#fffbeb,#f8f7f4)}
+.risk-box h4{margin:0 0 10px;color:var(--red);font-size:16px}
+.risk-box.green h4{color:#15803d}
+.risk-box.goldbox h4{color:#8b7a4a}
+.risk-box p{font-size:15px;margin:0}
+.finding{border:1px solid var(--gray-200);border-radius:12px;padding:26px 30px;margin-bottom:18px;background:#fcfcfc;border-left:3px solid transparent}
+.finding:hover{border-color:var(--gold-border);border-left-color:var(--gold)}
+.finding.modA{border-left-color:var(--red)}
+.finding.modB{border-left-color:var(--gold);background:#fffdf6}
+.finding.modC{border-left-color:#15803d}
+.finding-title{font-weight:700;font-size:17px;color:var(--gray-900)}
+.bar-row{display:flex;align-items:center;gap:16px;margin-bottom:14px}
+.bar-label{width:170px;font-size:13px;font-weight:700;color:var(--gray-700);text-align:right;flex-shrink:0}
+.bar-track{flex:1;height:30px;background:var(--gray-100);border-radius:6px;overflow:hidden}
+.bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:14px;font-size:13px;font-weight:700;color:#fff}
+.bar-fill.red{background:linear-gradient(90deg,var(--red),var(--red-light))}
+.bar-fill.gold{background:linear-gradient(90deg,#b8963a,#d4b96a)}
+.bar-fill.green{background:linear-gradient(90deg,#15803d,#22c55e)}
+.bar-fill.gray{background:linear-gradient(90deg,#616161,#9e9e9e)}
+.chart-box{background:#fcfcfc;border:1px solid var(--gray-200);border-radius:12px;padding:24px;margin:20px 0}
+.chart-box h4{margin:0 0 4px;font-size:15px;color:var(--gray-900)}
+.chart-box .hint{font-size:13px;color:var(--gray-600);margin-bottom:14px}
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.timeline{display:flex;gap:0;margin:32px 0 16px;position:relative}
+.timeline::before{content:'';position:absolute;top:28px;left:5%;right:5%;height:3px;background:linear-gradient(90deg,var(--gold-border),var(--gold),var(--gold-border));border-radius:2px}
+.timeline-phase{flex:1;text-align:center;position:relative;padding:0 8px}
+.timeline-phase .dot{width:16px;height:16px;border-radius:50%;margin:0 auto 12px;position:relative;z-index:1;border:3px solid #fff;box-shadow:0 0 0 2px var(--gold)}
+.timeline-phase .phase-name{font-size:13px;font-weight:700;color:var(--gray-800)}
+.timeline-phase .phase-hours{font-size:22px;font-weight:700;color:var(--red)}
+.timeline-phase .phase-pct{font-size:12px;color:var(--gray-500);font-weight:600}
+.slide-nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 0;justify-content:center}
+.slide-nav a{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.9);font-size:12px;font-weight:600;text-decoration:none}
+.slide-nav a:hover{background:rgba(201,169,110,.18);border-color:var(--gold);color:#fff}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.toc-item{display:flex;gap:14px;align-items:center;padding:14px 16px;border:1px solid var(--gray-200);border-radius:10px;background:#fcfcfc;text-decoration:none}
+.toc-item:hover{border-color:var(--gold);background:#fefcf5}
+.toc-num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--red),var(--red-light));color:#fff;font-weight:800;font-size:13px;flex-shrink:0}
+.toc-title{font-weight:700;color:var(--gray-900);font-size:14px}
+.toc-desc{font-size:12px;color:var(--gray-600);margin-top:2px}
+.callout{background:linear-gradient(135deg,#0d0d0d,#1a1a1a);color:#fff;border-radius:12px;padding:26px 28px;margin:20px 0;position:relative;overflow:hidden}
+.callout::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),var(--gold))}
+.callout h4{color:var(--gold);margin:0 0 8px;font-size:15px;text-transform:uppercase;letter-spacing:.6px}
+.callout p{color:rgba(255,255,255,.82);font-size:15px;margin:0}
+code{font-family:'JetBrains Mono',monospace;background:var(--gray-100);padding:2px 8px;border-radius:3px;font-size:13px;color:var(--red)}
+.check-list{list-style:none;padding:0}
+.check-list li{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--gray-100);font-size:15px;color:var(--gray-700)}
+.check-icon{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;margin-top:1px}
+.check-icon.ok{background:#dcfce7;color:#15803d;border:1px solid #bbf7d0}
+.check-icon.exec{background:#fef3c7;color:#b45309;border:1px solid #fde68a}
+.check-icon.pend{background:#f3f4f6;color:#6b7280;border:1px solid #e5e7eb}
+.gantt{margin:18px 0}
+.gantt-row{display:grid;grid-template-columns:220px 1fr 86px;gap:12px;align-items:center;margin-bottom:10px;font-size:13px}
+.gantt-label{font-weight:700;color:var(--gray-800);text-align:right}
+.gantt-track{height:26px;background:var(--gray-100);border-radius:6px;position:relative;overflow:hidden}
+.gantt-fill{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:10px;font-size:11px;font-weight:700;color:#fff;white-space:nowrap}
+.gantt-hours{font-weight:800;color:var(--red);text-align:right;font-size:13px}
+.footer{text-align:center;padding:36px;font-size:13px;color:var(--gray-500);border-top:1px solid var(--gold-border);position:relative}
+@media(max-width:640px){.cover h1{font-size:26px}.card-body{padding:22px 20px}.kpi-grid,.kpi-grid.g3{grid-template-columns:repeat(2,1fr)}.chart-grid{grid-template-columns:1fr}.toc-grid{grid-template-columns:1fr}.bar-label{width:100px;font-size:11px}.gantt-row{grid-template-columns:1fr}.gantt-label{text-align:left}}
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="cover-content">
+<div class="label">Produto novo | Relatório inicial | Setembro 2026</div>
+<h1>Share of Search<br>Relatório de Produtização</h1>
+<p>Custos de ferramentas, cronograma com prazos em dias e horas por entrega, e os 3 módulos do produto explicados para decisão da liderança.</p>
+<div class="cover-meta"><span>Documento interno V4 Company</span><span>Câmbio ref: USD 5,50 | EUR 6,00</span><span>Preços verificados em set 2026</span></div>
+<div class="slide-nav">
+<a href="#sumario">01 Sumário</a><a href="#conceito">02 Conceito</a><a href="#modulos">03 Módulos</a><a href="#custos">04 Custos</a><a href="#cronograma">05 Cronograma</a><a href="#precificacao">06 Preço</a><a href="#riscos">07 Riscos</a><a href="#decisao">08 Solicitações</a>
+</div>
+</div>
+</div>
+<div class="container">
+
+<div class="card" id="sumario"><div class="card-body">
+<h2><span class="slide-num">01</span> Sumário executivo: leitura em 1 minuto</h2>
+<div class="kpi-grid g3">
+<div class="kpi-card"><div class="value">3</div><div class="label">Módulos do produto</div><div class="sub">SEO, AI Search, Marketplace</div></div>
+<div class="kpi-card"><div class="value">34 a 62h</div><div class="label">Esforço por cliente</div><div class="sub">16 a 28 dias úteis</div></div>
+<div class="kpi-card"><div class="value">R$ 176 a 1,4 mil</div><div class="label">Custo ferramentas / mês</div><div class="sub">cheio, antes do rateio</div></div>
+</div>
+<p><strong>O que estamos propondo:</strong> transformar Share of Search em produto vendável recorrente, com 3 módulos independentes. O cliente pode contratar só um módulo ou a jornada completa. Cada módulo tem entregas, prazos e horas fechados neste documento.</p>
+<div class="toc-grid">
+<a class="toc-item" href="#modulos"><div class="toc-num">A</div><div><div class="toc-title">Módulo A | SEO Tradicional</div><div class="toc-desc">34,5h | 16 dias úteis | porta de entrada</div></div></a>
+<a class="toc-item" href="#modulos"><div class="toc-num" style="background:linear-gradient(135deg,#b8963a,#d4b96a)">B</div><div><div class="toc-title">Módulo B | AI Search + SEO (flagship)</div><div class="toc-desc">62h | 28 dias úteis | maior margem</div></div></a>
+<a class="toc-item" href="#modulos"><div class="toc-num" style="background:linear-gradient(135deg,#15803d,#22c55e)">C</div><div><div class="toc-title">Módulo C | Marketplace</div><div class="toc-desc">44h | 22 dias úteis | ML, Amazon, Shopee</div></div></a>
+<a class="toc-item" href="#custos"><div class="toc-num" style="background:linear-gradient(135deg,#616161,#9e9e9e)">$</div><div><div class="toc-title">Custos e rateio explicado</div><div class="toc-desc">tabela completa + Ubersuggest + exemplo prático</div></div></a>
+</div>
+<div class="risk-box goldbox" style="margin-top:20px"><h4>Nossa recomendação</h4><p>Recomendamos homologar o <strong>Módulo A como produto de entrada</strong> (ciclo curto, com o Ubersuggest que já assinamos) e o <strong>Módulo B como flagship de 2026</strong> (diferenciação em AI Search, tíquete maior), mantendo o Módulo C em paralelo só para clientes com operação relevante em marketplace. Todos os números de horas e prazos abaixo já consideram a curva de aprendizado das 3 primeiras entregas.</p></div>
+</div></div>
+
+<div class="card" id="conceito"><div class="card-body">
+<h2><span class="slide-num">02</span> O que é Share of Search, na prática</h2>
+<p>Share of Search (SoS) é a <strong>fatia de demanda de busca que a marca captura contra os concorrentes</strong>. Se 1.000 pessoas buscam o tema por mês e 350 buscas usam termos da marca do cliente ou caem nas páginas dele, o SoS é 35%. É o KPI que antecede o share of market: quando o SoS sobe, a participação de mercado costuma subir de 6 a 12 meses depois.</p>
+<table><tr><th>Fórmula</th><th>Como ler</th><th>Meta usual</th></tr>
+<tr><td><code>SoS = buscas da marca / buscas totais do tema x 100</code></td><td>Ex: 3.200 / 10.000 = <strong>32%</strong></td><td><span class="badge badge-ok">B2B nichado acima de 30%</span></td></tr>
+<tr><td><code>SoS IA = citações da marca / citações totais x 100</code></td><td>Ex: citada em 42 de 100 respostas de IA = <strong>42%</strong></td><td><span class="badge badge-exec">AI Search acima de 40%</span></td></tr>
+<tr><td><code>SoS Marketplace = visitas anúncios marca / visitas categoria x 100</code></td><td>Ex: proxy por share de buscas internas e sellers</td><td><span class="badge badge-info">Marketplace acima de 25%</span></td></tr></table>
+<div class="chart-box"><h4>Exemplo visual: evolução de SoS em 90 dias (dados ilustrativos)</h4><div class="hint">Os valores aparecem ao passar o mouse. É assim que o cliente acompanha no dashboard.</div><canvas id="chLine" height="120"></canvas></div>
+<div class="callout"><h4>Por que produtizar agora</h4><p>Busca tradicional ainda decide compra, IA generativa já responde antes do clique e marketplace tem busca própria que o Google não enxerga. Medir só um dos três deixa ponto cego. O produto em 3 módulos cobre cada busca onde ela acontece, sem obrigar o cliente a comprar tudo de uma vez.</p></div>
+</div></div>
+
+<div class="card" id="modulos"><div class="card-body">
+<h2><span class="slide-num">03</span> Os 3 módulos: diferença prática e o que muda na execução</h2>
+<p>Cada módulo responde uma pergunta diferente do coordenador e do cliente. Abaixo o comparativo direto e depois o detalhe de cada um.</p>
+<table><tr><th>Dimensão</th><th>Módulo A: SEO Tradicional</th><th>Módulo B: AI Search + SEO</th><th>Módulo C: Marketplace</th></tr>
+<tr><td><strong>Pergunta que responde</strong></td><td>Quem domina o Google no meu tema?</td><td>Quem domina o Google <strong>e</strong> as respostas de IA?</td><td>Quem domina a busca <strong>dentro</strong> do ML e da Amazon?</td></tr>
+<tr><td><strong>Fonte de dados</strong></td><td>Ubersuggest (já assinado) ou Semrush/Ahrefs + GSC + DataForSEO</td><td>Tudo do A + Peec AI ou Otterly (ChatGPT, Perplexity, AI Overviews, Gemini)</td><td>Nubimetrics + Real Trends + leitura de catálogo</td></tr>
+<tr><td><strong>Entrega central</strong></td><td>Mapa de SoS Google + gaps de conteúdo</td><td>SoS duplo (Google + IA) + plano GEO</td><td>SoS por categoria + plano de títulos e preço</td></tr>
+<tr><td><strong>Tempo de maturação</strong></td><td>Dados em 3 a 5 dias</td><td>14 a 21 dias de janela de coleta IA (não dá para acelerar)</td><td>7 a 10 dias (depende de acesso à conta do seller)</td></tr>
+<tr><td><strong>Perfil da equipe</strong></td><td>1 analista SEO</td><td>1 analista SEO + 1 redator GEO</td><td>1 analista marketplace</td></tr>
+<tr><td><strong>Recompra natural</strong></td><td>Trimestral</td><td>Mensal (IA muda rápido, justifica recorrência)</td><td>Mensal em categoria competitiva</td></tr></table>
+<div class="chart-box"><h4>Comparativo de esforço e prazo por módulo (horas e dias úteis)</h4><div class="hint">Módulo B é o mais completo e o de maior tíquete. Módulo A é a porta de entrada mais rápida.</div><canvas id="chBars" height="130"></canvas></div>
+
+<div class="finding modA"><div class="finding-title">Módulo A | SEO Tradicional <span class="badge badge-critico">34,5h | 16 dias úteis</span></div>
+<p style="margin-top:10px"><strong>Particularidade:</strong> tudo vem de volume de busca estimado e posição no Google. É determinístico e rápido. Limitação honesta: volume é estimativa das ferramentas, não número exato do Google. Por isso trabalhamos sempre com <strong>participação relativa</strong> (fatia), nunca com número absoluto isolado.</p>
+<p><strong>O que muda na execução:</strong> fluxo 100% em ferramentas que o time já domina. Sem janela de espera. Keyword set de até 125 termos no plano atual (teto do Individual, priorizar o top 125 e completar com DataForSEO), coleta em lote (custo variável irrisório), cálculo em planilha padrão e dashboard no Looker Studio. Como já temos Ubersuggest assinado, o Módulo A sai com custo incremental quase zero. Ideal para validar o produto nas 3 primeiras vendas.</p>
+<ul class="check-list"><li><span class="check-icon ok">1</span> <span><strong>Entregas:</strong> keyword set validado, base de volumes, cálculo SoS por tema e concorrente, dashboard, gaps e plano de ação SEO, apresentação executiva.</span></li><li><span class="check-icon exec">2</span> <span><strong>Quando vender:</strong> cliente que pergunta "por que meu concorrente aparece mais que eu no Google". Ciclo curto, prova de valor rápida.</span></li></ul></div>
+
+<div class="finding modB"><div class="finding-title">Módulo B | AI Search + SEO <span class="badge badge-alto">62h | 28 dias úteis | flagship</span></div>
+<p style="margin-top:10px"><strong>Particularidade:</strong> soma duas medições que não se misturam. O SoS Google mede clique potencial. O SoS IA mede <strong>citação e sentimento</strong> (a IA citou a marca? falou bem? linkou qual fonte?). Exige janela de 14 a 21 dias de monitoramento contínuo porque resposta de IA varia por dia, modelo e região. Não existe atalho confiável para essa janela.</p>
+<p><strong>O que muda na execução em relação ao A:</strong> adiciona 4 camadas. (1) Prompt pack de 50 a 100 perguntas reais que o comprador faria à IA. (2) Coleta multimodelo (ChatGPT, Perplexity, AI Overviews, Gemini) via Peec ou Otterly. (3) Classificação de sentimento e fontes citadas. (4) Plano GEO: ajustes de conteúdo para ser citado (estrutura, FAQ, dados, autoridade). Acrescenta cerca de 27,5h e 12 dias úteis sobre o Módulo A, mas é o que justifica recorrência mensal.</p>
+<ul class="check-list"><li><span class="check-icon ok">1</span> <span><strong>Entregas:</strong> tudo do Módulo A + prompt pack, SoS IA por modelo, mapa de citações e sentimento, plano GEO + SEO, dashboard unificado, roadmap de 90 dias.</span></li><li><span class="check-icon exec">2</span> <span><strong>Quando vender:</strong> cliente que já pergunta "o ChatGPT recomenda meu concorrente e não eu". Tíquete maior, churn menor.</span></li></ul></div>
+
+<div class="finding modC"><div class="finding-title">Módulo C | Marketplace <span class="badge badge-ok">44h | 22 dias úteis</span></div>
+<p style="margin-top:10px"><strong>Particularidade:</strong> marketplace não tem volume de busca público como o Google. O SoS aqui é <strong>proxy</strong>: combina buscas internas por categoria (Nubimetrics), posição dos anúncios, share de sellers e leitura de títulos. Exige acesso de leitura à conta do seller no ML ou na Amazon. Sem esse acesso, a precisão cai pela metade.</p>
+<p><strong>O que muda na execução em relação ao A e ao B:</strong> troca o objeto. Em vez de páginas e prompts, o inventário é catálogo: títulos, preços, avaliações, sortimento. A coleta é por categoria e concorrente seller, não por keyword solta. O plano de ação é operacional (reescrever títulos no padrão de busca interna, ajustar preço e margem, cobrir gaps de sortimento), com impacto em vendas em 30 a 60 dias, mais rápido que SEO.</p>
+<ul class="check-list"><li><span class="check-icon ok">1</span> <span><strong>Entregas:</strong> keyword set de busca interna, SoS por categoria, mapa de sellers e preços, dashboard, plano de títulos + preço + sortimento, apresentação.</span></li><li><span class="check-icon exec">2</span> <span><strong>Quando vender:</strong> cliente com mais de 30% da receita vindo de ML, Amazon ou Shopee, ou que reclama de seller não autorizado e guerra de preço.</span></li></ul></div>
+</div></div>
+
+<div class="card" id="custos"><div class="card-body">
+<h2><span class="slide-num">04</span> Custos de ferramentas: tabela completa e rateio explicado</h2>
+<p>Preços públicos verificados em setembro de 2026, plano mensal. DataForSEO é pré-pago por uso e não expira. Nosso Ubersuggest é o Individual de $12 por mês (cerca de R$ 66), com opção vitalícia de $120 em pagamento único.</p>
+<table><tr><th>Ferramenta</th><th>Para qual módulo</th><th>Plano recomendado</th><th>USD / mês</th><th>BRL / mês</th><th>Tipo de custo</th></tr>
+<tr><td><strong>Ubersuggest</strong> (já assinado)</td><td>A (base) e B (ponte)</td><td>Individual $12 (1 domínio, 125 keywords/projeto, 5 concorrentes, 10 prompts IA/mês)</td><td>$12,00</td><td>R$ 66</td><td>Fixo agência, já contratado: incremental R$ 0</td></tr>
+<tr><td><strong>Semrush</strong> (upgrade futuro do A e B)</td><td>A e B</td><td>Pro (5 projetos, 500 keywords)</td><td>$139,95</td><td>R$ 770</td><td>Fixo agência, rateável</td></tr>
+<tr><td><strong>Ahrefs</strong> (alternativa à Semrush)</td><td>A e B</td><td>Standard (20 projetos, 2.000 keywords)</td><td>$249,00</td><td>R$ 1.370</td><td>Fixo agência, rateável</td></tr>
+<tr><td><strong>DataForSEO</strong> SERP API</td><td>A e B</td><td>Pay as you go, depósito mín $50</td><td>$5 a $20</td><td>R$ 28 a R$ 110</td><td>Variável por cliente</td></tr>
+<tr><td><strong>Peec AI</strong> (monitor IA)</td><td>B</td><td>Pro (100 prompts, 3 engines)</td><td>$230 (EUR 199)</td><td>R$ 1.194</td><td>Fixo agência, rateável</td></tr>
+<tr><td><strong>Otterly AI</strong> (alternativa à Peec)</td><td>B</td><td>Standard</td><td>$189,00</td><td>R$ 1.040</td><td>Fixo agência, rateável</td></tr>
+<tr><td><strong>Ahrefs Brand Radar</strong> (add on IA)</td><td>B (opcional)</td><td>Base + créditos</td><td>$199,00</td><td>R$ 1.095</td><td>Opcional, só se já tiver Ahrefs</td></tr>
+<tr><td><strong>Nubimetrics</strong></td><td>C</td><td>Premium (40 sellers, 500 listings)</td><td>$59*</td><td>R$ 325*</td><td>Fixo agência, rateável</td></tr>
+<tr><td><strong>Real Trends</strong></td><td>C (complemento)</td><td>Pro</td><td>$29*</td><td>R$ 160*</td><td>Fixo agência, rateável</td></tr>
+<tr><td><strong>GSC + Looker Studio</strong></td><td>A, B, C</td><td>Gratuito</td><td>$0</td><td>R$ 0</td><td>Zero</td></tr></table>
+<p style="font-size:13px;color:var(--gray-600)">* Nubimetrics e Real Trends não publicam tabela aberta no Brasil em 2026, valores estimados por faixa histórica e trial. Confirmar na contratação. Ubersuggest Business $20 (R$ 110) e Enterprise $40 (R$ 220) como upgrades futuros; add-ons de +$5 (cerca de R$ 28) por domínio, keywords ou prompts extras. Fontes: app.neilpatel.com/en/pricing, semrush.com/pricing, ahrefs.com/pricing, peec.ai/pricing, otterly.ai, dataforseo.com, nubimetrics.com. Consultado em 18/09/2026.</p>
+
+<div class="finding modA" style="margin-top:20px"><div class="finding-title">Nosso Ubersuggest assinado: onde funciona e onde não funciona</div>
+<p style="margin-top:10px"><strong>Resposta direta: sim, funciona para o Módulo A e serve de ponte no Módulo B. Não serve para o Módulo C.</strong> Nosso plano Individual de $12 cobre 1 domínio, 150 buscas por dia, 125 keywords monitoradas por projeto com atualização semanal, 5 concorrentes, 20 localidades e 20 mil sugestões de keywords por mês. Em 2026 ele ganhou ainda visibilidade em AI Search (10 prompts por projeto com ciclo mensal em ChatGPT e Gemini), app no ChatGPT e conector MCP com 37 ferramentas.</p>
+<table><tr><th>Módulo</th><th>Veredito</th><th>Por quê</th></tr>
+<tr><td><strong>A | SEO</strong></td><td><span class="badge badge-ok">Funciona</span></td><td>Keyword set de até 125 termos cabe no limite: priorizar o top 125 e completar com DataForSEO. Tracking semanal é suficiente para SoS trimestral. Exige validação cruzada com GSC, pois volumes são aproximados e a base é menor que Semrush e Ahrefs.</td></tr>
+<tr><td><strong>B | AI Search</strong></td><td><span class="badge badge-exec">Ponte provisória</span></td><td>Só 10 prompts mensais em ChatGPT e Gemini. O flagship exige 50 a 100 prompts em 3 a 4 modelos com coleta diária. Dá para fazer piloto e demo, mas o stack oficial precisa de Peec ou Otterly. Add-on de +25 prompts existe para estender sem trocar de plano.</td></tr>
+<tr><td><strong>C | Marketplace</strong></td><td><span class="badge badge-pend">Não cobre</span></td><td>Não enxerga busca interna de ML, Amazon ou Shopee. Segue com Nubimetrics + Real Trends.</td></tr></table>
+<p><strong>Atenção ao limite de 1 domínio (ponto crítico para a liderança):</strong> o plano atual comporta 1 cliente por vez no rank tracking. Cada cliente simultâneo adicional pede um add-on de domínio de +$5 por mês (cerca de R$ 28, já com 125 keywords, 3 concorrentes e 10 prompts inclusos) ou o upgrade para o Business de $20 por mês (7 domínios). Na prática, o custo por cliente segue irrisório, mas precisa constar no cálculo de margem.</p>
+<p><strong>Limites que precisam constar no método:</strong> atualização de ranking semanal (Semrush e Ahrefs atualizam todo dia), índice de backlinks menor (não usar para decisão de link building), dificuldade de keyword calibrada por Domain Authority (tende a inflar em termos comerciais). Nada disso invalida o SoS, que trabalha com fatia relativa, mas precisa estar escrito no relatório entregue ao cliente.</p></div>
+
+<div class="risk-box goldbox"><h4>O que é rateio por cliente (explicação simples)</h4><p><strong>Rateio significa dividir a mensalidade cheia de uma ferramenta entre todos os clientes que usam ela ao mesmo tempo.</strong> Pagamos o valor cheio uma vez e cada cliente absorve uma fração. Exemplo: Semrush Pro custa R$ 770 por mês e atende 10 projetos simultâneos. Com 8 clientes ativos de SoS, o custo por cliente é 770 / 8 = <strong>R$ 96 por cliente por mês</strong>. O cliente não paga a ferramenta cheia, paga a fração do uso dele. DataForSEO não entra no rateio porque é por consumo: cada cliente paga só o que consumiu (tipicamente R$ 30 a R$ 80 por rodada de coleta). Como já assinamos o Ubersuggest, o custo incremental dele por cliente novo é <strong>R$ 0 no 1º cliente e R$ 28 por cliente adicional</strong> (add-on de domínio).</p></div>
+
+<table><tr><th>Cenário de rateio (8 clientes ativos)</th><th>Custo cheio / mês</th><th>Custo rateado / cliente</th></tr>
+<tr><td>Ubersuggest Individual $12 (já assinado) + add-on +$5 por cliente extra</td><td>R$ 66</td><td><strong>R$ 0 no 1º cliente, R$ 28 por adicional</strong></td></tr>
+<tr><td>Semrush Pro dividido por 8 (upgrade futuro)</td><td>R$ 770</td><td><strong>R$ 96</strong></td></tr>
+<tr><td>Peec Pro dividido por 8</td><td>R$ 1.194</td><td><strong>R$ 149</strong></td></tr>
+<tr><td>Nubimetrics Premium dividido por 8</td><td>R$ 325</td><td><strong>R$ 41</strong></td></tr>
+<tr><td>DataForSEO (consumo direto, sem rateio)</td><td>-</td><td><strong>R$ 30 a R$ 80</strong></td></tr>
+<tr><td><strong>Total ferramentas por cliente: Módulo A com Ubersuggest $12</strong></td><td>-</td><td><strong>R$ 30 a R$ 108</strong></td></tr>
+<tr><td><strong>Total ferramentas por cliente: Módulo B</strong></td><td>-</td><td><strong>R$ 193 a R$ 243</strong></td></tr>
+<tr><td><strong>Total ferramentas por cliente: Módulo C</strong></td><td>-</td><td><strong>R$ 71 a R$ 121</strong></td></tr></table>
+
+<div class="chart-box"><h4>Custo cheio mensal por stack (R$) vs custo rateado por cliente (R$)</h4><div class="hint">Barra escura: o que a agência paga. Barra dourada: o que cada cliente absorve com 8 ativos. O Stack A usa o Ubersuggest de $12 que já assinamos. Os valores aparecem ao passar o mouse.</div><canvas id="chCost" height="130"></canvas></div>
+
+<div class="callout"><h4>Decisão de stack para homologar</h4><p>Stack de largada com custo incremental zero: Ubersuggest Individual $12 (já assinado) + DataForSEO + GSC + Looker Studio. Isso viabiliza o Módulo A de imediato e pilotos do Módulo B. Stack oficial do flagship: somar Peec Pro (cerca de R$ 1,2 mil por mês cheios, R$ 149 rateados) e, no marketplace, Nubimetrics Premium. Prevemos upgrade para Ubersuggest Business ($20) quando houver mais de 1 cliente simultâneo no tracking ou keyword set acima de 125 termos. Recomendamos não assinar Semrush e Ahrefs juntos no início: com o Ubersuggest em casa, um dos dois basta como upgrade futuro, quando o cliente exigir tracking diário ou análise profunda de backlinks.</p></div>
+</div></div>
+
+<div class="card" id="cronograma"><div class="card-body">
+<h2><span class="slide-num">05</span> Cronograma das entregas: prazo em dias e horas</h2>
+<p>Dias úteis contados do kickoff (D1). Horas são esforço real de equipe, não prazo corrido. A coleta de IA no Módulo B tem janela mínima de 14 dias corridos que não pode ser comprimida, por isso o B é o mais longo.</p>
+<div class="timeline">
+<div class="timeline-phase"><div class="dot" style="background:var(--red)"></div><div class="phase-hours">34,5h</div><div class="phase-name">Módulo A</div><div class="phase-pct">16 dias úteis</div></div>
+<div class="timeline-phase"><div class="dot" style="background:var(--gold)"></div><div class="phase-hours" style="color:#8b7a4a">62h</div><div class="phase-name">Módulo B</div><div class="phase-pct">28 dias úteis</div></div>
+<div class="timeline-phase"><div class="dot" style="background:#15803d;box-shadow:0 0 0 2px #15803d"></div><div class="phase-hours" style="color:#15803d">44h</div><div class="phase-name">Módulo C</div><div class="phase-pct">22 dias úteis</div></div>
+</div>
+
+<h3>Módulo A | SEO Tradicional: entrega por entrega</h3>
+<table><tr><th>#</th><th>Entrega</th><th>Prazo</th><th>Horas</th><th>Responsável</th><th>Dependência</th></tr>
+<tr><td>1</td><td><strong>Kickoff + concorrentes:</strong> 3 a 5 concorrentes, temas, acessos GSC</td><td>D2</td><td>2,0h</td><td>Analista SEO</td><td>Acesso GSC</td></tr>
+<tr><td>2</td><td><strong>Keyword set:</strong> 100 a 125 termos (teto do plano Individual), classificação branded vs não branded</td><td>D5</td><td>6,0h</td><td>Analista SEO</td><td>E1</td></tr>
+<tr><td>3</td><td><strong>Coleta volumes + SERP:</strong> Ubersuggest + DataForSEO em lote</td><td>D8</td><td>5,0h</td><td>Analista SEO</td><td>E2</td></tr>
+<tr><td>4</td><td><strong>Cálculo SoS + Share of Voice:</strong> planilha padrão por tema e concorrente</td><td>D10</td><td>4,0h</td><td>Analista SEO</td><td>E3</td></tr>
+<tr><td>5</td><td><strong>Dashboard Looker Studio:</strong> evolução, ranking por tema, alertas</td><td>D13</td><td>6,0h</td><td>Analista SEO</td><td>E4</td></tr>
+<tr><td>6</td><td><strong>Gaps + plano de ação:</strong> quick wins de 30 dias + pillars de 90 dias</td><td>D15</td><td>7,5h</td><td>Analista SEO</td><td>E5</td></tr>
+<tr><td>7</td><td><strong>Apresentação executiva:</strong> leitura para diretoria + próximos passos</td><td>D16</td><td>4,0h</td><td>Analista SEO</td><td>E6</td></tr></table>
+<div class="gantt">
+<div class="gantt-row"><div class="gantt-label">E1 Kickoff (2h)</div><div class="gantt-track"><div class="gantt-fill red" style="width:13%">D1-D2</div></div><div class="gantt-hours">2,0h</div></div>
+<div class="gantt-row"><div class="gantt-label">E2 Keyword set (6h)</div><div class="gantt-track"><div class="gantt-fill red" style="width:30%;margin-left:10%">D3-D5</div></div><div class="gantt-hours">6,0h</div></div>
+<div class="gantt-row"><div class="gantt-label">E3 Coleta (5h)</div><div class="gantt-track"><div class="gantt-fill red" style="width:25%;margin-left:32%">D6-D8</div></div><div class="gantt-hours">5,0h</div></div>
+<div class="gantt-row"><div class="gantt-label">E4 Cálculo SoS (4h)</div><div class="gantt-track"><div class="gantt-fill red" style="width:20%;margin-left:52%">D9-D10</div></div><div class="gantt-hours">4,0h</div></div>
+<div class="gantt-row"><div class="gantt-label">E5 Dashboard (6h)</div><div class="gantt-track"><div class="gantt-fill red" style="width:28%;margin-left:62%">D11-D13</div></div><div class="gantt-hours">6,0h</div></div>
+<div class="gantt-row"><div class="gantt-label">E6 Plano ação (7,5h)</div><div class="gantt-track"><div class="gantt-fill red" style="width:25%;margin-left:72%">D14-D15</div></div><div class="gantt-hours">7,5h</div></div>
+<div class="gantt-row"><div class="gantt-label">E7 Apresentação (4h)</div><div class="gantt-track"><div class="gantt-fill red" style="width:12%;margin-left:86%">D16</div></div><div class="gantt-hours">4,0h</div></div>
+</div>
+
+<h3>Módulo B | AI Search + SEO: entrega por entrega</h3>
+<table><tr><th>#</th><th>Entrega</th><th>Prazo</th><th>Horas</th><th>Responsável</th><th>Dependência</th></tr>
+<tr><td>1</td><td><strong>Kickoff ampliado:</strong> concorrentes + personas + modelos IA prioritários</td><td>D3</td><td>4,0h</td><td>SEO + redator</td><td>Acessos + briefing</td></tr>
+<tr><td>2</td><td><strong>Keyword set SEO:</strong> 200 a 400 termos + intenção (pede Business $20 ou add-ons de keywords)</td><td>D7</td><td>7,0h</td><td>Analista SEO</td><td>E1</td></tr>
+<tr><td>3</td><td><strong>Prompt pack IA:</strong> 50 a 100 perguntas reais por tema e funil</td><td>D10</td><td>6,0h</td><td>Redator GEO</td><td>E1</td></tr>
+<tr><td>4</td><td><strong>Coleta SEO:</strong> volumes, SERP, Share of Voice Google</td><td>D13</td><td>6,0h</td><td>Analista SEO</td><td>E2</td></tr>
+<tr><td>5</td><td><strong>Coleta IA 14 a 21 dias:</strong> Peec ou Otterly, 3 a 4 modelos, janela contínua</td><td>D13-D21</td><td>8,0h</td><td>Analista SEO</td><td>E3 (janela fixa)</td></tr>
+<tr><td>6</td><td><strong>SoS duplo + sentimento:</strong> citação, posição na resposta, fontes, tom</td><td>D24</td><td>9,0h</td><td>SEO + redator</td><td>E4 + E5</td></tr>
+<tr><td>7</td><td><strong>Dashboard unificado:</strong> Google + IA lado a lado por tema</td><td>D26</td><td>8,0h</td><td>Analista SEO</td><td>E6</td></tr>
+<tr><td>8</td><td><strong>Plano GEO + SEO:</strong> páginas para reescrever, FAQ, dados, PR digital</td><td>D27</td><td>9,0h</td><td>SEO + redator</td><td>E7</td></tr>
+<tr><td>9</td><td><strong>Apresentação + roadmap de 90 dias</strong></td><td>D28</td><td>5,0h</td><td>SEO + redator</td><td>E8</td></tr></table>
+<div class="chart-box"><h4>Distribuição do esforço no Módulo B (62h totais)</h4><div class="hint">Coleta IA, cálculo duplo e plano GEO concentram 55% do esforço. É o coração do flagship.</div><canvas id="chDonut" height="130"></canvas></div>
+
+<h3>Módulo C | Marketplace: entrega por entrega</h3>
+<table><tr><th>#</th><th>Entrega</th><th>Prazo</th><th>Horas</th><th>Responsável</th><th>Dependência</th></tr>
+<tr><td>1</td><td><strong>Kickoff + acessos:</strong> contas seller, categorias, margem e logística</td><td>D2</td><td>3,0h</td><td>Analista MKT</td><td>Acesso leitura seller</td></tr>
+<tr><td>2</td><td><strong>Keyword set interno:</strong> 100 a 200 buscas por categoria</td><td>D6</td><td>6,0h</td><td>Analista MKT</td><td>E1</td></tr>
+<tr><td>3</td><td><strong>Coleta Nubimetrics + catálogo:</strong> sellers, listings, preços, avaliações</td><td>D12</td><td>8,0h</td><td>Analista MKT</td><td>E2</td></tr>
+<tr><td>4</td><td><strong>SoS por categoria:</strong> share prateleira, preço médio, gaps sortimento</td><td>D15</td><td>7,0h</td><td>Analista MKT</td><td>E3</td></tr>
+<tr><td>5</td><td><strong>Dashboard + mapa sellers:</strong> evolução e alertas de preço</td><td>D18</td><td>7,0h</td><td>Analista MKT</td><td>E4</td></tr>
+<tr><td>6</td><td><strong>Plano títulos + preço + sortimento:</strong> reescritas e precificação</td><td>D21</td><td>8,0h</td><td>Analista MKT</td><td>E5</td></tr>
+<tr><td>7</td><td><strong>Apresentação executiva</strong></td><td>D22</td><td>5,0h</td><td>Analista MKT</td><td>E6</td></tr></table>
+
+<div class="risk-box"><h4>Premissas de prazo (valem para os 3 módulos)</h4><p>Dias úteis, com cliente respondendo acessos em até 48h. Cada dia de atraso do cliente desloca o cronograma na mesma proporção. Recompra: A trimestral (12h por rodada), B mensal (14h por rodada após setup), C mensal (12h por rodada). Horas de recompra são menores porque keyword set e dashboard já existem.</p></div>
+</div></div>
+
+<div class="card" id="precificacao"><div class="card-body">
+<h2><span class="slide-num">06</span> Precificação sugerida e margem</h2>
+<p>Valores de referência para a liderança validar. Hora técnica de referência: R$ 120. Ferramenta considerada pelo custo rateado com 8 clientes ativos. No Módulo A, o Ubersuggest que já assinamos zera o custo incremental de ferramentas.</p>
+<table><tr><th>Módulo</th><th>Setup (projeto inicial)</th><th>Composição do setup</th><th>Recorrência</th><th>Margem estimada</th></tr>
+<tr><td><strong>A | SEO</strong> 34,5h</td><td><strong>R$ 4.900</strong></td><td>34,5h x R$ 120 = R$ 4.140 + add-on domínio R$ 28 + DataForSEO R$ 80 + margem (Ubersuggest Individual $12 já assinado)</td><td><strong>R$ 1.900 / tri</strong> (12h por rodada)</td><td><span class="badge badge-ok">acima de 70%</span></td></tr>
+<tr><td><strong>B | AI + SEO</strong> 62h</td><td><strong>R$ 8.900</strong></td><td>62h x R$ 120 = R$ 7.440 + ferramentas R$ 220 + margem</td><td><strong>R$ 2.900 / mês</strong> (14h por rodada)</td><td><span class="badge badge-ok">acima de 70%</span></td></tr>
+<tr><td><strong>C | Marketplace</strong> 44h</td><td><strong>R$ 6.400</strong></td><td>44h x R$ 120 = R$ 5.280 + ferramentas R$ 100 + margem</td><td><strong>R$ 2.200 / mês</strong> (12h por rodada)</td><td><span class="badge badge-ok">acima de 70%</span></td></tr>
+<tr><td><strong>Jornada completa A+B</strong></td><td><strong>R$ 11.900</strong> (desconto combo)</td><td>B reaproveita keyword set do A, economiza 8h</td><td><strong>R$ 2.900 / mês</strong></td><td><span class="badge badge-exec">tíquete máximo</span></td></tr></table>
+<div class="bar-container">
+<div class="bar-row"><div class="bar-label">A | Setup R$ 4.900</div><div class="bar-track"><div class="bar-fill red" style="width:41%">34,5h</div></div></div>
+<div class="bar-row"><div class="bar-label">B | Setup R$ 8.900</div><div class="bar-track"><div class="bar-fill gold" style="width:100%">62h flagship</div></div></div>
+<div class="bar-row"><div class="bar-label">C | Setup R$ 6.400</div><div class="bar-track"><div class="bar-fill green" style="width:71%">44h</div></div></div>
+</div>
+<p style="font-size:13px;color:var(--gray-600)">Com 8 clientes ativos no mix (4A + 3B + 1C na largada), a receita de setup somada cobre o custo cheio anual das ferramentas novas em menos de 2 meses. A partir daí, ferramentas viram custo diluído e a margem sobe a cada novo cliente sem contratar nova licença.</p>
+</div></div>
+
+<div class="card" id="riscos"><div class="card-body">
+<h2><span class="slide-num">07</span> Riscos, pré-requisitos e limites honestos</h2>
+<div class="finding"><div class="finding-title">Pré-requisitos do cliente (travam o início se faltar)</div>
+<ul class="check-list"><li><span class="check-icon ok">1</span> <span>Acesso de leitura ao GSC e ao GA4 (módulos A e B) e à conta seller (módulo C).</span></li><li><span class="check-icon ok">2</span> <span>Lista inicial de 3 a 5 concorrentes validada pelo comercial do cliente, não só pelo marketing.</span></li><li><span class="check-icon ok">3</span> <span>Um interlocutor que responde em 48h. SoS trava sem validação de keyword set e prompt pack.</span></li></ul></div>
+<div class="finding"><div class="finding-title">Limites que precisamos comunicar ao cliente</div>
+<ul class="check-list"><li><span class="check-icon exec">!</span> <span>Volume de busca é estimativa, não censo. O valor absoluto oscila, a <strong>fatia relativa</strong> é estável e é nela que decidimos. No Ubersuggest, validar sempre contra o GSC.</span></li><li><span class="check-icon exec">!</span> <span>Resposta de IA varia por dia e região. Por isso o Módulo B exige janela de 14 a 21 dias: medição de 1 dia sozinha não é confiável.</span></li><li><span class="check-icon exec">!</span> <span>Marketplace não abre volume interno. O SoS C é proxy qualificado, não número oficial da plataforma.</span></li></ul></div>
+<div class="finding"><div class="finding-title">Riscos operacionais e mitigação</div>
+<table><tr><th>Risco</th><th>Impacto</th><th>Mitigação</th></tr>
+<tr><td>Cliente demora acessos</td><td>Desloca D1 em cascata</td><td>Checklist de acessos no contrato + D1 só conta após acessos ok</td></tr>
+<tr><td>Time estoura horas no prompt pack</td><td>Margem do B cai</td><td>Template de 60 prompts base por vertical, customiza 40%</td></tr>
+<tr><td>Ubersuggest bate o teto (125 keywords, 1 domínio)</td><td>Coleta do A atrasa</td><td>Priorizar top 125 + completar com DataForSEO em lote; add-on de +$5 por domínio extra ou upgrade para Business $20</td></tr>
+<tr><td>Ferramenta IA muda preço</td><td>Custo rateado sobe</td><td>Contrato com cláusula de repasse acima de 15% + stack com alternativa (Peec ou Otterly)</td></tr></table></div>
+</div></div>
+
+<div class="card" id="decisao"><div class="card-body">
+<h2><span class="slide-num">08</span> Nossas solicitações à liderança para avançar</h2>
+<ul class="check-list">
+<li><span class="check-icon pend">1</span> <span><strong>Aprovação do stack:</strong> pedimos aval para manter Ubersuggest Individual $12 (já assinado) + DataForSEO como base de largada, e para contratar Peec Pro + Nubimetrics Premium como licenças oficiais do flagship e do marketplace; upgrade para Business $20 quando houver cliente simultâneo extra.</span></li>
+<li><span class="check-icon pend">2</span> <span><strong>Aprovação dos preços:</strong> pedimos aval para os setups de R$ 4,9 mil (A), R$ 8,9 mil (B) e R$ 6,4 mil (C), com as recorrências propostas.</span></li>
+<li><span class="check-icon pend">3</span> <span><strong>Definição dos 2 clientes piloto:</strong> pedimos indicação de 1 cliente para o Módulo A (ciclo rápido) e 1 para o Módulo B (flagship), com condição piloto em troca de case e depoimento.</span></li>
+<li><span class="check-icon pend">4</span> <span><strong>Definição do dono do produto:</strong> pedimos que definam quem aprova keyword sets e prompt packs nos primeiros 60 dias até o template amadurecer.</span></li>
+</ul>
+<div class="callout"><h4>Próximo passo que propomos (14 dias)</h4><p>Semana 1: submetemos stack e preços para aprovação e criamos os templates (planilha SoS, prompt pack base, dashboard modelo). Semana 2: rodamos o Módulo A interno na própria V4 com o Ubersuggest (nosso SoS contra 4 concorrentes) e apresentamos o resultado como demo comercial. Custo incremental da demo: apenas horas de equipe + cerca de R$ 50 de DataForSEO.</p></div>
+<p style="font-size:13px;color:var(--gray-600)">Elaboramos este documento em 18/09/2026. Câmbio e preços sujeitos a variação. Revisamos o conteúdo após a definição dos pilotos.</p>
+</div></div>
+
+<div class="footer">V4 Company | Share of Search: relatório inicial de produtização | Uso interno e apresentação à liderança | Set 2026</div>
+</div>
+<script>
+Chart.defaults.font.family = "'Ubuntu', sans-serif";
+Chart.defaults.color = '#616161';
+new Chart(document.getElementById('chLine'), {type:'line', data:{labels:['Dia 0','Dia 15','Dia 30','Dia 45','Dia 60','Dia 75','Dia 90'], datasets:[
+{label:'Sua marca', data:[22,26,29,31,34,36,38], borderColor:'rgb(229,9,20)', backgroundColor:'rgba(229,9,20,.1)', tension:.35, fill:true, pointRadius:4},
+{label:'Concorrente 1', data:[34,33,32,31,30,29,28], borderColor:'#9e9e9e', tension:.35, pointRadius:3},
+{label:'Concorrente 2', data:[18,19,20,20,21,21,22], borderColor:'#c9a96e', tension:.35, pointRadius:3},
+{label:'Outros', data:[26,22,19,18,15,14,12], borderColor:'#e0e0e0', tension:.35, pointRadius:2}]},
+options:{responsive:true, plugins:{legend:{position:'bottom'}, title:{display:false}}, scales:{y:{min:0, max:45, ticks:{callback:v=>v+'%'}}}}});
+new Chart(document.getElementById('chBars'), {type:'bar', data:{labels:['Módulo A (SEO)','Módulo B (AI+SEO)','Módulo C (MKT)'], datasets:[
+{label:'Horas', data:[34.5,62,44], backgroundColor:['rgb(229,9,20)','#c9a96e','#15803d'], borderRadius:8},
+{label:'Dias úteis', data:[16,28,22], backgroundColor:['rgba(229,9,20,.25)','rgba(201,169,110,.4)','rgba(21,128,61,.25)'], borderRadius:8}]},
+options:{responsive:true, plugins:{legend:{position:'bottom'}}, scales:{y:{beginAtZero:true}}}});
+new Chart(document.getElementById('chCost'), {type:'bar', data:{labels:['Stack A (Ubersuggest)','Stack B','Stack C'], datasets:[
+{label:'Custo cheio mensal (R$)', data:[176,1414,485], backgroundColor:'#212121', borderRadius:8},
+{label:'Custo rateado por cliente (R$)', data:[69,218,96], backgroundColor:'#c9a96e', borderRadius:8}]},
+options:{responsive:true, plugins:{legend:{position:'bottom'}}, scales:{y:{beginAtZero:true, ticks:{callback:v=>'R$ '+v}}}}});
+new Chart(document.getElementById('chDonut'), {type:'doughnut', data:{labels:['Kickoff','Keyword set','Prompt pack','Coleta SEO','Coleta IA','Cálculo duplo','Dashboard','Plano GEO','Apresentação'], datasets:[{data:[4,7,6,6,8,9,8,9,5], backgroundColor:['#212121','#e50914','#ff3c46','#c9a96e','#e8dcc8','#15803d','#22c55e','#b45309','#9e9e9e'], borderWidth:2, borderColor:'#fff'}]},
+options:{responsive:true, plugins:{legend:{position:'bottom'}}}});
+</script>
+</body>
+</html>
