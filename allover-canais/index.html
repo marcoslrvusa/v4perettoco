@@ -424,6 +424,33 @@
   @media (max-width: 900px) {
     .kpi-grid { grid-template-columns: repeat(2, 1fr); }
   }
+  .scen-grid { display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin:18px 0; }
+  .scen { border:1px solid var(--gold-border); border-radius:12px; padding:20px; background:#fff; }
+  .scen h4 { margin:0 0 8px; font-size:15px; }
+  .scen ul { margin:8px 0 0 18px; padding:0; font-size:13.5px; color:var(--gray-700); }
+  .scen ul li { margin:5px 0; }
+  .explorer-bar { display:flex; gap:10px; flex-wrap:wrap; margin:14px 0; align-items:center; }
+  .explorer-bar input {
+    flex:1; min-width:220px; padding:10px 14px; border-radius:8px;
+    border:1px solid var(--gold-border); font-size:14px; font-family:inherit;
+  }
+  .explorer-bar .count { font-size:13px; color:var(--gray-500); }
+  #chanTable .chan-group-row td {
+    background: linear-gradient(135deg, var(--gray-50), #f8f7f4);
+    font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .6px; color: var(--red); padding: 10px 14px;
+  }
+  .chan-group { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; color:var(--red); margin:20px 0 6px; }
+  .player-grid-wrap { display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin:16px 0; }
+  .player { border:1px solid var(--gold-border); border-radius:12px; padding:16px 18px; background:#fff; }
+  .player:hover { box-shadow: 0 2px 16px rgba(0,0,0,0.05); }
+  .player-head { display:flex; gap:10px; align-items:flex-start; margin-bottom:10px; }
+  .player-num { display:inline-flex; min-width:30px; height:30px; border-radius:50%; background:linear-gradient(135deg,var(--red),var(--red-light,#e05252)); color:#fff; font-weight:700; font-size:13px; align-items:center; justify-content:center; }
+  .player-base { margin-left:auto; font-size:11px; color:var(--gray-500); white-space:nowrap; }
+  .player-grid { display:grid; gap:6px; font-size:13px; }
+  .player-grid .field { font-weight:700; }
+  .player-grid .full { grid-column: 1 / -1; }
+  @media (max-width: 900px) { .player-grid-wrap { grid-template-columns: 1fr; } }
   @media (max-width: 640px) {
     .cover h1 { font-size: 26px; }
     .cover { padding: 40px 20px 32px; }
@@ -445,9 +472,9 @@
       <span style="width:1px; height:28px; background:rgba(255,255,255,0.25);"></span>
       <img src="logo-allover.jpg" alt="All Over" style="height:44px; width:auto; border-radius:8px;" onerror="this.style.display='none'">
     </div>
-    <div class="label">Análise de Canais | Mídia Paga + AI Search | Setembro 2026</div>
-    <h1>All Over Exterior Roofing<br>Onde alocar a verba</h1>
-    <p>Estudo decisório com método: decomposição do funil, 20 concorrentes no raio do ZIP 77092, matriz ponderada de canais, caminho visual do ChatGPT Ads e baseline de visibilidade em IA (SEMrush). Tráfego estável, vendas em queda, lead mais caro — o que fazer com US$ 1,5–5k.</p>
+    <div class="label">Análise de Canais | Mídia Paga (consultivo) + contexto AI Search | Setembro 2026</div>
+    <h1>All Over Exterior Roofing<br>Como compor o plano de mídia</h1>
+    <p>Estudo consultivo com método: decomposição do funil, 20 concorrentes no raio do ZIP 77092, matriz de leitura dos canais, 60 canais catalogados com benchmarks de CPL, caminho visual do ChatGPT Ads e baseline de visibilidade em IA (SEMrush). Sem proposta de verba — a composição fica a critério do cliente a partir das rotas simuladas.</p>
     <div class="cover-meta">
       <span>• Confidencial · v6 · allover-canais</span>
       <span>• 8 seções · leitura ~15 min</span>
@@ -458,10 +485,10 @@
       <a href="#funil">02 <span>Funil</span></a>
       <a href="#concorrentes">03 <span>20 players</span></a>
       <a href="#matriz">04 <span>Matriz</span></a>
-      <a href="#rotas">05 <span>Rotas</span></a>
+      <a href="#rotas">05 <span>Cenários</span></a>
       <a href="#caminho">06 <span>Caminho GPT</span></a>
       <a href="#aivis">07 <span>AI Visibility</span></a>
-      <a href="#okr">08 <span>OKR + Plano</span></a>
+      <a href="#canais60">08 <span>60 canais</span></a><a href="#okr">09 <span>Composição</span></a>
     </div>
   </div>
 </div>
@@ -471,7 +498,7 @@
   <!-- 01 RESPOSTA -->
   <div class="card" id="resposta">
     <div class="card-body">
-      <h2><span class="slide-num">01</span> A resposta em 30 segundos</h2>
+      <h2><span class="slide-num">01</span> A leitura em 30 segundos</h2>
       <p>O Google comum não é o melhor uso da verba — mas o Google de ligações (LSA) sim, e é o pago mais barato que existe. Anúncios no ChatGPT já estão no ar: o trabalho agora é gestão semanal com critério de corte, não lançamento.</p>
       <div class="kpi-grid">
         <div class="kpi-card"><div class="value">$79</div><div class="label">LSA por ligação</div><div class="sub">ROAS fechado 4,82× · SearchLight Q1/26</div></div>
@@ -482,15 +509,15 @@
       <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:12px;">
         <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:18px;">
           <span class="badge badge-ok">Continuar</span>
-          <p style="font-size:14px; margin-top:10px;"><strong>LSA + Search splitado + avaliações + indicação.</strong> Base de todo o investimento.</p>
+          <p style="font-size:14px; margin-top:10px;"><strong>LSA + Search splitado + avaliações + indicação.</strong> A base que os dados sustentam — a composição é do cliente.</p>
         </div>
         <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:10px; padding:18px;">
           <span class="badge badge-medio">Gerir teste</span>
-          <p style="font-size:14px; margin-top:10px;"><strong>ChatGPT (já ativo) + Nextdoor + Bing.</strong> Sem tirar da base; escala só o que vender.</p>
+          <p style="font-size:14px; margin-top:10px;"><strong>ChatGPT (já ativo) + Nextdoor + Bing.</strong> Leitura de teste: acompanhar CPL real antes de compor.</p>
         </div>
         <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:10px; padding:18px;">
           <span class="badge badge-critico">Não alocar</span>
-          <p style="font-size:14px; margin-top:10px;"><strong>Angi / Thumbtack.</strong> Pedido dividido com até 8 rivais: $500–2.400 por obra.</p>
+          <p style="font-size:14px; margin-top:10px;"><strong>Angi / Thumbtack.</strong> Leitura estrutural: pedido dividido com até 8 rivais ($500–2.400 por obra) — compor só com papel definido.</p>
         </div>
       </div>
     </div>
@@ -526,7 +553,7 @@
       <div style="overflow-x:auto;">
       <table>
         <tr><th>#</th><th>Empresa</th><th>Base</th><th>Fatos</th><th>Implicação</th></tr>
-        <tr style="background:#fcfaf7;"><td>—</td><td><strong>All Over (você)</strong></td><td>77092</td><td>Ticket $15–20k · premium</td><td>Gap nº 1: prova social</td></tr>
+        <tr style="background:#fcfaf7;"><td>—</td><td><strong>All Over (você)</strong></td><td>77092</td><td><strong>272 reviews</strong> no Business Profile · Ticket $15–20k · premium</td><td>Prova social ativa — brigar em prova, não em preço</td></tr>
         <tr><td>01</td><td><strong>Amstill Roofing</strong></td><td>77079</td><td>50 anos · 1.200+ Google 4,9 · ~40 mil telhados · GAF Master Elite · Owens Corning Platinum · 24/7</td><td>Rival estrutural</td></tr>
         <tr><td>02</td><td><strong>Telge Roofing</strong></td><td>77429 Cypress</td><td>4,8 (716+) · GAF Master Elite + President's Club · 17 anos · BBB A+ 2010</td><td>Rival direto NW</td></tr>
         <tr><td>03</td><td><strong>Precision Roof Crafters</strong></td><td>Houston</td><td>3.000+ 5★ · 33 mil projetos · 30+ anos · GAF + Owens Corning · financiamento</td><td>Benchmark de escala</td></tr>
@@ -549,7 +576,173 @@
         <tr><td>20</td><td><strong>Apollo / Southern / Shingle Hut / Merit</strong></td><td>Cypress</td><td>OC Preferred · Southern desde 2000 · Shingle Hut BBB 2016 · Merit 4,9 (60)</td><td>Cauda longa: bairro decide</td></tr>
       </table>
       </div>
-      <p style="margin-top:6px;"><span class="badge badge-medio">Prioridade de espionagem</span> &nbsp;Amstill · Telge · Craddock · FairClaims · Precision — 3 anúncios mais antigos de cada, print + data de início, semana 1.</p>
+      <p style="margin-top:6px;"><span class="badge badge-medio">Leitura competitiva sugerida</span> &nbsp;Amstill · Telge · Craddock · FairClaims · Precision — observar os 3 anúncios mais antigos de cada (bibliotecas públicas de anúncios).</p>
+<h3>Players com stack de mídia + tecnologia (Wappalyzer) e CRO para conferir</h3>
+<p>Fonte técnica: leitura Wappalyzer dos sites em set/26 (CMS, analytics, advertising, CRM, SEO). <strong>Mídia</strong> = o que o código deles entrega (pixels, Floodlight, LSA-proof). <strong>CRO</strong> = o que abrir na home de cada um para copiar — links verificados.</p>
+<div class="player-grid-wrap">
+<div class="player">
+<div class="player-head"><span class="player-num">01</span><div><a href='https://amstillroofing.com' target='_blank' rel='noopener'><strong>Amstill Roofing</strong></a><br><span style='font-size:11px;color:var(--gray-500)'>amstillroofing.com</span></div><span class="player-base">77079</span></div>
+<div class="player-grid">
+<div><span class="field">Mídia evidenciada (Wappalyzer):</span> <span class="value">Nextdoor Ads · DoubleClick Floodlight · Microsoft Advertising</span></div>
+<div><span class="field">Stack comercial:</span> <span class="value">WordPress + RankMath · CallRail · Clarity · FB Pixel · GTM · Cloudflare + S3/AWS · Gravity Forms</span></div>
+<div class="full"><span class="field">CRO (verificar na home):</span> <span class="value">Quote/call-back forms no site; opera Houston + Round Rock (escala regional)</span></div>
+<div class="full"><span class="field">Implicação:</span> <span class="value">Rival estrutural</span></div>
+</div></div>
+<div class="player">
+<div class="player-head"><span class="player-num">02</span><div><a href='https://www.telgeroofing.com' target='_blank' rel='noopener'><strong>Telge Roofing</strong></a><br><span style='font-size:11px;color:var(--gray-500)'>www.telgeroofing.com</span></div><span class="player-base">77429 Cypress</span></div>
+<div class="player-grid">
+<div><span class="field">Mídia evidenciada (Wappalyzer):</span> <span class="value">DoubleClick Floodlight (display/retarget)</span></div>
+<div><span class="field">Stack comercial:</span> <span class="value">WordPress + Divi + Yoast · FB Pixel · call tracking · WP Rocket · SiteGround</span></div>
+<div class="full"><span class="field">CRO (verificar na home):</span> <span class="value">Financing + reviews + YouTube; 68 mil projetos (prova)</span></div>
+<div class="full"><span class="field">Implicação:</span> <span class="value">Rival direto NW</span></div>
+</div></div>
+<div class="player">
+<div class="player-head"><span class="player-num">03</span><div><a href='https://precisionroofcrafters.com' target='_blank' rel='noopener'><strong>Precision Roof Crafters</strong></a><br><span style='font-size:11px;color:var(--gray-500)'>precisionroofcrafters.com</span></div><span class="player-base">Houston</span></div>
+<div class="player-grid">
+<div><span class="field">Mídia evidenciada (Wappalyzer):</span> <span class="value">Mídia paga não evidenciada no stack</span></div>
+<div><span class="field">Stack comercial:</span> <span class="value">WordPress · Ahrefs (SEO) · GTM · WP Engine · SMS opt-in no form</span></div>
+<div class="full"><span class="field">CRO (verificar na home):</span> <span class="value">Força orgânica + reviews; 70% repeat/referral declarado</span></div>
+<div class="full"><span class="field">Implicação:</span> <span class="value">Benchmark de escala</span></div>
+</div></div>
+<div class="player">
+<div class="player-head"><span class="player-num">04</span><div><a href='https://houstonroofingonline.com' target='_blank' rel='noopener'><strong>Houston Roofing & Const.</strong></a><br><span style='font-size:11px;color:var(--gray-500)'>houstonroofingonline.com</span></div><span class="player-base">77065</span></div>
+<div class="player-grid">
+<div><span class="field">Mídia evidenciada (Wappalyzer):</span> <span class="value">Google Ads + conversion tracking · Innovid · Floodlight · Microsoft Advertising</span></div>
+<div><span class="field">Stack comercial:</span> <span class="value">WordPress + RankMath · React · Clarity · Gravity Forms · SiteGround · $500 OFF promo</span></div>
+<div class="full"><span class="field">CRO (verificar na home):</span> <span class="value">Commercial separado; promo agressiva</span></div>
+<div class="full"><span class="field">Implicação:</span> <span class="value">Commercial separado</span></div>
+</div></div>
+<div class="player">
+<div class="player-head"><span class="player-num">05</span><div><a href='https://www.craddockroofing.com' target='_blank' rel='noopener'><strong>Craddock Roofing</strong></a><br><span style='font-size:11px;color:var(--gray-500)'>www.craddockroofing.com</span></div><span class="player-base">77092 (mesmo CEP)</span></div>
+<div class="player-grid">
+<div><span class="field">Mídia evidenciada (Wappalyzer):</span> <span class="value">DoubleClick Floodlight</span></div>
+<div><span class="field">Stack comercial:</span> <span class="value">Wix · Poptin · Store Vantage CRM · Cloudflare</span></div>
+<div class="full"><span class="field">CRO (verificar na home):</span> <span class="value">Instant Cost Estimator (ferramenta própria) + free assessment</span></div>
+<div class="full"><span class="field">Implicação:</span> <span class="value">Vigiar LSA no próprio CEP</span></div>
+</div></div>
+<div class="player">
+<div class="player-head"><span class="player-num">06</span><div><a href='https://www.innprecconroofing.com' target='_blank' rel='noopener'><strong>Innpreccon Roofing</strong></a><br><span style='font-size:11px;color:var(--gray-500)'>www.innprecconroofing.com</span></div><span class="player-base">77090</span></div>
+<div class="player-grid">
+<div><span class="field">Mídia evidenciada (Wappalyzer):</span> <span class="value">Mídia paga não evidenciada no stack</span></div>
+<div><span class="field">Stack comercial:</span> <span class="value">Wix · Store Vantage CRM · site em reforma (tel como CTA)</span></div>
+<div class="full"><span class="field">CRO (verificar na home):</span> <span class="value">Operação enxuta; observar retorno do site</span></div>
+<div class="full"><span class="field">Implicação:</span> <span class="value">Padrão velocidade+claim</span></div>
+</div></div>
+<div class="player">
+<div class="player-head"><span class="player-num">07</span><div><a href='https://achillesroofingtx.com' target='_blank' rel='noopener'><strong>Achilles Roofing</strong></a><br><span style='font-size:11px;color:var(--gray-500)'>achillesroofingtx.com</span></div><span class="player-base">77429 Cypress</span></div>
+<div class="player-grid">
+<div><span class="field">Mídia evidenciada (Wappalyzer):</span> <span class="value">Mídia paga não evidenciada no stack</span></div>
+<div><span class="field">Stack comercial:</span> <span class="value">WordPress + Breakdance + Yoast · Nginx</span></div>
+<div class="full"><span class="field">CRO (verificar na home):</span> <span class="value">Instant Roof Estimator + online booking + referral ($500 Visa) — CRO forte</span></div>
+<div class="full"><span class="field">Implicação:</span> <span class="value">Cross-sell como rotina</span></div>
+</div></div>
+<div class="player">
+<div class="player-head"><span class="player-num">08</span><div><a href='https://fairclaimsroofingcompany.com' target='_blank' rel='noopener'><strong>FairClaims Roofing</strong></a><br><span style='font-size:11px;color:var(--gray-500)'>fairclaimsroofingcompany.com</span></div><span class="player-base">Spring</span></div>
+<div class="player-grid">
+<div><span class="field">Mídia evidenciada (Wappalyzer):</span> <span class="value">DoubleClick Floodlight</span></div>
+<div><span class="field">Stack comercial:</span> <span class="value">React/Base44 · HighLevel CRM (funil GHL próprio) · GTM · Cloudflare · PWA</span></div>
+<div class="full"><span class="field">CRO (verificar na home):</span> <span class="value">Satellite estimate widget na home (nome/email/tel) — CRO first-fold</span></div>
+<div class="full"><span class="field">Implicação:</span> <span class="value">Batalha do claim</span></div>
+</div></div>
+<div class="player">
+<div class="player-head"><span class="player-num">09</span><div><a href='https://www.hometeamroof.com' target='_blank' rel='noopener'><strong>Home Team Roofing</strong></a><br><span style='font-size:11px;color:var(--gray-500)'>www.hometeamroof.com</span></div><span class="player-base">Tomball</span></div>
+<div class="player-grid">
+<div><span class="field">Mídia evidenciada (Wappalyzer):</span> <span class="value">Facebook Pixel (social)</span></div>
+<div><span class="field">Stack comercial:</span> <span class="value">GoDaddy Builder · React 16 · Lodash</span></div>
+<div class="full"><span class="field">CRO (verificar na home):</span> <span class="value">Inspection booking com agendamento (form completo) + lifetime warranty</span></div>
+<div class="full"><span class="field">Implicação:</span> <span class="value">Paridade de reviews</span></div>
+</div></div>
+<div class="player">
+<div class="player-head"><span class="player-num">10</span><div><a href='https://shamrockroofingtexas.com' target='_blank' rel='noopener'><strong>Shamrock Roofing</strong></a><br><span style='font-size:11px;color:var(--gray-500)'>shamrockroofingtexas.com</span></div><span class="player-base">77388 Spring</span></div>
+<div class="player-grid">
+<div><span class="field">Mídia evidenciada (Wappalyzer):</span> <span class="value">Mídia paga não evidenciada no stack</span></div>
+<div><span class="field">Stack comercial:</span> <span class="value">WordPress · Cloudflare · WP Engine</span></div>
+<div class="full"><span class="field">CRO (verificar na home):</span> <span class="value">Blog ativo (From the Rooftop); sem estimador próprio visível</span></div>
+<div class="full"><span class="field">Implicação:</span> <span class="value">Não brigar em preço</span></div>
+</div></div>
+<div class="player">
+<div class="player-head"><span class="player-num">11</span><div><a href='https://www.kiddroof.com' target='_blank' rel='noopener'><strong>Kidd Roofing</strong></a><br><span style='font-size:11px;color:var(--gray-500)'>www.kiddroof.com</span></div><span class="player-base">Cypress</span></div>
+<div class="player-grid">
+<div><span class="field">Mídia evidenciada (Wappalyzer):</span> <span class="value">ClickCease (anti-fraude de clique!) · Facebook Pixel</span></div>
+<div><span class="field">Stack comercial:</span> <span class="value">WordPress · Ahrefs (SEO) · S3/AWS + WP Engine · CookieYes · 6 filiais</span></div>
+<div class="full"><span class="field">CRO (verificar na home):</span> <span class="value">ClickCease indica search pago relevante; schedule service multi-cidade</span></div>
+<div class="full"><span class="field">Implicação:</span> <span class="value">Gap de selo</span></div>
+</div></div>
+<div class="player">
+<div class="player-head"><span class="player-num">12</span><div><a href='https://remedyroofing.com' target='_blank' rel='noopener'><strong>Remedy Roofing</strong></a><br><span style='font-size:11px;color:var(--gray-500)'>remedyroofing.com</span></div><span class="player-base">Katy</span></div>
+<div class="player-grid">
+<div><span class="field">Mídia evidenciada (Wappalyzer):</span> <span class="value">Google Ads + conversion tracking · Floodlight · Fraud Blocker (!!)</span></div>
+<div><span class="field">Stack comercial:</span> <span class="value">WordPress + Elementor + Yoast + JetEngine · HubSpot · WP Engine · reCAPTCHA</span></div>
+<div class="full"><span class="field">CRO (verificar na home):</span> <span class="value">Quote form completo (endereço+serviço) na home; paga search e defende clique</span></div>
+<div class="full"><span class="field">Implicação:</span> <span class="value">Cobertura do oeste</span></div>
+</div></div>
+<div class="player">
+<div class="player-head"><span class="player-num">13</span><div><a href='https://www.lifetimeroofingla.com' target='_blank' rel='noopener'><strong>Lifetime Roofing</strong></a><br><span style='font-size:11px;color:var(--gray-500)'>www.lifetimeroofingla.com</span></div><span class="player-base">77373 Spring</span></div>
+<div class="player-grid">
+<div><span class="field">Mídia evidenciada (Wappalyzer):</span> <span class="value">Mídia paga não evidenciada no stack</span></div>
+<div><span class="field">Stack comercial:</span> <span class="value">Stack enxuto (Apache/jQuery) · SMS + email opt-in nos forms</span></div>
+<div class="full"><span class="field">CRO (verificar na home):</span> <span class="value">Form de banner na primeira dobra (nome/email/tel/CEP/serviço) + same-day</span></div>
+<div class="full"><span class="field">Implicação:</span> <span class="value">Padrão de resposta</span></div>
+</div></div>
+<div class="player">
+<div class="player-head"><span class="player-num">14</span><div><a href='http://www.roof1construction.com' target='_blank' rel='noopener'><strong>Roof 1 Construction</strong></a><br><span style='font-size:11px;color:var(--gray-500)'>www.roof1construction.com</span></div><span class="player-base">Tomball</span></div>
+<div class="player-grid">
+<div><span class="field">Mídia evidenciada (Wappalyzer):</span> <span class="value">Google Ads + conversion tracking · Floodlight</span></div>
+<div><span class="field">Stack comercial:</span> <span class="value">Site simples · selo HomeAdvisor Screened & Approved</span></div>
+<div class="full"><span class="field">CRO (verificar na home):</span> <span class="value">Claim process como tese; YouTube embutido (how-its-done)</span></div>
+<div class="full"><span class="field">Implicação:</span> <span class="value">Densidade de elite</span></div>
+</div></div>
+<div class="player">
+<div class="player-head"><span class="player-num">15</span><div><a href='https://www.adamsroofinghtx.com' target='_blank' rel='noopener'><strong>Adams Roofing</strong></a><br><span style='font-size:11px;color:var(--gray-500)'>www.adamsroofinghtx.com</span></div><span class="player-base">Cypress</span></div>
+<div class="player-grid">
+<div><span class="field">Mídia evidenciada (Wappalyzer):</span> <span class="value">Plataforma Lead Science (agência) · Hearth financing</span></div>
+<div><span class="field">Stack comercial:</span> <span class="value">Lead Science · GAF · quote form (nome/tel/email/CEP) + financing banners</span></div>
+<div class="full"><span class="field">CRO (verificar na home):</span> <span class="value">5k+ projetos; marketing terceirizado especializado</span></div>
+<div class="full"><span class="field">Implicação:</span> <span class="value">Prova social local</span></div>
+</div></div>
+<div class="player">
+<div class="player-head"><span class="player-num">16</span><div><a href='https://cayneroofing.com' target='_blank' rel='noopener'><strong>Cayne Roofing</strong></a><br><span style='font-size:11px;color:var(--gray-500)'>cayneroofing.com</span></div><span class="player-base">77429 Cypress</span></div>
+<div class="player-grid">
+<div><span class="field">Mídia evidenciada (Wappalyzer):</span> <span class="value">Mídia paga não evidenciada no stack</span></div>
+<div><span class="field">Stack comercial:</span> <span class="value">WordPress · PHP 8.1 · Apache/MySQL</span></div>
+<div class="full"><span class="field">CRO (verificar na home):</span> <span class="value">Firefighter-owned (diferenciação); Request an Estimate recorrente</span></div>
+<div class="full"><span class="field">Implicação:</span> <span class="value">Avaliar FORTIFIED</span></div>
+</div></div>
+<div class="player">
+<div class="player-head"><span class="player-num">17</span><div><a href='https://www.roseroofing.com' target='_blank' rel='noopener'><strong>Rose Roofing</strong></a><br><span style='font-size:11px;color:var(--gray-500)'>www.roseroofing.com</span></div><span class="player-base">77040</span></div>
+<div class="player-grid">
+<div><span class="field">Mídia evidenciada (Wappalyzer):</span> <span class="value">Trustindex + Rich Plugins Reviews (prova agregada)</span></div>
+<div><span class="field">Stack comercial:</span> <span class="value">WordPress · Owens Corning Platinum · 300+ corretores parceiros</span></div>
+<div class="full"><span class="field">CRO (verificar na home):</span> <span class="value">Quote form com seletor de projeto (bid/leak/repair/check/storm) — qualificação no form</span></div>
+<div class="full"><span class="field">Implicação:</span> <span class="value">Padrão de orçamento</span></div>
+</div></div>
+<div class="player">
+<div class="player-head"><span class="player-num">18</span><div><a href='https://roofingnorthamerica.com' target='_blank' rel='noopener'><strong>North American Roofing</strong></a><br><span style='font-size:11px;color:var(--gray-500)'>roofingnorthamerica.com</span></div><span class="player-base">Spring/Klein</span></div>
+<div class="player-grid">
+<div><span class="field">Mídia evidenciada (Wappalyzer):</span> <span class="value">Mídia paga não evidenciada no stack</span></div>
+<div><span class="field">Stack comercial:</span> <span class="value">WordPress · Nginx · CertainTeed SELECT ShingleMaster</span></div>
+<div class="full"><span class="field">CRO (verificar na home):</span> <span class="value">INSTANT ROOF QUOTE na primeira dobra (nome/email/tel/endereço) — CRO agressivo; HOAs playbook</span></div>
+<div class="full"><span class="field">Implicação:</span> <span class="value">HOAs: playbook próprio</span></div>
+</div></div>
+<div class="player">
+<div class="player-head"><span class="player-num">19</span><div><a href='https://www.idealroofingservices.com' target='_blank' rel='noopener'><strong>State / Ideal Roofing</strong></a><br><span style='font-size:11px;color:var(--gray-500)'>www.idealroofingservices.com</span></div><span class="player-base">Houston</span></div>
+<div class="player-grid">
+<div><span class="field">Mídia evidenciada (Wappalyzer):</span> <span class="value">Google Ads + conversion tracking · Floodlight · Azure Insights</span></div>
+<div><span class="field">Stack comercial:</span> <span class="value">GAF · drone inspections · exit popup + quote form · Best Pick</span></div>
+<div class="full"><span class="field">CRO (verificar na home):</span> <span class="value">Drone + popup de saída; full exterior (siding/windows/paint)</span></div>
+<div class="full"><span class="field">Implicação:</span> <span class="value">Elite é piso</span></div>
+</div></div>
+<div class="player">
+<div class="player-head"><span class="player-num">20</span><div><strong>Apollo · Southern · Shingle Hut · Merit</strong><br><span style='font-size:12px'><a href="https://apolloroofing.co" target="_blank" rel="noopener">Apollo</a> · <a href="https://www.southernroofingtx.com" target="_blank" rel="noopener">Southern</a> · <a href="https://shinglehutroofing.com" target="_blank" rel="noopener">Shingle Hut</a> · <a href="https://meritroofs.com" target="_blank" rel="noopener">Merit</a></span></div><span class="player-base">Cypress</span></div>
+<div class="player-grid">
+<div><span class="field">Mídia evidenciada (Wappalyzer):</span> <span class="value">Apollo: Owens Corning Platinum · Southern: GAF · Shingle Hut: OC Platinum/CertainTeed/Fortified</span></div>
+<div><span class="field">Stack comercial:</span> <span class="value">Apollo: Innovate Haus · SMS consent · financing · visualizer · pricing</span></div>
+<div class="full"><span class="field">CRO (verificar na home):</span> <span class="value">Apollo: estimator + SMS consent · Southern: estimate form · Shingle Hut: quote forms · Merit: Momnt financing + booking</span></div>
+<div class="full"><span class="field">Implicação:</span> <span class="value">Cauda longa: bairro decide</span></div>
+</div></div>
+</div>
+<div class="callout"><h4>PS — padrão que se repete (verifique você mesmo)</h4><p>Em <strong>pelo menos metade dos players</strong> (Lifetime, North American, FairClaims, Remedy, Adams, Home Team, Ideal, Apollo, Rose, Southern, Shingle Hut, Craddock) há <strong>formulário ou estimador logo na home, na primeira dobra à direita</strong>: nome + telefone + endereço/CEP (+ tipo de serviço). É o padrão de CRO do segmento — captura antes de convencer. Recomendação: abrir as 12 homes lado a lado e comparar o atrito (nº de campos, prova ao lado, Web quale).</p></div>
+
     </div>
   </div>
 
@@ -587,23 +780,53 @@
     </div>
   </div>
 
-  <!-- 05 ROTAS -->
+  <!-- 05 CENÁRIOS -->
   <div class="card" id="rotas">
     <div class="card-body">
-      <h2><span class="slide-num">05</span> Três rotas, uma lógica 70-20-10</h2>
-      <p>70% no comprovado, 20% no operacional que multiplica, 10% em testes com corte. Nenhuma rota sobe de letra sem dossiê + 30 dias de CAC no teto.</p>
-      <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:12px;">
-        <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:18px;">
-          <span class="badge badge-ok">Rota A — Eficiência</span>
-          <p style="font-size:13px; margin-top:10px;"><strong>$1,5–2k/mês.</strong> 70% LSA + Search splitado · 20% reviews + indicação + proposta · 10% um teste (Bing/Nextdoor).</p>
+      <h2><span class="slide-num">05</span> Simulação de cenários (sem verba proposta)</h2>
+      <p>Três composições possíveis a partir dos mesmos 60 canais catalogados — a escolha e o tamanho de cada fatia ficam com o cliente. Nenhum cenário sobe de letra sem 30 dias de CAC medido no próprio CRM.</p>
+      <div class="scen-grid">
+        <div class="scen">
+          <span class="badge badge-ok">Cenário A — Rota convencional</span>
+          <h4>Google, Meta, Bing, Nextdoor, Thumbtack</h4>
+          <ul>
+            <li><strong>Google LSA + Search:</strong> captura de demanda decidida; LSA com selo Google acima do mapa.</li>
+            <li><strong>Meta (retargeting primeiro):</strong> tráfego quente do pixel antes de frio.</li>
+            <li><strong>Bing + Nextdoor:</strong> testes de intenção local (bairros, CEPs).</li>
+            <li><strong>Thumbtack:</strong> somente com papel de volume excedente e régua de velocidade.</li>
+          </ul>
         </div>
-        <div style="background:var(--gold-light); border:1px solid var(--gold-border); border-radius:10px; padding:18px;">
-          <span class="badge badge-baixo">Rota B — Equilíbrio</span>
-          <p style="font-size:13px; margin-top:10px;"><strong>$3k/mês.</strong> Base A (LSA até o teto) · tese claim/FORTIFIED · ChatGPT + Nextdoor em paralelo.</p>
+        <div class="scen">
+          <span class="badge badge-baixo">Cenário B — Reputação e indicação</span>
+          <h4>Reviews, GBP, indicação, proposta</h4>
+          <ul>
+            <li><strong>272 reviews no Business Profile</strong> como ativo central (prova > preço).</li>
+            <li><strong>Indicação + proposta ilustrada</strong> (padrão Rose Roofing) para ticket premium.</li>
+            <li><strong>Pago como acelerador</strong> dos dois itens acima, não como substituto.</li>
+            <li>Leitura: menor CPL estrutural; depende de operação, não de mídia.</li>
+          </ul>
         </div>
-        <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:10px; padding:18px;">
-          <span class="badge badge-medio">Rota C — Crescimento</span>
-          <p style="font-size:13px; margin-top:10px;"><strong>$5k/mês.</strong> Base + expansão geo pós-AB · conteúdo storm/claim + HOAs · vencedor ChatGPT se ≥1 SQL.</p>
+      </div>
+      <div class="scen-grid">
+        <div class="scen">
+          <span class="badge badge-medio">Cenário C — Resposta a tempestade</span>
+          <h4>Storm/claim, FORTIFIED, ChatGPT</h4>
+          <ul>
+            <li><strong>Claim + FORTIFIED</strong> como tese (padrão Innpreccon/Cayne).</li>
+            <li><strong>ChatGPT Ads</strong> nos 4 grupos temáticos já ativos, com gestão semanal.</li>
+            <li><strong>Door-knocking pós-storm + direct mail geo-cercado</strong> como apoio offline.</li>
+            <li>Leitura: janela first-mover em IA; sazonalidade dita o ritmo.</li>
+          </ul>
+        </div>
+        <div class="scen">
+          <span class="badge badge-info">Como compor</span>
+          <h4>Critérios de leitura (sem pesos travados)</h4>
+          <ul>
+            <li>Custo por obra vs ticket $15–20k e fechamento real do CRM.</li>
+            <li>Controle operacional (dados próprios > dados de terceiros).</li>
+            <li>Fit com ICP premium (prova social pesa mais que volume).</li>
+            <li>Risco estrutural (lead dividido, leilão inflacionado).</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -646,15 +869,6 @@
       </table>
       </div>
 
-      <h3>Budget do mês: conta aberta</h3>
-      <div style="overflow-x:auto;">
-      <table>
-        <tr><th>Verba/mês</th><th>Conta (CPC $4 · CVR 3% · SQL 30% · obra 25%)</th><th>Veredito</th></tr>
-        <tr><td><strong>$750</strong> (piso)</td><td>~190 cliques → ~5 pedidos → ~1 SQL</td><td><span class="badge badge-medio">Aprendizado, sem leitura</span></td></tr>
-        <tr><td><strong>$1.500–2.000</strong></td><td>~400–500 cliques → ~11–15 pedidos → ~3–4 SQLs → ~1 obra</td><td><span class="badge badge-ok">Satisfatório: CAC ~$1,8k &lt; margem ~$5,2k</span></td></tr>
-        <tr><td><strong>$3.000+</strong></td><td>Só após o corte do mês 1</td><td><span class="badge badge-info">Mês 2, se ≥1 SQL</span></td></tr>
-      </table>
-      </div>
     </div>
   </div>
 
@@ -697,24 +911,129 @@
     </div>
   </div>
 
+  <!-- 08 CANAIS 60 -->
+  <div class="card" id="canais60">
+    <div class="card-body">
+      <h2><span class="slide-num">08</span> Os 60 canais catalogados (benchmarks de referência)</h2>
+      <p>Base do estudo <em>Benchmarking de CPL — Roofing Houston (ZIP 77092)</em>: 60 canais com modalidade, CPL estimado e conversão expectável. Valores são <strong>referência de mercado</strong>, não proposta de verba — servem para compor os cenários da seção 05. Digite para filtrar:</p>
+      <div class="explorer-bar">
+        <input id="chanFilter" type="text" placeholder="Filtrar por nome ou modalidade… (ex.: call, social, lead)" onkeyup="filterChan()">
+        <span class="count" id="chanCount">60 canais</span>
+      </div>
+      <div style="overflow-x:auto;">
+      <table id="chanTable">
+        <tr><th>Canal</th><th>Modalidade</th><th>CPL estimado</th><th>Conversão</th><th>Leitura de intenção</th></tr>
+<tr class="chan-group-row" data-g="Busca e decisão imediata (1–10)"><td colspan="5">▸ Busca e decisão imediata (1–10)</td></tr>
+<tr class="chan-row" data-search="google local services ads (lsa) ppl (pay-per-lead) validado"><td><strong>1. Google Local Services Ads (LSA)</strong></td><td>PPL (Pay-per-Lead) Validado</td><td>$75 - $162</td><td>25% - 45%</td><td>Altíssima. Surge acima dos mapas com selo "Google Guaranteed". É o modelo mais fiável do mercado, com reembolso de spam 2 .</td></tr>
+<tr class="chan-row" data-search="google ads (search / pmax) ppc (pay-per-click)"><td><strong>2. Google Ads (Search / PMax)</strong></td><td>PPC (Pay-per-Click)</td><td>$150 - $228+</td><td>20% - 35%</td><td>Altíssima, contudo, extremamente suscetível a exaustão de orçamento por cliques falsos ou termos de pesquisa de baixo valor ("DIY roof repair") 2 .</td></tr>
+<tr class="chan-row" data-search="google business profile (gbp) orgânico (local map pack)"><td><strong>3. Google Business Profile (GBP)</strong></td><td>Orgânico (Local Map Pack)</td><td>$5 - $20 (manutenção)</td><td>30% - 50%</td><td>Suprema. Motor primordial de geração de negócios locais. Otimização gratuita de base 3 .</td></tr>
+<tr class="chan-row" data-search="seo orgânico estrutural investimento inbound"><td><strong>4. SEO Orgânico Estrutural</strong></td><td>Investimento Inbound</td><td>$10 - $50</td><td>40% - 50%</td><td>Altíssima. Vantagem de longo prazo, mas exige 12 a 18 meses de criação de conteúdo técnico para maturar os rankings 2 .</td></tr>
+<tr class="chan-row" data-search="seo localizado (city pages) inbound local"><td><strong>5. SEO Localizado (City Pages)</strong></td><td>Inbound Local</td><td>&lt; $40</td><td>35% - 50%</td><td>Altíssima. Estratégia de páginas de destino dedicadas estritamente a pesquisas granulares (ex: "roofers in 77092") 2 .</td></tr>
+<tr class="chan-row" data-search="bing ads / msft advertising ppc"><td><strong>6. Bing Ads / MSFT Advertising</strong></td><td>PPC</td><td>$80 - $140</td><td>15% - 25%</td><td>Média/Alta. Atinge uma demografia PC (desktop) tendencialmente mais velha, abastada e proprietária de habitações.</td></tr>
+<tr class="chan-row" data-search="duckduckgo local ads ppc contextual"><td><strong>7. DuckDuckGo Local Ads</strong></td><td>PPC Contextual</td><td>$60 - $100</td><td>10% - 20%</td><td>Média. Menor volume absoluto, mas isento da inflação predatória dos leilões do Google, focado em utilizadores focados em privacidade.</td></tr>
+<tr class="chan-row" data-search="apple search ads / maps ecossistema ios"><td><strong>8. Apple Search Ads / Maps</strong></td><td>Ecossistema iOS</td><td>$40 - $90</td><td>20% - 30%</td><td>Alta. Integração nativa e imperativa para utilizadores móveis da Apple, que representam fatia demográfica premium em Houston.</td></tr>
+<tr class="chan-row" data-search="yelp for business (ads) diretório patrocinado"><td><strong>9. Yelp for Business (Ads)</strong></td><td>Diretório Patrocinado</td><td>$80 - $150</td><td>15% - 25%</td><td>Média. Historicamente volátil, requer uma gestão feroz de reputação e mitigação de avaliações agressivas.</td></tr>
+<tr class="chan-row" data-search="yahoo local search diretório associado"><td><strong>10. Yahoo Local Search</strong></td><td>Diretório Associado</td><td>$70 - $110</td><td>10% - 20%</td><td>Baixa/Média. Tráfego marginalizado, atuando apenas como um suplemento secundário de baixo custo de aquisição.</td></tr>
+<tr class="chan-group-row" data-g="Agregadores e marketplaces (11–20)"><td colspan="5">▸ Agregadores e marketplaces (11–20)</td></tr>
+<tr class="chan-row" data-search="angi (antiga angie&#x27;s list) lead partilhado / mercado"><td><strong>11. Angi (Antiga Angie&#x27;s List)</strong></td><td>Lead Partilhado / Mercado</td><td>$60 - $120</td><td>8% - 12%</td><td>Média/Baixa. Plataforma saturada; fomenta guerras fratricidas de preços onde vence o orçamento sub-faturado ou o mais rápido 4 .</td></tr>
+<tr class="chan-row" data-search="homeadvisor lead partilhado"><td><strong>12. HomeAdvisor</strong></td><td>Lead Partilhado</td><td>$45 - $110</td><td>10% - 15%</td><td>Média/Baixa. Dinâmica de velocidade extrema; lead vendido a meia dúzia de concorrentes locais instantaneamente 4 .</td></tr>
+<tr class="chan-row" data-search="thumbtack pay-per-contact"><td><strong>13. Thumbtack</strong></td><td>Pay-per-Contact</td><td>$30 - $90</td><td>10% - 15%</td><td>Baixa. Clientes tipicamente sensíveis ao preço inicial à procura do empreiteiro com orçamentação mais baixa no mercado 4 .</td></tr>
+<tr class="chan-row" data-search="networx lead partilhado home services"><td><strong>14. Networx</strong></td><td>Lead Partilhado Home Services</td><td>$35 - $80</td><td>8% - 12%</td><td>Baixa. Exclusivamente dedicada a obras caseiras, mas partilha do mesmo desgaste conversional dos agregadores 19 .</td></tr>
+<tr class="chan-row" data-search="craftjack lead verificado via telefone"><td><strong>15. CraftJack</strong></td><td>Lead Verificado via Telefone</td><td>$40 - $100</td><td>10% - 15%</td><td>Média. Tentativa de mitigar fraude através de call-verification, reduzindo o desperdício com contactos que não respondem (ghosting) 19 .</td></tr>
+<tr class="chan-row" data-search="houzz pro diretório / lead premium"><td><strong>16. Houzz Pro</strong></td><td>Diretório / Lead Premium</td><td>$50 - $150</td><td>10% - 20%</td><td>Alta. Perfil de utilizador altamente qualificado à procura de renovações estéticas, telhados arquitetónicos ou de luxo 13 .</td></tr>
+<tr class="chan-row" data-search="porch lead partilhado b2c"><td><strong>17. Porch</strong></td><td>Lead Partilhado B2C</td><td>$30 - $70</td><td>5% - 10%</td><td>Baixa. Tráfego primariamente construído sobre relatórios de inspeção habitacional, gerando leads ainda em fase exploratória precoce.</td></tr>
+<tr class="chan-row" data-search="buildzoom referral (% da obra fechada)"><td><strong>18. BuildZoom</strong></td><td>Referral (% da Obra Fechada)</td><td>Pagamento no Fim</td><td>Varia (Alta)</td><td>Alta. Mitiga risco financeiro publicitário; paga-se uma comissão predefinida unicamente após o contrato de obra assinado e executado.</td></tr>
+<tr class="chan-row" data-search="bark compra de créditos (credits)"><td><strong>19. Bark</strong></td><td>Compra de Créditos (Credits)</td><td>$20 - $50</td><td>5% - 10%</td><td>Muito Baixa. Altíssima competição e prevalência de consumidores que procuram serviços de valor residual sem noção dos custos reais.</td></tr>
+<tr class="chan-row" data-search="better business bureau (bbb) anuidade e credenciação"><td><strong>20. Better Business Bureau (BBB)</strong></td><td>Anuidade e Credenciação</td><td>Mensalidade Fixa</td><td>20% - 30%</td><td>Alta. O consumidor que procura ativamente serviços via BBB demonstra alta intenção transacional ancorada primariamente em garantias de confiança 12 .</td></tr>
+<tr class="chan-group-row" data-g="Leads exclusivos e pay-per-call (21–30)"><td colspan="5">▸ Leads exclusivos e pay-per-call (21–30)</td></tr>
+<tr class="chan-row" data-search="roofclaim lead exclusivo preço fixo"><td><strong>21. RoofClaim</strong></td><td>Lead Exclusivo Preço Fixo</td><td>~$99 Fixo</td><td>25% - 35%</td><td>Alta. Ecossistema blindado; as leads são canalizadas para um único empreiteiro, estancando a hemorragia concorrencial no primeiro contacto 18 .</td></tr>
+<tr class="chan-row" data-search="service direct pay-per-lead (chamadas)"><td><strong>22. Service Direct</strong></td><td>Pay-Per-Lead (Chamadas)</td><td>$30 - $100+</td><td>25% - 35%</td><td>Alta. Mercado livre onde o empreiteiro define o custo máximo (bid) que aceita pagar por uma chamada telefónica local exclusiva 18 .</td></tr>
+<tr class="chan-row" data-search="33 mile radius pay-per-call (live transfer)"><td><strong>23. 33 Mile Radius</strong></td><td>Pay-Per-Call (Live Transfer)</td><td>$40 - $100</td><td>25% - 40%</td><td>Altíssima. Contacto humano ao vivo transferido sem retenções ou subscrições contratuais limitativas de longo prazo 18 .</td></tr>
+<tr class="chan-row" data-search="marketcall rede de afiliados (ppcall)"><td><strong>24. Marketcall</strong></td><td>Rede de Afiliados (PPCall)</td><td>$50 - $120</td><td>20% - 35%</td><td>Alta. Afiliados independentes assumem o risco do marketing, o empreiteiro paga apenas pela chamada validada com duração superior a X minutos 23 .</td></tr>
+<tr class="chan-row" data-search="ringpartner pay-per-call inbound"><td><strong>25. RingPartner</strong></td><td>Pay-Per-Call Inbound</td><td>$60 - $130</td><td>20% - 30%</td><td>Alta. Motor massivo de interações de consumidores com verificação sofisticada de intenção inbound antes do roteamento da chamada telefónica 24 .</td></tr>
+<tr class="chan-row" data-search="soleo pay-per-call home services"><td><strong>26. Soleo</strong></td><td>Pay-Per-Call Home Services</td><td>$50 - $110</td><td>20% - 35%</td><td>Alta. Rede verticalizada estritamente em serviços residenciais, reportando taxas de fecho e ROIs que superam largamente os agregadores convencionais 25 .</td></tr>
+<tr class="chan-row" data-search="astoundry routing e validação técnica"><td><strong>27. Astoundry</strong></td><td>Routing e Validação Técnica</td><td>Variável</td><td>Variável</td><td>Alta. Foco absoluto na infraestrutura de triagem, gestão de capacidade de chamadas e limpeza assética de dados (data hygiene).</td></tr>
+<tr class="chan-row" data-search="everconnect live lead para emergências"><td><strong>28. EverConnect</strong></td><td>Live Lead para Emergências</td><td>$70 - $150</td><td>25% - 35%</td><td>Alta. Canal privilegiado e desenhado para intercetar proprietários que requerem resposta imediata para mitigar desastres nas habitações (ex: ruturas, quedas de árvores) 21 .</td></tr>
+<tr class="chan-row" data-search="leadtruffle conversão via agente de ia"><td><strong>29. LeadTruffle</strong></td><td>Conversão via Agente de IA</td><td>$40 - $90</td><td>20% - 30%</td><td>Média/Alta. Descarrega a qualificação mecânica para fluxos de IA conversacional que agendam automaticamente reuniões qualificadas no CRM do empreiteiro 4 .</td></tr>
+<tr class="chan-row" data-search="inquirly tecnologia híbrida &amp; lead gen"><td><strong>30. Inquirly</strong></td><td>Tecnologia Híbrida &amp; Lead Gen</td><td>$50 - $100</td><td>20% - 25%</td><td>Média/Alta. Funde ferramentas de software de marketing com campanhas adaptativas focadas primordialmente nos prestadores de serviços de coberturas 21 .</td></tr>
+<tr class="chan-group-row" data-g="Social e vídeo (31–40)"><td colspan="5">▸ Social e vídeo (31–40)</td></tr>
+<tr class="chan-row" data-search="facebook ads (meta) demografia / tráfego frio"><td><strong>31. Facebook Ads (Meta)</strong></td><td>Demografia / Tráfego Frio</td><td>$20 - $80</td><td>15% - 25%</td><td>Baixa/Média. Necessita de ganchos visuais e narrativas drásticas (ex: Alerta de granizo recente) para interromper padrões de scroll contínuo 4 .</td></tr>
+<tr class="chan-row" data-search="meta retargeting (tracking) tráfego quente (pixel)"><td><strong>32. Meta Retargeting (Tracking)</strong></td><td>Tráfego Quente (Pixel)</td><td>$15 - $40</td><td>30% - 40%</td><td>Alta. Impacta repetidamente os utilizadores que inspecionaram o website, mas abandonaram a sessão sem submeter um pedido formal.</td></tr>
+<tr class="chan-row" data-search="instagram ads (reels/feed) imagem e vídeo / estética"><td><strong>33. Instagram Ads (Reels/Feed)</strong></td><td>Imagem e Vídeo / Estética</td><td>$25 - $75</td><td>10% - 20%</td><td>Baixa/Média. Ferramenta poderosa para documentação visual "Antes/Depois" e casos de estudo estéticos que valorizam a propriedade 4 .</td></tr>
+<tr class="chan-row" data-search="youtube video ads (in-stream) interrupção cinemática"><td><strong>34. YouTube Video Ads (In-Stream)</strong></td><td>Interrupção Cinemática</td><td>$30 - $90</td><td>10% - 15%</td><td>Média. Permite exposição aprofundada. O meio ideal para campanhas educacionais ("Como inspecionar o seu próprio telhado em 3 passos") 27 .</td></tr>
+<tr class="chan-row" data-search="youtube shorts ads vídeo de formato curto"><td><strong>35. YouTube Shorts Ads</strong></td><td>Vídeo de Formato Curto</td><td>$15 - $45</td><td>5% - 10%</td><td>Baixa. Gera impressões globais massivas, contudo, a ausência de atrito induz volume elevado de contactos desqualificados e sem meios para adjudicação.</td></tr>
+<tr class="chan-row" data-search="tiktok ads reconhecimento de marca"><td><strong>36. TikTok Ads</strong></td><td>Reconhecimento de Marca</td><td>$15 - $50</td><td>5% - 10%</td><td>Baixa. Eficaz na humanização da equipa de trabalho ("Day in the life of a roofer"), visando ancorar o reconhecimento subliminar na mente da comunidade local.</td></tr>
+<tr class="chan-row" data-search="nextdoor ads rede comunitária fechada"><td><strong>37. Nextdoor Ads</strong></td><td>Rede Comunitária Fechada</td><td>$40 - $100</td><td>15% - 25%</td><td>Média/Alta. Digitalização do boca a boca. Como restringe utilizadores às suas vizinhanças (ex: bairros específicos do 77092), cria um selo de confiança paritária insuperável.</td></tr>
+<tr class="chan-row" data-search="pinterest ads pesquisa exploratória visual"><td><strong>38. Pinterest Ads</strong></td><td>Pesquisa Exploratória Visual</td><td>$30 - $60</td><td>10% - 20%</td><td>Média. Capitaliza sobre consumidores em estágios primários de pesquisa arquitetónica, antecipando uma possível substituição visual integral (upgrades premium).</td></tr>
+<tr class="chan-row" data-search="x (twitter) ads interrupção e contexto viral"><td><strong>39. X (Twitter) Ads</strong></td><td>Interrupção e Contexto Viral</td><td>$30 - $80</td><td>5% - 15%</td><td>Baixa. Relevância tática de curto prazo; excelente canal para monitorização e interceção em tempo real utilizando hashtags meteorológicas (#HoustonStorm) 28 .</td></tr>
+<tr class="chan-row" data-search="linkedin ads / outreach segmentação b2b exata"><td><strong>40. LinkedIn Ads / Outreach</strong></td><td>Segmentação B2B Exata</td><td>$100 - $408+</td><td>5% - 15%</td><td>Alta. O canal corporativo supremo. Exclusivo para operações de elevado ticket financeiro em telhados comerciais (TPO, EDPM, Revestimentos Elastoméricos) 28 .</td></tr>
+<tr class="chan-group-row" data-g="Base própria e automação (41–50)"><td colspan="5">▸ Base própria e automação (41–50)</td></tr>
+<tr class="chan-row" data-search="email marketing (nutrição e segmentação) custos falsos (base própria)"><td><strong>41. Email Marketing (Nutrição e Segmentação)</strong></td><td>Custos Falsos (Base Própria)</td><td>$50-$75 por mil envios</td><td>Altíssima</td><td>Altíssima. Assumindo a base gerada e segmentada internamente, gera um ROI assombroso de 3.800%, solidificando as vendas através de up-sells 2 .</td></tr>
+<tr class="chan-row" data-search="sms marketing (opt-in tcpa) custos de envio mensagem"><td><strong>42. SMS Marketing (Opt-in TCPA)</strong></td><td>Custos de Envio Mensagem</td><td>$5 - $15</td><td>25% - 40%</td><td>Alta. A via de acesso direto aos dispositivos móveis. Essencial para agendamentos meteorológicos de emergência e processos de resposta "Speed-to-Lead".</td></tr>
+<tr class="chan-row" data-search="automação drip (follow-up continuo) plataformas de automação crm"><td><strong>43. Automação Drip (Follow-Up Continuo)</strong></td><td>Plataformas de Automação CRM</td><td>Quase nulo</td><td>Expande o LTV</td><td>Alta. Implantação de memorização constante da marca perante potenciais clientes que congelaram o orçamento mas tencionam adjudicar na Primavera vindoura.</td></tr>
+<tr class="chan-row" data-search="upwork / marketplaces de talentos b2b plataforma bid (concursos)"><td><strong>44. Upwork / Marketplaces de Talentos B2B</strong></td><td>Plataforma Bid (Concursos)</td><td>$30 - $100</td><td>20% - 35%</td><td>Média/Alta. Descodifica a rede oculta: a capacidade de subcontratação em grandes infraestruturas imobiliárias ou propostas para novos desenvolvimentos habitacionais 29 .</td></tr>
+<tr class="chan-row" data-search="cold email b2b (infraestrutura distribuída) custos de setup e domínios"><td><strong>45. Cold Email B2B (Infraestrutura Distribuída)</strong></td><td>Custos de Setup e Domínios</td><td>~$225</td><td>8% - 12%</td><td>Média. Modelo matemático rigoroso para estabelecer reuniões programadas com diretores de facility management, armazéns logísticos e gestão condominial 29 .</td></tr>
+<tr class="chan-row" data-search="whatsapp business api custos por conversa/janela"><td><strong>46. WhatsApp Business API</strong></td><td>Custos por Conversa/Janela</td><td>Residual / Fixo</td><td>30% - 40%</td><td>Alta. Uma necessidade transacional quase imperativa quando se aborda e serve a imensa demografia hispânica e multicultural a residir no polo de Houston.</td></tr>
+<tr class="chan-row" data-search="ringless voicemail (rvm drops) custos por ponto de ligação"><td><strong>47. Ringless Voicemail (RVM Drops)</strong></td><td>Custos por Ponto de Ligação</td><td>$10 - $30</td><td>5% - 15%</td><td>Baixa/Média. Implementação automatizada e não-intrusiva de depósitos de voz pós-desastre. Contudo, navega regulamentações severas de compliance TCPA.</td></tr>
+<tr class="chan-row" data-search="web push notifications push in-browser"><td><strong>48. Web Push Notifications</strong></td><td>Push In-Browser</td><td>Praticamente Nulo</td><td>5% - 10%</td><td>Baixa. Tática auxiliar marginal, utilizada tipicamente para difundir avisos imediatos quando tornados ou células de tempestade severa ameaçam o condado 30 .</td></tr>
+<tr class="chan-row" data-search="agentes conversacionais ia e sdrs virtuais subscrições mensais de soft"><td><strong>49. Agentes Conversacionais IA e SDRs Virtuais</strong></td><td>Subscrições Mensais de Soft</td><td>$20 - $60</td><td>15% - 25%</td><td>Média. Resposta mecânica que purga a desqualificação no primeiro minuto, efetuando o repasse telefónico em quente (live transfer) de casos complexos aos engenheiros comerciais.</td></tr>
+<tr class="chan-row" data-search="cold calling outbound (tradicional b2b) custo total trabalho (loaded)"><td><strong>50. Cold Calling Outbound (Tradicional B2B)</strong></td><td>Custo Total Trabalho (Loaded)</td><td>~$300</td><td>10% - 15%</td><td>Média. Excessivamente oneroso e desprovido de retorno sobre o tempo investido, a menos que operado perante listas altamente enriquecidas e focadas nas direções B2B corporativas 29 .</td></tr>
+<tr class="chan-group-row" data-g="Offline e comunidade (51–60)"><td colspan="5">▸ Offline e comunidade (51–60)</td></tr>
+<tr class="chan-row" data-search="canvassing porta-a-porta (door knocking) custo laboral variável / hora"><td><strong>51. Canvassing Porta-a-Porta (Door Knocking)</strong></td><td>Custo Laboral Variável / Hora</td><td>$0 - $15</td><td>25% - 40%</td><td>Alta (após o mapeamento no telhado). O canal que exibe a rentabilidade percentual absoluta mais desproporcional nas margens (ROI) face ao investimento primário nos pós-eventos sísmicos de danos de granizo maciço 3 .</td></tr>
+<tr class="chan-row" data-search="direct mail e postais geo-cercados produção e expedição postal"><td><strong>52. Direct Mail e Postais Geo-Cercados</strong></td><td>Produção e Expedição Postal</td><td>$20 - $70 (até $200)</td><td>10% - 20%</td><td>Média/Alta. Fundamental como alavanca de prova social, procedendo ao envio postal a um raio denso de habitações sempre que uma obra é montada para execução na mesma artéria 3 .</td></tr>
+<tr class="chan-row" data-search="programa estruturado de referências (referral) benefícios ou incentivos fiscais"><td><strong>53. Programa Estruturado de Referências (Referral)</strong></td><td>Benefícios ou Incentivos Fiscais</td><td>~$0 a Custo Residual</td><td>&gt; 50%</td><td>Suprema e Intocável. O valor simbólico intrínseco da confiança humana é integralmente transferido para o empreiteiro, eliminando atritos da primeira interação, o que gera sistematicamente as taxas de conversão de elite do mercado industrial de Houston 4 .</td></tr>
+<tr class="chan-row" data-search="sinalética expositiva e "yard signs" produção inicial de monitores"><td><strong>54. Sinalética Expositiva e "Yard Signs"</strong></td><td>Produção Inicial de Monitores</td><td>Amortizado</td><td>15% - 25%</td><td>Alta. Funciona inexoravelmente como publicidade analógica perpétua de espectro hiperlocal, oferecendo ao transeunte e às frações vizinhas a prova da escolha, credenciando a eficácia e autoridade da obra decorrente 4 .</td></tr>
+<tr class="chan-row" data-search="rotulagem publicitária de frotas (truck wraps) produção gráfica de grande formato"><td><strong>55. Rotulagem Publicitária de Frotas (Truck Wraps)</strong></td><td>Produção Gráfica de Grande Formato</td><td>Amortizado nas Despesas CapEx</td><td>Aleatório/Passivo</td><td>Média. Permite a transmutação estrutural das centenas de veículos operacionais de distribuição logística (supply chain) em imensos outdoors geolocalizados de forte fixação de lembrança 4 .</td></tr>
+<tr class="chan-row" data-search="alianças institucionais: agentes de seguro e brokers honorários profissionais"><td><strong>56. Alianças Institucionais: Agentes de Seguro e Brokers</strong></td><td>Honorários Profissionais</td><td>$0 - $50 (Fixação)</td><td>60% - 80%</td><td>Altíssima. Constitui o fluxo ideal de canalização; estes técnicos detêm a autoridade burocrática sobre os processos de sinistro ativados pelos proprietários da habitação (claims) 3 .</td></tr>
+<tr class="chan-row" data-search="alianças institucionais: mediadores imobiliários locais honorários profissionais"><td><strong>57. Alianças Institucionais: Mediadores Imobiliários Locais</strong></td><td>Honorários Profissionais</td><td>Custo Residual de Gestão</td><td>40% - 60%</td><td>Alta. Aborda diretamente o segmento imperioso do imobiliário, capturando a procura em lares que exigem restauros ou certificações obrigatórias em tempo recorde para garantir o "closing" dos financiamentos do imobiliário 30 .</td></tr>
+<tr class="chan-row" data-search="publicidade radiodifusão em estações locais custos associados a impressões"><td><strong>58. Publicidade Radiodifusão em Estações Locais</strong></td><td>Custos Associados a Impressões</td><td>Altíssimo ($300+)</td><td>Baixa (&lt; 5%)</td><td>Baixa. Concebida metodologicamente como meio primário de edificação gradual de percepção de grandeza e confiabilidade, assemelhando as pequenas e dinâmicas empresas estruturais às grandes corporações oligárquicas locais, no entanto desprovida de medição científica e atribuição rigorosa e imediata do ROI 27 .</td></tr>
+<tr class="chan-row" data-search="publicidade nas redes de televisão e infraestrutura de cabo negociação orçamental elevada"><td><strong>59. Publicidade nas Redes de Televisão e Infraestrutura de Cabo</strong></td><td>Negociação Orçamental Elevada</td><td>Incalculável na Aquisição</td><td>Baixa</td><td>Baixa. Esta matriz mediática continua predominantemente isolada e monopolizada pelos conglomerados detentores das marcas industriais (legado), atuando numa perspetiva meramente corporativa, difusa, sem apelo imediato de ação.</td></tr>
+<tr class="chan-row" data-search="exposições e feiras comunitárias residenciais (home/garden shows) investimento mínimo em aluguer de pavilhões de demonstração"><td><strong>60. Exposições e Feiras Comunitárias Residenciais (Home/Garden Shows)</strong></td><td>Investimento Mínimo em Aluguer de Pavilhões de Demonstração</td><td>$800 a $3000 (Anual)</td><td>8% - 15%</td><td>Média. Faculta a edificação imperiosa e essencial do perfil social, servindo concomitantemente de funil mecânico de recrutamento humano qualificado na vertente imobiliária das coberturas e angariação massiva e simultânea para inclusão na sub-estrutura das bases de dados automatizadas descritas anteriormente (Categoria 5) 29 .</td></tr>
+      </table>
+      </div>
+    </div>
+  </div>
+<script>
+function filterChan() {
+  var q = document.getElementById('chanFilter').value.toLowerCase().trim();
+  var rows = document.querySelectorAll('#chanTable .chan-row');
+  var n = 0;
+  rows.forEach(function(r) {
+    var show = !q || r.getAttribute('data-search').indexOf(q) !== -1;
+    r.style.display = show ? '' : 'none';
+    if (show) n++;
+  });
+  document.querySelectorAll('#chanTable .chan-group-row').forEach(function(g) {
+    var next = g.nextElementSibling, vis = false;
+    while (next && !next.classList.contains('chan-group-row')) {
+      if (next.style.display !== 'none') { vis = true; break; }
+      next = next.nextElementSibling;
+    }
+    g.style.display = vis || !q ? '' : 'none';
+  });
+  document.getElementById('chanCount').textContent = n + ' canais';
+}
+</script>
+
+  <!-- 09 COMPOSIÇÃO -->
   <!-- 08 OKR -->
   <div class="card" id="okr">
     <div class="card-body">
-      <h2><span class="slide-num">08</span> OKR, plano de 30 dias e glossário</h2>
+      <h2><span class="slide-num">09</span> Composição do plano + glossário</h2>
       <div style="overflow-x:auto;">
       <table>
-        <tr><th>Objetivo</th><th>KR</th><th>Dono</th><th>Prazo</th></tr>
-        <tr><td><strong>O1 — Decidir com dado</strong></td><td>100% ligações com origem verificada; H1–H4 com causa nomeada</td><td>Marcos</td><td>15 dias</td></tr>
-        <tr><td><strong>O2 — CAC no teto</strong></td><td>CAC ≤ $437 por 30 dias; split repair×replacement; Fase 2 só com CPL ChatGPT ≤ Search</td><td>Equipe</td><td>60 dias</td></tr>
-        <tr><td><strong>O3 — Existir em IA</strong></td><td>NAP/GBP consistentes; 2 páginas-resposta no ar; +40 reviews; prompts 1–4 com cobertura paga total</td><td>Equipe + Julio</td><td>90 dias</td></tr>
+        <tr><th>Objetivo</th><th>Leitura de sucesso</th><th>Composição sugerida</th></tr>
+        <tr><td><strong>O1 — Decidir com dado</strong></td><td>Ligações com origem verificada; hipóteses H1–H4 com causa nomeada</td><td>Dossiê de ligações + espionagem top-5</td></tr>
+        <tr><td><strong>O2 — CAC sob controle</strong></td><td>CAC constituentes medidos no CRM; split repair×replacement legível</td><td>Base comprovada primeiro; testes com régua de corte</td></tr>
+        <tr><td><strong>O3 — Existir em IA</strong></td><td>NAP/GBP consistentes; páginas-resposta no ar; prompts 1–4 com cobertura (paga e/ou orgânica)</td><td>Correção geográfica + páginas-resposta + grupos ChatGPT</td></tr>
       </table>
       </div>
       <div style="overflow-x:auto;">
       <table>
-        <tr><th>Semana</th><th>Ação</th><th>Pronto quando</th></tr>
-        <tr><td><strong>1–2</strong></td><td>Dossiê de ligações; espionagem top-5; split + reviews; checagem dos anúncios ChatGPT ativos (entrega, CPC, hints, pixel)</td><td>Causa H1–H4 nomeada; gestão semanal ligada</td></tr>
-        <tr><td><strong>3–4</strong></td><td>Nextdoor (2–3 CEPs) + Bing; correção NAP/GBP; primeira página-resposta (prompt 4)</td><td>Hipóteses em teste</td></tr>
-        <tr><td><strong>4</strong></td><td>Painel 1 página: gasto × pedidos × obras × custo/obra (inclui ChatGPT)</td><td>Decisão de rota em 5 minutos</td></tr>
+        <tr><th>Sequência</th><th>Composição</th><th>Sinal de leitura</th></tr>
+        <tr><td><strong>Primeira</strong></td><td>Dossiê de ligações; espionagem top-5; split + reviews; leitura dos anúncios ChatGPT ativos (entrega, CPC, hints, pixel)</td><td>Causa H1–H4 nomeada; gestão semanal em regime</td></tr>
+        <tr><td><strong>Seguinte</strong></td><td>Nextdoor (2–3 CEPs) + Bing; correção NAP/GBP; primeira página-resposta (prompt 4)</td><td>Hipóteses em leitura</td></tr>
+        <tr><td><strong>Contínuo</strong></td><td>Painel 1 página: gasto × pedidos × obras × custo/obra (inclui ChatGPT)</td><td>Composição revista em 5 minutos</td></tr>
       </table>
       </div>
       <h3>Glossário mínimo</h3>
@@ -729,7 +1048,7 @@
   </div>
 
   <div class="footer">
-    Análise de canais + AI Search Visibility gerada em Setembro de 2026 pela equipe da <strong>V4 Company</strong> | Padrão visual auditorias SEO | allover-canais v6
+    Análise de canais (leitura consultiva, sem alocação de verba) gerada em Setembro de 2026 pela equipe da <strong>V4 Company</strong> | Padrão visual auditorias SEO | allover-canais v7
   </div>
 </div>
 
