@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metal Indianápolis | Atualização 22/09: evidências no ar + o que falta produzir</title>
+<style>
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --red: rgb(229, 9, 20);
+    --red-dark: rgb(180, 7, 16);
+    --red-light: rgb(255, 60, 70);
+    --gold: #c9a96e;
+    --gold-light: #f5f0e6;
+    --gold-border: #e8dcc8;
+    --gray-50: #fafafa;
+    --gray-100: #f5f5f5;
+    --gray-200: #eeeeee;
+    --gray-300: #e0e0e0;
+    --gray-400: #bdbdbd;
+    --gray-500: #9e9e9e;
+    --gray-600: #757575;
+    --gray-700: #616161;
+    --gray-800: #424242;
+    --gray-900: #212121;
+  }
+
+  body {
+    font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f8f7f4;
+    color: var(--gray-900);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  .cover {
+    background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #2a2a2a 100%);
+    color: #fff;
+    padding: 64px 40px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(201,169,110,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .cover-content { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; }
+  .cover-content::before {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .cover-content::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin: 28px auto 0;
+    border-radius: 1px;
+  }
+  .cover .label {
+    display: inline-block;
+    background: rgba(201,169,110,0.12);
+    border: 1px solid rgba(201,169,110,0.3);
+    padding: 6px 20px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    color: var(--gold);
+  }
+  .cover h1 {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 14px;
+    letter-spacing: -0.5px;
+    font-family: 'Plus Jakarta Sans', serif;
+  }
+  .cover p {
+    font-size: 17px;
+    opacity: 0.85;
+    margin-bottom: 24px;
+    font-weight: 300;
+    letter-spacing: 0.2px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 13px;
+    opacity: 0.7;
+    letter-spacing: 0.5px;
+  }
+
+  .container { max-width: 1020px; margin: -36px auto 48px; position: relative; z-index: 2; padding: 0 16px; }
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+    margin-bottom: 28px;
+    overflow: hidden;
+    border: 1px solid var(--gray-300);
+    position: relative;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 40px;
+    right: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-border), var(--gold), var(--gold-border), transparent);
+    opacity: 0.6;
+  }
+  .card-body { padding: 44px 52px; }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--gold-border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -0.3px;
+    position: relative;
+  }
+  h2::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 1px;
+  }
+  h2 .slide-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--red);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin: 36px 0 18px;
+    letter-spacing: -0.2px;
+  }
+  h4 { font-size: 16px; font-weight: 700; color: var(--gray-800); margin: 22px 0 12px; }
+  p { font-size: 16px; color: var(--gray-700); margin-bottom: 16px; line-height: 1.8; }
+  p:last-child { margin-bottom: 0; }
+
+  .badge {
+    display: inline-block;
+    padding: 5px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .badge-critico { background: #fef2f2; color: var(--red); border: 1px solid #fecaca; }
+  .badge-alto { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+  .badge-medio { background: #fefce8; color: #a16207; border: 1px solid #fef08a; }
+  .badge-baixo { background: var(--gold-light); color: #8b7a4a; border: 1px solid var(--gold-border); }
+  .badge-info { background: #f5f5f5; color: #616161; border: 1px solid #d4d4d4; }
+  .badge-ok { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+  .badge-exec { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+  .badge-pend { background: #f5f5f5; color: #6b7280; border: 1px solid #d1d5db; }
+  .badge-pilar { background: linear-gradient(135deg, #fef2f2, #fff7ed); color: var(--red); border: 1px solid #fecaca; }
+  .badge-hub { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+  .badge-cluster { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+
+  table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 14px; }
+  th, td { padding: 13px 14px; text-align: left; border-bottom: 1px solid var(--gray-100); vertical-align: top; }
+  th {
+    background: linear-gradient(135deg, var(--gray-50), #f8f7f4);
+    font-weight: 700;
+    color: var(--gray-700);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 2px solid var(--gold-border);
+  }
+  tr:hover td { background: #fcfaf7; }
+  tr:last-child td { border-bottom: none; }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .kpi-card {
+    background: #f2f0ec;
+    border-radius: 10px;
+    padding: 20px 12px 18px;
+    text-align: center;
+    border: 1px solid var(--gold-border);
+    position: relative;
+    overflow: hidden;
+  }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--red), var(--gold));
+  }
+  .kpi-card .value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--red);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+  .kpi-card .label {
+    font-size: 11px;
+    color: var(--gray-600);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 8px;
+  }
+  .kpi-card .sub { font-size: 11px; color: var(--gray-600); margin-top: 4px; line-height: 1.4; }
+
+  .risk-box {
+    background: linear-gradient(135deg, #fcfaf7, #f8f7f4);
+    border-left: 4px solid var(--red);
+    padding: 22px 26px;
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 18px;
+  }
+  .risk-box h4 { margin: 0 0 10px; color: var(--red); font-size: 16px; letter-spacing: -0.2px; }
+  .risk-box p { font-size: 15px; color: var(--gray-700); margin: 0; line-height: 1.7; }
+
+  .finding {
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 26px 30px;
+    margin-bottom: 18px;
+    background: #fcfcfc;
+    border-left: 3px solid transparent;
+  }
+  .finding:hover {
+    box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+    border-color: var(--gold-border);
+    border-left-color: var(--gold);
+  }
+  .finding-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .finding-title { font-weight: 700; font-size: 17px; color: var(--gray-900); letter-spacing: -0.2px; }
+  .finding-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 32px;
+    font-size: 15px;
+  }
+  .finding-grid .field { font-weight: 600; color: var(--gray-800); }
+  .finding-grid .value { color: var(--gray-700); }
+  .finding-grid .full { grid-column: 1 / -1; }
+
+  .bar-container { margin: 22px 0; }
+  .bar-row { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+  .bar-label { width: 160px; font-size: 14px; font-weight: 700; color: var(--gray-700); text-align: right; flex-shrink: 0; letter-spacing: -0.2px; }
+  .bar-track { flex: 1; height: 30px; background: var(--gray-100); border-radius: 6px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding-right: 14px; font-size: 13px; font-weight: 700; color: #fff; letter-spacing: 0.3px; white-space: nowrap; }
+  .bar-fill.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .bar-fill.orange { background: linear-gradient(90deg, #c2410c, #ea580c); }
+  .bar-fill.gold { background: linear-gradient(90deg, #b8963a, #d4b96a); }
+  .bar-fill.gray { background: linear-gradient(90deg, #616161, #9e9e9e); }
+  .bar-fill.green { background: linear-gradient(90deg, #15803d, #22c55e); }
+
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--gray-100);
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 13px;
+    color: var(--red);
+  }
+
+  .footer {
+    text-align: center;
+    padding: 36px;
+    font-size: 14px;
+    color: var(--gray-500);
+    border-top: 1px solid var(--gold-border);
+    letter-spacing: 0.3px;
+    position: relative;
+  }
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 2px;
+  }
+
+  .slide-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 18px 0 0;
+    justify-content: center;
+  }
+  .slide-nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.9);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    text-decoration: none;
+  }
+  .slide-nav a:hover { background: rgba(201,169,110,0.18); border-color: var(--gold); color: #fff; }
+  .slide-nav a span { font-size: 10px; opacity: 0.7; }
+
+  .callout {
+    background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+    color: #fff;
+    border-radius: 12px;
+    padding: 26px 28px;
+    margin: 20px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .callout::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--red), var(--gold)); }
+  .callout h4 { color: var(--gold); margin: 0 0 8px; font-size: 15px; text-transform: uppercase; letter-spacing: 0.6px; }
+  .callout p { color: rgba(255,255,255,0.82); font-size: 15px; line-height: 1.7; margin: 0; }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+  .pill-pilar { background: #fef2f2; color: var(--red); border-color: #fecaca; }
+  .pill-hub { background: #fffbeb; color: #92400e; border-color: #fde68a; }
+  .pill-satelite { background: #eff6ff; color: #1e40af; border-color: #bfdbfe; }
+  .pill-alta { background: #fef2f2; color: var(--red); border-color: #fecaca; }
+  .pill-media { background: #fffbeb; color: #92400e; border-color: #fde68a; }
+
+  @media (max-width: 900px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .cover h1 { font-size: 26px; }
+    .cover { padding: 40px 20px 32px; }
+    .card-body { padding: 20px; }
+    .finding-grid { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: 1fr 1fr; }
+    table { font-size: 12px; }
+    th, td { padding: 8px 10px; }
+  }
+
+
+  .arch-box { border-radius: 12px; padding: 18px 14px; border: 1px solid; margin-bottom: 12px; text-align: center; }
+  .arch-box.pilar { background: linear-gradient(135deg, #fef2f2, #fff7ed); border-color: #fecaca; }
+  .arch-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 4px; }
+  .arch-title { font-size: 15px; font-weight: 800; color: var(--gray-900); }
+</style>
+</head>
+<body>
+<div class="cover"><div class="cover-content">
+<div class="label">Atualização 22/09/2026 · Verificação viva 22/09 · Para o 1º check-in</div>
+<h1>Metal Indianápolis<br>Evidências no ar + o que falta produzir</h1>
+<p>4 pillars + 2 hubs + 58 posts catalogados por cluster com links clicáveis, a teia de links verificada, as keywords da planilha que definiram o critério e o programa do que ainda falta para a estratégia se materializar. Documento para revisar, conferir e pontuar no check-in.</p>
+<div class="cover-meta"><span>• Projeto 309016</span><span>• 22/09/2026</span><span>• Formato all-over-seo-updates</span></div>
+<div class="slide-nav"><a href="#kpis">01 <span>Resumo</span></a><a href="#pillars">02 <span>4 pillars</span></a><a href="#hubs">03 <span>2 hubs</span></a><a href="#posts">04 <span>Posts</span></a><a href="#produzir">05 <span>A produzir</span></a><a href="#malha">06 <span>Malha</span></a><a href="#keywords">07 <span>Keywords</span></a><a href="#padrao">08 <span>Padrão</span></a><a href="#cronograma">09 <span>Cronograma</span></a><a href="#check">10 <span>Check-in</span></a></div>
+</div></div>
+<div class="container">
+<div class="card" id="kpis"><div class="card-body">
+<h2><span class="slide-num">01</span> Resumo</h2>
+<div class="kpi-grid">
+<div class="kpi-card"><div class="value">4/4</div><div class="label">Pillars no ar</div><div class="sub">3.000+ palavras cada · HTTP 200 em 22/09</div></div>
+<div class="kpi-card"><div class="value">2/2</div><div class="label">Hubs otimizados</div><div class="sub">blocos + cards + links contextuais</div></div>
+<div class="kpi-card"><div class="value">58</div><div class="label">Posts catalogados</div><div class="sub">5 clusters · amostra 200 em 22/09</div></div>
+<div class="kpi-card"><div class="value">138</div><div class="label">Links da teia</div><div class="sub">verificados no ar em 18/09</div></div>
+<div class="kpi-card"><div class="value">12</div><div class="label">Spokes a produzir</div><div class="sub">programa proposto · seção 05</div></div>
+<div class="kpi-card"><div class="value">59</div><div class="label">Keywords na planilha</div><div class="sub">critério · seção 07</div></div>
+</div>
+<div class="callout"><h4>O que você vai encontrar aqui</h4><p>As tabelas clicáveis dos 4 pillars, 2 hubs e 58 posts organizados por cluster; o programa dos 12 spokes que faltam produzir; as regras da malha de links; as keywords da planilha com volume, CPC e dificuldade que definiram cada artigo; o padrão visual de referência; o cronograma no eKyte; e o checklist do primeiro check-in. A <a href="https://marcoslrvusa.github.io/v4perettoco/indianapolis-atualizacao-18-09.html" style="color:var(--gold);">versão 18/09 foi preservada intacta</a> para comparação.</p></div>
+</div></div>
+<div class="card" id="pillars"><div class="card-body">
+<h2><span class="slide-num">02</span> As 4 pillar pages: clique e avalie</h2>
+<p>Todas com padrão visual único (badge pilar, sumário ancorado, seções numeradas, tabelas, cards, checklist, FAQ com schema, carrossel de produtos no final, CTA), zero travessão, linguagem humana e SEO máximo. Status <span class="badge badge-ok">No ar</span> = HTTP 200 verificado em produção em 22/09/2026.</p>
+<div class="finding" style="border-left-color: var(--red);">
+<div class="finding-header"><div><span class="finding-title">Nicho: Anel de Segmento</span> <span class="pill pill-pilar" style="margin-left:8px;">No ar</span></div>
+<div><a href="https://indianapolis.com.br/aneis-de-segmento/" style="font-size:13px;">Abrir página →</a></div></div>
+<div class="finding-grid"><div><span class="field">URL:</span> <span class="value"><code>/aneis-de-segmento/</code></span></div>
+<div><span class="field">Keyword:</span> <span class="value"><code>anel de segmento</code></span></div>
+<div><span class="field">Palavras:</span> <span class="value"><strong>3.074</strong></span></div>
+<div><span class="field">Volume:</span> <span class="value"><strong>2.400</strong></span></div></div></div><div class="finding" style="border-left-color: var(--red);">
+<div class="finding-header"><div><span class="finding-title">Técnico: Cinzento + Nodular</span> <span class="pill pill-pilar" style="margin-left:8px;">No ar</span></div>
+<div><a href="https://indianapolis.com.br/ferro-fundido-cinzento-nodular/" style="font-size:13px;">Abrir página →</a></div></div>
+<div class="finding-grid"><div><span class="field">URL:</span> <span class="value"><code>/ferro-fundido-cinzento-nodular/</code></span></div>
+<div><span class="field">Keyword:</span> <span class="value"><code>ferro fundido cinzento</code></span></div>
+<div><span class="field">Palavras:</span> <span class="value"><strong>3.021</strong></span></div>
+<div><span class="field">Volume:</span> <span class="value"><strong>590</strong></span></div></div></div><div class="finding" style="border-left-color: var(--red);">
+<div class="finding-header"><div><span class="finding-title">Comercial: Fundição</span> <span class="pill pill-pilar" style="margin-left:8px;">No ar</span></div>
+<div><a href="https://indianapolis.com.br/fundicao-de-ferro-fundido/" style="font-size:13px;">Abrir página →</a></div></div>
+<div class="finding-grid"><div><span class="field">URL:</span> <span class="value"><code>/fundicao-de-ferro-fundido/</code></span></div>
+<div><span class="field">Keyword:</span> <span class="value"><code>fundição de ferro fundido</code></span></div>
+<div><span class="field">Palavras:</span> <span class="value"><strong>3.034</strong></span></div>
+<div><span class="field">Volume:</span> <span class="value"><strong>210</strong></span></div></div></div><div class="finding" style="border-left-color: var(--red);">
+<div class="finding-header"><div><span class="finding-title">Customização: Usinagem</span> <span class="pill pill-pilar" style="margin-left:8px;">No ar</span></div>
+<div><a href="https://indianapolis.com.br/usinagem-cnc-ferro-fundido/" style="font-size:13px;">Abrir página →</a></div></div>
+<div class="finding-grid"><div><span class="field">URL:</span> <span class="value"><code>/usinagem-cnc-ferro-fundido/</code></span></div>
+<div><span class="field">Keyword:</span> <span class="value"><code>usinagem CNC ferro fundido</code></span></div>
+<div><span class="field">Palavras:</span> <span class="value"><strong>3.009</strong></span></div>
+<div><span class="field">Volume:</span> <span class="value"><strong>alto ticket</strong></span></div></div></div>
+</div></div>
+<div class="card" id="hubs"><div class="card-body">
+<h2><span class="slide-num">03</span> Os 2 hubs: o que mudou</h2>
+<div class="finding" style="border-left-color: var(--gold);"><div class="finding-header"><div><span class="finding-title"><a href="https://indianapolis.com.br/guia-ferro-fundido/">guia-ferro-fundido/</a></span> <span class="pill pill-hub" style="margin-left:8px;">Hub técnico</span></div></div>
+<p>Bloco de 15 links + cards dos 3 pillars + 13 links contextuais no corpo. BreadcrumbList validado.</p></div><div class="finding" style="border-left-color: var(--gold);"><div class="finding-header"><div><span class="finding-title"><a href="https://indianapolis.com.br/usinagem-cnc/">usinagem-cnc/</a></span> <span class="pill pill-hub" style="margin-left:8px;">Hub engenharia</span></div></div>
+<p>Bloco de 10 links + cards dos 3 pillars + 10 links contextuais no corpo. BreadcrumbList validado.</p></div><div class="finding"><div class="finding-header"><div><span class="finding-title">Duplicatas resolvidas</span></div><div><span class="badge badge-ok">5/5</span></div></div>
+<p><code>/fundicao-de-ferro-fundido-2/</code> agora redireciona (301) para o pillar; post fino migrado para <code>/fundicao-de-ferro-fundido-sp/</code> liberando o slug exato; pares auto-peças, preço e post×produto mantidos com intenção distinta e cross-links mútuos.</p></div>
+</div></div>
+<div class="card" id="posts"><div class="card-body">
+<h2><span class="slide-num">04</span> Os 58 posts organizados por cluster</h2>
+<p>Cada post do blog classificado no cluster que alimenta, com link clicável para revisão. Status <span class="badge badge-ok">Pronto</span> = documentado em 18/09 + amostra revalidada viva em 22/09.</p>
+<h3>Nicho: Anel de Segmento: pillar: /aneis-de-segmento/</h3><table><tr><th>Slug</th><th>Título</th><th>Palavras</th><th>Status</th></tr><tr><td><code>aneis-de-segmento-de-ferro</code></td><td><a href="https://indianapolis.com.br/aneis-de-segmento-de-ferro/">Anéis de segmento de ferro: tipos, materiais e aplicações industriais</a></td><td>1610</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>aneis-de-segmento-do-pistao</code></td><td><a href="https://indianapolis.com.br/aneis-de-segmento-do-pistao/">Anéis de segmento do pistão: função, desgaste e especificação</a></td><td>1649</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>aneis-de-segmento-em-bronze</code></td><td><a href="https://indianapolis.com.br/aneis-de-segmento-em-bronze/">Anéis de segmento em bronze: aplicações especiais em compressores</a></td><td>1605</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>aneis-de-segmento-para-amortecedores-em-bronze</code></td><td><a href="https://indianapolis.com.br/aneis-de-segmento-para-amortecedores-em-bronze/">Anéis de segmento para amortecedores em bronze: especificação técnica</a></td><td>1600</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>aneis-de-segmento-pistao</code></td><td><a href="https://indianapolis.com.br/aneis-de-segmento-pistao/">Anéis de segmento de pistão para compressores: guia de seleção</a></td><td>1627</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>aneis-de-segmento-sob-medida</code></td><td><a href="https://indianapolis.com.br/aneis-de-segmento-sob-medida/">Anéis de segmento sob medida: fabricação por desenho técnico</a></td><td>1603</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>aneis-para-bombas-a-vacuo</code></td><td><a href="https://indianapolis.com.br/aneis-para-bombas-a-vacuo/">Anéis para bombas a vácuo: especificação em ferro fundido e bronze</a></td><td>1624</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>aneis-para-compressor-de-alta-pressao</code></td><td><a href="https://indianapolis.com.br/aneis-para-compressor-de-alta-pressao/">Anéis para compressor de alta pressão: materiais e desempenho</a></td><td>1636</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>anel-de-segmento-do-motor</code></td><td><a href="https://indianapolis.com.br/anel-de-segmento-do-motor/">Anel de Segmento do Motor: Função, Tipos e Como Escolher o Componente</a></td><td>1776</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>anel-de-segmento-em-ferro-fundido</code></td><td><a href="https://indianapolis.com.br/anel-de-segmento-em-ferro-fundido/">Anéis de segmento de ferro: tipos, materiais e aplicações industriais</a></td><td>1610</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>anel-de-segmento-para-compressor</code></td><td><a href="https://indianapolis.com.br/anel-de-segmento-para-compressor/">Anel de segmento para compressor: guia de especificação técnica</a></td><td>1626</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>anel-de-segmento-preco</code></td><td><a href="https://indianapolis.com.br/anel-de-segmento-preco/">Preço de anel de segmento: tabela comparativa e fatores de custo</a></td><td>1617</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>anel-de-segmento</code></td><td><a href="https://indianapolis.com.br/anel-de-segmento/">Anel de Segmento: Tipos, Aplicações e Como Especificar o Componente Ce</a></td><td>1633</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>fabricante-aneis-de-segmento</code></td><td><a href="https://indianapolis.com.br/fabricante-aneis-de-segmento/">Fabricante de anéis de segmento: capacidade técnica e qualidade</a></td><td>1614</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>fornecedor-aneis-de-segmento</code></td><td><a href="https://indianapolis.com.br/fornecedor-aneis-de-segmento/">Por que investir em um fornecedor anéis de segmento confiável</a></td><td>1612</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>camisa-compressor</code></td><td><a href="https://indianapolis.com.br/camisa-compressor/">Camisa para Compressor de Ar: Função, Materiais e Especificação Técnic</a></td><td>1601</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>cabecote-compressor-de-ar</code></td><td><a href="https://indianapolis.com.br/cabecote-compressor-de-ar/">Cabeçote de compressor de ar: materiais, dimensões e fornecedores</a></td><td>1603</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>cabecote-para-compressor</code></td><td><a href="https://indianapolis.com.br/cabecote-para-compressor/">Cabeçote para Compressor de Ar: Função, Materiais e Como Especificar</a></td><td>1610</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>cilindro-compressor-de-ar</code></td><td><a href="https://indianapolis.com.br/cilindro-compressor-de-ar/">Cilindro de compressor de ar em ferro fundido: especificação</a></td><td>1624</td><td><span class="badge badge-ok">Pronto</span></td></tr></table><h3>Técnico: Materiais: pillar: /ferro-fundido-cinzento-nodular/</h3><table><tr><th>Slug</th><th>Título</th><th>Palavras</th><th>Status</th></tr><tr><td><code>ferro-fundido-cinzento</code></td><td><a href="https://indianapolis.com.br/ferro-fundido-cinzento/">Ferro fundido cinzento: guia técnico completo de propriedades e aplica</a></td><td>680</td><td><span class="badge badge-ok">Via snippet</span></td></tr><tr><td><code>fundicao-de-ferro-cinzento-e-nodular</code></td><td><a href="https://indianapolis.com.br/fundicao-de-ferro-cinzento-e-nodular/">Como é feita a fundição de ferro cinzento e nodular</a></td><td>1616</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>fundicao-ferro-fundido-cinzento</code></td><td><a href="https://indianapolis.com.br/fundicao-ferro-fundido-cinzento/">Fundição de ferro fundido cinzento: classes GG20, GG25 e aplicações té</a></td><td>1681</td><td><span class="badge badge-ok">Pronto</span></td></tr></table><h3>Comercial: Fundição: pillar: /fundicao-de-ferro-fundido/</h3><table><tr><th>Slug</th><th>Título</th><th>Palavras</th><th>Status</th></tr><tr><td><code>empresa-de-ferro-fundido</code></td><td><a href="https://indianapolis.com.br/empresa-de-ferro-fundido/">Empresa de ferro fundido: como avaliar um fornecedor industrial</a></td><td>1611</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>empresa-de-fundicao-de-ferro-fundido</code></td><td><a href="https://indianapolis.com.br/empresa-de-fundicao-de-ferro-fundido/">Empresa de fundição de ferro fundido: certificações e capacidade</a></td><td>1601</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>fabricacao-de-pecas-em-ferro-fundido</code></td><td><a href="https://indianapolis.com.br/fabricacao-de-pecas-em-ferro-fundido/">Fabricante de anéis de segmento: capacidade técnica e qualidade</a></td><td>1719</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>fundicao-de-ferro-em-itaquaquecetuba</code></td><td><a href="https://indianapolis.com.br/fundicao-de-ferro-em-itaquaquecetuba/">Processos de fundição de ferro em Itaquaquecetuba SP</a></td><td>1702</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>fundicao-de-ferro-em-pep-set</code></td><td><a href="https://indianapolis.com.br/fundicao-de-ferro-em-pep-set/">Fundição de ferro em pep set conheça as tendências e inovações na indú</a></td><td>1825</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>fundicao-de-ferro-fundido-2</code></td><td><a href="https://indianapolis.com.br/fundicao-de-ferro-fundido-2/">Fundição de ferro fundido: como funciona e quais são as aplicações</a></td><td>979</td><td><span class="badge badge-ok">301 → pillar</span></td></tr><tr><td><code>fundicao-de-ferro-fundido-sp</code></td><td><a href="https://indianapolis.com.br/fundicao-de-ferro-fundido-sp/">Por que a fundição de ferro fundido SP é a melhor opção para o seu neg</a></td><td>1750</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>fundicao-de-ferros</code></td><td><a href="https://indianapolis.com.br/fundicao-de-ferros/">Fundição de ferros: processo industrial, tipos de liga e aplicações</a></td><td>1629</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>fundicao-de-pecas-em-ferro-fundido</code></td><td><a href="https://indianapolis.com.br/fundicao-de-pecas-em-ferro-fundido/">Saiba como é o processo de fundição de peças em ferro fundido</a></td><td>1638</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>fundicao-em-sao-paulo</code></td><td><a href="https://indianapolis.com.br/fundicao-em-sao-paulo/">Fundição em São Paulo: panorama industrial e fornecedores de referênci</a></td><td>1600</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>pecas-de-ferro-fundido</code></td><td><a href="https://indianapolis.com.br/pecas-de-ferro-fundido/">Peças de ferro fundido sob encomenda: guia de especificação técnica</a></td><td>1618</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>preco-do-ferro-fundido-kg</code></td><td><a href="https://indianapolis.com.br/preco-do-ferro-fundido-kg/">Qualidade e custo: Encontre melhor preço do ferro fundido KG</a></td><td>1975</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>preco-ferro-fundido</code></td><td><a href="https://indianapolis.com.br/preco-ferro-fundido/">Preço do Ferro Fundido: Fatores que Influenciam o Custo da Matéria-Pri</a></td><td>1602</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>servico-de-fundicao-em-sao-paulo</code></td><td><a href="https://indianapolis.com.br/servico-de-fundicao-em-sao-paulo/">Serviço de fundição em São Paulo: capacidade técnica e prazos</a></td><td>1641</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>fundicao-de-auto-pecas</code></td><td><a href="https://indianapolis.com.br/fundicao-de-auto-pecas/">Fundição de auto peças: características e benefícios</a></td><td>1637</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>fundicao-de-autopecas</code></td><td><a href="https://indianapolis.com.br/fundicao-de-autopecas/">Qualidade em fundição de autopeças: a importância de escolher a empres</a></td><td>1682</td><td><span class="badge badge-ok">Pronto</span></td></tr></table><h3>Engenharia: Usinagem: pillar: /usinagem-cnc-ferro-fundido/</h3><table><tr><th>Slug</th><th>Título</th><th>Palavras</th><th>Status</th></tr><tr><td><code>fundicao-e-usinagem</code></td><td><a href="https://indianapolis.com.br/fundicao-e-usinagem/">Fundição e usinagem: garanta a qualidade da peça final com esses proce</a></td><td>1658</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>fundicao-e-usinagem-em-ferro-fundido-empresa</code></td><td><a href="https://indianapolis.com.br/fundicao-e-usinagem-em-ferro-fundido-empresa/">Empresa de fundição e usinagem em ferro fundido: o que considerar na e</a></td><td>1617</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>fundicao-e-usinagem-proprias</code></td><td><a href="https://indianapolis.com.br/fundicao-e-usinagem-proprias/">Fundição e usinagem próprias: diferencial competitivo na indústria met</a></td><td>1626</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>fabricante-de-pecas-para-maquinas-e-equipamentos</code></td><td><a href="https://indianapolis.com.br/fabricante-de-pecas-para-maquinas-e-equipamentos/">Importância de fabricante de peças para máquinas e equipamentos qualif</a></td><td>1612</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>pecas-para-tratores-agricolas</code></td><td><a href="https://indianapolis.com.br/pecas-para-tratores-agricolas/">Peças para tratores agrícolas em ferro fundido: durabilidade no campo</a></td><td>2199</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>pecas-para-tratores</code></td><td><a href="https://indianapolis.com.br/pecas-para-tratores/">Peças para Tratores Agrícolas em Ferro Fundido: Como Escolher o Fornec</a></td><td>1897</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>cubos-e-mancais-para-maquinas</code></td><td><a href="https://indianapolis.com.br/cubos-e-mancais-para-maquinas/">Cubos e mancais para máquinas: fabricação em ferro fundido</a></td><td>1646</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>fabrica-de-roldanas</code></td><td><a href="https://indianapolis.com.br/fabrica-de-roldanas/">Fábrica de Roldanas em Ferro Fundido: Como Escolher o Fornecedor Ideal</a></td><td>1927</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>industria-metalurgica-de-pecas-automotivas</code></td><td><a href="https://indianapolis.com.br/industria-metalurgica-de-pecas-automotivas/">Anéis de segmento para amortecedores em bronze: a importância da escol</a></td><td>1654</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>fabricante-de-pecas-automotivas</code></td><td><a href="https://indianapolis.com.br/fabricante-de-pecas-automotivas/">Fabricante de peças para bombeamento de concreto: critérios técnicos d</a></td><td>1609</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>empresas-fabricantes-de-pecas-automotivas</code></td><td><a href="https://indianapolis.com.br/empresas-fabricantes-de-pecas-automotivas/">Empresas fabricantes de peças automotivas em ferro fundido</a></td><td>1606</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>fabrica-de-pecas-automotiva</code></td><td><a href="https://indianapolis.com.br/fabrica-de-pecas-automotiva/">Como escolher uma fábrica de peças automotiva confiável e de qualidade</a></td><td>1700</td><td><span class="badge badge-ok">Pronto</span></td></tr></table><h3>Construção: hub Fase 3 (gap): pillar: hub da Fase 3: a criar</h3><table><tr><th>Slug</th><th>Título</th><th>Palavras</th><th>Status</th></tr><tr><td><code>abracadeira-para-concreto</code></td><td><a href="https://indianapolis.com.br/abracadeira-para-concreto/">Abraçadeira para concreto: tipos, materiais e aplicações na construção</a></td><td>1763</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>abracadeira-para-tubo-de-concreto</code></td><td><a href="https://indianapolis.com.br/abracadeira-para-tubo-de-concreto/">Abraçadeira para tubo de concreto: especificações técnicas e instalaçã</a></td><td>1629</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>fabricante-abracadeiras-bombeamento-concreto</code></td><td><a href="https://indianapolis.com.br/fabricante-abracadeiras-bombeamento-concreto/">Fabricante de abraçadeiras para bombeamento de concreto</a></td><td>1667</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>fabricante-de-pecas-para-bombeamento-de-concreto</code></td><td><a href="https://indianapolis.com.br/fabricante-de-pecas-para-bombeamento-de-concreto/">Como avaliar a eficiência de um fabricante de peças para bombeamento d</a></td><td>1608</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>pecas-para-bomba-de-concreto</code></td><td><a href="https://indianapolis.com.br/pecas-para-bomba-de-concreto/">Peças de ferro fundido sob encomenda: guia de especificação técnica</a></td><td>1610</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>pecas-para-bombeamento-de-concreto</code></td><td><a href="https://indianapolis.com.br/pecas-para-bombeamento-de-concreto/">Peças para bombeamento de concreto: especificações e vida útil</a></td><td>1613</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>pecas-para-sistema-de-bombeamento-de-concreto</code></td><td><a href="https://indianapolis.com.br/pecas-para-sistema-de-bombeamento-de-concreto/">Peças para sistema de bombeamento de concreto: manutenção e reposição</a></td><td>2195</td><td><span class="badge badge-ok">Pronto</span></td></tr><tr><td><code>rolos-de-apoio-para-betoneiras</code></td><td><a href="https://indianapolis.com.br/rolos-de-apoio-para-betoneiras/">Rolos de apoio para betoneiras: especificação em ferro fundido</a></td><td>2302</td><td><span class="badge badge-ok">Pronto</span></td></tr></table>
+</div></div>
+<div class="card" id="produzir"><div class="card-body">
+<h2><span class="slide-num">05</span> O que falta produzir: 12 spokes + Fase 3</h2>
+<p>Buracos reais encontrados no inventário, priorizados por volume e intenção, mais o hub de construção da Fase 3. Proposta para aprovação antes de produzir: cada spoke nasce no padrão das páginas modelo (seção 08) e já entra na malha (seção 06).</p>
+<table><tr><th>Cluster</th><th>Spoke proposto</th><th>Prioridade</th><th>Status</th></tr><tr><td>técnico</td><td>o que é ferro nodular (guia introdutório)</td><td><span class="badge badge-critico">Alta</span></td><td><span class="badge badge-pend">A produzir</span></td></tr><tr><td>técnico</td><td>tabela de dureza Brinell por classe FC/GGG</td><td><span class="badge badge-critico">Alta</span></td><td><span class="badge badge-pend">A produzir</span></td></tr><tr><td>técnico</td><td>como ler laudo metalográfico</td><td><span class="badge badge-medio">Média</span></td><td><span class="badge badge-pend">A produzir</span></td></tr><tr><td>comercial</td><td>como cotar fundição: checklist do pedido perfeito</td><td><span class="badge badge-critico">Alta</span></td><td><span class="badge badge-pend">A produzir</span></td></tr><tr><td>comercial</td><td>fundição em Minas Gerais: vale a pena (geo, decisão)</td><td><span class="badge badge-medio">Média</span></td><td><span class="badge badge-pend">A produzir</span></td></tr><tr><td>usinagem</td><td>tabela de tolerâncias CNC por operação</td><td><span class="badge badge-critico">Alta</span></td><td><span class="badge badge-pend">A produzir</span></td></tr><tr><td>usinagem</td><td>terceirização de usinagem: contrato e SLA</td><td><span class="badge badge-medio">Média</span></td><td><span class="badge badge-pend">A produzir</span></td></tr><tr><td>anéis</td><td>end gap: guia de medição na prática</td><td><span class="badge badge-critico">Alta</span></td><td><span class="badge badge-pend">A produzir</span></td></tr><tr><td>anéis</td><td>amaciamento de motor retificado</td><td><span class="badge badge-medio">Média</span></td><td><span class="badge badge-pend">A produzir</span></td></tr><tr><td>construção</td><td>peças para betoneira: guia de reposição</td><td><span class="badge badge-critico">Alta</span></td><td><span class="badge badge-pend">A produzir</span></td></tr><tr><td>construção</td><td>bombeamento de concreto: comparativo de peças</td><td><span class="badge badge-medio">Média</span></td><td><span class="badge badge-pend">A produzir</span></td></tr><tr><td>comercial</td><td>fundição para indústria vidreira (vertical nova)</td><td><span class="badge badge-baixo">Baixa</span></td><td><span class="badge badge-pend">A produzir</span></td></tr></table>
+<div class="finding"><div class="finding-header"><div><span class="finding-title">Fase 3: hub de construção a criar</span></div><div><span class="badge badge-pend">A produzir</span></div></div>
+<p>Cluster construção (8 posts: abraçadeiras, rolos de apoio, bomba de concreto) ainda sem hub próprio. Proposta: criar o hub que organiza o cluster e aponta para os pillars comercial e de customização.</p></div>
+</div></div>
+<div class="card" id="malha"><div class="card-body">
+<h2><span class="slide-num">06</span> Malha de links: regras + teia verificada</h2>
+<p>Arquitetura que distribui autoridade entre negócio, técnica e conversão. Teia de 138 links checada viva em produção em 18/09 (origem contém o link para o destino).</p>
+<div class="arch-box pilar"><div class="arch-label" style="color:var(--red);">Cluster Anéis</div><div class="arch-title">17 links verificados</div></div>
+<div class="arch-box pilar"><div class="arch-label" style="color:var(--red);">Cluster Técnico</div><div class="arch-title">35 links verificados</div></div>
+<div class="arch-box pilar"><div class="arch-label" style="color:var(--red);">Cluster Comercial</div><div class="arch-title">26 links verificados</div></div>
+<div class="arch-box pilar"><div class="arch-label" style="color:var(--red);">Cluster Usinagem</div><div class="arch-title">46 links verificados</div></div>
+<div class="finding"><div class="finding-header"><div><span class="finding-title">Regras da malha (aplicadas e a aplicar nos spokes)</span></div><div><span class="badge badge-ok">Padrão</span></div></div>
+<div class="finding-grid">
+<div class="full"><span class="field">UP:</span> <span class="value">todo post linka seu pillar (âncora semântica com keyword e variação)</span></div>
+<div class="full"><span class="field">SIDE:</span> <span class="value">todo post conecta os irmãos do cluster (ex.: anéis lista motor, compressor, preço, tipos)</span></div>
+<div class="full"><span class="field">DOWN:</span> <span class="value">cada pillar lista e linka seus artigos no bloco “Continue”: fecha o circuito</span></div>
+<div class="full"><span class="field">CONVERSÃO:</span> <span class="value">todo pillar termina em solicitar cotação + ver produtos + carrossel da linha</span></div>
+<div class="full"><span class="field">Critério de aceite:</span> <span class="value">cada hub com 8+ links contextuais · âncoras com variação semântica · malha validada no Screaming Frog sem órfãos e sem 404 · BreadcrumbList validado em Rich Results Test</span></div>
+</div></div>
+<h3>Amostra da teia (10 de 138)</h3>
+<div style="overflow-x:auto;"><table><tr><th>Origem</th><th>Âncora</th><th>Destino</th><th>Status</th></tr><tr><td><a href="https://indianapolis.com.br/guia-ferro-fundido/">guia-ferro-fundido</a></td><td>ferro fundido cinzento</td><td><a href="https://indianapolis.com.br/ferro-fundido-cinzento/">ferro-fundido-cinzento</a></td><td>✓</td></tr><tr><td><a href="https://indianapolis.com.br/guia-ferro-fundido/">guia-ferro-fundido</a></td><td>ferro fundido nodular</td><td><a href="https://indianapolis.com.br/fundicao-de-ferro-cinzento-e-nodular/">fundicao-de-ferro-cinzento-e-nodular</a></td><td>✓</td></tr><tr><td><a href="https://indianapolis.com.br/guia-ferro-fundido/">guia-ferro-fundido</a></td><td>peças de ferro fundido</td><td><a href="https://indianapolis.com.br/pecas-de-ferro-fundido/">pecas-de-ferro-fundido</a></td><td>✓</td></tr><tr><td><a href="https://indianapolis.com.br/guia-ferro-fundido/">guia-ferro-fundido</a></td><td>fundição de peças sob especificação</td><td><a href="https://indianapolis.com.br/fundicao-de-pecas-em-ferro-fundido/">fundicao-de-pecas-em-ferro-fundido</a></td><td>✓</td></tr><tr><td><a href="https://indianapolis.com.br/guia-ferro-fundido/">guia-ferro-fundido</a></td><td>fundição de ferro fundido para projetos industriais</td><td><a href="https://indianapolis.com.br/fundicao-de-ferro-fundido/">fundicao-de-ferro-fundido</a></td><td>✓</td></tr><tr><td><a href="https://indianapolis.com.br/guia-ferro-fundido/">guia-ferro-fundido</a></td><td>processo industrial</td><td><a href="https://indianapolis.com.br/fabricacao-de-pecas-em-ferro-fundido/">fabricacao-de-pecas-em-ferro-fundido</a></td><td>✓</td></tr><tr><td><a href="https://indianapolis.com.br/usinagem-cnc/">usinagem-cnc</a></td><td>usinagem CNC ferro fundido</td><td><a href="https://indianapolis.com.br/usinagem-cnc-ferro-fundido/">usinagem-cnc-ferro-fundido</a></td><td>✓</td></tr><tr><td><a href="https://indianapolis.com.br/usinagem-cnc/">usinagem-cnc</a></td><td>peças sob desenho</td><td><a href="https://indianapolis.com.br/fundicao-de-pecas-em-ferro-fundido/">fundicao-de-pecas-em-ferro-fundido</a></td><td>✓</td></tr><tr><td><a href="https://indianapolis.com.br/aneis-de-segmento/">aneis-de-segmento</a></td><td>anéis de segmento do motor</td><td><a href="https://indianapolis.com.br/anel-de-segmento-do-motor/">anel-de-segmento-do-motor</a></td><td>✓</td></tr><tr><td><a href="https://indianapolis.com.br/aneis-de-segmento/">aneis-de-segmento</a></td><td>tipos e aplicações</td><td><a href="https://indianapolis.com.br/anel-de-segmento/">anel-de-segmento</a></td><td>✓</td></tr></table></div>
+<p>Teia completa linha a linha na <a href="https://marcoslrvusa.github.io/v4perettoco/indianapolis-atualizacao-18-09.html#teia">versão 18/09 (seção 06)</a>.</p>
+</div></div>
+<div class="card" id="keywords"><div class="card-body">
+<h2><span class="slide-num">07</span> Keywords da planilha × artigo (o critério)</h2>
+<p>Fonte única: <code>Metal Indianapolis Keywords - Página2.csv</code> (59 keywords com intenção, volume mensal, CPC, dificuldade de ads e dificuldade SEO). Abaixo as intents estratégicas mapeadas para o artigo que as cobre: é este cruzamento que definiu pillars, clusters e spokes.</p>
+<div style="overflow-x:auto;"><table><tr><th>Keyword da planilha</th><th>Intenção</th><th>Volume</th><th>CPC</th><th>Dif. SEO</th><th>Artigo que cobre</th><th>Status</th></tr><tr><td><code>anéis de segmento</code></td><td>Transacional/Comercial</td><td>2.4K</td><td>R$0,60</td><td>28</td><td><a href="https://indianapolis.com.br/aneis-de-segmento//">aneis-de-segmento/</a></td><td><span class="badge badge-ok">No ar</span></td></tr><tr><td><code>ferro fundido cinzento</code></td><td>Transacional/Comercial</td><td>590</td><td>R$5,16</td><td>9</td><td><a href="https://indianapolis.com.br/ferro-fundido-cinzento-nodular//">ferro-fundido-cinzento-nodular/</a></td><td><span class="badge badge-ok">No ar</span></td></tr><tr><td><code>fundição de ferro fundido</code></td><td>Transacional/Comercial</td><td>210</td><td>R$4,90</td><td>7</td><td><a href="https://indianapolis.com.br/fundicao-de-ferro-fundido//">fundicao-de-ferro-fundido/</a></td><td><span class="badge badge-ok">No ar</span></td></tr><tr><td><code>usinagem cnc</code></td><td>Transacional/Comercial</td><td>2.4K</td><td>R$31,56</td><td>9</td><td><a href="https://indianapolis.com.br/usinagem-cnc-ferro-fundido//">usinagem-cnc-ferro-fundido/</a></td><td><span class="badge badge-ok">No ar</span></td></tr><tr><td><code>fundição de ferro</code></td><td>Transacional/Comercial</td><td>260</td><td>R$4,49</td><td>16</td><td><a href="https://indianapolis.com.br/fundicao-de-ferro-fundido/ (apoio)/">fundicao-de-ferro-fundido/ (apoio)</a></td><td><span class="badge badge-ok">No ar</span></td></tr><tr><td><code>peças em ferro fundido</code></td><td>Transacional/Comercial</td><td>50</td><td>R$2,79</td><td>24</td><td><a href="https://indianapolis.com.br/pecas-de-ferro-fundido//">pecas-de-ferro-fundido/</a></td><td><span class="badge badge-ok">No ar</span></td></tr><tr><td><code>peças usinadas</code></td><td>Transacional/Comercial</td><td>210</td><td>R$4,59</td><td>7</td><td>cluster usinagem</td><td><span class="badge badge-ok">No ar</span></td></tr><tr><td><code>anéis de segmento do motor</code></td><td>Transacional/Comercial</td><td>110</td><td>R$0</td><td>18</td><td><a href="https://indianapolis.com.br/anel-de-segmento-do-motor//">anel-de-segmento-do-motor/</a></td><td><span class="badge badge-ok">No ar</span></td></tr><tr><td><code>anéis de segmento do pistão</code></td><td>Transacional/Comercial</td><td>110</td><td>R$0</td><td>34</td><td>cluster anéis (6 posts)</td><td><span class="badge badge-ok">No ar</span></td></tr><tr><td><code>ferro fundido cinzento microestrutura</code></td><td>Transacional/Comercial</td><td>110</td><td>R$0</td><td>5</td><td><a href="https://indianapolis.com.br/ferro-fundido-cinzento//">ferro-fundido-cinzento/</a></td><td><span class="badge badge-ok">No ar</span></td></tr><tr><td><code>ferro fundido cinzento aplicações</code></td><td>Transacional/Comercial</td><td>50</td><td>R$0</td><td>5</td><td><a href="https://indianapolis.com.br/ferro-fundido-cinzento//">ferro-fundido-cinzento/</a></td><td><span class="badge badge-ok">No ar</span></td></tr><tr><td><code>anel de segmento (modelos: gol, corsa, hb20…)</code></td><td>Transacional/Comercial</td><td>30 a 110</td><td>R$0 a 0,39</td><td>33 a 36</td><td>cluster anéis (tipos)</td><td><span class="badge badge-ok">No ar</span></td></tr><tr><td><code>forno de fundição de ferro</code></td><td>Transacional/Comercial</td><td>40</td><td>R$1,36</td><td>25</td><td><a href="https://indianapolis.com.br/guia-ferro-fundido/ (apoio)/">guia-ferro-fundido/ (apoio)</a></td><td><span class="badge badge-ok">No ar</span></td></tr><tr><td><code>fundição de ferro fundido em minas gerais</code></td><td>Transacional/Comercial</td><td>90</td><td>R$3,63</td><td>24</td><td>página geo (a decidir)</td><td><span class="badge badge-medio">A decidir</span></td></tr><tr><td><code>usinagem cnc curitiba</code></td><td>Transacional/Comercial</td><td>40</td><td>R$4,49</td><td>44</td><td>página geo (a decidir)</td><td><span class="badge badge-medio">A decidir</span></td></tr><tr><td><code>centro de usinagem cnc preço</code></td><td>Transacional/Comercial</td><td>90</td><td>R$1,72</td><td>28</td><td>cluster usinagem</td><td><span class="badge badge-ok">No ar</span></td></tr><tr><td><code>fundição em São Paulo</code></td><td>Transacional/Comercial</td><td>n/d</td><td>n/d</td><td>n/d</td><td><a href="https://indianapolis.com.br/fundicao-em-sao-paulo//">fundicao-em-sao-paulo/</a></td><td><span class="badge badge-ok">No ar</span></td></tr><tr><td><code>fundição de ferro em Itaquaquecetuba</code></td><td>Transacional/Comercial</td><td>n/d</td><td>n/d</td><td>n/d</td><td><a href="https://indianapolis.com.br/fundicao-de-ferro-em-itaquaquecetuba//">fundicao-de-ferro-em-itaquaquecetuba/</a></td><td><span class="badge badge-ok">No ar</span></td></tr><tr><td><code>preço do ferro fundido</code></td><td>Transacional/Comercial</td><td>n/d</td><td>n/d</td><td>n/d</td><td><a href="https://indianapolis.com.br/preco-ferro-fundido/ + preco-do-ferro-fundido-kg//">preco-ferro-fundido/ + preco-do-ferro-fundido-kg/</a></td><td><span class="badge badge-ok">No ar</span></td></tr><tr><td><code>peças para tratores</code></td><td>Transacional/Comercial</td><td>n/d</td><td>n/d</td><td>n/d</td><td><a href="https://indianapolis.com.br/pecas-para-tratores-agricolas//">pecas-para-tratores-agricolas/</a></td><td><span class="badge badge-ok">No ar</span></td></tr><tr><td><code>fabricante de peças automotivas</code></td><td>Transacional/Comercial</td><td>n/d</td><td>n/d</td><td>n/d</td><td><a href="https://indianapolis.com.br/fabricante-de-pecas-automotivas/ + fabrica-de-pecas-automotiva//">fabricante-de-pecas-automotivas/ + fabrica-de-pecas-automotiva/</a></td><td><span class="badge badge-ok">No ar</span></td></tr><tr><td><code>camisa / cabeçote para compressor</code></td><td>Transacional/Comercial</td><td>n/d</td><td>n/d</td><td>n/d</td><td><a href="https://indianapolis.com.br/camisa-compressor/ + cabecote + produto//">camisa-compressor/ + cabecote + produto/</a></td><td><span class="badge badge-ok">No ar</span></td></tr><tr><td><code>rolo de apoio p/ betoneira</code></td><td>Transacional/Comercial</td><td>n/d</td><td>n/d</td><td>n/d</td><td><a href="https://indianapolis.com.br/rolos-de-apoio-para-betoneiras//">rolos-de-apoio-para-betoneiras/</a></td><td><span class="badge badge-ok">No ar</span></td></tr><tr><td><code>como escolher fundição</code></td><td>Transacional/Comercial</td><td>n/d</td><td>n/d</td><td>n/d</td><td><a href="https://indianapolis.com.br/fundicao-de-ferros/ (guia decisão)/">fundicao-de-ferros/ (guia decisão)</a></td><td><span class="badge badge-ok">No ar</span></td></tr></table></div>
+<div class="risk-box" style="border-left-color: var(--gold);"><h4 style="color:#8b7a4a;">Leitura do critério</h4><p>Anel de segmento (2.400) e ferro fundido cinzento (590, dificuldade SEO 9) são os que mais rapidamente escalam tráfego qualificado; fundição de ferro fundido (210, dificuldade 7) garante conversão; usinagem CNC (2.400, CPC R$31,56) concentra ticket maior. Geográficas (Minas Gerais 90, Curitiba) entram como decisão de operação antes de produzir: ver checklist, item 4.</p></div>
+</div></div>
+<div class="card" id="padrao"><div class="card-body">
+<h2><span class="slide-num">08</span> Padrão visual: os modelos de referência</h2>
+<p>Qualidade mínima aceitável para pillars, clusters e spokes, espelhada nas páginas modelo do site. Tudo que for produzido segue esta linha, inclusive o carrossel de produtos no final.</p>
+<div class="finding"><div class="finding-header"><div><span class="finding-title">Modelos</span></div><div><span class="badge badge-ok">Referência</span></div></div>
+<div class="finding-grid">
+<div class="full"><span class="field">Pilar comercial:</span> <span class="value"><a href="https://indianapolis.com.br/fundicao-de-ferro-fundido/">/fundicao-de-ferro-fundido/</a></span></div>
+<div class="full"><span class="field">Pilar customização:</span> <span class="value"><a href="https://indianapolis.com.br/usinagem-cnc/">/usinagem-cnc/</a> (hub) e <a href="https://indianapolis.com.br/usinagem-cnc-ferro-fundido/">/usinagem-cnc-ferro-fundido/</a> (pillar)</span></div>
+</div></div>
+<div class="finding"><div class="finding-header"><div><span class="finding-title">Inventário aplicado nos 4 pillars</span></div><div><span class="badge badge-ok">4/4</span></div></div>
+<div class="finding-grid">
+<div class="full"><span class="field">Badge + sumário ancorado:</span> <span class="value">etiqueta do tipo de página + lista de links para os H2 no topo</span></div>
+<div class="full"><span class="field">Seções numeradas:</span> <span class="value">processo etapa por etapa, materiais, setores, diferenciais em cards</span></div>
+<div class="full"><span class="field">Tabelas e checklist:</span> <span class="value">prazos por cenário, checklist de homologação, comparativos</span></div>
+<div class="full"><span class="field">Casos por segmento:</span> <span class="value">automotivo, agrícola, compressores, máquinas, com links internos</span></div>
+<div class="full"><span class="field">Carrossel de produtos:</span> <span class="value">“Arraste para o lado” com a linha completa e link ver produto</span></div>
+<div class="full"><span class="field">Bloco Continue:</span> <span class="value">pillars irmãos + hubs linkados: fecha o DOWN da malha</span></div>
+<div class="full"><span class="field">FAQ + CTA final:</span> <span class="value">perguntas frequentes com schema + “Tire Seu Projeto do Papel” com solicitar cotação</span></div>
+<div class="full"><span class="field">Texto:</span> <span class="value">3.000+ palavras, zero travessão, linguagem humana, SEO máximo</span></div>
+</div></div>
+</div></div>
+<div class="card" id="cronograma"><div class="card-body">
+<h2><span class="slide-num">09</span> Onde estamos no cronograma (eKyte)</h2>
+<p>Projeto <a href="https://app.ekyte.com/#/projects/309016/edit" target="_blank" rel="noopener"><strong>309016</strong></a>: Fase 2 em execução, Fase 3 planejada. Este documento conclui a frente de evidências para o primeiro check-in.</p>
+<div class="finding"><div class="finding-header"><div><span class="finding-title">Tarefa atual em destaque</span></div><div><span class="badge badge-exec">Em execução</span></div></div>
+<div class="finding-grid">
+<div class="full"><span class="field">9693100 · Malha de links internos entre hubs e conteúdo existente:</span> <span class="value">Fase 2 · 4,0h estimadas · executor Marcos Luciano · depende da produção dos 2 hubs (9693096, concluída em 09/09). Próximas: substituir placeholder e apresentação de resultados.</span></div>
+</div></div>
+<div class="finding"><div class="finding-header"><div><span class="finding-title">Concluído e evidenciado aqui</span></div><div><span class="badge badge-ok">Feito</span></div></div>
+<div class="finding-grid">
+<div class="full"><span class="field">Conteúdo:</span> <span class="value">4 pillars 3.000+ · 2 hubs otimizados · 58 posts catalogados por cluster · 5 duplicatas resolvidas</span></div>
+<div class="full"><span class="field">Autoridade:</span> <span class="value">teia de 138 links verificada · BreadcrumbList validado · FAQ com schema</span></div>
+</div></div>
+<div class="finding"><div class="finding-header"><div><span class="finding-title">Em aberto</span></div><div><span class="badge badge-pend">A produzir</span></div></div>
+<div class="finding-grid">
+<div class="full"><span class="field">Conteúdo:</span> <span class="value">12 spokes propostos (seção 05) · hub de construção da Fase 3 · 2 clusters complementares da Fase 3</span></div>
+<div class="full"><span class="field">Técnico/contínuo:</span> <span class="value">placeholder · apresentação de resultados · monitoramento no GSC</span></div>
+</div></div>
+</div></div>
+<div class="card" id="check"><div class="card-body">
+<h2><span class="slide-num">10</span> Primeiro check-in: checklist de pontuação</h2>
+<table><tr><th>#</th><th>Verificar</th><th>Como</th><th>Status</th></tr>
+<tr><td>1</td><td>Amostra dos 4 pillars para apreciação do padrão visual</td><td>Links da seção 02</td><td><span class="badge badge-info">Cliente</span></td></tr>
+<tr><td>2</td><td>Tom de voz e dados técnicos (termos, prazos, tolerâncias)</td><td>Responder com página + trecho + correção</td><td><span class="badge badge-info">Cliente</span></td></tr>
+<tr><td>3</td><td>Oferta e CTAs (cotação em 48h, ISO, laboratório, +60 anos)</td><td>Quer algum case, cliente ou número real incluído?</td><td><span class="badge badge-info">Cliente</span></td></tr>
+<tr><td>4</td><td>Priorizar os 12 spokes e decidir páginas geográficas (MG/RJ/PR)</td><td>Tabela da seção 05 · faz sentido operacional?</td><td><span class="badge badge-alto">Aguardando</span></td></tr>
+<tr><td>5</td><td>Amostra dos posts por cluster para conferência</td><td>Links da seção 04</td><td><span class="badge badge-info">Cliente</span></td></tr>
+<tr><td>6</td><td>Validar malha e critérios de aceite</td><td>Seção 06 · Screaming Frog + Rich Results Test</td><td><span class="badge badge-info">A validar</span></td></tr>
+</table>
+<div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
+<a href="https://app.ekyte.com/#/projects/309016/edit" style="display:inline-flex; padding:10px 18px; background:linear-gradient(135deg,#0d0d0d,#1a1a1a); color:#fff; border-radius:8px; text-decoration:none; font-size:13px; font-weight:700;">Projeto eKyte 309016 →</a>
+<a href="https://indianapolis.com.br/fundicao-de-ferro-fundido/" style="display:inline-flex; padding:10px 18px; background:#fff; border:1px solid var(--gold-border); color:var(--gray-700); border-radius:8px; text-decoration:none; font-size:13px; font-weight:700;">Ver pillar exemplo →</a>
+<a href="https://marcoslrvusa.github.io/v4perettoco/indianapolis-atualizacao-18-09.html" style="display:inline-flex; padding:10px 18px; background:#fff; border:1px solid var(--gold-border); color:var(--gray-700); border-radius:8px; text-decoration:none; font-size:13px; font-weight:700;">Versão 18/09 preservada →</a>
+</div>
+</div></div>
+<div class="footer">
+Atualização Metal Indianápolis gerada em 22/09/2026 pela equipe de SEO da <strong>V4 Company</strong> | Formato all-over-seo-updates · Padrão visual auditorias SEO | Projeto 309016 · Verificação viva 22/09/2026 · <a href="https://marcoslrvusa.github.io/v4perettoco/indianapolis-seo-apresentacao/">← Apresentação de execução</a> · <a href="https://marcoslrvusa.github.io/v4perettoco/indianapolis-atualizacao-18-09.html">Versão 18/09</a>
+</div>
+</div>
+</body>
+</html>
