@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium Cleaning NJ | AI Search Demand Capture | Check-in V4</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+  :root {
+    --red: rgb(229, 9, 20);
+    --red-dark: rgb(180, 7, 16);
+    --red-light: rgb(255, 60, 70);
+    --gold: #c9a96e;
+    --gold-light: #f5f0e6;
+    --gold-border: #e8dcc8;
+    --gray-50: #fafafa;
+    --gray-100: #f5f5f5;
+    --gray-200: #eeeeee;
+    --gray-300: #e0e0e0;
+    --gray-400: #bdbdbd;
+    --gray-500: #9e9e9e;
+    --gray-600: #757575;
+    --gray-700: #616161;
+    --gray-800: #424242;
+    --gray-900: #212121;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f8f7f4;
+    color: var(--gray-900);
+    line-height: 1.75;
+    font-size: 16.5px;
+  }
+
+  /* ===== COVER ===== */
+  .cover {
+    background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #2a2a2a 100%);
+    color: #fff;
+    padding: 64px 40px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(201,169,110,0.05) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .cover-content { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
+  .cover-content::before {
+    content: '';
+    position: absolute;
+    top: -16px; left: 50%;
+    transform: translateX(-50%);
+    width: 200px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .cover-content::after {
+    content: '';
+    display: block;
+    width: 60px; height: 2px;
+    background: var(--gold);
+    margin: 28px auto 0;
+    border-radius: 1px;
+  }
+  .cover .label {
+    display: inline-block;
+    background: rgba(201,169,110,0.12);
+    border: 1px solid rgba(201,169,110,0.3);
+    padding: 6px 20px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    color: var(--gold);
+  }
+  .cover h1 {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 14px;
+    letter-spacing: -0.5px;
+    font-family: 'Plus Jakarta Sans', serif;
+  }
+  .cover p {
+    font-size: 17px;
+    opacity: 0.85;
+    margin-bottom: 24px;
+    font-weight: 300;
+    letter-spacing: 0.2px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 13px;
+    opacity: 0.7;
+    letter-spacing: 0.5px;
+  }
+
+  /* ===== LAYOUT ===== */
+  .container { max-width: 1040px; margin: -36px auto 56px; position: relative; z-index: 2; padding: 0 16px; }
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+    margin-bottom: 28px;
+    overflow: hidden;
+    border: 1px solid var(--gray-300);
+    position: relative;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 40px; right: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-border), var(--gold), var(--gold-border), transparent);
+    opacity: 0.6;
+  }
+  .card-body { padding: 48px 56px 52px; }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--gold-border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -0.3px;
+    position: relative;
+  }
+  h2::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0;
+    width: 40px; height: 2px;
+    background: var(--gold);
+    border-radius: 1px;
+  }
+  h2 .slide-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--red);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  h3 { font-size: 17.5px; font-weight: 700; color: var(--gray-900); margin: 40px 0 16px; letter-spacing: -0.15px; padding-bottom: 6px; border-bottom: 1px dashed var(--gold-border); }
+  h4 { font-size: 15.5px; font-weight: 700; color: var(--gray-800); margin: 24px 0 10px; }
+  p { font-size: 16.5px; color: var(--gray-700); margin-bottom: 18px; line-height: 1.85; max-width: 82ch; }
+  p:last-child { margin-bottom: 0; }
+  a { color: var(--red); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  ul.plain { margin: 10px 0 18px 22px; padding: 0; }
+  ul.plain li { margin: 8px 0; color: var(--gray-700); font-size: 15.5px; line-height: 1.7; }
+
+  /* ===== BADGES / PILLS ===== */
+  .badge {
+    display: inline-block;
+    padding: 5px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .badge-critico { background: #fef2f2; color: var(--red); border: 1px solid #fecaca; }
+  .badge-alto { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+  .badge-medio { background: #fefce8; color: #a16207; border: 1px solid #fef08a; }
+  .badge-baixo { background: var(--gold-light); color: #8b7a4a; border: 1px solid var(--gold-border); }
+  .badge-info { background: #f5f5f5; color: #616161; border: 1px solid #d4d4d4; }
+  .badge-ok { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+  .badge-exec { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+  .badge-pend { background: #f5f5f5; color: #6b7280; border: 1px solid #d1d5db; }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+  .pill-alta { background: #fef2f2; color: var(--red); border-color: #fecaca; }
+  .pill-media { background: #fffbeb; color: #92400e; border-color: #fde68a; }
+  .pill-ok { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
+  .pill-info { background: #f5f5f5; color: #616161; border-color: #d4d4d4; }
+  .pill-gold { background: var(--gold-light); color: #8b7a4a; border-color: var(--gold-border); }
+
+  /* ===== TABLES ===== */
+  .table-wrap { overflow-x: auto; margin: 18px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--gray-100); vertical-align: top; line-height: 1.55; }
+  th {
+    background: linear-gradient(135deg, var(--gray-50), #f8f7f4);
+    font-weight: 700;
+    color: var(--gray-700);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 2px solid var(--gold-border);
+  }
+  tr:hover td { background: #fcfaf7; }
+  tr:last-child td { border-bottom: none; }
+  td.num { font-family: 'JetBrains Mono', monospace; font-size: 13px; white-space: nowrap; }
+  td.dim { color: var(--gray-500); }
+
+  /* ===== KPI ===== */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .kpi-grid.g3 { grid-template-columns: repeat(3, 1fr); }
+  .kpi-grid.g5 { grid-template-columns: repeat(5, 1fr); }
+  .kpi-card {
+    background: #f2f0ec;
+    border-radius: 10px;
+    padding: 20px 12px 18px;
+    text-align: center;
+    border: 1px solid var(--gold-border);
+    position: relative;
+    overflow: hidden;
+  }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--red), var(--gold));
+  }
+  .kpi-card .value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--red);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+  .kpi-card .label {
+    font-size: 11px;
+    color: var(--gray-600);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 8px;
+  }
+  .kpi-card .sub { font-size: 11px; color: var(--gray-600); margin-top: 4px; line-height: 1.4; }
+  .kpi-card.gold .value { color: var(--gold); }
+  .kpi-card.green .value { color: #15803d; }
+
+  /* ===== RISK / CALLOUT / FINDING ===== */
+  .risk-box {
+    background: linear-gradient(135deg, #fcfaf7, #f8f7f4);
+    border-left: 4px solid var(--red);
+    padding: 24px 28px;
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 22px;
+  }
+  .risk-box h4 { margin: 0 0 10px; color: var(--red); font-size: 16px; letter-spacing: -0.2px; }
+  .risk-box p { font-size: 15.5px; color: var(--gray-700); margin: 0; line-height: 1.8; max-width: 80ch; }
+  .risk-box.green { border-left-color: #15803d; background: linear-gradient(135deg, #f0fdf4, #f8f7f4); }
+  .risk-box.green h4 { color: #15803d; }
+  .risk-box.goldbox { border-left-color: var(--gold); background: linear-gradient(135deg, #fffbeb, #f8f7f4); }
+  .risk-box.goldbox h4 { color: #8b7a4a; }
+
+  .callout {
+    background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+    color: #fff;
+    border-radius: 12px;
+    padding: 30px 32px;
+    margin: 28px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .callout::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--red), var(--gold));
+  }
+  .callout h4 { color: var(--gold); margin: 0 0 8px; font-size: 15px; text-transform: uppercase; letter-spacing: 0.6px; }
+  .callout p { color: rgba(255,255,255,0.88); font-size: 16px; line-height: 1.8; margin: 0; max-width: 78ch; }
+
+  .finding {
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    background: #fcfcfc;
+    border-left: 3px solid transparent;
+  }
+  .finding:hover {
+    box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+    border-color: var(--gold-border);
+    border-left-color: var(--gold);
+  }
+  .finding.modA { border-left-color: var(--red); }
+  .finding.modB { border-left-color: var(--gold); background: #fffdf6; }
+  .finding.modC { border-left-color: #15803d; background: #fafffb; }
+  .finding-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .finding-title { font-weight: 700; font-size: 17px; color: var(--gray-900); letter-spacing: -0.2px; }
+
+  /* ===== BARS ===== */
+  .bar-container { margin: 22px 0; }
+  .bar-row { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+  .bar-label {
+    width: 180px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gray-700);
+    text-align: right;
+    flex-shrink: 0;
+    letter-spacing: -0.2px;
+  }
+  .bar-track { flex: 1; height: 30px; background: var(--gray-100); border-radius: 6px; overflow: hidden; }
+  .bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 14px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    min-width: fit-content;
+  }
+  .bar-fill.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .bar-fill.orange { background: linear-gradient(90deg, #c2410c, #ea580c); }
+  .bar-fill.gold { background: linear-gradient(90deg, #b8963a, #d4b96a); }
+  .bar-fill.gray { background: linear-gradient(90deg, #616161, #9e9e9e); }
+  .bar-fill.green { background: linear-gradient(90deg, #15803d, #22c55e); }
+  .bar-fill.zero { background: var(--gray-300); color: var(--gray-700); width: 4% !important; justify-content: center; padding: 0; }
+
+  /* ===== CHART BOX ===== */
+  .chart-box {
+    background: #fcfcfc;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0;
+  }
+  .chart-box h4 { margin: 0 0 4px; font-size: 15px; color: var(--gray-900); }
+  .chart-box .hint { font-size: 13.5px; color: var(--gray-600); margin-bottom: 16px; }
+  .chart-box img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid var(--gray-200);
+    background: #fff;
+    min-height: 380px;
+    object-fit: contain;
+    object-position: center;
+    padding: 8px;
+  }
+  .chart-box.chart-lg {
+    padding: 28px 32px;
+    margin: 24px 0;
+  }
+  .chart-box.chart-lg h4 { font-size: 17px; }
+  .chart-box.chart-lg .hint { font-size: 14px; margin-bottom: 18px; }
+  .chart-box.chart-lg img {
+    min-height: 480px;
+    display: block;
+  }
+  .chart-grid .chart-box img { min-height: 340px; }
+  .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .chart-grid.triple { grid-template-columns: 1fr 1fr 1fr; }
+
+  /* ===== TOC ===== */
+  .toc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+  .toc-item {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    padding: 14px 16px;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    background: #fcfcfc;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.15s;
+  }
+  .toc-item:hover { border-color: var(--gold); background: #fefcf5; text-decoration: none; }
+  .toc-num {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--red), var(--red-light));
+    color: #fff;
+    font-weight: 800;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+  .toc-num.gold { background: linear-gradient(135deg, #b8963a, #d4b96a); }
+  .toc-num.green { background: linear-gradient(135deg, #15803d, #22c55e); }
+  .toc-num.gray { background: linear-gradient(135deg, #616161, #9e9e9e); }
+  .toc-title { font-weight: 700; color: var(--gray-900); font-size: 14px; }
+  .toc-desc { font-size: 12px; color: var(--gray-600); margin-top: 2px; }
+
+  /* ===== STEPPER ===== */
+  .stepper { position: relative; margin: 8px 0 8px 14px; padding-left: 34px; border-left: 2px solid var(--gold-border); }
+  .step { position: relative; padding: 14px 0 18px; }
+  .step::before {
+    content: attr(data-n);
+    position: absolute;
+    left: -51px; top: 12px;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--red);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .step.done::before { background: #15803d; content: '\2713'; }
+  .step h4 { margin: 0 0 6px; font-size: 16px; }
+  .step p { font-size: 15.5px; margin: 6px 0 0; line-height: 1.75; max-width: 78ch; }
+
+  /* ===== MOCK CHAT ===== */
+  .mockchat {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 16px 0;
+  }
+  .mockchat .q {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px 10px 10px 2px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: var(--gray-800);
+  }
+  .mockchat .a {
+    background: #f2f0ec;
+    border-radius: 10px 10px 2px 10px;
+    padding: 12px 16px;
+    font-size: 15px;
+    color: var(--gray-700);
+  }
+  .mockchat .a .miss {
+    display: inline-block;
+    background: #fef2f2;
+    border: 1px dashed #fecaca;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 13px;
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  /* ===== CHECK LIST ===== */
+  .check-list { list-style: none; padding: 0; margin: 8px 0 0; }
+  .check-list li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 15px;
+    color: var(--gray-700);
+  }
+  .check-icon {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 800;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .check-icon.ok { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+  .check-icon.exec { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+  .check-icon.pend { background: #f3f4f6; color: #6b7280; border: 1px solid #e5e7eb; }
+  .check-icon.crit { background: #fee2e2; color: var(--red); border: 1px solid #fecaca; }
+
+  /* ===== TIMELINE / GANTT ===== */
+  .timeline { display: flex; gap: 0; margin: 32px 0 16px; position: relative; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 28px; left: 5%; right: 5%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold-border), var(--gold), var(--gold-border));
+    border-radius: 2px;
+  }
+  .timeline-phase { flex: 1; text-align: center; position: relative; padding: 0 8px; }
+  .timeline-phase .dot {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    position: relative;
+    z-index: 1;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px var(--gold);
+  }
+  .timeline-phase .phase-name { font-size: 13px; font-weight: 700; color: var(--gray-800); }
+  .timeline-phase .phase-hours { font-size: 22px; font-weight: 700; color: var(--red); }
+  .timeline-phase .phase-pct { font-size: 12px; color: var(--gray-500); font-weight: 600; }
+
+  .gantt { margin: 18px 0; }
+  .gantt-row {
+    display: grid;
+    grid-template-columns: 240px 1fr 90px;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 13px;
+  }
+  .gantt-label { font-weight: 700; color: var(--gray-800); text-align: right; }
+  .gantt-track { height: 26px; background: var(--gray-100); border-radius: 6px; position: relative; overflow: hidden; }
+  .gantt-fill {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+  }
+  .gantt-fill.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .gantt-fill.gold { background: linear-gradient(90deg, #b8963a, #d4b96a); }
+  .gantt-fill.green { background: linear-gradient(90deg, #15803d, #22c55e); }
+  .gantt-fill.gray { background: linear-gradient(90deg, #616161, #9e9e9e); }
+  .gantt-hours { font-weight: 800; color: var(--red); text-align: right; font-size: 13px; }
+
+  /* ===== SCEN ===== */
+  .scen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 18px 0; }
+  .scen { border: 1px solid var(--gold-border); border-radius: 12px; padding: 20px; background: #fff; }
+  .scen h4 { margin: 0 0 8px; font-size: 15px; }
+  .scen ul { margin: 8px 0 0 18px; padding: 0; font-size: 13.5px; color: var(--gray-700); }
+  .scen ul li { margin: 5px 0; }
+
+  /* ===== FIELD GRID ===== */
+  .finding-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 36px; font-size: 15.5px; line-height: 1.65; }
+  .finding-grid .field { font-weight: 600; color: var(--gray-800); }
+  .finding-grid .value { color: var(--gray-700); }
+  .finding-grid .full { grid-column: 1 / -1; }
+
+  /* ===== PLAYER GRID ===== */
+  .player-grid-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+  .player { border: 1px solid var(--gold-border); border-radius: 12px; padding: 16px 18px; background: #fff; }
+  .player:hover { box-shadow: 0 2px 16px rgba(0,0,0,0.05); }
+  .player-head { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; }
+  .player-num {
+    display: inline-flex;
+    min-width: 30px; height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--red), var(--red-light));
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    align-items: center;
+    justify-content: center;
+  }
+  .player-base { margin-left: auto; font-size: 11px; color: var(--gray-500); white-space: nowrap; }
+  .player-grid { display: grid; gap: 6px; font-size: 13px; }
+  .player-grid .field { font-weight: 700; color: var(--gray-800); }
+  .player-grid .value { color: var(--gray-700); }
+  .player-grid .full { grid-column: 1 / -1; }
+
+  /* ===== NAV / FOOTER / MISC ===== */
+  .slide-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 18px 0 0;
+    justify-content: center;
+  }
+  .slide-nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.9);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .slide-nav a:hover { background: rgba(201,169,110,0.18); border-color: var(--gold); color: #fff; }
+  .slide-nav a span { font-size: 10px; opacity: 0.7; }
+
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--gray-100);
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-size: 13px;
+    color: var(--gray-800);
+    border: 1px solid var(--gray-200);
+  }
+
+  .footer {
+    text-align: center;
+    padding: 36px;
+    font-size: 14px;
+    color: var(--gray-500);
+    border-top: 1px solid var(--gold-border);
+    letter-spacing: 0.3px;
+    position: relative;
+  }
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: -2px; left: 50%;
+    transform: translateX(-50%);
+    width: 40px; height: 3px;
+    background: var(--gold);
+    border-radius: 2px;
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 8px; }
+  .answer-card {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 10px;
+    padding: 18px;
+  }
+  .answer-card p { font-size: 15px; margin-top: 12px; line-height: 1.7; }
+  .warn-card { background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 20px; }
+  .warn-card p { font-size: 15px; margin-top: 12px; line-height: 1.7; }
+  .crit-card { background: #fef2f2; border: 1px solid #fecaca; border-radius: 10px; padding: 20px; }
+  .crit-card p { font-size: 15px; margin-top: 12px; line-height: 1.7; }
+
+  .blueprint {
+    background: #fffdf6;
+    border: 1px solid var(--gold-border);
+    border-radius: 12px;
+    padding: 24px 26px;
+    margin-bottom: 18px;
+  }
+  .blueprint h4 { margin: 0 0 8px; font-size: 15px; color: var(--gray-900); }
+  .blueprint .bp-meta { font-size: 12px; color: var(--gray-600); margin-bottom: 8px; font-family: 'JetBrains Mono', monospace; }
+
+  .chapter-label {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--gold);
+    background: rgba(201,169,110,0.1);
+    border: 1px solid rgba(201,169,110,0.25);
+    padding: 3px 12px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+  }
+
+  .highlight { background: linear-gradient(180deg, transparent 55%, rgba(201,169,110,0.35) 55%); font-weight: 700; color: var(--gray-900); }
+
+  @media (max-width: 900px) {
+    .kpi-grid, .kpi-grid.g3, .kpi-grid.g5 { grid-template-columns: repeat(2, 1fr); }
+    .chart-grid, .chart-grid.triple { grid-template-columns: 1fr; }
+    .toc-grid, .scen-grid, .two-col, .three-col, .player-grid-wrap { grid-template-columns: 1fr; }
+    .gantt-row { grid-template-columns: 1fr; }
+    .gantt-label { text-align: left; }
+    .timeline { flex-wrap: wrap; gap: 16px; }
+    .timeline::before { display: none; }
+    .bar-label { width: 120px; font-size: 11px; }
+  }
+  @media (max-width: 640px) {
+    .cover h1 { font-size: 26px; }
+    .cover { padding: 40px 20px 32px; }
+    .card-body { padding: 22px 18px; }
+    .finding-grid { grid-template-columns: 1fr; }
+    .kpi-grid, .kpi-grid.g3, .kpi-grid.g5 { grid-template-columns: 1fr; }
+    table { font-size: 12px; }
+    th, td { padding: 8px 10px; }
+    .bar-label { width: 90px; font-size: 11px; }
+  }
+  @media print {
+    .cover { padding: 40px; }
+    .card { break-inside: avoid; box-shadow: none; }
+    body { background: #fff; }
+  }
+
+  .finding-header { margin-bottom: 18px; }
+  .badge + p, .chapter-label + p { margin-top: 10px; }
+  .chart-box { margin: 26px 0; }
+  .table-wrap { margin: 22px 0; }
+  .kpi-grid { margin-bottom: 36px; }
+  .mockchat { margin: 22px 0; }
+  .toc-grid { gap: 14px; margin-top: 22px; }
+  .stepper { margin-top: 14px; }
+  .gantt { margin: 24px 0; }
+  .timeline { margin: 36px 0 20px; }
+  h3 + .table-wrap, h3 + .chart-box { margin-top: 12px; }
+  .card + .card { margin-top: 4px; }
+  .footer { font-size: 13.5px; line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<!-- ==================== COVER ==================== -->
+<div class="cover">
+  <div class="cover-content">
+    <div style="display:flex; align-items:center; justify-content:center; gap:18px; margin-bottom:28px;">
+      <img src="logo-v4-white.png" alt="V4 Company" style="height:34px; width:auto;" onerror="this.style.display='none'">
+    </div>
+    <div class="label">Estratégia avançada e acelerada de AI | SEO/AIO/GEO | Setembro 2026</div>
+    <h1>Premium Cleaning NJ<br>AI Search Demand Capture</h1>
+    <p>O lead nasceu em oceano azul; a janela de tempo para agir ainda existe e exige movimento agressivo. A base de SEO com arquitetura avançada já existe. O que falta é a profundidade: intencionalidade de palavras-chave e prompts. Baseline real: 0% de visibilidade em IA, DA 3, homepage única no índice, 10 prompts rastreados com 199 mil buscas e nenhum destino. Este documento consolida auditoria SEO/AIO/GEO, matriz de keywords, matriz de prompts, blueprints de resposta e plano de 30 dias. A camada de profundidade que precisa existir para o SEO avançar.</p>
+    <div class="cover-meta">
+      <span>• Confidencial · check-in v1 · Premium Cleaning NJ</span>
+      <span>• 9 seções · leitura ~18 min</span>
+      <span>• Meta AISV 30d: 0% → 10%+ em prompts prioritários</span>
+    </div>
+    <div class="slide-nav">
+      <a href="#resposta">01 <span>Resposta</span></a>
+      <a href="#diagnostico">02 <span>Diagnóstico</span></a>
+      <a href="#aisv">03 <span>AI Visibility</span></a>
+      <a href="#benchmark">04 <span>Benchmark</span></a>
+      <a href="#keywords">05 <span>Keywords NY/NJ</span></a>
+      <a href="#prompts">06 <span>Prompts AISV</span></a>
+      <a href="#blueprints">07 <span>Blueprints</span></a>
+      <a href="#plano30">08 <span>Plano 30d</span></a>
+      <a href="#narrativa">09 <span>Narrativa + OKRs</span></a>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ==================== 01 RESPOSTA ==================== -->
+  <div class="card" id="resposta">
+    <div class="card-body">
+      <h2><span class="slide-num">01</span> A leitura em 30 segundos</h2>
+      <p>O lead que virou este contrato recorrente entrou em um momento de <strong>oceano azul</strong>: qualquer movimento básico de SEO com um pouco de AIO já gerava perspectiva. A janela estava aberta e o barato bastava. Essa janela fechou. O domínio <strong>premiumcleaningnj.com</strong> agora está invisível em dois canais ao mesmo tempo: Google orgânico (só a homepage rankeia, posições 86–107, tráfego 0) e respostas de IA (0% de visibilidade em 10 prompts, 0 menções, share of voice 0%). O mercado que ele ignora soma <strong>+1,2 milhão de buscas/mês</strong> no cluster nacional e <strong>199 mil buscas/mês</strong> nos 10 prompts de AI Search Visibility. Jani-King e Coverall já capturam 40% e 30% desses prompts. Premium Cleaning: 0. <strong>Para entrar na janela de tempo que ainda existe, o movimento precisa ser agressivo e em 30 dias, não o básico de antes.</strong></p>
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="value">0%</div><div class="label">Visibilidade AISV</div><div class="sub">10/10 prompts · 0 menções</div></div>
+        <div class="kpi-card"><div class="value">DA 3</div><div class="label">Autoridade</div><div class="sub">23 backlinks · 20 ref domains</div></div>
+        <div class="kpi-card"><div class="value">1</div><div class="label">Página rankeando</div><div class="sub">homepage · pos 86–107</div></div>
+        <div class="kpi-card gold"><div class="value">199K</div><div class="label">Buscas/mês nos prompts</div><div class="sub">7 de 10 prompts com volume</div></div>
+      </div>
+      <div class="three-col">
+        <div class="answer-card">
+          <span class="badge badge-ok">Fazer já (30d)</span>
+          <p><strong>Prompt-first pages + entity + local pack.</strong> Cada prompt prioritário vira página com blueprints de resposta; NAP e schema LocalBusiness; blog de prompts por serviço.</p>
+        </div>
+        <div class="warn-card">
+          <span class="badge badge-medio">Camada seguinte (30–90d)</span>
+          <p><strong>Cluster temático por vertical (office / restaurant / medical).</strong> Só depois do prompt-first. A arquitetura de descoberta para AI search vem em cima do que já responde prompt.</p>
+        </div>
+        <div class="crit-card">
+          <span class="badge badge-critico">Não repetir</span>
+          <p><strong>A base já foi feita. O que não aconteceu foi a profundidade.</strong> SEO básico com arquitetura avançada está no lugar; rodamos só com keywords genéricas porque primeiro se constrói a base e depois a profundidade. Esta apresentação é a profundidade: intencionalidade de palavras-chave e prompts, com baseline e meta em 30 dias.</p>
+        </div>
+      </div>
+      <div class="toc-grid">
+        <a class="toc-item" href="#diagnostico"><div class="toc-num">02</div><div><div class="toc-title">Diagnóstico do domínio</div><div class="toc-desc">DA 3 · tráfego 0 · keywords rankeando</div></div></a>
+        <a class="toc-item" href="#aisv"><div class="toc-num gold">03</div><div><div class="toc-title">Baseline AI Search Visibility</div><div class="toc-desc">0% em 10 prompts · charts exportados</div></div></a>
+        <a class="toc-item" href="#benchmark"><div class="toc-num gold">04</div><div><div class="toc-title">Benchmark de marcas e citações</div><div class="toc-desc">Jani-King 40% · 95 páginas citadas</div></div></a>
+        <a class="toc-item" href="#keywords"><div class="toc-num">05</div><div><div class="toc-title">Matriz de keywords NY/NJ</div><div class="toc-desc">volume · SD · clusters por serviço</div></div></a>
+        <a class="toc-item" href="#prompts"><div class="toc-num">06</div><div><div class="toc-title">Matriz de prompts AISV</div><div class="toc-desc">10 prompts · 199K · marcas citadas</div></div></a>
+        <a class="toc-item" href="#blueprints"><div class="toc-num gold">07</div><div><div class="toc-title">Arquitetura de resposta</div><div class="toc-desc">blueprints · entity · local pack</div></div></a>
+        <a class="toc-item" href="#plano30"><div class="toc-num green">08</div><div><div class="toc-title">Plano de 30 dias</div><div class="toc-desc">gantt · entregas por semana</div></div></a>
+        <a class="toc-item" href="#narrativa"><div class="toc-num gray">09</div><div><div class="toc-title">Narrativa + Composição + OKRs</div><div class="toc-desc">como encaixar no check-in · metas</div></div></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 02 DIAGNÓSTICO ==================== -->
+  <div class="card" id="diagnostico">
+    <div class="card-body">
+      <h2><span class="slide-num">02</span> Onde quebrou: o domínio em números</h2>
+      <p>Auditoria Ubersuggest + leitura de índice. O site está em construção via Lovable, mas o que está publicado já é o suficiente para rankear e não rankeia. Contexto importante: <strong>nós já fizemos o SEO básico, obviamente com a arquitetura avançada</strong>. O que não entrou foi a intencionalidade de palavras-chave e prompts. Trabalhamos só com as keywords genéricas do nome/marca, porque primeiro se constrói a base e depois a profundidade. A profundidade não aconteceu, e é por isso que o SEO não avançou: sem ela, não existe página por serviço/local nem <span class="highlight">extractability</span> para as respostas de IA.</p>
+
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="value">DA 3</div><div class="label">Domain Authority</div><div class="sub">Ubersuggest · set/26</div></div>
+        <div class="kpi-card"><div class="value">23</div><div class="label">Backlinks</div><div class="sub">20 referring domains</div></div>
+        <div class="kpi-card"><div class="value">0</div><div class="label">Tráfego orgânico</div><div class="sub">visitas/mês estimadas</div></div>
+        <div class="kpi-card gold"><div class="value">6</div><div class="label">Keywords no índice</div><div class="sub">todas na homepage</div></div>
+      </div>
+
+      <h3>Keywords rankeando hoje (homepage única)</h3>
+      <div class="table-wrap">
+        <table>
+          <tr><th>#</th><th>Keyword</th><th>Posição</th><th>Volume</th><th>Leitura</th></tr>
+          <tr><td>1</td><td>premium cleaning solutions</td><td class="num">86</td><td class="num">30</td><td class="dim">branded fraca · zero demanda real</td></tr>
+          <tr><td>2</td><td>premium cleaning services</td><td class="num">90</td><td class="num">320</td><td class="dim">branded · fora da página 1</td></tr>
+          <tr><td>3</td><td>nj commercial cleaning</td><td class="num">101</td><td class="num">140</td><td><span class="badge badge-medio">único não-branded</span> pos 101 = página 11</td></tr>
+          <tr><td>4</td><td>premium cleaning</td><td class="num">101</td><td class="num">320</td><td class="dim">branded genérico</td></tr>
+          <tr><td>5</td><td>premium clean</td><td class="num">103</td><td class="num">320</td><td class="dim">branded genérico</td></tr>
+          <tr><td>6</td><td>premiumcleaning</td><td class="num">107</td><td class="num">880</td><td class="dim">branded · domínio mal escrito</td></tr>
+        </table>
+      </div>
+      <p style="font-size:14px;color:var(--gray-600);margin-top:-6px;">Todas as 6 keywords são branded ou quase. Nenhuma keyword de demanda real (service + city) está rankeando. Isso não é "SEO precisa de tempo". É <strong>ausência de páginas para existir na busca</strong>.</p>
+
+      <div class="risk-box">
+        <h4>Diagnóstico em uma frase</h4>
+        <p>A base (arquitetura avançada) está de pé; a profundidade não. O site tem <strong>1 página rankeando para keywords genéricas</strong> onde o mercado tem <strong>dezenas de páginas por serviço × local com intencionalidade</strong>. As respostas de IA (ChatGPT, AI Overview, Gemini) citam exatamente essas páginas específicas (pricing guides, service pages, listas top-N), e elas não existem aqui. Sem profundidade, o SEO não avança.</p>
+      </div>
+
+      <div class="callout">
+        <h4>Oceano azul virou oceano vermelho, e a janela ainda está aberta</h4>
+        <p>O contrato recorrente veio em um momento de <strong>oceano azul</strong>: SEO básico com um toque de AIO já gerava perspectiva, porque quase ninguém estava jogando esse jogo. Esse tempo passou. Hoje o básico não move ponteiro e a IA já responde com 4 a 14 marcas certas. Fizemos a base com arquitetura avançada e keywords genéricas (primeiro a base, depois a profundidade); a profundidade ficou parada. O que está em jogo agora é entregar essa profundidade <strong>de forma agressiva</strong>: <strong>AI Search Demand Capture</strong>: prompts, volumes, benchmark, blueprints, meta de 30 dias, para entrar na janela de tempo que ainda existe antes que o mercado se sature de verdade.</p>
+      </div>
+
+      <h3>SERP: o que já está acontecendo no mercado</h3>
+      <ul class="plain">
+        <li><strong>AI Overview ativo</strong> em queries como <code>office cleaning near me</code>. A resposta vem antes do clique, e a fonte citada não é o Premium.</li>
+        <li><strong>Local pack domina</strong> <code>commercial cleaning</code>. Vencedores são páginas de serviço específicas por vertical e local, não a homepage genérica.</li>
+        <li><strong>Concorrentes monitorados AISV:</strong> Jan-Pro, Coverall, ServiceMaster Clean, Jani-King, ABM Industries, todos com páginas de serviço dedicadas e locations pages.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ==================== 03 AI VISIBILITY ==================== -->
+  <div class="card" id="aisv">
+    <div class="card-body">
+      <h2><span class="slide-num">03</span> Baseline: AI Search Visibility = 0</h2>
+      <p>Rastreamento AISV (prompts updated 2026-09-23): 10 prompts, 5 temas, 84 marcas monitoradas, plataforma en-US, loc id 2.840. Resultado: <strong>0% de visibilidade em todos os prompts</strong>, 0 menções, avg rank n/d. Os três gráficos abaixo são os exports oficiais do painel.</p>
+
+      <div class="kpi-grid g3">
+        <div class="kpi-card"><div class="value">0 / 10</div><div class="label">Prompts com menção</div><div class="sub">Premium Cleaning NJ</div></div>
+        <div class="kpi-card"><div class="value">0%</div><div class="label">Visibility</div><div class="sub">todos os temas</div></div>
+        <div class="kpi-card gold"><div class="value">0,0%</div><div class="label">Share of Voice</div><div class="sub">vs 87,9% "Other"</div></div>
+      </div>
+
+      <div class="chart-box chart-lg">
+        <h4>Top Brands | Visibility (%)</h4>
+        <div class="hint">Export AISV · 2026-09-23 · Premium Cleaning NJ fora do gráfico (0% de visibilidade)</div>
+        <img src="aisv_premium-cleaning-nj_top-brands-visibility-chart_2026-09-23.png" alt="Top Brands Visibility" loading="lazy">
+      </div>
+      <div class="chart-box chart-lg">
+        <h4>Share of Voice (%)</h4>
+        <div class="hint">Export AISV · 2026-09-23 · fatia "Other" concentra 87,9% · Premium = 0%</div>
+        <img src="aisv_premium-cleaning-nj_share-of-voice-chart_2026-09-23.png" alt="Share of Voice" loading="lazy">
+      </div>
+      <div class="chart-box chart-lg">
+        <h4>Prompts | Intent mix (%)</h4>
+        <div class="hint">Export AISV · 2026-09-23 · 50% Informational + 50% Commercial · 0% Nav/Transactional</div>
+        <img src="aisv_premium-cleaning-nj_prompts-intent-chart_2026-09-23.png" alt="Prompts Intent Mix" loading="lazy">
+      </div>
+
+      <div class="finding modA">
+        <div class="finding-header">
+          <div class="finding-title">Leitura do baseline</div>
+          <span class="badge badge-critico">Crítico · 0% em tudo</span>
+        </div>
+        <div class="finding-grid">
+          <div><span class="field">Prompts rastreados:</span> <span class="value">10 (2 por tema × 5 temas)</span></div>
+          <div><span class="field">Volume total nos prompts:</span> <span class="value">199.000 buscas/mês</span></div>
+          <div><span class="field">Intent:</span> <span class="value">50% Info · 50% Commercial · 0% Nav · 0% Transactional</span></div>
+          <div><span class="field">Mentions Premium:</span> <span class="value">0 em 10 prompts</span></div>
+          <div><span class="field">Brands citadas (cada prompt):</span> <span class="value">4 a 14 marcas; nenhuma é a Premium</span></div>
+          <div><span class="field">Plataforma:</span> <span class="value">ChatGPT (citations) · en-US</span></div>
+          <div class="full"><span class="field">Implicação:</span> <span class="value">Não é "estamos ranqueando mal". <strong>Estamos fora da resposta</strong>. A IA já responde; quem ela cita é a página com blueprint certo.</span></div>
+        </div>
+      </div>
+
+      <div class="mockchat">
+        <div class="q">User: "What are the best office cleaning services for small businesses in the US?"</div>
+        <div class="a">Resposta da IA cita: JAN-PRO, Coverall, Stratus, Buildingstars, Anago. <span class="miss">Premium Cleaning NJ: não citada (0 menções)</span></div>
+      </div>
+      <div class="mockchat">
+        <div class="q">User: "Which janitorial service companies offer the best value for daily office cleaning contracts?"</div>
+        <div class="a">Resposta cita 14 players regionais NY/LI (Above N' Beyond, Z-Best, Jan-Pro Greater NY, Vanguard LI, Coverall LI…). <span class="miss">Premium Cleaning NJ: não citada</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 04 BENCHMARK ==================== -->
+  <div class="card" id="benchmark">
+    <div class="card-body">
+      <h2><span class="slide-num">04</span> Benchmark: quem a IA cita hoje</h2>
+      <p>Duas leituras: (1) o ranking de marcas por visibility/SoV no AISV, e (2) as 95 páginas que a ChatGPT realmente citou nas respostas. Padrão único: <strong>quem tem página de serviço + página de pricing + página local é citado</strong>.</p>
+
+      <h3>Top marcas | Visibility / Mentions / Share of Voice</h3>
+      <div class="table-wrap">
+        <table>
+          <tr><th>#</th><th>Brand</th><th>Avg. rank</th><th>Mentions</th><th>Visibility %</th><th>SoV %</th></tr>
+          <tr><td>1</td><td><strong>Jani-King</strong></td><td class="num">3.50</td><td class="num">4</td><td class="num">40%</td><td class="num">4,40</td></tr>
+          <tr><td>2</td><td><strong>Coverall</strong></td><td class="num">3.67</td><td class="num">3</td><td class="num">30%</td><td class="num">3,30</td></tr>
+          <tr><td>3</td><td>Anvil Facility Services</td><td class="num">7.50</td><td class="num">2</td><td class="num">20%</td><td class="num">2,20</td></tr>
+          <tr><td>4</td><td>Vanguard Cleaning Systems</td><td class="num">3.00</td><td class="num">2</td><td class="num">20%</td><td class="num">2,20</td></tr>
+          <tr><td>5</td><td>JAN-PRO Cleaning & Disinfecting</td><td class="num">1.00</td><td class="num">1</td><td class="num">10%</td><td class="num">1,10</td></tr>
+          <tr><td>6</td><td>Stratus Building Solutions</td><td class="num">3.00</td><td class="num">1</td><td class="num">10%</td><td class="num">1,10</td></tr>
+          <tr><td>7</td><td>Buildingstars</td><td class="num">4.00</td><td class="num">1</td><td class="num">10%</td><td class="num">1,10</td></tr>
+          <tr><td>8</td><td>Anago Cleaning Systems</td><td class="num">5.00</td><td class="num">1</td><td class="num">10%</td><td class="num">1,10</td></tr>
+          <tr style="background:#fef2f2;"><td>·</td><td><strong>Premium Cleaning NJ</strong></td><td class="num">·</td><td class="num">0</td><td class="num">0%</td><td class="num">0,00</td></tr>
+          <tr><td>85</td><td class="dim">(+76 marcas com 1 menção cada · SoV ~1,10)</td><td class="num dim">·</td><td class="num dim">1</td><td class="num dim">10%</td><td class="num dim">1,10</td></tr>
+        </table>
+      </div>
+
+      <div class="bar-container">
+        <div class="bar-row"><div class="bar-label">Jani-King</div><div class="bar-track"><div class="bar-fill red" style="width:100%;">40% visibility · avg rank 3.5</div></div></div>
+        <div class="bar-row"><div class="bar-label">Coverall</div><div class="bar-track"><div class="bar-fill orange" style="width:75%;">30% · avg 3.67</div></div></div>
+        <div class="bar-row"><div class="bar-label">Anvil / Vanguard</div><div class="bar-track"><div class="bar-fill gold" style="width:50%;">20% cada</div></div></div>
+        <div class="bar-row"><div class="bar-label">JAN-PRO / Stratus /…</div><div class="bar-track"><div class="bar-fill gray" style="width:25%;">10% cada</div></div></div>
+        <div class="bar-row"><div class="bar-label">Premium Cleaning NJ</div><div class="bar-track"><div class="bar-fill zero">0%</div></div></div>
+      </div>
+
+      <h3>95 citações | o padrão do que a IA cita</h3>
+      <p>Fonte: <code>all-citations.csv</code> (ChatGPT · last cited 2026-09-23). Todas com <code>Mentions you = FALSE</code>. Três formatos de página dominam:</p>
+      <div class="two-col">
+        <div class="finding modB">
+          <div class="finding-title">1. Páginas de pricing / cost guide</div>
+          <ul class="plain" style="margin-top:10px;">
+            <li><code>/guides/pricing/office-cleaning-cost-long-island</code> (Anvil)</li>
+            <li><code>commercial-cleaning-cost-new-york-city</code></li>
+            <li><code>hotel-cleaning-cost-ontario</code> · <code>cost-per-square-foot-hotel-housekeeping</code></li>
+            <li><code>how-much-does-cleaning-tile-and-grout-cost</code></li>
+          </ul>
+          <p style="font-size:14px;margin-top:8px;"><span class="pill pill-gold">Padrão</span> pricing + local + ano = citado.</p>
+        </div>
+        <div class="finding modC">
+          <div class="finding-title">2. Páginas de serviço específicas + locations</div>
+          <ul class="plain" style="margin-top:10px;">
+            <li><code>/who-we-clean/office-cleaning</code> (JAN-PRO)</li>
+            <li><code>/service-areas/commercial-cleaning-nassau-county</code></li>
+            <li><code>/locations/…</code> (Vanguard, Stratus, Coverall)</li>
+            <li><code>/commercial-cleaning/restaurants</code> (Jani-King)</li>
+          </ul>
+          <p style="font-size:14px;margin-top:8px;"><span class="pill pill-ok">Padrão</span> serviço × local = citado.</p>
+        </div>
+        <div class="finding modA">
+          <div class="finding-title">3. Listas / comparativos / how-to</div>
+          <ul class="plain" style="margin-top:10px;">
+            <li><code>top-commercial-cleaning-companies</code></li>
+            <li><code>best-office-cleaning-services-2026</code></li>
+            <li><code>how-to-bid-commercial-cleaning-contracts</code></li>
+            <li><code>how-to-get-cleaning-contracts-with-hotels</code></li>
+          </ul>
+          <p style="font-size:14px;margin-top:8px;"><span class="pill pill-alta">Padrão</span> list + how-to + ano = citado.</p>
+        </div>
+        <div class="finding" style="border-left-color:#616161;background:#f5f5f5;">
+          <div class="finding-title">0 citações para o Premium</div>
+          <p style="font-size:14px;margin-top:10px;">Nenhuma das 95 URLs é do premiumcleaningnj.com. O "Other" com 87,9% do SoV são exatamente essas páginas de terceiros, <strong>substituíveis</strong> se existirem equivalentes aqui com blueprint certo.</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <h4>Concorrentes configurados no AISV</h4>
+        <p>Jan-Pro · Coverall · ServiceMaster Clean · Jani-King · ABM Industries. Meta do check-in: em 30 dias, Premium Cleaning NJ entra no gráfico de visibility com menção em pelo menos 3 dos 10 prompts prioritários (meta estendida: todos os 7 com volume &gt; 0).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 05 KEYWORDS ==================== -->
+  <div class="card" id="keywords">
+    <div class="card-body">
+      <h2><span class="slide-num">05</span> Matriz de keywords | clusters NY/NJ</h2>
+      <p>Volumes Ubersuggest (EUA / recorte NY-NJ). Duas leituras: (A) demanda nacional gigante que define o formato de página, e (B) recorte bi-estado NJ–NY que define a autoridade local. A tese é <strong>bi-state authority</strong>: o mercado de NJ não pode ser atendido só por "NJ": NYC e Long Island derramam demanda na borda.</p>
+
+      <h3>Cluster A | Office &amp; Janitorial (demanda núcleo)</h3>
+      <div class="table-wrap">
+        <table>
+          <tr><th>#</th><th>Keyword</th><th>Volume</th><th>SD</th><th>Cluster</th><th>Página-alvo proposta</th></tr>
+          <tr><td>1</td><td>commercial cleaning near me</td><td class="num">246.000</td><td class="num">·</td><td>Commercial core</td><td>Home + /commercial-cleaning-nj/</td></tr>
+          <tr><td>2</td><td>commercial cleaning service</td><td class="num">201.000</td><td class="num">·</td><td>Commercial core</td><td>/commercial-cleaning-services-nj/</td></tr>
+          <tr><td>3</td><td>commercial cleaning service near me</td><td class="num">201.000</td><td class="num">·</td><td>Commercial core</td><td>Home + local pack</td></tr>
+          <tr><td>4</td><td>commercial cleaning company</td><td class="num">165.000</td><td class="num">·</td><td>Commercial core</td><td>/commercial-cleaning-company-nj/</td></tr>
+          <tr><td>5</td><td>commercial cleaning services</td><td class="num">165.000</td><td class="num">·</td><td>Commercial core</td><td>pilar /services/commercial/</td></tr>
+          <tr><td>6</td><td>commercial cleaning services near me</td><td class="num">40.500</td><td class="num">·</td><td>Commercial core</td><td>Home + locations</td></tr>
+          <tr><td>7</td><td>janitorial services</td><td class="num">33.100</td><td class="num">·</td><td>Janitorial</td><td>/janitorial-services-nj/</td></tr>
+          <tr><td>8</td><td>office cleaning companies</td><td class="num">27.100</td><td class="num">·</td><td>Office</td><td>/office-cleaning-companies-nj/</td></tr>
+          <tr><td>9</td><td>office cleaning small business</td><td class="num">22.200</td><td class="num">·</td><td>Office · AISV p1</td><td>/office-cleaning-small-business/</td></tr>
+          <tr><td>10</td><td>janitorial services near me</td><td class="num">14.800</td><td class="num">·</td><td>Janitorial</td><td>Home + GBP</td></tr>
+          <tr><td>11</td><td>commercial carpet cleaning services</td><td class="num">9.900</td><td class="num">·</td><td>Carpet · AISV p3</td><td>/commercial-carpet-cleaning/</td></tr>
+          <tr><td>12</td><td>office cleaning near me</td><td class="num">8.100</td><td class="num">·</td><td>Office · AI Overview</td><td>Home + GBP</td></tr>
+          <tr><td>13</td><td>medical office cleaning</td><td class="num">8.100</td><td class="num"><span class="badge badge-ok">SD 13</span></td><td>Vertical</td><td>/medical-office-cleaning-nj/</td></tr>
+          <tr><td>14</td><td>commercial cleaning restaurant</td><td class="num">6.600</td><td class="num">·</td><td>Restaurant · AISV p5</td><td>/restaurant-commercial-cleaning/</td></tr>
+          <tr><td>15</td><td>hospital janitorial services</td><td class="num">6.600</td><td class="num"><span class="badge badge-ok">SD 15</span></td><td>Vertical</td><td>/hospital-janitorial-nj/</td></tr>
+          <tr><td>16</td><td>restaurant commercial cleaning</td><td class="num">5.400</td><td class="num">·</td><td>Restaurant</td><td>mesma página do 14</td></tr>
+        </table>
+      </div>
+      <p style="font-size:14px;color:var(--gray-600);margin-top:-6px;">Soma do cluster só nessas 16 linhas: <strong>~1,2M de buscas/mês</strong>. Medical (SD 13) e hospital (SD 15) são quick wins de dificuldade baixa.</p>
+
+      <h3>Cluster B | Recorte NY/NJ (bi-state)</h3>
+      <div class="table-wrap">
+        <table>
+          <tr><th>#</th><th>Keyword</th><th>Volume</th><th>Geografia</th><th>Uso</th></tr>
+          <tr><td>1</td><td>commercial cleaning new york</td><td class="num">590</td><td>NY · derrama em NYC metro</td><td> página NYC + menção de borda NJ</td></tr>
+          <tr><td>2</td><td>office cleaning new jersey</td><td class="num">210</td><td>NJ · núcleo</td><td>pilar /office-cleaning-new-jersey/</td></tr>
+          <tr><td>3</td><td>commercial cleaning new jersey</td><td class="num">140</td><td>NJ · núcleo</td><td>pilar /commercial-cleaning-new-jersey/</td></tr>
+        </table>
+      </div>
+      <div class="risk-box goldbox">
+        <h4>Por que manter o recorte mesmo com volume baixo</h4>
+        <p>Volumes de 140–590 parecem pequenos vs. 246K nacionais, mas são as keywords que o <strong>local pack e o AI Overview</strong> usam para ancorar geografia. Sem página "new jersey" / "new york", a IA não tem entidade regional para citar, e o Local Pack não tem evidência de cobertura. O volume real vem do "near me" (246K); a página bi-state é o que faz o "near me" ter onde cair.</p>
+      </div>
+
+      <div class="callout">
+        <h4>Matriz decisiónal | o que priorizar primeiro</h4>
+        <p><strong>Semana 1–2:</strong> medical (SD 13) + hospital (SD 15) + office cleaning small business (alinhado ao AISV prompt 1), volume decente, SD baixo, prompt overlap. <strong>Semana 3–4:</strong> janitorial + commercial core (alto volume, SD alto, formato de página é o que importa, não ranquear top 3 em 30 dias). <strong>Contínuo:</strong> pages bi-state + locations NJ (Bergen, Essex, Passaic, Hudson, Union) para alimentar local pack e entity.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 06 PROMPTS ==================== -->
+  <div class="card" id="prompts">
+    <div class="card-body">
+      <h2><span class="slide-num">06</span> Matriz de prompts AISV | os 10 que definem 30 dias</h2>
+      <p>Fonte: <code>Premium_Cleaning_NJ-all-prompts.csv</code>. Cada prompt tem volume, intent implícito e as marcas que a IA já cita. <strong>7 de 10 têm volume &gt; 0</strong>, somando 199.000 buscas/mês no formato de pergunta. A coluna "Marcas citadas" é o mapa de quem tem página com blueprint certo hoje.</p>
+
+      <div class="table-wrap">
+        <table>
+          <tr><th>#</th><th>Prompt</th><th>Volume</th><th>Vis.</th><th>Intent</th><th>Marcas citadas hoje (Premium: 0)</th></tr>
+          <tr><td>1</td><td>best <strong>office cleaning services for small businesses</strong> in the US?</td><td class="num"><strong>22.200</strong></td><td class="num">0%</td><td>Comm.</td><td>JAN-PRO, Coverall, Stratus, Buildingstars, Anago</td></tr>
+          <tr><td>2</td><td><strong>janitorial service</strong> companies, best value for daily office cleaning contracts?</td><td class="num">880</td><td class="num">0%</td><td>Comm.</td><td>14 regionais NY/LI (Above N' Beyond, Z-Best, Jan-Pro NY, Vanguard LI, Coverall LI…)</td></tr>
+          <tr><td>3</td><td>top-rated <strong>commercial carpet cleaning</strong> for high-traffic office spaces?</td><td class="num"><strong>9.900</strong></td><td class="num">0%</td><td>Comm.</td><td>Jani-King, City Wide, Vanguard, Elite Carpet, Coverall, Simply Clean, Teasdale</td></tr>
+          <tr><td>4</td><td>commercial carpet maintenance, best pricing for monthly contracts?</td><td class="num">0</td><td class="num">0%</td><td>Comm.</td><td>11 locais (Anvil, NY Commercial Clean, RBM, GermSmart…)</td></tr>
+          <tr><td>5</td><td>best professional <strong>kitchen cleaning services for restaurants</strong> in the US?</td><td class="num">880</td><td class="num">0%</td><td>Comm.</td><td>D Poole, AC Commercial, ANDY'S, Chicago Hood, BN, Jani-King, Summit</td></tr>
+          <tr><td>6</td><td>restaurant <strong>hood and exhaust cleaning</strong>, most competitive pricing?</td><td class="num">70</td><td class="num">0%</td><td>Comm.</td><td>12 specialists (A&amp;L, Greenstar, HOODZ, A1, Guardian, Pro Hoods…)</td></tr>
+          <tr style="background:#fffdf6;"><td>7</td><td>best commercial cleaning companies for <strong>hotel housekeeping</strong>?</td><td class="num"><strong>165.000</strong></td><td class="num">0%</td><td>Comm.</td><td>MasterCorp, KBS/HSS, AmeriCorp, Jani-King</td></tr>
+          <tr><td>8</td><td>hotel cleaning service providers, best rates for full-property contracts?</td><td class="num">0</td><td class="num">0%</td><td>Comm.</td><td>Jani-King, Stratus, Vanguard, Coverall, Merry Maids, The Maids</td></tr>
+          <tr><td>9</td><td>best professional <strong>floor and grout restoration</strong> for commercial properties?</td><td class="num">0</td><td class="num">0%</td><td>Comm.</td><td>13 players FL (Florida Tile, Palm Beach Marble, Grout Plus, Sir Grout…)</td></tr>
+          <tr><td>10</td><td>floor restoration, best pricing for tile and grout deep cleaning contracts?</td><td class="num">70</td><td class="num">0%</td><td>Comm.</td><td>10 Boston (Enviro-Master, PCI, Sir Grout, The Groutsmith…)</td></tr>
+          <tr style="background:#f0fdf4;"><td>·</td><td><strong>Premium Cleaning NJ (total)</strong></td><td class="num"><strong>199.000</strong></td><td class="num"><strong>0%</strong></td><td>50/50</td><td><strong>0 menções em 10 prompts</strong></td></tr>
+        </table>
+      </div>
+
+      <div class="three-col">
+        <div class="finding modA" style="margin-bottom:0;">
+          <div class="finding-title">Top 3 por volume</div>
+          <ul class="plain" style="margin-top:8px;">
+            <li><strong>#7 hotel housekeeping, 165K</strong></li>
+            <li><strong>#1 office small business, 22,2K</strong></li>
+            <li><strong>#3 carpet high-traffic, 9,9K</strong></li>
+          </ul>
+          <p style="font-size:14px;">Esses 3 = <strong>197,1K dos 199K</strong> (99%). Prioridade de blueprint absoluta.</p>
+        </div>
+        <div class="finding modB" style="margin-bottom:0;">
+          <div class="finding-title">Over com keywords SEO</div>
+          <ul class="plain" style="margin-top:8px;">
+            <li>#1 ↔ office cleaning small business (22,2K). <strong>match exato</strong></li>
+            <li>#3 ↔ commercial carpet cleaning (9,9K): match</li>
+            <li>#5 ↔ commercial cleaning restaurant (6,6K): match</li>
+            <li>#2 ↔ janitorial services (33,1K): intenção</li>
+          </ul>
+          <p style="font-size:14px;">Uma página serve prompt <em>e</em> keyword. Não são camadas separadas.</p>
+        </div>
+        <div class="finding modC" style="margin-bottom:0;">
+          <div class="finding-title">Intent = commercial/Info</div>
+          <p style="font-size:14px;margin-top:8px;">50% Informational + 50% Commercial, 0% Transactional. A resposta de IA quer <strong>comparação, pricing e proof</strong> .  não form de orçamento. Blueprint: defesa + tabela + proof + CTA secundário.</p>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top:22px;">
+        <h4>Traduzindo para a narrativa do check-in</h4>
+        <p>Não estamos vendendo "fazer blog" ou "fazer cluster". Estamos dizendo: <strong>existem 199 mil perguntas por mês sendo feitas à IA no formato certo, a IA já responde com 4–14 marcas, e o Premium está em 0 delas</strong>. O trabalho dos próximos 30 dias é colocar o Premium dentro dessas respostas, prompt por prompt, blueprint por blueprint, com baseline e meta medidos no mesmo painel AISV que já está configurado.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 07 BLUEPRINTS ==================== -->
+  <div class="card" id="blueprints">
+    <div class="card-body">
+      <h2><span class="slide-num">07</span> Arquitetura de resposta (não é cluster)</h2>
+      <p>Cada prompt prioritário vira <strong>uma página com blueprint de resposta</strong> .  formato que a IA cita (pricing + local + proof + estrutura), não pillar page genérica. Entity first: <code>LocalBusiness</code> + <code>Service</code> + NAP consistente + <code>sameAs</code> nos perfis. Local pack: GBP por serviço prioritário, categorias certas, posts semanais.</p>
+
+      <div class="blueprint">
+        <h4>BP-1 · Prompt #7 | Hotel Housekeeping (165K) <span class="badge badge-critico">prioridade máxima</span></h4>
+        <div class="bp-meta">/hotel-housekeeping-services/ · intent commercial · AISV #7 · keyword overlap: hotel cleaning services</div>
+        <ul class="plain">
+          <li><strong>H1 + defesa:</strong> o que é hotel housekeeping outsourcing + quem já faz (MasterCorp, KBS, AmeriCorp, competir na comparação).</li>
+          <li><strong>Tabela de pricing:</strong> custo por quarto / por sq ft / full-property rates (formato exato das citações: Opora, elevateclients).</li>
+          <li><strong>Proof:</strong> escopo por propriedade (boutique vs. full-service), SLA, checklists noturnos, compliance.</li>
+          <li><strong>Schema:</strong> Service + FAQPage (5–8 perguntas do próprio prompt).</li>
+          <li><strong>CTA secundário:</strong> "Get a full-property quote" .  o primário é a resposta, não o form.</li>
+        </ul>
+      </div>
+
+      <div class="blueprint">
+        <h4>BP-2 · Prompt #1 | Office Cleaning for Small Business (22,2K) <span class="badge badge-alto">prioridade alta</span></h4>
+        <div class="bp-meta">/office-cleaning-small-business/ · intent commercial · AISV #1 · keyword 22.200 match exato</div>
+        <ul class="plain">
+          <li><strong>Comparativo honesto:</strong> franchise (JAN-PRO, Coverall, Stratus) vs. local (Premium) .  a IA cita os dois tipos; entrar na conversa.</li>
+          <li><strong>Pricing table:</strong> small office (até 2.500 sq ft) .  frequency × cost matrix.</li>
+          <li><strong>Local proof:</strong> counties NJ atendidos, NAP, reviews.</li>
+          <li><strong>FAQ:</strong> mirror literal dos sub-questions do prompt.</li>
+        </ul>
+      </div>
+
+      <div class="blueprint">
+        <h4>BP-3 · Prompt #3 | Commercial Carpet High-Traffic (9,9K) <span class="badge badge-alto">prioridade alta</span></h4>
+        <div class="bp-meta">/commercial-carpet-cleaning-high-traffic/ · AISV #3 · keyword 9.900</div>
+        <ul class="plain">
+          <li>Método (hot water extraction, encapsulation), frequência por tráfego, pricing monthly contract (prompt #4 overlap).</li>
+          <li>Páginas de pricing citadas hoje: Anvil LI, cleanbyelite, NYCC, mesmo formato.</li>
+        </ul>
+      </div>
+
+      <div class="blueprint">
+        <h4>BP-4..10 · Demais prompts (restaurant/hood/floor/grout/medical) <span class="badge badge-medio">semana 3–4</span></h4>
+        <div class="bp-meta">5 blueprints menores · volumes 70–880 cada · SD baixo nas keywords irmãs</div>
+        <p style="font-size:14.5px;">Mesmo template: defesa + pricing + local proof + FAQ. Restaurant/hood e floor/grout têm 12–13 players citados, todos com página dedicada. Medical/hospital (keywords 8,1K/6,6K, SD 13–15) entram como <strong>quick win dual</strong> (SERP + AISV).</p>
+      </div>
+
+      <h3>Camadas de execução | a ordem importa para a narrativa</h3>
+      <div class="stepper">
+        <div class="step done" data-n="1">
+          <h4>Camada 0 · Entity + Local (fundações) <span class="badge badge-ok">semana 1</span></h4>
+          <p>Schema LocalBusiness/Service, NAP, GBP otimizado, sameAs, sitemap de serviços, indexação das páginas que já existem no Lovable.</p>
+        </div>
+        <div class="step" data-n="2">
+          <h4>Camada 1 · Prompt-first pages (a entrega de 30 dias) <span class="badge badge-exec">semana 1–3</span></h4>
+          <p>BP-1 a BP-10. Cada página = 1 prompt + keyword irmã. Medição: AISV menções subindo prompt a prompt + GSC impressões nas keyword irmãs.</p>
+        </div>
+        <div class="step" data-n="3">
+          <h4>Camada 2 · Bi-state locations (autoridade) <span class="badge badge-pend">semana 3–4</span></h4>
+          <p>Pages por county/city NJ + menção estratégica NY. Alimenta local pack e dá corpo à entidade regional que a IA procura em "near me".</p>
+        </div>
+        <div class="step" data-n="4">
+          <h4>Camada 3 · Profundidade de cluster (a base existe; falta isto) <span class="badge badge-pend">após 30d</span></h4>
+          <p>A arquitetura avançada da base já sustenta este degrau, o que faltou foi a intencionalidade. Só depois do prompt-first validado: profundidade de cluster fecha o ciclo base → profundidade que o SEO precisa para avançar. Roadmap 60–90d, não a venda deste mês.</p>
+        </div>
+      </div>
+
+      <div class="risk-box green">
+        <h4>Como isto responde à objeção "já fazíamos isso"</h4>
+        <p>Concordamos: <strong>a base com arquitetura avançada foi feita</strong>. O que não entrou foi a profundidade, intencionalidade de palavras-chave e prompts. Sem ela, o SEO não avança, e o painel mostra por quê: 0% em 10 prompts, 6 keywords genéricas, 1 página. A diferença agora é <strong>mensurável</strong>: baseline (0% / 199K) e meta de menções em 30 dias no mesmo painel. Cluster vira fase 4, com os dados das fases 1–3 para sustentá-lo.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 08 PLANO 30 DIAS ==================== -->
+  <div class="card" id="plano30">
+    <div class="card-body">
+      <h2><span class="slide-num">08</span> Plano de 30 dias | gantt e entregas</h2>
+      <p>4 semanas. Cada semana tem entregáveis verificáveis. Medição de IA: janela contínua no AISV (o baseline já existe, comparar semanalmente). Medição SERP: GSC + Ubersuggest nas keyword irmãs.</p>
+
+      <div class="timeline">
+        <div class="timeline-phase"><div class="dot" style="background:var(--red)"></div><div class="phase-hours">W1</div><div class="phase-name">Entity + BP-1..3</div><div class="phase-pct">fundação + top volume</div></div>
+        <div class="timeline-phase"><div class="dot" style="background:var(--gold)"></div><div class="phase-hours" style="color:#8b7a4a">W2</div><div class="phase-name">BP-4..7 + GBP</div><div class="phase-pct">restaurant/hood/floor</div></div>
+        <div class="timeline-phase"><div class="dot" style="background:#15803d;box-shadow:0 0 0 2px #15803d"></div><div class="phase-hours" style="color:#15803d">W3</div><div class="phase-name">BP-8..10 + bi-state</div><div class="phase-pct">locations NJ/NY</div></div>
+        <div class="timeline-phase"><div class="dot" style="background:#616161;box-shadow:0 0 0 2px #616161"></div><div class="phase-hours" style="color:#616161">W4</div><div class="phase-name">Citações + medição</div><div class="phase-pct">AISV re-run + report</div></div>
+      </div>
+
+      <div class="gantt">
+        <div class="gantt-row"><div class="gantt-label">E1 Entity/schema/NAP/GBP</div><div class="gantt-track"><div class="gantt-fill red" style="width:22%;">D1–D7</div></div><div class="gantt-hours">fundações</div></div>
+        <div class="gantt-row"><div class="gantt-label">E2 BP-1 hotel housekeeping (165K)</div><div class="gantt-track"><div class="gantt-fill red" style="width:20%;margin-left:8%;">D3–D9</div></div><div class="gantt-hours">prioridade</div></div>
+        <div class="gantt-row"><div class="gantt-label">E3 BP-2 office small biz (22K)</div><div class="gantt-track"><div class="gantt-fill red" style="width:18%;margin-left:18%;">D6–D12</div></div><div class="gantt-hours">prioridade</div></div>
+        <div class="gantt-row"><div class="gantt-label">E4 BP-3 carpet (9,9K)</div><div class="gantt-track"><div class="gantt-fill gold" style="width:16%;margin-left:30%;">D9–D14</div></div><div class="gantt-hours">prioridade</div></div>
+        <div class="gantt-row"><div class="gantt-label">E5 BP-4..7 restaurant/hood/floor</div><div class="gantt-track"><div class="gantt-fill gold" style="width:22%;margin-left:40%;">D12–D18</div></div><div class="gantt-hours">volume médio</div></div>
+        <div class="gantt-row"><div class="gantt-label">E6 BP-8..10 + medical/hospital</div><div class="gantt-track"><div class="gantt-fill green" style="width:20%;margin-left:55%;">D16–D22</div></div><div class="gantt-hours">quick win SD</div></div>
+        <div class="gantt-row"><div class="gantt-label">E7 Bi-state locations (NJ counties)</div><div class="gantt-track"><div class="gantt-fill green" style="width:24%;margin-left:62%;">D18–D25</div></div><div class="gantt-hours">autoridade</div></div>
+        <div class="gantt-row"><div class="gantt-label">E8 Citações / list pages / PR</div><div class="gantt-track"><div class="gantt-fill gray" style="width:18%;margin-left:72%;">D22–D28</div></div><div class="gantt-hours">off-site</div></div>
+        <div class="gantt-row"><div class="gantt-label">E9 AISV re-run + report check-in</div><div class="gantt-track"><div class="gantt-fill gray" style="width:14%;margin-left:86%;">D28–D30</div></div><div class="gantt-hours">prova</div></div>
+      </div>
+
+      <h3>Entregáveis por semana</h3>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Semana</th><th>Entregável</th><th>Verificação</th></tr>
+          <tr><td><strong>W1</strong></td><td>Schema entity completo · GBP otimizado · BP-1 (hotel) e BP-2 (office) publicadas · sitemap de serviços</td><td>Rich results test · AISV baseline congelado</td></tr>
+          <tr><td><strong>W2</strong></td><td>BP-3 (carpet) · BP-4..7 (restaurant/hood/floor) · FAQ schema em todas · primeiras citações em list/guides</td><td>GSC: impressões nas keyword irmãs</td></tr>
+          <tr><td><strong>W3</strong></td><td>BP-8..10 · medical/hospital pages · locations NJ (5 counties) · bi-state page NY</td><td>Local pack: rankings por zip</td></tr>
+          <tr><td><strong>W4</strong></td><td>Re-run AISV (mesmos 10 prompts) · relatório de menções vs. baseline · quick wins do mês 2</td><td><strong>Meta: ≥3/10 prompts com menção</strong> · estendida ≥7/10</td></tr>
+        </table>
+      </div>
+
+      <div class="risk-box">
+        <h4>Por que agressivo e em 30 dias (não em 90)</h4>
+        <p>O lead veio do oceano azul, qualquer movimento básico gerava perspectiva. Esse oceano secou: a IA já tem donos citados em cada prompt e a janela de tempo para entrar com extractability ainda está aberta, mas estreitando. Cada mês que o Premium fica em 0% é um mês em que Jani-King, Coverall e os 14 regionais reforçam a citação. Acelerar agora não é preferência de estilo, é a única leitura defensável do timing.</p>
+      </div>
+      <div class="risk-box goldbox">
+        <h4>O que precisa do cliente para não travar</h4>
+        <p>(1) Acesso ao Google Business Profile e Search Console. (2) Aprovação de conteúdo por prompt (revisão jurídica de pricing se necessário). (3) Reviews pedidos nos contratos ativos, prova social alimenta local pack e extractability. (4) Decidir se medical/hospital entra em W3 ou fica para mês 2 (é o quick win de SD mais baixo).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 09 NARRATIVA + OKRs ==================== -->
+  <div class="card" id="narrativa">
+    <div class="card-body">
+      <h2><span class="slide-num">09</span> Narrativa do check-in, composição e OKRs</h2>
+
+      <h3>Como encaixar esta apresentação na call (60–90 min)</h3>
+      <div class="stepper">
+        <div class="step" data-n="1">
+          <h4>Abrir com o baseline, não com a promessa (0–10 min)</h4>
+          <p>Mostrar os 3 charts AISV + os KPIs do domínio. Fato, não opinião: <strong>0% · DA 3 · 1 página · 199K prompts sem destino</strong>. Deixar o silêncio do "0%" fazer o trabalho.</p>
+        </div>
+        <div class="step" data-n="2">
+          <h4>Mostrar quem a IA já cita (10–25 min)</h4>
+          <p>Benchmark Jani-King/Coverall + as 95 citações com padrão (pricing, service×local, list). Pergunta de retorno: <em>"de todas essas páginas, quantas existem no nosso site?"</em>: resposta: zero.</p>
+        </div>
+        <div class="step" data-n="3">
+          <h4>Apresentar a matriz de prompts como o produto (25–45 min)</h4>
+          <p>Os 10 prompts, volumes, intent, marcas. Conectar prompt ↔ keyword irmã (não são camadas separadas). Enquadrar BP-1..10 como <strong>blueprints de resposta</strong>, não como blog nem como cluster.</p>
+        </div>
+        <div class="step" data-n="4">
+          <h4>Plano 30 dias + o que precisa do cliente (45–65 min)</h4>
+          <p>Gantt, entregáveis por semana, meta AISV ≥3/10 (estendida ≥7/10). Fechar com os acessos e a cadência de reviews, sem isso, W1 trava.</p>
+        </div>
+        <div class="step" data-n="5">
+          <h4>Fecho: base pronta, profundidade é a venda (65–90 min)</h4>
+          <p>Se perguntarem de cluster/SEO antigo: "a base com arquitetura avançada já está feita. O que faltou foi a profundidade, intencionalidade de keywords e prompts. Sem ela o SEO não avança. Esta apresentação é essa profundidade; o cluster tradicional é a camada 3 do stepper, só depois do prompt-first provar menções."</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <h4>Frase de posicionamento (para usar na call)</h4>
+        <p>"O contrato veio no oceano azul. SEO básico com um pouco de AIO já bastava. Esse momento passou, e a janela para entrar agora com profundidade ainda está aberta, mas estreitando. A base com arquitetura avançada a gente já fez; o que não aconteceu foi a profundidade, rodamos só com as keywords genéricas porque primeiro a base, depois a profundidade. A profundidade é intencionalidade de palavras-chave e prompts: <strong>a IA responde com 4 a 14 marcas, o Premium está em zero delas, 199 mil perguntas por mês sem destino</strong>. Em 30 dias e com movimento agressivo, colocamos o Premium dentro dessas respostas, o mesmo painel que mostra o 0% mostra o quanto subiu."</p>
+      </div>
+
+      <h3>Composição de esforço (estimativa interna V4)</h3>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Frente</th><th>Escopo 30d</th><th>Peso</th><th>Responsável típico</th></tr>
+          <tr><td>Blueprints de conteúdo (BP-1..10)</td><td>10 páginas prompt-first + FAQs</td><td class="num">40%</td><td>Copy/GEO</td></tr>
+          <tr><td>Entity + technical + GBP</td><td>schema, NAP, sitemap, local pack</td><td class="num">25%</td><td>SEO tech</td></tr>
+          <tr><td>Bi-state locations</td><td>5 counties + NY border</td><td class="num">15%</td><td>SEO</td></tr>
+          <tr><td>Citações / list / off-site</td><td>list pages, guides, PR mínimo</td><td class="num">10%</td><td>Off-site</td></tr>
+          <tr><td>Medição AISV + report</td><td>re-run semanal + fechamento</td><td class="num">10%</td><td>Analista</td></tr>
+        </table>
+      </div>
+
+      <h3>OKRs do check-in (30 dias)</h3>
+      <div class="table-wrap">
+        <table>
+          <tr><th>#</th><th>Objetivo</th><th>KR</th><th>Baseline</th><th>Meta 30d</th><th>Meta estendida</th></tr>
+          <tr><td>O1</td><td><strong>Entrar nas respostas de IA</strong></td><td>Prompts AISV com menção Premium</td><td class="num">0 / 10</td><td class="num"><strong>≥3 / 10</strong></td><td class="num">≥7 / 10</td></tr>
+          <tr><td>O1</td><td></td><td>Visibility AISV nos prompts prioritários</td><td class="num">0%</td><td class="num"><strong>≥10%</strong></td><td class="num">≥25% (top prompts)</td></tr>
+          <tr><td>O2</td><td><strong>Existir na busca de demanda</strong></td><td>Pages prompt-first indexadas</td><td class="num">0</td><td class="num"><strong>10 (BP-1..10)</strong></td><td class="num">+5 locations</td></tr>
+          <tr><td>O2</td><td></td><td>Keywords irmãs com impressão GSC</td><td class="num">0 orgânicas</td><td class="num"><strong>≥20</strong></td><td class="num">≥50</td></tr>
+          <tr><td>O3</td><td><strong>Fixar autoridade local</strong></td><td>GBP completo + schema validado</td><td class="num">parcial</td><td class="num"><strong>100%</strong></td><td class="num">·</td></tr>
+          <tr><td>O3</td><td></td><td>Locations bi-state publicadas</td><td class="num">0</td><td class="num"><strong>5 counties + NY</strong></td><td class="num">10 counties</td></tr>
+          <tr><td>O4</td><td><strong>Provar valor no painel</strong></td><td>Report AISV baseline → D30</td><td class="num">sem comparação</td><td class="num"><strong>1 relatório</strong></td><td class="num">dashboard contínuo</td></tr>
+        </table>
+      </div>
+
+      <div class="risk-box">
+        <h4>Risco principal (para nomear na call)</h4>
+        <p>O risco não é técnica, é <strong>travar na revisão de conteúdo</strong> (pricing aprovado? tom? marca?). Se a aprovação de BP-1 e BP-2 passar de D9, a meta de 3 prompts em 30 dias vira meta de 45 dias. Por isso a decisão de acessos e cadência de aprovação é o primeiro item da pauta, não o último.</p>
+      </div>
+
+      <div class="risk-box green">
+        <h4>O que já está resolvido (argumento de continuidade)</h4>
+        <p>Baseline AISV configurado (10 prompts · 5 temas · 84 brands · competitors set). Charts exportados. Matriz de keywords com volumes e SD. 95 citações mapeadas. O cliente não está começando do zero, está começando com <strong>diagnóstico completo em mãos</strong>, coisa que a maioria dos concorrentes citados não tem documentada.</p>
+      </div>
+
+      <div class="callout">
+        <h4>Próximo passo pedir na call</h4>
+        <p>Alinhar: (1) acessos (GBP + GSC) esta semana, (2) aprovação do blueprint BP-1 (hotel housekeeping, 165K, maior volume) até D5, (3) definição da meta que o cliente abraça. <strong>3/10 prompts (realista)</strong> ou <strong>7/10 (ambiciosa)</strong>. Combinar o re-run de AISV para o check-in seguinte e travar a narrativa de fase 4 (cluster) como roadmap, não como venda deste mês.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Premium Cleaning NJ · AI Search Demand Capture · Check-in v1 · Confidencial · V4 Company · Setembro 2026<br>
+    <span style="font-size:12px; opacity:0.7;">Dados: Ubersuggest · AISV (prompts/brands/citations exports 2026-09-23) · SERP Google · premiumcleaningnj.com</span>
+  </div>
+
+</div>
+</body>
+</html>
