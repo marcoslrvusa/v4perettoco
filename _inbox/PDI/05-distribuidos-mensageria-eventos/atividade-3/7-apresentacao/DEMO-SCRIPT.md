@@ -1,4 +1,4 @@
-# Roteiro de Demo — Resiliencia com Circuit Breaker e Retry/Backoff
+# Roteiro de Demo: Resiliencia com Circuit Breaker e Retry/Backoff
 
 Abra o deck (index.html) e percorra os slides na ordem.
 

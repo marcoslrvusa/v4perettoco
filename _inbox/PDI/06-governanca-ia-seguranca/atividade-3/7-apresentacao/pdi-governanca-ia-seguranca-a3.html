@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDI: Gestao de segredos e rotacao de credenciais: Registro de Entrega</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--white:#fff;--off-white:#f8f9fb;--gray-50:#f1f3f5;--gray-200:#dde3e9;--gray-700:#495560;--gray-800:#2e3740;--gray-900:#1a1f24;--accent:#b8860b;--accent2:#8b4513;--yellow-600:#e6a800;--border:#e2e6ea}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,sans-serif;color:var(--gray-900);background:var(--off-white);line-height:1.6;-webkit-font-smoothing:antialiased}
+.page{max-width:900px;margin:0 auto;background:var(--white);box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.cover{padding:80px 72px 56px;background:linear-gradient(135deg,#1a0f0a 0%,#2d1a10 100%);color:var(--white);position:relative;overflow:hidden}
+.cover-badge{display:inline-block;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent);border:1px solid rgba(184,134,11,.3);padding:5px 14px;background:rgba(184,134,11,.06)}
+.cover h1{font-size:36px;font-weight:700;line-height:1.2;letter-spacing:-.5px;max-width:640px;margin-top:16px}
+.cover h1 em{color:var(--accent);font-style:normal}
+.cover-meta{margin-top:32px;font-size:14px;color:#8896a8;line-height:1.8}
+.cover-meta strong{color:var(--gray-200);font-weight:500}
+.cover-logo{margin-bottom:28px}.cover-logo img{height:56px;width:auto;display:block;opacity:.92}
+.cover-avatar{position:absolute;top:40px;right:56px;width:84px;height:84px;border-radius:50%;overflow:hidden;border:2px solid rgba(184,134,11,.6);box-shadow:0 0 0 5px rgba(184,134,11,.12),0 8px 24px rgba(0,0,0,.4)}
+.cover-avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.cover-slug{margin-top:24px;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.25);letter-spacing:.5px}
+.content{padding:56px 72px 80px}
+h2{font-size:22px;font-weight:700;letter-spacing:-.3px;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+h2 .num{color:var(--accent2)}
+p{color:var(--gray-700);font-size:14px;margin-bottom:14px}
+p strong{color:var(--gray-900)}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:16px 0 20px}
+th{text-align:left;padding:10px 14px;background:var(--gray-50);border-top:1px solid var(--border);border-bottom:1px solid var(--border);color:var(--gray-800);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--gray-700);vertical-align:top}
+td code,p code,pre{font-family:'JetBrains Mono',monospace}
+td code,p code{font-size:12px;background:var(--gray-50);border:1px solid var(--border);padding:1px 4px;border-radius:3px;color:var(--accent2)}
+pre{background:#0d1014;color:#e8ecf0;padding:16px 20px;border-radius:6px;font-size:12px;line-height:1.7;overflow-x:auto;margin:16px 0 20px}
+.status{display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:3px 10px;border-radius:3px}
+.st-warn{background:rgba(230,168,0,.12);color:var(--yellow-600)}
+ul{margin:8px 0 16px 20px}li{color:var(--gray-700);font-size:14px;margin-bottom:6px}
+.callout{border-left:3px solid var(--accent);background:var(--off-white);padding:14px 18px;font-size:13px;color:var(--gray-700);margin:16px 0}
+.callout strong{color:var(--accent2)}
+.pipeline{margin:24px 0 28px;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#0d1014}
+.pipeline-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;background:linear-gradient(135deg,#1a0f0a,#2d1a10);border-bottom:1px solid rgba(184,134,11,.25)}
+.pipeline-title{color:#fff;font-size:13px;font-weight:600;letter-spacing:.3px}
+.pipeline-title em{color:var(--accent);font-style:normal}
+.pipeline-live{display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:10px;color:#8896a8;letter-spacing:.5px;text-transform:uppercase;white-space:nowrap}
+.pipeline-live .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pingDot 1.6s infinite}
+@keyframes pingDot{0%{box-shadow:0 0 0 0 rgba(184,134,11,.6)}70%{box-shadow:0 0 0 8px rgba(184,134,11,0)}100%{box-shadow:0 0 0 0 rgba(184,134,11,0)}}
+.pipeline-body{position:relative;padding:26px 22px 24px}
+.pl-rail{position:absolute;left:62px;top:20px;bottom:20px;width:2px;background:rgba(184,134,11,.22)}
+.pl-pulse{position:absolute;left:-3px;width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px rgba(184,134,11,.9);opacity:0}
+.pl-pulse.p1{animation:plFlow 3.4s linear infinite}.pl-pulse.p2{animation:plFlow 3.4s linear infinite 1.7s}.pl-pulse.g{background:#52d69b;box-shadow:0 0 10px rgba(82,214,155,.9);animation:plFlow 3.4s linear infinite 2.55s}
+@keyframes plFlow{0%{top:0%;opacity:0}8%{opacity:1}85%{opacity:1}100%{top:97%;opacity:0}}
+.pl-steps{display:flex;flex-direction:column;gap:14px;width:100%;padding-left:26px}
+.pl-step{display:flex;align-items:flex-start;gap:14px;background:#141922;border:1px solid rgba(232,236,240,.07);border-radius:8px;padding:14px 16px}
+.pl-step .num{flex:0 0 30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:var(--accent);background:rgba(184,134,11,.1);border:1px solid rgba(184,134,11,.35)}
+.pl-step .name{font-size:13px;font-weight:600;color:#fff}
+.pl-step .name code{font-family:'JetBrains Mono',monospace;font-size:12px;background:rgba(184,134,11,.12);border:1px solid rgba(184,134,11,.35);padding:1px 5px;border-radius:3px;color:#ffd98a}
+.pl-step .desc{font-size:12px;color:#8896a8;margin-top:2px;line-height:1.55}
+.pl-chip{display:inline-flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.pl-tag{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 8px;border-radius:3px;background:rgba(184,134,11,.12);color:#ffd98a;border:1px solid rgba(184,134,11,.3);white-space:nowrap}
+.pl-tag.ok{background:rgba(22,139,73,.14);color:#52d69b;border-color:rgba(22,139,73,.4)}
+.pl-terminal{border-style:dashed;border-color:rgba(82,214,155,.45)}
+.pl-terminal .num{background:rgba(22,139,73,.14);border-color:rgba(82,214,155,.5);color:#52d69b}
+.pl-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:20px;padding:12px 16px;border-top:1px dashed rgba(184,134,11,.25);font-size:11px;color:#8896a8}
+@media print{body{background:#fff}.page{box-shadow:none}.content{padding:20px 48px 60px}.cover{padding:48px 56px 40px}}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="cover">
+<div class="cover-avatar"><img src="../../../../../assets/images/logo-peretto-perfil.jpg" alt="Marcos Luciano"></div>
+<div class="cover-logo"><img src="../../../../../assets/logo-peretto.png" alt="Peretto"></div>
+<span class="cover-badge">PDI 2026 | Trilha 06 | Atividade 3</span>
+<h1>Gestao de segredos e <em>rotacao de credenciais</em></h1>
+<div class="cover-meta"><strong>Autor:</strong> PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com<br><strong>Unidade:</strong> FV Marketing / V4 Company: Automação &amp; Infraestrutura<br><strong>Módulo:</strong> 06 | Governanca de IA e Seguranca<br><strong>Data:</strong> Setembro 2026<br><strong>Status:</strong> <span class="status st-warn">NÃO publicado</span> · Desenvolvido / Homologação pendente<br><strong>Versão:</strong> 1.0</div>
+<div class="cover-slug">pdi-governanca-ia-seguranca-a3</div>
+</div>
+<div class="content">
+<h2><span class="num">1.</span> Contexto</h2>
+<p>Tokens de Meta Ads, Google, CRM, banco e webhooks circulam entre workers, CIs e maquinas do time sem inventario, sem dono e sem prazo de troca. Chave sem dono e chave eterna.</p>
+<p>Esta atividade fecha a causa: <strong>cofre central, entrega por referencia, rotacao com prazo e varredura que falha o build</strong>.</p>
+<h2><span class="num">2.</span> Diagnóstico</h2>
+<p>Segredo em chat, planilha ou commit da acesso a verba de midia e base de leads; a troca emergencial vira madrugada porque ninguem sabe onde cada chave esta usada. O custo do vazamento e proporcional ao tempo de exposicao, e hoje esse tempo e indefinido.</p>
+<table><tr><th>Sintoma</th><th>Risco</th><th>Correcao</th></tr><tr><td>.env no chat ou wiki</td><td>Exposicao permanente</td><td>Cofre + referencia</td></tr><tr><td>Chave estatica no CI</td><td>Abuso silencioso</td><td>OIDC ou rotacao curta</td></tr><tr><td>Sem rotacao</td><td>Janela infinita</td><td>30/90/180 dias com dono</td></tr></table>
+<h2><span class="num">3.</span> Solução</h2>
+<p>Standard com principios, tabela de guarda e entrega, prazos e resposta a vazamento em 5 passos. Codigo <code>secrets_audit.py</code> executavel: 5 familias de padroes reais, checagem de <code>.gitignore</code> e exit code para o CI. Comandos do GitHub Docs verificados na entrega.</p>
+<pre>gh secret set NOME_DO_SECRET
+gh secret set NOME_DO_SECRET &lt; secret.txt
+gh secret set --env PROD NOME_DO_SECRET
+gh secret list</pre>
+<ul><li>Producao no cofre, CI em secrets por ambiente, local em `.env` fora do git</li><li>Dynamic secrets com TTL onde o provider suporta</li></ul>
+<h2><span class="num">4.</span> Como funciona</h2>
+<div class="pipeline"><div class="pipeline-head"><span class="pipeline-title">Ciclo de vida do <em>segredo</em></span><span class="pipeline-live"><span class="dot"></span> fluxo ativo</span></div><div class="pipeline-body"><div class="pl-rail"><span class="pl-pulse p1"></span><span class="pl-pulse p2"></span><span class="pl-pulse g"></span></div><div class="pl-steps">
+<div class="pl-step"><span class="num">1</span><div><div class="name">Cofre central</div><div class="desc">Vault KV ou gerenciado do provider; codigo referencia, nunca valor.</div><div class="pl-chip"><span class="pl-tag">dono + criticidade</span></div></div></div>
+<div class="pl-step"><span class="num">2</span><div><div class="name">Entrega por referencia</div><div class="desc">Env var, OIDC no CI, <code>gh secret set</code> por ambiente.</div><div class="pl-chip"><span class="pl-tag">sem chave estatica</span></div></div></div>
+<div class="pl-step"><span class="num">3</span><div><div class="name">Rotacao com prazo</div><div class="desc">30 dias critica, 90 alta, 180 padrao; dynamic secret onde der.</div><div class="pl-chip"><span class="pl-tag">gerar, validar, revogar</span></div></div></div>
+<div class="pl-step"><span class="num">4</span><div><div class="name"><code>secrets_audit.py</code> varre</div><div class="desc">5 padroes reais + <code>.gitignore</code>; achado falha o build.</div><div class="pl-chip"><span class="pl-tag">exit 1 = CI vermelho</span></div></div></div>
+<div class="pl-step pl-terminal"><span class="num">5</span><div><div class="name">Vazou, gira</div><div class="desc">Revogar, girar, auditar uso, comunicar, post-mortem. Critica em 4 h.</div><div class="pl-chip"><span class="pl-tag ok">procedimento ensaiado</span></div></div></div>
+</div><div class="pl-footer"><span>secrets_audit.py | self-test: AKIA + ghp detectados</span><span>comandos do GitHub Docs</span></div></div></div>
+<h2><span class="num">5.</span> Entregas</h2>
+<table><tr><th>Arquivo</th><th>Conteudo</th></tr><tr><td><code>1-standards/STANDARD-SEGREDOS-ROTACAO.md</code></td><td>Principios, guarda e entrega, rotacao, resposta</td></tr><tr><td><code>2-implementacao/secrets_audit.py</code></td><td>Varredura executavel com self-test passando</td></tr><tr><td><code>2-implementacao/CHECKLIST-SEGREDOS.md</code></td><td>Higiene mensal, 8 itens</td></tr><tr><td><code>7-apresentacao/</code></td><td>Deck de 12 slides, demo, roteiro com 5 Q and A, este relatorio em HTML, DOCX e PDF</td></tr></table>
+<h2><span class="num">6.</span> Métricas de sucesso</h2>
+<table><tr><th>Metrica</th><th>Atual</th><th>Meta</th></tr><tr><td>Criticas com rotacao</td><td>0% (baseline desta PDI)</td><td>100% em 90 dias (meta)</td></tr><tr><td>Segredos em repos</td><td>a medir na primeira rodada</td><td>0 apos remediacao (meta)</td></tr><tr><td>Giro de chave vazada</td><td>sem rotina</td><td>ate 4 h (meta)</td></tr></table>
+<div class="callout"><strong>Status:</strong> Desenvolvido em Setembro 2026, homologacao pendente: migrar Ads e CRM para o cofre e ligar a varredura no CI.</div>
+</div>
+</div>
+</body>
+</html>

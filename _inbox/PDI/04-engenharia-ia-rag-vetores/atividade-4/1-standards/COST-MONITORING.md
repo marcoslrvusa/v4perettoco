@@ -1,4 +1,4 @@
-# STANDARD — Monitoramento de Custo LLM
+# STANDARD: Monitoramento de Custo LLM
 
 - **Capture:** log de `prompt_tokens`, `completion_tokens`, `model`, `agent` por Run.
 - **Custo:** tabela de preço por 1k tokens (atualizar mensal).

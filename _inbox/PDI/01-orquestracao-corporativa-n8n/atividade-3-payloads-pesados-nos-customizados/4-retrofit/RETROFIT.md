@@ -1,4 +1,4 @@
-# Retrofit — Nós Code e Expressões Existentes
+# Retrofit: Nós Code e Expressões Existentes
 
 Plano para adaptar os nós `Code` e expressões já existentes nos workflows SDR IA
 e Command Center ao padrão de payload pesado da atividade 3.
@@ -20,13 +20,13 @@ padrões `1-standards/`.
 
 ## Passo a passo (por workflow)
 
-### Fase 1 — Mapear nós Code
+### Fase 1: Mapear nós Code
 
 1. Listar todos os nós `Code` (JS e Python) do workflow.
 2. Marcar quais processam listas grandes (`$input.all()`, `map`/`filter` em arrays).
 3. Marcar onde há `JSON.parse`/`JSON.stringify` dentro de loops.
 
-### Fase 2 — Aplicar padrão
+### Fase 2: Aplicar padrão
 
 1. **Parse 1x:** mover `JSON.parse` do payload para a primeira etapa.
 2. **Dedupe O(n):** trocar `filter`+`find`/`indexOf` por `Set` de chave primitiva.
@@ -34,7 +34,7 @@ padrões `1-standards/`.
 4. **Sair cedo:** filtros baratos antes de transformacoes caras.
 5. **Python:** garantir apenas stdlib; `Counter`/`defaultdict` para agregacao.
 
-### Fase 3 — Teste com payload simulado
+### Fase 3: Teste com payload simulado
 
 ```bash
 curl -X POST https://n8n.fvmarketing.com.br/webhook/nos/js-normalizer \
@@ -49,8 +49,8 @@ curl -X POST https://n8n.fvmarketing.com.br/webhook/nos/js-normalizer \
 
 | Atividade | Esforço | Detalhe |
 |---|---|---|
-| JS Normalizer (novo) | — | Entregue nesta PDI |
-| Python Enricher (novo) | — | Entregue nesta PDI |
+| JS Normalizer (novo) |: | Entregue nesta PDI |
+| Python Enricher (novo) |: | Entregue nesta PDI |
 | Retrofit ADPLAN | 30 min | Streaming + dedupe |
 | Retrofit PRO ANALISES | 10 min | Parse 1x + validacao |
 | Retrofit CC Collector | 20 min | Dedupe + agregacao O(n) |

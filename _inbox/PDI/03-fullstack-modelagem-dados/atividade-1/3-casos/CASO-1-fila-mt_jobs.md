@@ -1,4 +1,4 @@
-# CASO 1 — Gargalo: fila `mt_jobs` no pick do worker
+# CASO 1: Gargalo: fila `mt_jobs` no pick do worker
 
 ## Sinais
 
@@ -21,9 +21,9 @@ LIMIT 1;
 
 O plano mostrava:
 
-- `Seq Scan on mt_jobs` com `Rows Removed by Filter: 2,381,450` — status/queue sem índice.
-- `Nested Loop` no JOIN (FK `client_id` desindexada) — re-scan por linha.
-- `Sort` em 2,1M linhas para pegar 1 — pobríssimo.
+- `Seq Scan on mt_jobs` com `Rows Removed by Filter: 2,381,450`: status/queue sem índice.
+- `Nested Loop` no JOIN (FK `client_id` desindexada): re-scan por linha.
+- `Sort` em 2,1M linhas para pegar 1: pobríssimo.
 
 Duas causas-raiz: filtro da fila sem índice composto (**igualdade→range→ORDER BY**) e LEFT JOIN
 que o pick nunca precisava (payload já trazia o que o worker usa).
@@ -54,4 +54,4 @@ Uso id segura: `FOR UPDATE SKIP LOCKED` no pick para 5 workers consumindo a mesm
 
 - Toda classe de query de worker deve ter `EXPLAIN` no MR.
 - Pick de fila sempre `FOR UPDATE SKIP LOCKED` + limite explícito (`LIMIT 5`).
-- `update_status` em batch (CTE) — nunca editor linha a linha no loop.
+- `update_status` em batch (CTE): nunca editor linha a linha no loop.

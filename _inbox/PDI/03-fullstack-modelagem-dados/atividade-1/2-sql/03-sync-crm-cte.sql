@@ -9,7 +9,7 @@
 --   clients(id, name, tier)
 
 -- =====================================================================
--- ANTES — 4.2s: Seq Scan sync_log (12M) + Hash Join sem índice na FK + Sort
+-- ANTES: 4.2s: Seq Scan sync_log (12M) + Hash Join sem índice na FK + Sort
 -- =====================================================================
 EXPLAIN (ANALYZE, BUFFERS)
 SELECT c.id,
@@ -25,13 +25,13 @@ GROUP BY c.id, s.object, s.direction
 ORDER BY (sum(s.expected) - sum(s.synced)) DESC;
 
 -- plano ANTES (resumo):
---   Seq Scan on sync_log s (12M rows) — filtro created_at não podável
---   Hash Join on clients.id         — sem índice na FK → re-scan + spill
---   HashAggregate oversized          — work_mem estourado (temp files)
+--   Seq Scan on sync_log s (12M rows): filtro created_at não podável
+--   Hash Join on clients.id        : sem índice na FK → re-scan + spill
+--   HashAggregate oversized         : work_mem estourado (temp files)
 --   Execução: ~4.2s
 
 -- =====================================================================
--- DEPOIS — 2 índices (FK composta + BRIN na série de tempo) + CTE de drift
+-- DEPOIS: 2 índices (FK composta + BRIN na série de tempo) + CTE de drift
 -- =====================================================================
 CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_sync_log_client_created
   ON sync_log (client_id, created_at DESC);
@@ -65,7 +65,7 @@ ORDER BY drift_pct DESC;
 -- plano DEPOIS (resumo):
 --   Bitmap Index Scan (idx_sync_log_client_created) poda 12M → ~180k rows
 --   Bitmap Heap Scan + HashAggregate em 180k rows (30 dias)
---   Nested Loop indexado em clients (PK) — sem re-scan
+--   Nested Loop indexado em clients (PK): sem re-scan
 --   Execução: ~180ms  (Δ 23x)
 
 -- =====================================================================

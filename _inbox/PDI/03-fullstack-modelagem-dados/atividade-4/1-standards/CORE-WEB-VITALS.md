@@ -1,4 +1,4 @@
-# STANDARD — Core Web Vitals (Next.js)
+# STANDARD: Core Web Vitals (Next.js)
 
 ## LCP (<=2.5s)
 - `next/image` com `priority` no hero; `sizes` correto.

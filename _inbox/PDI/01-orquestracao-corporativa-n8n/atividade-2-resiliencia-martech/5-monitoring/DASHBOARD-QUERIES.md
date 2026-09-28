@@ -1,4 +1,4 @@
-# Dashboard de Monitoramento MarTech — Queries Supabase
+# Dashboard de Monitoramento MarTech: Queries Supabase
 
 > Banco: Supabase `gswzuzetverulcgzhynb` · Schema v3.0 (mt_*)
 

@@ -40,7 +40,7 @@ Sem rede de seguranca, toda mudanca em main e indiretamente em producao.
 
 ## Decisao Arquitetural (ADR)
 
-ADR-022 — Estrategia de Testes
+ADR-022: Estrategia de Testes
 
 | Opcao | Pro | Contra | Decisao |
 
@@ -99,3 +99,19 @@ ADR-022 — Estrategia de Testes
 - E2E para fluxos criticos.
 
 - Mutation testing em modulos nucleo.
+## Decisoes e tradeoffs
+- pytest com testcontainers e playwright escolhido sobre so unitarios mockados: cobre 3 camadas com realismo e o custo maior de setup compensa, pois unitario sozinho e cego a integracao.
+- Unitario mira logica pura com alvo de 90 por cento, integracao mira ports com DB efemero com alvo de 80 por cento, e E2E cobre so happy path: camadas rapidas seguram o merge e a camada lenta nao trava o time.
+- Gate de cobertura minima de 80 por cento com --cov-fail-under=80 como required check no CI: impede piorar a cobertura sem perceber, saindo de 0 por cento e CI que so rodava lint.
+- E2E em stage separado com retry, fora do caminho critico do merge: evita que teste lento ou instavel bloqueie o fluxo diario dos cerca de 30 modulos Python e nos JS.
+- Fixtures isoladas com retry de 1 vez e isolamento contra estado global: sustenta tempo de unit e integracao menor que 3 min e flaky rate menor que 1 por cento.
+
+## Impacto no negocio
+
+O projeto tem cerca de 30 modulos Python mais nos JS e o CI atual so roda lint, entao refactor de prompt ou tool injeta regressao em producao sem rede de seguranca. O gate de 80 por cento com unit e integracao em menos de 3 min troca dias de validacao manual por minutos no CI, reduz regressao frequente para rara com flaky abaixo de 1 por cento, e evita o custo de corrigir defeito tarde, quando ele ja chegou a main e a producao.
+
+## Referencias de estudo
+- Curso: Testes automatizados com pytest, na Alura.
+- Video: Piramide de testes na pratica com Python, no YouTube.
+- Doc oficial: Documentacao do pytest sobre execucao e cobertura, em docs.pytest.org.
+- Doc oficial: Documentacao do Coverage.py sobre medicao com branch, em coverage.readthedocs.io.

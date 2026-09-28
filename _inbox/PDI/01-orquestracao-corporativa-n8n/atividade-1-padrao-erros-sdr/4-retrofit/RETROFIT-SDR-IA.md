@@ -1,4 +1,4 @@
-# Retrofit SDR IA — Aplicacao do Padrao de Erro
+# Retrofit SDR IA: Aplicacao do Padrao de Erro
 
 ## Situacao Atual
 

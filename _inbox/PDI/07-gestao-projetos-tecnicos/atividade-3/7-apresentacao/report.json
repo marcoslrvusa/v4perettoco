@@ -1,0 +1,43 @@
+{
+  "autor": "PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com",
+  "unidade": "FV Marketing / V4 Company",
+  "area": "Automacao & Infraestrutura",
+  "data": "Setembro 2026",
+  "title": "Gestao de Incidentes e Postmortems sem Culpa",
+  "slug": "gestao-projetos-tecnicos-a3",
+  "sections": [
+    ["1. Contexto", [
+      ["p", "Quando uma automacao da FV Marketing quebrava (relatorio nao chega, lead nao entra no CRM, webhook falha), a resposta era improviso no Slack: sem lider definido, sem registro do que foi tentado e sem aviso estruturado a operacao."],
+      ["p", "Depois do susto, nenhum registro: a licao evaporava e o mesmo incidente voltava meses depois, com o mesmo custo em leads e campanhas."]
+    ]],
+    ["2. Diagnostico", [
+      ["p", "Caso real de 18/08/2026: deploy com validacao nova derrubou o webhook Meta Ads (erro 500), 40 leads represados por 3h. A deteccao foi manual e levou 40 minutos; o rollback salvou, mas sem alerta, sem teste com payload real e sem checklist de deploy."],
+      ["ul", ["Sem severidade, tudo parece igual e nada e prioridade", "Sem comandante, cada um investiga por conta propria", "Sem postmortem, a causa estrutural sobrevive"]]
+    ]],
+    ["3. Solucao", [
+      ["p", "Resposta padronizada em ordem (classificar, mitigar, comunicar, resolver, registrar) com papeis e severidades S1 a S4, mais postmortem sem culpa em ate 5 dias uteis com acoes rastreadas no kanban."],
+      ["ul", ["STANDARD-INCIDENTES-POSTMORTEM.md: severidades, papeis, ordem de resposta, regras do postmortem", "template-postmortem.md: template + exemplo real do webhook com 5 porques e 3 acoes", "checklist-resposta-incidente.md: checklist da hora + frases prontas do comunicador"]]
+    ]],
+    ["4. Como funciona", [
+      ["p", "Sintoma vira severidade em 10 minutos, comandante assume com canal dedicado, mitigacao para o sangramento, operacao avisada com workaround e proxima atualizacao. No dia sai a timeline minima; em ate 5 dias uteis sai o postmortem, lido na review, com acoes virando cartoes ate Pronto."]
+    ]],
+    ["5. Entregas", [
+      ["table", ["Arquivo", "Conteudo"], [
+        ["1-standards/STANDARD-INCIDENTES-POSTMORTEM.md", "Severidades, papeis, resposta e regras blameless"],
+        ["2-implementacao/template-postmortem.md", "Template + exemplo real preenchido"],
+        ["2-implementacao/checklist-resposta-incidente.md", "Checklist da hora + frases prontas"],
+        ["7-apresentacao/DECK-PDI.md", "13 slides"],
+        ["7-apresentacao/DEMO-SCRIPT.md", "Roteiro de demo de 10 min"],
+        ["7-apresentacao/ROTEIRO-DOMINIO.md", "5 perguntas e respostas"]
+      ]]
+    ]],
+    ["6. Metricas de sucesso", [
+      ["table", ["Metrica", "Atual", "Meta"], [
+        ["Tempo medio de mitigacao (S1/S2)", "nao medido (estimado 4h+)", "1h (meta)"],
+        ["Incidentes com postmortem em 5 dias", "0%", "100% (meta)"],
+        ["Acoes de postmortem concluidas", "nao medido", "80% em 30 dias (meta)"]
+      ]],
+      ["note", "Linha de base sera medida no proximo incidente real com o checklist; metas sao projetadas."]
+    ]]
+  ]
+}

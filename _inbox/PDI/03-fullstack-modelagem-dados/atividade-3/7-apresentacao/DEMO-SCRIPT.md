@@ -1,4 +1,4 @@
-# Roteiro de Demo — Arquitetura Serverless para Processamento Assincrono (event-driven)
+# Roteiro de Demo: Arquitetura Serverless para Processamento Assincrono (event-driven)
 
 Abra o deck (index.html) e percorra os slides na ordem.
 

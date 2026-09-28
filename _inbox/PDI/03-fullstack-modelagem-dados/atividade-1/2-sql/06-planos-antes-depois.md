@@ -1,4 +1,4 @@
-# 06-planos-antes-depois.md — Planos de execução (adversarial before × after)
+# 06-planos-antes-depois.md: Planos de execução (adversarial before × after)
 
 > Planos documentais dos 3 casos reais. Rodando em qualquer Supabase 15+ com os
 > schemas de referência (`mt_jobs` 2.4M · `sync_log` 12M · `events` 8M · `leads` 900k).
@@ -6,9 +6,9 @@
 
 ---
 
-## CASO 1 — Fila `mt_jobs` (pick de worker)
+## CASO 1: Fila `mt_jobs` (pick de worker)
 
-### ANTES — 1.82s (produção)
+### ANTES: 1.82s (produção)
 
 ```text
 Limit  (cost=41,920.00..41,920.01 rows=1)
@@ -23,7 +23,7 @@ Limit  (cost=41,920.00..41,920.01 rows=1)
 Buffers: shared hit=9,600 read=94,120
 ```
 
-### DEPOIS — 4ms (pós índices + remoção do LEFT JOIN)
+### DEPOIS: 4ms (pós índices + remoção do LEFT JOIN)
 
 ```text
 Limit  (cost=0.56..4.90 rows=5)
@@ -35,9 +35,9 @@ Limit  (cost=0.56..4.90 rows=5)
 
 Δ 450×. O `Seq Scan` de 2.4M vira `Index Scan`; o `Sort` de 762ms vira inexistente.
 
-## CASO 2 — Sync CRM (auditoria 30d)
+## CASO 2: Sync CRM (auditoria 30d)
 
-### ANTES — 4.2s
+### ANTES: 4.2s
 
 ```text
 Finalize HashAggregate  (group key: c.id, s.object, s.direction)
@@ -52,7 +52,7 @@ Finalize HashAggregate  (group key: c.id, s.object, s.direction)
   Execution Time: 4,210 ms
 ```
 
-### DEPOIS — 180ms (índice composto + BRIN)
+### DEPOIS: 180ms (índice composto + BRIN)
 
 ```text
 HashAggregate  (HashAggregate)  rows=182
@@ -68,9 +68,9 @@ HashAggregate  (HashAggregate)  rows=182
 
 ---
 
-## CASO 3 — Dashboard de performance (janela 7d)
+## CASO 3: Dashboard de performance (janela 7d)
 
-### ANTES — 8.4s
+### ANTES: 8.4s
 
 ```text
 HashAggregate  (3 scans na mesma tabela)
@@ -80,7 +80,7 @@ HashAggregate  (3 scans na mesma tabela)
   Execution Time: 8,405 ms
 ```
 
-### DEPOIS — ~380ms (materialização + 1 scan)
+### DEPOIS: ~380ms (materialização + 1 scan)
 
 ```text
 Limit (50)  rows 
@@ -99,8 +99,8 @@ Limit (50)  rows
 
 | Pergunta | Ferramenta |
 |---|---|
-| Estou lendo só `Seq Scan`? | Problema de índice ou RLS — ver Caso 1/5 |
+| Estou lendo só `Seq Scan`? | Problema de índice ou RLS: ver Caso 1/5 |
 | Os `rows` batem com a realidade? | Confiar em `ANALYZE` recente (autovacuum) |
-| A soma no `Execution Time` explode em `Planning`? | CTE volumetricamente recalculada — forçar inline |
-| Tem `temporary files`? | `work_mem` estourado — subir `work_mem` da sessão/role |
+| A soma no `Execution Time` explode em `Planning`? | CTE volumetricamente recalculada: forçar inline |
+| Tem `temporary files`? | `work_mem` estourado: subir `work_mem` da sessão/role |
 | Índice existe mas não é usado? | RLS complexa ou correção de `COLLATION`/type cast |

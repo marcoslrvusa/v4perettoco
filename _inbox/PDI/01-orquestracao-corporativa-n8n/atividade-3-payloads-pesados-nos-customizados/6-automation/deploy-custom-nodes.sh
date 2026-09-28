@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================
-# deploy-custom-nodes.sh — Deploy dos workflows da atividade 3
+# deploy-custom-nodes.sh: Deploy dos workflows da atividade 3
 # PDI A3: Nós customizados / expressões avançadas
 #
 # USO: bash deploy-custom-nodes.sh [--dry-run]
@@ -17,12 +17,12 @@ if [[ "${1:-}" == "--dry-run" ]]; then
 fi
 
 if [[ "$DRY_RUN" == "0" ]]; then
-  echo "❌ Deploy REAL bloqueado — aguardando homologação."
+  echo "❌ Deploy REAL bloqueado: aguardando homologação."
   echo "   Rode com --dry-run para validar sem publicar."
   exit 1
 fi
 
-echo "🔍 DRY-RUN — validando workflows com n8nac..."
+echo "🔍 DRY-RUN: validando workflows com n8nac..."
 for f in "$WORKFLOWS_DIR"/*.workflow.ts; do
   echo "   → $(basename "$f")"
   npx --yes n8nac skills validate "$f"

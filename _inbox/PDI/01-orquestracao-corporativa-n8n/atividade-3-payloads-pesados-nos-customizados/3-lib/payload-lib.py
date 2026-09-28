@@ -1,7 +1,7 @@
 # ============================================================
-# payload_lib.py — Biblioteca reutilizável de nós Code Python
+# payload_lib.py: Biblioteca reutilizável de nós Code Python
 # PDI A3: Nós customizados / expressões avançadas
-# Apenas stdlib — sem dependências externas.
+# Apenas stdlib: sem dependências externas.
 # ============================================================
 import json
 from collections import Counter, defaultdict

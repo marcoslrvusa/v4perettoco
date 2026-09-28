@@ -1,4 +1,4 @@
-# Monitoring — Performance de Payload e Nós Code
+# Monitoring: Performance de Payload e Nós Code
 
 Queries SQL para monitorar o processamento de payloads pesados e a saúde dos
 nós Code (JS/Python) após o retrofit da atividade 3.
@@ -7,7 +7,7 @@ nós Code (JS/Python) após o retrofit da atividade 3.
 
 - Usa as tabelas da atividade 1 (`error_*`) e da atividade 2 (`mt_*`).
 - O nó `Return Metrics` dos novos workflows expõe `processedItems`, `deduped`,
-  `durationMs` e `itemsPerSecond` — alimente uma tabela de métricas se quiser
+  `durationMs` e `itemsPerSecond`: alimente uma tabela de métricas se quiser
   histórico (sugestão: `mt_payload_metrics`).
 
 ## 1. Pico de processamento (top runs)
@@ -62,9 +62,9 @@ ORDER BY dedupe_pct DESC;
 
 | Condição | Ação |
 |---|---|
-| `duration_ms > 60000` | Alertar — payload ou nó regrediu |
+| `duration_ms > 60000` | Alertar: payload ou nó regrediu |
 | `items_per_second` cai > 50% vs média 24h | Investigar nó Code |
-| `dedupe_pct > 50%` | Cliente envia duplicado — orientar filtro |
+| `dedupe_pct > 50%` | Cliente envia duplicado: orientar filtro |
 
 ## 6. Schema sugerido (mt_payload_metrics)
 
@@ -80,5 +80,5 @@ CREATE TABLE IF NOT EXISTS mt_payload_metrics (
 );
 ```
 
-> Tabela de métricas é opcional e **aditiva** — não altera nenhuma tabela existente
+> Tabela de métricas é opcional e **aditiva**: não altera nenhuma tabela existente
 > das atividades 1 e 2. Criar somente após homologação.

@@ -1,4 +1,4 @@
-# Retrofit Command Center — Workflows de Infraestrutura
+# Retrofit Command Center: Workflows de Infraestrutura
 
 ## Situacao Atual
 

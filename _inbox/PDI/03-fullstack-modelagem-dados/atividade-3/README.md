@@ -38,7 +38,7 @@ Valor: custo por uso + escala automatica sob rajada.
 
 ## Decisao Arquitetural (ADR)
 
-ADR-033 — Serverless event-driven
+ADR-033: Serverless event-driven
 
 | Opcao | Pro | Contra | Decisao |
 
@@ -87,6 +87,25 @@ ADR-033 — Serverless event-driven
 | Cold start | provisioned concurrency |
 
 | Fila sem limite | DLQ |
+
+## Decisoes e tradeoffs
+
+1. **Upload nunca processa no request (grava no store e publica `file.uploaded`, consumer com concorrencia limitada a 10):** request sincrono estourava timeout em planilhas de ate 50k linhas. Tradeoff: resposta assincrona exige acompanhar status por evento, aceito porque elimina o timeout.
+2. **Idempotencia por dedup `hash(arquivo + tenant)`:** reprocessar nao duplica leads. Tradeoff: precisa de store de chaves (em prod Redis/DynamoDB; no PoC um set em memoria) e custa uma leitura por evento.
+3. **DLQ apos N tentativas + 1 arquivo ruim nao afeta os outros:** isolamento por mensagem. Tradeoff: mensagens na DLQ exigem operacao manual de replay; sem DLQ a fila travaria na mensagem veneno.
+4. **Payload carrega so metadados (URL), nunca o arquivo:** fila leve e rapida. Tradeoff: o consumer precisa buscar o objeto no store, uma chamada a mais por mensagem.
+5. **Quando NAO usar (carga constante alta, worker always-on sai mais barato) + segredos fora de env hardcoded, pooler com TLS e timeout de ate 60s:** serverless so onde ha ociosidade (o worker ficava 90% ocioso). Tradeoff: cold start em rajada, mitigado com concorrencia provisionada.
+
+## Impacto no negocio
+
+Clientes enviam planilhas de 1k a 50k linhas e picos de 200 uploads derrubavam o worker always-on, 90% ocioso. Com fila, funcao e store, o custo cai para menos de R$ 0,20 por mil planilhas, a escala vai a zero no vale e o p95 fica abaixo de 60s com zero duplicatas, o que viabiliza campanhas de importacao em rajada sem provisionar servidor parado.
+
+## Referencias de estudo
+
+- Curso: AWS Lambda e Serverless na pratica (Alura)
+- Video: Serverless em 100 segundos (Fireship, YouTube)
+- Doc oficial: Cloud Run functions, https://cloud.google.com/functions/docs (verificada em 2026-09-28)
+- Doc oficial: Terraform, https://developer.hashicorp.com/terraform/docs (verificada em 2026-09-28)
 
 ## Proximos Passos
 

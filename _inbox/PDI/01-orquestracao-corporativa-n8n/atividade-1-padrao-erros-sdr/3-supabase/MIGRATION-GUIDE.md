@@ -1,4 +1,4 @@
-# Migracao Supabase — Schema v2.0 → v2.1
+# Migracao Supabase: Schema v2.0 → v2.1
 
 ## O que muda
 

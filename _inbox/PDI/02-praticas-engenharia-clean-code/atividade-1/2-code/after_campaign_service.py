@@ -1,4 +1,4 @@
-# DEPOIS — Clean Architecture + SOLID
+# DEPOIS: Clean Architecture + SOLID
 from typing import Protocol
 from dataclasses import dataclass
 from unittest import mock

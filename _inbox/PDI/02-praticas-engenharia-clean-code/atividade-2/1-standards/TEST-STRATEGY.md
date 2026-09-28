@@ -1,4 +1,4 @@
-# Estrategia de Testes — cobertura minima 80%
+# Estrategia de Testes: cobertura minima 80%
 
 | Camada | Ferramenta | Foco | Alvo |
 |--------|-----------|------|------|

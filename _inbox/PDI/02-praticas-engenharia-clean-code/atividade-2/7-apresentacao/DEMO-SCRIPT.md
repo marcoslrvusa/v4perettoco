@@ -1,4 +1,4 @@
-# Roteiro de Demo — Pipeline de Testes Automatizados (Unit/Integration/E2E) com 80% de Cobertura
+# Roteiro de Demo: Pipeline de Testes Automatizados (Unit/Integration/E2E) com 80% de Cobertura
 
 Abra o deck (index.html) e percorra os slides na ordem.
 

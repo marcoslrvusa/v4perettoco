@@ -1,4 +1,4 @@
-# Padrao de Processamento de Payloads Pesados — n8n Enterprise V4
+# Padrao de Processamento de Payloads Pesados: n8n Enterprise V4
 
 > **Versao:** 1.0 | **Status:** Pronto para homologacao | **Ultima revisao:** 2026-08-05
 
@@ -15,13 +15,13 @@ Quando o n8n processa o JSON inteiro de uma vez:
 
 ## 2. Principios
 
-1. **Nunca carregue o payload inteiro em memoria** — processe em lotes (chunk).
-2. **Separe dados de referencia do trabalho** — payload leve na fila; os dados
+1. **Nunca carregue o payload inteiro em memoria**: processe em lotes (chunk).
+2. **Separe dados de referencia do trabalho**: payload leve na fila; os dados
    pesados ficam no Supabase (tabela ou storage) e sao lidos por streaming.
-3. **Prefira operacoes O(n) ou O(n log n)** — evite aninhar no Code node.
-4. **Stateless kernels** — o codigo de transformacao nao guarda estado global;
+3. **Prefira operacoes O(n) ou O(n log n)**: evite aninhar no Code node.
+4. **Stateless kernels**: o codigo de transformacao nao guarda estado global;
    recebe um chunk e devolve um chunk.
-5. **Log do que foi feito** — cada chunk tem checkpoint para retomar (idempotencia).
+5. **Log do que foi feito**: cada chunk tem checkpoint para retomar (idempotencia).
 
 ## 3. Tabela de Decisao
 
@@ -45,14 +45,14 @@ HTTP Request (JSON pesado)
   → Merge / progress-bar
 ```
 
-- O n8n serializa cada batch individualmente — mantem a memoria sob controle.
+- O n8n serializa cada batch individualmente: mantem a memoria sob controle.
 - Cada batch roda como item proprio; erros viram retry batch com continueErrorOutput.
 
 ### 4.1 Kernel JavaScript (Code node)
 
 Regras do kernel:
 - Funcoes puras: `(input) => output`, sem mutable state fora do loop.
-- Evitar `JSON.stringify` de payload grande desnecessario — so no checkpoint.
+- Evitar `JSON.stringify` de payload grande desnecessario: so no checkpoint.
 - Usar `for...of` classico; evitar spread gigante (`...arr`).
 - Cortar campos desnecessarios no normalize (schema de saida enxuto).
 

@@ -1,10 +1,10 @@
-# PDI — Queries Complexas e Indexação no Supabase (PostgreSQL)
+# PDI: Queries Complexas e Indexação no Supabase (PostgreSQL)
 
 > **Área:** Automação & Infraestrutura
 > **Unidade:** FV Marketing / V4 Company
 > **Autor:** Marcos Perettoco
 > **Data:** Agosto 2026
-> **Status:** **Entregue (desenvolvido) · NÃO publicado — aguardando homologação**
+> **Status:** **Entregue (desenvolvido) · NÃO publicado: aguardando homologação**
 >
 > ✅ Entregas concluídas: 1-standards (perf standard) · 2-sql (5 provas de conceito com
 > adversarial antes/depois) · 3-casos (3 gargalos reais) · 7-apresentacao (deck + demo +
@@ -29,17 +29,17 @@ atividade-1/
 O Supabase que sustenta a operação SDR IA e a fila `mt_jobs` sofria com queries
 escritas sem plano de execução: JOINs pesados sem índice, leituras sequenciais em
 tabelas de milhões de linhas, funções com RLS que vazavam para o caminho quente das
-consultas e `autovacuum` desconfigurado — o resultado eram timeouts de webhook,
+consultas e `autovacuum` desconfigurado: o resultado eram timeouts de webhook,
 dashboards que abriam em 8s+ e fila com backlog invisível.
 
 Com EXPLAIN ANALYZE como método, foram corrigidos 3 gargalos reais:
 
-1. **Fila `mt_jobs`** — consulta de worker varria 100% da tabela por falta de índice
+1. **Fila `mt_jobs`**: consulta de worker varria 100% da tabela por falta de índice
    composto; com `(status, queue, scheduled_at)` o plano virou Index Scan e a latência
    caiu de 1.8s para 4ms.
-2. **Sync CRM** — JOIN de auditoria sem índice de FK + filtro em coluna sem índice;
+2. **Sync CRM**: JOIN de auditoria sem índice de FK + filtro em coluna sem índice;
    corrigido com índice em `(client_id, object, synced_at DESC)` e CTE de janela.
-3. **Dashboard** — agregação com `count(DISTINCT)` + janela sobre 12M de linhas;
+3. **Dashboard**: agregação com `count(DISTINCT)` + janela sobre 12M de linhas;
    resolvido com materialização parcial (tabela agregada + índice BRIN no tempo).
 
 ## Arquitetura Resumida
@@ -62,7 +62,7 @@ EXPLAIN ANALYZE (método de diagnóstico)
 3. Configurar o job de particionamento/TTL das tabelas de eventos.
 4. Validar RLS com teste de força bruta (pgbench + roles de teste).
 
-> ⚠️ Nenhum índice foi aplicado em produção nesta etapa — apenas documentado e provado.
+> ⚠️ Nenhum índice foi aplicado em produção nesta etapa: apenas documentado e provado.
 
 ## Metricas de Sucesso
 
@@ -73,3 +73,22 @@ EXPLAIN ANALYZE (método de diagnóstico)
 | Dashboard de performance (janela 7d) | 8.4s | < 1.5s |
 | Bloat em tabelas de log | não monitorado | < 20% |
 | Timeout de webhook por query lenta | ~3/dia | 0 |
+
+## Decisoes e tradeoffs
+
+1. **Nenhuma query em producao sem `EXPLAIN (ANALYZE, BUFFERS)`:** o plano e a fonte da verdade; o achismo gerou Seq Scan em 2,4M linhas na fila `mt_jobs`. Tradeoff: exige disciplina de revisao e staging com volumetria representativa.
+2. **Indice composto na ordem igualdade, range e depois ORDER BY (`queue, status, scheduled_at`):** cobre filtro e ordenacao num Index Scan sem Sort; o pick da fila saiu de 1,8s para 4ms. Tradeoff: a escrita paga um pouco mais por indice; aceito porque a fila e lida pelo worker a cada 15s.
+3. **Tipo certo por padrao de acesso (B-tree composto, GIN para arrays/jsonb, BRIN para series temporais):** BRIN em `created_at` fica 10x menor que o B-tree equivalente. Tradeoff: o BRIN so funciona se a ordem fisica acompanha o tempo; exige manutencao com vacuum e particionamento.
+4. **Particionamento por range com TTL em tabelas append-only (logs, eventos, sync):** o partition pruning ignora particoes antigas; o dashboard saiu de 8,4s para 1,1s com agregacao materializada. Tradeoff: exige job de particionamento e TTL para manter; sem ele a tabela cresce sem limite.
+5. **`CREATE INDEX CONCURRENTLY` fora de pico + RLS com policies simples e indices respeitados:** o indice novo nao segura `AccessExclusiveLock` nem derruba a escrita. Tradeoff: a criacao e mais lenta e nao roda em transacao; as janelas de deploy precisam prever isso.
+
+## Impacto no negocio
+
+A fila `mt_jobs` com 2,4M linhas, o sync de CRM e o dashboard sobre 12M linhas geravam timeouts de webhook (cerca de 3 por dia), dashboards de 8s ou mais e backlog invisivel. Com os indices e o metodo EXPLAIN, o pick fica abaixo de 10ms, o sync abaixo de 250ms e o dashboard abaixo de 1,5s, zerando timeouts e devolvendo visibilidade da fila sem trocar de banco.
+
+## Referencias de estudo
+
+- Curso: SQL Performance Explained, de Markus Winand (use-the-index-luke.com)
+- Video: Postgres Performance (Supabase, YouTube)
+- Doc oficial: Using EXPLAIN (PostgreSQL), https://www.postgresql.org/docs/current/using-explain.html (verificada em 2026-09-28)
+- Doc oficial: Query Optimization (Supabase), https://supabase.com/docs/guides/database/query-optimization (verificada em 2026-09-28)

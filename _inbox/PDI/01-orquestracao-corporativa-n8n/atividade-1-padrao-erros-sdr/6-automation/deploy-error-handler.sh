@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============================================================
-# Deploy Error Handler — Padrao Universal n8n Enterprise V4
+# Deploy Error Handler: Padrao Universal n8n Enterprise V4
 # ============================================================
 # Uso: bash deploy-error-handler.sh
 #

@@ -1,4 +1,4 @@
-# STANDARD — Conformidade LGPD (Dados Distribuídos)
+# STANDARD: Conformidade LGPD (Dados Distribuídos)
 
 ## Princípios aplicados
 - **Trânsito:** TLS 1.2+ obrigatório; mTLS entre serviços internos.

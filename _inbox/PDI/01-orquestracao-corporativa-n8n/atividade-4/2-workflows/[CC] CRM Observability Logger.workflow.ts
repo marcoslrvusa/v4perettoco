@@ -1,4 +1,4 @@
-// n8n — [CC] CRM Observability Logger
+// n8n: [CC] CRM Observability Logger
 export const workflow = {
   name: '[CC] CRM Observability Logger',
   nodes: [

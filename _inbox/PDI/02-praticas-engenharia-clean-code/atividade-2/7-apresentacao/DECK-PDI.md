@@ -1,4 +1,4 @@
-# Deck PDI — Pipeline de Testes Automatizados (Unit/Integration/E2E) com 80% de Cobertura
+# Deck PDI: Pipeline de Testes Automatizados (Unit/Integration/E2E) com 80% de Cobertura
 
 Area: Engenharia de Software
 
@@ -21,7 +21,7 @@ Sem fixtures: testes dependiam de estado global/real.
 Sem distincao de camada: tudo demorava horas.
 Sem teto de cobertura: era possivel piorar sem perceber.
 ## Slide 5: Decisao Arquitetural (ADR)
-ADR-022 — Estrategia de Testes
+ADR-022: Estrategia de Testes
 | Opcao | Pro | Contra | Decisao |
 | --- | --- | --- | --- |
 | pytest + testcontainers + playwright | realista, 3 camadas | setup maior | ESCOLHIDA |

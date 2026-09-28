@@ -1,4 +1,4 @@
-# Padrao Universal de Tratamento de Erros — n8n Enterprise V4
+# Padrao Universal de Tratamento de Erros: n8n Enterprise V4
 
 > **Versao:** 2.0 | **Status:** Homologado | **Ultima revisao:** 2026-07-08
 
@@ -102,7 +102,7 @@ Todo workflow que captura um erro DEVE produzir este envelope JSON padrao:
   "errorClass": "server_error",
   "workflowName": "CRM Sync: Attio to Notion",
   "workflowId": "abc123",
-  "failedNode": "HTTP Request — Attio",
+  "failedNode": "HTTP Request: Attio",
   "errorMessage": "Request failed with status code 502",
   "errorDescription": "Upstream API returned Bad Gateway",
   "executionId": "12345",
@@ -126,7 +126,7 @@ Todo workflow que captura um erro DEVE produzir este envelope JSON padrao:
 | `errorMessage` | string | Error Trigger | Mensagem de erro (sanitizada) |
 | `executionId` | string | Error Trigger | ID da execucao |
 | `executionUrl` | string | Error Trigger | Link direto para a execucao |
-| `correlationId` | string | Gerado | `workflowId-executionId` — estavel entre retries |
+| `correlationId` | string | Gerado | `workflowId-executionId`: estavel entre retries |
 | `timestamp` | string | Error Trigger | ISO 8601 |
 
 ---
@@ -355,10 +355,10 @@ SELECT * FROM vw_error_health_score;
 
 **Todo** no fallivel (API, DB, rede, file I/O) DEVE ter:
 
-1. `onError: "continueErrorOutput"` — cria o segundo output
+1. `onError: "continueErrorOutput"`: cria o segundo output
 2. Conexao `sourceIndex: 1` para um handler de erro
 
-**Nao faca metade.** Um sem o outro e PIOR que nenhum — falha silenciosa.
+**Nao faca metade.** Um sem o outro e PIOR que nenhum: falha silenciosa.
 
 ### 8.2 Padrao de Conexao
 
@@ -444,9 +444,9 @@ O Error Handler Central NAO deve notificar no mesmo canal que os workflows monit
 ### 10.2 Formato Slack Critical
 
 ```
-🚨 *CRITICO* — Workflow Failure
+🚨 *CRITICO*: Workflow Failure
 *Workflow:* CRM Sync
-*Node:* HTTP Request — Attio
+*Node:* HTTP Request: Attio
 *Error:* Request failed with status code 502
 *Class:* server_error
 *Correlation:* abc123-12345
@@ -457,9 +457,9 @@ O Error Handler Central NAO deve notificar no mesmo canal que os workflows monit
 ### 10.3 Formato Slack Warning
 
 ```
-⚠️ *ALERTA* — Workflow Failure
+⚠️ *ALERTA*: Workflow Failure
 *Workflow:* CRM Sync
-*Node:* Code — Validate Data
+*Node:* Code: Validate Data
 *Error:* toDateTime can't be used on undefined value
 *Class:* data_validation
 *Correlation:* abc123-12345
@@ -469,8 +469,8 @@ O Error Handler Central NAO deve notificar no mesmo canal que os workflows monit
 ### 10.4 Escalation Chain
 
 Tier 1: Slack (imediato)
-Tier 2: SMS Twilio (15 min sem ack) — *opcional, configurar por workflow*
-Tier 3: Voice call Twilio (+30 min) — *opcional, somente workflows criticos*
+Tier 2: SMS Twilio (15 min sem ack): *opcional, configurar por workflow*
+Tier 3: Voice call Twilio (+30 min): *opcional, somente workflows criticos*
 
 O ack e registrado na coluna `acknowledged_at` da `error_dlq`. Cada tier checa se ja houve ack antes de disparar.
 
@@ -532,7 +532,7 @@ O ack e registrado na coluna `acknowledged_at` da `error_dlq`. Cada tier checa s
 
 ### Workflows SDR IA (prioridade maxima)
 
-7 workflows com erro recorrente — aplicar correcoes + padrao universal:
+7 workflows com erro recorrente: aplicar correcoes + padrao universal:
 
 | Workflow | Erro | Correcao ja aplicada? | Push pendente? | Retrofit necessario |
 |----------|------|----------------------|---------------|-------------------|

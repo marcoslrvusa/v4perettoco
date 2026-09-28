@@ -1,4 +1,4 @@
-# 2-sql — Queries otimizadas e provas de conceito
+# 2-sql: Queries otimizadas e provas de conceito
 
 > Cada arquivo traz uma **query adversarial** (como estava em produção) e a **versão
 > otimizada** (como ficou), com plano `EXPLAIN` antes × depois. Os planos são

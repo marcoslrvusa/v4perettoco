@@ -48,7 +48,7 @@ def add_cover():
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.space_before = Pt(20)
     for line in ['Autor: Marcos Luciano · PDI Técnico',
-                 'Unidade: FV Marketing / V4 Company — Automação & Infraestrutura',
+                 'Unidade: FV Marketing / V4 Company: Automação & Infraestrutura',
                  'Data: Agosto 2026',
                  'Status: Desenvolvido · NÃO publicado (homologação pendente)',
                  'Versão: 1.0']:
@@ -86,11 +86,11 @@ doc.add_paragraph(
     'estruturais motivam este PDI:'
 )
 for item in [
-    'Workflows síncronos frágeis — requisição processada dentro do webhook; em picos '
+    'Workflows síncronos frágeis: requisição processada dentro do webhook; em picos '
     '(campanha, importação), a instância trava e o cliente não recebe confirmação.',
-    'Payloads pesados sem checkpoint — processamento de 10k+ itens de uma vez; '
+    'Payloads pesados sem checkpoint: processamento de 10k+ itens de uma vez; '
     'um timeout no meio perde tudo e o job recomeça do zero.',
-    'Sincronização com CRM sem observabilidade — falha não registrada; divergência '
+    'Sincronização com CRM sem observabilidade: falha não registrada; divergência '
     'entre o esperado e o syncado só é descoberta quando o cliente reclama.',
 ]:
     doc.add_paragraph(item, style='List Bullet')
@@ -135,7 +135,7 @@ add_heading_styled('5. Detecção de divergência (drift)', 1)
 doc.add_paragraph(
     'Todo sync envia um envelope padrão (expected × confirmed). O Observabilidade '
     'calcula o drift % e decide: divergência acima da tolerância (default 5%) gera '
-    'mt_sync_delta aberto + alerta no dashboard — antes do impacto chegar ao cliente.'
+    'mt_sync_delta aberto + alerta no dashboard: antes do impacto chegar ao cliente.'
 )
 
 add_heading_styled('6. Schema Supabase v3.0', 1)
@@ -143,7 +143,7 @@ add_table(
     ['Tabela', 'Uso'],
     [
         ['mt_jobs', 'Fila assíncrona (queued/running/done/failed, backoff, heartbeat)'],
-        ['mt_concurrency', 'Semáforo distribuído — limite por fila'],
+        ['mt_concurrency', 'Semáforo distribuído: limite por fila'],
         ['mt_job_progress', 'Checkpoint de chunk de payload pesado'],
         ['mt_sync_log', 'Auditoria de cada sync de CRM'],
         ['mt_crm_health', 'Saúde agregada por object + direction'],
@@ -198,6 +198,32 @@ doc.add_paragraph(
     'Status: desenvolvido · workflows e schema prontos para produção · aguardando '
     'homologação. Nenhum workflow foi publicado no n8n nesta etapa.'
 )
+
+add_heading_styled('10. Decisoes e tradeoffs', 1)
+for item in [
+    'Gateway que so enfileira com ACK 202 em menos de 2s: absorve pico sem travar a instancia. O cliente recebe confirmacao de fila (queued) e consulta mt_jobs para o status final.',
+    'Worker com polling a cada 15s e semaforo em mt_concurrency: limita pressao sobre n8n e CRMs, com latencia minima de ciclo em troca de nunca estourar o limite.',
+    'Checkpoint retomavel com backoff de 30s, 1m e 2m e maximo de 3 tentativas: falha no chunk 4 de 10 retoma do chunk 4, com mais escritas no Supabase em troca de zero retrabalho total.',
+    'Schema v3.0 aditivo com 6 tabelas e 5 views convivendo com as tabelas error da atividade 1, sem migracao destrutiva.',
+    'Drift com tolerancia default de 5%: exemplo com 1000 esperados e 860 confirmados gera 14% e abre mt_sync_delta antes do cliente reclamar, com deteccao em menos de 15 min.',
+]:
+    doc.add_paragraph(item, style='List Bullet')
+
+add_heading_styled('11. Impacto no negocio', 1)
+doc.add_paragraph(
+    'Antes, pico de campanha ou importacao travava a instancia no webhook, payload de 10k itens sem checkpoint perdia tudo no timeout e falha de sync com Kommo, HubSpot ou RD Station so aparecia na reclamacao. '
+    'Com fila, ACK em menos de 2s, processamento retomavel e drift visivel em dashboard, a meta sai de volume nao suportado para 5x o volume nominal, de travamento por concorrencia ilimitada para limite por slot e de deteccao na reclamacao para menos de 15 min, com mais de 90% dos payloads pesados processados. '
+    'Isso reduz risco de indisponibilidade em pico e custo de retrabalho de jobs refeitos do zero.'
+)
+
+add_heading_styled('12. Referencias de estudo', 1)
+for item in [
+    'Curso: Fundamentos de Filas e Sistemas Assincronos, na Alura.',
+    'Video: n8n Webhooks and Queue Pattern Explained, no YouTube, canal oficial n8n.',
+    'Doc: n8n Docs, Webhook node and sub-workflows, na plataforma n8n Docs.',
+    'Doc: Supabase Docs, Postgres tables and views, na plataforma Supabase Docs.',
+]:
+    doc.add_paragraph(item, style='List Bullet')
 
 output_dir = os.path.dirname(os.path.abspath(__file__))
 output_path = os.path.join(output_dir, 'pdi-orquestracao-martech-n8n-a2.docx')

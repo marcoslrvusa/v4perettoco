@@ -1,7 +1,7 @@
-# Workflows — PDI-NOS-CUSTOMIZADOS (payloads pesados)
+# Workflows: PDI-NOS-CUSTOMIZADOS (payloads pesados)
 
 Workflows n8n desenvolvidos para a terceira atividade do PDI. **Nao publicar em
-producao ainda** — aguardando homologacao da apresentacao.
+producao ainda**: aguardando homologacao da apresentacao.
 
 ## Componentes
 
@@ -24,7 +24,7 @@ producao ainda** — aguardando homologacao da apresentacao.
 
 ## Dependencias
 
-- Nenhuma credencial externa — apenas nos `Code` (JS/Python).
+- Nenhuma credencial externa: apenas nos `Code` (JS/Python).
 - Lógica reutilizavel: `../3-lib/payload-lib.js` e `payload-lib.py`
   (fonte da verdade; os workflows embutem copias das funcoes usadas).
 

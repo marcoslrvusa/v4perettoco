@@ -1,11 +1,11 @@
 // ============================================================
-// payload-lib.js — Biblioteca reutilizável de nós Code JS
+// payload-lib.js: Biblioteca reutilizável de nós Code JS
 // PDI A3: Nós customizados / expressões avançadas
 // Use como referência para colar (copiar) dentro de nós Code.
 // ============================================================
 
 // ------------------------------------------------------------
-// 1) Chunking streaming — processa em lotes sem carregar tudo
+// 1) Chunking streaming: processa em lotes sem carregar tudo
 // ------------------------------------------------------------
 export function* chunk(items, size = 100) {
   for (let i = 0; i < items.length; i += size) {

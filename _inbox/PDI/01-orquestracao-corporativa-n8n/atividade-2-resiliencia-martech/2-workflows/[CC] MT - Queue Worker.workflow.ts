@@ -101,7 +101,7 @@ export class MtQueueWorkerWorkflow {
     };
 
     // =====================================================================
-    // CONCURRENCY — LIMITE DE SLOTS
+    // CONCURRENCY: LIMITE DE SLOTS
     // =====================================================================
 
     @node({

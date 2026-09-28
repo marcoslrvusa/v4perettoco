@@ -1,4 +1,4 @@
-# Core Web Vitals — Diagnostico e Plano
+# Core Web Vitals: Diagnostico e Plano
 
 | Metrica | Valor | Limite | Status |
 |--------|-------|--------|--------|

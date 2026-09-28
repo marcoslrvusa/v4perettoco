@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDI: Aprendizado Contínuo sem Burnout - Registro de Entrega</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white: #ffffff;
+  --off-white: #f8f9fb;
+  --gray-50: #f1f3f5;
+  --gray-100: #e9ecef;
+  --gray-200: #dde3e9;
+  --gray-300: #c8d0d8;
+  --gray-500: #8896a8;
+  --gray-600: #6b7a8a;
+  --gray-700: #495560;
+  --gray-800: #2e3740;
+  --gray-900: #1a1f24;
+  --accent: #b8860b;
+  --accent2: #8b4513;
+  --red-600: #c0392b;
+  --yellow-600: #e6a800;
+  --border: #e2e6ea;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  color: var(--gray-900);
+  background: var(--off-white);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.page { max-width: 900px; margin: 0 auto; background: var(--white); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.cover {
+  padding: 80px 72px 56px;
+  background: linear-gradient(135deg, #1a0f0a 0%, #2d1a10 100%);
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+.cover-badge {
+  display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--accent);
+  border: 1px solid rgba(184,134,11,0.3); padding: 5px 14px; background: rgba(184,134,11,0.06);
+}
+.cover h1 { font-size: 36px; font-weight: 700; line-height: 1.2; letter-spacing: -0.5px; max-width: 640px; margin-top: 16px; }
+.cover h1 em { color: var(--accent); font-style: normal; }
+.cover-meta { margin-top: 32px; font-size: 14px; color: #8896a8; line-height: 1.8; }
+.cover-meta strong { color: var(--gray-200); font-weight: 500; }
+.cover-logo { margin-bottom: 28px; }
+.cover-logo img { height: 56px; width: auto; display: block; opacity: 0.92; }
+.cover-avatar {
+  position: absolute; top: 40px; right: 56px; width: 84px; height: 84px;
+  border-radius: 50%; overflow: hidden;
+  border: 2px solid rgba(184,134,11,0.6);
+  box-shadow: 0 0 0 5px rgba(184,134,11,0.12), 0 8px 24px rgba(0,0,0,0.4);
+}
+.cover-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cover-slug {
+  margin-top: 24px; font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: rgba(255,255,255,0.25); letter-spacing: 0.5px;
+}
+.content { padding: 56px 72px 80px; }
+h2 {
+  font-size: 22px; font-weight: 700; letter-spacing: -0.3px;
+  margin: 40px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border);
+}
+h2 .num { color: var(--accent2); }
+h3 { font-size: 15px; font-weight: 600; margin: 24px 0 10px; }
+p { color: var(--gray-700); font-size: 14px; margin-bottom: 14px; }
+p strong { color: var(--gray-900); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0 20px; }
+th {
+  text-align: left; padding: 10px 14px; background: var(--gray-50);
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  color: var(--gray-800); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--gray-700); vertical-align: top; }
+td code, p code { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--gray-50); border: 1px solid var(--border); padding: 1px 4px; border-radius: 3px; color: var(--accent2); }
+ul { margin: 8px 0 16px 20px; }
+li { color: var(--gray-700); font-size: 14px; margin-bottom: 6px; }
+li strong { color: var(--gray-900); }
+.callout {
+  border-left: 3px solid var(--accent); background: var(--off-white);
+  padding: 14px 18px; font-size: 13px; color: var(--gray-700); margin: 16px 0;
+}
+.callout strong { color: var(--accent2); }
+.status { display: inline-block; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; padding: 3px 10px; border-radius: 3px; }
+.st-warn { background: rgba(230,168,0,0.12); color: var(--yellow-600); }
+.pipeline { margin: 24px 0 28px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: #0d1014; }
+.pipeline-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 12px 18px; background: linear-gradient(135deg, #1a0f0a, #2d1a10);
+  border-bottom: 1px solid rgba(184,134,11,0.25);
+}
+.pipeline-title { color: #fff; font-size: 13px; font-weight: 600; letter-spacing: 0.3px; }
+.pipeline-title em { color: var(--accent); font-style: normal; }
+.pipeline-live {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #8896a8;
+  letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap;
+}
+.pipeline-live .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pingDot 1.6s infinite; }
+@keyframes pingDot { 0% { box-shadow: 0 0 0 0 rgba(184,134,11,0.6); } 70% { box-shadow: 0 0 0 8px rgba(184,134,11,0); } 100% { box-shadow: 0 0 0 0 rgba(184,134,11,0); } }
+.pipeline-body { position: relative; padding: 26px 22px 24px; }
+.pl-rail { position: absolute; left: 62px; top: 20px; bottom: 20px; width: 2px; background: rgba(184,134,11,0.22); }
+.pl-pulse { position: absolute; left: -3px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px rgba(184,134,11,0.9); opacity: 0; }
+.pl-pulse.p1 { animation: plFlow 3.4s linear infinite; }
+.pl-pulse.p2 { animation: plFlow 3.4s linear infinite 1.7s; }
+.pl-pulse.g  { background: #52d69b; box-shadow: 0 0 10px rgba(82,214,155,0.9); animation: plFlow 3.4s linear infinite 2.55s; }
+@keyframes plFlow {
+  0%   { top: 0%; opacity: 0; }
+  8%   { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { top: 97%; opacity: 0; }
+}
+.pl-steps { display: flex; flex-direction: column; gap: 14px; width: 100%; padding-left: 26px; }
+.pl-step {
+  display: flex; align-items: flex-start; gap: 14px;
+  background: #141922; border: 1px solid rgba(232,236,240,0.07); border-radius: 8px;
+  padding: 14px 16px;
+}
+.pl-step .num {
+  flex: 0 0 30px; height: 30px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600;
+  color: var(--accent); background: rgba(184,134,11,0.1); border: 1px solid rgba(184,134,11,0.35);
+}
+.pl-step .name { font-size: 13px; font-weight: 600; color: #fff; }
+.pl-step .desc { font-size: 12px; color: #8896a8; margin-top: 2px; line-height: 1.55; }
+.pl-chip { display: inline-flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.pl-tag {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 3px 8px; border-radius: 3px;
+  background: rgba(184,134,11,0.12); color: #ffd98a; border: 1px solid rgba(184,134,11,0.3); white-space: nowrap;
+}
+.pl-tag.ok { background: rgba(22,139,73,0.14); color: #52d69b; border-color: rgba(22,139,73,0.4); }
+.pl-terminal { border-color: rgba(82,214,155,0.45); }
+.pl-terminal .num { background: rgba(22,139,73,0.14); border-color: rgba(82,214,155,0.5); color: #52d69b; }
+@media print {
+  body { background: white; }
+  .page { box-shadow: none; }
+  .content { padding: 20px 48px 60px; }
+  .cover { padding: 48px 56px 40px; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="cover">
+    <div class="cover-avatar"><img src="../../../../../assets/images/logo-peretto-perfil.jpg" alt="Marcos Luciano"></div>
+    <div class="cover-logo"><img src="../../../../../assets/logo-peretto.png" alt="Peretto"></div>
+    <span class="cover-badge">PDI 2026 | Saúde, Equilíbrio e Autogestão</span>
+    <h1>Aprendizado Contínuo <em>sem Burnout</em></h1>
+    <div class="cover-meta">
+      <strong>Autor:</strong> PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com<br>
+      <strong>Unidade:</strong> FV Marketing / V4 Company: Automação &amp; Infraestrutura<br>
+      <strong>Módulo:</strong> 10. Saúde, Equilíbrio e Autogestão (Atividade 4)<br>
+      <strong>Data:</strong> Setembro 2026<br>
+      <strong>Status:</strong> <span class="status st-warn">NÃO publicado</span> · Desenvolvido / Homologação pendente<br>
+      <strong>Versão:</strong> 1.0
+    </div>
+    <div class="cover-slug">pdi-saude-aprendizado-continuo-a4</div>
+  </div>
+
+  <div class="content">
+
+    <h2><span class="num">1.</span> Contexto</h2>
+    <p>Estudar tudo ao mesmo tempo, de madrugada e sem pausa, gera <strong>abandono em 3 semanas e culpa em 4</strong>. Como profissional de automação desatualizado vira gargalo técnico em meses, parar de estudar não é opção: o ritmo é o problema, não a vontade.</p>
+    <p>Esta atividade define <strong>rotina de 4 horas semanais protegidas</strong>, funil de curadoria com máximo de 2 frentes por trimestre e descanso como parte do plano, com semana de recuperação a cada 6 semanas.</p>
+
+    <h2><span class="num">2.</span> Diagnóstico</h2>
+    <ul>
+      <li><strong>Frentes demais:</strong> 5 cursos simultâneos com retenção mínima e zero conclusão.</li>
+      <li><strong>Estudo passivo:</strong> aula assistida e grifo sem recordação nem prática não consolidam nada.</li>
+      <li><strong>Sem recuperação:</strong> privação de sono e culpa acumulada até o abandono do plano.</li>
+    </ul>
+
+    <h2><span class="num">3.</span> Solução</h2>
+    <ul>
+      <li><strong>Plano trimestral:</strong> 1 frente técnica e 1 comportamental, cada uma com resultado prático em 90 dias.</li>
+      <li><strong>Técnica por sessão:</strong> recordação em folha em branco, conteúdo novo, prática e diário de 5 linhas.</li>
+      <li><strong>Descanso planejado:</strong> 7 a 8 h de sono como requisito, 1 dia semanal sem estudo e semana leve a cada 6 semanas.</li>
+    </ul>
+
+    <h2><span class="num">4.</span> Como funciona</h2>
+    <div class="pipeline">
+      <div class="pipeline-head">
+        <div class="pipeline-title">PIPELINE <em>ESTUDO SUSTENTÁVEL</em></div>
+        <div class="pipeline-live"><span class="dot"></span> ciclo trimestral</div>
+      </div>
+      <div class="pipeline-body">
+        <div class="pl-rail"><div class="pl-pulse p1"></div><div class="pl-pulse p2"></div><div class="pl-pulse g"></div></div>
+        <div class="pl-steps">
+          <div class="pl-step"><div class="num">1</div><div><div class="name">ESCOLHER 2 frentes</div><div class="desc">1 técnica e 1 comportamental. Todo interesse novo passa pelo funil de 3 perguntas.</div><div class="pl-chip"><span class="pl-tag">max 2</span></div></div></div>
+          <div class="pl-step"><div class="num">2</div><div><div class="name">AGENDAR 4 h fixas</div><div class="desc">2 blocos de 2 h ou 4 de 1 h, sempre nos mesmos dias. Estudo não entra no sono.</div><div class="pl-chip"><span class="pl-tag">4 h/sem</span></div></div></div>
+          <div class="pl-step"><div class="num">3</div><div><div class="name">ESTUDAR com técnica ativa</div><div class="desc">Recordação, conteúdo novo, prática ou explicação em voz alta. Releitura não conta.</div><div class="pl-chip"><span class="pl-tag">ativa</span></div></div></div>
+          <div class="pl-step"><div class="num">4</div><div><div class="name">REGISTRAR diário de 5 linhas</div><div class="desc">O que aprendi, onde aplico, energia, trava e próxima ação. Sessão sem registro não conta.</div><div class="pl-chip"><span class="pl-tag">5 min</span></div></div></div>
+          <div class="pl-step pl-terminal"><div class="num">5</div><div><div class="name">RECUPERAR e balançar</div><div class="desc">Semana leve a cada 6 semanas com zero conteúdo novo. Balanço: continuo, ajusto ou troco.</div><div class="pl-chip"><span class="pl-tag ok">meta 70%</span></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <h2><span class="num">5.</span> Entregas</h2>
+    <table>
+      <tr><th>Arquivo</th><th>Conteúdo</th></tr>
+      <tr><td><code>01-rotina-estudo-sustentavel.md</code></td><td>Formato de 4 h, técnica por sessão e recuperação</td></tr>
+      <tr><td><code>02-curadoria-descanso-planejado.md</code></td><td>Funil de curadoria, lista de desejos e descanso</td></tr>
+      <tr><td><code>plano-estudos-trimestral.md</code></td><td>Plano de 12 semanas com balanço</td></tr>
+      <tr><td><code>diario-aprendizado-energia.md</code></td><td>Diário de 5 linhas com alerta de sobrecarga</td></tr>
+      <tr><td><code>DECK-PDI.md</code></td><td>Narrativa do deck em 14 slides</td></tr>
+      <tr><td><code>DEMO-SCRIPT.md</code></td><td>Roteiro de demonstração de 8 minutos</td></tr>
+      <tr><td><code>ROTEIRO-DOMINIO.md</code></td><td>5 perguntas e respostas de domínio</td></tr>
+    </table>
+
+    <h2><span class="num">6.</span> Métricas de sucesso</h2>
+    <table>
+      <tr><th>Métrica</th><th>Atual</th><th>Meta</th></tr>
+      <tr><td>Horas de estudo por semana</td><td>0</td><td>4 (meta)</td></tr>
+      <tr><td>Frentes simultâneas de estudo</td><td>sem dado</td><td>2 no máximo (meta)</td></tr>
+      <tr><td>Taxa de conclusão do plano trimestral</td><td>sem dado</td><td>70% (meta)</td></tr>
+    </table>
+    <div class="callout"><strong>Nota:</strong> todas as metas acima são projetadas e marcadas como meta. Serão validadas no primeiro trimestre de execução do plano.</div>
+
+    <div class="callout">
+      <strong>Status:</strong> Entregue (desenvolvido, homologação pendente). Próximo passo: preencher o plano trimestral com as 2 frentes e rodar as primeiras 6 semanas.
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

@@ -1,4 +1,4 @@
-# PDI — Apresentacao: Padrao Universal de Tratamento de Erros n8n
+# PDI: Apresentacao: Padrao Universal de Tratamento de Erros n8n
 
 > **Formato:** 15-20 slides | **Tempo:** 20-25 min
 > **Audiencia:** Tech Lead + Squad de Automacao
@@ -11,7 +11,7 @@
 PDI: PADRAO UNIVERSAL DE TRATAMENTO DE ERROS
               N8N ENTERPRISE
 
-        Marcos Perettoco — Tech Lead
+        Marcos Perettoco: Tech Lead
         Julho 2026 | FV Marketing / V4
 ```
 
@@ -47,7 +47,7 @@ PDI: PADRAO UNIVERSAL DE TRATAMENTO DE ERROS
 
 ---
 
-## Slide 4: A Solucao — Arquitetura em 3 Camadas
+## Slide 4: A Solucao: Arquitetura em 3 Camadas
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -234,7 +234,7 @@ O que era 7 jeitos diferentes agora e um padrao."
 
 ---
 
-## Slide 16: Anexo — Anti-Patterns
+## Slide 16: Anexo: Anti-Patterns
 
 | Anti-pattern | Problema |
 |-------------|----------|

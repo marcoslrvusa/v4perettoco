@@ -1,4 +1,4 @@
-# STANDARD — Observabilidade de Sync n8n -> CRM
+# STANDARD: Observabilidade de Sync n8n -> CRM
 
 ## Contrato (obrigatorio em toda saida)
 Todo no que escreve em CRM deve emitir log estruturado:

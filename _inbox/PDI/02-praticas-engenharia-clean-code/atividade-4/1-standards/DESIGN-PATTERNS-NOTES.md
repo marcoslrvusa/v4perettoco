@@ -1,4 +1,4 @@
-# Design Patterns — Notas (Python/JS)
+# Design Patterns: Notas (Python/JS)
 
 ## Quando usar
 - **Adapter**: sempre que chamar API de terceiro.

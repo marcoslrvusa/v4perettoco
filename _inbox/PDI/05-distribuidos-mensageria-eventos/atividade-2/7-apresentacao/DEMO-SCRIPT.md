@@ -1,4 +1,4 @@
-# Roteiro de Demo — Idempotencia e Entrega Exactly-Once (na pratica: at-least-once + dedup)
+# Roteiro de Demo: Idempotencia e Entrega Exactly-Once (na pratica: at-least-once + dedup)
 
 Abra o deck (index.html) e percorra os slides na ordem.
 

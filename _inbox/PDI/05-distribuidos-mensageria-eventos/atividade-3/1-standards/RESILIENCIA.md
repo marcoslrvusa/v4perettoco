@@ -1,4 +1,4 @@
-# Circuit Breaker — Padrao
+# Circuit Breaker: Padrao
 
 ```
 CLOSED --(N falhas)--> OPEN --(timeout)--> HALF_OPEN --(sucesso)--> CLOSED

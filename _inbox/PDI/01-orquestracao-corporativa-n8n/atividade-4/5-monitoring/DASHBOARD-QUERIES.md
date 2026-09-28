@@ -1,4 +1,4 @@
-# Queries de monitoramento — Observabilidade CRM
+# Queries de monitoramento: Observabilidade CRM
 
 ## Taxa de erro por CRM (janela 5 min)
 ```sql

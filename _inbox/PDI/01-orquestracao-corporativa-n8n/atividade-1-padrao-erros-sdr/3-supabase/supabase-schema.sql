@@ -1,5 +1,5 @@
 -- ============================================================
--- N8N COMMAND CENTER — Supabase Schema v2.0
+-- N8N COMMAND CENTER: Supabase Schema v2.0
 -- Uso: Rodar no SQL Editor do Supabase
 --      (projeto: gswzuzetverulcgzhynb)
 -- ============================================================
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS workflow_reports (
   updated_at    TIMESTAMPTZ DEFAULT now()
 );
 
--- 4. METRICS (snapshots históricos — populado a cada 1h)
+-- 4. METRICS (snapshots históricos: populado a cada 1h)
 CREATE TABLE IF NOT EXISTS n8n_metrics (
   id                    UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   snapshot_at           TIMESTAMPTZ DEFAULT now(),
@@ -154,7 +154,7 @@ FROM workflow_reports
 GROUP BY workflow_id;
 
 -- ============================================================
--- REALTIME (idempotent — safe to re-run)
+-- REALTIME (idempotent: safe to re-run)
 -- ============================================================
 DO $$ BEGIN ALTER PUBLICATION supabase_realtime ADD TABLE n8n_workflows; EXCEPTION WHEN SQLSTATE '42710' THEN NULL; END $$;
 DO $$ BEGIN ALTER PUBLICATION supabase_realtime ADD TABLE n8n_events; EXCEPTION WHEN SQLSTATE '42710' THEN NULL; END $$;

@@ -1,4 +1,4 @@
-# Deck PDI — Arquitetura Serverless para Processamento Assincrono (event-driven)
+# Deck PDI: Arquitetura Serverless para Processamento Assincrono (event-driven)
 
 Area: Arquitetura Full Stack
 
@@ -20,7 +20,7 @@ Processamento sincrono no request = timeout.
 Sem idempotencia: reprocessar duplicava leads.
 Sem limite de concorrencia.
 ## Slide 5: Decisao Arquitetural (ADR)
-ADR-033 — Serverless event-driven
+ADR-033: Serverless event-driven
 | Opcao | Pro | Contra | Decisao |
 | --- | --- | --- | --- |
 | Fila + funcao + store | scale to zero | cold start | ESCOLHIDA |

@@ -1,4 +1,4 @@
-# Manual de Implementação — Nós Customizados e Expressões Avançadas n8n
+# Manual de Implementação: Nós Customizados e Expressões Avançadas n8n
 
 > **PDI A3 · Área:** Automação & Infraestrutura · **Autor:** Marcos Perettoco
 > **Status:** Desenvolvido · Implementar somente **após homologação** da apresentação.
@@ -15,28 +15,28 @@ quem vai executar.
 |---|---|
 | n8n Enterprise acessível | `https://n8n.fvmarketing.com.br` (instância ativa) |
 | n8n-as-code configurado | `npx --yes n8nac env status --json` retornando o ambiente `producao` |
-| Credencial Supabase | `Command Center Supabase` (`nRJEEi2QwVVKIAHY`) — **não** usada nos workflows novos, mas usada no monitoring |
+| Credencial Supabase | `Command Center Supabase` (`nRJEEi2QwVVKIAHY`): **não** usada nos workflows novos, mas usada no monitoring |
 | Permissão de push | Acesso de escrita nos workflows via API n8n (`n8nApi`) |
 
-> A atividade 3 **não depende** de novas tabelas Supabase — os workflows são
+> A atividade 3 **não depende** de novas tabelas Supabase: os workflows são
 > autônomos (só nós `Code`). A tabela `mt_payload_metrics` do `5-monitoring/` é
 > opcional e aditiva.
 
 ---
 
-## 1. Fase 1 — Revisar os padrões (15 min)
+## 1. Fase 1: Revisar os padrões (15 min)
 
 Leia e confirme com o time os 3 padrões antes de qualquer código:
 
-1. `1-standards/STANDARD-CODE-JS.md` — regras de nós Code JS (parse 1x, O(n), Set).
-2. `1-standards/STANDARD-CODE-PYTHON.md` — regras de nós Code Python (stdlib only).
-3. `1-standards/STANDARD-EXPRESSIONS.md` — expressões avançadas + memoização.
+1. `1-standards/STANDARD-CODE-JS.md`: regras de nós Code JS (parse 1x, O(n), Set).
+2. `1-standards/STANDARD-CODE-PYTHON.md`: regras de nós Code Python (stdlib only).
+3. `1-standards/STANDARD-EXPRESSIONS.md`: expressões avançadas + memoização.
 
 **Gate:** se o time não assinar os padrões, nada é publicado.
 
 ---
 
-## 2. Fase 2 — Carregar a biblioteca 3-lib (10 min)
+## 2. Fase 2: Carregar a biblioteca 3-lib (10 min)
 
 A biblioteca é a **fonte da verdade** da lógica de transformação.
 
@@ -47,7 +47,7 @@ A biblioteca é a **fonte da verdade** da lógica de transformação.
 
 ---
 
-## 3. Fase 3 — Publicar os workflows (30 min)
+## 3. Fase 3: Publicar os workflows (30 min)
 
 Os 3 workflows estão em `2-workflows/` e **já validados** com n8nac
 (`Workflow is valid`).
@@ -74,11 +74,11 @@ No n8n UI, ative os nós `Webhook` dos dois workflows de entrada:
 - `[CC] NOS - JS Payload Normalizer` → `/nos/js-normalizer`
 - `[CC] NOS - Python Payload Enricher` → `/nos/python-enricher`
 
-O `Expressions & Memo Playground` é manual — sem webhook.
+O `Expressions & Memo Playground` é manual: sem webhook.
 
 ---
 
-## 4. Fase 4 — Testar com payload simulado (30 min)
+## 4. Fase 4: Testar com payload simulado (30 min)
 
 ### 4.1 Smoke test (10 itens)
 
@@ -127,7 +127,7 @@ curl -X POST https://n8n.fvmarketing.com.br/webhook/nos/python-enricher \
 
 ---
 
-## 5. Fase 5 — Retrofit dos workflows existentes (2 dias)
+## 5. Fase 5: Retrofit dos workflows existentes (2 dias)
 
 Siga `4-retrofit/RETROFIT.md`. Resumo:
 
@@ -147,7 +147,7 @@ Siga `4-retrofit/RETROFIT.md`. Resumo:
 
 ---
 
-## 6. Fase 6 — Monitoramento (30 min)
+## 6. Fase 6: Monitoramento (30 min)
 
 1. (Opcional) Criar a tabela `mt_payload_metrics` no Supabase
    (`5-monitoring/QUERIES.md` §6) para guardar histórico.
@@ -157,9 +157,9 @@ Siga `4-retrofit/RETROFIT.md`. Resumo:
 
 | Condição | Ação |
 |---|---|
-| `duration_ms > 60000` | Alertar — payload ou nó regrediu |
+| `duration_ms > 60000` | Alertar: payload ou nó regrediu |
 | `items_per_second` cai > 50% vs média 24h | Investigar nó Code |
-| `dedupe_pct > 50%` | Cliente envia duplicado — orientar filtro |
+| `dedupe_pct > 50%` | Cliente envia duplicado: orientar filtro |
 
 ---
 
@@ -174,7 +174,7 @@ trivial:
 ```
 
 Se o problema for em um workflow retrofittado, reverta **somente aquele workflow**
-para a versão anterior no git e re-faça o push — o restante do pipeline permanece.
+para a versão anterior no git e re-faça o push: o restante do pipeline permanece.
 
 ---
 
@@ -191,4 +191,4 @@ para a versão anterior no git e re-faça o push — o restante do pipeline perm
 - [ ] Baseline de `itemsPerSecond` documentado
 
 > ✅ Implementação concluída quando todos os itens acima forem verificados.
-> Nenhum item deve ser pulado — cada um protege contra regressão de performance.
+> Nenhum item deve ser pulado: cada um protege contra regressão de performance.

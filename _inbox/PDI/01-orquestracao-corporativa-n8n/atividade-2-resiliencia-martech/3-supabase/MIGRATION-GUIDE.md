@@ -1,7 +1,7 @@
-# Guia de Migracao — Schema v3.0 (MarTech Resilience)
+# Guia de Migracao: Schema v3.0 (MarTech Resilience)
 
 > **Banco:** Supabase `gswzuzetverulcgzhynb` | **Schema:** `public`
-> **Compatibilidade:** aditivo sobre v2.x (erro/circuit) — nada e alterado
+> **Compatibilidade:** aditivo sobre v2.x (erro/circuit): nada e alterado
 
 ## O que este schema adiciona
 
@@ -24,18 +24,18 @@
 
 ## Como aplicar
 
-### Opcao A — SQL Editor (dashboard)
+### Opcao A: SQL Editor (dashboard)
 
 1. Abrir `https://supabase.com/dashboard/project/gswzuzetverulcgzhynb/sql/editor`
 2. Colar o conteudo de `supabase-schema-v3.sql`
 3. Rodar (Ctrl+Enter)
 
-### Opcao B — n8n (via credencial Postgres existente)
+### Opcao B: n8n (via credencial Postgres existente)
 
 Ja usado na migracao v2.1: criar um workflow temporario com node Postgres
 (credencial `Peretto`) com `operation: executeQuery` e o corpo do schema.
 
-### Opcao C — Script
+### Opcao C: Script
 
 ```bash
 bash ../6-automation/run-migration.sh

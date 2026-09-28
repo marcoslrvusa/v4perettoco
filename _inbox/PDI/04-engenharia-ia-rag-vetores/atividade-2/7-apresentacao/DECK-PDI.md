@@ -1,10 +1,10 @@
-# Deck PDI — RAG Hibrido (BM25 + Vetorial) e GraphRAG para Relacoes
+# Deck PDI: RAG Hibrido (BM25 + Vetorial) e GraphRAG para Relacoes
 
 Area: Engenharia de IA
 
 ## Slide 1: Resumo Executivo
 Upgrade do RAG baseline para hibrido (BM25 + vetorial com RRF) e GraphRAG para relacoes. Entrego o padrao e implementacao.
-Similaridade falha em 'qual contrato do cliente X' — Grafos cobrem isso.
+Similaridade falha em 'qual contrato do cliente X': Grafos cobrem isso.
 ## Slide 2: Contexto de Producao
 Relacionamento ('cliente->contrato->fatura') ruim.
 Termos exatos (CNPJ) nao recuperados por embeddings.
@@ -16,7 +16,7 @@ BM25 sozinho perde sinonimos.
 | sinonimo | otimo | ruim | otimo |
 | relacao | ruim | ruim | grafo |
 ## Slide 4: Decisao Arquitetural (ADR)
-ADR-042 — Recuperacao Hibrida + Grafo
+ADR-042: Recuperacao Hibrida + Grafo
 | Opcao | Pro | Contra | Decisao |
 | --- | --- | --- | --- |
 | BM25 + vetorial + GraphRAG | cobra todos | complexo | ESCOLHIDA |

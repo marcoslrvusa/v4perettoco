@@ -1,4 +1,4 @@
-# Roteiro de Demo — Sistemas Distribuidos com Mensageria (fila, topico, DLQ)
+# Roteiro de Demo: Sistemas Distribuidos com Mensageria (fila, topico, DLQ)
 
 Abra o deck (index.html) e percorra os slides na ordem.
 

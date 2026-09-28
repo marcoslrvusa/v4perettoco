@@ -48,7 +48,7 @@ def add_cover():
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.space_before = Pt(20)
-    for line in ['Autor: Marcos Luciano · PDI Técnico', 'Unidade: FV Marketing / V4 Company — Automação & Infraestrutura',
+    for line in ['Autor: Marcos Luciano · PDI Técnico', 'Unidade: FV Marketing / V4 Company: Automação & Infraestrutura',
                  'Data: Julho 2026', 'Status: Homologado', 'Versão: 2.0']:
         run = p.add_run(line + '\n')
         run.font.size = Pt(11)
@@ -81,7 +81,7 @@ doc.add_paragraph(
 )
 doc.add_paragraph(
     'Este relatório documenta o PDI (Padrão Universal de Tratamento de Erros) implementado para resolver '
-    'esse problema de raiz — não apenas corrigindo as falhas pontuais, mas estabelecendo um padrão '
+    'esse problema de raiz: não apenas corrigindo as falhas pontuais, mas estabelecendo um padrão '
     'enterprise reutilizável para todos os workflows da operação.'
 )
 
@@ -92,13 +92,13 @@ table.style = 'Light Grid Accent 1'
 table.alignment = WD_TABLE_ALIGNMENT.CENTER
 headers = ['Workflow', 'Erro', 'Impacto']
 data = [
-    ['ADPLAN', 'JS timeout 25min — event loop bloqueado por SplitInBatches ausente', 'P0'],
-    ['SIGNOR', 'Task runner desconectado — servidor precisou de tuning', 'P0'],
-    ['Genics', 'Redis Cloud inacessível — DNS externo sem fallback', 'P0'],
-    ['SOFIA', 'Rate limit Chatwoot — sem wait entre requisições', 'P1'],
-    ['PRO ANÁLISES', 'toDateTime undefined — campo opcional sem validação', 'P1'],
-    ['Schwalm', 'Null constraint em telefone — insert no Supabase sem validação', 'P1'],
-    ['V4 INTERNO', '404 no Ekyte — board ID mudou sem atualizar o workflow', 'P1'],
+    ['ADPLAN', 'JS timeout 25min: event loop bloqueado por SplitInBatches ausente', 'P0'],
+    ['SIGNOR', 'Task runner desconectado: servidor precisou de tuning', 'P0'],
+    ['Genics', 'Redis Cloud inacessível: DNS externo sem fallback', 'P0'],
+    ['SOFIA', 'Rate limit Chatwoot: sem wait entre requisições', 'P1'],
+    ['PRO ANÁLISES', 'toDateTime undefined: campo opcional sem validação', 'P1'],
+    ['Schwalm', 'Null constraint em telefone: insert no Supabase sem validação', 'P1'],
+    ['V4 INTERNO', '404 no Ekyte: board ID mudou sem atualizar o workflow', 'P1'],
 ]
 for i, h in enumerate(headers):
     table.rows[0].cells[i].text = h
@@ -108,7 +108,7 @@ for r, row_data in enumerate(data, 1):
 
 add_heading_styled('2.2 Causa Raiz', 2)
 doc.add_paragraph(
-    'Ausência de padronização: cada workflow tratava erro do seu jeito improvisado — ou '
+    'Ausência de padronização: cada workflow tratava erro do seu jeito improvisado: ou '
     'simplesmente não tratava. Não havia taxonomia de erros, política de retry, notificação, '
     'persistência ou proteção contra cascata. O resultado era um ecossistema frágil onde uma falha '
     'em um nó poderia derrubar todo o fluxo sem deixar rastro.'
@@ -116,12 +116,12 @@ doc.add_paragraph(
 
 add_heading_styled('3. Arquitetura da Solução', 1)
 doc.add_paragraph(
-    'Três camadas obrigatórias e complementares. Não são alternativas — um workflow enterprise precisa das três.'
+    'Três camadas obrigatórias e complementares. Não são alternativas: um workflow enterprise precisa das três.'
 )
 add_heading_styled('Camada 1: Node-Level · Auto-cura local', 2)
 doc.add_paragraph(
     'retryOnFail + continueErrorOutput em cada nó falível. Captura ~73% das falhas transientes '
-    '(429, 503, timeout) no próprio nó — sem overhead de workflow externo.'
+    '(429, 503, timeout) no próprio nó: sem overhead de workflow externo.'
 )
 add_heading_styled('Camada 2: Error Handler Central · Rede de segurança', 2)
 doc.add_paragraph(
@@ -173,7 +173,7 @@ run = p.add_run(
     '  "correlationId": "abc123-67890",\n'
     '  "workflowName": "CRM Sync",\n'
     '  "workflowId": "abc123",\n'
-    '  "failedNode": "HTTP Request — Attio",\n'
+    '  "failedNode": "HTTP Request: Attio",\n'
     '  "errorMessage": "Request failed with status code 502",\n'
     '  "executionUrl": "https://n8n.fvmarketing.com.br/workflow/abc123/executions/67890",\n'
     '  "timestamp": "2026-07-08T10:30:00.000Z"\n'
@@ -196,7 +196,7 @@ data = [
     ['Redis', 'Sim', '2', '2000 ms', 'Conexão local'],
     ['Postgres', 'Sim', '2', '3000 ms', 'Timeout de query'],
     ['n8n API', 'Sim', '3', '5000 ms', 'Rate limit interno'],
-    ['Code node', 'Não', '—', '—', 'NUNCA retentar — erro de lógica'],
+    ['Code node', 'Não', 'n/a', 'n/a', 'NUNCA retentar: erro de lógica'],
 ]
 for i, h in enumerate(headers):
     table.rows[0].cells[i].text = h
@@ -258,12 +258,12 @@ for r, row_data in enumerate(data, 1):
 add_heading_styled('10. Anti-Patterns', 1)
 doc.add_paragraph('Erros reais observados nos workflows SDR IA que o padrão veio eliminar:')
 anti_patterns = [
-    'onError sem main[1] — Erro descartado silenciosamente. Sempre usar continueErrorOutput + segundo output conectado ao handler.',
-    'Retentar 4xx — Queima API credits à toa. Erro do cliente (400, 401, 403, 404) não vai mudar na próxima tentativa. Só retentar 5xx / timeout / DNS.',
-    'Error workflow no mesmo canal — Se o workflow de erro usa o mesmo Slack que o principal, uma falha no Slack cria recursão infinita. Usar canais separados.',
-    '200 no erro — Se a resposta é 200 mas houve falha interna, quem chamou nunca sabe. Propagar status HTTP correto.',
-    'Não publicar o error handler — Código antigo rodando mesmo depois de "corrigido". Sempre publish (Shift+P) após configurar ou alterar.',
-    'Payload sem correlationId — Sem um ID estável entre retries, não é possível ligar uma falha à sua causa original.',
+    'onError sem main[1]: Erro descartado silenciosamente. Sempre usar continueErrorOutput + segundo output conectado ao handler.',
+    'Retentar 4xx: Queima API credits à toa. Erro do cliente (400, 401, 403, 404) não vai mudar na próxima tentativa. Só retentar 5xx / timeout / DNS.',
+    'Error workflow no mesmo canal: Se o workflow de erro usa o mesmo Slack que o principal, uma falha no Slack cria recursão infinita. Usar canais separados.',
+    '200 no erro: Se a resposta é 200 mas houve falha interna, quem chamou nunca sabe. Propagar status HTTP correto.',
+    'Não publicar o error handler: Código antigo rodando mesmo depois de "corrigido". Sempre publish (Shift+P) após configurar ou alterar.',
+    'Payload sem correlationId: Sem um ID estável entre retries, não é possível ligar uma falha à sua causa original.',
 ]
 for ap in anti_patterns:
     p = doc.add_paragraph(style='List Bullet')
@@ -306,6 +306,39 @@ for r, row_data in enumerate(data, 1):
     for c, val in enumerate(row_data):
         table.rows[r].cells[c].text = val
 
-output_path = '/home/marcos/Desktop/AI/v4perettoco-main/PDI/7-apresentacao/pdi-orquestracao-corporativa-n8n-a1.docx'
+add_heading_styled('13. Decisoes e tradeoffs', 1)
+for item in [
+    'Handler central unico: manutencao em um unico ponto com 10 nos validados com n8nac. Se o handler cair, perde-se notificacao temporaria, mas nao o dado, pois a DLQ esta no Supabase e o Monitor roda a cada 5 min.',
+    'Tres camadas obrigatorias: Camada 1 captura cerca de 73% das falhas transientes sem overhead externo, Camada 2 classifica e notifica em menos de 1 min e Camada 3 impede cascata. Custo de mais configuracao por no em troca de auto-cura acima de 70%.',
+    'Code node nunca retenta: erro de logica como toDateTime undefined ou null constraint em telefone nao se resolve com retry. Exige validacao com IF e try/catch.',
+    'Breaker isolado por workflow: limiar de 5 falhas consecutivas e cooldown de 5 min com recovery automatico, em troca de estabilidade sistemica.',
+    'DLQ permanente no Supabase: schema v2.1 com 4 tabelas e 4 views preserva payload com correlationId estavel para replay, com custo de manter migracao e views como vw_error_health_score.',
+]:
+    p = doc.add_paragraph(style='List Bullet')
+    r = p.add_run(item)
+    r.font.size = Pt(10)
+
+add_heading_styled('14. Impacto no negocio', 1)
+doc.add_paragraph(
+    'Com 7 workflows SDR IA sem notificacao e deteccao levando dias, cada falha silenciosa derrubava o SLA de atendimento a leads sem ninguem saber. '
+    'O padrao reduz a deteccao para menos de 1 min via Slack, eleva a auto-cura para mais de 70% com retry no no e zera circuitos abertos sem alerta (de 100% para 0%). '
+    'O retrofit completo cabe em 4 dias, com cerca de 1h para as 5 correcoes pontuais ja mapeadas (20 min no ADPLAN e 10 min em cada um dos outros 4), '
+    'o que corta risco operacional e retrabalho de investigacao manual.'
+)
+
+add_heading_styled('15. Referencias de estudo', 1)
+for item in [
+    'Curso: Automacao e Orquestracao n8n do Basico ao Avancado, na Udemy.',
+    'Video: Error Trigger in n8n, tratamento centralizado de erros, no YouTube, canal oficial n8n.',
+    'Doc: n8n Docs, Error handling with Error Trigger workflows, na plataforma n8n Docs.',
+    'Doc: Supabase Docs, Database tables, views and indexes, na plataforma Supabase Docs.',
+]:
+    p = doc.add_paragraph(style='List Bullet')
+    r = p.add_run(item)
+    r.font.size = Pt(10)
+
+import os as _os
+output_dir = _os.path.dirname(_os.path.abspath(__file__))
+output_path = _os.path.join(output_dir, 'pdi-orquestracao-corporativa-n8n-a1.docx')
 doc.save(output_path)
 print(f'DOCX saved to {output_path}')

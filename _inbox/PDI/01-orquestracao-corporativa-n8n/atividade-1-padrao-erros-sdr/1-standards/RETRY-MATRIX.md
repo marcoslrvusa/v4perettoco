@@ -1,4 +1,4 @@
-# Retry Matrix — Configuracao por Tipo de Node
+# Retry Matrix: Configuracao por Tipo de Node
 
 ## Configuracao Nativa (node-level)
 
@@ -54,15 +54,15 @@ return [{ json: { _waitMs: finalWait, _attempt: attempt + 1 } }];
 
 | Status | Retentar? | Acao |
 |--------|-----------|------|
-| 400 | Nao | Payload invalido — revisar manualmente |
-| 401 | Nao | Credencial expirou — alertar equipe imediatamente |
-| 403 | Nao | Permissao negada — alertar equipe |
-| 404 | Nao | Endpoint/URL mudou — revisar |
-| 408 | Sim (3x) | Timeout do servidor — backoff |
-| 409 | Sim (3x) | Conflito — retentar com backoff |
-| 422 | Nao | Dado mal formatado — revisar payload |
-| 425 | Sim (3x) | Very Early — retentar |
-| 429 | Sim (3x) | Rate limit — respeitar Retry-After se presente |
+| 400 | Nao | Payload invalido: revisar manualmente |
+| 401 | Nao | Credencial expirou: alertar equipe imediatamente |
+| 403 | Nao | Permissao negada: alertar equipe |
+| 404 | Nao | Endpoint/URL mudou: revisar |
+| 408 | Sim (3x) | Timeout do servidor: backoff |
+| 409 | Sim (3x) | Conflito: retentar com backoff |
+| 422 | Nao | Dado mal formatado: revisar payload |
+| 425 | Sim (3x) | Very Early: retentar |
+| 429 | Sim (3x) | Rate limit: respeitar Retry-After se presente |
 | 500 | Sim (3x) | Erro interno do servidor |
 | 502 | Sim (3x) | Upstream com problema |
 | 503 | Sim (3x) | Servico indisponivel |

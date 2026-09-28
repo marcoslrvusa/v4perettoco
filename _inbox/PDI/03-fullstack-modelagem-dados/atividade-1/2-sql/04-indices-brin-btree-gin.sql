@@ -1,9 +1,9 @@
 -- 04-indices-brin-btree-gin.sql
--- PoC dos 3 tipos de índice com EXPLAIN — tabelas reais da operação V4:
+-- PoC dos 3 tipos de índice com EXPLAIN: tabelas reais da operação V4:
 -- eventos append-only (BRIN), fila mt_jobs (B-tree), leads com tags jsonb (GIN).
 
 -- =====================================================================
--- 1) BRIN — séries temporais (events, sync_log)
+-- 1) BRIN: séries temporais (events, sync_log)
 -- BRIN agrupa por faixa de páginas, não linha a linha: ~1MB de índice para
 -- 12M rows contra ~220MB de B-tree. Pago quando a tabela é fisicamente
 -- ordenada por tempo (append-only).
@@ -21,7 +21,7 @@ WHERE created_at >= '2026-08-01' AND created_at < '2026-08-02';
 --                   Tamanho do índice: ~32KB vs ~700MB do B-tree equivalente.
 
 -- =====================================================================
--- 2) B-tree composto — fila mt_jobs (igualdade + range + ordenação)
+-- 2) B-tree composto: fila mt_jobs (igualdade + range + ordenação)
 -- =====================================================================
 DROP INDEX IF EXISTS idx_mt_jobs_pick;
 CREATE INDEX idx_mt_jobs_pick ON mt_jobs
@@ -33,13 +33,13 @@ WHERE queue = 'email' AND status = 'queued' AND scheduled_at < now()
 ORDER BY scheduled_at
 LIMIT 10;
 
--- plano: Index Scan (idx_mt_jobs_pick) sem Sort — ordem provida pelo índice.
+-- plano: Index Scan (idx_mt_jobs_pick) sem Sort: ordem provida pelo índice.
 --   Index Cond: (queue='email') AND (status='queued')
 --   Filter: scheduled_at < now()  → ordenação já provida pelo índice
 --   Execução: ~3ms  (antes: Seq Scan + Sort ~600ms)
 
 -- =====================================================================
--- 3) GIN — jsonb/arrays (leads com tags, meta de eventos)
+-- 3) GIN: jsonb/arrays (leads com tags, meta de eventos)
 -- =====================================================================
 DROP INDEX IF EXISTS idx_leads_tags_gin;
 CREATE INDEX idx_leads_tags_gin ON leads USING gin (tags);

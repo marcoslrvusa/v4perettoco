@@ -1,4 +1,4 @@
-# Deck PDI — Mapeamento de Dominios com Domain-Driven Design (DDD)
+# Deck PDI: Mapeamento de Dominios com Domain-Driven Design (DDD)
 
 Area: Engenharia de Software
 
@@ -14,7 +14,7 @@ Ausencia de bounded contexts -> tudo vira 'tabela unica'.
 Linguagem ubíqua ausente -> 'lead' significa 3 coisas.
 Sem agregado -> regras de consistencia espalhadas.
 ## Slide 4: Decisao Arquitetural (ADR)
-ADR-023 — Mapa de Dominios
+ADR-023: Mapa de Dominios
 | Opcao | Pro | Contra | Decisao |
 | --- | --- | --- | --- |
 | DDD explicito | consistencia, linguagem | governanca | ESCOLHIDA |
@@ -22,8 +22,8 @@ ADR-023 — Mapa de Dominios
 > Nota: Cada bounded context tem seu modelo; integracao por eventos de dominio.
 ## Slide 5: Entregas desta Atividade
 DOMAIN-MAP.md.
-domain_models.py — agregados com invariantes.
-domain_events.py — eventos.
+domain_models.py: agregados com invariantes.
+domain_events.py: eventos.
 ## Slide 6: Plano de Validacao
 Workshop de linguagem ubíqua com Product + 2 squads.
 Validar agregados contra 3 user stories.

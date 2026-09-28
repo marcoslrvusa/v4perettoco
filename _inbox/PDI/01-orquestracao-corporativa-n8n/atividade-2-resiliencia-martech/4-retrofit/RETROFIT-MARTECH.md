@@ -1,4 +1,4 @@
-# RETROFIT — Como adaptar workflows MarTech existentes ao padrao PDI-MARTECH
+# RETROFIT: Como adaptar workflows MarTech existentes ao padrao PDI-MARTECH
 
 > Objetivo: transformar workflows sincronos friveis em pipelines assincronos
 > resilientes SEM reescrever a logica de negocio existente.
@@ -50,7 +50,7 @@ O Observabilidade calcula hash, drift e atualiza `mt_crm_health`.
 
 ## 3. Regras de retrofit
 
-1. **Nao mudar a logica de negocio** no retrofit — só o transporte.
+1. **Nao mudar a logica de negocio** no retrofit: só o transporte.
 2. **Job keys estaveis**: `queue:object:id` para idempotencia.
 3. **Checkpoint em jobs > 5 min**: `mt_job_progress` com chunk_index.
 4. **Sempre enviar envelope** ao Observabilidade (mesmo em erro).

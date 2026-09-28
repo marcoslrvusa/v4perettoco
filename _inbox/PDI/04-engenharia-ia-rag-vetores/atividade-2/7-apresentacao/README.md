@@ -4,9 +4,9 @@ Engenharia de IA
 
 <h2><span class="num">1.</span> Contexto</h2>
 
-<p>RAG (<em>Retrieval-Augmented Generation</em>) é a técnica de dar "memória consultável" ao LLM: em vez de adivinhar, ele busca documentos reais e responde com base neles. O desafio é <strong>recuperar o pedaço certo</strong>. Quando o conhecimento é relacional ("quem reporta para quem"), o RAG clássico de pedaços de texto falha — e entra o <strong>GraphRAG</strong>, que modela conexões como grafo.</p>
+<p>RAG (<em>Retrieval-Augmented Generation</em>) é a técnica de dar "memória consultável" ao LLM: em vez de adivinhar, ele busca documentos reais e responde com base neles. O desafio é <strong>recuperar o pedaço certo</strong>. Quando o conhecimento é relacional ("quem reporta para quem"), o RAG clássico de pedaços de texto falha: e entra o <strong>GraphRAG</strong>, que modela conexões como grafo.</p>
 
-<div class="didactic"><div class="didactic-title">Analogia da enciclopédia</div>RAG é como abrir a enciclopédia na página certa antes de responder. <strong>Chunking</strong> é cortar o livro em tópicos menores e bem-indexados. <strong>GraphRAG</strong> é montar um mapa de "ver também" entre pessoas, produtos e regras — assim dá pra responder "quem aprova esse pedido?" seguindo as setas do grafo, não só lendo um parágrafo isolado.</div>
+<div class="didactic"><div class="didactic-title">Analogia da enciclopédia</div>RAG é como abrir a enciclopédia na página certa antes de responder. <strong>Chunking</strong> é cortar o livro em tópicos menores e bem-indexados. <strong>GraphRAG</strong> é montar um mapa de "ver também" entre pessoas, produtos e regras: assim dá pra responder "quem aprova esse pedido?" seguindo as setas do grafo, não só lendo um parágrafo isolado.</div>
 
 <h2><span class="num">2.</span> Diagnóstico</h2>
 
@@ -40,4 +40,4 @@ Engenharia de IA
 
 <h2><span class="num">8.</span> Status final</h2>
 
-<p><span class="status st-warn">NÃO publicado</span> — Desenvolvido e em homologação. Aguarda revisão antes de produção.</p>
+<p><span class="status st-warn">NÃO publicado</span>: Desenvolvido e em homologação. Aguarda revisão antes de produção.</p>

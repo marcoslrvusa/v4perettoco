@@ -24,7 +24,7 @@ import { workflow, node, links } from '@n8n-as-code/transformer';
 // [CC] MT Queue Gateway
 // =====================================================================
 // Proposito: Enfileira requisicoes MarTech como jobs assincronos.
-//            NUNCA processa payload no webhook — grava na fila e responde
+//            NUNCA processa payload no webhook: grava na fila e responde
 //            ACK imediato para absorver picos sem travar a instancia.
 //
 // CONFIGURE: Webhook path por fila (ex: /mt/crm-sync) e rotas de destino
@@ -70,7 +70,7 @@ export class MtQueueGatewayWorkflow {
     language: 'javaScript',
     jsCode: `
 // =====================================================================
-// Serialize Job — MT Queue Gateway
+// Serialize Job: MT Queue Gateway
 // =====================================================================
 // Converte a request em um job da fila mt_jobs.
 // Job leve: payload com referencias; dados pesados via mt_job_progress
@@ -224,7 +224,7 @@ return [{
     },
   };
 
-  // path elimination (duplicate) — respond 200 with existing
+  // path elimination (duplicate): respond 200 with existing
   @node({
     name: 'Respond Duplicate',
     type: 'n8n-nodes-base.respondToWebhook',

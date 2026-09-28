@@ -1,4 +1,4 @@
-# Especificação Padrão de Entrega — PDI 2026 (Builders Hub)
+# Especificação Padrão de Entrega: PDI 2026 (Builders Hub)
 
 Cada atividade de PDI deve ser entregue em uma pasta própria seguindo este padrão,
 idêntico às atividades 1 e 2 já homologadas (anteriormente `PDI - A1` e `PDI-MARTECH`).
@@ -34,13 +34,13 @@ _inbox/PDI/{NN-modulo}/
   `../../../../../` e em seguida `assets/...`. Ou seja `../../../../../assets/logo-peretto.png`.
 - **CAPA:** logo Peretto (`assets/logo-peretto.png`) + foto circular
   (`assets/images/logo-peretto-perfil.jpg`) + badge + título + meta (Autor: Marcos Luciano;
-  Unidade: FV Marketing / V4 Company — Automação & Infraestrutura; Status: NÃO publicado).
+  Unidade: FV Marketing / V4 Company: Automação & Infraestrutura; Status: NÃO publicado).
 - **Seção "Como funciona":** usar o box `.pipeline` com animação de pulsos (cópia do
   template/atividade 2). Toda atividade com fluxo de engenharia DEVE ter este box.
 - Seções numeradas: 1 Contexto, 2 Diagnóstico, 3 Solução, 4 Como funciona, 5 Entregas,
   6 Métricas de sucesso + callout final de status.
 - Tabelas/styling já no template. Todo `Gerar` conteúdo técnico REAL e específico da
-  atividade — nunca deixar placeholder preenchido de forma genérica.
+  atividade: nunca deixar placeholder preenchido de forma genérica.
 - Nome do relatório: `pdi-{slug}.html` onde `{slug}` é a atividade (ex.: `pdi-solidez-clean-code-a1`).
 
 ## README da atividade (padrão A1/A2)
@@ -53,7 +53,7 @@ Autor Marcos Luciano/Perettoco; Data; Status), "Entregas desta PDI" com o diagra
 ## README do módulo (card)
 
 ```markdown
-# PDI — {Título do Módulo}
+# PDI: {Título do Módulo}
 
 > **Área:** Automação & Infraestrutura
 > **Autor:** Marcos Perettoco
@@ -70,7 +70,7 @@ Módulo com {N} atividades. Cada atividade na própria pasta `atividade-{N}/`.
 | … | … | … |
 ```
 
-## DOCX — gerar-docx.py
+## DOCX: gerar-docx.py
 
 Copiar e adaptar o `gerar-docx.py` da atividade 2 (python-docx, capa + seções + tabelas,
 paleta #8b4513/#1a1f24/#6b7a8a). Executar para gerar `pdi-{slug}.docx` na mesma pasta.

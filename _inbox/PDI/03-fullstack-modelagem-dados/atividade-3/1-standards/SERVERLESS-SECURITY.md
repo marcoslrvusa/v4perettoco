@@ -1,4 +1,4 @@
-# STANDARD — Serverless Seguro
+# STANDARD: Serverless Seguro
 
 - **Secrets:** nunca em env var hardcoded → usar Secret Manager / AWS Secrets Manager.
 - **Conexão DB:** via connection pooler (PgBouncer) com TLS; não abrir por IP público.

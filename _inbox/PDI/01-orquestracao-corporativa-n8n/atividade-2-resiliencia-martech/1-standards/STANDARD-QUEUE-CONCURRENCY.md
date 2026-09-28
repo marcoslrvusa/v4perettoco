@@ -1,4 +1,4 @@
-# Padrao de Filas e Concorrencia — n8n Enterprise V4
+# Padrao de Filas e Concorrencia: n8n Enterprise V4
 
 > **Versao:** 1.0 | **Status:** Pronto para homologacao | **Ultima revisao:** 2026-08-05
 
@@ -29,7 +29,7 @@ e o SLA de resposta ao cliente quebra.
 │  → status = running, atualiza heartbeat                    │
 ├──────────────────────────────────────────────────────────────┤
 │ WORKER (sub-workflow assincrono por job)                     │
-│  → processa payload (chunking — ver Padrao Payload Pesado)  │
+│  → processa payload (chunking: ver Padrao Payload Pesado)  │
 │  → integra CRM / envia email / atualiza documentos         │
 │  → status = done | error com retry programado              │
 ├──────────────────────────────────────────────────────────────┤
@@ -76,20 +76,20 @@ Usamos uma tabela de slots (`mt_concurrency`) como semafaro distribuido:
 - O worker verifica os slots antes de processar. Se estiver no limite, o job
   volte para a fila (nao bloqueia a execucao do n8n).
 - A tomada do slot é atomica via `UPDATE ... SET status='running', picked_at=now()
-  WHERE id = :id AND status='queued'` — apenas uma execucao vence o race.
+  WHERE id = :id AND status='queued'`: apenas uma execucao vence o race.
 
 ### 2.3 Heartbeat e Reaper
 
 - Worker atualiza `heartbeat_at` a cada 30s.
 - Reaper (1 min) devolve para `queued` jobs em `running` com heartbeat antigo
-  (> 2 min) — sinais de processamento morto.
+  (> 2 min): sinais de processamento morto.
 - Reaper tambem re-enfileira jobs com `retry_at <= now()`.
 
 ## 3. Sub-workflows Assincronos
 
 O modelo assincrono real do padrao:
 
-**Gateway (webhook) só enfileira e responde ACK imediato** — o processamento
+**Gateway (webhook) só enfileira e responde ACK imediato**: o processamento
 pesado nunca acontece no request de entrada. O Poller (ScheduleTrigger) pega os
 jobs enfileirados, adquire o slot e chama um **sub-workflow por job** via nó
 `Execute Workflow` (mode `sync`, limitado pela concorrencia da fila).

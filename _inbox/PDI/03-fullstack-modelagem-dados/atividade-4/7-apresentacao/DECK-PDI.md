@@ -1,4 +1,4 @@
-# Deck PDI — Otimizacao de Core Web Vitals (LCP/INP/CLS) com Diagnostico Real
+# Deck PDI: Otimizacao de Core Web Vitals (LCP/INP/CLS) com Diagnostico Real
 
 Area: Arquitetura Full Stack
 
@@ -20,7 +20,7 @@ LCP: hero sem fetchpriority/preconnect.
 INP: handler sincrono bloqueia.
 CLS: cards sem aspect-ratio.
 ## Slide 5: Decisao Arquitetural (ADR)
-ADR-034 — Ordem de Otimizacao
+ADR-034: Ordem de Otimizacao
 | Opcao | Pro | Contra | Decisao |
 | --- | --- | --- | --- |
 | LCP->INP->CLS | maior ROI | - | ESCOLHIDA |

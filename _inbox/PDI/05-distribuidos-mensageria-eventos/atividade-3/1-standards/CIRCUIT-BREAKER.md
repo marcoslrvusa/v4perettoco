@@ -1,4 +1,4 @@
-# STANDARD — Circuit Breaker
+# STANDARD: Circuit Breaker
 
 ## Estados
 - **Closed:** tráfego normal; conta falhas.

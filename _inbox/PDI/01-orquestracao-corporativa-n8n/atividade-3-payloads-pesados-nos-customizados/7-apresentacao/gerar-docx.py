@@ -48,7 +48,7 @@ def add_cover():
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.space_before = Pt(20)
     for line in ['Autor: Marcos Luciano · PDI Técnico',
-                 'Unidade: FV Marketing / V4 Company — Automação & Infraestrutura',
+                 'Unidade: FV Marketing / V4 Company: Automação & Infraestrutura',
                  'Data: Agosto 2026',
                  'Status: Desenvolvido · NÃO publicado (homologação pendente)',
                  'Versão: 1.0']:
@@ -82,18 +82,18 @@ add_cover()
 add_heading_styled('1. Contexto', 1)
 doc.add_paragraph(
     'Os pipelines n8n da V4 Company (SDR IA e MarTech) processam payloads cada vez '
-    'maiores — listas de leads, sincronizações de CRM, importações em massa. Os nós '
+    'maiores: listas de leads, sincronizações de CRM, importações em massa. Os nós '
     'Code que fazem esse trabalho foram escritos como "um nó que faz tudo": carregam '
     'o payload inteiro em memória, re-parseiam JSON a cada etapa, percorrem listas com '
     'complexidade O(n²) e repetem a mesma lógica entre dezenas de workflows. Três '
     'problemas estruturais motivam este PDI:'
 )
 for item in [
-    'Payloads pesados estouram a instância — 100k+ itens com map().filter() encadeado '
+    'Payloads pesados estouram a instância: 100k+ itens com map().filter() encadeado '
     'e { ...item } por iteração geram OOM e event loop bloqueado.',
-    'Parse e complexidade desperdiçados — JSON.parse dentro de loops e buscas por item '
+    'Parse e complexidade desperdiçados: JSON.parse dentro de loops e buscas por item '
     '(.find, indexOf) viram O(n²).',
-    'Lógica duplicada e sem padrão — o mesmo transform copiado entre workflows, '
+    'Lógica duplicada e sem padrão: o mesmo transform copiado entre workflows, '
     'expressões inline difíceis de manter e nenhuma biblioteca compartilhada.',
 ]:
     doc.add_paragraph(item, style='List Bullet')
@@ -102,7 +102,7 @@ add_heading_styled('2. Diagnóstico', 1)
 add_heading_styled('2.1 Causa raiz', 2)
 doc.add_paragraph(
     'Não existe uma camada padrão de transformação no n8n da V4. Cada nó Code reinventa '
-    'a roda — e a forma "mais fácil de escrever" é a mais cara de rodar. O resultado é '
+    'a roda: e a forma "mais fácil de escrever" é a mais cara de rodar. O resultado é '
     'o sintoma já visto na atividade 1 (ADPLAN: JS timeout de 25 min) e na atividade 2 '
     '(payload pesado sem processamento incremental).'
 )
@@ -132,14 +132,14 @@ add_table(
     ],
 )
 doc.add_paragraph(
-    'Escala: o mesmo fluxo que processa 10 itens processa 100k — o chunking streaming '
+    'Escala: o mesmo fluxo que processa 10 itens processa 100k: o chunking streaming '
     'e o dedupe O(n) garantem memória controlada e event loop livre.'
 )
 
 add_heading_styled('5. Por que O(n) muda tudo', 1)
 doc.add_paragraph(
     'O mesmo payload de 100 mil itens custa bilhões de operações no padrão antigo '
-    '(O(n²)) e poucas centenas de milhares no novo (O(n)) — e a memória acompanha. '
+    '(O(n²)) e poucas centenas de milhares no novo (O(n)): e a memória acompanha. '
     'Chunking streaming mantém o pico de memória constante: o payload inteiro nunca '
     'fica residente.'
 )
@@ -147,7 +147,7 @@ doc.add_paragraph(
 add_heading_styled('6. Memoização entre execuções', 1)
 doc.add_paragraph(
     'Valores estáveis (limiar, taxa, config) são cacheados com $getWorkflowStaticData("global") '
-    '— calculados 1x e reutilizados nas execuções seguintes, sem repetir chamadas caras. '
+    '- calculados 1x e reutilizados nas execuções seguintes, sem repetir chamadas caras. '
     'Na segunda execução, o cachedAt não muda.'
 )
 
@@ -205,6 +205,32 @@ doc.add_paragraph(
     'homologação. Nenhum workflow foi publicado no n8n nesta etapa. Implementar '
     'seguindo o MANUAL-IMPLEMENTACAO.md na raiz da atividade.'
 )
+
+add_heading_styled('11. Decisoes e tradeoffs', 1)
+for item in [
+    'Parse 1x na entrada com chunk default de 1000: elimina re-parse dentro de loop. Exige padronizar a entrada como string ou array no Webhook /nos/js-normalizer.',
+    'Normalizacao O(n) com Set por chave primitiva: payload de 100k itens sai de bilhoes de operacoes para centenas de milhares. Exige copia minima de campos.',
+    'Python so com stdlib (collections, itertools, Counter e defaultdict): roda no Code node sem dependencia externa, sem pandas e sem pip.',
+    'Biblioteca unica 3-lib como fonte da verdade: funcoes chunk, dedupe, aggregate, normalizeStream, memoizeGlobal e toOutput num lugar so. Workflows embutem copias e exigem sincronizar a cada mudanca.',
+    'Memoizacao com $getWorkflowStaticData global: limiar e config calculados 1x e reutilizados, com risco de defasagem se nao invalidar.',
+]:
+    doc.add_paragraph(item, style='List Bullet')
+
+add_heading_styled('12. Impacto no negocio', 1)
+doc.add_paragraph(
+    'O sintoma ja visto na atividade 1 com JS timeout de 25 min no ADPLAN e na atividade 2 com payload sem processamento incremental travava importacoes e sincronizacoes ao escalar de 10k para 100k itens. '
+    'Com streaming, dedupe O(n) e pico abaixo de 2 GB, o mesmo fluxo processa 10 ou 100k itens sem trocar de maquina, com parse unico e codigo unico na 3-lib em vez de copia entre dezenas de workflows. '
+    'Isso corta tempo de execucao, elimina OOM e event loop bloqueado e reduz custo de manutencao de expressoes inline nao testaveis para padrao com JSONata.'
+)
+
+add_heading_styled('13. Referencias de estudo', 1)
+for item in [
+    'Curso: JavaScript Performance, estruturas de dados e complexidade, na Alura.',
+    'Video: JavaScript Event Loop and Memory Explained, no YouTube, canal Fireship.',
+    'Doc: n8n Docs, Code node JavaScript and Python, na plataforma n8n Docs.',
+    'Doc: MDN Docs, Map, Set and Array iteration, na plataforma MDN Web Docs.',
+]:
+    doc.add_paragraph(item, style='List Bullet')
 
 output_dir = os.path.dirname(os.path.abspath(__file__))
 output_path = os.path.join(output_dir, 'pdi-nos-customizados-n8n-a3.docx')

@@ -1,4 +1,4 @@
-# Envelope Padrao de Erro — Referencia Rapida
+# Envelope Padrao de Erro: Referencia Rapida
 
 ## Schema
 
@@ -8,7 +8,7 @@
   "errorClass": "server_error",
   "workflowName": "CRM Sync: Attio to Notion",
   "workflowId": "abc123",
-  "failedNode": "HTTP Request — Attio",
+  "failedNode": "HTTP Request: Attio",
   "errorMessage": "Request failed with status code 502",
   "errorDescription": "Upstream API returned Bad Gateway",
   "executionId": "12345",
@@ -32,7 +32,7 @@
 | `errorMessage` | string | Sim | Mensagem (sanitizada, max 500 chars) |
 | `executionId` | string | Sim | ID da execucao |
 | `executionUrl` | string | Nao | Link direto para a execucao |
-| `correlationId` | string | Sim | `{workflowId}-{executionId}` — estavel entre retries |
+| `correlationId` | string | Sim | `{workflowId}-{executionId}`: estavel entre retries |
 | `timestamp` | string (ISO 8601) | Sim | Momento do erro |
 
 ## Codigo de Referencia (Code node)

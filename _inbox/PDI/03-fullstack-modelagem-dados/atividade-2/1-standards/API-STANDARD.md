@@ -1,4 +1,4 @@
-# STANDARD — API Modular (FastAPI)
+# STANDARD: API Modular (FastAPI)
 
 ## Paginacao: SEMPRE cursor-based
 `?after=<cursor>&limit=50`. Cursor = id criptografado.

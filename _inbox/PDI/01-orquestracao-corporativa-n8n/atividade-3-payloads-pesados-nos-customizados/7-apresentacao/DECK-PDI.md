@@ -1,4 +1,4 @@
-# PDI — Apresentacao: Nós Customizados e Expressões Avançadas n8n
+# PDI: Apresentacao: Nós Customizados e Expressões Avançadas n8n
 
 > **Formato:** 15-18 slides | **Tempo:** 20-25 min
 > **Audiencia:** Tech Lead + Squad de Automacao
@@ -11,7 +11,7 @@
 PDI: NÓS CUSTOMIZADOS E EXPRESSÕES AVANÇADAS
               N8N ENTERPRISE
 
-        Marcos Perettoco — Tech Lead
+        Marcos Perettoco: Tech Lead
         Agosto 2026 | FV Marketing / V4
 ```
 
@@ -42,11 +42,11 @@ Nó Code "faz tudo":
   expressões inline difíceis de manter
 ```
 
-**Causa raiz:** não existe uma camada padrão de transformação — cada nó reinventa.
+**Causa raiz:** não existe uma camada padrão de transformação: cada nó reinventa.
 
 ---
 
-## Slide 4: A Solução — 3 Frentes
+## Slide 4: A Solução: 3 Frentes
 
 ```
 ┌──────────────────────────────────────────────────┐
@@ -76,7 +76,7 @@ Nó Code "faz tudo":
 
 ---
 
-## Slide 6: Frente 1 — JS Payload Normalizer
+## Slide 6: Frente 1: JS Payload Normalizer
 
 ```
 Webhook /nos/js-normalizer
@@ -85,14 +85,14 @@ Webhook /nos/js-normalizer
       → Return Metrics (duração, itens/s)
 ```
 
-- Parse 1x — nunca dentro do loop
+- Parse 1x: nunca dentro do loop
 - Filtro barato antes de transformação cara
 - Dedupe por chave primitiva (`Set`), não por objeto
 - Cópia mínima (só os campos necessários)
 
 ---
 
-## Slide 7: Frente 2 — Python Payload Enricher
+## Slide 7: Frente 2: Python Payload Enricher
 
 ```
 Webhook /nos/python-enricher
@@ -101,14 +101,14 @@ Webhook /nos/python-enricher
       → Return Summary
 ```
 
-- Só stdlib (`collections`, `itertools`) — sem pip
+- Só stdlib (`collections`, `itertools`): sem pip
 - Dedupe O(n) com `set`
 - Agregação O(n) com `Counter`/`defaultdict`
 - Chunking na camada JS antes, Python enriquece lote a lote
 
 ---
 
-## Slide 8: Frente 3 — Expressões & Memo Playground
+## Slide 8: Frente 3: Expressões & Memo Playground
 
 ```
 Manual Trigger
@@ -119,7 +119,7 @@ Manual Trigger
 ```
 
 - Expressão condicional em parâmetros de nós
-- `$getWorkflowStaticData('global')` — valor estável cacheador entre execuções
+- `$getWorkflowStaticData('global')`: valor estável cacheador entre execuções
 - Referências entre nós (`$('Node').item.json...`)
 
 ---
@@ -132,7 +132,7 @@ Manual Trigger
 └── payload-lib.py   → chunk, dedupe, aggregate, parse_payload, to_output
 ```
 
-**Regra:** nunca editar um nó Code sem atualizar a lib — a lib é o padrão.
+**Regra:** nunca editar um nó Code sem atualizar a lib: a lib é o padrão.
 
 ---
 
@@ -201,7 +201,7 @@ Homologação:
 
 ---
 
-## Slide 15: Anexo — Anti-Patterns
+## Slide 15: Anexo: Anti-Patterns
 
 | Anti-pattern | Problema |
 |---|---|

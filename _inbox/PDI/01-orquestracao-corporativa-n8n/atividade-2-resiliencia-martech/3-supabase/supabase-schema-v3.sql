@@ -1,5 +1,5 @@
 -- ============================================================
--- N8N ENTERPRISE — Supabase Schema Extension v3.0
+-- N8N ENTERPRISE: Supabase Schema Extension v3.0
 -- MarTech Resilience: Queues + Concurrency + Heavy Payload + CRM Observability
 -- ============================================================
 -- Uso: Rodar no SQL Editor do Supabase (projeto: gswzuzetverulcgzhynb)

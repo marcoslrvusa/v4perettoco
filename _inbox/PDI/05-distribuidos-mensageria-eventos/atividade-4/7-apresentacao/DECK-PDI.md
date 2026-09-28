@@ -1,4 +1,4 @@
-# Deck PDI — Conformidade LGPD em Eventos e Dados (anonimizacao, consentimento, esquecimento)
+# Deck PDI: Conformidade LGPD em Eventos e Dados (anonimizacao, consentimento, esquecimento)
 
 Area: Sistemas Distribuidos
 
@@ -16,7 +16,7 @@ Pedido de exclusao nao propagava.
 | sem consentimento | consent por finalidade |
 | delete parcial | cascata |
 ## Slide 4: Decisao Arquitetural (ADR)
-ADR-054 — Tratamento de PII
+ADR-054: Tratamento de PII
 | Opcao | Pro | Contra | Decisao |
 | --- | --- | --- | --- |
 | Anon + consent + delete cascata | conforme LGPD | governanca | ESCOLHIDA |

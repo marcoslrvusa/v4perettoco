@@ -70,7 +70,7 @@ export class MtCrmObservabilidadeWorkflow {
         language: 'javaScript',
         jsCode: `
 // ============================================================
-// Decode Sync Envelope — CRM Sync Observabilidade
+// Decode Sync Envelope: CRM Sync Observabilidade
 // ============================================================
 // Envelope padrao da camada de sync (STANDARD-OBSERVABILITY-CRM.md).
 // Calcula payload_hash/response_hash e drift% (divergencia).

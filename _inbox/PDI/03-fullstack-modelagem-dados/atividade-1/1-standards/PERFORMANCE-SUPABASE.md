@@ -1,4 +1,4 @@
-# PERFORMANCE-SUPABASE.md — Standard de Performance em PostgreSQL (Supabase)
+# PERFORMANCE-SUPABASE.md: Standard de Performance em PostgreSQL (Supabase)
 
 > Padrão da V4 para escrever, revisar e rodar queries de Supabase (PostgreSQL) em
 > produção. Aplica a fila `mt_jobs`, sync de CRM, dashboards e qualquer view com dado vivo.
@@ -20,7 +20,7 @@ Ao revisar um plano, procurar por estes sinais de gargalo:
 
 | Sinal no plano | Consequência |
 |---|---|
-| `Seq Scan` em tabela > 100k linhas | leitura linear — trava em carga real |
+| `Seq Scan` em tabela > 100k linhas | leitura linear: trava em carga real |
 | `Nested Loop` com re-scan alto | índice de FK ou de JOIN ausente |
 | rows estimadas ≪ rows reais | estatísticas obsoletas (`ANALYZE` atrasado) |
 | `Sort` explícito sobre coluna não indexada | ordem do índice não cobre o `ORDER BY` |
@@ -39,7 +39,7 @@ Ao revisar um plano, procurar por estes sinais de gargalo:
 Composição de índice B-tree:
 1. Colunas de **igualdade primeiro**, depois **range**, depois **ORDER BY**.
 2. Padrão `WHERE queue='x' AND status='y' ORDER BY created_at` → índice `(queue, status, created_at)` cobre Index Scan sem Sort.
-3. PK já é índice (unique) — não recriar.
+3. PK já é índice (unique): não recriar.
 4. **FK sempre indexada quando participa de JOIN.**
 
 Em produção, usar sempre `CREATE INDEX ... CONCURRENTLY` (não segura `AccessExclusiveLock`, não derruba escrita durante criação).
@@ -94,7 +94,7 @@ drop de partição, nunca no horário de pico.
 
 ## 5. RLS sem destruir performance
 
-RLS é aplicado **por linha** durante o scan — política complexa (subquery, JOIN em
+RLS é aplicado **por linha** durante o scan: política complexa (subquery, JOIN em
 função) força o planner para `Seq Scan`. Padrão V4:
 
 1. Coluna de tenant `client_id` na própria linha + índice.
@@ -117,9 +117,9 @@ falso. O plano real precisa do `request.jwt.claims` setado.
 
 - **Paginação por cursor** em vez de `LIMIT/OFFSET` (OFFSET cresce O(n)).
 - **Janelas (window functions)** para top-N por grupo no mesmo scan.
-- **CTEs** para pipelines legíveis — inlined pelo planner sempre que possivel.
+- **CTEs** para pipelines legíveis: inlined pelo planner sempre que possivel.
 - **`count(DISTINCT)`** em dados grandes: materializar agregado em tabela de resumo.
-- Sem `SELECT *` — planejador e tamanho de linha importam em wide tables.
+- Sem `SELECT *`: planejador e tamanho de linha importam em wide tables.
 - **UPDATE/DELETE em batch** via CTE para evitar lock storm.
 
 ## 7. Checklist de revisão de query

@@ -1,7 +1,7 @@
-# Standard — Expressões Avançadas no n8n
+# Standard: Expressões Avançadas no n8n
 
-> **Objetivo:** padrão para expressões `={{ ... }}` em parâmetros de nós n8n —
-> referências entre nós, JSONata, condicionais e cache — para payloads pesados.
+> **Objetivo:** padrão para expressões `={{ ... }}` em parâmetros de nós n8n:
+> referências entre nós, JSONata, condicionais e cache: para payloads pesados.
 
 ## Quando usar expressão vs nó Code
 
@@ -62,7 +62,7 @@ return [{ json: { taxa: staticData.taxaCambio } }];
 | `$('Node').all()` dentro de loop | Materializa arrays gigantes repetidamente |
 | Expressão complexa com múltiplas chamadas de nó | Re-avalia a cada execução |
 | JSONata pesado em payload enorme | Melhor chunking no nó Code |
-| Expressão para lógica de negócio reutilizável | Duplicação — vai para `3-lib/` |
+| Expressão para lógica de negócio reutilizável | Duplicação: vai para `3-lib/` |
 
 ## Checagem (antes de publicar)
 

@@ -1,7 +1,7 @@
-# Workflows — PDI-MARTECH (resiliencia MarTech)
+# Workflows: PDI-MARTECH (resiliencia MarTech)
 
 Workflows n8n desenvolvidos para a segunda atividade do PDI. **Nao publicar em
-producao ainda** — aguardando homologacao da apresentacao.
+producao ainda**: aguardando homologacao da apresentacao.
 
 ## Componentes
 
@@ -36,7 +36,7 @@ Requisicao MarTech (pico)
 - Credencial `Command Center Supabase` (`nRJEEi2QwVVKIAHY`) nos nodes Supabase
 - **Antes de publicar:** trocar `MT_HEAVY_PAYLOAD_PROCESSOR_ID` no worker pelo ID real
   do sub-workflow `[CC] MT - Heavy Payload Processor` criado no n8n
-- O Heavy Payload Processor NÃO tem trigger proprio — e invocado pelo Execute Workflow
+- O Heavy Payload Processor NÃO tem trigger proprio: e invocado pelo Execute Workflow
   (n8n injeta a entrada direto no primeiro node)
 
 ## Como usar (quando autorizado a publicar)

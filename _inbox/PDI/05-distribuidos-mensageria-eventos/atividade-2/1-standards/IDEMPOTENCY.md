@@ -1,4 +1,4 @@
-# Idempotencia — Padrao
+# Idempotencia: Padrao
 
 ## Premissa
 Brokers sao at-least-once. Duplicata VAI acontecer. O consumidor torna o efeito unico.

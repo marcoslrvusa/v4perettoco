@@ -1,4 +1,4 @@
-# Deck PDI — Engenharia de Custos de LLM (custo por tarefa, cache, roteamento)
+# Deck PDI: Engenharia de Custos de LLM (custo por tarefa, cache, roteamento)
 
 Area: Engenharia de IA
 
@@ -16,7 +16,7 @@ Impossivel precificar ao cliente.
 | sem cache | cache |
 | custo invisivel | custo/tarefa |
 ## Slide 4: Decisao Arquitetural (ADR)
-ADR-044 — Estrategia de Custo
+ADR-044: Estrategia de Custo
 | Opcao | Pro | Contra | Decisao |
 | --- | --- | --- | --- |
 | Roteamento + cache + budget | previsivel | governanca | ESCOLHIDA |

@@ -1,4 +1,4 @@
-# STANDARD — Serverless Event-Driven
+# STANDARD: Serverless Event-Driven
 
 1. Upload nunca processa no request. Grava no store e publica `file.uploaded`.
 2. Concorrencia limitada no consumer (ex.: 10).

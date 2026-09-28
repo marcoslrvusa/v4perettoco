@@ -6,7 +6,7 @@ Arquitetura Full Stack
 
 <p>A API de pedidos da FV cresceu sem padrão: o endpoint /pedidos devolvia a lista inteira com LIMIT/OFFSET, o banco PostgreSQL sofria em páginas profundas e o mesmo JSON era recalculado dezenas de vezes por minuto. Quando o tráfego subiu, o endpoint virou gargalo e começou a derrubar o Postgres.</p>
 
-<div class="didactic"><div class="didactic-title">Analogia do cardápio gigante</div>Imagine um restaurante que, para te mostrar a página 50 do cardápio, relê TODAS as 5.000 receitas desde a primeira. O garçom (banco) cansa. A paginação por cursor é pedir: 'me traga o que vem DEPOIS do prato X' — o garçom vai direto lá, sem reler tudo. E se 100 clientes pedem o mesmo prato popular? O cache é a foto do prato no balcão: ninguém precisa ir à cozinha de novo.</div>
+<div class="didactic"><div class="didactic-title">Analogia do cardápio gigante</div>Imagine um restaurante que, para te mostrar a página 50 do cardápio, relê TODAS as 5.000 receitas desde a primeira. O garçom (banco) cansa. A paginação por cursor é pedir: 'me traga o que vem DEPOIS do prato X': o garçom vai direto lá, sem reler tudo. E se 100 clientes pedem o mesmo prato popular? O cache é a foto do prato no balcão: ninguém precisa ir à cozinha de novo.</div>
 
 <h2><span class="num">2.</span> Diagnóstico</h2>
 
@@ -40,4 +40,4 @@ Arquitetura Full Stack
 
 <h2><span class="num">8.</span> Status final</h2>
 
-<p><span class="status st-warn">NÃO publicado</span> — Desenvolvido e em homologação. Aguarda revisão antes de produção.</p>
+<p><span class="status st-warn">NÃO publicado</span>: Desenvolvido e em homologação. Aguarda revisão antes de produção.</p>

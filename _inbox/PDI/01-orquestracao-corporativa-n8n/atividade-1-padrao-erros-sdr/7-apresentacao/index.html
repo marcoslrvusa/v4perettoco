@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PDI — Padrão Universal de Tratamento de Erros n8n</title>
+<title>PDI: Padrão Universal de Tratamento de Erros n8n</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;500&display=swap" rel="stylesheet">
 <style>
@@ -247,15 +247,15 @@ tr:hover td { color: var(--text); }
 <div class="slide"><span class="slide-num">02 / 14</span>
 <div class="tag">O Problema</div>
 <h2>7 workflows SDR IA quebrando em silêncio</h2>
-<div class="sub">Nenhum notificava. Falhas passavam <em>dias</em> sem ninguém saber. Cada workflow tratava erro do seu jeito — ou não tratava.</div>
+<div class="sub">Nenhum notificava. Falhas passavam <em>dias</em> sem ninguém saber. Cada workflow tratava erro do seu jeito: ou não tratava.</div>
 
-<div class="wfi"><span><span class="wfi-n">ADPLAN</span> <span class="wfi-e">— JS timeout 25min (event loop bloqueado)</span></span> <span class="badge b-p0">P0</span></div>
-<div class="wfi"><span><span class="wfi-n">SIGNOR</span> <span class="wfi-e">— Task runner desconectado</span></span> <span class="badge b-p0">P0</span></div>
-<div class="wfi"><span><span class="wfi-n">Genics</span> <span class="wfi-e">— Redis Cloud inacessível</span></span> <span class="badge b-p0">P0</span></div>
-<div class="wfi"><span><span class="wfi-n">SOFIA</span> <span class="wfi-e">— Rate limit Chatwoot</span></span> <span class="badge b-p1">P1</span></div>
-<div class="wfi"><span><span class="wfi-n">PRO ANÁLISES</span> <span class="wfi-e">— toDateTime undefined</span></span> <span class="badge b-p1">P1</span></div>
-<div class="wfi"><span><span class="wfi-n">Schwalm</span> <span class="wfi-e">— Null constraint telefone</span></span> <span class="badge b-p1">P1</span></div>
-<div class="wfi"><span><span class="wfi-n">V4 INTERNO</span> <span class="wfi-e">— 404 no Ekyte (board ID mudou)</span></span> <span class="badge b-p1">P1</span></div>
+<div class="wfi"><span><span class="wfi-n">ADPLAN</span> <span class="wfi-e">- JS timeout 25min (event loop bloqueado)</span></span> <span class="badge b-p0">P0</span></div>
+<div class="wfi"><span><span class="wfi-n">SIGNOR</span> <span class="wfi-e">- Task runner desconectado</span></span> <span class="badge b-p0">P0</span></div>
+<div class="wfi"><span><span class="wfi-n">Genics</span> <span class="wfi-e">- Redis Cloud inacessível</span></span> <span class="badge b-p0">P0</span></div>
+<div class="wfi"><span><span class="wfi-n">SOFIA</span> <span class="wfi-e">- Rate limit Chatwoot</span></span> <span class="badge b-p1">P1</span></div>
+<div class="wfi"><span><span class="wfi-n">PRO ANÁLISES</span> <span class="wfi-e">- toDateTime undefined</span></span> <span class="badge b-p1">P1</span></div>
+<div class="wfi"><span><span class="wfi-n">Schwalm</span> <span class="wfi-e">- Null constraint telefone</span></span> <span class="badge b-p1">P1</span></div>
+<div class="wfi"><span><span class="wfi-n">V4 INTERNO</span> <span class="wfi-e">- 404 no Ekyte (board ID mudou)</span></span> <span class="badge b-p1">P1</span></div>
 
 <div style="margin-top:12px;font-size:12px;color:var(--text3);">+ 3 Command Centers sem tratamento: Collector · Heartbeat · Metrics</div>
 
@@ -276,11 +276,11 @@ tr:hover td { color: var(--text); }
 <div>
 <h3>Antes · Caos</h3>
 <div class="card" style="margin-bottom:8px;"><p>Cada workflow com seu próprio makeshift improvisado</p></div>
-<div class="card" style="margin-bottom:8px;"><p><span style="color:var(--red)">✕</span> Falha silenciosa — zero notificações</p></div>
+<div class="card" style="margin-bottom:8px;"><p><span style="color:var(--red)">✕</span> Falha silenciosa: zero notificações</p></div>
 <div class="card" style="margin-bottom:8px;"><p><span style="color:var(--red)">✕</span> Sem retry configurado</p></div>
 <div class="card" style="margin-bottom:8px;"><p><span style="color:var(--red)">✕</span> Sem persistência do erro</p></div>
 <div class="card" style="margin-bottom:8px;"><p><span style="color:var(--red)">✕</span> Sem proteção contra cascata</p></div>
-<div class="card"><p><span style="color:var(--red)">✕</span> Debug manual — sem rastreabilidade</p></div>
+<div class="card"><p><span style="color:var(--red)">✕</span> Debug manual: sem rastreabilidade</p></div>
 </div>
 
 <div>
@@ -344,8 +344,8 @@ O que a Camada 1 não cura, a 2 classifica. O que a 2 classifica, a 3 protege e 
 <div class="card">
 <div class="card-title">Camada 1 · Node-Level</div>
 <p><strong>Problema:</strong> 73% dos erros são transientes (429, 503, timeout). Resolver no nó é mais rápido e barato que acionar um workflow externo.</p>
-<p style="margin-top:10px"><strong>Custo:</strong> Zero — config declarativa no JSON.</p>
-<p style="margin-top:10px"><strong>Trade-off:</strong> Não cobre erro de lógica ou validação. Não existe backoff exponencial nativo — pra isso tem Camada 2.</p>
+<p style="margin-top:10px"><strong>Custo:</strong> Zero: config declarativa no JSON.</p>
+<p style="margin-top:10px"><strong>Trade-off:</strong> Não cobre erro de lógica ou validação. Não existe backoff exponencial nativo: pra isso tem Camada 2.</p>
 <p style="margin-top:10px"><span class="badge b-info">Jr: configurar no nó</span></p>
 </div>
 
@@ -353,7 +353,7 @@ O que a Camada 1 não cura, a 2 classifica. O que a 2 classifica, a 3 protege e 
 <div class="card-title">Camada 2 · Central</div>
 <p><strong>Problema:</strong> Se cada workflow tivesse seu próprio error handler, teríamos 10 workflows duplicando lógica. Um central evita isso.</p>
 <p style="margin-top:10px"><strong>Custo:</strong> 1 workflow de 10 nós, validado com n8nac.</p>
-<p style="margin-top:10px"><strong>Trade-off:</strong> Ponto único de falha? Não — se o handler cair, os erros ficam no log do n8n até ele voltar.</p>
+<p style="margin-top:10px"><strong>Trade-off:</strong> Ponto único de falha? Não: se o handler cair, os erros ficam no log do n8n até ele voltar.</p>
 <p style="margin-top:10px"><span class="badge b-warn">Pl: implementar + testar</span></p>
 </div>
 
@@ -361,7 +361,7 @@ O que a Camada 1 não cura, a 2 classifica. O que a 2 classifica, a 3 protege e 
 <div class="card-title">Camada 3 · CB + DLQ</div>
 <p><strong>Problema:</strong> Sem CB, APIs frágeis (Chatwoot, Redis) tomam golpe em cascata. Sem DLQ, erro vira "dado perdido".</p>
 <p style="margin-top:10px"><strong>Custo:</strong> Schema Supabase + 1 workflow de monitor a cada 5 min.</p>
-<p style="margin-top:10px"><strong>Trade-off:</strong> Dependência de Supabase. Já temos — custo marginal zero.</p>
+<p style="margin-top:10px"><strong>Trade-off:</strong> Dependência de Supabase. Já temos: custo marginal zero.</p>
 <p style="margin-top:10px"><span class="badge b-crit">Sr: revisar + homologar</span></p>
 </div>
 </div>
@@ -420,10 +420,10 @@ O que a Camada 1 não cura, a 2 classifica. O que a 2 classifica, a 3 protege e 
 <div class="slide"><span class="slide-num">07 / 14</span>
 <div class="tag">Código</div>
 <h2>Como classificar um erro na prática</h2>
-<div class="sub">Code node de classificação — roda no Error Handler Central quando um erro chega</div>
+<div class="sub">Code node de classificação: roda no Error Handler Central quando um erro chega</div>
 
 <pre style="max-width:720px;">
-<span class="c">// Error Handler Central — parse + classificação</span>
+<span class="c">// Error Handler Central: parse + classificação</span>
 <span class="k">const</span> msg = (execution.error?.message || <span class="s">''</span>).toLowerCase();
 
 <span class="k">let</span> errorClass = <span class="s">'unknown'</span>;
@@ -492,7 +492,7 @@ O que a Camada 1 não cura, a 2 classifica. O que a 2 classifica, a 3 protege e 
 <tr><td>Supabase</td><td>2</td><td>3s</td></tr>
 <tr><td>Slack</td><td>3</td><td>5s</td></tr>
 <tr><td>WhatsApp</td><td>3</td><td>5s</td></tr>
-<tr><td><span style="color:var(--red)">Code node</span></td><td>0</td><td>—</td></tr>
+<tr><td><span style="color:var(--red)">Code node</span></td><td>0</td><td>-</td></tr>
 </tbody>
 </table>
 </div>
@@ -508,7 +508,7 @@ O que a Camada 1 não cura, a 2 classifica. O que a 2 classifica, a 3 protege e 
 
 <div class="g2">
 <div>
-<h3>error_dlq — Dead Letter Queue</h3>
+<h3>error_dlq: Dead Letter Queue</h3>
 <pre style="font-size:11px;"><span class="k">CREATE TABLE</span> error_dlq (
   id                <span class="v">UUID</span> <span class="k">PRIMARY KEY</span>,
   correlation_id    <span class="v">TEXT</span> <span class="k">NOT NULL</span>,
@@ -537,10 +537,10 @@ O que a Camada 1 não cura, a 2 classifica. O que a 2 classifica, a 3 protege e 
 <div style="margin-top:10px;">
 <h3>Views de monitoramento</h3>
 <div style="font-size:11px;color:var(--text2);line-height:1.8;">
-<code style="color:var(--green)">vw_error_health_score</code> — score geral de saúde<br>
-<code style="color:var(--green)">vw_circuits_open_now</code> — circuitos abertos agora<br>
-<code style="color:var(--green)">vw_error_summary_24h</code> — top erros 24h<br>
-<code style="color:var(--green)">vw_retry_success_rate</code> — taxa de auto-cura
+<code style="color:var(--green)">vw_error_health_score</code>: score geral de saúde<br>
+<code style="color:var(--green)">vw_circuits_open_now</code>: circuitos abertos agora<br>
+<code style="color:var(--green)">vw_error_summary_24h</code>: top erros 24h<br>
+<code style="color:var(--green)">vw_retry_success_rate</code>: taxa de auto-cura
 </div>
 </div>
 </div>
@@ -581,7 +581,7 @@ Ciclo de vida do erro: <span style="color:var(--blue)">pending_review</span> →
 <!-- ════════════ SLIDE 11 ════════════ -->
 <div class="slide"><span class="slide-num">11 / 14</span>
 <div class="tag">Retrofit</div>
-<h2>O que já está corrigido — falta push</h2>
+<h2>O que já está corrigido: falta push</h2>
 <div class="sub">5 workflows SDR IA com correções aplicadas nos JSONs locais em 22/06. Só esperando deploy.</div>
 
 <table>
@@ -618,14 +618,14 @@ bash PDI/6-automation/run-migration.sh</pre>
 <!-- ════════════ SLIDE 12 ════════════ -->
 <div class="slide"><span class="slide-num">12 / 14</span>
 <div class="tag">Anti-Patterns</div>
-<h2>O que <em>não</em> fazer — aprenda com os erros</h2>
+<h2>O que <em>não</em> fazer: aprenda com os erros</h2>
 <div class="sub">Erros reais que vimos nos workflows SDR IA</div>
 
-<div class="ap"><strong>onError sem main[1]</strong> — Erro descartado silenciosamente. Sempre use <code style="color:var(--green)">continueErrorOutput</code> + segundo output conectado.</div>
-<div class="ap"><strong>Retentar 4xx (exceto 429)</strong> — Queima API credits à toa. Se é erro do cliente (400, 401, 403, 404), não vai mudar na próxima tentativa. Só retentar 5xx/429/timeout/DNS.</div>
-<div class="ap"><strong>Error workflow no mesmo canal</strong> — Se o workflow de erro usa o mesmo Slack que o principal, uma falha no Slack cria recursão infinita. Use canais separados.</div>
-<div class="ap"><strong>Responder 200 quando deu erro</strong> — Se você responde 200 após uma falha, quem chamou nunca sabe. Propague o status HTTP correto.</div>
-<div class="ap"><strong>Não publicar o error handler</strong> — Código antigo rodando mesmo depois de "corrigido". Sempre publish (Shift+P) após configurar.</div>
+<div class="ap"><strong>onError sem main[1]</strong>: Erro descartado silenciosamente. Sempre use <code style="color:var(--green)">continueErrorOutput</code> + segundo output conectado.</div>
+<div class="ap"><strong>Retentar 4xx (exceto 429)</strong>: Queima API credits à toa. Se é erro do cliente (400, 401, 403, 404), não vai mudar na próxima tentativa. Só retentar 5xx/429/timeout/DNS.</div>
+<div class="ap"><strong>Error workflow no mesmo canal</strong>: Se o workflow de erro usa o mesmo Slack que o principal, uma falha no Slack cria recursão infinita. Use canais separados.</div>
+<div class="ap"><strong>Responder 200 quando deu erro</strong>: Se você responde 200 após uma falha, quem chamou nunca sabe. Propague o status HTTP correto.</div>
+<div class="ap"><strong>Não publicar o error handler</strong>: Código antigo rodando mesmo depois de "corrigido". Sempre publish (Shift+P) após configurar.</div>
 </div>
 
 <!-- ════════════ SLIDE 13 ════════════ -->

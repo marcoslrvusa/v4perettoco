@@ -27,7 +27,7 @@ SUPABASE_SERVICE_KEY="${SUPABASE_SERVICE_KEY:-}"
 
 # Verificar se temos URL e Service Key
 echo "============================================"
-echo " Migracao Supabase — Schema v2.1"
+echo " Migracao Supabase: Schema v2.1"
 echo "============================================"
 echo ""
 

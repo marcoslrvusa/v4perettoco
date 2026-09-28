@@ -1,4 +1,4 @@
-# Deck PDI — Observabilidade e Logs de Sincronizacao n8n-CRM
+# Deck PDI: Observabilidade e Logs de Sincronizacao n8n-CRM
 
 Area: Orquestracao Corporativa (n8n)
 
@@ -21,7 +21,7 @@ Ausencia de padrao de log nas saidas do n8n (cada no loga diferente).
 Sem ID de correlacao entre trigger, execucao e escrita no CRM.
 Sem SLO de sincronizacao -> nada alerta.
 ## Slide 5: Decisao Arquitetural (ADR)
-ADR-011 — Log estruturado + painel + alerta, nao APM caro.
+ADR-011: Log estruturado + painel + alerta, nao APM caro.
 | Opcao | Pro | Contra | Decisao |
 | --- | --- | --- | --- |
 | Log estruturado + painel SQL | simples, sem custo | consulta manual | ESCOLHIDA |
@@ -29,8 +29,8 @@ ADR-011 — Log estruturado + painel + alerta, nao APM caro.
 | Contador no n8n | zero | sem contexto | rejeitada |
 > Nota: Nao precisa de stack APM para ter observabilidade de negocio; um log JSON + view SQL ja reduz MTTR drasticamente.
 ## Slide 6: Entregas desta Atividade
-STANDARD-OBSERVABILITY-LOGS.md — contrato de log (schema + niveis).
-observability_dashboard.sql — view de correlacao por trace_id.
+STANDARD-OBSERVABILITY-LOGS.md: contrato de log (schema + niveis).
+observability_dashboard.sql: view de correlacao por trace_id.
 exemplo de no n8n com log estruturado (trecho).
 ## Slide 7: Plano de Validacao e Rollout
 Aplicar o padrao em 1 integracao (piloto) por 1 semana.

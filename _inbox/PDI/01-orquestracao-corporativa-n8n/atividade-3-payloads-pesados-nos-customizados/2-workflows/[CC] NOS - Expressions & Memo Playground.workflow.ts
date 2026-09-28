@@ -8,10 +8,10 @@ import { workflow, node, links } from '@n8n-as-code/transformer';
 // ──────────────────────────────────────────────────────────────────────────
 // Property name                    Node type (short)   Flags
 // ManualTrigger                     manualTrigger
-// GenerateSampleData                code  (JS — gera payload de teste)
+// GenerateSampleData                code  (JS: gera payload de teste)
 // FilterHighScore                   if    (expressao JSONata/condicional)
-// MemoizeReference                 code  (JS — $getWorkflowStaticData)
-// OutputResult                     code  (JS — resume tudo)
+// MemoizeReference                 code  (JS: $getWorkflowStaticData)
+// OutputResult                     code  (JS: resume tudo)
 //
 // ROUTING MAP
 // ──────────────────────────────────────────────────────────────────────────
@@ -117,10 +117,10 @@ return [{ json: { rows, generatedAt: Date.now() } }];
     language: 'javaScript',
     jsCode: `
 // ============================================================
-// Memoize Reference — cache entre execucoes
+// Memoize Reference: cache entre execucoes
 // ============================================================
 // Valores estaveis (limiar, taxa, config) sao cacheados no
-// static data do workflow — calculados 1x e reutilizados.
+// static data do workflow: calculados 1x e reutilizados.
 // ============================================================
 
 const staticData = $getWorkflowStaticData('global');

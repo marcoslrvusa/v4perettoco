@@ -68,7 +68,7 @@ export class ErrorHandlerCentralWorkflow {
     language: 'javaScript',
     jsCode: `
 // =====================================================================
-// Parse and Classify — Error Handler Central
+// Parse and Classify: Error Handler Central
 // =====================================================================
 // Recebe payload do Error Trigger e produz envelope padrao V4:
 // { severity, workflowName, workflowId, failedNode, errorMessage,

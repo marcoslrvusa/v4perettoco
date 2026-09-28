@@ -1,4 +1,4 @@
-# NVIDIA DLI — Notas
+# NVIDIA DLI: Notas
 
 - **Embeddings**: normalizar antes de coseno.
 - **Chunking**: 512 tokens + overlap 64.

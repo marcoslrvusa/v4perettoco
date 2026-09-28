@@ -1,6 +1,6 @@
 -- 05-rls-performance.sql
 -- PoC: RLS sem destruir índices. Regra: a politica é aplicada linha a linha
--- durante o scan — se ela fizer JOIN/função cara, o planner cai para Seq Scan.
+-- durante o scan: se ela fizer JOIN/função cara, o planner cai para Seq Scan.
 --
 -- Cenario: MT_JOBs com tenant por client_id. Antes a política juntava a tabela
 -- de membership; depois usa coluna denormalizada + função SECURITY DEFINER.
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS mt_jobs_rls (
 );
 
 -- =====================================================================
--- ANTES — RLS com JOIN (politica cara) → força Seq Scan mesmo com índice
+-- ANTES: RLS com JOIN (politica cara) → força Seq Scan mesmo com índice
 -- =====================================================================
 CREATE OR REPLACE FUNCTION public.is_member_of_client(cid bigint)
 RETURNS boolean LANGUAGE sql STABLE SECURITY DEFINER AS
@@ -40,12 +40,12 @@ EXPLAIN (ANALYZE, BUFFERS)
 SELECT * FROM mt_jobs WHERE status = 'queued';
 
 -- plano ANTES (resumo):
---   Seq Scan on mt_jobs — planner nao pode usar idx_mt_jobs_status porque a
+--   Seq Scan on mt_jobs: planner nao pode usar idx_mt_jobs_status porque a
 --   RLS com função (VOLATILE do ponto de vista do planner) impede poda segura.
 --   Execução: ~1.4s para 900k rows + custo da função por linha (~180ms).
 
 -- =====================================================================
--- DEPOIS — coluna denormalizada + função estável com SECURITY DEFINER
+-- DEPOIS: coluna denormalizada + função estável com SECURITY DEFINER
 -- =====================================================================
 ALTER TABLE mt_jobs ADD COLUMN IF NOT EXISTS tenant_id bigint;
 -- popule de client_id (na V4 é sempre 1-to-1 no ciclo SDR)
@@ -70,7 +70,7 @@ SELECT * FROM mt_jobs WHERE status = 'queued';
 --   Index Scan using idx_mt_jobs_tenant_status
 --       Index Cond: (status = 'queued')
 --       Filter: (tenant_id = current_tenant_id())  -- estável, custo 0
---   Execução: ~8ms  (Δ 175x) — o planner pode continuar usando o índice.
+--   Execução: ~8ms  (Δ 175x): o planner pode continuar usando o índice.
 
 -- =====================================================================
 -- Regra: SEMPRE validar RLS com o header de auth setado. Sem ele o EXPLAIN

@@ -1,4 +1,4 @@
-# Roteiro de Demo — Mapeamento de Dominios com Domain-Driven Design (DDD)
+# Roteiro de Demo: Mapeamento de Dominios com Domain-Driven Design (DDD)
 
 Abra o deck (index.html) e percorra os slides na ordem.
 

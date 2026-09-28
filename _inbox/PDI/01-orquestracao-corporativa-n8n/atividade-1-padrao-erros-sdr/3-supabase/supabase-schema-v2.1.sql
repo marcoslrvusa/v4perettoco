@@ -1,5 +1,5 @@
 -- ============================================================
--- N8N ENTERPRISE — Supabase Schema Extension v2.1
+-- N8N ENTERPRISE: Supabase Schema Extension v2.1
 -- Error Handling + Retry + Circuit Breaker + DLQ
 -- ============================================================
 -- Uso: Rodar no SQL Editor do Supabase (projeto: gswzuzetverulcgzhynb)

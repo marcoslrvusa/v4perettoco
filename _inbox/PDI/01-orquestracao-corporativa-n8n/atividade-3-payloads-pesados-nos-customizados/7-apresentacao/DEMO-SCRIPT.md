@@ -1,4 +1,4 @@
-# Script de Demonstracao — Nós Customizados e Expressões Avançadas n8n (PDI-NOS-CUSTOMIZADOS)
+# Script de Demonstracao: Nós Customizados e Expressões Avançadas n8n (PDI-NOS-CUSTOMIZADOS)
 
 > Homologacao simulada. NENHUM passo publica em producao.
 
@@ -10,7 +10,7 @@ npx n8nac env status --json
 tree _inbox/PDI/01-orquestracao-corporativa-n8n/atividade-3-payloads-pesados-nos-customizados/
 ```
 
-## Passo 1 — Validar Workflows (n8nac, sem push)
+## Passo 1: Validar Workflows (n8nac, sem push)
 
 ```bash
 npx -y n8nac skills validate "2-workflows/[CC] NOS - JS Payload Normalizer.workflow.ts"
@@ -19,13 +19,13 @@ npx -y n8nac skills validate "2-workflows/[CC] NOS - Expressions & Memo Playgrou
 # Todos devem acusar: ✅ Workflow is valid
 ```
 
-## Passo 2 — Mostrar a biblioteca reutilizavel (3-lib)
+## Passo 2: Mostrar a biblioteca reutilizavel (3-lib)
 
 - `3-lib/payload-lib.js` → `chunk` · `normalizeStream` · `dedupe` · `aggregate` · `memoizeGlobal`
 - `3-lib/payload-lib.py` → `chunk` · `dedupe` · `aggregate` · `parse_payload` · `to_output`
 - Regra: lib e a fonte da verdade; nos Code embutem copias das funcoes usadas.
 
-## Passo 3 — Demo JS Payload Normalizer (dedupe + normalizacao O(n))
+## Passo 3: Demo JS Payload Normalizer (dedupe + normalizacao O(n))
 
 > Para a demo, rodar localmente (`n8n start`) ou em instancia de teste.
 
@@ -43,10 +43,10 @@ curl -X POST http://localhost:5678/webhook/nos/js-normalizer \
 # → {"success":true,"processedItems":3,"deduped":1,"itemsPerSecond":...}
 ```
 
-**Ponto-chave:** id duplicado entrou 2x e saiu 1x — dedupe por chave primitiva
+**Ponto-chave:** id duplicado entrou 2x e saiu 1x: dedupe por chave primitiva
 (`Set`), em UMA passada (O(n)), sem copiar o objeto inteiro por item.
 
-## Passo 4 — Escalar para payload pesado (prova de streaming)
+## Passo 4: Escalar para payload pesado (prova de streaming)
 
 ```bash
 # Gerar 100k itens e enviar ao mesmo webhook
@@ -64,7 +64,7 @@ curl -X POST http://localhost:5678/webhook/nos/js-normalizer \
 
 **Ponto-chave:** mesmo processo (chunk 1000) aguenta 100k sem estourar o event loop.
 
-## Passo 5 — Demo Python Payload Enricher (agregacao stdlib)
+## Passo 5: Demo Python Payload Enricher (agregacao stdlib)
 
 ```bash
 curl -X POST http://localhost:5678/webhook/nos/python-enricher \
@@ -81,7 +81,7 @@ curl -X POST http://localhost:5678/webhook/nos/python-enricher \
 
 **Ponto-chave:** agregacao com `Counter`/`defaultdict` (O(n)) e apenas stdlib.
 
-## Passo 6 — Demo Expressões & Memo Playground
+## Passo 6: Demo Expressões & Memo Playground
 
 ```bash
 # Rodar manualmente o workflow no n8n UI (Manual Trigger)
@@ -90,10 +90,10 @@ curl -X POST http://localhost:5678/webhook/nos/python-enricher \
 # → Rodar de novo: cachedAt nao muda (memoizacao entre execucoes)
 ```
 
-**Ponto-chave:** valor estavel calculado 1x e reutilizado — demonstra
+**Ponto-chave:** valor estavel calculado 1x e reutilizado: demonstra
 `$getWorkflowStaticData` na pratica.
 
-## Passo 7 — Retrofit e monitoramento
+## Passo 7: Retrofit e monitoramento
 
 - Mostrar `4-retrofit/RETROFIT.md` (ADPLAN, PRO ANALISES, CC Collector/Metrics)
 - Mostrar `5-monitoring/QUERIES.md` (mt_payload_metrics + alertas de duracao)

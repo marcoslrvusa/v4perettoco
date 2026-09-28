@@ -1,4 +1,4 @@
-# Roteiro de Demo — Otimizacao de Core Web Vitals (LCP/INP/CLS) com Diagnostico Real
+# Roteiro de Demo: Otimizacao de Core Web Vitals (LCP/INP/CLS) com Diagnostico Real
 
 Abra o deck (index.html) e percorra os slides na ordem.
 

@@ -1,4 +1,4 @@
-# Deck PDI — Estudo de Design Patterns aplicados ao ecossistema
+# Deck PDI: Estudo de Design Patterns aplicados ao ecossistema
 
 Area: Engenharia de Software
 
@@ -14,7 +14,7 @@ Acoplamento a APIs de terceiro espalhado (sem Adapter).
 Selecao de modelo de LLM por if/else (sem Strategy).
 Logs de dominio sem padrao (sem Observer).
 ## Slide 4: Decisao Arquitetural (ADR)
-ADR-024 — Catalogo de Padroes
+ADR-024: Catalogo de Padroes
 | Padrao | Onde | Decisao |
 | --- | --- | --- |
 | Adapter | CRM/LLM externos | ESCOLHIDO |

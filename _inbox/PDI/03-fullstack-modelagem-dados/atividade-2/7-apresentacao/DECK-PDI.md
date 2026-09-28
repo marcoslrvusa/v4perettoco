@@ -1,4 +1,4 @@
-# Deck PDI — APIs Modulares de Missao Critica (FastAPI) com Paginacao, Cache e Rate Limiting
+# Deck PDI: APIs Modulares de Missao Critica (FastAPI) com Paginacao, Cache e Rate Limiting
 
 Area: Arquitetura Full Stack
 
@@ -21,7 +21,7 @@ Offset em tabelas grandes = full scan.
 Conexoes nao pooladas -> esgotamento.
 Sem distincao 4xx vs 5xx.
 ## Slide 5: Decisao Arquitetural (ADR)
-ADR-032 — API Modular
+ADR-032: API Modular
 | Opcao | Pro | Contra | Decisao |
 | --- | --- | --- | --- |
 | FastAPI + Redis + slowapi | async, maduro | mais deps | ESCOLHIDA |

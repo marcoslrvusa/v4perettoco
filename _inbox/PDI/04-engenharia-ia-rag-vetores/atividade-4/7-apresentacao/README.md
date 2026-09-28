@@ -4,9 +4,9 @@ Engenharia de IA
 
 <h2><span class="num">1.</span> Contexto</h2>
 
-<p>LLM cobra por <strong>token</strong> (entrada + saída). Em produção, o custo explode silenciosamente: prompts repetidos, chamadas redundantes e modelo caro onde um barato bastaria. Reduzir custo não é "usar menos IA" — é <strong>usar a infraestrutura certa</strong>: cache, batch e <em>model routing</em>.</p>
+<p>LLM cobra por <strong>token</strong> (entrada + saída). Em produção, o custo explode silenciosamente: prompts repetidos, chamadas redundantes e modelo caro onde um barato bastaria. Reduzir custo não é "usar menos IA": é <strong>usar a infraestrutura certa</strong>: cache, batch e <em>model routing</em>.</p>
 
-<div class="didactic"><div class="didactic-title">Analogia do buffet</div>Token é a comida no prato — você paga por grama. <strong>Cache semântico</strong> é guardar a sobra na geladeira: se outro pede a mesma coisa, você serve do pote, não cozinha de novo. <strong>Batch</strong> é fazer 100 pratos de uma vez no forno, mais barato que um a um. <strong>Model routing</strong> é mandar o prato simples pro cozinheiro júnior e o complexo pro chef — paga o chef só quando precisa.</div>
+<div class="didactic"><div class="didactic-title">Analogia do buffet</div>Token é a comida no prato: você paga por grama. <strong>Cache semântico</strong> é guardar a sobra na geladeira: se outro pede a mesma coisa, você serve do pote, não cozinha de novo. <strong>Batch</strong> é fazer 100 pratos de uma vez no forno, mais barato que um a um. <strong>Model routing</strong> é mandar o prato simples pro cozinheiro júnior e o complexo pro chef: paga o chef só quando precisa.</div>
 
 <h2><span class="num">2.</span> Diagnóstico</h2>
 
@@ -18,7 +18,7 @@ Engenharia de IA
 
 <h2><span class="num">3.</span> Solução</h2>
 
-<p>Trinca de eficiência: (1) <strong>cache semântico</strong> — responde do cache quando a pergunta é similar a uma já respondida; (2) <strong>batch</strong> — empacota chamadas não-urgentes em lotes com desconto; (3) <strong>model routing</strong> — classifica a pergunta e manda pro modelo barato (ex.: mini) ou caro (frontier) conforme a complexidade.</p>
+<p>Trinca de eficiência: (1) <strong>cache semântico</strong>: responde do cache quando a pergunta é similar a uma já respondida; (2) <strong>batch</strong>: empacota chamadas não-urgentes em lotes com desconto; (3) <strong>model routing</strong>: classifica a pergunta e manda pro modelo barato (ex.: mini) ou caro (frontier) conforme a complexidade.</p>
 
 <h2><span class="num">4.</span> Como funciona (pipeline)</h2>
 
@@ -40,4 +40,4 @@ Engenharia de IA
 
 <h2><span class="num">8.</span> Status final</h2>
 
-<p><span class="status st-warn">NÃO publicado</span> — Desenvolvido e em homologação. Aguarda revisão antes de produção.</p>
+<p><span class="status st-warn">NÃO publicado</span>: Desenvolvido e em homologação. Aguarda revisão antes de produção.</p>

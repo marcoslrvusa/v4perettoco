@@ -396,7 +396,7 @@ hr {
 <h1>Padrão Universal de Tratamento de Erros <em>n8n Enterprise</em></h1>
 <div class="cover-meta">
 <strong>Autor:</strong> PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com<br>
-<strong>Unidade:</strong> FV Marketing / V4 Company — Automação &amp; Infraestrutura<br>
+<strong>Unidade:</strong> FV Marketing / V4 Company: Automação &amp; Infraestrutura<br>
 <strong>Data:</strong> Julho 2026<br>
 <strong>Status:</strong> Homologado<br>
 <strong>Versão:</strong> 2.0
@@ -420,7 +420,7 @@ hr {
 </p>
 <p>
   Este relatório documenta o PDI (Padrão Universal de Tratamento de Erros) implementado para resolver
-  esse problema de raiz — não apenas corrigindo as falhas pontuais, mas estabelecendo um <strong>padrão
+  esse problema de raiz: não apenas corrigindo as falhas pontuais, mas estabelecendo um <strong>padrão
   enterprise reutilizável</strong> para todos os workflows da operação.
 </p>
 </div>
@@ -435,13 +435,13 @@ hr {
 <tr><th>Workflow</th><th>Erro</th><th>Impacto</th></tr>
 </thead>
 <tbody>
-<tr><td>ADPLAN</td><td>JS timeout 25min — event loop bloqueado por SplitInBatches ausente</td><td><span class="badge bg-critical">P0</span></td></tr>
-<tr><td>SIGNOR</td><td>Task runner desconectado — servidor precisou de tuning</td><td><span class="badge bg-critical">P0</span></td></tr>
-<tr><td>Genics</td><td>Redis Cloud inacessível — DNS externo sem fallback</td><td><span class="badge bg-critical">P0</span></td></tr>
-<tr><td>SOFIA</td><td>Rate limit Chatwoot — sem wait entre requisições</td><td><span class="badge bg-warning">P1</span></td></tr>
-<tr><td>PRO ANÁLISES</td><td><code class="code-inline">toDateTime undefined</code> — campo opcional sem validação</td><td><span class="badge bg-warning">P1</span></td></tr>
-<tr><td>Schwalm</td><td>Null constraint em telefone — insert no Supabase sem validação</td><td><span class="badge bg-warning">P1</span></td></tr>
-<tr><td>V4 INTERNO</td><td>404 no Ekyte — board ID mudou sem atualizar o workflow</td><td><span class="badge bg-warning">P1</span></td></tr>
+<tr><td>ADPLAN</td><td>JS timeout 25min: event loop bloqueado por SplitInBatches ausente</td><td><span class="badge bg-critical">P0</span></td></tr>
+<tr><td>SIGNOR</td><td>Task runner desconectado: servidor precisou de tuning</td><td><span class="badge bg-critical">P0</span></td></tr>
+<tr><td>Genics</td><td>Redis Cloud inacessível: DNS externo sem fallback</td><td><span class="badge bg-critical">P0</span></td></tr>
+<tr><td>SOFIA</td><td>Rate limit Chatwoot: sem wait entre requisições</td><td><span class="badge bg-warning">P1</span></td></tr>
+<tr><td>PRO ANÁLISES</td><td><code class="code-inline">toDateTime undefined</code>: campo opcional sem validação</td><td><span class="badge bg-warning">P1</span></td></tr>
+<tr><td>Schwalm</td><td>Null constraint em telefone: insert no Supabase sem validação</td><td><span class="badge bg-warning">P1</span></td></tr>
+<tr><td>V4 INTERNO</td><td>404 no Ekyte: board ID mudou sem atualizar o workflow</td><td><span class="badge bg-warning">P1</span></td></tr>
 </tbody>
 </table>
 <p style="font-size:13px; color:var(--gray-500);">P0 = Bloqueia operação · P1 = Degrada experiência</p>
@@ -459,7 +459,7 @@ hr {
 
 <h3>2.3 Causa Raiz</h3>
 <p>
-  <strong>Ausência de padronização:</strong> cada workflow tratava erro do seu jeito improvisado — ou
+  <strong>Ausência de padronização:</strong> cada workflow tratava erro do seu jeito improvisado: ou
   simplesmente não tratava. Não havia taxonomia de erros, política de retry, notificação,
   persistência ou proteção contra cascata. O resultado era um ecossistema frágil onde uma falha
   em um nó poderia derrubar todo o fluxo sem deixar rastro.
@@ -469,7 +469,7 @@ hr {
 <!-- 3. ARQUITETURA -->
 <div class="section">
 <h2><span class="num">3.</span> Arquitetura da Solução</h2>
-<p class="sub">Três camadas obrigatórias e complementares. Não são alternativas — um workflow enterprise
+<p class="sub">Três camadas obrigatórias e complementares. Não são alternativas: um workflow enterprise
 precisa das três.</p>
 
 <div class="layer-table">
@@ -477,7 +477,7 @@ precisa das três.</p>
 <div class="tag">Camada 1</div>
 <div class="body">
 <div class="title">Node-Level · Auto-cura local</div>
-<div class="desc"><code class="code-inline">retryOnFail</code> + <code class="code-inline">continueErrorOutput</code> em cada nó falível. Captura ~73% das falhas transientes (429, 503, timeout) no próprio nó — sem overhead de workflow externo.</div>
+<div class="desc"><code class="code-inline">retryOnFail</code> + <code class="code-inline">continueErrorOutput</code> em cada nó falível. Captura ~73% das falhas transientes (429, 503, timeout) no próprio nó: sem overhead de workflow externo.</div>
 </div>
 <div class="pct">~73%</div>
 </div>
@@ -511,13 +511,13 @@ precisa das três.</p>
 </p>
 <p>
   <strong>Por que 3 camadas e não 2?</strong> A Camada 1 (node-level) é a mais barata e captura a
-  maioria dos casos — mas não cobre erros de lógica (dado inválido, runtime). A Camada 2 classifica
+  maioria dos casos: mas não cobre erros de lógica (dado inválido, runtime). A Camada 2 classifica
   o que escapar, mas não protege APIs contra cascata. A Camada 3 existe exatamente para isso:
   impedir que uma API falha receba golpes em sequência.
 </p>
 <p>
   <strong>E se o Error Handler Central cair?</strong> Os erros ficam no log interno do n8n até o
-  handler voltar. Há perda de notificação, mas não de dado — a DLQ é populada no Supabase, que tem
+  handler voltar. Há perda de notificação, mas não de dado: a DLQ é populada no Supabase, que tem
   SLA próprio. Além disso, o Circuit Breaker Monitor roda independentemente a cada 5 min.
 </p>
 </div>
@@ -547,7 +547,7 @@ Sem ambigüidade, sem exceção.</p>
 <div class="section">
 <h2><span class="num">5.</span> Envelope Padrão de Erro</h2>
 <p class="sub">Todo workflow que captura um erro DEVE produzir este envelope JSON. O <code class="code-inline">correlationId</code>
-é estável entre retries — permite rastrear uma falha desde a primeira tentativa até o descarte na DLQ.</p>
+é estável entre retries: permite rastrear uma falha desde a primeira tentativa até o descarte na DLQ.</p>
 
 <div class="code-block">
 {<br>
@@ -556,7 +556,7 @@ Sem ambigüidade, sem exceção.</p>
 &nbsp;&nbsp;<span class="k">"correlationId"</span>: <span class="s">"abc123-67890"</span>,<br>
 &nbsp;&nbsp;<span class="k">"workflowName"</span>:  <span class="s">"CRM Sync"</span>,<br>
 &nbsp;&nbsp;<span class="k">"workflowId"</span>:    <span class="s">"abc123"</span>,<br>
-&nbsp;&nbsp;<span class="k">"failedNode"</span>:    <span class="s">"HTTP Request — Attio"</span>,<br>
+&nbsp;&nbsp;<span class="k">"failedNode"</span>:    <span class="s">"HTTP Request: Attio"</span>,<br>
 &nbsp;&nbsp;<span class="k">"errorMessage"</span>:  <span class="s">"Request failed with status code 502"</span>,<br>
 &nbsp;&nbsp;<span class="k">"executionUrl"</span>:  <span class="s">"https://n8n.fvmarketing.com.br/workflow/abc123/executions/67890"</span>,<br>
 &nbsp;&nbsp;<span class="k">"timestamp"</span>:     <span class="s">"2026-07-08T10:30:00.000Z"</span><br>
@@ -567,7 +567,7 @@ Sem ambigüidade, sem exceção.</p>
 <p>O Code node do Error Handler Central implementa a taxonomia via regex. Abaixo, o core da lógica:</p>
 
 <div class="code-block">
-<span class="c">// Error Handler Central — Parse + Classify</span><br>
+<span class="c">// Error Handler Central: Parse + Classify</span><br>
 <span class="k">const</span> msg = (execution.error?.message || <span class="s">''</span>).toLowerCase();<br><br>
 <span class="k">let</span> errorClass = <span class="s">'unknown'</span>;<br>
 <span class="k">let</span> severity = <span class="s">'info'</span>;<br><br>
@@ -612,7 +612,7 @@ Sem ambigüidade, sem exceção.</p>
 <tr><td>Redis</td><td>✓</td><td>2</td><td>2000 ms</td><td>Conexão local</td></tr>
 <tr><td>Postgres</td><td>✓</td><td>2</td><td>3000 ms</td><td>Timeout de query</td></tr>
 <tr><td>n8n API</td><td>✓</td><td>3</td><td>5000 ms</td><td>Rate limit interno</td></tr>
-<tr><td><strong>Code node</strong></td><td><strong>✗</strong></td><td><strong>—</strong></td><td><strong>—</strong></td><td><strong>NUNCA retentar — erro de lógica</strong></td></tr>
+<tr><td><strong>Code node</strong></td><td><strong>✗</strong></td><td><strong>-</strong></td><td><strong>-</strong></td><td><strong>NUNCA retentar: erro de lógica</strong></td></tr>
 </tbody>
 </table>
 
@@ -632,7 +632,7 @@ Sem ambigüidade, sem exceção.</p>
 <li>4xx (exceto 408/409/425/429)</li>
 <li>Data validation</li>
 <li>Runtime / OOM</li>
-<li>401/403 (credencial expirou — alertar)</li>
+<li>401/403 (credencial expirou: alertar)</li>
 </ul>
 </div>
 <div class="card">
@@ -740,10 +740,10 @@ closed --(5 falhas)--&gt; open --(5 min)--&gt; half-open --(sucesso)--&gt; close
 
 <h4 style="margin-top:12px;">Views de Monitoramento</h4>
 <div style="font-size:13px; color:var(--gray-600); line-height:2;">
-<code style="color:var(--accent);">vw_error_health_score</code> — Score geral de saúde (0-1)<br>
-<code style="color:var(--accent);">vw_circuits_open_now</code> — Circuitos abertos neste momento<br>
-<code style="color:var(--accent);">vw_error_summary_24h</code> — Top erros das últimas 24h<br>
-<code style="color:var(--accent);">vw_retry_success_rate</code> — Taxa de auto-cura por nó
+<code style="color:var(--accent);">vw_error_health_score</code>: Score geral de saúde (0-1)<br>
+<code style="color:var(--accent);">vw_circuits_open_now</code>: Circuitos abertos neste momento<br>
+<code style="color:var(--accent);">vw_error_summary_24h</code>: Top erros das últimas 24h<br>
+<code style="color:var(--accent);">vw_retry_success_rate</code>: Taxa de auto-cura por nó
 </div>
 </div>
 </div>
@@ -893,9 +893,40 @@ bash PDI/6-automation/deploy-error-handler.sh
 </div>
 </div>
 
+<!-- 13. DECISOES -->
+<div class="section">
+<h2><span class="num">13.</span> Decisoes e tradeoffs</h2>
+<p class="sub">Escolhas derivadas do conteudo real da atividade, com custo e beneficio explicitos.</p>
+<ul style="margin:8px 0 16px 20px;">
+<li style="font-size:14px; margin-bottom:6px;"><strong>Handler central unico:</strong> manutencao em um unico ponto com 10 nos validados com n8nac. Se o handler cair, perde-se notificacao temporaria, mas nao o dado, pois a DLQ esta no Supabase e o Monitor roda a cada 5 min.</li>
+<li style="font-size:14px; margin-bottom:6px;"><strong>Tres camadas obrigatorias:</strong> Camada 1 captura cerca de 73% das falhas transientes sem overhead externo, Camada 2 classifica e notifica em menos de 1 min e Camada 3 impede cascata. Custo de mais configuracao por no em troca de auto-cura acima de 70%.</li>
+<li style="font-size:14px; margin-bottom:6px;"><strong>Code node nunca retenta:</strong> erro de logica como toDateTime undefined ou null constraint em telefone nao se resolve com retry. Exige validacao com IF e try/catch para nao queimar creditos de API.</li>
+<li style="font-size:14px; margin-bottom:6px;"><strong>Breaker isolado por workflow:</strong> limiar de 5 falhas consecutivas e cooldown de 5 min com recovery automatico. Pausa temporaria em troca de estabilidade sistemica.</li>
+<li style="font-size:14px; margin-bottom:6px;"><strong>DLQ permanente no Supabase:</strong> schema v2.1 com 4 tabelas e 4 views preserva payload com correlationId estavel para replay. Custo de manter migracao e views como vw_error_health_score e vw_circuits_open_now.</li>
+</ul>
+</div>
+
+<!-- 14. IMPACTO -->
+<div class="section">
+<h2><span class="num">14.</span> Impacto no negocio</h2>
+<p>Com 7 workflows SDR IA sem notificacao e deteccao levando dias, cada falha silenciosa derrubava o SLA de atendimento a leads sem ninguem saber. O padrao reduz a deteccao para menos de 1 min via Slack, eleva a auto-cura para mais de 70% com retry no no e zera circuitos abertos sem alerta (de 100% para 0%). O retrofit completo cabe em 4 dias, com cerca de 1h para as 5 correcoes pontuais ja mapeadas (20 min no ADPLAN e 10 min em cada um dos outros 4), o que corta risco operacional e retrabalho de investigacao manual.</p>
+</div>
+
+<!-- 15. REFERENCIAS -->
+<div class="section">
+<h2><span class="num">15.</span> Referencias de estudo</h2>
+<p class="sub">Material para aprofundar os temas usados nesta atividade.</p>
+<ul style="margin:8px 0 16px 20px;">
+<li style="font-size:14px; margin-bottom:6px;"><strong>Curso:</strong> Automacao e Orquestracao n8n do Basico ao Avancado, na Udemy.</li>
+<li style="font-size:14px; margin-bottom:6px;"><strong>Video:</strong> Error Trigger in n8n, tratamento centralizado de erros, no YouTube, canal oficial n8n.</li>
+<li style="font-size:14px; margin-bottom:6px;"><strong>Doc:</strong> n8n Docs, Error handling with Error Trigger workflows, na plataforma n8n Docs.</li>
+<li style="font-size:14px; margin-bottom:6px;"><strong>Doc:</strong> Supabase Docs, Database tables, views and indexes, na plataforma Supabase Docs.</li>
+</ul>
+</div>
+
 <!-- FOOTER -->
 <div class="footer">
-<strong>PDI — Padrão Universal de Tratamento de Erros n8n Enterprise</strong><br>
+<strong>PDI: Padrão Universal de Tratamento de Erros n8n Enterprise</strong><br>
 Autor: Marcos Luciano · Tech Lead · FV Marketing / V4 Company<br>
 Data: Julho 2026 · Versão 2.0 · Status: Homologado<br>
 Slug: <code style="color: var(--accent);">pdi-orquestracao-corporativa-n8n-a1</code><br>

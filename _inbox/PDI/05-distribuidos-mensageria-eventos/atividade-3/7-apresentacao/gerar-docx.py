@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Gera o DOCX desta atividade a partir de report.json (padrao PDI senior)."""
+"""Gera o DOCX desta atividade a partir de report.json (padrao PDI senior), incluindo as secoes de autoria."""
 import json, os
 from docx import Document
 from docx.shared import Pt, Cm, RGBColor
@@ -8,6 +8,14 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 HERE = os.path.dirname(os.path.abspath(__file__))
 with open(os.path.join(HERE, "report.json"), encoding="utf-8") as f:
     D = json.load(f)
+
+SKIP = {"Decisoes e tradeoffs", "Impacto no negocio", "Referencias de estudo"}
+
+NEW = [
+    ("Decisoes e tradeoffs", "ul", ["Timeout de 800ms conta como falha: se o Score nao responde em 800ms, o Pagamento nao prende thread esperando.", "Breaker abre apos mais de 5 falhas em 10s: em OPEN o score_cache() responde em menos de 1s, isolando a falha no Score.", "Half-open apos 30s com 1 sonda: o breaker.test() libera uma chamada de teste; se ok, fecha, se nao, mantem OPEN. Recupera sozinho em vez de exigir acao manual.", "Retry com backoff de 0.1 a 0.4s mais jitter so em CLOSED: espera crescente com ruido; retry imediato foi rejeitado porque piora o outage."]),
+    ("Impacto no negocio", "p", ["Com abertura em ate 5 falhas e fallback em 100% do outage, o Pagamento sustenta 99,9% de disponibilidade mesmo com o Score fora do ar por minutos. Sem a protecao, a lentidao virava esgotamento de threads e erro para o cliente; com ela, a degradacao e graciosa em milissegundos e o retorno e automatico via half-open, sem intervencao manual."]),
+    ("Referencias de estudo", "ul", ["Curso: \"Microservices: Resilience Patterns with Resilience4j\" (Udemy).", "Video: \"Circuit Breaker Pattern Explained\" (YouTube, Fireship).", "Documento oficial: Microsoft Learn, \"Circuit Breaker pattern\" (learn.microsoft.com).", "Documento oficial: Resilience4j Documentation (resilience4j.readme.io)."]),
+]
 
 doc = Document()
 st = doc.styles['Normal']; st.font.name = 'Calibri'; st.font.size = Pt(11)
@@ -22,8 +30,8 @@ def cover():
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER; p.space_before = Pt(28)
     r = p.add_run('Documento Tecnico de PDI'); r.font.size = Pt(12); r.font.color.rgb = RGBColor(0x6B,0x7A,0x8A)
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER; p.space_before = Pt(16)
-    for line in [f"Autor: {D['autor']}", f"Unidade: {D['unidade']}", f"Data: {D['data']}",
-                 f"Area: {D['area']}", "Status: Entregue (desenvolvido)"]:
+    for line in [f"Autor: {D['autor']}", f"Unidade: {D.get('unidade', 'FV Marketing / V4 Company')}", f"Data: {D.get('data', 'Agosto 2026')}",
+                 f"Area: {D.get('area', '05 - Sistemas Distribuidos, Mensageria e Eventos')}", "Status: Entregue (desenvolvido)"]:
         rr = p.add_run(line + '\n'); rr.font.size = Pt(11); rr.font.color.rgb = RGBColor(0x49,0x55,0x60)
     doc.add_page_break()
 
@@ -55,7 +63,22 @@ def add_section(title, blocks):
 
 cover()
 for title, blocks in D['sections']:
+    if title.split(". ", 1)[-1] in SKIP:
+        continue
+    if isinstance(blocks, str):
+        hh = doc.add_heading(title, level=2)
+        for r in hh.runs: r.font.color.rgb = RGBColor(0x8B,0x1E,0x1E)
+        continue
     add_section(title, blocks)
+for title, kind, items in NEW:
+    hh = doc.add_heading(title, level=2)
+    for r in hh.runs: r.font.color.rgb = RGBColor(0x8B,0x1E,0x1E)
+    if kind == "p":
+        for x in items:
+            doc.add_paragraph(x)
+    else:
+        for x in items:
+            doc.add_paragraph(x, style='List Bullet')
 out = os.path.join(HERE, "pdi-" + D['slug'] + ".docx")
 doc.save(out)
 print("DOCX:", out)

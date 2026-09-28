@@ -40,4 +40,4 @@ Engenharia de IA
 
 <h2><span class="num">8.</span> Status final</h2>
 
-<p><span class="status st-warn">NÃO publicado</span> — Desenvolvido e em homologação. Aguarda revisão antes de produção.</p>
+<p><span class="status st-warn">NÃO publicado</span>: Desenvolvido e em homologação. Aguarda revisão antes de produção.</p>

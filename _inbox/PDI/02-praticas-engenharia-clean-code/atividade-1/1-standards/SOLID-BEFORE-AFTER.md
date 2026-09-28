@@ -1,4 +1,4 @@
-# SOLID — Antes vs Depois
+# SOLID: Antes vs Depois
 
 ## Antes
 - **SRP:** run() faz regra + SQL + SMTP + CRM.

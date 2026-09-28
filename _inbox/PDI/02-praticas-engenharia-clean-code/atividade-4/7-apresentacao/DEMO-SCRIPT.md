@@ -1,4 +1,4 @@
-# Roteiro de Demo — Estudo de Design Patterns aplicados ao ecossistema
+# Roteiro de Demo: Estudo de Design Patterns aplicados ao ecossistema
 
 Abra o deck (index.html) e percorra os slides na ordem.
 

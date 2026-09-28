@@ -1,4 +1,4 @@
-# Multi-Agente — Padrao
+# Multi-Agente: Padrao
 
 ```
 Supervisor (roteia)

@@ -34,7 +34,7 @@ O CampaignService original misturava regra de negocio, acesso direto a banco, en
 
 ## Diagnostico e Causa Raiz
 
-- SQL concatenado (f"SELECT ... {camp.id}") — vetor de injection.
+- SQL concatenado (f"SELECT ... {camp.id}"): vetor de injection.
 
 - Sem transacao: lead marcado enviado mas e-mail falha -> estado inconsistente.
 
@@ -42,7 +42,7 @@ O CampaignService original misturava regra de negocio, acesso direto a banco, en
 
 ## Decisao Arquitetural (ADR)
 
-ADR-021 — Camadas e Ports/Adapters
+ADR-021: Camadas e Ports/Adapters
 
 | Opcao | Pro | Contra | Decisao |
 
@@ -58,15 +58,15 @@ ADR-021 — Camadas e Ports/Adapters
 
 ## Entregas desta Atividade
 
-- SOLID-BEFORE-AFTER.md — mapeamento violacao->solucao.
+- SOLID-BEFORE-AFTER.md: mapeamento violacao->solucao.
 
-- before_campaign_service.py — modulo legado.
+- before_campaign_service.py: modulo legado.
 
-- after_campaign_service.py — Clean Architecture + 1 teste.
+- after_campaign_service.py: Clean Architecture + 1 teste.
 
 ## Plano de Validacao e Rollout
 
-1. Cobrir o servico com testes de porta (mock de Notifier/Repository) — alvo 85%.
+1. Cobrir o servico com testes de porta (mock de Notifier/Repository): alvo 85%.
 
 2. Feature flag: novo modulo em paralelo por 1 sprint (shadow).
 
@@ -103,3 +103,19 @@ ADR-021 — Camadas e Ports/Adapters
 - Aplicar o molde aos demais modulos legados.
 
 - Mutation testing (mutmut) no servico.
+## Decisoes e tradeoffs
+- Clean Architecture escolhida sobre hexagonal puro e manter acoplado com E2E: testabilidade com ports desacoplados compensa o custo de mais arquivos, como registra o ADR-021.
+- Dependencias de I/O como Protocol (LeadRepository, Notifier, Logger) com injecao no bootstrap: o servico passa a depender de abstracoes e o teste usa FakeRepo sem subir infra.
+- Rollout em shadow por 1 sprint com reconciliacao diaria e corte em divergencia menor que 0,1 por cento, em vez de cutover direto: compara o modulo novo com o legado de 600 linhas sem expor listas de 5k a 80k leads a estado parcial.
+- Meta de cobertura de 85 por cento nos testes de porta com mocks, em vez de teste manual: o legado tinha 0 por cento de cobertura e 4 dependencias de I/O acopladas, entao o gate quantitativo impede regressao silenciosa.
+- Classes menores que 45 linhas com 1 responsabilidade por classe, aceitando mais arquivos: elimina SQL concatenado, falta de transacao e falha silenciosa de CRM que ja causou duplo contato.
+
+## Impacto no negocio
+
+O modulo dispara 3 a 5 campanhas por dia para listas de 5k a 80k leads, entao cada falha silenciosa vira duplo contato e reclamacao real. Sair de 600 linhas com 0 por cento de cobertura para classes menores que 45 linhas com alvo de 85 por cento reduz o tempo de alteracao de deploy manual com teste manual para validacao automatica, baixa o risco de SQL injection e estado parcial sem transacao, e evita o custo de hotfix em base grande com rollback simples por feature flag.
+
+## Referencias de estudo
+- Curso: Clean Architecture e SOLID com Python, na Alura.
+- Video: SOLID em codigo Python na pratica, no YouTube.
+- Doc oficial: Documentacao do Python sobre Protocol e tipagem estrutural, em docs.python.org.
+- Doc oficial: Documentacao do pytest sobre fixtures e mocks, em docs.pytest.org.

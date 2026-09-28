@@ -1,4 +1,4 @@
-# Mensageria — Padrao
+# Mensageria: Padrao
 
 - **Fila**: 1 consumidor (trabalho).
 - **Topico**: N consumidores (evento).

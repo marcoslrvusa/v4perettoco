@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PDI — Resiliência MarTech n8n</title>
+<title>PDI: Resiliência MarTech n8n</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;500&display=swap" rel="stylesheet">
 <style>
@@ -177,16 +177,16 @@ tr:hover td { color: var(--text); }
 </div>
 <div class="progress"><div class="progress-bar" id="bar"></div></div>
 
-<!-- SLIDE 1 — CAPA -->
+<!-- SLIDE 1: CAPA -->
 <section class="slide" id="s1">
   <div class="slide-num">SLIDE 01 / 08</div>
-  <span class="tag">PDI — Atividade 02</span>
+  <span class="tag">PDI: Atividade 02</span>
   <h1>Resiliência <span class="g">MarTech</span><br>n8n Enterprise</h1>
-  <p class="sub">Filas assíncronas com controle de concorrência, processamento de payloads pesados com checkpoint e observabilidade completa de sincronização com CRMs — antes que a falha chegue ao cliente.</p>
+  <p class="sub">Filas assíncronas com controle de concorrência, processamento de payloads pesados com checkpoint e observabilidade completa de sincronização com CRMs: antes que a falha chegue ao cliente.</p>
   <p class="sub" style="color:var(--text3);font-size:12px;">Status: <span class="badge b-warn">NÃO publicado</span> · Aguardando homologação</p>
 </section>
 
-<!-- SLIDE 2 — PROBLEMA -->
+<!-- SLIDE 2: PROBLEMA -->
 <section class="slide">
   <div class="slide-num">SLIDE 02 / 08</div>
   <div class="tag">Problema</div>
@@ -198,7 +198,7 @@ tr:hover td { color: var(--text); }
     </div>
     <div class="card">
       <div class="card-title">Payload pesado</div>
-      <p>Processamento de 10k+ itens roda de uma vez. Um timeout no meio perde tudo — o job recomeça do zero.</p>
+      <p>Processamento de 10k+ itens roda de uma vez. Um timeout no meio perde tudo: o job recomeça do zero.</p>
     </div>
     <div class="card">
       <div class="card-title">Sem observabilidade</div>
@@ -207,7 +207,7 @@ tr:hover td { color: var(--text); }
   </div>
 </section>
 
-<!-- SLIDE 3 — ARQUITETURA -->
+<!-- SLIDE 3: ARQUITETURA -->
 <section class="slide">
   <div class="slide-num">SLIDE 03 / 08</div>
   <div class="tag">Arquitetura</div>
@@ -232,11 +232,11 @@ tr:hover td { color: var(--text); }
   </div>
 </section>
 
-<!-- SLIDE 4 — DADOS -->
+<!-- SLIDE 4: DADOS -->
 <section class="slide">
   <div class="slide-num">SLIDE 04 / 08</div>
   <div class="tag">Schema Supabase</div>
-  <h2>v3.0 — <span class="g">aditivo</span>, sem tocar no error_*</h2>
+  <h2>v3.0: <span class="g">aditivo</span>, sem tocar no error_*</h2>
   <div class="g2" style="margin-top:28px;">
     <div>
       <h3>Tabelas</h3>
@@ -264,11 +264,11 @@ tr:hover td { color: var(--text); }
   </div>
 </section>
 
-<!-- SLIDE 5 — DRIFT -->
+<!-- SLIDE 5: DRIFT -->
 <section class="slide">
   <div class="slide-num">SLIDE 05 / 08</div>
   <div class="tag">Detecção de divergência</div>
-  <h2><span class="y">Drift</span> — detectado antes do cliente</h2>
+  <h2><span class="y">Drift</span>: detectado antes do cliente</h2>
   <pre><code><span class="c">// Tolerância configurável (default 5%)</span>
 esperado   = 1200   <span class="c">// o que o workflow devia syncar</span>
 confirmado = 1184   <span class="c">// o que o CRM confirmou</span>
@@ -281,12 +281,12 @@ drift      = <span class="r">14%</span>   <span class="c">// &gt; 5% → mt_sync
   <p class="sub">O envelope de sync calcula hash de payload e resposta; o Observabilidade decide se há drift e alimenta o dashboard em tempo real.</p>
 </section>
 
-<!-- SLIDE 6 — RETENTATIVA / CHECKPOINT -->
+<!-- SLIDE 6: RETENTATIVA / CHECKPOINT -->
 <section class="slide">
   <div class="slide-num">SLIDE 06 / 08</div>
   <div class="tag">Payload pesado</div>
   <h2>Retomada do <span class="g">chunk</span>, não do zero</h2>
-  <pre><code><span class="c">// mt_job_progress — checkpoint por chunk</span>
+  <pre><code><span class="c">// mt_job_progress: checkpoint por chunk</span>
 chunk_index  4 / 10
 status       running
 
@@ -302,7 +302,7 @@ max_attempts = 3</code></pre>
   <p class="sub">O envelope de erro (atividade 1, Error Handler Central) continua tratando o que escapar daqui.</p>
 </section>
 
-<!-- SLIDE 7 — MÉTRICAS -->
+<!-- SLIDE 7: MÉTRICAS -->
 <section class="slide">
   <div class="slide-num">SLIDE 07 / 08</div>
   <div class="tag">Métricas</div>
@@ -323,7 +323,7 @@ max_attempts = 3</code></pre>
   </table>
 </section>
 
-<!-- SLIDE 8 — ENTREGAS / NEXT -->
+<!-- SLIDE 8: ENTREGAS / NEXT -->
 <section class="slide">
   <div class="slide-num">SLIDE 08 / 08</div>
   <div class="tag">Entregas</div>
@@ -332,12 +332,12 @@ max_attempts = 3</code></pre>
     <div class="card">
       <div class="card-title">Entregas</div>
       <ul>
-        <li>1-standards/ — 3 padrões</li>
-        <li>2-workflows/ — 4 pipelines .workflow.ts</li>
-        <li>3-supabase/ — schema v3.0 + migração</li>
-        <li>4-retrofit/ — adaptação de fluxos existentes</li>
-        <li>5-monitoring/ — queries + alertas</li>
-        <li>6-automation/ — scripts de deploy</li>
+        <li>1-standards/: 3 padrões</li>
+        <li>2-workflows/: 4 pipelines .workflow.ts</li>
+        <li>3-supabase/: schema v3.0 + migração</li>
+        <li>4-retrofit/: adaptação de fluxos existentes</li>
+        <li>5-monitoring/: queries + alertas</li>
+        <li>6-automation/: scripts de deploy</li>
       </ul>
     </div>
     <div class="card">

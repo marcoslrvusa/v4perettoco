@@ -1,4 +1,4 @@
-# Dashboard de Monitoramento — Queries Supabase
+# Dashboard de Monitoramento: Queries Supabase
 
 ## 1. Health Score Geral
 

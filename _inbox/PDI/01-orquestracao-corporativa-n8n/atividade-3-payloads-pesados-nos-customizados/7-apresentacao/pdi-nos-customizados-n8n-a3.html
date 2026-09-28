@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PDI: Nós Customizados n8n — Registro de Entrega</title>
+<title>PDI: Nós Customizados n8n: Registro de Entrega</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -223,11 +223,11 @@ li { color: var(--gray-700); font-size: 14px; margin-bottom: 6px; }
   <div class="cover"><img class="logo" src="https://marcoslrvusa.github.io/v4perettoco/v4logowhitepng.png" alt="V4 Company" style="height:48px;width:auto">
     <div class="cover-avatar"><img src="../../../../../assets/images/logo-peretto-perfil.jpg" alt="Marcos Luciano"></div>
     <div class="cover-logo"><img src="../../../../../assets/logo-peretto.png" alt="Peretto"></div>
-    <span class="cover-badge">PDI — Atividade 03 · Registro de Entrega</span>
+    <span class="cover-badge">PDI: Atividade 03 · Registro de Entrega</span>
     <h1>Nós <em>Customizados</em> e Expressões Avançadas n8n</h1>
     <div class="cover-meta">
       <strong>Autor:</strong> PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com<br>
-      <strong>Unidade:</strong> FV Marketing / V4 Company — Automação &amp; Infraestrutura<br>
+      <strong>Unidade:</strong> FV Marketing / V4 Company: Automação &amp; Infraestrutura<br>
       <strong>Data:</strong> Agosto 2026<br>
       <strong>Status:</strong> <span class="status st-warn">NÃO publicado</span> · Desenvolvido / Homologação pendente<br>
       <strong>Versão:</strong> 1.0
@@ -240,23 +240,23 @@ li { color: var(--gray-700); font-size: 14px; margin-bottom: 6px; }
     <h2><span class="num">1.</span> Contexto</h2>
     <p>
       Os pipelines n8n da V4 Company (SDR IA e MarTech) processam payloads cada vez
-      maiores — listas de leads, sincronizações de CRM, importações em massa. Os nós
+      maiores: listas de leads, sincronizações de CRM, importações em massa. Os nós
       <code>Code</code> que fazem esse trabalho foram escritos como "um nó que faz
       tudo": carregam o payload inteiro em memória, re-parseiam JSON a cada etapa,
       percorrem listas com complexidade O(n²) e repetem a mesma lógica entre dezenas
       de workflows. Três problemas estruturais motivam este PDI:
     </p>
     <ul>
-      <li><strong>Payloads pesados estouram a instância</strong> — 100k+ itens com <code>map().filter()</code> encadeado e <code>{ ...item }</code> por iteração geram OOM e event loop bloqueado.</li>
-      <li><strong>Parse e complexidade desperdiçados</strong> — <code>JSON.parse</code> dentro de loops e buscas por item (<code>.find</code>, <code>indexOf</code>) viram O(n²).</li>
-      <li><strong>Lógica duplicada e sem padrão</strong> — o mesmo transform copiado entre workflows, expressões inline difíceis de manter e nenhuma biblioteca compartilhada.</li>
+      <li><strong>Payloads pesados estouram a instância</strong>: 100k+ itens com <code>map().filter()</code> encadeado e <code>{ ...item }</code> por iteração geram OOM e event loop bloqueado.</li>
+      <li><strong>Parse e complexidade desperdiçados</strong>: <code>JSON.parse</code> dentro de loops e buscas por item (<code>.find</code>, <code>indexOf</code>) viram O(n²).</li>
+      <li><strong>Lógica duplicada e sem padrão</strong>: o mesmo transform copiado entre workflows, expressões inline difíceis de manter e nenhuma biblioteca compartilhada.</li>
     </ul>
 
     <h2><span class="num">2.</span> Diagnóstico</h2>
     <h3>2.1 Causa raiz</h3>
     <p>
       Não existe uma <strong>camada padrão de transformação</strong> no n8n da V4. Cada
-      nó Code reinventa a roda — e a forma "mais fácil de escrever" é a mais cara de
+      nó Code reinventa a roda: e a forma "mais fácil de escrever" é a mais cara de
       rodar. O resultado é o sintoma já visto na atividade 1 (ADPLAN: JS timeout de
       25 min) e na atividade 2 (payload pesado sem processamento incremental).
     </p>
@@ -271,7 +271,7 @@ li { color: var(--gray-700); font-size: 14px; margin-bottom: 6px; }
       </tr>
       <tr>
         <td><strong>2. Nós Code Python no n8n</strong></td>
-        <td>Enriquecimento e agregação pesados com a biblioteca padrão (collections, itertools) — sem dependências externas.</td>
+        <td>Enriquecimento e agregação pesados com a biblioteca padrão (collections, itertools): sem dependências externas.</td>
         <td><code>[CC] NOS - Python Payload Enricher</code></td>
       </tr>
       <tr>
@@ -281,11 +281,11 @@ li { color: var(--gray-700); font-size: 14px; margin-bottom: 6px; }
       </tr>
     </table>
 
-    <pre><span class="c">// O coração da mudança — de O(n²) para O(n)</span>
+    <pre><span class="c">// O coração da mudança: de O(n²) para O(n)</span>
 <span class="c">// ANTES: busca por item dentro do loop</span>
 items.forEach(item =&gt; { const x = items.find(o =&gt; o.id === item.ref); })
 
-<span class="c">// DEPOIS: índice Map + Set de dedupe — UMA passada</span>
+<span class="c">// DEPOIS: índice Map + Set de dedupe: UMA passada</span>
 const seen = new Set();
 for (const item of items) {
   if (seen.has(item.id)) continue;
@@ -305,7 +305,7 @@ for (const item of items) {
 
     <div class="pipeline">
       <div class="pipeline-head">
-        <span class="pipeline-title">Como a engenharia funciona — <em>payload pesado de ponta a ponta</em></span>
+        <span class="pipeline-title">Como a engenharia funciona: <em>payload pesado de ponta a ponta</em></span>
         <span class="pipeline-live"><span class="dot"></span> fluxo em execução</span>
       </div>
       <div class="pipeline-body">
@@ -337,7 +337,7 @@ for (const item of items) {
             <div class="num">3</div>
             <div>
               <div class="name">Normalize in One Pass <code>(JS)</code></div>
-              <div class="desc">Filtra, dedupe (Set por chave primitiva) e transforma no <strong>mesmo</strong> loop — complexidade O(n), cópia mínima de campos.</div>
+              <div class="desc">Filtra, dedupe (Set por chave primitiva) e transforma no <strong>mesmo</strong> loop: complexidade O(n), cópia mínima de campos.</div>
               <span class="pl-chip"><span class="pl-tag ok">O(n)</span><span class="pl-tag ok">dedupe Set</span><span class="pl-tag">cópia mínima</span></span>
             </div>
           </div>
@@ -346,7 +346,7 @@ for (const item of items) {
             <div class="num">4</div>
             <div>
               <div class="name">Enrich Python <code>(Python)</code></div>
-              <div class="desc">Enriquecimento e agregação com a biblioteca padrão (<code>collections</code>, <code>itertools</code>) — sem pandas, sem pip.</div>
+              <div class="desc">Enriquecimento e agregação com a biblioteca padrão (<code>collections</code>, <code>itertools</code>): sem pandas, sem pip.</div>
               <span class="pl-chip"><span class="pl-tag">stdlib only</span><span class="pl-tag ok">Counter/defaultdict</span></span>
             </div>
           </div>
@@ -355,7 +355,7 @@ for (const item of items) {
             <div class="num">5</div>
             <div>
               <div class="name">Return Metrics <code>(JS)</code></div>
-              <div class="desc">Entrega <code>processedItems</code>, <code>deduped</code>, <code>durationMs</code> e <code>itemsPerSecond</code> — a base das queries de performance do <code>5-monitoring/</code>.</div>
+              <div class="desc">Entrega <code>processedItems</code>, <code>deduped</code>, <code>durationMs</code> e <code>itemsPerSecond</code>: a base das queries de performance do <code>5-monitoring/</code>.</div>
               <span class="pl-chip"><span class="pl-tag ok">items/s</span><span class="pl-tag ok">dedupe ratio</span></span>
             </div>
           </div>
@@ -374,13 +374,13 @@ for (const item of items) {
     </div>
 
     <div class="callout">
-      <strong>Escala:</strong> o mesmo fluxo que processa 10 itens processa 100k — o chunking
+      <strong>Escala:</strong> o mesmo fluxo que processa 10 itens processa 100k: o chunking
       streaming e o dedupe O(n) garantem memória controlada e event loop livre.
     </div>
 
     <h2><span class="num">5.</span> Por que O(n) muda tudo</h2>
     <p>O mesmo payload de 100 mil itens custa bilhões de operações no padrão antigo
-      (O(n²)) e poucas centenas de milhares no novo (O(n)) — e a memória acompanha:</p>
+      (O(n²)) e poucas centenas de milhares no novo (O(n)): e a memória acompanha:</p>
 
     <div class="charts">
       <div class="chart-card">
@@ -398,8 +398,8 @@ for (const item of items) {
           <text x="40" y="188" fill="#8896a8" font-size="9" font-family="JetBrains Mono">1k</text>
           <text x="196" y="188" fill="#8896a8" font-size="9" font-family="JetBrains Mono">50k</text>
           <text x="300" y="188" fill="#8896a8" font-size="9" font-family="JetBrains Mono">100k</text>
-          <text x="150" y="12" fill="#c0392b" font-size="10" font-family="JetBrains Mono">O(n²) — antigo</text>
-          <text x="150" y="26" fill="#168b49" font-size="10" font-family="JetBrains Mono">O(n) — novo</text>
+          <text x="150" y="12" fill="#c0392b" font-size="10" font-family="JetBrains Mono">O(n²): antigo</text>
+          <text x="150" y="26" fill="#168b49" font-size="10" font-family="JetBrains Mono">O(n): novo</text>
         </svg>
       </div>
 
@@ -422,7 +422,7 @@ for (const item of items) {
     </div>
 
     <p>
-      Chunking streaming mantém o pico de memória <strong>constante</strong> — o payload
+      Chunking streaming mantém o pico de memória <strong>constante</strong>: o payload
       inteiro nunca fica residente. É por isso que o mesmo nó processa 10 ou 100 mil
       itens sem trocar de máquina.
     </p>
@@ -431,7 +431,7 @@ for (const item of items) {
       <div class="didactic-title">Explicação didática</div>
       <p>
         Imagine uma esteira com 100 mil caixas. No jeito antigo, para cada caixa a
-        pessoa voltava e conferia todas as outras — o processo travava. No novo, cada
+        pessoa voltava e conferia todas as outras: o processo travava. No novo, cada
         caixa passa uma única vez e você anota numa lista quem já viu: a esteira nunca
         para, mesmo com 100 mil caixas.
       </p>
@@ -440,10 +440,10 @@ for (const item of items) {
     <h2><span class="num">6.</span> Memoização entre execuções</h2>
     <p>
       Valores estáveis (limiar, taxa, config) são cacheados com
-      <code>$getWorkflowStaticData('global')</code> — calculados 1x e reutilizados
+      <code>$getWorkflowStaticData('global')</code>: calculados 1x e reutilizados
       nas execuções seguintes, sem repetir chamadas caras.
     </p>
-    <pre><code><span class="c">// Memoize Reference — cache entre execuções</span>
+    <pre><code><span class="c">// Memoize Reference: cache entre execuções</span>
 const staticData = $getWorkflowStaticData('global');
 if (staticData.scoreThreshold === undefined) {
   staticData.scoreThreshold = 70;  <span class="c">// busca cara feita 1x</span>
@@ -492,6 +492,28 @@ if (staticData.scoreThreshold === undefined) {
       <tr><td><code>7-apresentacao/</code></td><td>Deck HTML + demo + este relatório</td><td>HTML + Markdown</td></tr>
       <tr><td><code>MANUAL-IMPLEMENTACAO.md</code></td><td>Manual de implementação completo (6 fases + rollback + checklist de homologação)</td><td>Markdown</td></tr>
     </table>
+
+    <h2><span class="num">11.</span> Decisoes e tradeoffs</h2>
+    <p>Escolhas derivadas do conteudo real da atividade, com custo e beneficio explicitos.</p>
+    <ul>
+      <li><strong>Parse 1x na entrada com chunk default de 1000:</strong> elimina re-parse dentro de loop. Exige padronizar a entrada como string ou array no Webhook /nos/js-normalizer.</li>
+      <li><strong>Normalizacao O(n) com Set por chave primitiva:</strong> payload de 100k itens sai de bilhoes de operacoes para centenas de milhares. Exige copia minima de campos em vez de spread completo.</li>
+      <li><strong>Python so com stdlib (collections, itertools, Counter e defaultdict):</strong> roda no Code node sem dependencia externa. Menos sintaxe pronta em troca de deploy simples.</li>
+      <li><strong>Biblioteca unica 3-lib como fonte da verdade:</strong> funcoes chunk, dedupe, aggregate, normalizeStream, memoizeGlobal e toOutput num lugar so. Workflows embutem copias e exigem sincronizar a cada mudanca.</li>
+      <li><strong>Memoizacao com $getWorkflowStaticData global:</strong> limiar e config calculados 1x e reutilizados. Dado cacheado pode defasar e exige invalidacao consciente.</li>
+    </ul>
+
+    <h2><span class="num">12.</span> Impacto no negocio</h2>
+    <p>O sintoma ja visto na atividade 1 com JS timeout de 25 min no ADPLAN e na atividade 2 com payload sem processamento incremental travava importacoes e sincronizacoes ao escalar de 10k para 100k itens. Com streaming, dedupe O(n) e pico abaixo de 2 GB, o mesmo fluxo processa 10 ou 100k itens sem trocar de maquina, com parse unico e codigo unico na 3-lib em vez de copia entre dezenas de workflows. Isso corta tempo de execucao, elimina OOM e event loop bloqueado e reduz custo de manutencao de expressoes inline nao testaveis para padrao com JSONata.</p>
+
+    <h2><span class="num">13.</span> Referencias de estudo</h2>
+    <p>Material para aprofundar os temas usados nesta atividade.</p>
+    <ul>
+      <li><strong>Curso:</strong> JavaScript Performance, estruturas de dados e complexidade, na Alura.</li>
+      <li><strong>Video:</strong> JavaScript Event Loop and Memory Explained, no YouTube, canal Fireship.</li>
+      <li><strong>Doc:</strong> n8n Docs, Code node JavaScript and Python, na plataforma n8n Docs.</li>
+      <li><strong>Doc:</strong> MDN Docs, Map, Set and Array iteration, na plataforma MDN Web Docs.</li>
+    </ul>
 
     <div class="callout">
       <strong>Status:</strong> desenvolvido · workflows validados e prontos para produção ·

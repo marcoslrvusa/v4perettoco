@@ -30,7 +30,7 @@ Eventos e traces carregam PII (e-mail, CNPJ); sem controle, vazamento e processo
 
 ## Decisao Arquitetural (ADR)
 
-ADR-054 — Tratamento de PII
+ADR-054: Tratamento de PII
 
 | Opcao | Pro | Contra | Decisao |
 
@@ -83,3 +83,21 @@ ADR-054 — Tratamento de PII
 - Data map de PII.
 
 - Alerta de PII em logs.
+
+## Decisoes e tradeoffs
+
+- **`consent_id` obrigatorio no payload**: so publica dado pessoal com base legal ativa; sem consentimento, o evento nao circula.
+- **`subject_id` em vez de CPF bruto no downstream**: Vendas e Marketing operam com token e o Analytics recebe so hash sem reversao.
+- **AES em repouso mais TLS em transito**: CPF e e-mail cifrados no broker, com campos sensiveis marcados com `pii:true` no schema `lead_event.avsc`.
+- **Retencao com TTL de 365 dias e purge por `subject_id`**: o `retention_purge.py` varre e apaga, e o pedido de exclusao cai de 90 dias para menos de 1 dia, dentro do patamar de ate 15 dias.
+
+## Impacto no negocio
+
+Com zero PII em texto puro e 100% dos fluxos com consentimento, o risco de autuacao pela ANPD e de dano de imagem cai porque o dado passa a ter rastro no `mapa-dados.md` e prazo definido. O apagamento em menos de 1 dia transforma o direito ao esquecimento em rotina operacional de uma varredura por `subject_id`, em vez de cacada manual por servico.
+
+## Referencias de estudo
+
+- Curso: "LGPD na Pratica" (Udemy).
+- Video: "O que e a LGPD?" (YouTube, SEBRAE).
+- Documento oficial: Guia Orientativo da ANPD (gov.br/anpd).
+- Documento oficial: Lei n. 13.709/2018 (planalto.gov.br).

@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============================================================
-# Deploy MarTech — Resiliencia n8n Enterprise V4 (PDI-MARTECH)
+# Deploy MarTech: Resiliencia n8n Enterprise V4 (PDI-MARTECH)
 # ============================================================
 # Uso: bash deploy-martech.sh
 #
@@ -37,7 +37,7 @@ for wf in "${WORKFLOWS[@]}"; do
     if npx n8nac skills validate "$WORKFLOWS_DIR/$wf" 2>&1 | grep -q "Workflow is valid"; then
         echo "  ✅ $wf: valido"
     else
-        echo "  ❌ $wf: FALHA NA VALIDACAO — corrija antes de publicar."
+        echo "  ❌ $wf: FALHA NA VALIDACAO: corrija antes de publicar."
         exit 1
     fi
 done
@@ -71,7 +71,7 @@ echo "1. Copy do ID do '[CC] MT - Heavy Payload Processor' (criado acima):"
 echo "   → colar em 'ExecuteHeavyPayloadProcessor' do '[CC] MT - Queue Worker'"
 echo ""
 echo "2. Credenciais (ja devem existir):"
-echo "   - Command Center Supabase (nRJEEi2QwVVKIAHY) — usado nos nodes Supabase"
+echo "   - Command Center Supabase (nRJEEi2QwVVKIAHY): usado nos nodes Supabase"
 echo ""
 echo "3. Schema v3.0 aplicado:"
 echo "   → bash run-migration.sh  (ou SQL Editor do Supabase)"

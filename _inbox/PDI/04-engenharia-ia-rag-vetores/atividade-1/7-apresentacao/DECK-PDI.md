@@ -1,4 +1,4 @@
-# Deck PDI — Fundamentos de IA Generativa (NVIDIA DLI) aplicados a RAG
+# Deck PDI: Fundamentos de IA Generativa (NVIDIA DLI) aplicados a RAG
 
 Area: Engenharia de IA
 
@@ -14,7 +14,7 @@ Chunk grande -> ruido; pequeno -> perde contexto.
 Embedding sem normalizacao.
 Sem rerank -> top-k ruido.
 ## Slide 4: Decisao Arquitetural (ADR)
-ADR-041 — Baseline RAG
+ADR-041: Baseline RAG
 | Opcao | Pro | Contra | Decisao |
 | --- | --- | --- | --- |
 | Chunk 512 + overlap 64 + rerank | coeso | mais tokens | ESCOLHIDA |

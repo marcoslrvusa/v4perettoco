@@ -1,4 +1,4 @@
-# Roteiro de Demo — Conformidade LGPD em Eventos e Dados (anonimizacao, consentimento, esquecimento)
+# Roteiro de Demo: Conformidade LGPD em Eventos e Dados (anonimizacao, consentimento, esquecimento)
 
 Abra o deck (index.html) e percorra os slides na ordem.
 

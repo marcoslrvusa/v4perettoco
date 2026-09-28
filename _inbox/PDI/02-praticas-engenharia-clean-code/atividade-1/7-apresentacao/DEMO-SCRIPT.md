@@ -1,4 +1,4 @@
-# Roteiro de Demo — Refatoracao de Modulo Legado com SOLID e Clean Architecture
+# Roteiro de Demo: Refatoracao de Modulo Legado com SOLID e Clean Architecture
 
 Abra o deck (index.html) e percorra os slides na ordem.
 

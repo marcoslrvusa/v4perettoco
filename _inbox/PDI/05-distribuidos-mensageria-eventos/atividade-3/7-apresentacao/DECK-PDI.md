@@ -1,4 +1,4 @@
-# Deck PDI — Resiliencia com Circuit Breaker e Retry/Backoff
+# Deck PDI: Resiliencia com Circuit Breaker e Retry/Backoff
 
 Area: Sistemas Distribuidos
 
@@ -16,7 +16,7 @@ Sem fallback: erro virou 5xx.
 | sem protecao | breaker |
 | 5xx seco | fallback |
 ## Slide 4: Decisao Arquitetural (ADR)
-ADR-053 — Resiliencia
+ADR-053: Resiliencia
 | Opcao | Pro | Contra | Decisao |
 | --- | --- | --- | --- |
 | CB + backoff + fallback | protege cascata | estado | ESCOLHIDA |

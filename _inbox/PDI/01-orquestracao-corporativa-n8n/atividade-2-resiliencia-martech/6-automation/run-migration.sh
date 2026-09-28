@@ -27,7 +27,7 @@ SUPABASE_URL="${SUPABASE_URL:-}"
 SUPABASE_SERVICE_KEY="${SUPABASE_SERVICE_KEY:-}"
 
 echo "============================================"
-echo " Migracao Supabase — Schema v3.0 (MarTech)"
+echo " Migracao Supabase: Schema v3.0 (MarTech)"
 echo "============================================"
 echo ""
 

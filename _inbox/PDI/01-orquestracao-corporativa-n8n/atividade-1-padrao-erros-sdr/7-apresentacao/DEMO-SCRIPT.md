@@ -1,4 +1,4 @@
-# Script de Demonstracao — Error Handling n8n Enterprise
+# Script de Demonstracao: Error Handling n8n Enterprise
 
 ## Setup
 

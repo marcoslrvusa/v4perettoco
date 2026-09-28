@@ -1,4 +1,4 @@
-# Padrao de Observabilidade de Sincronizacao com CRM — n8n Enterprise V4
+# Padrao de Observabilidade de Sincronizacao com CRM: n8n Enterprise V4
 
 > **Versao:** 1.0 | **Status:** Pronto para homologacao | **Ultima revisao:** 2026-08-05
 
@@ -6,7 +6,7 @@
 
 Integracoes com CRMs terceiros (Kommo, HubSpot, RD Station, Pipedrive) acontecem em
 workflows que sincronizam contatos, pedidos, conversas e propriedades. Quando o CRM
-recusa payload, muda schema, aplica rate limit ou cai, o workflow falha — mas a
+recusa payload, muda schema, aplica rate limit ou cai, o workflow falha: mas a
 falha **so chega ao time quando o cliente reclama**. Nao existe trilha do que foi
 sincronizado, quando, com qual payload e que erro retornou.
 
@@ -67,7 +67,7 @@ min_health, updated_at
 - `health_score = success / total` na janela (default 1h, computado na view).
 - A view `vw_crm_health` devolve todos os healths abaixo do `min_health` config.
 
-## 5. Detector de Divergencia — "antes de afetar o cliente"
+## 5. Detector de Divergencia: "antes de afetar o cliente"
 
 1. O workflow que faz o sync grava o **esperado**: quantos registros deveriam
    existir (ex: `total = 1200` apos a importacao).

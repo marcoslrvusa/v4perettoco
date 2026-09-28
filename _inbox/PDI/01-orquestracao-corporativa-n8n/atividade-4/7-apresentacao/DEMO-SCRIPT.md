@@ -1,4 +1,4 @@
-# Roteiro de Demo — Observabilidade e Logs de Sincronizacao n8n-CRM
+# Roteiro de Demo: Observabilidade e Logs de Sincronizacao n8n-CRM
 
 Abra o deck (index.html) e percorra os slides na ordem.
 

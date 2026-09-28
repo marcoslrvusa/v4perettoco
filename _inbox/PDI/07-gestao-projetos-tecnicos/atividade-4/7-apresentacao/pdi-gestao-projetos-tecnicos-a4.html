@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDI: Comunicacao com Stakeholders: Registro de Entrega</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white: #ffffff; --off-white: #f8f9fb; --gray-50: #f1f3f5; --gray-100: #e9ecef; --gray-200: #dde3e9;
+  --gray-300: #c8d0d8; --gray-500: #8896a8; --gray-600: #6b7a8a; --gray-700: #495560; --gray-800: #2e3740;
+  --gray-900: #1a1f24; --accent: #b8860b; --accent2: #8b4513; --red-600: #c0392b; --yellow-600: #e6a800; --border: #e2e6ea;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', -apple-system, sans-serif; color: var(--gray-900); background: var(--off-white); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+.page { max-width: 900px; margin: 0 auto; background: var(--white); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.cover { padding: 80px 72px 56px; background: linear-gradient(135deg, #1a0f0a 0%, #2d1a10 100%); color: var(--white); position: relative; overflow: hidden; }
+.cover-badge { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); border: 1px solid rgba(184,134,11,0.3); padding: 5px 14px; background: rgba(184,134,11,0.06); }
+.cover h1 { font-size: 36px; font-weight: 700; line-height: 1.2; letter-spacing: -0.5px; max-width: 640px; margin-top: 16px; }
+.cover h1 em { color: var(--accent); font-style: normal; }
+.cover-meta { margin-top: 32px; font-size: 14px; color: #8896a8; line-height: 1.8; }
+.cover-meta strong { color: var(--gray-200); font-weight: 500; }
+.cover-logo { margin-bottom: 28px; }
+.cover-logo img { height: 56px; width: auto; display: block; opacity: 0.92; }
+.cover-avatar { position: absolute; top: 40px; right: 56px; width: 84px; height: 84px; border-radius: 50%; overflow: hidden; border: 2px solid rgba(184,134,11,0.6); box-shadow: 0 0 0 5px rgba(184,134,11,0.12), 0 8px 24px rgba(0,0,0,0.4); }
+.cover-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cover-slug { margin-top: 24px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.25); letter-spacing: 0.5px; }
+.content { padding: 56px 72px 80px; }
+h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; margin: 40px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+h2 .num { color: var(--accent2); }
+p { color: var(--gray-700); font-size: 14px; margin-bottom: 14px; }
+p strong { color: var(--gray-900); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0 20px; }
+th { text-align: left; padding: 10px 14px; background: var(--gray-50); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); color: var(--gray-800); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--gray-700); vertical-align: top; }
+td code, p code { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--gray-50); border: 1px solid var(--border); padding: 1px 4px; border-radius: 3px; color: var(--accent2); }
+ul { margin: 8px 0 16px 20px; }
+li { color: var(--gray-700); font-size: 14px; margin-bottom: 6px; }
+.callout { border-left: 3px solid var(--accent); background: var(--off-white); padding: 14px 18px; font-size: 13px; color: var(--gray-700); margin: 16px 0; }
+.callout strong { color: var(--accent2); }
+.status { display: inline-block; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; padding: 3px 10px; border-radius: 3px; }
+.st-warn { background: rgba(230,168,0,0.12); color: var(--yellow-600); }
+.pipeline { margin: 24px 0 28px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: #0d1014; }
+.pipeline-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 18px; background: linear-gradient(135deg, #1a0f0a, #2d1a10); border-bottom: 1px solid rgba(184,134,11,0.25); }
+.pipeline-title { color: #fff; font-size: 13px; font-weight: 600; letter-spacing: 0.3px; }
+.pipeline-title em { color: var(--accent); font-style: normal; }
+.pipeline-live { display: inline-flex; align-items: center; gap: 7px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #8896a8; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap; }
+.pipeline-live .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pingDot 1.6s infinite; }
+@keyframes pingDot { 0% { box-shadow: 0 0 0 0 rgba(184,134,11,0.6); } 70% { box-shadow: 0 0 0 8px rgba(184,134,11,0); } 100% { box-shadow: 0 0 0 0 rgba(184,134,11,0); } }
+.pipeline-body { position: relative; padding: 26px 22px 24px; }
+.pl-rail { position: absolute; left: 62px; top: 20px; bottom: 20px; width: 2px; background: rgba(184,134,11,0.22); }
+.pl-pulse { position: absolute; left: -3px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px rgba(184,134,11,0.9); opacity: 0; }
+.pl-pulse.p1 { animation: plFlow 3.4s linear infinite; }
+.pl-pulse.p2 { animation: plFlow 3.4s linear infinite 1.7s; }
+.pl-pulse.g { background: #52d69b; box-shadow: 0 0 10px rgba(82,214,155,0.9); animation: plFlow 3.4s linear infinite 2.55s; }
+@keyframes plFlow { 0% { top: 0%; opacity: 0; } 8% { opacity: 1; } 85% { opacity: 1; } 100% { top: 97%; opacity: 0; } }
+.pl-steps { display: flex; flex-direction: column; gap: 14px; width: 100%; padding-left: 26px; }
+.pl-step { display: flex; align-items: flex-start; gap: 14px; background: #141922; border: 1px solid rgba(232,236,240,0.07); border-radius: 8px; padding: 14px 16px; }
+.pl-step .num { flex: 0 0 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; color: var(--accent); background: rgba(184,134,11,0.1); border: 1px solid rgba(184,134,11,0.35); }
+.pl-step .name { font-size: 13px; font-weight: 600; color: #fff; }
+.pl-step .name code { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: rgba(184,134,11,0.12); border: 1px solid rgba(184,134,11,0.35); padding: 1px 5px; border-radius: 3px; color: #ffd98a; }
+.pl-step .desc { font-size: 12px; color: #8896a8; margin-top: 2px; line-height: 1.55; }
+.pl-chip { display: inline-flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.pl-tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 3px 8px; border-radius: 3px; background: rgba(184,134,11,0.12); color: #ffd98a; border: 1px solid rgba(184,134,11,0.3); white-space: nowrap; }
+.pl-tag.ok { background: rgba(22,139,73,0.14); color: #52d69b; border-color: rgba(22,139,73,0.4); }
+.pl-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-top: 20px; padding: 12px 16px; border-top: 1px dashed rgba(184,134,11,0.25); font-size: 11px; color: #8896a8; }
+@media print { body { background: white; } .page { box-shadow: none; } .content { padding: 20px 48px 60px; } .cover { padding: 48px 56px 40px; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="cover">
+    <div class="cover-avatar"><img src="../../../../../assets/images/logo-peretto-perfil.jpg" alt="Marcos Luciano"></div>
+    <div class="cover-logo"><img src="../../../../../assets/logo-peretto.png" alt="Peretto"></div>
+    <span class="cover-badge">PDI 2026: Gestao de Projetos Tecnicos</span>
+    <h1>Comunicacao com Stakeholders: <em>status, risco e expectativa</em></h1>
+    <div class="cover-meta">
+      <strong>Autor:</strong> PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com<br>
+      <strong>Unidade:</strong> FV Marketing / V4 Company, Automacao e Infraestrutura<br>
+      <strong>Modulo:</strong> 07 - Gestao de Projetos Tecnicos, Atividade 4<br>
+      <strong>Data:</strong> Setembro 2026<br>
+      <strong>Status:</strong> <span class="status st-warn">NAO publicado</span> - Desenvolvido / Homologacao pendente<br>
+      <strong>Versao:</strong> 1.0
+    </div>
+    <div class="cover-slug">pdi-gestao-projetos-tecnicos-a4</div>
+  </div>
+  <div class="content">
+    <h2><span class="num">1.</span> Contexto</h2>
+    <p>O status tecnico da area chegava a gestao e operacao em <strong>linguagem de engenharia</strong>, sem dizer o que muda para o negocio, sem risco explicito e sem pedido claro. A consequencia era surpresa em atraso, decisao sem informacao e cobranca reativa no Slack.</p>
+    <p>Stakeholder nao tecnico decide por impacto e prazo, nao por arquitetura. Sem traducao, a informacao existe mas a decisao nao anda.</p>
+    <h2><span class="num">2.</span> Diagnostico</h2>
+    <p>Retrato atual: status semanal enviado no prazo em so <strong>20% das semanas</strong>, nenhum atraso avisado com 48h de antecedencia e nenhum risco registrado com plano e dono. O custo aparece como reuniao de emergencia e decisao sob pressao.</p>
+    <ul>
+      <li>Status verbal evapora e ninguem cobra o combinado.</li>
+      <li>Risco sem plano vira susto em vez de gestao.</li>
+      <li>Pedido sem prazo vira espera infinita.</li>
+    </ul>
+    <h2><span class="num">3.</span> Solucao</h2>
+    <p>Ritual semanal fixo de 30 min (<strong>feito, proximo, riscos, pedidos</strong>) com doc enviado antes, <strong>semaforo de risco</strong> com plano e dono obrigatorios, <strong>matriz de stakeholders</strong> por canal e <strong>tabela de traducao</strong> tecnica para negocio.</p>
+    <ul>
+      <li><code>STANDARD-COMUNICACAO-STAKEHOLDERS.md</code>: matriz, ritual, semaforo, traducao, anti-padroes.</li>
+      <li><code>pauta-status-semanal.md</code>: pauta fixa de 30 min com bloco de decisoes.</li>
+      <li><code>template-status-risco.md</code>: template + exemplo real da semana 01/09/2026.</li>
+    </ul>
+    <h2><span class="num">4.</span> Como funciona</h2>
+    <div class="pipeline">
+      <div class="pipeline-head">
+        <div class="pipeline-title">Ritual de segunda <em>doc antes, decisao na reuniao</em></div>
+        <div class="pipeline-live"><span class="dot"></span> fluxo ativo</div>
+      </div>
+      <div class="pipeline-body">
+        <div class="pl-rail"><span class="pl-pulse p1"></span><span class="pl-pulse p2"></span><span class="pl-pulse g"></span></div>
+        <div class="pl-steps">
+          <div class="pl-step"><div class="num">1</div><div><div class="name">Feito <code>5 min, sem jargao</code></div><div class="desc">Valor entregue em linguagem de negocio. Ex.: relatorio chega sozinho toda segunda 8h.</div><div class="pl-chip"><span class="pl-tag">valor</span></div></div></div>
+          <div class="pl-step"><div class="num">2</div><div><div class="name">Proximo <code>5 min</code></div><div class="desc">Compromisso da semana, do topo da fila do kanban, com data ou faixa.</div><div class="pl-chip"><span class="pl-tag">compromisso</span></div></div></div>
+          <div class="pl-step"><div class="num">3</div><div><div class="name">Riscos <code>10 min, semaforo</code></div><div class="desc">Verde, amarelo ou vermelho. Todo amarelo e vermelho tem plano + dono.</div><div class="pl-chip"><span class="pl-tag">plano + dono</span></div></div></div>
+          <div class="pl-step"><div class="num">4</div><div><div class="name">Pedidos <code>10 min, com prazo</code></div><div class="desc">Decisao ou ajuda com dono e prazo de resposta. Sem prazo nao entra.</div><div class="pl-chip"><span class="pl-tag">decisao</span></div></div></div>
+          <div class="pl-step"><div class="num">5</div><div><div class="name">Decisoes <code>registradas na hora</code></div><div class="desc">Bloco final do doc: decisao, dono, prazo. Atraso se avisa com 48h, com plano.</div><div class="pl-chip"><span class="pl-tag ok">48h</span><span class="pl-tag ok">registrado</span></div></div></div>
+        </div>
+        <div class="pl-footer"><span>Exemplo: semana 01/09, 2 pedidos com prazo quarta, 1 risco amarelo</span><span>meta: zero surpresa em 4 semanas</span></div>
+      </div>
+    </div>
+    <h2><span class="num">5.</span> Entregas</h2>
+    <table>
+      <tr><th>Arquivo</th><th>Conteudo</th></tr>
+      <tr><td><code>STANDARD-COMUNICACAO-STAKEHOLDERS.md</code></td><td>Matriz, ritual, semaforo, traducao e anti-padroes</td></tr>
+      <tr><td><code>pauta-status-semanal.md</code></td><td>Pauta fixa de 30 min</td></tr>
+      <tr><td><code>template-status-risco.md</code></td><td>Template + exemplo real preenchido</td></tr>
+      <tr><td><code>DECK-PDI.md</code></td><td>Narrativa de 13 slides</td></tr>
+      <tr><td><code>DEMO-SCRIPT.md</code></td><td>Roteiro de demonstracao de 10 min</td></tr>
+      <tr><td><code>ROTEIRO-DOMINIO.md</code></td><td>5 perguntas e respostas de dominio</td></tr>
+    </table>
+    <h2><span class="num">6.</span> Metricas de sucesso</h2>
+    <table>
+      <tr><th>Metrica</th><th>Atual</th><th>Meta</th></tr>
+      <tr><td>Status semanal enviado no prazo</td><td>20% das semanas</td><td>100% (meta)</td></tr>
+      <tr><td>Atrasos avisados com 48h de antecedencia</td><td>0%</td><td>100% (meta)</td></tr>
+      <tr><td>Riscos com plano e dono</td><td>0</td><td>100% dos ativos (meta)</td></tr>
+    </table>
+    <div class="callout"><strong>Status:</strong> Atividade desenvolvida e homologacao pendente. Metas projetadas para 4 semanas de ritual. Referencias: curso Agile Project Management no Coursera, video de stakeholder communication (YouTube), Agile project management (Atlassian) e SRE Workbook (Google).</div>
+  </div>
+</div>
+</body>
+</html>

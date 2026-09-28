@@ -1,4 +1,4 @@
-# Deck PDI — Refatoracao de Modulo Legado com SOLID e Clean Architecture
+# Deck PDI: Refatoracao de Modulo Legado com SOLID e Clean Architecture
 
 Area: Engenharia de Software
 
@@ -18,11 +18,11 @@ O CampaignService original misturava regra de negocio, acesso direto a banco, en
 | DIP | aplicacao depende de psycopg2/smtp direto |
 | Sem transacao | estado parcial em falha |
 ## Slide 4: Diagnostico e Causa Raiz
-SQL concatenado (f"SELECT ... {camp.id}") — vetor de injection.
+SQL concatenado (f"SELECT ... {camp.id}"): vetor de injection.
 Sem transacao: lead marcado enviado mas e-mail falha -> estado inconsistente.
 Impossivel testar: 600 linhas, 4 dependencias de I/O acopladas, 0% cobertura.
 ## Slide 5: Decisao Arquitetural (ADR)
-ADR-021 — Camadas e Ports/Adapters
+ADR-021: Camadas e Ports/Adapters
 | Opcao | Pro | Contra | Decisao |
 | --- | --- | --- | --- |
 | Clean Architecture | testavel, desacoplado | mais arquivos | ESCOLHIDA |
@@ -30,11 +30,11 @@ ADR-021 — Camadas e Ports/Adapters
 | Manter acoplado + E2E | zero refactor | fragil | rejeitada |
 > Nota: Dependencia de I/O vira interface (Protocol): LeadRepository, Notifier, Logger. O servico depende de abstracoes; implementacoes sao injetadas no bootstrap.
 ## Slide 6: Entregas desta Atividade
-SOLID-BEFORE-AFTER.md — mapeamento violacao->solucao.
-before_campaign_service.py — modulo legado.
-after_campaign_service.py — Clean Architecture + 1 teste.
+SOLID-BEFORE-AFTER.md: mapeamento violacao->solucao.
+before_campaign_service.py: modulo legado.
+after_campaign_service.py: Clean Architecture + 1 teste.
 ## Slide 7: Plano de Validacao e Rollout
-Cobrir o servico com testes de porta (mock de Notifier/Repository) — alvo 85%.
+Cobrir o servico com testes de porta (mock de Notifier/Repository): alvo 85%.
 Feature flag: novo modulo em paralelo por 1 sprint (shadow).
 Se divergencia < 0,1%, migrar trafego e remover legado.
 Rollback: flag desliga o novo sem deploy.

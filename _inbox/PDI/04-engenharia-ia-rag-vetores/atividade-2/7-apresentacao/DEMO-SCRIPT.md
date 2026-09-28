@@ -1,4 +1,4 @@
-# Roteiro de Demo — RAG Hibrido (BM25 + Vetorial) e GraphRAG para Relacoes
+# Roteiro de Demo: RAG Hibrido (BM25 + Vetorial) e GraphRAG para Relacoes
 
 Abra o deck (index.html) e percorra os slides na ordem.
 

@@ -1,4 +1,4 @@
-# Deck PDI — Orquestracao Multi-agente com Handoffs e Isolamento
+# Deck PDI: Orquestracao Multi-agente com Handoffs e Isolamento
 
 Area: Engenharia de IA
 
@@ -14,7 +14,7 @@ SRP ausente entre agentes.
 Contexto compartilhado -> vazamento de PII.
 Sem handoff formal.
 ## Slide 4: Decisao Arquitetural (ADR)
-ADR-043 — Topologia Multi-agente
+ADR-043: Topologia Multi-agente
 | Opcao | Pro | Contra | Decisao |
 | --- | --- | --- | --- |
 | Supervisor + handoff | foco, testavel | mais nos | ESCOLHIDA |

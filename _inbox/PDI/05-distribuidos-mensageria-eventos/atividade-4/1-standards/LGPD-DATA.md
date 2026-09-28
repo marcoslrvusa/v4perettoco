@@ -1,4 +1,4 @@
-# LGPD — Padrao de Dados e Eventos
+# LGPD: Padrao de Dados e Eventos
 
 1. **Minimizacao**: so o necessario para a finalidade.
 2. **Consentimento por finalidade**: campanha != score.

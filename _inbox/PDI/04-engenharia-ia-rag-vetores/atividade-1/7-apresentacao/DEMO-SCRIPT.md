@@ -1,4 +1,4 @@
-# Roteiro de Demo — Fundamentos de IA Generativa (NVIDIA DLI) aplicados a RAG
+# Roteiro de Demo: Fundamentos de IA Generativa (NVIDIA DLI) aplicados a RAG
 
 Abra o deck (index.html) e percorra os slides na ordem.
 

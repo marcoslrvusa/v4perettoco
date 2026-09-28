@@ -8,7 +8,7 @@
 --           created_at timestamptz default now(), attempts int default 0);
 
 -- =====================================================================
--- ANTES — plano: Seq Scan on mt_jobs (2.4M rows) + Sort (queued + filter)
+-- ANTES: plano: Seq Scan on mt_jobs (2.4M rows) + Sort (queued + filter)
 -- Também tinha CTE com JSONB "enrichment" que o planner não podia podar.
 -- =====================================================================
 EXPLAIN (ANALYZE, BUFFERS)
@@ -29,7 +29,7 @@ LIMIT 1;
 --   Planning time ... Execução total: ~1.82s
 
 -- =====================================================================
--- DEPOIS — 2 índices compostos + JOIN indexado + remoção do LEFT JOIN inútil
+-- DEPOIS: 2 índices compostos + JOIN indexado + remoção do LEFT JOIN inútil
 -- =====================================================================
 CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_mt_jobs_pick
   ON mt_jobs (status, queue, scheduled_at) DESC NULLS LAST;

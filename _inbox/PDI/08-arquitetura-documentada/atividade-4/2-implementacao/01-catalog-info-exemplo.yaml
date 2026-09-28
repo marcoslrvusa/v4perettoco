@@ -1,0 +1,49 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: worker-coleta-meta-ads
+  description: Worker Python que coleta metricas da Meta Ads API com retry e grava no Supabase
+  annotations:
+    github.com/project-slug: fv-marketing/orquestrador-v4
+  tags:
+    - python
+    - coleta
+    - critico
+  links:
+    - url: https://github.com/fv-marketing/orquestrador-v4
+      title: Repositorio
+spec:
+  type: service
+  lifecycle: production
+  owner: marcos-luciano
+  system: orquestrador-v4
+  dependsOn:
+    - component:supabase-postgres
+    - API:meta-ads-api
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: n8n-orquestrador
+  description: Workflows, triggers e webhooks do orquestrador na porta 5678
+  tags:
+    - n8n
+    - orquestracao
+spec:
+  type: service
+  lifecycle: production
+  owner: marcos-luciano
+  system: orquestrador-v4
+  dependsOn:
+    - component:worker-coleta-meta-ads
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: webhook-coletar
+  description: POST /coletar com conta_id e janela, resposta 200 ok ou 500 falha com conta_id
+spec:
+  type: openapi
+  lifecycle: production
+  owner: marcos-luciano
+  system: orquestrador-v4

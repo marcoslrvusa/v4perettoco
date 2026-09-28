@@ -1,36 +1,36 @@
-# PDI — Resiliência MarTech n8n Enterprise (PDI-MARTECH)
+# PDI: Resiliência MarTech n8n Enterprise (PDI-MARTECH)
 
 ## 1. Contexto
 
 A operação MarTech da V4 Company processa requisições de integração com CRMs
 em workflows n8n. Três problemas estruturais:
 
-1. **Workflows síncronos frágeis** — requisições processadas dentro do webhook;
+1. **Workflows síncronos frágeis**: requisições processadas dentro do webhook;
    em picos (campanhas, importações) a instância trava e o cliente não recebe ACK.
-2. **Payloads pesados sem checkpoint** — processamento de 10k+ itens roda de uma
+2. **Payloads pesados sem checkpoint**: processamento de 10k+ itens roda de uma
    vez; um timeout no meio perde tudo e o job recomeça do zero.
-3. **Sincronização com CRM sem observabilidade** — falha não é registrada;
+3. **Sincronização com CRM sem observabilidade**: falha não é registrada;
    divergência entre o que devia syncar e o que syncou só é descoberta quando
    o cliente reclama.
 
 ## 2. Solução em 3 frentes
 
-### Frente 1 — Fila assíncrona + concorrência
+### Frente 1: Fila assíncrona + concorrência
 
-- `[CC] MT Queue Gateway` — webhook que enfileira e responde **ACK 202 imediato**.
-- `[CC] MT - Queue Worker` — consome a fila respeitando o semáforo
+- `[CC] MT Queue Gateway`: webhook que enfileira e responde **ACK 202 imediato**.
+- `[CC] MT - Queue Worker`: consome a fila respeitando o semáforo
   `mt_concurrency` (slot por fila).
 - Fila = tabela `mt_jobs` no Supabase (idempotência por `job_key`).
 
-### Frente 2 — Processamento de payloads pesados
+### Frente 2: Processamento de payloads pesados
 
-- `[CC] MT - Heavy Payload Processor` — sub-workflow chamado pelo worker.
+- `[CC] MT - Heavy Payload Processor`: sub-workflow chamado pelo worker.
 - Normalização em chunks (JS) + enriquecimento opcional em Python.
 - Checkpoint `mt_job_progress`: se o job falhar no chunk 7 de 12, retoma do 7.
 
-### Frente 3 — Observabilidade de sincronização com CRM
+### Frente 3: Observabilidade de sincronização com CRM
 
-- `[CC] MT - CRM Sync Observabilidade` — webhook `/mt/crm-sync`.
+- `[CC] MT - CRM Sync Observabilidade`: webhook `/mt/crm-sync`.
 - Registra `mt_sync_log`, atualiza `mt_crm_health` e detecta **drift**
   (divergência entre o esperado e o confirmado) → `mt_sync_delta`.
 - Detecção antes de impactar o cliente.

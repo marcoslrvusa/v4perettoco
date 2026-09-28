@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PDI — Nós Customizados n8n</title>
+<title>PDI: Nós Customizados n8n</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;500&display=swap" rel="stylesheet">
 <style>
@@ -175,16 +175,16 @@ tr:hover td { color: var(--text); }
 </div>
 <div class="progress"><div class="progress-bar" id="bar"></div></div>
 
-<!-- SLIDE 1 — CAPA -->
+<!-- SLIDE 1: CAPA -->
 <section class="slide" id="s1">
   <div class="slide-num">SLIDE 01 / 08</div>
-  <span class="tag">PDI — Atividade 03</span>
+  <span class="tag">PDI: Atividade 03</span>
   <h1>Nós <span class="g">Customizados</span><br>&amp; Expressões Avançadas n8n</h1>
-  <p class="sub">Nós Code JavaScript/Python otimizados e expressões avançadas para processar payloads pesados em streaming — dedupe O(n), parse único, cópia mínima e biblioteca reutilizável.</p>
+  <p class="sub">Nós Code JavaScript/Python otimizados e expressões avançadas para processar payloads pesados em streaming: dedupe O(n), parse único, cópia mínima e biblioteca reutilizável.</p>
   <p class="sub" style="color:var(--text3);font-size:12px;">Status: <span class="badge b-warn">NÃO publicado</span> · Aguardando homologação</p>
 </section>
 
-<!-- SLIDE 2 — PROBLEMA -->
+<!-- SLIDE 2: PROBLEMA -->
 <section class="slide">
   <div class="slide-num">SLIDE 02 / 08</div>
   <div class="tag">Problema</div>
@@ -205,7 +205,7 @@ tr:hover td { color: var(--text); }
   </div>
 </section>
 
-<!-- SLIDE 3 — ARQUITETURA -->
+<!-- SLIDE 3: ARQUITETURA -->
 <section class="slide">
   <div class="slide-num">SLIDE 03 / 08</div>
   <div class="tag">Arquitetura</div>
@@ -221,20 +221,20 @@ tr:hover td { color: var(--text); }
     </div>
     <div class="step">
       <div class="step-idx">3</div>
-      <div><h4>Normalize in One Pass (JS)</h4><p>Filtra, dedupe (Set por chave primitiva) e transforma no <span class="badge b-ok">mesmo loop</span> — O(n), cópia mínima.</p></div>
+      <div><h4>Normalize in One Pass (JS)</h4><p>Filtra, dedupe (Set por chave primitiva) e transforma no <span class="badge b-ok">mesmo loop</span>: O(n), cópia mínima.</p></div>
     </div>
     <div class="step">
       <div class="step-idx">4</div>
-      <div><h4>Enrich Python (Python)</h4><p>Enriquecimento e agregação com <code>collections</code>/<code>itertools</code> — só stdlib, sem pandas.</p></div>
+      <div><h4>Enrich Python (Python)</h4><p>Enriquecimento e agregação com <code>collections</code>/<code>itertools</code>: só stdlib, sem pandas.</p></div>
     </div>
     <div class="step">
       <div class="step-idx">5</div>
-      <div><h4>Return Metrics (JS)</h4><p>Entrega <code>processedItems</code>, <code>deduped</code>, <code>durationMs</code>, <code>itemsPerSecond</code> — base do monitoramento.</p></div>
+      <div><h4>Return Metrics (JS)</h4><p>Entrega <code>processedItems</code>, <code>deduped</code>, <code>durationMs</code>, <code>itemsPerSecond</code>: base do monitoramento.</p></div>
     </div>
   </div>
 </section>
 
-<!-- SLIDE 4 — O(n) vs O(n²) -->
+<!-- SLIDE 4: O(n) vs O(n²) -->
 <section class="slide">
   <div class="slide-num">SLIDE 04 / 08</div>
   <div class="tag">Complexidade</div>
@@ -254,7 +254,7 @@ items.forEach(item =&gt; {
   <p class="sub">Filtro barato antes de transformação cara; dedupe por chave primitiva, nunca por objeto.</p>
 </section>
 
-<!-- SLIDE 5 — MEMO / EXPRESSÕES -->
+<!-- SLIDE 5: MEMO / EXPRESSÕES -->
 <section class="slide">
   <div class="slide-num">SLIDE 05 / 08</div>
   <div class="tag">Expressões avançadas</div>
@@ -272,11 +272,11 @@ operator   = number &gt;= <span class="c">// gte</span></code></pre>
   <p class="sub">Referências entre nós: <code>$('Node').item.json.campo</code>; JSONata para consulta em payload grande.</p>
 </section>
 
-<!-- SLIDE 6 — BIBLIOTECA -->
+<!-- SLIDE 6: BIBLIOTECA -->
 <section class="slide">
   <div class="slide-num">SLIDE 06 / 08</div>
   <div class="tag">3-lib</div>
-  <h2>Biblioteca única — <span class="g">fonte da verdade</span></h2>
+  <h2>Biblioteca única: <span class="g">fonte da verdade</span></h2>
   <div class="g2" style="margin-top:28px;">
     <div>
       <h3>payload-lib.js</h3>
@@ -285,7 +285,7 @@ operator   = number &gt;= <span class="c">// gte</span></code></pre>
         <tr><td><code>chunk</code></td><td>Chunking streaming</td></tr>
         <tr><td><code>normalizeStream</code></td><td>Filtra+dedupe+transforma O(n)</td></tr>
         <tr><td><code>dedupe</code></td><td>Set por chave primitiva</td></tr>
-        <tr><td><code>aggregate</code></td><td>Map — agregação O(n)</td></tr>
+        <tr><td><code>aggregate</code></td><td>Map: agregação O(n)</td></tr>
         <tr><td><code>memoizeGlobal</code></td><td>Cache entre execuções</td></tr>
       </table>
     </div>
@@ -294,7 +294,7 @@ operator   = number &gt;= <span class="c">// gte</span></code></pre>
       <table>
         <tr><th>Função</th><th>Uso</th></tr>
         <tr><td><code>chunk</code></td><td>islice streaming</td></tr>
-        <tr><td><code>dedupe</code></td><td>set — O(n)</td></tr>
+        <tr><td><code>dedupe</code></td><td>set: O(n)</td></tr>
         <tr><td><code>aggregate</code></td><td>Counter/defaultdict</td></tr>
         <tr><td><code>parse_payload</code></td><td>Decodifica 1x</td></tr>
         <tr><td><code>to_output</code></td><td>Formato {json}</td></tr>
@@ -304,7 +304,7 @@ operator   = number &gt;= <span class="c">// gte</span></code></pre>
   <p class="sub" style="margin-top:20px;">Regra: nunca editar um nó Code sem atualizar a lib. Os workflows embutem cópias das funções usadas.</p>
 </section>
 
-<!-- SLIDE 7 — MÉTRICAS -->
+<!-- SLIDE 7: MÉTRICAS -->
 <section class="slide">
   <div class="slide-num">SLIDE 07 / 08</div>
   <div class="tag">Métricas</div>
@@ -325,7 +325,7 @@ operator   = number &gt;= <span class="c">// gte</span></code></pre>
   </table>
 </section>
 
-<!-- SLIDE 8 — ENTREGAS / NEXT -->
+<!-- SLIDE 8: ENTREGAS / NEXT -->
 <section class="slide">
   <div class="slide-num">SLIDE 08 / 08</div>
   <div class="tag">Entregas</div>
@@ -334,12 +334,12 @@ operator   = number &gt;= <span class="c">// gte</span></code></pre>
     <div class="card">
       <div class="card-title">Entregas</div>
       <ul>
-        <li>1-standards/ — 3 padrões (JS, Python, expressões)</li>
-        <li>2-workflows/ — 3 workflows .workflow.ts</li>
-        <li>3-lib/ — payload-lib.js + payload-lib.py</li>
-        <li>4-retrofit/ — ADPLAN, PRO ANALISES, CC</li>
-        <li>5-monitoring/ — queries + alertas</li>
-        <li>6-automation/ — deploy com gate</li>
+        <li>1-standards/: 3 padrões (JS, Python, expressões)</li>
+        <li>2-workflows/: 3 workflows .workflow.ts</li>
+        <li>3-lib/: payload-lib.js + payload-lib.py</li>
+        <li>4-retrofit/: ADPLAN, PRO ANALISES, CC</li>
+        <li>5-monitoring/: queries + alertas</li>
+        <li>6-automation/: deploy com gate</li>
       </ul>
     </div>
     <div class="card">

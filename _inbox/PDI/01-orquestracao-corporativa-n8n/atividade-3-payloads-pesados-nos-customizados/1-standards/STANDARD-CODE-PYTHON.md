@@ -1,4 +1,4 @@
-# Standard — Nós Code Python em Payloads Pesados
+# Standard: Nós Code Python em Payloads Pesados
 
 > **Objetivo:** regra única para nós `Code` com linguagem **Python** dentro do n8n,
 > usando apenas a biblioteca padrão (não há pip install garantido no runtime).
@@ -7,11 +7,11 @@
 
 1. **Python no n8n roda com stdlib.** `collections`, `itertools`, `functools`,
    `json`, `re`, `datetime` são seguros. Pandas/Numpy NÃO são garantidos.
-2. **Nunca faça `json.loads` dentro do loop** — decodifique o payload 1x.
-3. **Use `itertools` para stream de chunks** — evita materializar listas inteiras.
-4. **Dedupe com `dict`/`set` de chaves primitivas** — nunca lista de objetos.
-5. **Agregação com `collections.Counter`/`defaultdict`** — O(n) em vez de O(n²).
-6. **Trate item a item com `try/except` granular** — um item ruim não derruba o batch.
+2. **Nunca faça `json.loads` dentro do loop**: decodifique o payload 1x.
+3. **Use `itertools` para stream de chunks**: evita materializar listas inteiras.
+4. **Dedupe com `dict`/`set` de chaves primitivas**: nunca lista de objetos.
+5. **Agregação com `collections.Counter`/`defaultdict`**: O(n) em vez de O(n²).
+6. **Trate item a item com `try/except` granular**: um item ruim não derruba o batch.
 
 ## Template recomendado
 
@@ -49,7 +49,7 @@ return [{'json': {'count': len(result), 'items': result}}]
 
 O n8n entrega o payload por inteiro ao nó Python. Para payloads muito grandes,
 **faça o chunking na camada JS antes** (veja `payload-lib.js`) e envie chunk a
-chunk ao Python — cada chamada processa um lote pequeno e grava progresso
+chunk ao Python: cada chamada processa um lote pequeno e grava progresso
 (`mt_job_progress`, da atividade 2).
 
 ```

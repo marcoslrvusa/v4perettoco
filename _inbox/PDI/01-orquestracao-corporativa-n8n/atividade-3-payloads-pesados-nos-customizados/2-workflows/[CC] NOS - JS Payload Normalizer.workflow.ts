@@ -8,9 +8,9 @@ import { workflow, node, links } from '@n8n-as-code/transformer';
 // ──────────────────────────────────────────────────────────────────────────
 // Property name                    Node type (short)   Flags
 // Webhook                           webhook
-// ParseAndChunk                    code  (JS — stream + chunk + dedupe)
-// NormalizeInOnePass               code  (JS — O(n), copia minima)
-// ReturnMetrics                    code  (JS — metricas de performance)
+// ParseAndChunk                    code  (JS: stream + chunk + dedupe)
+// NormalizeInOnePass               code  (JS: O(n), copia minima)
+// ReturnMetrics                    code  (JS: metricas de performance)
 //
 // ROUTING MAP
 // ──────────────────────────────────────────────────────────────────────────
@@ -28,7 +28,7 @@ import { workflow, node, links } from '@n8n-as-code/transformer';
 // Entrega itens normalizados + metricas de performance.
 //
 // CONFIGURE:
-//  1. Nada de credencial — apenas nos Code (JS).
+//  1. Nada de credencial: apenas nos Code (JS).
 //  2. ChunkSize no node ParseAndChunk (default 1000).
 // =====================================================================
 
@@ -68,7 +68,7 @@ export class JsPayloadNormalizerWorkflow {
     language: 'javaScript',
     jsCode: `
 // ============================================================
-// Parse and Chunk — payload pesado (JS)
+// Parse and Chunk: payload pesado (JS)
 // ============================================================
 // 1) Recebe { payload: "JSON string" | array }.
 // 2) Parse 1x (nunca dentro do loop).
@@ -112,7 +112,7 @@ return [{
     language: 'javaScript',
     jsCode: `
 // ============================================================
-// Normalize in One Pass — O(n), copia minima, dedupe por chave
+// Normalize in One Pass: O(n), copia minima, dedupe por chave
 // ============================================================
 // Filtra + dedupe + transforma no MESMO loop. Sem map().filter()
 // encadeado, sem busca por item, sem spread gigante por item.
@@ -166,7 +166,7 @@ return [{
     language: 'javaScript',
     jsCode: `
 // ============================================================
-// Return Metrics — diagnostico de performance do pipeline
+// Return Metrics: diagnostico de performance do pipeline
 // ============================================================
 const data = $input.first().json;
 const durationMs = Date.now() - (data.startedAt || Date.now());

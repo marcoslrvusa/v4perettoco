@@ -1,4 +1,4 @@
-# Roteiro de Demo — Engenharia de Custos de LLM (custo por tarefa, cache, roteamento)
+# Roteiro de Demo: Engenharia de Custos de LLM (custo por tarefa, cache, roteamento)
 
 Abra o deck (index.html) e percorra os slides na ordem.
 

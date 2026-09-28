@@ -1,4 +1,4 @@
-# ANTES — modulo legado (didatico; NAO usar em prod)
+# ANTES: modulo legado (didatico; NAO usar em prod)
 import psycopg2, smtplib, requests, os
 class CampaignService:
     def run(self, camp):

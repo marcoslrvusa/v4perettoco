@@ -1,4 +1,4 @@
-# Script de Demonstracao — Resiliencia MarTech n8n Enterprise (PDI-MARTECH)
+# Script de Demonstracao: Resiliencia MarTech n8n Enterprise (PDI-MARTECH)
 
 > Homologacao simulada. NENHUM passo publica em produção.
 
@@ -10,7 +10,7 @@ npx n8nac env status --json
 tree _inbox/PDI-MARTECH/
 ```
 
-## Passo 1 — Validar Workflows (n8nac, sem push)
+## Passo 1: Validar Workflows (n8nac, sem push)
 
 ```bash
 npx -y n8nac skills validate "_inbox/PDI-MARTECH/2-workflows/[CC] MT Queue Gateway.workflow.ts"
@@ -20,17 +20,17 @@ npx -y n8nac skills validate "_inbox/PDI-MARTECH/2-workflows/[CC] MT - CRM Sync 
 # Todos devem acusar: ✅ Workflow is valid
 ```
 
-## Passo 2 — Schema Supabase (v3.0)
+## Passo 2: Schema Supabase (v3.0)
 
 Mostrar `3-supabase/supabase-schema-v3.sql`:
 
 - Tabelas: `mt_jobs` · `mt_concurrency` · `mt_job_progress` · `mt_sync_log` · `mt_crm_health` · `mt_sync_delta`
 - Views: `vw_mt_queue_backlog` · `vw_mt_slots` · `vw_mt_sync_summary_24h` · `vw_mt_drift_abertos` · `vw_mt_crm_health`
-- **Aditivo** — não altera o schema v2.x (`error_*`)
+- **Aditivo**: não altera o schema v2.x (`error_*`)
 
-## Passo 3 — Mock do fluxo completo
+## Passo 3: Mock do fluxo completo
 
-> Para a demo, usar um Supabase local/de teste — não o de produção.
+> Para a demo, usar um Supabase local/de teste: não o de produção.
 
 ```bash
 # 1. Enfileirar job (simula o Gateway)
@@ -50,7 +50,7 @@ curl -X POST http://localhost:5678/webhook/mt/crm-sync \
   -d '{"syncId":"demo-1","object":"order","direction":"push","client":"genics","expected":120,"synced":118,"http_status":200}'
 ```
 
-## Passo 4 — Detectar drift
+## Passo 4: Detectar drift
 
 ```bash
 # Esperado 120, syncou 118 → drift ~1.7% (dentro da tolerância de 5%) → sem delta grave.
@@ -62,7 +62,7 @@ SELECT * FROM vw_mt_sync_summary_24h;    -- resumo de sync por objeto
 SELECT * FROM vw_mt_crm_health;          -- health abaixo do mínimo
 ```
 
-## Passo 5 — Limite de concorrência (semáforo)
+## Passo 5: Limite de concorrência (semáforo)
 
 ```sql
 INSERT INTO mt_concurrency (queue, max_concurrency) VALUES ('crm-sync', 5)
@@ -72,7 +72,7 @@ ON CONFLICT (queue) DO UPDATE SET max_concurrency = 5;
 SELECT * FROM vw_mt_slots;
 ```
 
-## Passo 6 — Retomada de payload pesado
+## Passo 6: Retomada de payload pesado
 
 ```bash
 # Simular falha no chunk 4 de 10
@@ -83,7 +83,7 @@ SELECT * FROM mt_job_progress WHERE job_id = 'demo-1';
 # Re-enfileirar e mostrar retomada do chunk 4 (checkpoint), não do zero
 ```
 
-## Passo 7 — Alertas de monitoramento
+## Passo 7: Alertas de monitoramento
 
 ```sql
 -- Worker travado? job parado há +10 min

@@ -30,7 +30,7 @@ Mensageria entrega no minimo 1 vez; sem dedup, reenvio duplica lead/fatura.
 
 ## Decisao Arquitetural (ADR)
 
-ADR-052 — Idempotencia
+ADR-052: Idempotencia
 
 | Opcao | Pro | Contra | Decisao |
 
@@ -81,3 +81,21 @@ ADR-052 — Idempotencia
 - Aplicar em todos os consumers.
 
 - Teste de concorrencia no CI.
+
+## Decisoes e tradeoffs
+
+- **At-least-once do broker mais dedup no consumidor**: entrega exactly-once observacional para o negocio, porque exactly-once de ponta a ponta nao existe em sistema distribuido.
+- **Outbox transacional**: venda e evento gravados na mesma transacao na tabela `outbox(event_id, payload, sent)`, entao falha na publicacao vira reprocessamento do outbox em vez de evento perdido. Custo: relay varrendo pendentes a cada 1s.
+- **Dedupe por `idempotency_key` antes de agir**: o consumer consulta a tabela de processados antes de cobrar. Custo: store com TTL para nao encher.
+- **ACK so apos gravar a chave**: a reentrega cai no dedupe, entao o mesmo evento 5x gera 1 cobranca. A chave combina event_id com identificador do negocio para nao colidir.
+
+## Impacto no negocio
+
+Sem dedupe, reentregas geravam cobrancas duplicadas e cerca de 60h por mes de correcao manual. Com dedup a meta e zero duplicata e 100% dos handlers idempotentes, com correcao proxima de 0h por mes. O teste que injeta o mesmo evento 5x e afirma 1 cobranca da ao Financeiro previsibilidade: retry deixa de ser risco de debito duplo.
+
+## Referencias de estudo
+
+- Curso: "Event-Driven Architecture: From Theory to Practice" (Udemy).
+- Video: "What is Idempotency?" (YouTube, Hussein Nasser).
+- Documento oficial: Apache Kafka Documentation, Exactly-once Semantics (kafka.apache.org).
+- Documento oficial: PostgreSQL Documentation, INSERT ON CONFLICT (postgresql.org).

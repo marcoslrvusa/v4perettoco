@@ -8,7 +8,7 @@
 --   dashboard_daily(client_id, day, events_total, leads_total)  -- materializado
 
 -- =====================================================================
--- ANTES — 8.4s (3 scans na mesma tabela + count distinct caro + sem BRIN)
+-- ANTES: 8.4s (3 scans na mesma tabela + count distinct caro + sem BRIN)
 -- =====================================================================
 EXPLAIN (ANALYZE, BUFFERS)
 WITH totals AS (
@@ -38,7 +38,7 @@ LIMIT 50;
 --   Execução: ~8.4s
 
 -- =====================================================================
--- DEPOIS — 1 único scan com window functions + tabela materializada
+-- DEPOIS: 1 único scan com window functions + tabela materializada
 -- Window: ROW_NUMBER por partição → top-3 eventos por cliente sem 3º scan.
 -- =====================================================================
 CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_events_client_day

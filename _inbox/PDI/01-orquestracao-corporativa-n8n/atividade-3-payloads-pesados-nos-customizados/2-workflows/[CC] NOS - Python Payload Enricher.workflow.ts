@@ -8,9 +8,9 @@ import { workflow, node, links } from '@n8n-as-code/transformer';
 // ──────────────────────────────────────────────────────────────────────────
 // Property name                    Node type (short)   Flags
 // Webhook                           webhook
-// ParsePayload                     code (python — decodifica 1x + dedupe)
-// EnrichPython                    code (python — agrega com stdlib)
-// ReturnSummary                    code (js — resume o resultado)
+// ParsePayload                     code (python: decodifica 1x + dedupe)
+// EnrichPython                    code (python: agrega com stdlib)
+// ReturnSummary                    code (js: resume o resultado)
 //
 // ROUTING MAP
 // ──────────────────────────────────────────────────────────────────────────
@@ -28,7 +28,7 @@ import { workflow, node, links } from '@n8n-as-code/transformer';
 // agrega com Counter/defaultdict. Exemplo de "no customizado" Python.
 //
 // CONFIGURE:
-//  1. Nada de credencial — apenas nos Code (Python/JS).
+//  1. Nada de credencial: apenas nos Code (Python/JS).
 // =====================================================================
 
 @workflow({
@@ -67,7 +67,7 @@ export class PythonPayloadEnricherWorkflow {
     language: 'pythonNative',
     pythonCode: `
 # ============================================================
-# Parse Payload — decodifica 1x, nunca dentro do loop
+# Parse Payload: decodifica 1x, nunca dentro do loop
 # ============================================================
 import json
 
@@ -97,7 +97,7 @@ return [{'json': {'totalItems': len(rows), 'rows': rows}}]
     language: 'pythonNative',
     pythonCode: `
 # ============================================================
-# Enrich Python — dedupe O(n) + agregacao com stdlib
+# Enrich Python: dedupe O(n) + agregacao com stdlib
 # ============================================================
 from collections import Counter, defaultdict
 

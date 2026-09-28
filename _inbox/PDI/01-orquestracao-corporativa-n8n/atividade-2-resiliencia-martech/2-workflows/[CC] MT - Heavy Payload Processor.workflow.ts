@@ -9,7 +9,7 @@ import { workflow, node, links } from '@n8n-as-code/transformer';
 // Property name                 Node type (short)          Flags
 // WorkflowTrigger               n8nTrigger (executeWorkflow)
 // UnpackInput                   code
-// NormalizePayload              code (JS — heavy transforms)
+// NormalizePayload              code (JS: heavy transforms)
 // WriteChunkProgress            supabase                  [creds]
 // PythonEnrich                 code (python)
 // ReturnResult                 executeCommand? (sub-process) → respondToWebhook
@@ -48,7 +48,7 @@ import { workflow, node, links } from '@n8n-as-code/transformer';
 })
 export class MtHeavyPayloadWorkflow {
     // =====================================================================
-    // Sub-workflow: sem trigger proprio — executado via Execute Workflow
+    // Sub-workflow: sem trigger proprio: executado via Execute Workflow
     // (n8n injeta a entrada direto no primeiro node, 'Unpack Input').
     // =====================================================================
 
@@ -63,7 +63,7 @@ export class MtHeavyPayloadWorkflow {
         language: 'javaScript',
         jsCode: `
 // ============================================================
-// Unpack Input — Heavy Payload
+// Unpack Input: Heavy Payload
 // ============================================================
 // O worker entrega { job_id, payload (JSONB string), chunks }.
 // Parse seguranca + concatena itens de chor lambda.
@@ -100,7 +100,7 @@ return [{
 `,
     };
 
-    // JS AVANÇADO — altura pesada (página estratégia, normalizações)
+    // JS AVANÇADO: altura pesada (página estratégia, normalizações)
     @node({
         name: 'Normalize Data',
         type: 'n8n-nodes-base.code',
@@ -112,7 +112,7 @@ return [{
         language: 'javaScript',
         jsCode: `
 // ============================================================
-// Normalize Data — heavy payload processing (JS)
+// Normalize Data: heavy payload processing (JS)
 // ============================================================
 // Converte campos divergentes para o formato padrao do monocito.
 // Aplica-se a TODOS os chunks; mantem chunk com progresso.
@@ -181,7 +181,7 @@ for (const chunk of job.chunks) {
         },
     };
 
-    // Enrichment de momento — Python code de monumento (ex: BERT-lite, OCR)
+    // Enrichment de momento: Python code de monumento (ex: BERT-lite, OCR)
     @node({
         name: 'Enrich Python',
         type: 'n8n-nodes-base.code',
@@ -193,10 +193,10 @@ for (const chunk of job.chunks) {
         language: 'pythonNative',
         pythonCode: `
 # ============================================================
-# Enrich Python — Heavy Payload (step opcional)
+# Enrich Python: Heavy Payload (step opcional)
 # ============================================================
 # Poinpoint: enriquecimento por itens (segment, clean, tags).
-# Usando a biblioteca padrão — sem deps externas.
+# Usando a biblioteca padrão: sem deps externas.
 # ============================================================
 from datetime import datetime
 
@@ -250,7 +250,7 @@ return [{
         // Sem trigger: entrada injetada pelo Execute Workflow (n8n)
         this.UnpackInput.out(0).to(this.NormalizeData.in(0));
 
-        // STEP 2: Progresso (checkpoint) — chamável apos cada chunk
+        // STEP 2: Progresso (checkpoint): chamável apos cada chunk
         this.NormalizeData.out(0).to(this.WriteProgress.in(0));
 
         // STEP 3: Python enrich (opcional)

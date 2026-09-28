@@ -1,4 +1,4 @@
-# Deck PDI — Idempotencia e Entrega Exactly-Once (na pratica: at-least-once + dedup)
+# Deck PDI: Idempotencia e Entrega Exactly-Once (na pratica: at-least-once + dedup)
 
 Area: Sistemas Distribuidos
 
@@ -16,7 +16,7 @@ Sem chave de evento.
 | sem upsert | upsert |
 | sem versao | etag |
 ## Slide 4: Decisao Arquitetural (ADR)
-ADR-052 — Idempotencia
+ADR-052: Idempotencia
 | Opcao | Pro | Contra | Decisao |
 | --- | --- | --- | --- |
 | dedup event_id + upsert | exactly-once p/ negocio | store | ESCOLHIDA |

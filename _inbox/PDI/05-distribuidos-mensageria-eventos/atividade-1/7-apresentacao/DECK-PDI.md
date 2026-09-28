@@ -1,4 +1,4 @@
-# Deck PDI — Sistemas Distribuidos com Mensageria (fila, topico, DLQ)
+# Deck PDI: Sistemas Distribuidos com Mensageria (fila, topico, DLQ)
 
 Area: Sistemas Distribuidos
 
@@ -16,7 +16,7 @@ Sem DLQ: mensagem ruim some.
 | sem DLQ | DLQ + retry |
 | sem backpressure | prefetch limitado |
 ## Slide 4: Decisao Arquitetural (ADR)
-ADR-051 — Transporte de Eventos
+ADR-051: Transporte de Eventos
 | Opcao | Pro | Contra | Decisao |
 | --- | --- | --- | --- |
 | Fila + topico + DLQ | desacopla | ops | ESCOLHIDA |

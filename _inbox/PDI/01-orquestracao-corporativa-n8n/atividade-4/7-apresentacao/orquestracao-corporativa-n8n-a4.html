@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
-<title>PDI — Observabilidade e Logs de Sincronização n8n-CRM</title>
+<title>PDI: Observabilidade e Logs de Sincronização n8n-CRM</title>
 <style>
 :root{--red:#e50914;--red-dark:#b40710;--gold:#c9a96e;--gold-light:#f7f2e9;--gold-border:#e8dcc8;--green:#1a8a3f;--ink:#2d2d2d;--muted:#6b6b6b;--bg:#faf9f6;}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -35,7 +35,7 @@ th{background:#262626;color:#fff}
   </div>
 </div>
 <h2>1. Contexto e Problema</h2>
-<div class="explain">Falhas de sincronização com CRMs terceiros (Salesforce, HubSpot, RD Station) só eram percebidas quando o cliente reclamava — não havia rastro estruturado de qual registro falhou, em qual etapa e por quê.</div>
+<div class="explain">Falhas de sincronização com CRMs terceiros (Salesforce, HubSpot, RD Station) só eram percebidas quando o cliente reclamava: não havia rastro estruturado de qual registro falhou, em qual etapa e por quê.</div>
 <h2>2. Diagnóstico</h2><ul><li>Sem trace correlacionando a execução inteira do workflow</li><li>Logs não estruturados impossibilitando alertas por taxa de erro</li><li>Falta de SLO de latência e de detecção proativa de falhas</li></ul>
 <h2>3. Arquitetura da Solução</h2><ul><li>Padrão de log estruturado (JSON) com trace_id, entity, crm, action, record_id</li><li>Workflow de observabilidade que propaga trace e emite log centralizado</li><li>Painel SQL com taxa de erro por CRM, falhas consecutivas e p95 de latência</li><li>Alerta proativo em #ops-crm antes do impacto ao cliente</li></ul>
 <h2>4. Entregas</h2><ul><li>STANDARD-OBSERVABILITY-LOGS.md (padrão + SLO)</li><li>Workflow n8n de log + alerta proativo</li><li>Queries de dashboard (erro, falhas consecutivas, p95)</li></ul>
