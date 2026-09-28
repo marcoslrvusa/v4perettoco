@@ -8,4 +8,4 @@ custo_tarefa = (in*$in + out*$out) * (1 - cache_hit)
 1. Roteamento por complexidade.
 2. Cache de prompt.
 3. Budget por cliente; alerta 80%.
-4. NAO cachear PII.
+4. NÃO cachear PII.

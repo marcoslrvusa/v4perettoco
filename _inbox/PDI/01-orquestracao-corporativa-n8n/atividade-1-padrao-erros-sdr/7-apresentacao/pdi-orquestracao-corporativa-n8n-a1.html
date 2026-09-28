@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PDI: Padrao Universal de Tratamento de Erros n8n</title>
+<title>PDI: Padrão Universal de Tratamento de Erros n8n</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -390,7 +390,7 @@ hr {
 <div style="display:flex; align-items:center; gap:16px; margin-bottom:24px;">
 <img src="https://marcoslrvusa.github.io/v4perettoco/assets/logo-peretto-red.png" alt="V4" style="height:32px; opacity:0.85; filter:none;" onerror="this.style.display='none';">
 <img src="https://marcoslrvusa.github.io/v4perettoco/assets/images/foto-marcos-perettoco.jpg" alt="Marcos Luciano" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid rgba(184,134,11,0.5);filter:none;flex-shrink:0;" onerror="this.style.display='none';">
-<span class="cover-badge" style="margin-bottom:0;">Relatorio Tecnico PDI</span>
+<span class="cover-badge" style="margin-bottom:0;">Relatório Técnico PDI</span>
 <span style="margin-left:auto; font-size:12px; color:#8896a8;">Marcos Luciano · Tech Lead</span>
 </div>
 <h1>Padrão Universal de Tratamento de Erros <em>n8n Enterprise</em></h1>
@@ -895,30 +895,30 @@ bash PDI/6-automation/deploy-error-handler.sh
 
 <!-- 13. DECISOES -->
 <div class="section">
-<h2><span class="num">13.</span> Decisoes e tradeoffs</h2>
-<p class="sub">Escolhas derivadas do conteudo real da atividade, com custo e beneficio explicitos.</p>
+<h2><span class="num">13.</span> Decisões e tradeoffs</h2>
+<p class="sub">Escolhas derivadas do conteúdo real da atividade, com custo e benefício explícitos.</p>
 <ul style="margin:8px 0 16px 20px;">
-<li style="font-size:14px; margin-bottom:6px;"><strong>Handler central unico:</strong> manutencao em um unico ponto com 10 nos validados com n8nac. Se o handler cair, perde-se notificacao temporaria, mas nao o dado, pois a DLQ esta no Supabase e o Monitor roda a cada 5 min.</li>
-<li style="font-size:14px; margin-bottom:6px;"><strong>Tres camadas obrigatorias:</strong> Camada 1 captura cerca de 73% das falhas transientes sem overhead externo, Camada 2 classifica e notifica em menos de 1 min e Camada 3 impede cascata. Custo de mais configuracao por no em troca de auto-cura acima de 70%.</li>
-<li style="font-size:14px; margin-bottom:6px;"><strong>Code node nunca retenta:</strong> erro de logica como toDateTime undefined ou null constraint em telefone nao se resolve com retry. Exige validacao com IF e try/catch para nao queimar creditos de API.</li>
-<li style="font-size:14px; margin-bottom:6px;"><strong>Breaker isolado por workflow:</strong> limiar de 5 falhas consecutivas e cooldown de 5 min com recovery automatico. Pausa temporaria em troca de estabilidade sistemica.</li>
-<li style="font-size:14px; margin-bottom:6px;"><strong>DLQ permanente no Supabase:</strong> schema v2.1 com 4 tabelas e 4 views preserva payload com correlationId estavel para replay. Custo de manter migracao e views como vw_error_health_score e vw_circuits_open_now.</li>
+<li style="font-size:14px; margin-bottom:6px;"><strong>Handler central único:</strong> manutenção em um único ponto com 10 nos validados com n8nac. Se o handler cair, perde-se notificação temporária, mas não o dado, pois a DLQ está no Supabase e o Monitor roda a cada 5 min.</li>
+<li style="font-size:14px; margin-bottom:6px;"><strong>Três camadas obrigatórias:</strong> Camada 1 captura cerca de 73% das falhas transientes sem overhead externo, Camada 2 classifica e notifica em menos de 1 min e Camada 3 impede cascata. Custo de mais configuração por no em troca de auto-cura acima de 70%.</li>
+<li style="font-size:14px; margin-bottom:6px;"><strong>Code node nunca retenta:</strong> erro de lógica como toDateTime undefined ou null constraint em telefone não se resolve com retry. Exige validação com IF e try/catch para não queimar créditos de API.</li>
+<li style="font-size:14px; margin-bottom:6px;"><strong>Breaker isolado por workflow:</strong> limiar de 5 falhas consecutivas e cooldown de 5 min com recovery automático. Pausa temporária em troca de estabilidade sistêmica.</li>
+<li style="font-size:14px; margin-bottom:6px;"><strong>DLQ permanente no Supabase:</strong> schema v2.1 com 4 tabelas e 4 views preserva payload com correlationId estável para replay. Custo de manter migração e views como vw_error_health_score e vw_circuits_open_now.</li>
 </ul>
 </div>
 
 <!-- 14. IMPACTO -->
 <div class="section">
-<h2><span class="num">14.</span> Impacto no negocio</h2>
-<p>Com 7 workflows SDR IA sem notificacao e deteccao levando dias, cada falha silenciosa derrubava o SLA de atendimento a leads sem ninguem saber. O padrao reduz a deteccao para menos de 1 min via Slack, eleva a auto-cura para mais de 70% com retry no no e zera circuitos abertos sem alerta (de 100% para 0%). O retrofit completo cabe em 4 dias, com cerca de 1h para as 5 correcoes pontuais ja mapeadas (20 min no ADPLAN e 10 min em cada um dos outros 4), o que corta risco operacional e retrabalho de investigacao manual.</p>
+<h2><span class="num">14.</span> Impacto no negócio</h2>
+<p>Com 7 workflows SDR IA sem notificação e detecção levando dias, cada falha silenciosa derrubava o SLA de atendimento a leads sem ninguém saber. O padrão reduz a detecção para menos de 1 min via Slack, eleva a auto-cura para mais de 70% com retry no nó e zera circuitos abertos sem alerta (de 100% para 0%). O retrofit completo cabe em 4 dias, com cerca de 1h para as 5 correções pontuais já mapeadas (20 min no ADPLAN e 10 min em cada um dos outros 4), o que corta risco operacional e retrabalho de investigação manual.</p>
 </div>
 
 <!-- 15. REFERENCIAS -->
 <div class="section">
-<h2><span class="num">15.</span> Referencias de estudo</h2>
+<h2><span class="num">15.</span> Referências de estudo</h2>
 <p class="sub">Material para aprofundar os temas usados nesta atividade.</p>
 <ul style="margin:8px 0 16px 20px;">
-<li style="font-size:14px; margin-bottom:6px;"><strong>Curso:</strong> Automacao e Orquestracao n8n do Basico ao Avancado, na Udemy.</li>
-<li style="font-size:14px; margin-bottom:6px;"><strong>Video:</strong> Error Trigger in n8n, tratamento centralizado de erros, no YouTube, canal oficial n8n.</li>
+<li style="font-size:14px; margin-bottom:6px;"><strong>Curso:</strong> Automação e Orquestração n8n do Básico ao Avançado, na Udemy.</li>
+<li style="font-size:14px; margin-bottom:6px;"><strong>Vídeo:</strong> Error Trigger in n8n, tratamento centralizado de erros, no YouTube, canal oficial n8n.</li>
 <li style="font-size:14px; margin-bottom:6px;"><strong>Doc:</strong> n8n Docs, Error handling with Error Trigger workflows, na plataforma n8n Docs.</li>
 <li style="font-size:14px; margin-bottom:6px;"><strong>Doc:</strong> Supabase Docs, Database tables, views and indexes, na plataforma Supabase Docs.</li>
 </ul>

@@ -1,11 +1,11 @@
-# PDI: Apresentacao: Nós Customizados e Expressões Avançadas n8n
+# PDI: Apresentação: Nós Customizados e Expressões Avançadas n8n
 
 > **Formato:** 15-18 slides | **Tempo:** 20-25 min
-> **Audiencia:** Tech Lead + Squad de Automacao
+> **Audiência:** Tech Lead + Squad de Automação
 
 ---
 
-## Slide 1: Titulo
+## Slide 1: Título
 
 ```
 PDI: NÓS CUSTOMIZADOS E EXPRESSÕES AVANÇADAS
@@ -143,7 +143,7 @@ PDI/
 ├── 1-standards/     → 3 padrões (JS, Python, expressões)
 ├── 2-workflows/     → 3 workflows .workflow.ts (validados com n8nac)
 ├── 3-lib/           → payload-lib.js + payload-lib.py
-├── 4-retrofit/      → Plano de retrofit ADPLAN, PRO ANALISES, CC
+├── 4-retrofit/      → Plano de retrofit ADPLAN, PRO ANÁLISES, CC
 ├── 5-monitoring/    → Queries de performance + alertas
 ├── 6-automation/    → deploy-custom-nodes.sh (com gate)
 └── 7-apresentacao/  → Este deck
@@ -156,7 +156,7 @@ PDI/
 | Workflow | Correção | Esforço |
 |----------|---------|---------|
 | ADPLAN | Streaming + dedupe (JS) | 30 min |
-| PRO ANALISES | Parse 1x + validação | 10 min |
+| PRO ANÁLISES | Parse 1x + validação | 10 min |
 | CC Collector | Dedupe + agregação O(n) | 20 min |
 | CC Metrics | Dedupe + agregação O(n) | 20 min |
 
@@ -185,7 +185,7 @@ Homologação:
   Seg: Revisar 1-standards + 3-lib
   Ter: Push 3 workflows (n8nac push)
   Qua: Testar com payload 100k + medir itens/s
-  Qui: Retrofit ADPLAN + PRO ANALISES + CC
+  Qui: Retrofit ADPLAN + PRO ANÁLISES + CC
   Sex: Dashboard de performance (5-monitoring)
 ```
 

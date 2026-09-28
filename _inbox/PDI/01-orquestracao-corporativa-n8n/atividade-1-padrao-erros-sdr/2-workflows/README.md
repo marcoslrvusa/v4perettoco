@@ -1,6 +1,6 @@
-# Workflows de Orquestracao
+# Workflows de Orquestração
 
-Dois workflows n8n-as-code (.workflow.ts) que implementam a Camada 2 e 3 do padrao.
+Dois workflows n8n-as-code (.workflow.ts) que implementam a Camada 2 e 3 do padrão.
 
 ## [CC] Error Handler Central
 
@@ -19,13 +19,13 @@ Error Trigger
       └── NO  → Slack #alerts → INSERT error_dlq
 ```
 
-### Credenciais Necessarias
+### Credenciais Necessárias
 
 | Credencial | Node | Finalidade |
 |-----------|------|-----------|
 | Slack API | Slack Critical, Slack Warning | Notificar canais |
 | Supabase API | Dead Letter Insert, Log to Supabase | Persistir erro + circuit state |
-| SMTP/Email | Send Report Email | Fallback de notificacao |
+| SMTP/Email | Send Report Email | Fallback de notificação |
 
 ### Deploy
 
@@ -36,7 +36,7 @@ npx n8nac skills validate "Error Handler Central.workflow.ts"
 # 2. Push para o n8n
 npx n8nac push "Error Handler Central.workflow.ts" --verify
 
-# 3. Vincular em cada workflow producao (UI do n8n)
+# 3. Vincular em cada workflow produção (UI do n8n)
 #    Abrir workflow → Settings → Error Workflow → [CC] Error Handler Central
 
 # 4. Publicar o Error Handler (Shift + P)
@@ -75,6 +75,6 @@ npx n8nac push "Circuit Breaker Monitor.workflow.ts" --verify
 
 ## Notas
 
-- Ambos workflows precisam estar **publicados** (nao draft) para funcionar
-- Apos alterar o Error Handler, SEMPRE republicar (Shift+P)
-- O Error Handler NAO deve notificar no mesmo canal que os workflows monitorados (recursion trap)
+- Ambos workflows precisam estar **publicados** (não draft) para funcionar
+- Após alterar o Error Handler, SEMPRE republicar (Shift+P)
+- O Error Handler NÃO deve notificar no mesmo canal que os workflows monitorados (recursion trap)

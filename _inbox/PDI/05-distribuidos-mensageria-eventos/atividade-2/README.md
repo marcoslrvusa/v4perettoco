@@ -1,14 +1,14 @@
-# Idempotencia e Entrega Exactly-Once (na pratica: at-least-once + dedup)
+# Idempotência e Entrega Exactly-Once (na prática: at-least-once + dedup)
 
-Sistemas Distribuidos
+Sistemas Distribuídos
 
 ## Resumo Executivo
 
-Garantir idempotencia de handlers: dedup por chave de evento + upsert, tornando 'at-least-once' equivalente a 'exactly-once' para o negocio. Entrego o padrao e um decorator.
+Garantir idempotência de handlers: dedup por chave de evento + upsert, tornando 'at-least-once' equivalente a 'exactly-once' para o negócio. Entrego o padrão e um decorator.
 
-Mensageria entrega no minimo 1 vez; sem dedup, reenvio duplica lead/fatura.
+Mensageria entrega no mínimo 1 vez; sem dedup, reenvio duplica lead/fatura.
 
-## Contexto de Producao
+## Contexto de Produção
 
 - Reenvio duplicava leads (CNPJ repetido).
 
@@ -16,7 +16,7 @@ Mensageria entrega no minimo 1 vez; sem dedup, reenvio duplica lead/fatura.
 
 - Sem chave de evento.
 
-## Diagnostico
+## Diagnóstico
 
 | Hoje | Alvo |
 
@@ -26,17 +26,17 @@ Mensageria entrega no minimo 1 vez; sem dedup, reenvio duplica lead/fatura.
 
 | sem upsert | upsert |
 
-| sem versao | etag |
+| sem versão | etag |
 
-## Decisao Arquitetural (ADR)
+## Decisão Arquitetural (ADR)
 
-ADR-052: Idempotencia
+ADR-052: Idempotência
 
-| Opcao | Pro | Contra | Decisao |
+| Opção | Pro | Contra | Decisão |
 
 | --- | --- | --- | --- |
 
-| dedup event_id + upsert | exactly-once p/ negocio | store | ESCOLHIDA |
+| dedup event_id + upsert | exactly-once p/ negócio | store | ESCOLHIDA |
 
 > **Nota:** At-least-once do broker + dedup no consumidor = exactly-once observacional.
 
@@ -48,15 +48,15 @@ ADR-052: Idempotencia
 
 - schema_dedup.sql.
 
-## Validacao
+## Validação
 
 1. Mesmo evento 3x -> 1 efeito.
 
-2. Concorrencia: 2 consumers, 1 aplicacao.
+2. Concorrência: 2 consumers, 1 aplicação.
 
-3. DLQ nao cria duplicata.
+3. DLQ não cria duplicata.
 
-## Metricas e SLO
+## Métricas e SLO
 
 | SLO | Alvo |
 
@@ -68,34 +68,34 @@ ADR-052: Idempotencia
 
 ## Riscos
 
-| Risco | Mitigacao |
+| Risco | Mitigação |
 
 | --- | --- |
 
 | Store cheio | TTL |
 
-| Chave errada | event_id + negocio |
+| Chave errada | event_id + negócio |
 
-## Proximos Passos
+## Próximos Passos
 
 - Aplicar em todos os consumers.
 
-- Teste de concorrencia no CI.
+- Teste de concorrência no CI.
 
-## Decisoes e tradeoffs
+## Decisões e tradeoffs
 
-- **At-least-once do broker mais dedup no consumidor**: entrega exactly-once observacional para o negocio, porque exactly-once de ponta a ponta nao existe em sistema distribuido.
-- **Outbox transacional**: venda e evento gravados na mesma transacao na tabela `outbox(event_id, payload, sent)`, entao falha na publicacao vira reprocessamento do outbox em vez de evento perdido. Custo: relay varrendo pendentes a cada 1s.
-- **Dedupe por `idempotency_key` antes de agir**: o consumer consulta a tabela de processados antes de cobrar. Custo: store com TTL para nao encher.
-- **ACK so apos gravar a chave**: a reentrega cai no dedupe, entao o mesmo evento 5x gera 1 cobranca. A chave combina event_id com identificador do negocio para nao colidir.
+- **At-least-once do broker mais dedup no consumidor**: entrega exactly-once observacional para o negócio, porque exactly-once de ponta a ponta não existe em sistema distribuído.
+- **Outbox transacional**: venda e evento gravados na mesma transação na tabela `outbox(event_id, payload, sent)`, então falha na publicação vira reprocessamento do outbox em vez de evento perdido. Custo: relay varrendo pendentes a cada 1s.
+- **Dedupe por `idempotency_key` antes de agir**: o consumer consulta a tabela de processados antes de cobrar. Custo: store com TTL para não encher.
+- **ACK só após gravar a chave**: a reentrega cai no dedupe, então o mesmo evento 5x gera 1 cobrança. A chave combina event_id com identificador do negócio para não colidir.
 
-## Impacto no negocio
+## Impacto no negócio
 
-Sem dedupe, reentregas geravam cobrancas duplicadas e cerca de 60h por mes de correcao manual. Com dedup a meta e zero duplicata e 100% dos handlers idempotentes, com correcao proxima de 0h por mes. O teste que injeta o mesmo evento 5x e afirma 1 cobranca da ao Financeiro previsibilidade: retry deixa de ser risco de debito duplo.
+Sem dedupe, reentregas geravam cobranças duplicadas e cerca de 60h por mês de correção manual. Com dedup a meta e zero duplicata e 100% dos handlers idempotentes, com correção próxima de 0h por mês. O teste que injeta o mesmo evento 5x e afirma 1 cobrança da ao Financeiro previsibilidade: retry deixa de ser risco de débito duplo.
 
-## Referencias de estudo
+## Referências de estudo
 
 - Curso: "Event-Driven Architecture: From Theory to Practice" (Udemy).
-- Video: "What is Idempotency?" (YouTube, Hussein Nasser).
+- Vídeo: "What is Idempotency?" (YouTube, Hussein Nasser).
 - Documento oficial: Apache Kafka Documentation, Exactly-once Semantics (kafka.apache.org).
 - Documento oficial: PostgreSQL Documentation, INSERT ON CONFLICT (postgresql.org).

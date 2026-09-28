@@ -65,31 +65,31 @@ Gateways HTTP (pico MarTech)
 
 > ⚠️ NENHUM workflow foi enviado ao n8n nesta etapa: publicação apenas após homologação.
 
-## Metricas de Sucesso
+## Métricas de Sucesso
 
-| Metrica | Atual | Meta |
+| Métrica | Atual | Meta |
 |---------|-------|------|
-| Pico absorvido sem travar instância | Nao suportado | 5x volume nominal |
-| Concorrencia maxima no n8n | Ilimitada (travamento) | Limitada por slot |
+| Pico absorvido sem travar instância | Não suportado | 5x volume nominal |
+| Concorrência máxima no n8n | Ilimitada (travamento) | Limitada por slot |
 | Payloads pesados processados | Travam / OOM | > 90% dos casos |
-| Falha de sync CRM detectada | Apos cliente reclamar | < 5 min |
+| Falha de sync CRM detectada | Após cliente reclamar | < 5 min |
 | Rastreabilidade de sync | Nenhuma | 100% dos jobs logados |
 
-## Decisoes e tradeoffs
+## Decisões e tradeoffs
 
-1. Gateway que so enfileira com ACK 202 em menos de 2s em vez de processar no webhook: absorve pico sem travar a instancia. O tradeoff e que o cliente recebe confirmacao de fila (queued) e nao de conclusao, o que exige consulta a mt_jobs para o status final.
-2. Worker com polling a cada 15s e semaforo em mt_concurrency em vez de concorrencia ilimitada: limita a pressao sobre o n8n e os CRMs. O tradeoff e uma latencia minima de 15s por ciclo em troca de nunca estourar o limite da fila.
-3. Checkpoint retomavel em mt_job_progress com backoff de 30s, 1m e 2m e maximo de 3 tentativas: falha no chunk 4 de 10 retoma do chunk 4, nao do zero. O tradeoff e mais escritas no Supabase por chunk em troca de eliminar o retrabalho total apos timeout.
-4. Schema v3.0 aditivo com 6 tabelas e 5 views convivendo com as tabelas error da atividade 1: evita migracao destrutiva. O tradeoff e operar mais tabelas (mt_jobs, mt_concurrency, mt_job_progress, mt_sync_log, mt_crm_health e mt_sync_delta) em troca de deploy sem quebrar o padrao de erros ja homologado.
-5. Drift com tolerancia default de 5% e envelope expected x confirmed: exemplo com 1000 esperados e 860 confirmados gera drift de 14% e abre mt_sync_delta antes do cliente reclamar. O tradeoff e que um limiar fixo pode gerar alerta em variacao legitima, compensado pela deteccao em menos de 15 min em vez da reclamacao.
+1. Gateway que só enfileira com ACK 202 em menos de 2s em vez de processar no webhook: absorve pico sem travar a instância. O tradeoff é que o cliente recebe confirmação de fila (queued) e não de conclusão, o que exige consulta a mt_jobs para o status final.
+2. Worker com polling a cada 15s e semáforo em mt_concurrency em vez de concorrência ilimitada: limita a pressão sobre o n8n e os CRMs. O tradeoff é uma latência mínima de 15s por ciclo em troca de nunca estourar o limite da fila.
+3. Checkpoint retomável em mt_job_progress com backoff de 30s, 1m e 2m e máximo de 3 tentativas: falha no chunk 4 de 10 retoma do chunk 4, não do zero. O tradeoff é mais escritas no Supabase por chunk em troca de eliminar o retrabalho total após timeout.
+4. Schema v3.0 aditivo com 6 tabelas e 5 views convivendo com as tabelas error da atividade 1: evita migração destrutiva. O tradeoff é operar mais tabelas (mt_jobs, mt_concurrency, mt_job_progress, mt_sync_log, mt_crm_health e mt_sync_delta) em troca de deploy sem quebrar o padrão de erros já homologado.
+5. Drift com tolerância default de 5% e envelope expected x confirmed: exemplo com 1000 esperados e 860 confirmados gera drift de 14% e abre mt_sync_delta antes do cliente reclamar. O tradeoff é que um limiar fixo pode gerar alerta em variação legítima, compensado pela detecção em menos de 15 min em vez da reclamação.
 
-## Impacto no negocio
+## Impacto no negócio
 
-Antes, pico de campanha ou importacao travava a instancia no webhook, payload de 10k itens sem checkpoint perdia tudo no timeout e falha de sync com Kommo, HubSpot ou RD Station so aparecia na reclamacao. Com fila, ACK em menos de 2s, processamento retomavel e drift visivel em dashboard, a meta sai de volume nao suportado para 5x o volume nominal, de travamento por concorrencia ilimitada para limite por slot e de deteccao na reclamacao para menos de 15 min, com mais de 90% dos payloads pesados processados. Isso reduz risco de indisponibilidade em pico e custo de retrabalho de jobs refeitos do zero.
+Antes, pico de campanha ou importação travava a instância no webhook, payload de 10k itens sem checkpoint perdia tudo no timeout e falha de sync com Kommo, HubSpot ou RD Station só aparecia na reclamação. Com fila, ACK em menos de 2s, processamento retomável e drift visível em dashboard, a meta sai de volume não suportado para 5x o volume nominal, de travamento por concorrência ilimitada para limite por slot e de detecção na reclamação para menos de 15 min, com mais de 90% dos payloads pesados processados. Isso reduz risco de indisponibilidade em pico e custo de retrabalho de jobs refeitos do zero.
 
-## Referencias de estudo
+## Referências de estudo
 
 - Curso: Fundamentos de Filas e Sistemas Assincronos, na Alura.
-- Video: n8n Webhooks and Queue Pattern Explained, no YouTube, canal oficial n8n.
+- Vídeo: n8n Webhooks and Queue Pattern Explained, no YouTube, canal oficial n8n.
 - Doc: n8n Docs, Webhook node and sub-workflows, na plataforma n8n Docs.
 - Doc: Supabase Docs, Postgres tables and views, na plataforma Supabase Docs.

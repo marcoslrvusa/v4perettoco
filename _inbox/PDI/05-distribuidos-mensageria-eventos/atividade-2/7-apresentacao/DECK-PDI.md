@@ -1,44 +1,44 @@
-# Deck PDI: Idempotencia e Entrega Exactly-Once (na pratica: at-least-once + dedup)
+# Deck PDI: Idempotência e Entrega Exactly-Once (na prática: at-least-once + dedup)
 
-Area: Sistemas Distribuidos
+Área: Sistemas Distribuídos
 
 ## Slide 1: Resumo Executivo
-Garantir idempotencia de handlers: dedup por chave de evento + upsert, tornando 'at-least-once' equivalente a 'exactly-once' para o negocio. Entrego o padrao e um decorator.
-Mensageria entrega no minimo 1 vez; sem dedup, reenvio duplica lead/fatura.
-## Slide 2: Contexto de Producao
+Garantir idempotência de handlers: dedup por chave de evento + upsert, tornando 'at-least-once' equivalente a 'exactly-once' para o negócio. Entrego o padrão e um decorator.
+Mensageria entrega no mínimo 1 vez; sem dedup, reenvio duplica lead/fatura.
+## Slide 2: Contexto de Produção
 Reenvio duplicava leads (CNPJ repetido).
 Fatura emitida 2x em retry.
 Sem chave de evento.
-## Slide 3: Diagnostico
+## Slide 3: Diagnóstico
 | Hoje | Alvo |
 | --- | --- |
 | reatenvio duplica | dedup event_id |
 | sem upsert | upsert |
-| sem versao | etag |
-## Slide 4: Decisao Arquitetural (ADR)
-ADR-052: Idempotencia
-| Opcao | Pro | Contra | Decisao |
+| sem versão | etag |
+## Slide 4: Decisão Arquitetural (ADR)
+ADR-052: Idempotência
+| Opção | Pro | Contra | Decisão |
 | --- | --- | --- | --- |
-| dedup event_id + upsert | exactly-once p/ negocio | store | ESCOLHIDA |
+| dedup event_id + upsert | exactly-once p/ negócio | store | ESCOLHIDA |
 > Nota: At-least-once do broker + dedup no consumidor = exactly-once observacional.
 ## Slide 5: Entregas
 IDEMPOTENCY.md.
 idempotent.py.
 schema_dedup.sql.
-## Slide 6: Validacao
+## Slide 6: Validação
 Mesmo evento 3x -> 1 efeito.
-Concorrencia: 2 consumers, 1 aplicacao.
-DLQ nao cria duplicata.
-## Slide 7: Metricas e SLO
+Concorrência: 2 consumers, 1 aplicação.
+DLQ não cria duplicata.
+## Slide 7: Métricas e SLO
 | SLO | Alvo |
 | --- | --- |
 | Duplicatas | 0 |
 | Idempotente | 100% handlers |
 ## Slide 8: Riscos
-| Risco | Mitigacao |
+| Risco | Mitigação |
 | --- | --- |
 | Store cheio | TTL |
-| Chave errada | event_id + negocio |
-## Slide 9: Proximos Passos
+| Chave errada | event_id + negócio |
+## Slide 9: Próximos Passos
 Aplicar em todos os consumers.
-Teste de concorrencia no CI.
+Teste de concorrência no CI.

@@ -1,47 +1,47 @@
 #!/usr/bin/env python3
-"""Gera o DOCX da atividade 1 (padrao PDI senior, paleta #8b4513/#1a1f24/#6b7a8a)."""
+"""Gera o DOCX da atividade 1 (padrão PDI sênior, paleta #8b4513/#1a1f24/#6b7a8a)."""
 import os
 from docx import Document
 from docx.shared import Pt, Cm, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 
 D = {
-  "title": "Modelo C4 na Pratica Aplicado ao Orquestrador de Automacao V4",
+  "title": "Modelo C4 na Prática Aplicado ao Orquestrador de Automação V4",
   "slug": "arquitetura-documentada-a1",
   "autor": "Marcos Luciano",
   "unidade": "FV Marketing / V4 Company",
   "data": "Setembro 2026",
-  "area": "Automacao & Infraestrutura",
+  "área": "Automação & Infraestrutura",
   "sections": [
     ("1. Contexto", [
-      ("p", "O Orquestrador de Automacao V4 executa coleta de metricas, disparo de emails e sincronizacao da operacao FV Marketing com n8n (:5678), workers Python (:8000), Supabase Postgres e painel Next.js (:3000), falando com Meta Ads API e Gmail API."),
-      ("p", "Cada pessoa desenhava o sistema de um jeito. Onboarding de 3 dias e incidentes de coleta sem mapa de diagnostico."),
+      ("p", "O Orquestrador de Automação V4 executa coleta de métricas, disparo de emails e sincronização da operação FV Marketing com n8n (:5678), workers Python (:8000), Supabase Postgres e painel Next.js (:3000), falando com Meta Ads API e Gmail API."),
+      ("p", "Cada pessoa desenhava o sistema de um jeito. Onboarding de 3 dias e incidentes de coleta sem mapa de diagnóstico."),
     ]),
-    ("2. Diagnostico", [
+    ("2. Diagnóstico", [
       ("table", ["Sintoma", "Causa"], [
         ["Onboarding de 3 dias", "Sem diagrama de contexto oficial"],
-        ["Incidente vira adivinhacao", "Sem containers com portas e dependencias"],
-        ["Mudanca no n8n quebra coleta", "Componentes do n8n nao mapeados"],
+        ["Incidente vira adivinhação", "Sem containers com portas e dependências"],
+        ["Mudança no n8n quebra coleta", "Componentes do n8n não mapeados"],
       ]),
     ]),
-    ("3. Solucao", [
-      ("p", "Aplicar os 4 niveis do C4 sobre o sistema real: contexto, containers, componentes do n8n e a funcao executar_com_retry. Structurizr DSL como fonte unica e Mermaid como espelho no repo."),
+    ("3. Solução", [
+      ("p", "Aplicar os 4 níveis do C4 sobre o sistema real: contexto, containers, componentes do n8n e a função executar_com_retry. Structurizr DSL como fonte única e Mermaid como espelho no repo."),
       ("note", "PR que muda container exige DSL e Mermaid atualizados juntos."),
     ]),
     ("4. Como funciona (coleta Meta Ads)", [
-      ("ol", ["Trigger agenda coleta-meta-ads a cada 30 min no n8n.", "Subworkflow chama workers via webhook com conta e janela.", "executar_com_retry com backoff 30s, 60s e 120s.", "Worker grava metricas no Supabase; falha vira fila de erros.", "Painel Next.js exibe verba ao gestor."]),
+      ("ol", ["Trigger agenda coleta-meta-ads a cada 30 min no n8n.", "Subworkflow chama workers via webhook com conta e janela.", "executar_com_retry com backoff 30s, 60s e 120s.", "Worker grava métricas no Supabase; falha vira fila de erros.", "Painel Next.js exibe verba ao gestor."]),
     ]),
     ("5. Entregas", [
-      ("ul", ["1-standards/01-guia-c4-aplicado.md: guia dos 4 niveis.", "1-standards/02-diagramas-sistema-automacao.md: diagramas reais.", "2-implementacao/01-workspace-c4.dsl: fonte Structurizr.", "2-implementacao/02-exemplo-mermaid-c4.md: espelho Mermaid.", "2-implementacao/03-checklist-revisao-c4.md: checklist de PR."]),
+      ("ul", ["1-standards/01-guia-c4-aplicado.md: guia dos 4 níveis.", "1-standards/02-diagramas-sistema-automacao.md: diagramas reais.", "2-implementacao/01-workspace-c4.dsl: fonte Structurizr.", "2-implementacao/02-exemplo-mermaid-c4.md: espelho Mermaid.", "2-implementacao/03-checklist-revisao-c4.md: checklist de PR."]),
     ]),
-    ("6. Metricas e proximos passos", [
-      ("table", ["Metrica", "Atual", "Meta"], [
+    ("6. Métricas e próximos passos", [
+      ("table", ["Métrica", "Atual", "Meta"], [
         ["Sistemas com contexto", "1", "3"],
         ["Containers documentados", "4 de 4", "4 de 4"],
         ["Diagramas desatualizados +30d", "0", "0"],
         ["Onboarding de operador", "3 dias", "1 dia"],
       ]),
-      ("p", "Proximos passos: publicar Structurizr Lite com link interno, incluir contexto no onboarding, revisar a cada mudanca de container."),
+      ("p", "Próximos passos: publicar Structurizr Lite com link interno, incluir contexto no onboarding, revisar a cada mudança de container."),
     ]),
   ],
 }
@@ -58,10 +58,10 @@ def cover():
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     r = p.add_run(D['title']); r.bold = True; r.font.size = Pt(23)
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER; p.space_before = Pt(28)
-    r = p.add_run('Documento Tecnico de PDI'); r.font.size = Pt(12); r.font.color.rgb = RGBColor(0x6B,0x7A,0x8A)
+    r = p.add_run('Documento Técnico de PDI'); r.font.size = Pt(12); r.font.color.rgb = RGBColor(0x6B,0x7A,0x8A)
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER; p.space_before = Pt(16)
     for line in [f"Autor: {D['autor']}", f"Unidade: {D['unidade']}", f"Data: {D['data']}",
-                 f"Area: {D['area']}", "Status: Entregue (desenvolvido)"]:
+                 f"Área: {D['área']}", "Status: Entregue (desenvolvido)"]:
         rr = p.add_run(line + '\n'); rr.font.size = Pt(11); rr.font.color.rgb = RGBColor(0x49,0x55,0x60)
     doc.add_page_break()
 

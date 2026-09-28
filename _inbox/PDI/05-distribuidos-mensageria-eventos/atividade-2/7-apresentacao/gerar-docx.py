@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Gera o DOCX desta atividade a partir de report.json (padrao PDI senior), incluindo as secoes de autoria."""
+"""Gera o DOCX desta atividade a partir de report.json (padrão PDI sênior), incluindo as seções de autoria."""
 import json, os
 from docx import Document
 from docx.shared import Pt, Cm, RGBColor
@@ -9,12 +9,12 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 with open(os.path.join(HERE, "report.json"), encoding="utf-8") as f:
     D = json.load(f)
 
-SKIP = {"Decisoes e tradeoffs", "Impacto no negocio", "Referencias de estudo"}
+SKIP = {"Decisões e tradeoffs", "Impacto no negócio", "Referências de estudo"}
 
 NEW = [
-    ("Decisoes e tradeoffs", "ul", ["At-least-once do broker mais dedup no consumidor: entrega exactly-once observacional para o negocio, porque exactly-once de ponta a ponta nao existe em sistema distribuido.", "Outbox transacional: venda e evento gravados na mesma transacao na tabela outbox(event_id, payload, sent), entao falha na publicacao vira reprocessamento do outbox em vez de evento perdido. Custo: relay varrendo pendentes a cada 1s.", "Dedupe por idempotency_key antes de agir: o consumer consulta a tabela de processados antes de cobrar. Custo: store com TTL para nao encher.", "ACK so apos gravar a chave: a reentrega cai no dedupe, entao o mesmo evento 5x gera 1 cobranca. A chave combina event_id com identificador do negocio para nao colidir."]),
-    ("Impacto no negocio", "p", ["Sem dedupe, reentregas geravam cobrancas duplicadas e cerca de 60h por mes de correcao manual. Com dedup a meta e zero duplicata e 100% dos handlers idempotentes, com correcao proxima de 0h por mes. O teste que injeta o mesmo evento 5x e afirma 1 cobranca da ao Financeiro previsibilidade: retry deixa de ser risco de debito duplo."]),
-    ("Referencias de estudo", "ul", ["Curso: \"Event-Driven Architecture: From Theory to Practice\" (Udemy).", "Video: \"What is Idempotency?\" (YouTube, Hussein Nasser).", "Documento oficial: Apache Kafka Documentation, Exactly-once Semantics (kafka.apache.org).", "Documento oficial: PostgreSQL Documentation, INSERT ON CONFLICT (postgresql.org)."]),
+    ("Decisões e tradeoffs", "ul", ["At-least-once do broker mais dedup no consumidor: entrega exactly-once observacional para o negócio, porque exactly-once de ponta a ponta não existe em sistema distribuído.", "Outbox transacional: venda e evento gravados na mesma transação na tabela outbox(event_id, payload, sent), então falha na publicação vira reprocessamento do outbox em vez de evento perdido. Custo: relay varrendo pendentes a cada 1s.", "Dedupe por idempotency_key antes de agir: o consumer consulta a tabela de processados antes de cobrar. Custo: store com TTL para não encher.", "ACK só após gravar a chave: a reentrega cai no dedupe, então o mesmo evento 5x gera 1 cobrança. A chave combina event_id com identificador do negócio para não colidir."]),
+    ("Impacto no negócio", "p", ["Sem dedupe, reentregas geravam cobranças duplicadas e cerca de 60h por mês de correção manual. Com dedup a meta e zero duplicata e 100% dos handlers idempotentes, com correção próxima de 0h por mês. O teste que injeta o mesmo evento 5x e afirma 1 cobrança da ao Financeiro previsibilidade: retry deixa de ser risco de débito duplo."]),
+    ("Referências de estudo", "ul", ["Curso: \"Event-Driven Architecture: From Theory to Practice\" (Udemy).", "Vídeo: \"What is Idempotency?\" (YouTube, Hussein Nasser).", "Documento oficial: Apache Kafka Documentation, Exactly-once Semantics (kafka.apache.org).", "Documento oficial: PostgreSQL Documentation, INSERT ON CONFLICT (postgresql.org)."]),
 ]
 
 doc = Document()
@@ -28,10 +28,10 @@ def cover():
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     r = p.add_run(D['title']); r.bold = True; r.font.size = Pt(23)
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER; p.space_before = Pt(28)
-    r = p.add_run('Documento Tecnico de PDI'); r.font.size = Pt(12); r.font.color.rgb = RGBColor(0x6B,0x7A,0x8A)
+    r = p.add_run('Documento Técnico de PDI'); r.font.size = Pt(12); r.font.color.rgb = RGBColor(0x6B,0x7A,0x8A)
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER; p.space_before = Pt(16)
     for line in [f"Autor: {D['autor']}", f"Unidade: {D.get('unidade', 'FV Marketing / V4 Company')}", f"Data: {D.get('data', 'Agosto 2026')}",
-                 f"Area: {D.get('area', '05 - Sistemas Distribuidos, Mensageria e Eventos')}", "Status: Entregue (desenvolvido)"]:
+                 f"Área: {D.get('área', '05 - Sistemas Distribuídos, Mensageria e Eventos')}", "Status: Entregue (desenvolvido)"]:
         rr = p.add_run(line + '\n'); rr.font.size = Pt(11); rr.font.color.rgb = RGBColor(0x49,0x55,0x60)
     doc.add_page_break()
 
@@ -56,7 +56,7 @@ def add_section(title, blocks):
         elif kind == "note":
             p = doc.add_paragraph(); p.add_run("Nota: ").bold = True; p.add_run(rest[0])
         elif kind == "warn":
-            p = doc.add_paragraph(); p.add_run("Atencao: ").bold = True; p.add_run(rest[0])
+            p = doc.add_paragraph(); p.add_run("Atenção: ").bold = True; p.add_run(rest[0])
         elif kind == "code":
             p = doc.add_paragraph(rest[1]); p.style = doc.styles['No Spacing']
             for r in p.runs: r.font.name = 'Consolas'; r.font.size = Pt(9)

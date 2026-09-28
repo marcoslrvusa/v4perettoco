@@ -414,24 +414,24 @@ drift      = 14%
       <tr><td><code>7-apresentacao/</code></td><td>Deck HTML + demo + este relatório</td><td>HTML + Markdown</td></tr>
     </table>
 
-    <h2><span class="num">10.</span> Decisoes e tradeoffs</h2>
-    <p>Escolhas derivadas do conteudo real da atividade, com custo e beneficio explicitos.</p>
+    <h2><span class="num">10.</span> Decisões e tradeoffs</h2>
+    <p>Escolhas derivadas do conteúdo real da atividade, com custo e benefício explícitos.</p>
     <ul>
-      <li><strong>Gateway que so enfileira com ACK 202 em menos de 2s:</strong> absorve pico sem travar a instancia. O cliente recebe confirmacao de fila (queued) e consulta mt_jobs para o status final.</li>
-      <li><strong>Worker com polling a cada 15s e semaforo em mt_concurrency:</strong> limita pressao sobre n8n e CRMs. Latencia minima de ciclo em troca de nunca estourar o limite da fila.</li>
-      <li><strong>Checkpoint retomavel com backoff de 30s, 1m e 2m e maximo de 3 tentativas:</strong> falha no chunk 4 de 10 retoma do chunk 4. Mais escritas no Supabase por chunk em troca de zero retrabalho total.</li>
-      <li><strong>Schema v3.0 aditivo com 6 tabelas e 5 views:</strong> convive com as tabelas error da atividade 1 sem migracao destrutiva. Mais tabelas para operar em troca de deploy seguro.</li>
-      <li><strong>Drift com tolerancia default de 5%:</strong> exemplo com 1000 esperados e 860 confirmados gera 14% e abre mt_sync_delta antes do cliente reclamar. Limiar fixo pode alertar em variacao legitima, em troca de deteccao em menos de 15 min.</li>
+      <li><strong>Gateway que só enfileira com ACK 202 em menos de 2s:</strong> absorve pico sem travar a instância. O cliente recebe confirmação de fila (queued) e consulta mt_jobs para o status final.</li>
+      <li><strong>Worker com polling a cada 15s e semáforo em mt_concurrency:</strong> limita pressão sobre n8n e CRMs. Latência mínima de ciclo em troca de nunca estourar o limite da fila.</li>
+      <li><strong>Checkpoint retomável com backoff de 30s, 1m e 2m e máximo de 3 tentativas:</strong> falha no chunk 4 de 10 retoma do chunk 4. Mais escritas no Supabase por chunk em troca de zero retrabalho total.</li>
+      <li><strong>Schema v3.0 aditivo com 6 tabelas e 5 views:</strong> convive com as tabelas error da atividade 1 sem migração destrutiva. Mais tabelas para operar em troca de deploy seguro.</li>
+      <li><strong>Drift com tolerância default de 5%:</strong> exemplo com 1000 esperados e 860 confirmados gera 14% e abre mt_sync_delta antes do cliente reclamar. Limiar fixo pode alertar em variação legítima, em troca de detecção em menos de 15 min.</li>
     </ul>
 
-    <h2><span class="num">11.</span> Impacto no negocio</h2>
-    <p>Antes, pico de campanha ou importacao travava a instancia no webhook, payload de 10k itens sem checkpoint perdia tudo no timeout e falha de sync com Kommo, HubSpot ou RD Station so aparecia na reclamacao. Com fila, ACK em menos de 2s, processamento retomavel e drift visivel em dashboard, a meta sai de volume nao suportado para 5x o volume nominal, de travamento por concorrencia ilimitada para limite por slot e de deteccao na reclamacao para menos de 15 min, com mais de 90% dos payloads pesados processados. Isso reduz risco de indisponibilidade em pico e custo de retrabalho de jobs refeitos do zero.</p>
+    <h2><span class="num">11.</span> Impacto no negócio</h2>
+    <p>Antes, pico de campanha ou importação travava a instância no webhook, payload de 10k itens sem checkpoint perdia tudo no timeout e falha de sync com Kommo, HubSpot ou RD Station só aparecia na reclamação. Com fila, ACK em menos de 2s, processamento retomável e drift visível em dashboard, a meta sai de volume não suportado para 5x o volume nominal, de travamento por concorrência ilimitada para limite por slot e de detecção na reclamação para menos de 15 min, com mais de 90% dos payloads pesados processados. Isso reduz risco de indisponibilidade em pico e custo de retrabalho de jobs refeitos do zero.</p>
 
-    <h2><span class="num">12.</span> Referencias de estudo</h2>
+    <h2><span class="num">12.</span> Referências de estudo</h2>
     <p>Material para aprofundar os temas usados nesta atividade.</p>
     <ul>
       <li><strong>Curso:</strong> Fundamentos de Filas e Sistemas Assincronos, na Alura.</li>
-      <li><strong>Video:</strong> n8n Webhooks and Queue Pattern Explained, no YouTube, canal oficial n8n.</li>
+      <li><strong>Vídeo:</strong> n8n Webhooks and Queue Pattern Explained, no YouTube, canal oficial n8n.</li>
       <li><strong>Doc:</strong> n8n Docs, Webhook node and sub-workflows, na plataforma n8n Docs.</li>
       <li><strong>Doc:</strong> Supabase Docs, Postgres tables and views, na plataforma Supabase Docs.</li>
     </ul>

@@ -1,6 +1,6 @@
-# Resiliencia com Circuit Breaker e Retry/Backoff
+# Resiliência com Circuit Breaker e Retry/Backoff
 
-Sistemas Distribuidos
+Sistemas Distribuídos
 
 <h2><span class="num">1.</span> Contexto</h2>
 

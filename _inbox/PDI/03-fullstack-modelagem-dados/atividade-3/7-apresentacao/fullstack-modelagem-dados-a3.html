@@ -37,7 +37,7 @@ th{background:#262626;color:#fff}
 <h2>1. Contexto e Problema</h2>
 <div class="explain">Tarefas pontuais (export, webhook) rodavam em instâncias always-on, desperdiçando custo e sem segurança de secrets.</div>
 <h2>2. Diagnóstico</h2><ul><li>Custo fixo de servidores para jobs esporádicos</li><li>Secrets em env var (risco)</li><li>Conexões de banco sem pooler/TLS</li></ul>
-<h2>3. Arquitetura da Solução</h2><ul><li>Cloud Function que conecta via Secret Manager</li><li>Pooler (PgBouncer) com TLS</li><li>IAM de minima privilégio</li><li>Idempotência por chave de evento</li></ul>
+<h2>3. Arquitetura da Solução</h2><ul><li>Cloud Function que conecta via Secret Manager</li><li>Pooler (PgBouncer) com TLS</li><li>IAM de mínima privilégio</li><li>Idempotência por chave de evento</li></ul>
 <h2>4. Entregas</h2><ul><li>SERVERLESS-SECURITY.md (padrão)</li><li>main.py (Cloud Function segura)</li><li>Dockerfile</li></ul>
 <h2>5. Métricas de Sucesso</h2>
 <table><thead><tr><th>Métrica</th><th>Antes</th><th>Depois</th></tr></thead><tbody><tr><td>Custo (jobs esporádicos)</td><td class='bad'>Always-on</td><td class='good'>Por execução</td></tr><tr><td>Secrets</td><td class='bad'>Env var</td><td class='good'>Secret Manager</td></tr></tbody></table>

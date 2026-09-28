@@ -1,4 +1,4 @@
-# Envelope Padrao de Erro: Referencia Rapida
+# Envelope Padrão de Erro: Referência Rápida
 
 ## Schema
 
@@ -22,20 +22,20 @@
 
 ## Campos
 
-| Campo | Tipo | Obrigatorio | Descricao |
+| Campo | Tipo | Obrigatório | Descrição |
 |-------|------|-------------|-----------|
-| `severity` | `critical | warning | info` | Sim | Nivel de impacto |
+| `severity` | `critical | warning | info` | Sim | Nível de impacto |
 | `errorClass` | `server_error | rate_limit | timeout | client_error | data_validation | network_dns | runtime | resource_exhaustion | unknown` | Sim | Taxonomia do erro |
 | `workflowName` | string | Sim | Nome do workflow que falhou |
 | `workflowId` | string | Sim | ID interno n8n |
-| `failedNode` | string | Sim | Nome do no que lancou a excecao |
+| `failedNode` | string | Sim | Nome do nó que lançou a exceção |
 | `errorMessage` | string | Sim | Mensagem (sanitizada, max 500 chars) |
-| `executionId` | string | Sim | ID da execucao |
-| `executionUrl` | string | Nao | Link direto para a execucao |
-| `correlationId` | string | Sim | `{workflowId}-{executionId}`: estavel entre retries |
+| `executionId` | string | Sim | ID da execução |
+| `executionUrl` | string | Não | Link direto para a execução |
+| `correlationId` | string | Sim | `{workflowId}-{executionId}`: estável entre retries |
 | `timestamp` | string (ISO 8601) | Sim | Momento do erro |
 
-## Codigo de Referencia (Code node)
+## Código de Referência (Code node)
 
 ```javascript
 const input = $input.first().json;

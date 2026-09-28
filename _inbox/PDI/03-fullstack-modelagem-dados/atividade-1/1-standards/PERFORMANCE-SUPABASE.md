@@ -117,7 +117,7 @@ falso. O plano real precisa do `request.jwt.claims` setado.
 
 - **Paginação por cursor** em vez de `LIMIT/OFFSET` (OFFSET cresce O(n)).
 - **Janelas (window functions)** para top-N por grupo no mesmo scan.
-- **CTEs** para pipelines legíveis: inlined pelo planner sempre que possivel.
+- **CTEs** para pipelines legíveis: inlined pelo planner sempre que possível.
 - **`count(DISTINCT)`** em dados grandes: materializar agregado em tabela de resumo.
 - Sem `SELECT *`: planejador e tamanho de linha importam em wide tables.
 - **UPDATE/DELETE em batch** via CTE para evitar lock storm.

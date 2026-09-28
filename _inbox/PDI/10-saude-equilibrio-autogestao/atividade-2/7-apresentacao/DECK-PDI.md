@@ -10,7 +10,7 @@ Dor cervical, lombar e fadiga visual em quem passa 8 horas em setup improvisado.
 
 ## Slide 3: Tese da atividade
 
-Ergonomia boa é a que você usa todo dia: 6 ajustes de custo baixo mais pausas que cabem na jornada real, sem academia e sem equipamento caro.
+Ergonomia boa é a que você usa todo dia: 6 ajustes de custo baixo mais pausas que cabem na jornada real, sem acadêmia e sem equipamento caro.
 
 ## Slide 4: Os 6 ajustes obrigatórios
 

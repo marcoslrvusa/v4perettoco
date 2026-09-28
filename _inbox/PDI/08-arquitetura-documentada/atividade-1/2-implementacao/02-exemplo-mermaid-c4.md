@@ -1,6 +1,6 @@
 # Espelho Mermaid do C4 (cola direto no repo)
 
-Copie cada bloco para arquivos `.md` do repositorio. Renderiza no GitHub e no GitLab sem plugin.
+Copie cada bloco para arquivos `.md` do repositório. Renderiza no GitHub e no GitLab sem plugin.
 
 ## Contexto
 
@@ -8,12 +8,12 @@ Copie cada bloco para arquivos `.md` do repositorio. Renderiza no GitHub e no Gi
 C4Context
   title Contexto - Orquestrador de Automacao V4
   Person(operador, "Operador de Automacao", "Cria e monitora fluxos")
-  Person(gestor, "Gestor de Trafego", "Consome relatorios e alertas")
+  Person(gestor, "Gestor de Tráfego", "Consome relatórios e alertas")
   System(orquestrador, "Orquestrador de Automacao V4", "Executa fluxos n8n e workers")
   System_Ext(meta, "Meta Ads API", "Metricas de campanhas")
   System_Ext(gmail, "Gmail API", "Disparo de emails")
   Rel(operador, orquestrador, "Opera e monitora")
-  Rel(orquestrador, gestor, "Envia alertas e relatorios")
+  Rel(orquestrador, gestor, "Envia alertas e relatórios")
   Rel(orquestrador, meta, "Le metricas")
   Rel(orquestrador, gmail, "Dispara emails")
 ```

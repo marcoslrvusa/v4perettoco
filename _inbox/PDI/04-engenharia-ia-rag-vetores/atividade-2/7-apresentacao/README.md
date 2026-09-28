@@ -1,4 +1,4 @@
-# RAG Hibrido (BM25 + Vetorial) e GraphRAG para Relacoes
+# RAG Híbrido (BM25 + Vetorial) e GraphRAG para Relações
 
 Engenharia de IA
 

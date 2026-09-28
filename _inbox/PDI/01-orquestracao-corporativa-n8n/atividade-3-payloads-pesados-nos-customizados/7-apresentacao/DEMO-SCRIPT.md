@@ -1,6 +1,6 @@
-# Script de Demonstracao: Nós Customizados e Expressões Avançadas n8n (PDI-NOS-CUSTOMIZADOS)
+# Script de Demonstração: Nós Customizados e Expressões Avançadas n8n (PDI-NOS-CUSTOMIZADOS)
 
-> Homologacao simulada. NENHUM passo publica em producao.
+> Homologação simulada. NENHUM passo publica em produção.
 
 ## Setup
 
@@ -19,15 +19,15 @@ npx -y n8nac skills validate "2-workflows/[CC] NOS - Expressions & Memo Playgrou
 # Todos devem acusar: ✅ Workflow is valid
 ```
 
-## Passo 2: Mostrar a biblioteca reutilizavel (3-lib)
+## Passo 2: Mostrar a biblioteca reutilizável (3-lib)
 
 - `3-lib/payload-lib.js` → `chunk` · `normalizeStream` · `dedupe` · `aggregate` · `memoizeGlobal`
 - `3-lib/payload-lib.py` → `chunk` · `dedupe` · `aggregate` · `parse_payload` · `to_output`
-- Regra: lib e a fonte da verdade; nos Code embutem copias das funcoes usadas.
+- Regra: lib e a fonte da verdade; nos Code embutem cópias das funções usadas.
 
-## Passo 3: Demo JS Payload Normalizer (dedupe + normalizacao O(n))
+## Passo 3: Demo JS Payload Normalizer (dedupe + normalização O(n))
 
-> Para a demo, rodar localmente (`n8n start`) ou em instancia de teste.
+> Para a demo, rodar localmente (`n8n start`) ou em instância de teste.
 
 ```bash
 curl -X POST http://localhost:5678/webhook/nos/js-normalizer \
@@ -64,7 +64,7 @@ curl -X POST http://localhost:5678/webhook/nos/js-normalizer \
 
 **Ponto-chave:** mesmo processo (chunk 1000) aguenta 100k sem estourar o event loop.
 
-## Passo 5: Demo Python Payload Enricher (agregacao stdlib)
+## Passo 5: Demo Python Payload Enricher (agregação stdlib)
 
 ```bash
 curl -X POST http://localhost:5678/webhook/nos/python-enricher \
@@ -79,7 +79,7 @@ curl -X POST http://localhost:5678/webhook/nos/python-enricher \
 # → {"success":true,"processedItems":3,"byTipo":{"B2B":2,"B2C":1},"somaScore":{"B2B":160,"B2C":45}}
 ```
 
-**Ponto-chave:** agregacao com `Counter`/`defaultdict` (O(n)) e apenas stdlib.
+**Ponto-chave:** agregação com `Counter`/`defaultdict` (O(n)) e apenas stdlib.
 
 ## Passo 6: Demo Expressões & Memo Playground
 
@@ -87,26 +87,26 @@ curl -X POST http://localhost:5678/webhook/nos/python-enricher \
 # Rodar manualmente o workflow no n8n UI (Manual Trigger)
 # → FilterHighScore filtra score >= 70 via expressao {{ $json.score }}
 # → MemoizeReference cacheia o limiar em $getWorkflowStaticData('global')
-# → Rodar de novo: cachedAt nao muda (memoizacao entre execucoes)
+# → Rodar de novo: cachedAt não muda (memoização entre execuções)
 ```
 
-**Ponto-chave:** valor estavel calculado 1x e reutilizado: demonstra
-`$getWorkflowStaticData` na pratica.
+**Ponto-chave:** valor estável calculado 1x e reutilizado: demonstra
+`$getWorkflowStaticData` na prática.
 
 ## Passo 7: Retrofit e monitoramento
 
-- Mostrar `4-retrofit/RETROFIT.md` (ADPLAN, PRO ANALISES, CC Collector/Metrics)
-- Mostrar `5-monitoring/QUERIES.md` (mt_payload_metrics + alertas de duracao)
+- Mostrar `4-retrofit/RETROFIT.md` (ADPLAN, PRO ANÁLISES, CC Collector/Metrics)
+- Mostrar `5-monitoring/QUERIES.md` (mt_payload_metrics + alertas de duração)
 
 ## Sucesso
 
 - ✅ 3 workflows validados com n8nac (`Workflow is valid`)
 - ✅ Dedupe O(n) em UMA passada (JS) demonstrado com 100k itens
-- ✅ Agregacao Python apenas stdlib (Counter/defaultdict)
-- ✅ Memoizacao entre execucoes (`$getWorkflowStaticData`)
-- ✅ Biblioteca `3-lib/` como fonte unica de transformacao
+- ✅ Agregação Python apenas stdlib (Counter/defaultdict)
+- ✅ Memoização entre execuções (`$getWorkflowStaticData`)
+- ✅ Biblioteca `3-lib/` como fonte única de transformação
 
-## Observacao
+## Observação
 
-Nenhum workflow foi publicado no n8n. Publicacao somente apos homologacao,
-com confirmacao explicita via `bash 6-automation/deploy-custom-nodes.sh --dry-run`.
+Nenhum workflow foi publicado no n8n. Publicação somente após homologação,
+com confirmação explícita via `bash 6-automation/deploy-custom-nodes.sh --dry-run`.

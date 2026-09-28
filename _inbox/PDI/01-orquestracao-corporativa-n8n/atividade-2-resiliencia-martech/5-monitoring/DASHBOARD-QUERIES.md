@@ -12,7 +12,7 @@ Retorna: `queue | queued | running | failed | oldest_queued_at | stale_queued`
 
 - `stale_queued > 0` = job parado na fila há mais de 10 min (worker pode estar off).
 
-## 2. Uso de Concorrencia (semáforo)
+## 2. Uso de Concorrência (semáforo)
 
 ```sql
 SELECT * FROM vw_mt_slots;

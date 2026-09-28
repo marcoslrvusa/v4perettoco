@@ -134,7 +134,7 @@ Siga `4-retrofit/RETROFIT.md`. Resumo:
 | Workflow | Correção | Esforço |
 |---|---|---|
 | ADPLAN | Streaming + dedupe (JS) | 30 min |
-| PRO ANALISES | Parse 1x + validação | 10 min |
+| PRO ANÁLISES | Parse 1x + validação | 10 min |
 | CC Collector | Dedupe + agregação O(n) | 20 min |
 | CC Metrics | Dedupe + agregação O(n) | 20 min |
 

@@ -1,15 +1,15 @@
 # Workflows: PDI-NOS-CUSTOMIZADOS (payloads pesados)
 
-Workflows n8n desenvolvidos para a terceira atividade do PDI. **Nao publicar em
-producao ainda**: aguardando homologacao da apresentacao.
+Workflows n8n desenvolvidos para a terceira atividade do PDI. **Não publicar em
+produção ainda**: aguardando homologação da apresentação.
 
 ## Componentes
 
-| # | Workflow | Tipo | Proposito |
+| # | Workflow | Tipo | Propósito |
 |---|----------|------|-----------|
-| 1 | `[CC] NOS - JS Payload Normalizer` | Webhook (`/nos/js-normalizer`) | Parse 1x, chunking streaming, dedupe O(n) e normalizacao em UMA passada (JS) |
+| 1 | `[CC] NOS - JS Payload Normalizer` | Webhook (`/nos/js-normalizer`) | Parse 1x, chunking streaming, dedupe O(n) e normalização em UMA passada (JS) |
 | 2 | `[CC] NOS - Python Payload Enricher` | Webhook (`/nos/python-enricher`) | Enriquecimento/agregacao em Python com stdlib (dedupe set + Counter/defaultdict) |
-| 3 | `[CC] NOS - Expressions & Memo Playground` | Manual | Demonstra expressoes avancadas (IF, referencia) + memoizacao com `$getWorkflowStaticData` |
+| 3 | `[CC] NOS - Expressions & Memo Playground` | Manual | Demonstra expressões avançadas (IF, referência) + memoização com `$getWorkflowStaticData` |
 
 ## Arquitetura
 
@@ -22,11 +22,11 @@ producao ainda**: aguardando homologacao da apresentacao.
   Manual ──▶ GenerateSampleData ──▶ FilterHighScore (IF) ──▶ MemoizeReference ──▶ Output
 ```
 
-## Dependencias
+## Dependências
 
 - Nenhuma credencial externa: apenas nos `Code` (JS/Python).
-- Lógica reutilizavel: `../3-lib/payload-lib.js` e `payload-lib.py`
-  (fonte da verdade; os workflows embutem copias das funcoes usadas).
+- Lógica reutilizável: `../3-lib/payload-lib.js` e `payload-lib.py`
+  (fonte da verdade; os workflows embutem cópias das funções usadas).
 
 ## Como usar (quando autorizado a publicar)
 
@@ -44,11 +44,11 @@ curl -X POST https://n8n.fvmarketing.com.br/webhook/nos/js-normalizer \
 Esperado no JS Normalizer: `processedItems: 2`, `deduped: 1`.
 
 > **Status: NÃO publicado.** Workflows validados com n8nac (`Workflow is valid`).
-> Publicar somente apos homologacao da apresentacao.
+> Publicar somente após homologação da apresentação.
 
-## Configuracao
+## Configuração
 
-| Parametro | Valor default | Onde |
+| Parâmetro | Valor default | Onde |
 |-----------|--------------|------|
 | Chunk size (JS Normalizer) | 1000 itens | Node `Parse and Chunk` |
 | Limiar de score (Playground) | 70 | Node `Filter High Score` |

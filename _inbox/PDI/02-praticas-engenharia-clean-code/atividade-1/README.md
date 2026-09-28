@@ -1,82 +1,82 @@
-# Refatoracao de Modulo Legado com SOLID e Clean Architecture
+# Refatoração de Módulo Legado com SOLID e Clean Architecture
 
 Engenharia de Software
 
 ## Resumo Executivo
 
-Refatoracao do modulo de orquestracao de campanhas (antigo CampaignService, 600+ linhas, acoplado) para Clean Architecture com ports/adapters e os 5 principios SOLID. Entrego o antes/depois, o ADR e um teste que prova a nova testabilidade.
+Refatoração do módulo de orquestração de campanhas (antigo CampaignService, 600+ linhas, acoplado) para Clean Architecture com ports/adapters e os 5 princípios SOLID. Entrego o antes/depois, o ADR e um teste que prova a nova testabilidade.
 
-O ponto nao e 'estilo': e eliminar classes de risco (SQL injection, transacoes ausentes, falha silenciosa de CRM) e tornar o modulo coberto por teste sem subir infra.
+O ponto não é 'estilo': é eliminar classes de risco (SQL injection, transações ausentes, falha silenciosa de CRM) e tornar o módulo coberto por teste sem subir infra.
 
-## Contexto de Producao
+## Contexto de Produção
 
-- O modulo dispara 3-5 campanhas/dia para listas de 5k-80k leads.
+- O módulo dispara 3-5 campanhas/dia para listas de 5k-80k leads.
 
-- Falha silenciosa de gravacao no CRM ja causou duplo contato (reclamacao real).
+- Falha silenciosa de gravação no CRM já causou duplo contato (reclamação real).
 
-- Qualquer alteracao hoje exige deploy manual e testes manuais.
+- Qualquer alteração hoje exige deploy manual e testes manuais.
 
 ## O Problema e o Blast Radius
 
-O CampaignService original misturava regra de negocio, acesso direto a banco, envio de e-mail e chamada de CRM no mesmo metodo.
+O CampaignService original misturava regra de negócio, acesso direto a banco, envio de e-mail e chamada de CRM no mesmo método.
 
-| Violacao | Manifestacao |
+| Violação | Manifestação |
 
 | --- | --- |
 
 | SRP | 1 classe cuida de regra+DB+email+CRM |
 
-| OCP | novo canal = editar metodo central |
+| OCP | novo canal = editar método central |
 
-| DIP | aplicacao depende de psycopg2/smtp direto |
+| DIP | aplicação depende de psycopg2/smtp direto |
 
-| Sem transacao | estado parcial em falha |
+| Sem transação | estado parcial em falha |
 
-## Diagnostico e Causa Raiz
+## Diagnóstico e Causa Raiz
 
 - SQL concatenado (f"SELECT ... {camp.id}"): vetor de injection.
 
-- Sem transacao: lead marcado enviado mas e-mail falha -> estado inconsistente.
+- Sem transação: lead marcado enviado mas e-mail falha -> estado inconsistente.
 
-- Impossivel testar: 600 linhas, 4 dependencias de I/O acopladas, 0% cobertura.
+- Impossível testar: 600 linhas, 4 dependências de I/O acopladas, 0% cobertura.
 
-## Decisao Arquitetural (ADR)
+## Decisão Arquitetural (ADR)
 
 ADR-021: Camadas e Ports/Adapters
 
-| Opcao | Pro | Contra | Decisao |
+| Opção | Pro | Contra | Decisão |
 
 | --- | --- | --- | --- |
 
-| Clean Architecture | testavel, desacoplado | mais arquivos | ESCOLHIDA |
+| Clean Architecture | testável, desacoplado | mais arquivos | ESCOLHIDA |
 
-| Hexagonal puro | simetrico | overhead | rejeitada |
+| Hexagonal puro | simétrico | overhead | rejeitada |
 
-| Manter acoplado + E2E | zero refactor | fragil | rejeitada |
+| Manter acoplado + E2E | zero refactor | frágil | rejeitada |
 
-> **Nota:** Dependencia de I/O vira interface (Protocol): LeadRepository, Notifier, Logger. O servico depende de abstracoes; implementacoes sao injetadas no bootstrap.
+> **Nota:** Dependência de I/O vira interface (Protocol): LeadRepository, Notifier, Logger. O serviço depende de abstrações; implementações são injetadas no bootstrap.
 
 ## Entregas desta Atividade
 
-- SOLID-BEFORE-AFTER.md: mapeamento violacao->solucao.
+- SOLID-BEFORE-AFTER.md: mapeamento violacao->solução.
 
-- before_campaign_service.py: modulo legado.
+- before_campaign_service.py: módulo legado.
 
 - after_campaign_service.py: Clean Architecture + 1 teste.
 
-## Plano de Validacao e Rollout
+## Plano de Validação e Rollout
 
-1. Cobrir o servico com testes de porta (mock de Notifier/Repository): alvo 85%.
+1. Cobrir o serviço com testes de porta (mock de Notifier/Repository): alvo 85%.
 
-2. Feature flag: novo modulo em paralelo por 1 sprint (shadow).
+2. Feature flag: novo módulo em paralelo por 1 sprint (shadow).
 
-3. Se divergencia < 0,1%, migrar trafego e remover legado.
+3. Se divergência < 0,1%, migrar tráfego e remover legado.
 
 4. Rollback: flag desliga o novo sem deploy.
 
-## Metricas e SLO
+## Métricas e SLO
 
-| Metrica | Antes | Depois |
+| Métrica | Antes | Depois |
 
 | --- | --- | --- |
 
@@ -88,34 +88,34 @@ ADR-021: Camadas e Ports/Adapters
 
 | SQL injection | sim | eliminado |
 
-## Riscos e Mitigacoes
+## Riscos e Mitigações
 
-| Risco | Mitigacao |
+| Risco | Mitigação |
 
 | --- | --- |
 
-| Shadow com divergencia | reconciliacao diaria |
+| Shadow com divergência | reconciliação diária |
 
-| Time nao adota | PR template + lint de arquitetura |
+| Time não adota | PR template + lint de arquitetura |
 
-## Proximos Passos
+## Próximos Passos
 
-- Aplicar o molde aos demais modulos legados.
+- Aplicar o molde aos demais módulos legados.
 
-- Mutation testing (mutmut) no servico.
-## Decisoes e tradeoffs
+- Mutation testing (mutmut) no serviço.
+## Decisões e tradeoffs
 - Clean Architecture escolhida sobre hexagonal puro e manter acoplado com E2E: testabilidade com ports desacoplados compensa o custo de mais arquivos, como registra o ADR-021.
-- Dependencias de I/O como Protocol (LeadRepository, Notifier, Logger) com injecao no bootstrap: o servico passa a depender de abstracoes e o teste usa FakeRepo sem subir infra.
-- Rollout em shadow por 1 sprint com reconciliacao diaria e corte em divergencia menor que 0,1 por cento, em vez de cutover direto: compara o modulo novo com o legado de 600 linhas sem expor listas de 5k a 80k leads a estado parcial.
-- Meta de cobertura de 85 por cento nos testes de porta com mocks, em vez de teste manual: o legado tinha 0 por cento de cobertura e 4 dependencias de I/O acopladas, entao o gate quantitativo impede regressao silenciosa.
-- Classes menores que 45 linhas com 1 responsabilidade por classe, aceitando mais arquivos: elimina SQL concatenado, falta de transacao e falha silenciosa de CRM que ja causou duplo contato.
+- Dependências de I/O como Protocol (LeadRepository, Notifier, Logger) com injeção no bootstrap: o serviço passa a depender de abstrações e o teste usa FakeRepo sem subir infra.
+- Rollout em shadow por 1 sprint com reconciliação diária e corte em divergência menor que 0,1 por cento, em vez de cutover direto: compara o módulo novo com o legado de 600 linhas sem expor listas de 5k a 80k leads a estado parcial.
+- Meta de cobertura de 85 por cento nos testes de porta com mocks, em vez de teste manual: o legado tinha 0 por cento de cobertura e 4 dependências de I/O acopladas, então o gate quantitativo impede regressão silenciosa.
+- Classes menores que 45 linhas com 1 responsabilidade por classe, aceitando mais arquivos: elimina SQL concatenado, falta de transação e falha silenciosa de CRM que já causou duplo contato.
 
-## Impacto no negocio
+## Impacto no negócio
 
-O modulo dispara 3 a 5 campanhas por dia para listas de 5k a 80k leads, entao cada falha silenciosa vira duplo contato e reclamacao real. Sair de 600 linhas com 0 por cento de cobertura para classes menores que 45 linhas com alvo de 85 por cento reduz o tempo de alteracao de deploy manual com teste manual para validacao automatica, baixa o risco de SQL injection e estado parcial sem transacao, e evita o custo de hotfix em base grande com rollback simples por feature flag.
+O módulo dispara 3 a 5 campanhas por dia para listas de 5k a 80k leads, então cada falha silenciosa vira duplo contato e reclamação real. Sair de 600 linhas com 0 por cento de cobertura para classes menores que 45 linhas com alvo de 85 por cento reduz o tempo de alteração de deploy manual com teste manual para validação automática, baixa o risco de SQL injection e estado parcial sem transação, e evita o custo de hotfix em base grande com rollback simples por feature flag.
 
-## Referencias de estudo
+## Referências de estudo
 - Curso: Clean Architecture e SOLID com Python, na Alura.
-- Video: SOLID em codigo Python na pratica, no YouTube.
-- Doc oficial: Documentacao do Python sobre Protocol e tipagem estrutural, em docs.python.org.
-- Doc oficial: Documentacao do pytest sobre fixtures e mocks, em docs.pytest.org.
+- Vídeo: SOLID em código Python na prática, no YouTube.
+- Doc oficial: Documentação do Python sobre Protocol e tipagem estrutural, em docs.python.org.
+- Doc oficial: Documentação do pytest sobre fixtures e mocks, em docs.pytest.org.

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PDI: Queries Complexas e Indexacao no Supabase (<em>PostgreSQL</em>): Registro de Entrega</title>
+<title>PDI: Queries Complexas e Indexação no Supabase (<em>PostgreSQL</em>): Registro de Entrega</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -202,7 +202,7 @@ li { color: var(--gray-700); font-size: 14px; margin-bottom: 6px; }
     <div class="cover-avatar"><img src="../../../../../assets/images/logo-peretto-perfil.jpg" alt="Marcos Luciano"></div>
     <div class="cover-logo"><img src="../../../../../assets/logo-peretto.png" alt="Peretto"></div>
     <span class="cover-badge">PDI: Atividade 01 : Registro de Entrega</span>
-    <h1>Queries Complexas e Indexacao no Supabase (<em>PostgreSQL</em>)</h1>
+    <h1>Queries Complexas e Indexação no Supabase (<em>PostgreSQL</em>)</h1>
     <div class="cover-meta">
       <strong>Autor:</strong> PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com<br>
       <strong>Unidade:</strong> FV Marketing / V4 Company: Automação &amp; Infraestrutura<br>
@@ -217,63 +217,63 @@ li { color: var(--gray-700); font-size: 14px; margin-bottom: 6px; }
   <div class="content">
 
     <h2><span class="num">1.</span> Contexto</h2>
-    <p>O Supabase que sustenta a operacao SDR IA e a fila <code>mt_jobs</code> sofria com queries escritas sem plano de execucao: JOINs pesados sem indice, leituras sequenciais em tabelas de milhoes de linhas, funcoes com RLS no caminho quente das consultas e <code>autovacuum</code> desconfigurado. O resultado eram timeouts de webhook, dashboards que abriam em 8s ou mais e fila com backlog invisivel.</p>
-<p>Referencias de volumetria V4: <code>mt_jobs</code> com 2,4M linhas, <code>sync_log</code> com 12M, <code>events</code> com 8M particionados, <code>leads</code> com 900k e <code>dashboard_daily</code> com 60k linhas por mes.</p>
+    <p>O Supabase que sustenta a operação SDR IA e a fila <code>mt_jobs</code> sofria com queries escritas sem plano de execução: JOINs pesados sem índice, leituras sequenciais em tabelas de milhões de linhas, funções com RLS no caminho quente das consultas e <code>autovacuum</code> desconfigurado. O resultado eram timeouts de webhook, dashboards que abriam em 8s ou mais e fila com backlog invisível.</p>
+<p>Referências de volumetria V4: <code>mt_jobs</code> com 2,4M linhas, <code>sync_log</code> com 12M, <code>events</code> com 8M particionados, <code>leads</code> com 900k e <code>dashboard_daily</code> com 60k linhas por mês.</p>
 
     <h2><span class="num">2.</span> Diagnóstico</h2>
-    <p>Com <code>EXPLAIN (ANALYZE, BUFFERS)</code> como metodo, os sinais de gargalo aparecem no plano: <code>Seq Scan</code> em tabela acima de 100k linhas, <code>Nested Loop</code> com re-scan alto por FK sem indice, <code>Sort</code> explicito sobre coluna nao indexada, <code>Hash Join</code> com spill em temp file e estatisticas obsoletas.</p>
+    <p>Com <code>EXPLAIN (ANALYZE, BUFFERS)</code> como método, os sinais de gargalo aparecem no plano: <code>Seq Scan</code> em tabela acima de 100k linhas, <code>Nested Loop</code> com re-scan alto por FK sem índice, <code>Sort</code> explícito sobre coluna não indexada, <code>Hash Join</code> com spill em temp file e estatísticas obsoletas.</p>
 <table><tr><th>Caso</th><th>Sintoma</th><th>Causa-raiz</th></tr>
-<tr><td>Fila <code>mt_jobs</code></td><td>pick de 1,8s com Seq Scan</td><td>filtro sem indice composto + LEFT JOIN desnecessario</td></tr>
-<tr><td>Sync CRM</td><td>JOIN de auditoria em 4,2s</td><td>FK sem indice + filtro em coluna sem indice</td></tr>
-<tr><td>Dashboard</td><td>agregacao em 8,4s sobre 12M linhas</td><td><code>count(DISTINCT)</code> + janela sem materializacao</td></tr></table>
+<tr><td>Fila <code>mt_jobs</code></td><td>pick de 1,8s com Seq Scan</td><td>filtro sem índice composto + LEFT JOIN desnecessário</td></tr>
+<tr><td>Sync CRM</td><td>JOIN de auditoria em 4,2s</td><td>FK sem índice + filtro em coluna sem índice</td></tr>
+<tr><td>Dashboard</td><td>agregação em 8,4s sobre 12M linhas</td><td><code>count(DISTINCT)</code> + janela sem materialização</td></tr></table>
 
     <h2><span class="num">3.</span> Solução</h2>
-    <p>Indices certos por padrao de acesso, particionamento por range com TTL, autovacuum calibrado e RLS com policies simples. Nenhum indice foi aplicado em producao nesta etapa: apenas documentado e provado.</p>
-<ul><li><strong>Fila <code>mt_jobs</code>:</strong> indice <code>(queue, status, scheduled_at)</code> mais remocao do LEFT JOIN. Plano virou Index Scan e a latencia saiu de 1,8s para 4ms.</li>
-<li><strong>Sync CRM:</strong> indice em <code>(client_id, object, synced_at DESC)</code> e CTE de janela. Saiu de 4,2s para 180ms.</li>
-<li><strong>Dashboard:</strong> materializacao parcial (tabela agregada + indice BRIN no tempo). Saiu de 8,4s para 1,1s.</li></ul>
+    <p>Índices certos por padrão de acesso, particionamento por range com TTL, autovacuum calibrado e RLS com policies simples. Nenhum índice foi aplicado em produção nesta etapa: apenas documentado e provado.</p>
+<ul><li><strong>Fila <code>mt_jobs</code>:</strong> índice <code>(queue, status, scheduled_at)</code> mais remoção do LEFT JOIN. Plano virou Index Scan e a latência saiu de 1,8s para 4ms.</li>
+<li><strong>Sync CRM:</strong> índice em <code>(client_id, object, synced_at DESC)</code> e CTE de janela. Saiu de 4,2s para 180ms.</li>
+<li><strong>Dashboard:</strong> materialização parcial (tabela agregada + índice BRIN no tempo). Saiu de 8,4s para 1,1s.</li></ul>
 
     <h2><span class="num">4.</span> Como funciona</h2>
-    <div class="pipeline"><div class="pipeline-head"><div class="pipeline-title">Metodo EXPLAIN <em>antes/depois</em></div><div class="pipeline-live"><span class="dot"></span>fluxo de otimizacao</div></div>
+    <div class="pipeline"><div class="pipeline-head"><div class="pipeline-title">Método EXPLAIN <em>antes/depois</em></div><div class="pipeline-live"><span class="dot"></span>fluxo de otimização</div></div>
 <div class="pipeline-body"><div class="pl-rail"><div class="pl-pulse p1"></div><div class="pl-pulse p2"></div><div class="pl-pulse g"></div></div>
 <div class="pl-steps">
 <div class="pl-step"><div class="num">1</div><div><div class="name">Medir com <code>EXPLAIN (ANALYZE, BUFFERS)</code></div><div class="desc">Plano e fonte da verdade. Procurar Seq Scan, re-scan, Sort e spill.</div></div></div>
-<div class="pl-step"><div class="num">2</div><div><div class="name">Indice composto <code>igualdade, range, ORDER BY</code></div><div class="desc">Um B-tree cobre filtro e ordenacao sem Sort. <span class="pl-chip"><span class="pl-tag">1,8s para 4ms</span></span></div></div></div>
-<div class="pl-step"><div class="num">3</div><div><div class="name">Tipo certo: <code>GIN</code> e <code>BRIN</code></div><div class="desc">GIN para arrays/jsonb. BRIN para series temporais, 10x menor. <span class="pl-chip"><span class="pl-tag">8,4s para 1,1s</span></span></div></div></div>
+<div class="pl-step"><div class="num">2</div><div><div class="name">Índice composto <code>igualdade, range, ORDER BY</code></div><div class="desc">Um B-tree cobre filtro e ordenação sem Sort. <span class="pl-chip"><span class="pl-tag">1,8s para 4ms</span></span></div></div></div>
+<div class="pl-step"><div class="num">3</div><div><div class="name">Tipo certo: <code>GIN</code> e <code>BRIN</code></div><div class="desc">GIN para arrays/jsonb. BRIN para séries temporais, 10x menor. <span class="pl-chip"><span class="pl-tag">8,4s para 1,1s</span></span></div></div></div>
 <div class="pl-step"><div class="num">4</div><div><div class="name">Particionar + <code>CONCURRENTLY</code></div><div class="desc">Range com TTL e pruning. Aplicar fora de pico sem AccessExclusiveLock. <span class="pl-chip"><span class="pl-tag ok">meta: pick abaixo de 10ms</span></span></div></div></div>
-</div><div class="pl-footer"><span>2-sql/06-planos-antes-depois.md reproduz os 3 casos no staging</span><span class="pl-lifecycle"><span class="pl-life done"><span class="b"></span>provado</span><span class="pl-life queued"><span class="b"></span>homologacao</span></span></div></div></div>
+</div><div class="pl-footer"><span>2-sql/06-planos-antes-depois.md reproduz os 3 casos no staging</span><span class="pl-lifecycle"><span class="pl-life done"><span class="b"></span>provado</span><span class="pl-life queued"><span class="b"></span>homologação</span></span></div></div></div>
 
     <h2><span class="num">5.</span> Entregas</h2>
-    <table><tr><th>Pasta</th><th>Conteudo</th></tr>
-<tr><td><code>1-standards</code></td><td>PERFORMANCE-SUPABASE.md: planos de execucao, EXPLAIN, indices, particionamento, autovacuum</td></tr>
+    <table><tr><th>Pasta</th><th>Conteúdo</th></tr>
+<tr><td><code>1-standards</code></td><td>PERFORMANCE-SUPABASE.md: planos de execução, EXPLAIN, índices, particionamento, autovacuum</td></tr>
 <tr><td><code>2-sql</code></td><td>5 PoCs com adversarial antes/depois (JOINs, janelas, CTEs, BRIN/B-tree/GIN, RLS) + 06-planos-antes-depois.md</td></tr>
 <tr><td><code>3-casos</code></td><td>3 gargalos reais: fila mt_jobs, sync CRM e dashboard</td></tr>
-<tr><td><code>7-apresentacao</code></td><td>deck, script de demonstracao e relatorio HTML/DOCX/PDF</td></tr></table>
+<tr><td><code>7-apresentacao</code></td><td>deck, script de demonstração e relatório HTML/DOCX/PDF</td></tr></table>
 
     <h2><span class="num">6.</span> Métricas de sucesso</h2>
-    <table><tr><th>Metrica</th><th>Atual</th><th>Meta</th></tr>
+    <table><tr><th>Métrica</th><th>Atual</th><th>Meta</th></tr>
 <tr><td>Worker da fila <code>mt_jobs</code> (pick job)</td><td>1.8s (Seq Scan)</td><td>&lt; 10ms</td></tr>
 <tr><td>JOIN de sync CRM (auditoria 30d)</td><td>4.2s</td><td>&lt; 250ms</td></tr>
 <tr><td>Dashboard de performance (janela 7d)</td><td>8.4s</td><td>&lt; 1.5s</td></tr>
-<tr><td>Bloat em tabelas de log</td><td>nao monitorado</td><td>&lt; 20%</td></tr>
+<tr><td>Bloat em tabelas de log</td><td>não monitorado</td><td>&lt; 20%</td></tr>
 <tr><td>Timeout de webhook por query lenta</td><td>~3/dia</td><td>0</td></tr></table>
-<div class="callout"><strong>Nota:</strong> nenhum indice foi aplicado em producao nesta etapa: apenas documentado e provado.</div>
-<h2><span class="num">7.</span> Decisoes e tradeoffs</h2>
-<ul><li><strong>Nenhuma query em producao sem <code>EXPLAIN (ANALYZE, BUFFERS)</code>:</strong> exige disciplina de revisao e staging com volumetria representativa.</li>
-<li><strong>Indice composto na ordem igualdade, range e depois ORDER BY:</strong> a escrita paga um pouco mais por indice; aceito porque a fila e lida pelo worker a cada 15s.</li>
-<li><strong>BRIN 10x menor que B-tree em <code>created_at</code>:</strong> so vale se a ordem fisica acompanha o tempo; exige manutencao com vacuum e particionamento.</li>
-<li><strong>Particionamento por range com TTL em append-only:</strong> exige job de manutencao; sem ele a tabela cresce sem limite.</li>
-<li><strong><code>CREATE INDEX CONCURRENTLY</code> fora de pico:</strong> criacao mais lenta e fora de transacao; a janela de deploy precisa prever isso.</li></ul>
-<h2><span class="num">8.</span> Impacto no negocio</h2>
-<p>A fila <code>mt_jobs</code> com 2,4M linhas, o sync de CRM e o dashboard sobre 12M linhas geravam timeouts de webhook (cerca de 3 por dia), dashboards de 8s ou mais e backlog invisivel. Com os indices e o metodo EXPLAIN, o pick fica abaixo de 10ms, o sync abaixo de 250ms e o dashboard abaixo de 1,5s, zerando timeouts e devolvendo visibilidade da fila sem trocar de banco.</p>
-<h2><span class="num">9.</span> Referencias de estudo</h2>
+<div class="callout"><strong>Nota:</strong> nenhum índice foi aplicado em produção nesta etapa: apenas documentado e provado.</div>
+<h2><span class="num">7.</span> Decisões e tradeoffs</h2>
+<ul><li><strong>Nenhuma query em produção sem <code>EXPLAIN (ANALYZE, BUFFERS)</code>:</strong> exige disciplina de revisão e staging com volumetria representativa.</li>
+<li><strong>Índice composto na ordem igualdade, range e depois ORDER BY:</strong> a escrita paga um pouco mais por índice; aceito porque a fila e lida pelo worker a cada 15s.</li>
+<li><strong>BRIN 10x menor que B-tree em <code>created_at</code>:</strong> só vale se a ordem física acompanha o tempo; exige manutenção com vacuum e particionamento.</li>
+<li><strong>Particionamento por range com TTL em append-only:</strong> exige job de manutenção; sem ele a tabela cresce sem limite.</li>
+<li><strong><code>CREATE INDEX CONCURRENTLY</code> fora de pico:</strong> criação mais lenta e fora de transação; a janela de deploy precisa prever isso.</li></ul>
+<h2><span class="num">8.</span> Impacto no negócio</h2>
+<p>A fila <code>mt_jobs</code> com 2,4M linhas, o sync de CRM e o dashboard sobre 12M linhas geravam timeouts de webhook (cerca de 3 por dia), dashboards de 8s ou mais e backlog invisível. Com os índices e o método EXPLAIN, o pick fica abaixo de 10ms, o sync abaixo de 250ms e o dashboard abaixo de 1,5s, zerando timeouts e devolvendo visibilidade da fila sem trocar de banco.</p>
+<h2><span class="num">9.</span> Referências de estudo</h2>
 <ul><li>Curso: SQL Performance Explained, de Markus Winand (use-the-index-luke.com)</li>
-<li>Video: Postgres Performance (Supabase, YouTube)</li>
+<li>Vídeo: Postgres Performance (Supabase, YouTube)</li>
 <li>Doc oficial: Using EXPLAIN (PostgreSQL), <a href="https://www.postgresql.org/docs/current/using-explain.html">postgresql.org/docs/current/using-explain.html</a> (verificada em 2026-09-28)</li>
 <li>Doc oficial: Query Optimization (Supabase), <a href="https://supabase.com/docs/guides/database/query-optimization">supabase.com/docs/guides/database/query-optimization</a> (verificada em 2026-09-28)</li></ul>
 
     <div class="callout">
-      <strong>Status:</strong> Desenvolvido e em homologacao. Nenhum indice aplicado em producao nesta etapa. Proximos passos: rodar os planos no staging, aplicar indices com CONCURRENTLY, configurar job de particionamento e validar RLS.
+      <strong>Status:</strong> Desenvolvido e em homologação. Nenhum índice aplicado em produção nesta etapa. Próximos passos: rodar os planos no staging, aplicar índices com CONCURRENTLY, configurar job de particionamento e validar RLS.
     </div>
 
   </div>

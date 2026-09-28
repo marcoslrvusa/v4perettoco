@@ -1,8 +1,8 @@
-# Atividade 1: Scoping e Estimativas Tecnicas
+# Atividade 1: Scoping e Estimativas Técnicas
 
 | Campo | Valor |
 |---|---|
-| Area | Automacao & Infraestrutura |
+| Área | Automação & Infraestrutura |
 | Unidade | FV Marketing / V4 Company |
 | Autor | Marcos Luciano |
 | Data | Setembro 2026 |
@@ -31,7 +31,7 @@ atividade-1/
 
 ## Problema Resolvido
 
-Estimativas da area saiam como numero unico ("uns 3 dias") sem escopo escrito, sem buffer e sem revisao. Resultado: estouro recorrente de prazo em automacoes e integracoes, retrabalho e perda de credibilidade com a operacao. Esta atividade entrega um metodo repetivel: decomposicao em pacotes de ate 1 dia, estimativa de 3 pontos (PERT), buffer calculado e reestimativa por marco com o cone da incerteza.
+Estimativas da área saíam como número único ("uns 3 dias") sem escopo escrito, sem buffer e sem revisão. Resultado: estouro recorrente de prazo em automações e integrações, retrabalho e perda de credibilidade com a operação. Esta atividade entrega um método repetível: decomposição em pacotes de até 1 dia, estimativa de 3 pontos (PERT), buffer calculado e reestimativa por marco com o cone da incerteza.
 
 ## Arquitetura Resumida
 
@@ -43,35 +43,35 @@ Pedido (briefing) -> Checklist de scoping (DoR) -> WBS em pacotes <= 1 dia
   -> Compromisso = faixa + premissas registradas
 ```
 
-## Proximos Passos
+## Próximos Passos
 
-1. Aplicar a planilha nas proximas 4 automacoes e registrar estimado vs real.
-2. Criar base historica simples (pacote, tipo, estimado, real) para calibrar buffers.
-3. Apresentar o metodo em review da area e adotar como padrao de scoping.
+1. Aplicar a planilha nas próximas 4 automações e registrar estimado vs real.
+2. Criar base histórica simples (pacote, tipo, estimado, real) para calibrar buffers.
+3. Apresentar o método em review da área e adotar como padrão de scoping.
 
-## Metricas de Sucesso
+## Métricas de Sucesso
 
-| Metrica | Atual | Meta |
+| Métrica | Atual | Meta |
 |---|---|---|
-| Desvio medio estimado vs real | 60% (amostra de 6 entregas, ago/2026) | 25% (meta) |
+| Desvio médio estimado vs real | 60% (amostra de 6 entregas, ago/2026) | 25% (meta) |
 | Entregas com escopo escrito e premissas | 30% | 100% (meta) |
 | Reestimativas formais por projeto | 0 | 3 por projeto (meta) |
 
-## Decisoes e tradeoffs
+## Decisões e tradeoffs
 
-1. **Estimativa em faixa, nao numero unico**: faixa comunica incerteza e protege a credibilidade; tradeoff e exigir mais disciplina de quem consome a estimativa.
-2. **Pacotes de no maximo 1 dia util**: pacotes grandes escondem risco; tradeoff e o custo de decompor (30 a 60 min por scoping).
-3. **Buffer explicito de 20% em vez de gordura escondida**: buffer visivel permite negociar escopo; tradeoff e parecer "mais caro" que estimativa sem buffer.
-4. **PERT simplificado (O/M/P) em vez de planning poker**: funciona para 1 pessoa estimando automacao solo; tradeoff e menor precisao em trabalho de equipe grande.
-5. **Reestimativa obrigatoria em 3 marcos**: o cone da incerteza so funciona se a estimativa for refeita; tradeoff e o tempo de revisao (15 min por marco).
+1. **Estimativa em faixa, não número único**: faixa comunica incerteza e protege a credibilidade; tradeoff é exigir mais disciplina de quem consome a estimativa.
+2. **Pacotes de no máximo 1 dia útil**: pacotes grandes escondem risco; tradeoff é o custo de decompor (30 a 60 min por scoping).
+3. **Buffer explícito de 20% em vez de gordura escondida**: buffer visível permite negociar escopo; tradeoff é parecer "mais caro" que estimativa sem buffer.
+4. **PERT simplificado (O/M/P) em vez de planning poker**: funciona para 1 pessoa estimando automação solo; tradeoff é menor precisão em trabalho de equipe grande.
+5. **Reestimativa obrigatória em 3 marcos**: o cone da incerteza só funciona se a estimativa for refeita; tradeoff é o tempo de revisão (15 min por marco).
 
-## Impacto no negocio
+## Impacto no negócio
 
-Com escopo escrito e faixa com buffer, a area passa a cumprir prazos com frequencia previsivel, o que destrava o planejamento da operacao de marketing (campanhas, relatorios e integracoes dependem dessas entregas) e reduz o custo do retrabalho de ultima hora.
+Com escopo escrito e faixa com buffer, a área passa a cumprir prazos com frequência previsível, o que destrava o planejamento da operação de marketing (campanhas, relatórios e integrações dependem dessas entregas) e reduz o custo do retrabalho de última hora.
 
-## Referencias
+## Referências
 
-- Curso: Agile Project Management, modulo do Google Project Management Professional Certificate (Coursera): https://www.coursera.org/learn/agile-project-management
-- Video: Story points and estimation, Mountain Goat Software (YouTube)
-- Doc: Manifesto Agil, valores e principios: https://agilemanifesto.org/
+- Curso: Agile Project Management, módulo do Google Project Management Professional Certificate (Coursera): https://www.coursera.org/learn/agile-project-management
+- Vídeo: Story points and estimation, Mountain Goat Software (YouTube)
+- Doc: Manifesto Ágil, valores e princípios: https://agilemanifesto.org/
 - Doc: The New Methodology, Martin Fowler (adaptativo vs preditivo): https://martinfowler.com/articles/newMethodology.html

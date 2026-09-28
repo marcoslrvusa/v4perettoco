@@ -1,6 +1,6 @@
 # Exemplo Real 1: Fluxo de Coleta Meta Ads
 
-Fonte oficial do desenho abaixo. Qualquer mudanca no worker de coleta exige atualizar este bloco no mesmo PR.
+Fonte oficial do desenho abaixo. Qualquer mudança no worker de coleta exige atualizar este bloco no mesmo PR.
 
 ```mermaid
 flowchart TD
@@ -14,4 +14,4 @@ flowchart TD
   E --> H["Painel exibe verba"]
 ```
 
-Donos: worker em `workers/coleta_meta.py` (exemplo), workflow `coleta-meta-ads` no n8n. Ultima revisao: Setembro 2026.
+Donos: worker em `workers/coleta_meta.py` (exemplo), workflow `coleta-meta-ads` no n8n. Última revisão: Setembro 2026.

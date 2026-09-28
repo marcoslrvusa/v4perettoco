@@ -1,45 +1,45 @@
-# Deck PDI: Conformidade LGPD em Eventos e Dados (anonimizacao, consentimento, esquecimento)
+# Deck PDI: Conformidade LGPD em Eventos e Dados (anonimização, consentimento, esquecimento)
 
-Area: Sistemas Distribuidos
+Área: Sistemas Distribuídos
 
 ## Slide 1: Resumo Executivo
-Padrao LGPD para o ecossistema de dados/eventos: minimizacao, consentimento por fluxo, anonimizacao em logs/traces e direito ao esquecimento via delete em cascata. Entrego o padrao e um util de anonimizacao.
+Padrão LGPD para o ecossistema de dados/eventos: minimização, consentimento por fluxo, anonimização em logs/traces e direito ao esquecimento via delete em cascata. Entrego o padrão e um útil de anonimização.
 Eventos e traces carregam PII (e-mail, CNPJ); sem controle, vazamento e processo administrativo.
-## Slide 2: Contexto de Producao
+## Slide 2: Contexto de Produção
 Logs de agente gravavam e-mail inteiro.
 Sem consentimento por finalidade.
-Pedido de exclusao nao propagava.
-## Slide 3: Diagnostico
+Pedido de exclusão não propagava.
+## Slide 3: Diagnóstico
 | Hoje | Alvo |
 | --- | --- |
 | PII em log/trace | anonimizado |
 | sem consentimento | consent por finalidade |
 | delete parcial | cascata |
-## Slide 4: Decisao Arquitetural (ADR)
+## Slide 4: Decisão Arquitetural (ADR)
 ADR-054: Tratamento de PII
-| Opcao | Pro | Contra | Decisao |
+| Opção | Pro | Contra | Decisão |
 | --- | --- | --- | --- |
-| Anon + consent + delete cascata | conforme LGPD | governanca | ESCOLHIDA |
-> Nota: Minimizacao por padrao; PII so com consentimento e retencao definida.
+| Anon + consent + delete cascata | conforme LGPD | governança | ESCOLHIDA |
+> Nota: Minimização por padrão; PII só com consentimento e retenção definida.
 ## Slide 5: Entregas
 LGPD-DATA.md.
 anon.py.
 retention_policy.sql.
-## Slide 6: Validacao
+## Slide 6: Validação
 Varrer logs: 0 e-mail/CNPJ cru.
-Simular exclusao: delete em todas as tabelas.
+Simular exclusão: delete em todas as tabelas.
 Auditoria: consentimento por finalidade.
-## Slide 7: Metricas e SLO
+## Slide 7: Métricas e SLO
 | SLO | Alvo |
 | --- | --- |
 | PII em log | 0 |
-| Exclusao | <= 15 dias |
+| Exclusão | <= 15 dias |
 | Consentimento | 100% fluxos |
 ## Slide 8: Riscos
-| Risco | Mitigacao |
+| Risco | Mitigação |
 | --- | --- |
 | Delete esquece tabela | mapear subject |
-| Cache PII | nao cachear |
-## Slide 9: Proximos Passos
+| Cache PII | não cachear |
+## Slide 9: Próximos Passos
 Data map de PII.
 Alerta de PII em logs.

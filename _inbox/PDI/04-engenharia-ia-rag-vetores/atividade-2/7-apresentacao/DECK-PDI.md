@@ -1,23 +1,23 @@
-# Deck PDI: RAG Hibrido (BM25 + Vetorial) e GraphRAG para Relacoes
+# Deck PDI: RAG Híbrido (BM25 + Vetorial) e GraphRAG para Relações
 
-Area: Engenharia de IA
+Área: Engenharia de IA
 
 ## Slide 1: Resumo Executivo
-Upgrade do RAG baseline para hibrido (BM25 + vetorial com RRF) e GraphRAG para relacoes. Entrego o padrao e implementacao.
+Upgrade do RAG baseline para híbrido (BM25 + vetorial com RRF) e GraphRAG para relações. Entrego o padrão e implementação.
 Similaridade falha em 'qual contrato do cliente X': Grafos cobrem isso.
-## Slide 2: Contexto de Producao
+## Slide 2: Contexto de Produção
 Relacionamento ('cliente->contrato->fatura') ruim.
-Termos exatos (CNPJ) nao recuperados por embeddings.
-BM25 sozinho perde sinonimos.
-## Slide 3: Diagnostico
-| Caso | Vetorial | BM25 | Hibrido |
+Termos exatos (CNPJ) não recuperados por embeddings.
+BM25 sozinho perde sinônimos.
+## Slide 3: Diagnóstico
+| Caso | Vetorial | BM25 | Híbrido |
 | --- | --- | --- | --- |
-| ID exato | ruim | otimo | otimo |
-| sinonimo | otimo | ruim | otimo |
-| relacao | ruim | ruim | grafo |
-## Slide 4: Decisao Arquitetural (ADR)
-ADR-042: Recuperacao Hibrida + Grafo
-| Opcao | Pro | Contra | Decisao |
+| ID exato | ruim | ótimo | ótimo |
+| sinônimo | ótimo | ruim | ótimo |
+| relação | ruim | ruim | grafo |
+## Slide 4: Decisão Arquitetural (ADR)
+ADR-042: Recuperação Hibrida + Grafo
+| Opção | Pro | Contra | Decisão |
 | --- | --- | --- | --- |
 | BM25 + vetorial + GraphRAG | cobra todos | complexo | ESCOLHIDA |
 > Nota: RRF funde ranks; GraphRAG via traversal.
@@ -25,20 +25,20 @@ ADR-042: Recuperacao Hibrida + Grafo
 HYBRID-RAG.md.
 hybrid_rag.py.
 graph_schema.cypher.
-## Slide 6: Validacao
-Avaliar em 30 perguntas (10 exatas, 10 sinonimos, 10 relacao).
+## Slide 6: Validação
+Avaliar em 30 perguntas (10 exatas, 10 sinônimos, 10 relação).
 Comparar hit@5.
-Confirmar GraphRAG resolve relacoes.
-## Slide 7: Metricas e SLO
+Confirmar GraphRAG resolve relações.
+## Slide 7: Métricas e SLO
 | SLO | Alvo |
 | --- | --- |
-| hit@5 (relacao) | >= 0.9 |
+| hit@5 (relação) | >= 0.9 |
 | hit@5 (exato) | >= 0.95 |
 ## Slide 8: Riscos
-| Risco | Mitigacao |
+| Risco | Mitigação |
 | --- | --- |
 | Grafo desatualizado | rebuild incremental |
 | RRF ruim | tunar |
-## Slide 9: Proximos Passos
+## Slide 9: Próximos Passos
 RAGAS.
 Cache de subgrafos.

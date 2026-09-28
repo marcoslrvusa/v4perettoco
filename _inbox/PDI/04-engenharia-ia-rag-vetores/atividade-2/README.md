@@ -1,38 +1,38 @@
-# RAG Hibrido (BM25 + Vetorial) e GraphRAG para Relacoes
+# RAG Híbrido (BM25 + Vetorial) e GraphRAG para Relações
 
 Engenharia de IA
 
 ## Resumo Executivo
 
-Upgrade do RAG baseline para hibrido (BM25 + vetorial com RRF) e GraphRAG para relacoes. Entrego o padrao e implementacao.
+Upgrade do RAG baseline para híbrido (BM25 + vetorial com RRF) e GraphRAG para relações. Entrego o padrão e implementação.
 
 Similaridade falha em 'qual contrato do cliente X' : Grafos cobrem isso.
 
-## Contexto de Producao
+## Contexto de Produção
 
 - Relacionamento ('cliente->contrato->fatura') ruim.
 
-- Termos exatos (CNPJ) nao recuperados por embeddings.
+- Termos exatos (CNPJ) não recuperados por embeddings.
 
-- BM25 sozinho perde sinonimos.
+- BM25 sozinho perde sinônimos.
 
-## Diagnostico
+## Diagnóstico
 
-| Caso | Vetorial | BM25 | Hibrido |
+| Caso | Vetorial | BM25 | Híbrido |
 
 | --- | --- | --- | --- |
 
-| ID exato | ruim | otimo | otimo |
+| ID exato | ruim | ótimo | ótimo |
 
-| sinonimo | otimo | ruim | otimo |
+| sinônimo | ótimo | ruim | ótimo |
 
-| relacao | ruim | ruim | grafo |
+| relação | ruim | ruim | grafo |
 
-## Decisao Arquitetural (ADR)
+## Decisão Arquitetural (ADR)
 
-ADR-042 : Recuperacao Hibrida + Grafo
+ADR-042 : Recuperação Hibrida + Grafo
 
-| Opcao | Pro | Contra | Decisao |
+| Opção | Pro | Contra | Decisão |
 
 | --- | --- | --- | --- |
 
@@ -48,27 +48,27 @@ ADR-042 : Recuperacao Hibrida + Grafo
 
 - graph_schema.cypher.
 
-## Validacao
+## Validação
 
-1. Avaliar em 30 perguntas (10 exatas, 10 sinonimos, 10 relacao).
+1. Avaliar em 30 perguntas (10 exatas, 10 sinônimos, 10 relação).
 
 2. Comparar hit@5.
 
-3. Confirmar GraphRAG resolve relacoes.
+3. Confirmar GraphRAG resolve relações.
 
-## Metricas e SLO
+## Métricas e SLO
 
 | SLO | Alvo |
 
 | --- | --- |
 
-| hit@5 (relacao) | >= 0.9 |
+| hit@5 (relação) | >= 0.9 |
 
 | hit@5 (exato) | >= 0.95 |
 
 ## Riscos
 
-| Risco | Mitigacao |
+| Risco | Mitigação |
 
 | --- | --- |
 
@@ -76,27 +76,27 @@ ADR-042 : Recuperacao Hibrida + Grafo
 
 | RRF ruim | tunar |
 
-## Proximos Passos
+## Próximos Passos
 
 - RAGAS.
 
 - Cache de subgrafos.
 
-## Decisoes e tradeoffs
+## Decisões e tradeoffs
 
-- BM25 mais vetorial com fusao RRF: aceitei complexidade extra para cobrir ID exato como CNPJ e sinonimo no mesmo retriever, porque cada metodo sozinho falha em um dos casos.
-- GraphRAG com traversal para relacoes cliente contrato fatura: assumi custo de rebuild incremental para responder perguntas relacionais que o vetorial nao resolve.
-- Chunking semantico com overlap 128: preservei contexto entre sentencas mesmo pagando mais tokens indexados.
-- Avaliacao em 30 perguntas (10 exatas, 10 sinonimos, 10 relacao) com hit@5: troquei teste informal por matriz que separa exato, sinonimo e relacao.
-- Meta de precisao@5 maior ou igual a 95 por cento e latencia menor que 150 ms com job noturno: equilibrei qualidade alta com atualizacao periodica do grafo.
+- BM25 mais vetorial com fusão RRF: aceitei complexidade extra para cobrir ID exato como CNPJ e sinônimo no mesmo retriever, porque cada método sozinho falha em um dos casos.
+- GraphRAG com traversal para relações cliente contrato fatura: assumi custo de rebuild incremental para responder perguntas relacionais que o vetorial não resolve.
+- Chunking semântico com overlap 128: preservei contexto entre sentenças mesmo pagando mais tokens indexados.
+- Avaliação em 30 perguntas (10 exatas, 10 sinônimos, 10 relação) com hit@5: troquei teste informal por matriz que separa exato, sinônimo e relação.
+- Meta de precisão@5 maior ou igual a 95 por cento e latência menor que 150 ms com job noturno: equilibrei qualidade alta com atualização periódica do grafo.
 
-## Impacto no negocio
+## Impacto no negócio
 
-O hibrido com hit@5 maior ou igual a 0.95 no exato e maior ou igual a 0.9 na relacao eleva a precisao@5 de cerca de 42 por cento para cerca de 98 por cento, o que reduz retrabalho de respostas vagas e viabiliza precificacao de busca relacional sem indexacao manual.
+O híbrido com hit@5 maior ou igual a 0.95 no exato e maior ou igual a 0.9 na relação eleva a precisão@5 de cerca de 42 por cento para cerca de 98 por cento, o que reduz retrabalho de respostas vagas e viabiliza precificação de busca relacional sem indexação manual.
 
-## Referencias de estudo
+## Referências de estudo
 
 - Curso: Advanced Retrieval for AI with Chroma, plataforma DeepLearning.AI.
-- Video: GraphRAG com busca vetorial mais grafo de conhecimento, plataforma YouTube, canal Microsoft Developer.
-- Doc oficial: Guia de BM25 e relevancia textual, documentacao oficial Elastic.
-- Doc oficial: Documentacao do pgvector com HNSW, documentacao oficial pgvector.
+- Vídeo: GraphRAG com busca vetorial mais grafo de conhecimento, plataforma YouTube, canal Microsoft Developer.
+- Doc oficial: Guia de BM25 e relevância textual, documentação oficial Elastic.
+- Doc oficial: Documentação do pgvector com HNSW, documentação oficial pgvector.

@@ -1,24 +1,24 @@
-# Retry Matrix: Configuracao por Tipo de Node
+# Retry Matrix: Configuração por Tipo de Node
 
-## Configuracao Nativa (node-level)
+## Configuração Nativa (node-level)
 
-| Tipo de Node | retryOnFail | maxTries | waitBetweenTries | Observacao |
+| Tipo de Node | retryOnFail | maxTries | waitBetweenTries | Observação |
 |-------------|-------------|----------|------------------|------------|
 | HTTP Request | true | 3 | 5000 | Sempre configurar |
 | Supabase API | true | 2 | 3000 | Rede interna, falhas raras |
 | Slack | true | 3 | 5000 | 429 frequente em pico |
 | Google Sheets | true | 2 | 5000 | Rate limit em batch |
-| Redis | true | 2 | 2000 | Conexao local, rapido |
+| Redis | true | 2 | 2000 | Conexão local, rápido |
 | WhatsApp / API externa | true | 3 | 5000 | Instabilidade comum |
 | Postgres | true | 2 | 3000 | Timeout de query |
 | n8n node (API interna) | true | 3 | 5000 | Pode rate limitar |
-| Code (JavaScript/Python) | false | - | - | Retry nao ajuda erro de logica |
-| Set / Edit Fields | false | - | - | Dados ja validados |
-| IF / Switch | false | - | - | Expressoes simples |
+| Code (JavaScript/Python) | false | - | - | Retry não ajuda erro de lógica |
+| Set / Edit Fields | false | - | - | Dados já validados |
+| IF / Switch | false | - | - | Expressões simples |
 
-## Configuracao Customizada (loop com backoff)
+## Configuração Customizada (loop com backoff)
 
-Para cenarios que exigem controle fino (429, 5xx persistentes):
+Para cenários que exigem controle fino (429, 5xx persistentes):
 
 ```typescript
 // Parametros do loop customizado
@@ -31,7 +31,7 @@ Para cenarios que exigem controle fino (429, 5xx persistentes):
 }
 ```
 
-### Codigo de Backoff
+### Código de Backoff
 
 ```javascript
 // Code node - calcular wait com jitter
@@ -50,20 +50,20 @@ const finalWait = Math.round(waitMs + jitter);
 return [{ json: { _waitMs: finalWait, _attempt: attempt + 1 } }];
 ```
 
-## Codigos HTTP: Retentar ou Nao?
+## Códigos HTTP: Retentar ou Não?
 
-| Status | Retentar? | Acao |
+| Status | Retentar? | Ação |
 |--------|-----------|------|
-| 400 | Nao | Payload invalido: revisar manualmente |
-| 401 | Nao | Credencial expirou: alertar equipe imediatamente |
-| 403 | Nao | Permissao negada: alertar equipe |
-| 404 | Nao | Endpoint/URL mudou: revisar |
+| 400 | Não | Payload inválido: revisar manualmente |
+| 401 | Não | Credencial expirou: alertar equipe imediatamente |
+| 403 | Não | Permissão negada: alertar equipe |
+| 404 | Não | Endpoint/URL mudou: revisar |
 | 408 | Sim (3x) | Timeout do servidor: backoff |
 | 409 | Sim (3x) | Conflito: retentar com backoff |
-| 422 | Nao | Dado mal formatado: revisar payload |
+| 422 | Não | Dado mal formatado: revisar payload |
 | 425 | Sim (3x) | Very Early: retentar |
 | 429 | Sim (3x) | Rate limit: respeitar Retry-After se presente |
 | 500 | Sim (3x) | Erro interno do servidor |
 | 502 | Sim (3x) | Upstream com problema |
-| 503 | Sim (3x) | Servico indisponivel |
+| 503 | Sim (3x) | Serviço indisponível |
 | 504 | Sim (3x) | Timeout do upstream |

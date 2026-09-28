@@ -1,6 +1,6 @@
 # STANDARD: API Modular (FastAPI)
 
-## Paginacao: SEMPRE cursor-based
+## Paginação: SEMPRE cursor-based
 `?after=<cursor>&limit=50`. Cursor = id criptografado.
 Resposta: `{ items, next_cursor, limit }`. Nunca `offset` em tabelas > 10k.
 
@@ -12,4 +12,4 @@ Resposta: `{ items, next_cursor, limit }`. Nunca `offset` em tabelas > 10k.
 
 ## Erros
 `{ "error": { "code": "...", "message": "...", "trace_id": "..." } }`
-4xx = cliente (nao retentar). 5xx = nosso (retry com backoff).
+4xx = cliente (não retentar). 5xx = nosso (retry com backoff).

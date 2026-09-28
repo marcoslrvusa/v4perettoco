@@ -31,7 +31,7 @@ atividade-2/
 
 ## Problema Resolvido
 
-Trabalho remoto prolongado em setup improvisado gera dor cervical, lombar e fadiga visual, além de jornadas sem pausa que derrubam a atenção à tarde. Esta atividade define um padrão mínimo de estação de trabalho de baixo custo e um protocolo de micro-pausas e movimento que cabe dentro da jornada real, sem depender de academia ou equipamento caro.
+Trabalho remoto prolongado em setup improvisado gera dor cervical, lombar e fadiga visual, além de jornadas sem pausa que derrubam a atenção à tarde. Esta atividade define um padrão mínimo de estação de trabalho de baixo custo e um protocolo de micro-pausas e movimento que cabe dentro da jornada real, sem depender de acadêmia ou equipamento caro.
 
 ## Arquitetura Resumida
 

@@ -1,8 +1,8 @@
-# Atividade 4: Comunicacao com Stakeholders nao Tecnicos
+# Atividade 4: Comunicação com Stakeholders não Técnicos
 
 | Campo | Valor |
 |---|---|
-| Area | Automacao & Infraestrutura |
+| Área | Automação & Infraestrutura |
 | Unidade | FV Marketing / V4 Company |
 | Autor | Marcos Luciano |
 | Data | Setembro 2026 |
@@ -31,46 +31,46 @@ atividade-4/
 
 ## Problema Resolvido
 
-Status tecnico chegava a gesto e operacao em linguagem de engenharia ("refatorei o extrator, subi o cron"), sem dizer o que muda para o negocio, sem risco explicito e sem pedido claro. Resultado: surpresa em atraso, decisao sem informacao e cobranca no Slack. Esta atividade entrega ritual semanal de status em linguagem de negocio (feito, proximo, risco com plano, pedido) e matriz de expectativa por stakeholder.
+Status técnico chegava a gesto e operação em linguagem de engenharia ("refatorei o extrator, subi o cron"), sem dizer o que muda para o negócio, sem risco explícito e sem pedido claro. Resultado: surpresa em atraso, decisão sem informação e cobrança no Slack. Esta atividade entrega ritual semanal de status em linguagem de negócio (feito, próximo, risco com plano, pedido) e matriz de expectativa por stakeholder.
 
 ## Arquitetura Resumida
 
 ```
-Segunda 9h, 30 min, pauta fixa: feito (valor entregue) -> proximo (compromisso da semana)
+Segunda 9h, 30 min, pauta fixa: feito (valor entregue) -> próximo (compromisso da semana)
   -> riscos (semaforo + plano + dono) -> pedidos (decisao ou ajuda com prazo)
   Regra: sem jargao, todo risco tem plano, todo pedido tem prazo de resposta
   + matriz: quem recebe o que, em que canal e com que frequencia
 ```
 
-## Proximos Passos
+## Próximos Passos
 
-1. Rodar o ritual por 4 segundas com a pauta fixa e registrar presenca e decisoes.
-2. Preencher a matriz de stakeholders da area (minimo 5 nomes reais).
-3. Medir surpresas (atraso nao avisado com 48h) e levar a zero.
+1. Rodar o ritual por 4 segundas com a pauta fixa e registrar presença e decisões.
+2. Preencher a matriz de stakeholders da área (mínimo 5 nomes reais).
+3. Medir surpresas (atraso não avisado com 48h) e levar a zero.
 
-## Metricas de Sucesso
+## Métricas de Sucesso
 
-| Metrica | Atual | Meta |
+| Métrica | Atual | Meta |
 |---|---|---|
 | Status semanal enviado no prazo | 20% das semanas | 100% (meta) |
-| Atrasos avisados com 48h de antecedencia | 0% | 100% (meta) |
+| Atrasos avisados com 48h de antecedência | 0% | 100% (meta) |
 | Riscos registrados com plano e dono | 0 | 100% dos riscos ativos (meta) |
 
-## Decisoes e tradeoffs
+## Decisões e tradeoffs
 
-1. **Status semanal escrito antes da reuniao**: leitura previa de 5 min elimina 20 min de exposicao; tradeoff e exigir escrita disciplinada de quem reporta.
-2. **Linguagem de negocio, zero jargao**: stakeholder decide por impacto, nao por tecnica; tradeoff e traduzir cada item (custa 10 min, evita 5 perguntas).
-3. **Semaforo de risco com plano obrigatorio**: risco vermelho sem plano e fofoca; tradeoff e expor problema cedo, antes de ter solucao completa.
-4. **Pedido com prazo de resposta**: "preciso de decisao ate quarta" em vez de "quando puderem"; tradeoff e parecer insistente (mas e o que destrava).
-5. **Matriz por stakeholder, nao mensagem unica**: diretor quer risco e prazo, operacao quer data e workaround; tradeoff e manter 2 versoes do mesmo status (curta no Slack, completa no doc).
+1. **Status semanal escrito antes da reunião**: leitura previa de 5 min elimina 20 min de exposição; tradeoff é exigir escrita disciplinada de quem reporta.
+2. **Linguagem de negócio, zero jargão**: stakeholder decide por impacto, não por técnica; tradeoff é traduzir cada item (custa 10 min, evita 5 perguntas).
+3. **Semáforo de risco com plano obrigatório**: risco vermelho sem plano é fofoca; tradeoff é expor problema cedo, antes de ter solução completa.
+4. **Pedido com prazo de resposta**: "preciso de decisão até quarta" em vez de "quando puderem"; tradeoff é parecer insistente (mas é o que destrava).
+5. **Matriz por stakeholder, não mensagem única**: diretor quer risco e prazo, operação quer data e workaround; tradeoff é manter 2 versões do mesmo status (curta no Slack, completa no doc).
 
-## Impacto no negocio
+## Impacto no negócio
 
-Com status previsivel em linguagem de negocio, a gestao decide com antecedencia (reallocar verba, remarcar lancamento, aprovar escopo) em vez de apagar incendio, e a operacao confia nos prazos porque o atraso, quando existe, chega avisado com plano.
+Com status previsível em linguagem de negócio, a gestão decide com antecedência (reallocar verba, remarcar lançamento, aprovar escopo) em vez de apagar incêndio, e a operação confia nos prazos porque o atraso, quando existe, chega avisado com plano.
 
-## Referencias
+## Referências
 
-- Curso: Agile Project Management, modulo do Google Project Management Professional Certificate (Coursera): https://www.coursera.org/learn/agile-project-management
-- Video: Stakeholder communication for project managers (YouTube)
-- Doc: Agile project management, Atlassian (planejamento, backlog, metricas e stakeholders): https://www.atlassian.com/agile/project-management
-- Doc: SRE Workbook, Google, indice (on-call, resposta e gestao organizacional): https://sre.google/workbook/table-of-contents/
+- Curso: Agile Project Management, módulo do Google Project Management Professional Certificate (Coursera): https://www.coursera.org/learn/agile-project-management
+- Vídeo: Stakeholder communication for project managers (YouTube)
+- Doc: Agile project management, Atlassian (planejamento, backlog, métricas e stakeholders): https://www.atlassian.com/agile/project-management
+- Doc: SRE Workbook, Google, índice (on-call, resposta e gestão organizacional): https://sre.google/workbook/table-of-contents/

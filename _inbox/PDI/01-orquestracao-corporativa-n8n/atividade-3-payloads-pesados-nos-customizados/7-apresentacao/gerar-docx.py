@@ -193,7 +193,7 @@ add_table(
         ['1-standards/', '3 padrões: nós Code JS, Python no n8n, expressões avançadas', 'Markdown'],
         ['2-workflows/', '3 workflows validados com n8nac', '.workflow.ts'],
         ['3-lib/', 'Biblioteca reutilizável payload-lib (JS + Python)', 'JS + Python'],
-        ['4-retrofit/', 'Como adaptar nós Code existentes (ADPLAN, PRO ANALISES, CC)', 'Markdown'],
+        ['4-retrofit/', 'Como adaptar nós Code existentes (ADPLAN, PRO ANÁLISES, CC)', 'Markdown'],
         ['5-monitoring/', 'Queries de performance + alertas de duração/dedupe', 'Markdown'],
         ['6-automation/', 'Deploy com gate de aprovação (dry-run)', 'Shell'],
         ['7-apresentacao/', 'Deck HTML + demo + este relatório', 'HTML + Markdown'],
@@ -206,27 +206,27 @@ doc.add_paragraph(
     'seguindo o MANUAL-IMPLEMENTACAO.md na raiz da atividade.'
 )
 
-add_heading_styled('11. Decisoes e tradeoffs', 1)
+add_heading_styled('11. Decisões e tradeoffs', 1)
 for item in [
     'Parse 1x na entrada com chunk default de 1000: elimina re-parse dentro de loop. Exige padronizar a entrada como string ou array no Webhook /nos/js-normalizer.',
-    'Normalizacao O(n) com Set por chave primitiva: payload de 100k itens sai de bilhoes de operacoes para centenas de milhares. Exige copia minima de campos.',
-    'Python so com stdlib (collections, itertools, Counter e defaultdict): roda no Code node sem dependencia externa, sem pandas e sem pip.',
-    'Biblioteca unica 3-lib como fonte da verdade: funcoes chunk, dedupe, aggregate, normalizeStream, memoizeGlobal e toOutput num lugar so. Workflows embutem copias e exigem sincronizar a cada mudanca.',
-    'Memoizacao com $getWorkflowStaticData global: limiar e config calculados 1x e reutilizados, com risco de defasagem se nao invalidar.',
+    'Normalização O(n) com Set por chave primitiva: payload de 100k itens sai de bilhões de operações para centenas de milhares. Exige cópia mínima de campos.',
+    'Python só com stdlib (collections, itertools, Counter e defaultdict): roda no Code node sem dependência externa, sem pandas e sem pip.',
+    'Biblioteca única 3-lib como fonte da verdade: funções chunk, dedupe, aggregate, normalizeStream, memoizeGlobal e toOutput num lugar só. Workflows embutem cópias e exigem sincronizar a cada mudança.',
+    'Memoização com $getWorkflowStaticData global: limiar e config calculados 1x e reutilizados, com risco de defasagem se não invalidar.',
 ]:
     doc.add_paragraph(item, style='List Bullet')
 
-add_heading_styled('12. Impacto no negocio', 1)
+add_heading_styled('12. Impacto no negócio', 1)
 doc.add_paragraph(
-    'O sintoma ja visto na atividade 1 com JS timeout de 25 min no ADPLAN e na atividade 2 com payload sem processamento incremental travava importacoes e sincronizacoes ao escalar de 10k para 100k itens. '
-    'Com streaming, dedupe O(n) e pico abaixo de 2 GB, o mesmo fluxo processa 10 ou 100k itens sem trocar de maquina, com parse unico e codigo unico na 3-lib em vez de copia entre dezenas de workflows. '
-    'Isso corta tempo de execucao, elimina OOM e event loop bloqueado e reduz custo de manutencao de expressoes inline nao testaveis para padrao com JSONata.'
+    'O sintoma já visto na atividade 1 com JS timeout de 25 min no ADPLAN e na atividade 2 com payload sem processamento incremental travava importações e sincronizações ao escalar de 10k para 100k itens. '
+    'Com streaming, dedupe O(n) e pico abaixo de 2 GB, o mesmo fluxo processa 10 ou 100k itens sem trocar de máquina, com parse único e código único na 3-lib em vez de cópia entre dezenas de workflows. '
+    'Isso corta tempo de execução, elimina OOM e event loop bloqueado e reduz custo de manutenção de expressões inline não testáveis para padrão com JSONata.'
 )
 
-add_heading_styled('13. Referencias de estudo', 1)
+add_heading_styled('13. Referências de estudo', 1)
 for item in [
     'Curso: JavaScript Performance, estruturas de dados e complexidade, na Alura.',
-    'Video: JavaScript Event Loop and Memory Explained, no YouTube, canal Fireship.',
+    'Vídeo: JavaScript Event Loop and Memory Explained, no YouTube, canal Fireship.',
     'Doc: n8n Docs, Code node JavaScript and Python, na plataforma n8n Docs.',
     'Doc: MDN Docs, Map, Set and Array iteration, na plataforma MDN Web Docs.',
 ]:

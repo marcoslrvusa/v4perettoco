@@ -199,27 +199,27 @@ doc.add_paragraph(
     'homologação. Nenhum workflow foi publicado no n8n nesta etapa.'
 )
 
-add_heading_styled('10. Decisoes e tradeoffs', 1)
+add_heading_styled('10. Decisões e tradeoffs', 1)
 for item in [
-    'Gateway que so enfileira com ACK 202 em menos de 2s: absorve pico sem travar a instancia. O cliente recebe confirmacao de fila (queued) e consulta mt_jobs para o status final.',
-    'Worker com polling a cada 15s e semaforo em mt_concurrency: limita pressao sobre n8n e CRMs, com latencia minima de ciclo em troca de nunca estourar o limite.',
-    'Checkpoint retomavel com backoff de 30s, 1m e 2m e maximo de 3 tentativas: falha no chunk 4 de 10 retoma do chunk 4, com mais escritas no Supabase em troca de zero retrabalho total.',
-    'Schema v3.0 aditivo com 6 tabelas e 5 views convivendo com as tabelas error da atividade 1, sem migracao destrutiva.',
-    'Drift com tolerancia default de 5%: exemplo com 1000 esperados e 860 confirmados gera 14% e abre mt_sync_delta antes do cliente reclamar, com deteccao em menos de 15 min.',
+    'Gateway que só enfileira com ACK 202 em menos de 2s: absorve pico sem travar a instância. O cliente recebe confirmação de fila (queued) e consulta mt_jobs para o status final.',
+    'Worker com polling a cada 15s e semáforo em mt_concurrency: limita pressão sobre n8n e CRMs, com latência mínima de ciclo em troca de nunca estourar o limite.',
+    'Checkpoint retomável com backoff de 30s, 1m e 2m e máximo de 3 tentativas: falha no chunk 4 de 10 retoma do chunk 4, com mais escritas no Supabase em troca de zero retrabalho total.',
+    'Schema v3.0 aditivo com 6 tabelas e 5 views convivendo com as tabelas error da atividade 1, sem migração destrutiva.',
+    'Drift com tolerância default de 5%: exemplo com 1000 esperados e 860 confirmados gera 14% e abre mt_sync_delta antes do cliente reclamar, com detecção em menos de 15 min.',
 ]:
     doc.add_paragraph(item, style='List Bullet')
 
-add_heading_styled('11. Impacto no negocio', 1)
+add_heading_styled('11. Impacto no negócio', 1)
 doc.add_paragraph(
-    'Antes, pico de campanha ou importacao travava a instancia no webhook, payload de 10k itens sem checkpoint perdia tudo no timeout e falha de sync com Kommo, HubSpot ou RD Station so aparecia na reclamacao. '
-    'Com fila, ACK em menos de 2s, processamento retomavel e drift visivel em dashboard, a meta sai de volume nao suportado para 5x o volume nominal, de travamento por concorrencia ilimitada para limite por slot e de deteccao na reclamacao para menos de 15 min, com mais de 90% dos payloads pesados processados. '
+    'Antes, pico de campanha ou importação travava a instância no webhook, payload de 10k itens sem checkpoint perdia tudo no timeout e falha de sync com Kommo, HubSpot ou RD Station só aparecia na reclamação. '
+    'Com fila, ACK em menos de 2s, processamento retomável e drift visível em dashboard, a meta sai de volume não suportado para 5x o volume nominal, de travamento por concorrência ilimitada para limite por slot e de detecção na reclamação para menos de 15 min, com mais de 90% dos payloads pesados processados. '
     'Isso reduz risco de indisponibilidade em pico e custo de retrabalho de jobs refeitos do zero.'
 )
 
-add_heading_styled('12. Referencias de estudo', 1)
+add_heading_styled('12. Referências de estudo', 1)
 for item in [
     'Curso: Fundamentos de Filas e Sistemas Assincronos, na Alura.',
-    'Video: n8n Webhooks and Queue Pattern Explained, no YouTube, canal oficial n8n.',
+    'Vídeo: n8n Webhooks and Queue Pattern Explained, no YouTube, canal oficial n8n.',
     'Doc: n8n Docs, Webhook node and sub-workflows, na plataforma n8n Docs.',
     'Doc: Supabase Docs, Postgres tables and views, na plataforma Supabase Docs.',
 ]:

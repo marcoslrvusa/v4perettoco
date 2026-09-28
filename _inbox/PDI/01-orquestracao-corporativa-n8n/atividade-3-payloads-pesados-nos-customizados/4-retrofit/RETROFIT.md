@@ -14,7 +14,7 @@ padrões `1-standards/`.
 | Workflow                 | Sintoma                                 | Correção                                            |
 | ------------------------ | --------------------------------------- | --------------------------------------------------- |
 | ADPLAN                   | JS timeout 25min (event loop bloqueado) | Streaming + chunking (`normalizeStream`), sair cedo |
-| PRO ANALISES             | `toDateTime` undefined                  | Parse 1x na entrada + validação de campo            |
+| PRO ANÁLISES             | `toDateTime` undefined                  | Parse 1x na entrada + validação de campo            |
 | Collector / Metrics (CC) | Payloads grandes re-processados         | Dedupe por chave + agregação O(n)                   |
 | Diversos                 | Código copiado entre nós                | Extrair para `3-lib/` e referenciar                 |
 
@@ -30,9 +30,9 @@ padrões `1-standards/`.
 
 1. **Parse 1x:** mover `JSON.parse` do payload para a primeira etapa.
 2. **Dedupe O(n):** trocar `filter`+`find`/`indexOf` por `Set` de chave primitiva.
-3. **Copias minimas:** reduzir spreads `{...item}` para os campos necessarios.
-4. **Sair cedo:** filtros baratos antes de transformacoes caras.
-5. **Python:** garantir apenas stdlib; `Counter`/`defaultdict` para agregacao.
+3. **Cópias mínimas:** reduzir spreads `{...item}` para os campos necessários.
+4. **Sair cedo:** filtros baratos antes de transformações caras.
+5. **Python:** garantir apenas stdlib; `Counter`/`defaultdict` para agregação.
 
 ### Fase 3: Teste com payload simulado
 
@@ -43,7 +43,7 @@ curl -X POST https://n8n.fvmarketing.com.br/webhook/nos/js-normalizer \
 ```
 
 - Checar `processedItems`, `deduped`, `durationMs` e `itemsPerSecond`.
-- Repetir com 10k e 100k itens; registrar pico de memoria.
+- Repetir com 10k e 100k itens; registrar pico de memória.
 
 ## Estimativa de esforço
 
@@ -52,9 +52,9 @@ curl -X POST https://n8n.fvmarketing.com.br/webhook/nos/js-normalizer \
 | JS Normalizer (novo) |: | Entregue nesta PDI |
 | Python Enricher (novo) |: | Entregue nesta PDI |
 | Retrofit ADPLAN | 30 min | Streaming + dedupe |
-| Retrofit PRO ANALISES | 10 min | Parse 1x + validacao |
-| Retrofit CC Collector | 20 min | Dedupe + agregacao O(n) |
-| Extrair lib `3-lib/` | 20 min | Mover funcoes para payload-lib |
+| Retrofit PRO ANÁLISES | 10 min | Parse 1x + validação |
+| Retrofit CC Collector | 20 min | Dedupe + agregação O(n) |
+| Extrair lib `3-lib/` | 20 min | Mover funções para payload-lib |
 
 ## Riscos e mitigação
 

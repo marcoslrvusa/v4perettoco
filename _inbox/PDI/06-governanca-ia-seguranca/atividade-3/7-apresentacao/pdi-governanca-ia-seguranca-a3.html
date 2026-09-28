@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PDI: Gestao de segredos e rotacao de credenciais: Registro de Entrega</title>
+<title>PDI: Gestão de segredos e rotação de credenciais: Registro de Entrega</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -70,37 +70,37 @@ ul{margin:8px 0 16px 20px}li{color:var(--gray-700);font-size:14px;margin-bottom:
 <div class="cover-avatar"><img src="../../../../../assets/images/logo-peretto-perfil.jpg" alt="Marcos Luciano"></div>
 <div class="cover-logo"><img src="../../../../../assets/logo-peretto.png" alt="Peretto"></div>
 <span class="cover-badge">PDI 2026 | Trilha 06 | Atividade 3</span>
-<h1>Gestao de segredos e <em>rotacao de credenciais</em></h1>
-<div class="cover-meta"><strong>Autor:</strong> PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com<br><strong>Unidade:</strong> FV Marketing / V4 Company: Automação &amp; Infraestrutura<br><strong>Módulo:</strong> 06 | Governanca de IA e Seguranca<br><strong>Data:</strong> Setembro 2026<br><strong>Status:</strong> <span class="status st-warn">NÃO publicado</span> · Desenvolvido / Homologação pendente<br><strong>Versão:</strong> 1.0</div>
+<h1>Gestão de segredos e <em>rotação de credenciais</em></h1>
+<div class="cover-meta"><strong>Autor:</strong> PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com<br><strong>Unidade:</strong> FV Marketing / V4 Company: Automação &amp; Infraestrutura<br><strong>Módulo:</strong> 06 | Governança de IA e Segurança<br><strong>Data:</strong> Setembro 2026<br><strong>Status:</strong> <span class="status st-warn">NÃO publicado</span> · Desenvolvido / Homologação pendente<br><strong>Versão:</strong> 1.0</div>
 <div class="cover-slug">pdi-governanca-ia-seguranca-a3</div>
 </div>
 <div class="content">
 <h2><span class="num">1.</span> Contexto</h2>
-<p>Tokens de Meta Ads, Google, CRM, banco e webhooks circulam entre workers, CIs e maquinas do time sem inventario, sem dono e sem prazo de troca. Chave sem dono e chave eterna.</p>
-<p>Esta atividade fecha a causa: <strong>cofre central, entrega por referencia, rotacao com prazo e varredura que falha o build</strong>.</p>
+<p>Tokens de Meta Ads, Google, CRM, banco e webhooks circulam entre workers, CIs e maquinas do time sem inventário, sem dono e sem prazo de troca. Chave sem dono e chave eterna.</p>
+<p>Esta atividade fecha a causa: <strong>cofre central, entrega por referência, rotação com prazo e varredura que falha o build</strong>.</p>
 <h2><span class="num">2.</span> Diagnóstico</h2>
-<p>Segredo em chat, planilha ou commit da acesso a verba de midia e base de leads; a troca emergencial vira madrugada porque ninguem sabe onde cada chave esta usada. O custo do vazamento e proporcional ao tempo de exposicao, e hoje esse tempo e indefinido.</p>
-<table><tr><th>Sintoma</th><th>Risco</th><th>Correcao</th></tr><tr><td>.env no chat ou wiki</td><td>Exposicao permanente</td><td>Cofre + referencia</td></tr><tr><td>Chave estatica no CI</td><td>Abuso silencioso</td><td>OIDC ou rotacao curta</td></tr><tr><td>Sem rotacao</td><td>Janela infinita</td><td>30/90/180 dias com dono</td></tr></table>
+<p>Segredo em chat, planilha ou commit da acesso a verba de mídia e base de leads; a troca emergencial vira madrugada porque ninguém sabe onde cada chave está usada. O custo do vazamento é proporcional ao tempo de exposição, e hoje esse tempo é indefinido.</p>
+<table><tr><th>Sintoma</th><th>Risco</th><th>Correção</th></tr><tr><td>.env no chat ou wiki</td><td>Exposição permanente</td><td>Cofre + referência</td></tr><tr><td>Chave estática no CI</td><td>Abuso silencioso</td><td>OIDC ou rotação curta</td></tr><tr><td>Sem rotação</td><td>Janela infinita</td><td>30/90/180 dias com dono</td></tr></table>
 <h2><span class="num">3.</span> Solução</h2>
-<p>Standard com principios, tabela de guarda e entrega, prazos e resposta a vazamento em 5 passos. Codigo <code>secrets_audit.py</code> executavel: 5 familias de padroes reais, checagem de <code>.gitignore</code> e exit code para o CI. Comandos do GitHub Docs verificados na entrega.</p>
+<p>Standard com princípios, tabela de guarda e entrega, prazos e resposta a vazamento em 5 passos. Código <code>secrets_audit.py</code> executável: 5 famílias de padrões reais, checagem de <code>.gitignore</code> e exit code para o CI. Comandos do GitHub Docs verificados na entrega.</p>
 <pre>gh secret set NOME_DO_SECRET
 gh secret set NOME_DO_SECRET &lt; secret.txt
 gh secret set --env PROD NOME_DO_SECRET
 gh secret list</pre>
-<ul><li>Producao no cofre, CI em secrets por ambiente, local em `.env` fora do git</li><li>Dynamic secrets com TTL onde o provider suporta</li></ul>
+<ul><li>Produção no cofre, CI em secrets por ambiente, local em `.env` fora do git</li><li>Dynamic secrets com TTL onde o provider suporta</li></ul>
 <h2><span class="num">4.</span> Como funciona</h2>
 <div class="pipeline"><div class="pipeline-head"><span class="pipeline-title">Ciclo de vida do <em>segredo</em></span><span class="pipeline-live"><span class="dot"></span> fluxo ativo</span></div><div class="pipeline-body"><div class="pl-rail"><span class="pl-pulse p1"></span><span class="pl-pulse p2"></span><span class="pl-pulse g"></span></div><div class="pl-steps">
-<div class="pl-step"><span class="num">1</span><div><div class="name">Cofre central</div><div class="desc">Vault KV ou gerenciado do provider; codigo referencia, nunca valor.</div><div class="pl-chip"><span class="pl-tag">dono + criticidade</span></div></div></div>
-<div class="pl-step"><span class="num">2</span><div><div class="name">Entrega por referencia</div><div class="desc">Env var, OIDC no CI, <code>gh secret set</code> por ambiente.</div><div class="pl-chip"><span class="pl-tag">sem chave estatica</span></div></div></div>
-<div class="pl-step"><span class="num">3</span><div><div class="name">Rotacao com prazo</div><div class="desc">30 dias critica, 90 alta, 180 padrao; dynamic secret onde der.</div><div class="pl-chip"><span class="pl-tag">gerar, validar, revogar</span></div></div></div>
-<div class="pl-step"><span class="num">4</span><div><div class="name"><code>secrets_audit.py</code> varre</div><div class="desc">5 padroes reais + <code>.gitignore</code>; achado falha o build.</div><div class="pl-chip"><span class="pl-tag">exit 1 = CI vermelho</span></div></div></div>
-<div class="pl-step pl-terminal"><span class="num">5</span><div><div class="name">Vazou, gira</div><div class="desc">Revogar, girar, auditar uso, comunicar, post-mortem. Critica em 4 h.</div><div class="pl-chip"><span class="pl-tag ok">procedimento ensaiado</span></div></div></div>
+<div class="pl-step"><span class="num">1</span><div><div class="name">Cofre central</div><div class="desc">Vault KV ou gerenciado do provider; código referencia, nunca valor.</div><div class="pl-chip"><span class="pl-tag">dono + criticidade</span></div></div></div>
+<div class="pl-step"><span class="num">2</span><div><div class="name">Entrega por referência</div><div class="desc">Env var, OIDC no CI, <code>gh secret set</code> por ambiente.</div><div class="pl-chip"><span class="pl-tag">sem chave estática</span></div></div></div>
+<div class="pl-step"><span class="num">3</span><div><div class="name">Rotação com prazo</div><div class="desc">30 dias crítica, 90 alta, 180 padrão; dynamic secret onde der.</div><div class="pl-chip"><span class="pl-tag">gerar, validar, revogar</span></div></div></div>
+<div class="pl-step"><span class="num">4</span><div><div class="name"><code>secrets_audit.py</code> varre</div><div class="desc">5 padrões reais + <code>.gitignore</code>; achado falha o build.</div><div class="pl-chip"><span class="pl-tag">exit 1 = CI vermelho</span></div></div></div>
+<div class="pl-step pl-terminal"><span class="num">5</span><div><div class="name">Vazou, gira</div><div class="desc">Revogar, girar, auditar uso, comunicar, post-mortem. Crítica em 4 h.</div><div class="pl-chip"><span class="pl-tag ok">procedimento ensaiado</span></div></div></div>
 </div><div class="pl-footer"><span>secrets_audit.py | self-test: AKIA + ghp detectados</span><span>comandos do GitHub Docs</span></div></div></div>
 <h2><span class="num">5.</span> Entregas</h2>
-<table><tr><th>Arquivo</th><th>Conteudo</th></tr><tr><td><code>1-standards/STANDARD-SEGREDOS-ROTACAO.md</code></td><td>Principios, guarda e entrega, rotacao, resposta</td></tr><tr><td><code>2-implementacao/secrets_audit.py</code></td><td>Varredura executavel com self-test passando</td></tr><tr><td><code>2-implementacao/CHECKLIST-SEGREDOS.md</code></td><td>Higiene mensal, 8 itens</td></tr><tr><td><code>7-apresentacao/</code></td><td>Deck de 12 slides, demo, roteiro com 5 Q and A, este relatorio em HTML, DOCX e PDF</td></tr></table>
+<table><tr><th>Arquivo</th><th>Conteúdo</th></tr><tr><td><code>1-standards/STANDARD-SEGREDOS-ROTACAO.md</code></td><td>Princípios, guarda e entrega, rotação, resposta</td></tr><tr><td><code>2-implementacao/secrets_audit.py</code></td><td>Varredura executável com self-test passando</td></tr><tr><td><code>2-implementacao/CHECKLIST-SEGREDOS.md</code></td><td>Higiene mensal, 8 itens</td></tr><tr><td><code>7-apresentacao/</code></td><td>Deck de 12 slides, demo, roteiro com 5 Q and A, este relatório em HTML, DOCX e PDF</td></tr></table>
 <h2><span class="num">6.</span> Métricas de sucesso</h2>
-<table><tr><th>Metrica</th><th>Atual</th><th>Meta</th></tr><tr><td>Criticas com rotacao</td><td>0% (baseline desta PDI)</td><td>100% em 90 dias (meta)</td></tr><tr><td>Segredos em repos</td><td>a medir na primeira rodada</td><td>0 apos remediacao (meta)</td></tr><tr><td>Giro de chave vazada</td><td>sem rotina</td><td>ate 4 h (meta)</td></tr></table>
-<div class="callout"><strong>Status:</strong> Desenvolvido em Setembro 2026, homologacao pendente: migrar Ads e CRM para o cofre e ligar a varredura no CI.</div>
+<table><tr><th>Métrica</th><th>Atual</th><th>Meta</th></tr><tr><td>Críticas com rotação</td><td>0% (baseline desta PDI)</td><td>100% em 90 dias (meta)</td></tr><tr><td>Segredos em repos</td><td>a medir na primeira rodada</td><td>0 após remediação (meta)</td></tr><tr><td>Giro de chave vazada</td><td>sem rotina</td><td>até 4 h (meta)</td></tr></table>
+<div class="callout"><strong>Status:</strong> Desenvolvido em Setembro 2026, homologação pendente: migrar Ads e CRM para o cofre e ligar a varredura no CI.</div>
 </div>
 </div>
 </body>

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Gera o DOCX desta atividade a partir de report.json (padrao PDI senior), incluindo as secoes de autoria."""
+"""Gera o DOCX desta atividade a partir de report.json (padrão PDI sênior), incluindo as seções de autoria."""
 import json, os
 from docx import Document
 from docx.shared import Pt, Cm, RGBColor
@@ -9,12 +9,12 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 with open(os.path.join(HERE, "report.json"), encoding="utf-8") as f:
     D = json.load(f)
 
-SKIP = {"Decisoes e tradeoffs", "Impacto no negocio", "Referencias de estudo"}
+SKIP = {"Decisões e tradeoffs", "Impacto no negócio", "Referências de estudo"}
 
 NEW = [
-    ("Decisoes e tradeoffs", "ul", ["Timeout de 800ms conta como falha: se o Score nao responde em 800ms, o Pagamento nao prende thread esperando.", "Breaker abre apos mais de 5 falhas em 10s: em OPEN o score_cache() responde em menos de 1s, isolando a falha no Score.", "Half-open apos 30s com 1 sonda: o breaker.test() libera uma chamada de teste; se ok, fecha, se nao, mantem OPEN. Recupera sozinho em vez de exigir acao manual.", "Retry com backoff de 0.1 a 0.4s mais jitter so em CLOSED: espera crescente com ruido; retry imediato foi rejeitado porque piora o outage."]),
-    ("Impacto no negocio", "p", ["Com abertura em ate 5 falhas e fallback em 100% do outage, o Pagamento sustenta 99,9% de disponibilidade mesmo com o Score fora do ar por minutos. Sem a protecao, a lentidao virava esgotamento de threads e erro para o cliente; com ela, a degradacao e graciosa em milissegundos e o retorno e automatico via half-open, sem intervencao manual."]),
-    ("Referencias de estudo", "ul", ["Curso: \"Microservices: Resilience Patterns with Resilience4j\" (Udemy).", "Video: \"Circuit Breaker Pattern Explained\" (YouTube, Fireship).", "Documento oficial: Microsoft Learn, \"Circuit Breaker pattern\" (learn.microsoft.com).", "Documento oficial: Resilience4j Documentation (resilience4j.readme.io)."]),
+    ("Decisões e tradeoffs", "ul", ["Timeout de 800ms conta como falha: se o Score não responde em 800ms, o Pagamento não prende thread esperando.", "Breaker abre após mais de 5 falhas em 10s: em OPEN o score_cache() responde em menos de 1s, isolando a falha no Score.", "Half-open após 30s com 1 sonda: o breaker.test() libera uma chamada de teste; se ok, fecha, se não, mantém OPEN. Recupera sozinho em vez de exigir ação manual.", "Retry com backoff de 0.1 a 0.4s mais jitter só em CLOSED: espera crescente com ruído; retry imediato foi rejeitado porque piora o outage."]),
+    ("Impacto no negócio", "p", ["Com abertura em até 5 falhas e fallback em 100% do outage, o Pagamento sustenta 99,9% de disponibilidade mesmo com o Score fora do ar por minutos. Sem a proteção, a lentidão virava esgotamento de threads e erro para o cliente; com ela, a degradação e graciosa em milissegundos e o retorno e automático via half-open, sem intervenção manual."]),
+    ("Referências de estudo", "ul", ["Curso: \"Microservices: Resilience Patterns with Resilience4j\" (Udemy).", "Vídeo: \"Circuit Breaker Pattern Explained\" (YouTube, Fireship).", "Documento oficial: Microsoft Learn, \"Circuit Breaker pattern\" (learn.microsoft.com).", "Documento oficial: Resilience4j Documentation (resilience4j.readme.io)."]),
 ]
 
 doc = Document()
@@ -28,10 +28,10 @@ def cover():
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     r = p.add_run(D['title']); r.bold = True; r.font.size = Pt(23)
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER; p.space_before = Pt(28)
-    r = p.add_run('Documento Tecnico de PDI'); r.font.size = Pt(12); r.font.color.rgb = RGBColor(0x6B,0x7A,0x8A)
+    r = p.add_run('Documento Técnico de PDI'); r.font.size = Pt(12); r.font.color.rgb = RGBColor(0x6B,0x7A,0x8A)
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER; p.space_before = Pt(16)
     for line in [f"Autor: {D['autor']}", f"Unidade: {D.get('unidade', 'FV Marketing / V4 Company')}", f"Data: {D.get('data', 'Agosto 2026')}",
-                 f"Area: {D.get('area', '05 - Sistemas Distribuidos, Mensageria e Eventos')}", "Status: Entregue (desenvolvido)"]:
+                 f"Área: {D.get('área', '05 - Sistemas Distribuídos, Mensageria e Eventos')}", "Status: Entregue (desenvolvido)"]:
         rr = p.add_run(line + '\n'); rr.font.size = Pt(11); rr.font.color.rgb = RGBColor(0x49,0x55,0x60)
     doc.add_page_break()
 
@@ -56,7 +56,7 @@ def add_section(title, blocks):
         elif kind == "note":
             p = doc.add_paragraph(); p.add_run("Nota: ").bold = True; p.add_run(rest[0])
         elif kind == "warn":
-            p = doc.add_paragraph(); p.add_run("Atencao: ").bold = True; p.add_run(rest[0])
+            p = doc.add_paragraph(); p.add_run("Atenção: ").bold = True; p.add_run(rest[0])
         elif kind == "code":
             p = doc.add_paragraph(rest[1]); p.style = doc.styles['No Spacing']
             for r in p.runs: r.font.name = 'Consolas'; r.font.size = Pt(9)

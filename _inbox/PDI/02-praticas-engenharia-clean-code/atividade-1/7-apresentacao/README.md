@@ -1,4 +1,4 @@
-# Refatoracao de Modulo Legado com SOLID e Clean Architecture
+# Refatoração de Módulo Legado com SOLID e Clean Architecture
 
 Engenharia de Software
 
@@ -7,22 +7,22 @@ class PedidoService:
     def salvar(self, p): ...        # banco
     def enviar_email(self, p): ...  # e-mail
     def calcular_imposto(self, p): ...  # regra
-    def gerar_pdf(self, p): ...     # relatorio
+    def gerar_pdf(self, p): ...     # relatório
     def logar(self, p): ...         # log</code></pre><p>Depois, separamos em papéis:</p><pre><code># BOM: cada classe tem uma responsabilidade
-class CalculaImposto:           # regra de negocio
+class CalculaImposto:           # regra de negócio
     def executar(self, pedido): ...
 
 class PedidoRepository:         # port (interface)
     def salvar(self, pedido): ...
 
 class EnviaEmail:               # adapter de infra
-    def enviar(self, destino, corpo): ...</code></pre><p><strong>OCP</strong>: aberto para extensão, fechado para modificação. Em vez de <code>if tipo == 'PF'</code>, usamos polimorfismo:</p><pre><code># BOM: adicionar novo tipo nao mexe no existente
+    def enviar(self, destino, corpo): ...</code></pre><p><strong>OCP</strong>: aberto para extensão, fechado para modificação. Em vez de <code>if tipo == 'PF'</code>, usamos polimorfismo:</p><pre><code># BOM: adicionar novo tipo não mexe no existente
 class DescontoStrategy:
     def calcular(self, pedido): raise NotImplementedError
 class DescontoPF(DescontoStrategy):
     def calcular(self, p): return p.total * 0.05
 class DescontoPJ(DescontoStrategy):
-    def calcular(self, p): return p.total * 0.10</code></pre><p><strong>LSP</strong>: subtipos devem ser substituíveis sem quebrar o programa. <strong>ISP</strong>: interfaces enxutas (quem usa e-mail não herda salvar/PDF). <strong>DIP</strong>: o módulo de alto nível depende de abstração, não do banco concreto:</p><pre><code># BOM: use case depende da interface, nao do Postgres
+    def calcular(self, p): return p.total * 0.10</code></pre><p><strong>LSP</strong>: subtipos devem ser substituíveis sem quebrar o programa. <strong>ISP</strong>: interfaces enxutas (quem usa e-mail não herda salvar/PDF). <strong>DIP</strong>: o módulo de alto nível depende de abstração, não do banco concreto:</p><pre><code># BOM: use case depende da interface, não do Postgres
 class FinalizaPedido:
     def __init__(self, repo: PedidoRepository):  # DIP
         self.repo = repo

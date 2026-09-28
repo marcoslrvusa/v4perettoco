@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Gera o DOCX desta atividade a partir de report.json (padrao PDI senior), incluindo as secoes de autoria."""
+"""Gera o DOCX desta atividade a partir de report.json (padrão PDI sênior), incluindo as seções de autoria."""
 import json, os
 from docx import Document
 from docx.shared import Pt, Cm, RGBColor
@@ -9,12 +9,12 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 with open(os.path.join(HERE, "report.json"), encoding="utf-8") as f:
     D = json.load(f)
 
-SKIP = {"Decisoes e tradeoffs", "Impacto no negocio", "Referencias de estudo"}
+SKIP = {"Decisões e tradeoffs", "Impacto no negócio", "Referências de estudo"}
 
 NEW = [
-    ("Decisoes e tradeoffs", "ul", ["consent_id obrigatorio no payload: so publica dado pessoal com base legal ativa; sem consentimento, o evento nao circula.", "subject_id em vez de CPF bruto no downstream: Vendas e Marketing operam com token e o Analytics recebe so hash sem reversao.", "AES em repouso mais TLS em transito: CPF e e-mail cifrados no broker, com campos sensiveis marcados com pii:true no schema lead_event.avsc.", "Retencao com TTL de 365 dias e purge por subject_id: o retention_purge.py varre e apaga, e o pedido de exclusao cai de 90 dias para menos de 1 dia, dentro do patamar de ate 15 dias."]),
-    ("Impacto no negocio", "p", ["Com zero PII em texto puro e 100% dos fluxos com consentimento, o risco de autuacao pela ANPD e de dano de imagem cai porque o dado passa a ter rastro no mapa-dados.md e prazo definido. O apagamento em menos de 1 dia transforma o direito ao esquecimento em rotina operacional de uma varredura por subject_id, em vez de cacada manual por servico."]),
-    ("Referencias de estudo", "ul", ["Curso: \"LGPD na Pratica\" (Udemy).", "Video: \"O que e a LGPD?\" (YouTube, SEBRAE).", "Documento oficial: Guia Orientativo da ANPD (gov.br/anpd).", "Documento oficial: Lei n. 13.709/2018 (planalto.gov.br)."]),
+    ("Decisões e tradeoffs", "ul", ["consent_id obrigatório no payload: só publica dado pessoal com base legal ativa; sem consentimento, o evento não circula.", "subject_id em vez de CPF bruto no downstream: Vendas e Marketing operam com token e o Analytics recebe só hash sem reversão.", "AES em repouso mais TLS em trânsito: CPF e e-mail cifrados no broker, com campos sensíveis marcados com pii:true no schema lead_event.avsc.", "Retenção com TTL de 365 dias e purge por subject_id: o retention_purge.py varre e apaga, e o pedido de exclusão cai de 90 dias para menos de 1 dia, dentro do patamar de até 15 dias."]),
+    ("Impacto no negócio", "p", ["Com zero PII em texto puro e 100% dos fluxos com consentimento, o risco de autuação pela ANPD e de dano de imagem cai porque o dado passa a ter rastro no mapa-dados.md e prazo definido. O apagamento em menos de 1 dia transforma o direito ao esquecimento em rotina operacional de uma varredura por subject_id, em vez de caçada manual por serviço."]),
+    ("Referências de estudo", "ul", ["Curso: \"LGPD na Prática\" (Udemy).", "Vídeo: \"O que e a LGPD?\" (YouTube, SEBRAE).", "Documento oficial: Guia Orientativo da ANPD (gov.br/anpd).", "Documento oficial: Lei n. 13.709/2018 (planalto.gov.br)."]),
 ]
 
 doc = Document()
@@ -28,10 +28,10 @@ def cover():
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     r = p.add_run(D['title']); r.bold = True; r.font.size = Pt(23)
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER; p.space_before = Pt(28)
-    r = p.add_run('Documento Tecnico de PDI'); r.font.size = Pt(12); r.font.color.rgb = RGBColor(0x6B,0x7A,0x8A)
+    r = p.add_run('Documento Técnico de PDI'); r.font.size = Pt(12); r.font.color.rgb = RGBColor(0x6B,0x7A,0x8A)
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER; p.space_before = Pt(16)
     for line in [f"Autor: {D['autor']}", f"Unidade: {D.get('unidade', 'FV Marketing / V4 Company')}", f"Data: {D.get('data', 'Agosto 2026')}",
-                 f"Area: {D.get('area', '05 - Sistemas Distribuidos, Mensageria e Eventos')}", "Status: Entregue (desenvolvido)"]:
+                 f"Área: {D.get('área', '05 - Sistemas Distribuídos, Mensageria e Eventos')}", "Status: Entregue (desenvolvido)"]:
         rr = p.add_run(line + '\n'); rr.font.size = Pt(11); rr.font.color.rgb = RGBColor(0x49,0x55,0x60)
     doc.add_page_break()
 
@@ -56,7 +56,7 @@ def add_section(title, blocks):
         elif kind == "note":
             p = doc.add_paragraph(); p.add_run("Nota: ").bold = True; p.add_run(rest[0])
         elif kind == "warn":
-            p = doc.add_paragraph(); p.add_run("Atencao: ").bold = True; p.add_run(rest[0])
+            p = doc.add_paragraph(); p.add_run("Atenção: ").bold = True; p.add_run(rest[0])
         elif kind == "code":
             p = doc.add_paragraph(rest[1]); p.style = doc.styles['No Spacing']
             for r in p.runs: r.font.name = 'Consolas'; r.font.size = Pt(9)

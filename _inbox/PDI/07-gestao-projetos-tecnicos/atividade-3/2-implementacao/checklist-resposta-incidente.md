@@ -3,21 +3,21 @@
 ## Minuto 0-10: classificar
 - [ ] Sintoma em 1 frase: [ ]
 - [ ] Desde quando (hora): [ ]
-- [ ] Impacto (campanhas, leads, relatorios): [ ]
+- [ ] Impacto (campanhas, leads, relatórios): [ ]
 - [ ] Severidade (S1-S4): [ ]
 - [ ] Comandante nomeado: [ ] | canal dedicado aberto: [ ]
 
 ## Minuto 10-30: mitigar e comunicar
-- [ ] Mitigacao aplicada (rollback, desligar, manual): [ ] hora: [ ]
-- [ ] Operacao avisada com: impacto + workaround + proxima atualizacao em: [ ]
+- [ ] Mitigação aplicada (rollback, desligar, manual): [ ] hora: [ ]
+- [ ] Operação avisada com: impacto + workaround + próxima atualização em: [ ]
 - [ ] Timeline sendo registrada (hora + fato): [ ]
 
-## Ate o fim do dia: resolver e registrar
+## Até o fim do dia: resolver e registrar
 - [ ] Causa corrigida e validada com o afetado: [ ]
-- [ ] Timeline minima salva (4 marcos): [ ]
-- [ ] Postmortem agendado (ate 5 dias uteis), dono: [ ]
+- [ ] Timeline mínima salva (4 marcos): [ ]
+- [ ] Postmortem agendado (até 5 dias úteis), dono: [ ]
 
 ## Frases prontas para o comunicador
-- Abertura: "Incidente S_ em [sistema]: [impacto]. Workaround: [ ]. Proxima atualizacao as [hora]."
-- Andamento: "Atualizacao [hora]: [o que foi feito], [o que falta]. Previsao: [ ]."
-- Encerramento: "Resolvido as [hora]. [resumo da causa]. Postmortem sai ate [data]."
+- Abertura: "Incidente S_ em [sistema]: [impacto]. Workaround: [ ]. Próxima atualização as [hora]."
+- Andamento: "Atualização [hora]: [o que foi feito], [o que falta]. Previsão: [ ]."
+- Encerramento: "Resolvido as [hora]. [resumo da causa]. Postmortem sai até [data]."

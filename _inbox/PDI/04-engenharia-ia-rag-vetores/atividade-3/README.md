@@ -1,14 +1,14 @@
-# Orquestracao Multi-agente com Handoffs e Isolamento
+# Orquestração Multi-agente com Handoffs e Isolamento
 
 Engenharia de IA
 
 ## Resumo Executivo
 
-Padrao de orquestracao multi-agente: supervisor + especialistas com handoff explicit, isolamento de contexto, timeouts e fallbacks. Entrego o padrao e um orquestrador real.
+Padrão de orquestração multi-agente: supervisor + especialistas com handoff explicit, isolamento de contexto, timeouts e fallbacks. Entrego o padrão e um orquestrador real.
 
-Agente unico vira 'deus' e quebra em prompt longo.
+Agente único vira 'deus' e quebra em prompt longo.
 
-## Contexto de Producao
+## Contexto de Produção
 
 - Um agente fazia tudo: triagem, consulta, proposta.
 
@@ -16,7 +16,7 @@ Agente unico vira 'deus' e quebra em prompt longo.
 
 - Sem timeout: sub-agente travado parava o fluxo.
 
-## Diagnostico
+## Diagnóstico
 
 - SRP ausente entre agentes.
 
@@ -24,19 +24,19 @@ Agente unico vira 'deus' e quebra em prompt longo.
 
 - Sem handoff formal.
 
-## Decisao Arquitetural (ADR)
+## Decisão Arquitetural (ADR)
 
 ADR-043 : Topologia Multi-agente
 
-| Opcao | Pro | Contra | Decisao |
+| Opção | Pro | Contra | Decisão |
 
 | --- | --- | --- | --- |
 
-| Supervisor + handoff | foco, testavel | mais nos | ESCOLHIDA |
+| Supervisor + handoff | foco, testável | mais nos | ESCOLHIDA |
 
-| Agente unico | simples | fragil | rejeitada |
+| Agente único | simples | frágil | rejeitada |
 
-> **Nota:** Handoff = mensagem tipada. Cada agente tem contexto proprio e timeout.
+> **Nota:** Handoff = mensagem tipada. Cada agente tem contexto próprio e timeout.
 
 ## Entregas
 
@@ -46,15 +46,15 @@ ADR-043 : Topologia Multi-agente
 
 - handoff_schema.py.
 
-## Validacao
+## Validação
 
 1. Simular triagem->consulta->proposta.
 
 2. Forcar timeout -> fallback.
 
-3. Contexto nao vaza.
+3. Contexto não vaza.
 
-## Metricas e SLO
+## Métricas e SLO
 
 | SLO | Alvo |
 
@@ -68,7 +68,7 @@ ADR-043 : Topologia Multi-agente
 
 ## Riscos
 
-| Risco | Mitigacao |
+| Risco | Mitigação |
 
 | --- | --- |
 
@@ -76,27 +76,27 @@ ADR-043 : Topologia Multi-agente
 
 | Custo supervisor | modelo leve |
 
-## Proximos Passos
+## Próximos Passos
 
 - Observabilidade de handoff.
 
 - Eval por agente.
 
-## Decisoes e tradeoffs
+## Decisões e tradeoffs
 
-- Supervisor com handoff tipado em vez de agente unico com prompt de 8k tokens: aceitei mais nos para ganhar foco, teste por papel e fronteira clara entre triagem, consulta e proposta.
-- Contexto proprio por agente com passagem de resumo minimo: escolhi isolamento para zerar vazamento, com meta de 0 ocorrencias, mesmo com custo de serializar o handoff.
+- Supervisor com handoff tipado em vez de agente único com prompt de 8k tokens: aceitei mais nos para ganhar foco, teste por papel e fronteira clara entre triagem, consulta e proposta.
+- Contexto próprio por agente com passagem de resumo mínimo: escolhi isolamento para zerar vazamento, com meta de 0 ocorrências, mesmo com custo de serializar o handoff.
 - Timeout menor ou igual a 15 s por agente com fallback em 100 por cento dos handoffs: preferi degradar com re-rota a travar o fluxo quando um worker trava.
-- Max hops contra loop e supervisor com modelo leve: contive custo e recursao em vez de deixar o supervisor reiterar sem limite.
-- Memoria de curto e longo prazo com estado preservado: troquei reexecucao do zero por retomada a partir do ultimo handoff valido.
+- Max hops contra loop e supervisor com modelo leve: contive custo e recursão em vez de deixar o supervisor reiterar sem limite.
+- Memória de curto e longo prazo com estado preservado: troquei reexecução do zero por retomada a partir do último handoff valido.
 
-## Impacto no negocio
+## Impacto no negócio
 
-A orquestracao com timeout menor ou igual a 15 s, fallback em 100 por cento e vazamento 0 eleva o sucesso de cerca de 49 por cento para cerca de 97 por cento, com meta maior ou igual a 95 por cento em tarefas de 3 etapas, o que reduz retrabalho por contaminacao e da previsibilidade de custo por papel.
+A orquestração com timeout menor ou igual a 15 s, fallback em 100 por cento e vazamento 0 eleva o sucesso de cerca de 49 por cento para cerca de 97 por cento, com meta maior ou igual a 95 por cento em tarefas de 3 etapas, o que reduz retrabalho por contaminação e da previsibilidade de custo por papel.
 
-## Referencias de estudo
+## Referências de estudo
 
 - Curso: Multi-AI Agent Systems with LangGraph, plataforma DeepLearning.AI.
-- Video: Padroes de orquestracao com supervisor e handoff, plataforma YouTube, canal LangChain.
-- Doc oficial: Documentacao do LangGraph para grafos de agentes, documentacao oficial LangChain.
-- Doc oficial: Guia de function calling e structured outputs, documentacao oficial OpenAI.
+- Vídeo: Padrões de orquestração com supervisor e handoff, plataforma YouTube, canal LangChain.
+- Doc oficial: Documentação do LangGraph para grafos de agentes, documentação oficial LangChain.
+- Doc oficial: Guia de function calling e structured outputs, documentação oficial OpenAI.

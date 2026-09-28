@@ -13,7 +13,7 @@
    gera pressão enorme no GC. Use mutação controlada ou Stream/Transform.
 4. **Parse de JSON 1x na entrada**: o payload chega como string; parses só na
    primeira etapa, nunca dentro de loops.
-5. **Saia cedo**: se o item não passou no filtro, descarte antes de normalizar.
+5. **Saía cedo**: se o item não passou no filtro, descarte antes de normalizar.
 6. **Use `$getWorkflowStaticData('global')`** para memoização entre execuções.
 
 ## Template recomendado

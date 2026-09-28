@@ -11,9 +11,9 @@ Retorna:
 |-----------------|-------------|-------------|---------------|--------------|
 | 47 | 3 | 12 | 0 | 0.936 |
 
-Health score > 0.95 = saudavel
-Health score 0.80-0.95 = atencao
-Health score < 0.80 = critico
+Health score > 0.95 = saudável
+Health score 0.80-0.95 = atenção
+Health score < 0.80 = crítico
 
 ## 2. Circuitos Abertos Agora
 
@@ -21,7 +21,7 @@ Health score < 0.80 = critico
 SELECT * FROM vw_circuits_open_now;
 ```
 
-Se retornar alguma linha, um workflow esta com circuit breaker aberto.
+Se retornar alguma linha, um workflow está com circuit breaker aberto.
 
 ## 3. Top 10 Workflows com Mais Erros (7 dias)
 
@@ -39,7 +39,7 @@ ORDER BY total DESC
 LIMIT 10;
 ```
 
-## 4. Erros Nao Revisados
+## 4. Erros Não Revisados
 
 ```sql
 SELECT * FROM error_dlq
@@ -63,7 +63,7 @@ GROUP BY r.workflow_name
 ORDER BY total_attempts DESC;
 ```
 
-## 6. Timeline de Eventos (ultimas 24h)
+## 6. Timeline de Eventos (últimas 24h)
 
 ```sql
 SELECT
@@ -91,11 +91,11 @@ ORDER BY total DESC
 LIMIT 10;
 ```
 
-## Sugestoes de Alertas (Cron + Webhook)
+## Sugestões de Alertas (Cron + Webhook)
 
-| Condicao | Query | Acao |
+| Condição | Query | Ação |
 |----------|-------|------|
 | Circuito aberto | `SELECT COUNT(*) FROM vw_circuits_open_now` > 0 | Slack #incidents |
 | Health score < 0.80 | `SELECT health_score FROM vw_error_health_score` < 0.80 | Slack #incidents + email |
-| 5+ erros criticos em 1h | Query #6 com filtro critical | Slack #incidents |
+| 5+ erros críticos em 1h | Query #6 com filtro critical | Slack #incidents |
 | Pendentes > 20 | Query #4 com COUNT > 20 | Slack #alerts |

@@ -1,4 +1,4 @@
-# Mermaid Guia Rapido (so o que usamos)
+# Mermaid Guia Rápido (só o que usamos)
 
 ## Fluxo (flowchart)
 
@@ -12,7 +12,7 @@ flowchart TD
   C -->|"Nao, falhou 3x"| F["Fila de erros"]
 ```
 
-## Sequencia (sequenceDiagram)
+## Sequência (sequenceDiagram)
 
 ```mermaid
 sequenceDiagram
@@ -29,8 +29,8 @@ sequenceDiagram
 
 ## Regras de sintaxe que quebram o CI
 
-- Rotulos com caracteres especiais vao entre aspas: `A["Trigger 30 min"]`.
-- Setas de resposta usam `-->>`, nao `->>`.
-- Condicao usa chaves: `C{"Coleta ok?"}`.
-- Nomes de participante sem espaco: `participant W as Worker Python`.
-- Todo bloco abre com tripla crase + `mermaid` e fecha com tripla crase, sem indentacao estranha.
+- Rótulos com caracteres especiais vão entre aspas: `A["Trigger 30 min"]`.
+- Setas de resposta usam `-->>`, não `->>`.
+- Condição usa chaves: `C{"Coleta ok?"}`.
+- Nomes de participante sem espaço: `participant W as Worker Python`.
+- Todo bloco abre com tripla crase + `mermaid` e fecha com tripla crase, sem indentação estranha.

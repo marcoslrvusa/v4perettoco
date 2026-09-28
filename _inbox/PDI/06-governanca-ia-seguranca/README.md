@@ -1,17 +1,17 @@
-# PDI | Trilha 06 | Governanca de IA e Seguranca
+# PDI | Trilha 06 | Governança de IA e Segurança
 
-> **Area:** Automacao & Infraestrutura
+> **Área:** Automação & Infraestrutura
 > **Autor:** Marcos Luciano
-> **Perfil:** Tech Lead Senior L2 / GPTS
+> **Perfil:** Tech Lead Sênior L2 / GPTS
 > **Unidade:** FV Marketing / V4 Company
-> **Periodo:** Setembro 2026
+> **Período:** Setembro 2026
 > **Status:** Em desenvolvimento
 
-Trilha com 4 atividades. Cada atividade na propria pasta `atividade-{N}/`.
+Trilha com 4 atividades. Cada atividade na própria pasta `atividade-{N}/`.
 
 | Atividade | Foco | Pasta |
 |-----------|------|-------|
-| 1 | Guardrails e anti-prompt-injection em automacoes com LLM | `atividade-1/` |
-| 2 | LGPD em pipelines de dados (minimizacao, anonimizacao, base legal) | `atividade-2/` |
-| 3 | Gestao de segredos e rotacao de credenciais | `atividade-3/` |
+| 1 | Guardrails e anti-prompt-injection em automações com LLM | `atividade-1/` |
+| 2 | LGPD em pipelines de dados (minimização, anonimização, base legal) | `atividade-2/` |
+| 3 | Gestão de segredos e rotação de credenciais | `atividade-3/` |
 | 4 | Trilhas de auditoria e compliance em workflows | `atividade-4/` |

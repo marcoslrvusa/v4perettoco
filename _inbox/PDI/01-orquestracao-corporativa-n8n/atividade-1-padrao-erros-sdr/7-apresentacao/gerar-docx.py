@@ -306,30 +306,30 @@ for r, row_data in enumerate(data, 1):
     for c, val in enumerate(row_data):
         table.rows[r].cells[c].text = val
 
-add_heading_styled('13. Decisoes e tradeoffs', 1)
+add_heading_styled('13. Decisões e tradeoffs', 1)
 for item in [
-    'Handler central unico: manutencao em um unico ponto com 10 nos validados com n8nac. Se o handler cair, perde-se notificacao temporaria, mas nao o dado, pois a DLQ esta no Supabase e o Monitor roda a cada 5 min.',
-    'Tres camadas obrigatorias: Camada 1 captura cerca de 73% das falhas transientes sem overhead externo, Camada 2 classifica e notifica em menos de 1 min e Camada 3 impede cascata. Custo de mais configuracao por no em troca de auto-cura acima de 70%.',
-    'Code node nunca retenta: erro de logica como toDateTime undefined ou null constraint em telefone nao se resolve com retry. Exige validacao com IF e try/catch.',
-    'Breaker isolado por workflow: limiar de 5 falhas consecutivas e cooldown de 5 min com recovery automatico, em troca de estabilidade sistemica.',
-    'DLQ permanente no Supabase: schema v2.1 com 4 tabelas e 4 views preserva payload com correlationId estavel para replay, com custo de manter migracao e views como vw_error_health_score.',
+    'Handler central único: manutenção em um único ponto com 10 nos validados com n8nac. Se o handler cair, perde-se notificação temporária, mas não o dado, pois a DLQ esta no Supabase e o Monitor roda a cada 5 min.',
+    'Três camadas obrigatórias: Camada 1 captura cerca de 73% das falhas transientes sem overhead externo, Camada 2 classifica e notifica em menos de 1 min e Camada 3 impede cascata. Custo de mais configuração por no em troca de auto-cura acima de 70%.',
+    'Code node nunca retenta: erro de lógica como toDateTime undefined ou null constraint em telefone não se resolve com retry. Exige validação com IF e try/catch.',
+    'Breaker isolado por workflow: limiar de 5 falhas consecutivas e cooldown de 5 min com recovery automático, em troca de estabilidade sistêmica.',
+    'DLQ permanente no Supabase: schema v2.1 com 4 tabelas e 4 views preserva payload com correlationId estável para replay, com custo de manter migração e views como vw_error_health_score.',
 ]:
     p = doc.add_paragraph(style='List Bullet')
     r = p.add_run(item)
     r.font.size = Pt(10)
 
-add_heading_styled('14. Impacto no negocio', 1)
+add_heading_styled('14. Impacto no negócio', 1)
 doc.add_paragraph(
-    'Com 7 workflows SDR IA sem notificacao e deteccao levando dias, cada falha silenciosa derrubava o SLA de atendimento a leads sem ninguem saber. '
-    'O padrao reduz a deteccao para menos de 1 min via Slack, eleva a auto-cura para mais de 70% com retry no no e zera circuitos abertos sem alerta (de 100% para 0%). '
-    'O retrofit completo cabe em 4 dias, com cerca de 1h para as 5 correcoes pontuais ja mapeadas (20 min no ADPLAN e 10 min em cada um dos outros 4), '
-    'o que corta risco operacional e retrabalho de investigacao manual.'
+    'Com 7 workflows SDR IA sem notificação e detecção levando dias, cada falha silenciosa derrubava o SLA de atendimento a leads sem ninguém saber. '
+    'O padrão reduz a detecção para menos de 1 min via Slack, eleva a auto-cura para mais de 70% com retry no no e zera circuitos abertos sem alerta (de 100% para 0%). '
+    'O retrofit completo cabe em 4 dias, com cerca de 1h para as 5 correções pontuais já mapeadas (20 min no ADPLAN e 10 min em cada um dos outros 4), '
+    'o que corta risco operacional e retrabalho de investigação manual.'
 )
 
-add_heading_styled('15. Referencias de estudo', 1)
+add_heading_styled('15. Referências de estudo', 1)
 for item in [
-    'Curso: Automacao e Orquestracao n8n do Basico ao Avancado, na Udemy.',
-    'Video: Error Trigger in n8n, tratamento centralizado de erros, no YouTube, canal oficial n8n.',
+    'Curso: Automação e Orquestração n8n do Básico ao Avançado, na Udemy.',
+    'Vídeo: Error Trigger in n8n, tratamento centralizado de erros, no YouTube, canal oficial n8n.',
     'Doc: n8n Docs, Error handling with Error Trigger workflows, na plataforma n8n Docs.',
     'Doc: Supabase Docs, Database tables, views and indexes, na plataforma Supabase Docs.',
 ]:

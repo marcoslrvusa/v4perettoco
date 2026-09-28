@@ -1,6 +1,6 @@
-# Core Web Vitals: Diagnostico e Plano
+# Core Web Vitals: Diagnóstico e Plano
 
-| Metrica | Valor | Limite | Status |
+| Métrica | Valor | Limite | Status |
 |--------|-------|--------|--------|
 | LCP | 4.1s | 2.5s | FAIL |
 | INP | 410ms | 200ms | FAIL |

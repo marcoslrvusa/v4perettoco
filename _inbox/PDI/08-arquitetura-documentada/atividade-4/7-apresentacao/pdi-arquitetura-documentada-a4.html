@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PDI: Catalogo de Servicos e Ownership com Matriz de Responsabilidade | Registro de Entrega</title>
+<title>PDI: Catálogo de Serviços e Ownership com Matriz de Responsabilidade | Registro de Entrega</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -66,8 +66,8 @@ ul{margin:8px 0 16px 20px}li{color:var(--gray-700);font-size:14px;margin-bottom:
   <div class="cover">
     <div class="cover-avatar"><img src="../../../../../assets/images/logo-peretto-perfil.jpg" alt="Marcos Luciano"></div>
     <div class="cover-logo"><img src="../../../../../assets/logo-peretto.png" alt="Peretto"></div>
-    <span class="cover-badge">PDI 08 | Atividade 4 | Catalogo</span>
-    <h1>Catalogo de Servicos <em>Ownership e Matriz de Responsabilidade</em></h1>
+    <span class="cover-badge">PDI 08 | Atividade 4 | Catálogo</span>
+    <h1>Catálogo de Serviços <em>Ownership e Matriz de Responsabilidade</em></h1>
     <div class="cover-meta">
       <strong>Autor:</strong> PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com<br>
       <strong>Unidade:</strong> FV Marketing / V4 Company | Automação &amp; Infraestrutura<br>
@@ -80,30 +80,30 @@ ul{margin:8px 0 16px 20px}li{color:var(--gray-700);font-size:14px;margin-bottom:
   </div>
   <div class="content">
     <h2><span class="num">1.</span> Contexto</h2>
-    <p>Quando o worker de coleta quebrava de madrugada, <strong>ninguem sabia quem acordar</strong>: o sistema nao tinha dono declarado e cada peca tinha um "talvez o fulano saiba". A matriz desta atividade declara <strong>dono, suplente e escala</strong> para as 6 pecas do orquestrador, com leitura honesta: ha concentracao real e 2 pecas sem suplente.</p>
+    <p>Quando o worker de coleta quebrava de madrugada, <strong>ninguém sabia quem acordar</strong>: o sistema não tinha dono declarado e cada peça tinha um "talvez o fulano saiba". A matriz desta atividade declara <strong>dono, suplente e escala</strong> para as 6 peças do orquestrador, com leitura honesta: há concentração real e 2 peças sem suplente.</p>
     <h2><span class="num">2.</span> Diagnóstico</h2>
-    <p>O risco mais caro do time pequeno e o <strong>conhecimento na cabeca de um so</strong>. Sem dono declarado, incidente vira broadcast no chat, ferias viram aposta e saida de pessoa apaga historia.</p>
-    <table><tr><th>Sintoma</th><th>Causa</th></tr><tr><td>Ninguem sabe quem acordar</td><td>Peca sem dono declarado</td></tr><tr><td>Ferias viram incidente</td><td>Peca sem suplente testado</td></tr><tr><td>Saida apaga historia</td><td>Ownership so na memoria</td></tr></table>
+    <p>O risco mais caro do time pequeno e o <strong>conhecimento na cabeça de um só</strong>. Sem dono declarado, incidente vira broadcast no chat, férias viram aposta e saída de pessoa apaga história.</p>
+    <table><tr><th>Sintoma</th><th>Causa</th></tr><tr><td>Ninguém sabe quem acordar</td><td>Peça sem dono declarado</td></tr><tr><td>Férias viram incidente</td><td>Peça sem suplente testado</td></tr><tr><td>Saída apaga história</td><td>Ownership só na memória</td></tr></table>
     <h2><span class="num">3.</span> Solução</h2>
-    <p><strong>Catalogo em <code>catalog-info.yaml</code> padrao Backstage</strong> (owner, dependsOn, API do webhook), <strong>matriz de responsabilidade</strong> das 6 pecas e <strong>roda de ownership</strong> com revezamento semanal e escala em 15 minutos. Dono e pessoa com nome, nunca "o time".</p>
-    <div class="callout"><strong>Decisao chave:</strong> formato Backstage mesmo sem portal rodando. Migracao zero quando o portal existir.</div>
+    <p><strong>Catálogo em <code>catalog-info.yaml</code> padrão Backstage</strong> (owner, dependsOn, API do webhook), <strong>matriz de responsabilidade</strong> das 6 peças e <strong>roda de ownership</strong> com revezamento semanal e escala em 15 minutos. Dono e pessoa com nome, nunca "o time".</p>
+    <div class="callout"><strong>Decisão chave:</strong> formato Backstage mesmo sem portal rodando. Migração zero quando o portal existir.</div>
     <h2><span class="num">4.</span> Como funciona</h2>
     <div class="pipeline"><div class="pipeline-head"><span class="pipeline-title">Incidente 2h: <em>da falha ao dono em 1 minuto</em></span><span class="pipeline-live"><span class="dot"></span> fluxo ativo</span></div><div class="pipeline-body"><div class="pl-rail"><div class="pl-pulse p1"></div><div class="pl-pulse p2"></div><div class="pl-pulse g"></div></div><div class="pl-steps">
-    <div class="pl-step"><div class="num">1</div><div><div class="name">Falha na <code>coleta</code></div><div class="desc">Fila de erros acusa conta sem metrica</div><div class="pl-chip"><span class="pl-tag">alerta</span></div></div></div>
-    <div class="pl-step"><div class="num">2</div><div><div class="name">Abre a <code>matriz</code></div><div class="desc">Peca workers, dono e suplente visiveis em 1 pagina</div><div class="pl-chip"><span class="pl-tag">1 pagina</span></div></div></div>
+    <div class="pl-step"><div class="num">1</div><div><div class="name">Falha na <code>coleta</code></div><div class="desc">Fila de erros acusa conta sem métrica</div><div class="pl-chip"><span class="pl-tag">alerta</span></div></div></div>
+    <div class="pl-step"><div class="num">2</div><div><div class="name">Abre a <code>matriz</code></div><div class="desc">Peça workers, dono e suplente visíveis em 1 página</div><div class="pl-chip"><span class="pl-tag">1 página</span></div></div></div>
     <div class="pl-step"><div class="num">3</div><div><div class="name">Chama a <code>pessoa da semana</code></div><div class="desc">Roda de ownership, sem broadcast no chat</div><div class="pl-chip"><span class="pl-tag">direto</span></div></div></div>
-    <div class="pl-step"><div class="num">4</div><div><div class="name">Escala em <code>15 min</code></div><div class="desc">Sem resposta: dono da peca, depois lideranca FV</div><div class="pl-chip"><span class="pl-tag">automatica</span></div></div></div>
-    <div class="pl-step pl-terminal"><div class="num">5</div><div><div class="name">Pos-incidente <code>registra</code></div><div class="desc">Licao vira ADR ou ajuste de doc, dono cobra</div><div class="pl-chip"><span class="pl-tag ok">memoria</span></div></div></div>
-    </div><div class="pl-footer"><span>roda semanal · troca segunda 9h</span><span>meta: zero peca sem suplente em 60 dias</span></div></div></div>
+    <div class="pl-step"><div class="num">4</div><div><div class="name">Escala em <code>15 min</code></div><div class="desc">Sem resposta: dono da peça, depois liderança FV</div><div class="pl-chip"><span class="pl-tag">automática</span></div></div></div>
+    <div class="pl-step pl-terminal"><div class="num">5</div><div><div class="name">Pos-incidente <code>registra</code></div><div class="desc">Lição vira ADR ou ajuste de doc, dono cobra</div><div class="pl-chip"><span class="pl-tag ok">memória</span></div></div></div>
+    </div><div class="pl-footer"><span>roda semanal · troca segunda 9h</span><span>meta: zero peça sem suplente em 60 dias</span></div></div></div>
     <h2><span class="num">5.</span> Entregas</h2>
     <p>Fundamentos em <code>1-standards/01-catalogo-e-ownership-fundamentos.md</code>, matriz real em <code>02-matriz-responsabilidade-orquestrador.md</code>, YAML do worker em <code>2-implementacao/01-catalog-info-exemplo.yaml</code>, template em <code>02-template-catalog-info.yaml</code> e roda em <code>03-roda-ownership.md</code>.</p>
 <pre>atividade-4/
   1-standards/ (fundamentos + matriz real)
   2-implementacao/ (yaml + template + roda)
-  7-apresentacao/ (deck + demo + este relatorio)</pre>
+  7-apresentacao/ (deck + demo + este relatório)</pre>
     <h2><span class="num">6.</span> Métricas de sucesso</h2>
-    <table><tr><th>Metrica</th><th>Atual</th><th>Meta</th></tr><tr><td>Sistemas com dono declarado</td><td>4 de 4</td><td>6 de 6</td></tr><tr><td>Pecas sem suplente</td><td>2</td><td>0</td></tr><tr><td>Dono achado em 15 min</td><td>1 de 3</td><td>3 de 3</td></tr><tr><td>Revisoes trimestrais</td><td>0</td><td>1</td></tr></table>
-    <div class="callout"><strong>Status:</strong> Atividade entregue e homologada no repo. Proximo passo: definir dono e suplente na reuniao do squad e importar no Backstage.</div>
+    <table><tr><th>Métrica</th><th>Atual</th><th>Meta</th></tr><tr><td>Sistemas com dono declarado</td><td>4 de 4</td><td>6 de 6</td></tr><tr><td>Peças sem suplente</td><td>2</td><td>0</td></tr><tr><td>Dono achado em 15 min</td><td>1 de 3</td><td>3 de 3</td></tr><tr><td>Revisões trimestrais</td><td>0</td><td>1</td></tr></table>
+    <div class="callout"><strong>Status:</strong> Atividade entregue e homologada no repo. Próximo passo: definir dono e suplente na reunião do squad e importar no Backstage.</div>
   </div>
 </div>
 </body>

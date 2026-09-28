@@ -80,21 +80,21 @@ Payload pesado (10k+ itens)
 | Código duplicado entre workflows | Alto (copiar/colar) | Biblioteca única `3-lib/` |
 | Expressões de manutenção difícil | Inline, não testáveis | Padronizadas + JSONata |
 
-## Decisoes e tradeoffs
+## Decisões e tradeoffs
 
-1. Parse 1x na entrada com chunk default de 1000 em vez de JSON.parse por etapa: elimina re-parse dentro de loop. O tradeoff e exigir padronizar a entrada como string ou array no Webhook /nos/js-normalizer.
-2. Normalizacao em uma passada O(n) com Set por chave primitiva em vez de .find e indexOf em loop O(n²): payload de 100k itens sai de bilhoes de operacoes para centenas de milhares. O tradeoff e exigir disciplina de copia minima de campos em vez de spread completo por item.
-3. Python so com stdlib (collections, itertools, Counter e defaultdict) sem pandas e sem pip: roda no Code node sem dependencia externa. O tradeoff e ter menos sintaxe pronta para dataframe em troca de deploy simples e sem quebra por versao de pacote.
-4. Biblioteca unica 3-lib (payload-lib.js e payload-lib.py) como fonte da verdade em vez de copiar e colar entre workflows: funcoes chunk, dedupe, aggregate, normalizeStream, memoizeGlobal e toOutput vivem num lugar so. O tradeoff e que os workflows embutem copias e exigem sincronizar com a lib a cada mudanca.
-5. Memoizacao com $getWorkflowStaticData global para valores estaveis em vez de recalcular por execucao: limiar e config calculados 1x e reutilizados. O tradeoff e que o dado cacheado pode ficar defasado e exige invalidacao consciente.
+1. Parse 1x na entrada com chunk default de 1000 em vez de JSON.parse por etapa: elimina re-parse dentro de loop. O tradeoff é exigir padronizar a entrada como string ou array no Webhook /nos/js-normalizer.
+2. Normalização em uma passada O(n) com Set por chave primitiva em vez de .find e indexOf em loop O(n²): payload de 100k itens sai de bilhões de operações para centenas de milhares. O tradeoff é exigir disciplina de cópia mínima de campos em vez de spread completo por item.
+3. Python só com stdlib (collections, itertools, Counter e defaultdict) sem pandas e sem pip: roda no Code node sem dependência externa. O tradeoff é ter menos sintaxe pronta para dataframe em troca de deploy simples e sem quebra por versão de pacote.
+4. Biblioteca única 3-lib (payload-lib.js e payload-lib.py) como fonte da verdade em vez de copiar e colar entre workflows: funções chunk, dedupe, aggregate, normalizeStream, memoizeGlobal e toOutput vivem num lugar só. O tradeoff é que os workflows embutem cópias e exigem sincronizar com a lib a cada mudança.
+5. Memoização com $getWorkflowStaticData global para valores estáveis em vez de recalcular por execução: limiar e config calculados 1x e reutilizados. O tradeoff é que o dado cacheado pode ficar defasado e exige invalidação consciente.
 
-## Impacto no negocio
+## Impacto no negócio
 
-O sintoma ja visto na atividade 1 com JS timeout de 25 min no ADPLAN e na atividade 2 com payload sem processamento incremental travava importacoes e sincronizacoes ao escalar de 10k para 100k itens. Com streaming, dedupe O(n) e pico abaixo de 2 GB, o mesmo fluxo processa 10 ou 100k itens sem trocar de maquina, com parse unico e codigo unico na 3-lib em vez de copia entre dezenas de workflows. Isso corta tempo de execucao, elimina OOM e event loop bloqueado e reduz custo de manutencao de expressoes inline nao testaveis para padrao com JSONata.
+O sintoma já visto na atividade 1 com JS timeout de 25 min no ADPLAN e na atividade 2 com payload sem processamento incremental travava importações e sincronizações ao escalar de 10k para 100k itens. Com streaming, dedupe O(n) e pico abaixo de 2 GB, o mesmo fluxo processa 10 ou 100k itens sem trocar de máquina, com parse único e código único na 3-lib em vez de cópia entre dezenas de workflows. Isso corta tempo de execução, elimina OOM e event loop bloqueado e reduz custo de manutenção de expressões inline não testáveis para padrão com JSONata.
 
-## Referencias de estudo
+## Referências de estudo
 
 - Curso: JavaScript Performance, estruturas de dados e complexidade, na Alura.
-- Video: JavaScript Event Loop and Memory Explained, no YouTube, canal Fireship.
+- Vídeo: JavaScript Event Loop and Memory Explained, no YouTube, canal Fireship.
 - Doc: n8n Docs, Code node JavaScript and Python, na plataforma n8n Docs.
 - Doc: MDN Docs, Map, Set and Array iteration, na plataforma MDN Web Docs.

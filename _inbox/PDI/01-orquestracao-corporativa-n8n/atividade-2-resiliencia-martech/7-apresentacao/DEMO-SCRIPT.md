@@ -1,6 +1,6 @@
-# Script de Demonstracao: Resiliencia MarTech n8n Enterprise (PDI-MARTECH)
+# Script de Demonstração: Resiliência MarTech n8n Enterprise (PDI-MARTECH)
 
-> Homologacao simulada. NENHUM passo publica em produção.
+> Homologação simulada. NENHUM passo publica em produção.
 
 ## Setup
 

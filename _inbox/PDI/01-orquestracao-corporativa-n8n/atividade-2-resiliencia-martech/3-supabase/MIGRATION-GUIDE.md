@@ -1,4 +1,4 @@
-# Guia de Migracao: Schema v3.0 (MarTech Resilience)
+# Guia de Migração: Schema v3.0 (MarTech Resilience)
 
 > **Banco:** Supabase `gswzuzetverulcgzhynb` | **Schema:** `public`
 > **Compatibilidade:** aditivo sobre v2.x (erro/circuit): nada e alterado
@@ -7,41 +7,41 @@
 
 | Tabela | Finalidade |
 |--------|-----------|
-| `mt_jobs` | Fila assincrona de jobs MarTech |
-| `mt_concurrency` | Limite de concorrencia por fila |
+| `mt_jobs` | Fila assíncrona de jobs MarTech |
+| `mt_concurrency` | Limite de concorrência por fila |
 | `mt_job_progress` | Checkpoint de payloads pesados |
-| `mt_sync_log` | Auditoria de sincronizacao com CRM |
-| `mt_crm_health` | Agregado de saude por entidade |
-| `mt_sync_delta` | Divergencias detectadas (pre-cliente) |
+| `mt_sync_log` | Auditoria de sincronização com CRM |
+| `mt_crm_health` | Agregado de saúde por entidade |
+| `mt_sync_delta` | Divergências detectadas (pre-cliente) |
 
 | View | Finalidade |
 |------|-----------|
 | `vw_mt_queue_backlog` | Jobs aguardando pois fila |
 | `vw_mt_slots` | Slots em uso vs limite |
 | `vw_mt_sync_summary_24h` | Resumo de sync 24h |
-| `vw_mt_drift_abertos` | Deltas nao resolvidos |
-| `vw_mt_crm_health` | Health abaixo do minimo |
+| `vw_mt_drift_abertos` | Deltas não resolvidos |
+| `vw_mt_crm_health` | Health abaixo do mínimo |
 
 ## Como aplicar
 
-### Opcao A: SQL Editor (dashboard)
+### Opção A: SQL Editor (dashboard)
 
 1. Abrir `https://supabase.com/dashboard/project/gswzuzetverulcgzhynb/sql/editor`
-2. Colar o conteudo de `supabase-schema-v3.sql`
+2. Colar o conteúdo de `supabase-schema-v3.sql`
 3. Rodar (Ctrl+Enter)
 
-### Opcao B: n8n (via credencial Postgres existente)
+### Opção B: n8n (via credencial Postgres existente)
 
-Ja usado na migracao v2.1: criar um workflow temporario com node Postgres
+Já usado na migração v2.1: criar um workflow temporário com node Postgres
 (credencial `Peretto`) com `operation: executeQuery` e o corpo do schema.
 
-### Opcao C: Script
+### Opção C: Script
 
 ```bash
 bash ../6-automation/run-migration.sh
 ```
 
-## Verificacao apos a migracao
+## Verificação após a migração
 
 ```sql
 SELECT table_name FROM information_schema.tables

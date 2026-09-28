@@ -486,31 +486,31 @@ if (staticData.scoreThreshold === undefined) {
       <tr><td><code>1-standards/</code></td><td>3 padrões: nós Code JS, Python no n8n, expressões avançadas</td><td>Markdown</td></tr>
       <tr><td><code>2-workflows/</code></td><td>3 workflows validados com n8nac</td><td>.workflow.ts</td></tr>
       <tr><td><code>3-lib/</code></td><td>Biblioteca reutilizável payload-lib (JS + Python)</td><td>JS + Python</td></tr>
-      <tr><td><code>4-retrofit/</code></td><td>Como adaptar nós Code existentes (ADPLAN, PRO ANALISES, CC)</td><td>Markdown</td></tr>
+      <tr><td><code>4-retrofit/</code></td><td>Como adaptar nós Code existentes (ADPLAN, PRO ANÁLISES, CC)</td><td>Markdown</td></tr>
       <tr><td><code>5-monitoring/</code></td><td>Queries de performance + alertas de duração/dedupe</td><td>Markdown</td></tr>
       <tr><td><code>6-automation/</code></td><td>Deploy com gate de aprovação (dry-run)</td><td>Shell</td></tr>
       <tr><td><code>7-apresentacao/</code></td><td>Deck HTML + demo + este relatório</td><td>HTML + Markdown</td></tr>
       <tr><td><code>MANUAL-IMPLEMENTACAO.md</code></td><td>Manual de implementação completo (6 fases + rollback + checklist de homologação)</td><td>Markdown</td></tr>
     </table>
 
-    <h2><span class="num">11.</span> Decisoes e tradeoffs</h2>
-    <p>Escolhas derivadas do conteudo real da atividade, com custo e beneficio explicitos.</p>
+    <h2><span class="num">11.</span> Decisões e tradeoffs</h2>
+    <p>Escolhas derivadas do conteúdo real da atividade, com custo e benefício explícitos.</p>
     <ul>
       <li><strong>Parse 1x na entrada com chunk default de 1000:</strong> elimina re-parse dentro de loop. Exige padronizar a entrada como string ou array no Webhook /nos/js-normalizer.</li>
-      <li><strong>Normalizacao O(n) com Set por chave primitiva:</strong> payload de 100k itens sai de bilhoes de operacoes para centenas de milhares. Exige copia minima de campos em vez de spread completo.</li>
-      <li><strong>Python so com stdlib (collections, itertools, Counter e defaultdict):</strong> roda no Code node sem dependencia externa. Menos sintaxe pronta em troca de deploy simples.</li>
-      <li><strong>Biblioteca unica 3-lib como fonte da verdade:</strong> funcoes chunk, dedupe, aggregate, normalizeStream, memoizeGlobal e toOutput num lugar so. Workflows embutem copias e exigem sincronizar a cada mudanca.</li>
-      <li><strong>Memoizacao com $getWorkflowStaticData global:</strong> limiar e config calculados 1x e reutilizados. Dado cacheado pode defasar e exige invalidacao consciente.</li>
+      <li><strong>Normalização O(n) com Set por chave primitiva:</strong> payload de 100k itens sai de bilhões de operações para centenas de milhares. Exige cópia mínima de campos em vez de spread completo.</li>
+      <li><strong>Python só com stdlib (collections, itertools, Counter e defaultdict):</strong> roda no Code node sem dependência externa. Menos sintaxe pronta em troca de deploy simples.</li>
+      <li><strong>Biblioteca única 3-lib como fonte da verdade:</strong> funções chunk, dedupe, aggregate, normalizeStream, memoizeGlobal e toOutput num lugar só. Workflows embutem cópias e exigem sincronizar a cada mudança.</li>
+      <li><strong>Memoização com $getWorkflowStaticData global:</strong> limiar e config calculados 1x e reutilizados. Dado cacheado pode defasar e exige invalidação consciente.</li>
     </ul>
 
-    <h2><span class="num">12.</span> Impacto no negocio</h2>
-    <p>O sintoma ja visto na atividade 1 com JS timeout de 25 min no ADPLAN e na atividade 2 com payload sem processamento incremental travava importacoes e sincronizacoes ao escalar de 10k para 100k itens. Com streaming, dedupe O(n) e pico abaixo de 2 GB, o mesmo fluxo processa 10 ou 100k itens sem trocar de maquina, com parse unico e codigo unico na 3-lib em vez de copia entre dezenas de workflows. Isso corta tempo de execucao, elimina OOM e event loop bloqueado e reduz custo de manutencao de expressoes inline nao testaveis para padrao com JSONata.</p>
+    <h2><span class="num">12.</span> Impacto no negócio</h2>
+    <p>O sintoma já visto na atividade 1 com JS timeout de 25 min no ADPLAN e na atividade 2 com payload sem processamento incremental travava importações e sincronizações ao escalar de 10k para 100k itens. Com streaming, dedupe O(n) e pico abaixo de 2 GB, o mesmo fluxo processa 10 ou 100k itens sem trocar de máquina, com parse único e código único na 3-lib em vez de cópia entre dezenas de workflows. Isso corta tempo de execução, elimina OOM e event loop bloqueado e reduz custo de manutenção de expressões inline não testáveis para padrão com JSONata.</p>
 
-    <h2><span class="num">13.</span> Referencias de estudo</h2>
+    <h2><span class="num">13.</span> Referências de estudo</h2>
     <p>Material para aprofundar os temas usados nesta atividade.</p>
     <ul>
       <li><strong>Curso:</strong> JavaScript Performance, estruturas de dados e complexidade, na Alura.</li>
-      <li><strong>Video:</strong> JavaScript Event Loop and Memory Explained, no YouTube, canal Fireship.</li>
+      <li><strong>Vídeo:</strong> JavaScript Event Loop and Memory Explained, no YouTube, canal Fireship.</li>
       <li><strong>Doc:</strong> n8n Docs, Code node JavaScript and Python, na plataforma n8n Docs.</li>
       <li><strong>Doc:</strong> MDN Docs, Map, Set and Array iteration, na plataforma MDN Web Docs.</li>
     </ul>

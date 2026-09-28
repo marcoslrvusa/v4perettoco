@@ -1,6 +1,6 @@
-# Observabilidade e Logs de Sincronizacao n8n-CRM
+# Observabilidade e Logs de Sincronização n8n-CRM
 
-Orquestracao Corporativa (n8n)
+Orquestração Corporativa (n8n)
 
 <h2><span class="num">1.</span> Contexto</h2>
 

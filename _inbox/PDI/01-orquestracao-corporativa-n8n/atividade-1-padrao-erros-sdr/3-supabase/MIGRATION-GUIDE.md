@@ -1,8 +1,8 @@
-# Migracao Supabase: Schema v2.0 → v2.1
+# Migração Supabase: Schema v2.0 → v2.1
 
 ## O que muda
 
-| Tabela | v2.0 | v2.1 | Descricao |
+| Tabela | v2.0 | v2.1 | Descrição |
 |--------|------|------|-----------|
 | `n8n_workflows` | ✅ | ✅ | Inalterada |
 | `n8n_events` | ✅ | ✅ | Inalterada |
@@ -36,5 +36,5 @@ WHERE table_schema = 'public'
   AND table_name IN ('error_dlq','error_circuit_breaker','error_retry_log','error_alert_config');
 ```
 
-> **Nota:** Nenhuma tabela existente e alterada. A migracao e 100% aditiva.
-> Nao ha necessidade de downtime.
+> **Nota:** Nenhuma tabela existente e alterada. A migração e 100% aditiva.
+> Não há necessidade de downtime.

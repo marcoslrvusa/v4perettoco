@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Gera o DOCX da atividade 2 (padrao PDI senior, paleta #8b4513/#1a1f24/#6b7a8a)."""
+"""Gera o DOCX da atividade 2 (padrão PDI sênior, paleta #8b4513/#1a1f24/#6b7a8a)."""
 import os
 from docx import Document
 from docx.shared import Pt, Cm, RGBColor
@@ -11,36 +11,36 @@ D = {
   "autor": "Marcos Luciano",
   "unidade": "FV Marketing / V4 Company",
   "data": "Setembro 2026",
-  "area": "Automacao & Infraestrutura",
+  "área": "Automação & Infraestrutura",
   "sections": [
     ("1. Contexto", [
-      ("p", "Decisoes como por que n8n ou por que Supabase viviam na cabeca de uma pessoa ou no chat. Tres decisoes refeitas no trimestre por falta de registro."),
+      ("p", "Decisões como por que n8n ou por que Supabase viviam na cabeça de uma pessoa ou no chat. Três decisões refeitas no trimestre por falta de registro."),
     ]),
-    ("2. Diagnostico", [
+    ("2. Diagnóstico", [
       ("table", ["Sintoma", "Causa"], [
-        ["Mesma decisao rediscutida", "Motivo e alternativas nao registrados"],
-        ["Fornecedor novo zera a conversa", "Sem criterio de comparacao antigo"],
-        ["Saida de pessoa apaga historia", "Decisao so na memoria individual"],
+        ["Mesma decisão rediscutida", "Motivo e alternativas não registrados"],
+        ["Fornecedor novo zera a conversa", "Sem critério de comparação antigo"],
+        ["Saída de pessoa apaga história", "Decisão só na memória individual"],
       ]),
     ]),
-    ("3. Solucao", [
-      ("p", "ADRs numerados e imutaveis em docs/adr/NNNN-titulo.md: 5 secoes em 1 pagina, ciclo Proposta, Em avaliacao, Aceita, Implementada, com saidas Rejeitada e Superada."),
-      ("note", "Consequencia sem metrica nao entra. Todo ADR diz o que vai monitorar."),
+    ("3. Solução", [
+      ("p", "ADRs numerados e imutáveis em docs/adr/NNNN-titulo.md: 5 seções em 1 página, ciclo Proposta, Em avaliação, Aceita, Implementada, com saídas Rejeitada e Superada."),
+      ("note", "Consequência sem métrica não entra. Todo ADR diz o que vai monitorar."),
     ]),
     ("4. Exemplos reais", [
-      ("p", "ADR-001: n8n self-hosted. Descartados fila propria (3 semanas sem UI) e Apps Script (sem log nem retry). Monitor: falha de coleta acima de 5 por cento em 24h."),
-      ("p", "ADR-002: Supabase Postgres com contas, coletas e erros. Descartados SQLite (sem concorrencia) e planilha (sem integridade). Monitor: fila de erros por dia."),
+      ("p", "ADR-001: n8n self-hosted. Descartados fila própria (3 semanas sem UI) e Apps Script (sem log nem retry). Monitor: falha de coleta acima de 5 por cento em 24h."),
+      ("p", "ADR-002: Supabase Postgres com contas, coletas e erros. Descartados SQLite (sem concorrência) e planilha (sem integridade). Monitor: fila de erros por dia."),
     ]),
     ("5. Entregas", [
-      ("ul", ["1-standards/01-formato-e-ciclo-de-vida-adr.md: formato e ciclo.", "1-standards/02-exemplos-reais-adr.md: resumos comentados.", "2-implementacao/01-template-adr.md: template de 1 pagina.", "02-adr-001 e 03-adr-002: ADRs reais integrais."]),
+      ("ul", ["1-standards/01-formato-e-ciclo-de-vida-adr.md: formato e ciclo.", "1-standards/02-exemplos-reais-adr.md: resumos comentados.", "2-implementacao/01-template-adr.md: template de 1 página.", "02-adr-001 e 03-adr-002: ADRs reais integrais."]),
     ]),
-    ("6. Metricas e proximos passos", [
-      ("table", ["Metrica", "Atual", "Meta"], [
+    ("6. Métricas e próximos passos", [
+      ("table", ["Métrica", "Atual", "Meta"], [
         ["ADRs registrados", "2", "6"],
-        ["Decisoes refeitas no trimestre", "3", "0"],
+        ["Decisões refeitas no trimestre", "3", "0"],
         ["Tempo para achar um motivo", "dias", "minutos"],
       ]),
-      ("p", "Proximos passos: criar docs/adr no repo, exigir ADR para decisao cara, revisao anual com dono definido."),
+      ("p", "Próximos passos: criar docs/adr no repo, exigir ADR para decisão cara, revisão anual com dono definido."),
     ]),
   ],
 }
@@ -57,10 +57,10 @@ def cover():
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     r = p.add_run(D['title']); r.bold = True; r.font.size = Pt(23)
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER; p.space_before = Pt(28)
-    r = p.add_run('Documento Tecnico de PDI'); r.font.size = Pt(12); r.font.color.rgb = RGBColor(0x6B,0x7A,0x8A)
+    r = p.add_run('Documento Técnico de PDI'); r.font.size = Pt(12); r.font.color.rgb = RGBColor(0x6B,0x7A,0x8A)
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER; p.space_before = Pt(16)
     for line in [f"Autor: {D['autor']}", f"Unidade: {D['unidade']}", f"Data: {D['data']}",
-                 f"Area: {D['area']}", "Status: Entregue (desenvolvido)"]:
+                 f"Área: {D['área']}", "Status: Entregue (desenvolvido)"]:
         rr = p.add_run(line + '\n'); rr.font.size = Pt(11); rr.font.color.rgb = RGBColor(0x49,0x55,0x60)
     doc.add_page_break()
 

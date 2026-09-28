@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PDI: Documentacao como Codigo, Mermaid e Diagramas Versionados | Registro de Entrega</title>
+<title>PDI: Documentação como Código, Mermaid e Diagramas Versionados | Registro de Entrega</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -66,8 +66,8 @@ ul{margin:8px 0 16px 20px}li{color:var(--gray-700);font-size:14px;margin-bottom:
   <div class="cover">
     <div class="cover-avatar"><img src="../../../../../assets/images/logo-peretto-perfil.jpg" alt="Marcos Luciano"></div>
     <div class="cover-logo"><img src="../../../../../assets/logo-peretto.png" alt="Peretto"></div>
-    <span class="cover-badge">PDI 08 | Atividade 3 | Docs como codigo</span>
-    <h1>Documentacao como Codigo <em>Mermaid e Diagramas Versionados</em></h1>
+    <span class="cover-badge">PDI 08 | Atividade 3 | Docs como código</span>
+    <h1>Documentação como Código <em>Mermaid e Diagramas Versionados</em></h1>
     <div class="cover-meta">
       <strong>Autor:</strong> PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com<br>
       <strong>Unidade:</strong> FV Marketing / V4 Company | Automação &amp; Infraestrutura<br>
@@ -80,30 +80,30 @@ ul{margin:8px 0 16px 20px}li{color:var(--gray-700);font-size:14px;margin-bottom:
   </div>
   <div class="content">
     <h2><span class="num">1.</span> Contexto</h2>
-    <p>Diagramas viviam em <strong>arquivos de desenho soltos, fora do git</strong>: impossiveis de revisar em PR e sempre desatualizados. Ninguem sabia qual era a versao certa do fluxo de coleta, e cada incidente comecava caçando o print correto no chat.</p>
+    <p>Diagramas viviam em <strong>arquivos de desenho soltos, fora do git</strong>: impossíveis de revisar em PR e sempre desatualizados. Ninguém sabia qual era a versão certa do fluxo de coleta, e cada incidente começava caçando o print correto no chat.</p>
     <h2><span class="num">2.</span> Diagnóstico</h2>
-    <p>O problema nao era falta de desenho, era <strong>desenho sem fonte versionada</strong>. Imagem binaria nao tem diff, nao entra em revisao e apodrece na primeira mudanca. Faltava diagrama como texto, junto do codigo, com CI quebrando em sintaxe invalida.</p>
-    <table><tr><th>Sintoma</th><th>Causa</th></tr><tr><td>Ninguem acha a versao certa</td><td>Desenho solto fora do git</td></tr><tr><td>PR nao revisa diagrama</td><td>Imagem binaria sem diff</td></tr><tr><td>Doc mente apos mudanca</td><td>Diagrama longe do codigo</td></tr></table>
+    <p>O problema não era falta de desenho, era <strong>desenho sem fonte versionada</strong>. Imagem binária não tem diff, não entra em revisão e apodrece na primeira mudança. Faltava diagrama como texto, junto do código, com CI quebrando em sintaxe inválida.</p>
+    <table><tr><th>Sintoma</th><th>Causa</th></tr><tr><td>Ninguém acha a versão certa</td><td>Desenho solto fora do git</td></tr><tr><td>PR não revisa diagrama</td><td>Imagem binária sem diff</td></tr><tr><td>Doc mente após mudança</td><td>Diagrama longe do código</td></tr></table>
     <h2><span class="num">3.</span> Solução</h2>
-    <p>Mover os diagramas para o repo como <strong>texto Mermaid</strong>: <code>flowchart</code> para caminhos e retries, <code>sequenceDiagram</code> para contratos n8n e worker. Dois exemplos reais do orquestrador prontos, guia rapido de sintaxe e validacao no CI com <code>mermaid-cli</code>.</p>
-    <div class="callout"><strong>Decisao chave:</strong> C4 detalhado continua no Structurizr DSL da atividade 1. Mermaid cobre o dia a dia, cada ferramenta no seu quadrado.</div>
+    <p>Mover os diagramas para o repo como <strong>texto Mermaid</strong>: <code>flowchart</code> para caminhos e retries, <code>sequenceDiagram</code> para contratos n8n e worker. Dois exemplos reais do orquestrador prontos, guia rápido de sintaxe e validação no CI com <code>mermaid-cli</code>.</p>
+    <div class="callout"><strong>Decisão chave:</strong> C4 detalhado continua no Structurizr DSL da atividade 1. Mermaid cobre o dia a dia, cada ferramenta no seu quadrado.</div>
     <h2><span class="num">4.</span> Como funciona</h2>
     <div class="pipeline"><div class="pipeline-head"><span class="pipeline-title">Docs vivos: <em>do edit ao render</em></span><span class="pipeline-live"><span class="dot"></span> fluxo ativo</span></div><div class="pipeline-body"><div class="pl-rail"><div class="pl-pulse p1"></div><div class="pl-pulse p2"></div><div class="pl-pulse g"></div></div><div class="pl-steps">
-    <div class="pl-step"><div class="num">1</div><div><div class="name">Edita o <code>.md com Mermaid</code></div><div class="desc">Junto do worker, no mesmo branch da mudanca</div><div class="pl-chip"><span class="pl-tag">repo</span></div></div></div>
-    <div class="pl-step"><div class="num">2</div><div><div class="name">Abre <code>PR com diff legivel</code></div><div class="desc">Texto diffavel, revisor ve o que mudou no desenho</div><div class="pl-chip"><span class="pl-tag">diff</span></div></div></div>
-    <div class="pl-step"><div class="num">3</div><div><div class="name">CI roda <code>mmdc</code></div><div class="desc">Sintaxe invalida quebra o build na hora</div><div class="pl-chip"><span class="pl-tag">ci</span></div></div></div>
-    <div class="pl-step"><div class="num">4</div><div><div class="name">Revisor aplica <code>checklist</code></div><div class="desc">Semantica, portas e contrato de saida</div><div class="pl-chip"><span class="pl-tag">review</span></div></div></div>
-    <div class="pl-step pl-terminal"><div class="num">5</div><div><div class="name">GitHub <code>renderiza</code></div><div class="desc">Operador le a versao certa sem ferramenta extra</div><div class="pl-chip"><span class="pl-tag ok">vivo</span></div></div></div>
-    </div><div class="pl-footer"><span>mermaid-cli · diff legivel</span><span>fonte oficial: o .md no repo</span></div></div></div>
+    <div class="pl-step"><div class="num">1</div><div><div class="name">Edita o <code>.md com Mermaid</code></div><div class="desc">Junto do worker, no mesmo branch da mudança</div><div class="pl-chip"><span class="pl-tag">repo</span></div></div></div>
+    <div class="pl-step"><div class="num">2</div><div><div class="name">Abre <code>PR com diff legivel</code></div><div class="desc">Texto diffável, revisor vê o que mudou no desenho</div><div class="pl-chip"><span class="pl-tag">diff</span></div></div></div>
+    <div class="pl-step"><div class="num">3</div><div><div class="name">CI roda <code>mmdc</code></div><div class="desc">Sintaxe inválida quebra o build na hora</div><div class="pl-chip"><span class="pl-tag">ci</span></div></div></div>
+    <div class="pl-step"><div class="num">4</div><div><div class="name">Revisor aplica <code>checklist</code></div><div class="desc">Semântica, portas e contrato de saída</div><div class="pl-chip"><span class="pl-tag">review</span></div></div></div>
+    <div class="pl-step pl-terminal"><div class="num">5</div><div><div class="name">GitHub <code>renderiza</code></div><div class="desc">Operador lê a versão certa sem ferramenta extra</div><div class="pl-chip"><span class="pl-tag ok">vivo</span></div></div></div>
+    </div><div class="pl-footer"><span>mermaid-cli · diff legível</span><span>fonte oficial: o .md no repo</span></div></div></div>
     <h2><span class="num">5.</span> Entregas</h2>
-    <p>Fundamentos em <code>1-standards/01-docs-como-codigo-fundamentos.md</code>, guia rapido em <code>02-mermaid-guia-rapido.md</code>, fluxo real de coleta em <code>2-implementacao/01-exemplo-fluxo-coleta.md</code>, sequencia do webhook em <code>02-exemplo-sequencia-webhook.md</code> e checklist em <code>03-checklist-docs-vivos.md</code>.</p>
+    <p>Fundamentos em <code>1-standards/01-docs-como-codigo-fundamentos.md</code>, guia rápido em <code>02-mermaid-guia-rapido.md</code>, fluxo real de coleta em <code>2-implementacao/01-exemplo-fluxo-coleta.md</code>, sequência do webhook em <code>02-exemplo-sequencia-webhook.md</code> e checklist em <code>03-checklist-docs-vivos.md</code>.</p>
 <pre>atividade-3/
   1-standards/ (fundamentos + guia mermaid)
   2-implementacao/ (2 exemplos reais + checklist)
-  7-apresentacao/ (deck + demo + este relatorio)</pre>
+  7-apresentacao/ (deck + demo + este relatório)</pre>
     <h2><span class="num">6.</span> Métricas de sucesso</h2>
-    <table><tr><th>Metrica</th><th>Atual</th><th>Meta</th></tr><tr><td>Diagramas vivos no repo</td><td>4</td><td>10</td></tr><tr><td>Diagramas soltos fora do git</td><td>6</td><td>0</td></tr><tr><td>PRs com diagrama revisado no trimestre</td><td>0</td><td>5</td></tr><tr><td>Diagramas com sintaxe invalida</td><td>0</td><td>0</td></tr></table>
-    <div class="callout"><strong>Status:</strong> Atividade entregue e homologada no repo. Proximo passo: converter os 3 fluxos criticos e ligar o CI de sintaxe.</div>
+    <table><tr><th>Métrica</th><th>Atual</th><th>Meta</th></tr><tr><td>Diagramas vivos no repo</td><td>4</td><td>10</td></tr><tr><td>Diagramas soltos fora do git</td><td>6</td><td>0</td></tr><tr><td>PRs com diagrama revisado no trimestre</td><td>0</td><td>5</td></tr><tr><td>Diagramas com sintaxe inválida</td><td>0</td><td>0</td></tr></table>
+    <div class="callout"><strong>Status:</strong> Atividade entregue e homologada no repo. Próximo passo: converter os 3 fluxos críticos e ligar o CI de sintaxe.</div>
   </div>
 </div>
 </body>

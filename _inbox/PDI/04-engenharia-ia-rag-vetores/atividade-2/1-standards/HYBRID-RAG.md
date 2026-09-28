@@ -1,12 +1,12 @@
-# RAG Hibrido + GraphRAG
+# RAG Híbrido + GraphRAG
 
 | Sinal | Melhor para |
 |-------|-------------|
 | BM25 | termos exatos (IDs, CNPJ) |
-| Vetorial | sinonimos, semantica |
-| Grafos | relacoes |
+| Vetorial | sinônimos, semântica |
+| Grafos | relações |
 
-## Fusao (RRF)
+## Fusão (RRF)
 score_final = sum(1 / (k + rank_i))  # k=60
 
 ## GraphRAG

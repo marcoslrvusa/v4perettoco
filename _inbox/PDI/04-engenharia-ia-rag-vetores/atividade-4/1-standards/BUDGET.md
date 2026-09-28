@@ -1,5 +1,5 @@
-# Politica de Budget por Cliente
+# Política de Budget por Cliente
 - Teto mensal no onboarding (ex.: R$ 200).
 - Alerta em 80% (Slack p/ account).
-- Em 100%: pausa agentes nao-criticos.
-- Revisao mensal.
+- Em 100%: pausa agentes não-críticos.
+- Revisão mensal.

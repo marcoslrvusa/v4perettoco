@@ -1,4 +1,4 @@
-# Otimizacao de Core Web Vitals (LCP/INP/CLS) com Diagnostico Real
+# Otimização de Core Web Vitals (LCP/INP/CLS) com Diagnóstico Real
 
 Arquitetura Full Stack
 

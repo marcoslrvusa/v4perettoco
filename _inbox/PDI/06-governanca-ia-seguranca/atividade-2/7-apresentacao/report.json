@@ -1,1 +1,152 @@
-{"area": "Automacao & Infraestrutura", "autor": "PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com", "data": "Setembro 2026", "sections": [["1. Contexto", [["p", "Captura de leads, enriquecimento, sync com CRM e relatorios movem CPF, e-mail, telefone e sinais de segmentacao todos os dias. Sem mapa de base legal, a operacao trata dado pessoal no escuro."], ["p", "Esta atividade transforma LGPD em rotina de pipeline: catalogo, gate de base legal, minimizacao, anonimizacao e registro com prazo."]]], ["2. Diagnostico", [["p", "Campo sem base legal viola a necessidade (art. 6, III); sensivel sem hipotese estrita viola o art. 11; sem rotina de titular (art. 18) nem registro (art. 37), fiscalizacao e incidente pegam a empresa sem resposta."], ["table", ["Falha", "Artigo", "Correcao"], [["Coleta por precaucao", "art. 6, III", "Minimizar na entrada"], ["Agregado identificavel", "art. 12", "k-anonimato minimo 5"], ["DSAR sem rotina", "art. 18 e 19", "Prazo de 15 dias"]]]]], ["3. Solucao", [["p", "Standard com catalogo de 6 itens, mapa do art. 7, minimizacao na borda e anonimizacao como processo baseado em risco. Codigo anonimizacao.py: pseudonimo com salt, faixa etaria, prefixo de CEP e checagem de k."], ["ul", ["Pseudonimo no operacional, anonimizado no analitico", "Checklist de conformidade por pipeline", "Referencias: lei, ANPD, curso Enap"]]]], ["4. Como funciona", [["p", "1. Catalogo de campos. 2. Gate de base legal por campo. 3. Minimizacao antes de persistir. 4. anonimizacao.py antes de agregar. 5. Registro das operacoes, prazo de retencao e DSAR em 15 dias."]]], ["5. Entregas", [["table", ["Arquivo", "Conteudo"], [["STANDARD-LGPD-PIPELINE.md", "Catalogo, art. 7, risco, DSAR"], ["anonimizacao.py", "Pipeline executavel, k=6"], ["CHECKLIST-LGPD-PIPELINE.md", "Conformidade por pipeline"], ["7-apresentacao/", "Deck, demo, roteiro, HTML, DOCX, PDF"]]]]], ["6. Metricas de sucesso", [["table", ["Metrica", "Atual", "Meta"], [["Campos com base legal", "0% (levantamento iniciado)", "100% dos 3 pipelines (meta)"], ["Pipelines anonimizados", "0 de 3", "3 de 3 (meta)"], ["Prazo DSAR", "sem rotina", "ate 15 dias (meta)"]]]]], ["7. Status final", [["p", "Desenvolvido em Setembro 2026, homologacao pendente: mapear os 3 pipelines com os donos e publicar a tabela de retencao com o encarregado."]]]], "slug": "governanca-ia-seguranca-a2", "title": "LGPD em pipelines de dados: minimizacao, anonimizacao e base legal", "unidade": "FV Marketing / V4 Company"}
+{
+  "área": "Automação & Infraestrutura",
+  "autor": "PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com",
+  "data": "Setembro 2026",
+  "sections": [
+    [
+      "1. Contexto",
+      [
+        [
+          "p",
+          "Captura de leads, enriquecimento, sync com CRM e relatórios movem CPF, e-mail, telefone e sinais de segmentação todos os dias. Sem mapa de base legal, a operação trata dado pessoal no escuro."
+        ],
+        [
+          "p",
+          "Esta atividade transforma LGPD em rotina de pipeline: catálogo, gate de base legal, minimização, anonimização e registro com prazo."
+        ]
+      ]
+    ],
+    [
+      "2. Diagnóstico",
+      [
+        [
+          "p",
+          "Campo sem base legal viola a necessidade (art. 6, III); sensível sem hipótese estrita viola o art. 11; sem rotina de titular (art. 18) nem registro (art. 37), fiscalização e incidente pegam a empresa sem resposta."
+        ],
+        [
+          "table",
+          [
+            "Falha",
+            "Artigo",
+            "Correção"
+          ],
+          [
+            [
+              "Coleta por precaução",
+              "art. 6, III",
+              "Minimizar na entrada"
+            ],
+            [
+              "Agregado identificável",
+              "art. 12",
+              "k-anonimato mínimo 5"
+            ],
+            [
+              "DSAR sem rotina",
+              "art. 18 e 19",
+              "Prazo de 15 dias"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "3. Solução",
+      [
+        [
+          "p",
+          "Standard com catálogo de 6 itens, mapa do art. 7, minimização na borda e anonimização como processo baseado em risco. Código anonimizacao.py: pseudônimo com salt, faixa etária, prefixo de CEP e checagem de k."
+        ],
+        [
+          "ul",
+          [
+            "Pseudônimo no operacional, anonimizado no analítico",
+            "Checklist de conformidade por pipeline",
+            "Referências: lei, ANPD, curso Enap"
+          ]
+        ]
+      ]
+    ],
+    [
+      "4. Como funciona",
+      [
+        [
+          "p",
+          "1. Catálogo de campos. 2. Gate de base legal por campo. 3. Minimização antes de persistir. 4. anonimizacao.py antes de agregar. 5. Registro das operações, prazo de retenção e DSAR em 15 dias."
+        ]
+      ]
+    ],
+    [
+      "5. Entregas",
+      [
+        [
+          "table",
+          [
+            "Arquivo",
+            "Conteúdo"
+          ],
+          [
+            [
+              "STANDARD-LGPD-PIPELINE.md",
+              "Catálogo, art. 7, risco, DSAR"
+            ],
+            [
+              "anonimizacao.py",
+              "Pipeline executável, k=6"
+            ],
+            [
+              "CHECKLIST-LGPD-PIPELINE.md",
+              "Conformidade por pipeline"
+            ],
+            [
+              "7-apresentacao/",
+              "Deck, demo, roteiro, HTML, DOCX, PDF"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "6. Métricas de sucesso",
+      [
+        [
+          "table",
+          [
+            "Métrica",
+            "Atual",
+            "Meta"
+          ],
+          [
+            [
+              "Campos com base legal",
+              "0% (levantamento iniciado)",
+              "100% dos 3 pipelines (meta)"
+            ],
+            [
+              "Pipelines anonimizados",
+              "0 de 3",
+              "3 de 3 (meta)"
+            ],
+            [
+              "Prazo DSAR",
+              "sem rotina",
+              "até 15 dias (meta)"
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "7. Status final",
+      [
+        [
+          "p",
+          "Desenvolvido em Setembro 2026, homologação pendente: mapear os 3 pipelines com os donos e publicar a tabela de retenção com o encarregado."
+        ]
+      ]
+    ]
+  ],
+  "slug": "governanca-ia-seguranca-a2",
+  "title": "LGPD em pipelines de dados: minimização, anonimização e base legal",
+  "unidade": "FV Marketing / V4 Company"
+}

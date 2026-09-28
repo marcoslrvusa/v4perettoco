@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PDI: Modelo C4 na Pratica Aplicado ao Orquestrador de Automacao V4 | Registro de Entrega</title>
+<title>PDI: Modelo C4 na Prática Aplicado ao Orquestrador de Automação V4 | Registro de Entrega</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -68,7 +68,7 @@ ul{margin:8px 0 16px 20px}li{color:var(--gray-700);font-size:14px;margin-bottom:
     <div class="cover-avatar"><img src="../../../../../assets/images/logo-peretto-perfil.jpg" alt="Marcos Luciano"></div>
     <div class="cover-logo"><img src="../../../../../assets/logo-peretto.png" alt="Peretto"></div>
     <span class="cover-badge">PDI 08 | Atividade 1 | C4</span>
-    <h1>Modelo C4 na Pratica <em>Aplicado ao Orquestrador de Automacao V4</em></h1>
+    <h1>Modelo C4 na Prática <em>Aplicado ao Orquestrador de Automação V4</em></h1>
     <div class="cover-meta">
       <strong>Autor:</strong> PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com<br>
       <strong>Unidade:</strong> FV Marketing / V4 Company | Automação &amp; Infraestrutura<br>
@@ -81,31 +81,31 @@ ul{margin:8px 0 16px 20px}li{color:var(--gray-700);font-size:14px;margin-bottom:
   </div>
   <div class="content">
     <h2><span class="num">1.</span> Contexto</h2>
-    <p>O <strong>Orquestrador de Automacao V4</strong> executa os fluxos de coleta de metricas, disparo de emails e sincronizacao da operacao FV Marketing. Ele combina <strong>n8n</strong> (porta 5678), <strong>workers Python</strong> (porta 8000), <strong>Supabase Postgres</strong> e <strong>painel Next.js</strong> (porta 3000), falando com dois sistemas externos: <strong>Meta Ads API</strong> e <strong>Gmail API</strong>.</p>
-    <p>Cada pessoa do time desenhava esse sistema de um jeito. O onboarding de um operador novo levava <strong>3 dias</strong> e incidentes de coleta viravam adivinhacao sobre qual peca falhou.</p>
+    <p>O <strong>Orquestrador de Automação V4</strong> executa os fluxos de coleta de métricas, disparo de emails e sincronização da operação FV Marketing. Ele combina <strong>n8n</strong> (porta 5678), <strong>workers Python</strong> (porta 8000), <strong>Supabase Postgres</strong> e <strong>painel Next.js</strong> (porta 3000), falando com dois sistemas externos: <strong>Meta Ads API</strong> e <strong>Gmail API</strong>.</p>
+    <p>Cada pessoa do time desenhava esse sistema de um jeito. O onboarding de um operador novo levava <strong>3 dias</strong> e incidentes de coleta viravam adivinhação sobre qual peça falhou.</p>
     <h2><span class="num">2.</span> Diagnóstico</h2>
-    <p>Faltava um <strong>mapa unico em camadas</strong>: um diagrama de contexto para explicar em 1 slide, um de containers com portas reais para diagnosticar, um de componentes do n8n (onde 80 por cento das mudancas acontecem) e o codigo critico do retry de coleta, onde um bug apaga verba de trafego dos relatorios.</p>
-    <table><tr><th>Sintoma</th><th>Causa</th></tr><tr><td>Onboarding de 3 dias</td><td>Sem diagrama de contexto oficial</td></tr><tr><td>Incidente vira chat de adivinhacao</td><td>Sem containers com portas e dependencias</td></tr><tr><td>Mudanca no n8n quebra coleta</td><td>Componentes do n8n nao mapeados</td></tr></table>
+    <p>Faltava um <strong>mapa único em camadas</strong>: um diagrama de contexto para explicar em 1 slide, um de containers com portas reais para diagnosticar, um de componentes do n8n (onde 80 por cento das mudanças acontecem) e o código crítico do retry de coleta, onde um bug apaga verba de tráfego dos relatórios.</p>
+    <table><tr><th>Sintoma</th><th>Causa</th></tr><tr><td>Onboarding de 3 dias</td><td>Sem diagrama de contexto oficial</td></tr><tr><td>Incidente vira chat de adivinhação</td><td>Sem containers com portas e dependências</td></tr><tr><td>Mudança no n8n quebra coleta</td><td>Componentes do n8n não mapeados</td></tr></table>
     <h2><span class="num">3.</span> Solução</h2>
-    <p>Aplicar os <strong>4 niveis do C4</strong> sobre o sistema real, com <strong>Structurizr DSL</strong> como fonte unica (<code>workspace.dsl</code>) e <strong>Mermaid</strong> como espelho que renderiza no repo sem ferramenta extra. Nivel 3 so para o n8n e nivel 4 so para a funcao <code>executar_com_retry</code>, onde bug custa dinheiro.</p>
-    <div class="callout"><strong>Decisao chave:</strong> PR que muda container exige DSL e Mermaid atualizados juntos, cobrado pelo checklist de revisao.</div>
+    <p>Aplicar os <strong>4 níveis do C4</strong> sobre o sistema real, com <strong>Structurizr DSL</strong> como fonte única (<code>workspace.dsl</code>) e <strong>Mermaid</strong> como espelho que renderiza no repo sem ferramenta extra. Nível 3 só para o n8n e nível 4 só para a função <code>executar_com_retry</code>, onde bug custa dinheiro.</p>
+    <div class="callout"><strong>Decisão chave:</strong> PR que muda container exige DSL e Mermaid atualizados juntos, cobrado pelo checklist de revisão.</div>
     <h2><span class="num">4.</span> Como funciona</h2>
-    <div class="pipeline"><div class="pipeline-head"><span class="pipeline-title">Fluxo feliz: <em>coleta de metricas Meta Ads</em></span><span class="pipeline-live"><span class="dot"></span> fluxo ativo</span></div><div class="pipeline-body"><div class="pl-rail"><div class="pl-pulse p1"></div><div class="pl-pulse p2"></div><div class="pl-pulse g"></div></div><div class="pl-steps">
+    <div class="pipeline"><div class="pipeline-head"><span class="pipeline-title">Fluxo feliz: <em>coleta de métricas Meta Ads</em></span><span class="pipeline-live"><span class="dot"></span> fluxo ativo</span></div><div class="pipeline-body"><div class="pl-rail"><div class="pl-pulse p1"></div><div class="pl-pulse p2"></div><div class="pl-pulse g"></div></div><div class="pl-steps">
     <div class="pl-step"><div class="num">1</div><div><div class="name">Trigger agenda <code>coleta-meta-ads</code></div><div class="desc">n8n dispara a cada 30 min por conta ativa</div><div class="pl-chip"><span class="pl-tag">n8n :5678</span></div></div></div>
     <div class="pl-step"><div class="num">2</div><div><div class="name">Webhook para <code>workers :8000</code></div><div class="desc">Subworkflow chama o worker com conta e janela de datas</div><div class="pl-chip"><span class="pl-tag">webhook</span></div></div></div>
     <div class="pl-step"><div class="num">3</div><div><div class="name">Coleta com <code>executar_com_retry</code></div><div class="desc">Backoff 30s, 60s e 120s contra rate limit da Meta</div><div class="pl-chip"><span class="pl-tag">Meta Ads API</span></div></div></div>
-    <div class="pl-step"><div class="num">4</div><div><div class="name">Grava no <code>Supabase Postgres</code></div><div class="desc">Metricas e logs; falha vira linha na fila de erros</div><div class="pl-chip"><span class="pl-tag">postgres</span></div></div></div>
-    <div class="pl-step pl-terminal"><div class="num">5</div><div><div class="name">Painel exibe e alerta</div><div class="desc">Gestor ve verba no painel Next.js :3000</div><div class="pl-chip"><span class="pl-tag ok">concluido</span></div></div></div>
-    </div><div class="pl-footer"><span>coleta-meta-ads · 30 min</span><span>proxima: fila de erros e retry manual</span></div></div></div>
+    <div class="pl-step"><div class="num">4</div><div><div class="name">Grava no <code>Supabase Postgres</code></div><div class="desc">Métricas e logs; falha vira linha na fila de erros</div><div class="pl-chip"><span class="pl-tag">postgres</span></div></div></div>
+    <div class="pl-step pl-terminal"><div class="num">5</div><div><div class="name">Painel exibe e alerta</div><div class="desc">Gestor vê verba no painel Next.js :3000</div><div class="pl-chip"><span class="pl-tag ok">concluído</span></div></div></div>
+    </div><div class="pl-footer"><span>coleta-meta-ads · 30 min</span><span>próxima: fila de erros e retry manual</span></div></div></div>
     <h2><span class="num">5.</span> Entregas</h2>
-    <p>Guia dos 4 niveis em <code>1-standards/01-guia-c4-aplicado.md</code>, diagramas reais do orquestrador em <code>02-diagramas-sistema-automacao.md</code>, fonte Structurizr em <code>2-implementacao/01-workspace-c4.dsl</code>, espelho Mermaid em <code>02-exemplo-mermaid-c4.md</code> e checklist de revisao em <code>03-checklist-revisao-c4.md</code>.</p>
+    <p>Guia dos 4 níveis em <code>1-standards/01-guia-c4-aplicado.md</code>, diagramas reais do orquestrador em <code>02-diagramas-sistema-automacao.md</code>, fonte Structurizr em <code>2-implementacao/01-workspace-c4.dsl</code>, espelho Mermaid em <code>02-exemplo-mermaid-c4.md</code> e checklist de revisão em <code>03-checklist-revisao-c4.md</code>.</p>
 <pre>atividade-1/
   1-standards/ (guia + diagramas reais)
   2-implementacao/ (dsl + mermaid + checklist)
-  7-apresentacao/ (deck + demo + este relatorio)</pre>
+  7-apresentacao/ (deck + demo + este relatório)</pre>
     <h2><span class="num">6.</span> Métricas de sucesso</h2>
-    <table><tr><th>Metrica</th><th>Atual</th><th>Meta</th></tr><tr><td>Sistemas com diagrama de contexto</td><td>1</td><td>3</td></tr><tr><td>Containers documentados do orquestrador</td><td>4 de 4</td><td>4 de 4</td></tr><tr><td>Diagramas desatualizados ha +30 dias</td><td>0</td><td>0</td></tr><tr><td>Onboarding de operador</td><td>3 dias</td><td>1 dia</td></tr></table>
-    <div class="callout"><strong>Status:</strong> Atividade entregue e homologada no repo. Proximo passo: publicar o Structurizr Lite com link interno e incluir o contexto no onboarding.</div>
+    <table><tr><th>Métrica</th><th>Atual</th><th>Meta</th></tr><tr><td>Sistemas com diagrama de contexto</td><td>1</td><td>3</td></tr><tr><td>Containers documentados do orquestrador</td><td>4 de 4</td><td>4 de 4</td></tr><tr><td>Diagramas desatualizados há +30 dias</td><td>0</td><td>0</td></tr><tr><td>Onboarding de operador</td><td>3 dias</td><td>1 dia</td></tr></table>
+    <div class="callout"><strong>Status:</strong> Atividade entregue e homologada no repo. Próximo passo: publicar o Structurizr Lite com link interno e incluir o contexto no onboarding.</div>
   </div>
 </div>
 </body>

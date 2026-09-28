@@ -1,45 +1,45 @@
 #!/usr/bin/env python3
-"""Gera o DOCX da atividade 3 (padrao PDI senior, paleta #8b4513/#1a1f24/#6b7a8a)."""
+"""Gera o DOCX da atividade 3 (padrão PDI sênior, paleta #8b4513/#1a1f24/#6b7a8a)."""
 import os
 from docx import Document
 from docx.shared import Pt, Cm, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 
 D = {
-  "title": "Documentacao como Codigo, Mermaid e Diagramas Versionados",
+  "title": "Documentação como Código, Mermaid e Diagramas Versionados",
   "slug": "arquitetura-documentada-a3",
   "autor": "Marcos Luciano",
   "unidade": "FV Marketing / V4 Company",
   "data": "Setembro 2026",
-  "area": "Automacao & Infraestrutura",
+  "área": "Automação & Infraestrutura",
   "sections": [
     ("1. Contexto", [
-      ("p", "Diagramas em arquivos soltos fora do git: sem versao certa, sem revisao em PR, sempre desatualizados. Incidente comecava cacando print no chat."),
+      ("p", "Diagramas em arquivos soltos fora do git: sem versão certa, sem revisão em PR, sempre desatualizados. Incidente começava caçando print no chat."),
     ]),
-    ("2. Diagnostico", [
+    ("2. Diagnóstico", [
       ("table", ["Sintoma", "Causa"], [
-        ["Ninguem acha a versao certa", "Desenho solto fora do git"],
-        ["PR nao revisa diagrama", "Imagem binaria sem diff"],
-        ["Doc mente apos mudanca", "Diagrama longe do codigo"],
+        ["Ninguém acha a versão certa", "Desenho solto fora do git"],
+        ["PR não revisa diagrama", "Imagem binária sem diff"],
+        ["Doc mente após mudança", "Diagrama longe do código"],
       ]),
     ]),
-    ("3. Solucao", [
-      ("p", "Diagramas como texto Mermaid no repo: flowchart para caminhos e retries, sequenceDiagram para contratos n8n e worker. Dois exemplos reais, guia rapido e validacao no CI com mermaid-cli."),
+    ("3. Solução", [
+      ("p", "Diagramas como texto Mermaid no repo: flowchart para caminhos e retries, sequenceDiagram para contratos n8n e worker. Dois exemplos reais, guia rápido e validação no CI com mermaid-cli."),
       ("note", "C4 detalhado continua no Structurizr DSL da atividade 1. Cada ferramenta no seu quadrado."),
     ]),
     ("4. Como funciona", [
-      ("ol", ["Edita o .md com Mermaid junto do worker.", "PR com diff legivel do desenho.", "CI roda mmdc e quebra em sintaxe invalida.", "Revisor aplica checklist de docs vivos.", "GitHub renderiza a versao certa."]),
+      ("ol", ["Edita o .md com Mermaid junto do worker.", "PR com diff legível do desenho.", "CI roda mmdc e quebra em sintaxe invalida.", "Revisor aplica checklist de docs vivos.", "GitHub renderiza a versão certa."]),
     ]),
     ("5. Entregas", [
-      ("ul", ["1-standards/01-docs-como-codigo-fundamentos.md: regras.", "02-mermaid-guia-rapido.md: sintaxe minima.", "01-exemplo-fluxo-coleta.md e 02-exemplo-sequencia-webhook.md: reais.", "03-checklist-docs-vivos.md: revisao de PR."]),
+      ("ul", ["1-standards/01-docs-como-codigo-fundamentos.md: regras.", "02-mermaid-guia-rapido.md: sintaxe mínima.", "01-exemplo-fluxo-coleta.md e 02-exemplo-sequencia-webhook.md: reais.", "03-checklist-docs-vivos.md: revisão de PR."]),
     ]),
-    ("6. Metricas e proximos passos", [
-      ("table", ["Metrica", "Atual", "Meta"], [
+    ("6. Métricas e próximos passos", [
+      ("table", ["Métrica", "Atual", "Meta"], [
         ["Diagramas vivos no repo", "4", "10"],
         ["Diagramas soltos fora do git", "6", "0"],
         ["PRs com diagrama revisado", "0", "5"],
       ]),
-      ("p", "Proximos passos: converter os 3 fluxos criticos, ligar o CI, apagar soltos apos migracao."),
+      ("p", "Próximos passos: converter os 3 fluxos críticos, ligar o CI, apagar soltos após migração."),
     ]),
   ],
 }
@@ -56,10 +56,10 @@ def cover():
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     r = p.add_run(D['title']); r.bold = True; r.font.size = Pt(23)
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER; p.space_before = Pt(28)
-    r = p.add_run('Documento Tecnico de PDI'); r.font.size = Pt(12); r.font.color.rgb = RGBColor(0x6B,0x7A,0x8A)
+    r = p.add_run('Documento Técnico de PDI'); r.font.size = Pt(12); r.font.color.rgb = RGBColor(0x6B,0x7A,0x8A)
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER; p.space_before = Pt(16)
     for line in [f"Autor: {D['autor']}", f"Unidade: {D['unidade']}", f"Data: {D['data']}",
-                 f"Area: {D['area']}", "Status: Entregue (desenvolvido)"]:
+                 f"Área: {D['área']}", "Status: Entregue (desenvolvido)"]:
         rr = p.add_run(line + '\n'); rr.font.size = Pt(11); rr.font.color.rgb = RGBColor(0x49,0x55,0x60)
     doc.add_page_break()
 

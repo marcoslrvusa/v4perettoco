@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PDI: Guardrails e anti-prompt-injection em automacoes com LLM: Registro de Entrega</title>
+<title>PDI: Guardrails e anti-prompt-injection em automações com LLM: Registro de Entrega</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -70,33 +70,33 @@ ul{margin:8px 0 16px 20px}li{color:var(--gray-700);font-size:14px;margin-bottom:
 <div class="cover-avatar"><img src="../../../../../assets/images/logo-peretto-perfil.jpg" alt="Marcos Luciano"></div>
 <div class="cover-logo"><img src="../../../../../assets/logo-peretto.png" alt="Peretto"></div>
 <span class="cover-badge">PDI 2026 | Trilha 06 | Atividade 1</span>
-<h1>Guardrails e <em>anti-prompt-injection</em> em automacoes com LLM</h1>
-<div class="cover-meta"><strong>Autor:</strong> PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com<br><strong>Unidade:</strong> FV Marketing / V4 Company: Automação &amp; Infraestrutura<br><strong>Módulo:</strong> 06 | Governanca de IA e Seguranca<br><strong>Data:</strong> Setembro 2026<br><strong>Status:</strong> <span class="status st-warn">NÃO publicado</span> · Desenvolvido / Homologação pendente<br><strong>Versão:</strong> 1.0</div>
+<h1>Guardrails e <em>anti-prompt-injection</em> em automações com LLM</h1>
+<div class="cover-meta"><strong>Autor:</strong> PDI Marcos Luciano - marcosluciano.rodrigues@v4company.com<br><strong>Unidade:</strong> FV Marketing / V4 Company: Automação &amp; Infraestrutura<br><strong>Módulo:</strong> 06 | Governança de IA e Segurança<br><strong>Data:</strong> Setembro 2026<br><strong>Status:</strong> <span class="status st-warn">NÃO publicado</span> · Desenvolvido / Homologação pendente<br><strong>Versão:</strong> 1.0</div>
 <div class="cover-slug">pdi-governanca-ia-seguranca-a1</div>
 </div>
 <div class="content">
 <h2><span class="num">1.</span> Contexto</h2>
-<p>Resumo de leads, triagem de tickets e geracao de copy consomem texto livre de usuarios, paginas, e-mails e planilhas. Cada fonte externa e um vetor: o modelo nao distingue com seguranca instrucao de dado, entao qualquer texto na janela vira candidato a comando.</p>
-<p>Esta atividade padroniza a barreira em <strong>5 camadas</strong> para que cada novo fluxo com LLM nasca com teto de dano conhecido e auditavel, alinhado ao OWASP Top 10 para LLMs.</p>
+<p>Resumo de leads, triagem de tickets e geração de copy consomem texto livre de usuários, páginas, e-mails e planilhas. Cada fonte externa e um vetor: o modelo não distingue com segurança instrução de dado, então qualquer texto na janela vira candidato a comando.</p>
+<p>Esta atividade padroniza a barreira em <strong>5 camadas</strong> para que cada novo fluxo com LLM nasça com teto de dano conhecido e auditável, alinhado ao OWASP Top 10 para LLMs.</p>
 <h2><span class="num">2.</span> Diagnóstico</h2>
-<p>Injecao direta ("ignore as instrucoes anteriores") e indireta (instrucao oculta no documento que o bot resume) desviam o modelo, vazam contexto do system prompt ou disparam acao indevida via ferramenta conectada. Saida sem contrato vira execucao sem dono (OWASP LLM01 e LLM02).</p>
-<table><tr><th>Vetor</th><th>Exemplo</th><th>Barreira</th></tr><tr><td>Direta</td><td>Usuario digita ordem de exfiltrar</td><td><code>detect_injection</code> + Moderation</td></tr><tr><td>Indireta</td><td>Texto oculto no documento resumido</td><td>Delimitador + detector</td></tr><tr><td>Output inseguro</td><td>Chamada de ferramenta nao validada</td><td><code>validate_output</code> + HITL</td></tr></table>
+<p>Injeção direta ("ignore as instruções anteriores") e indireta (instrução oculta no documento que o bot resume) desviam o modelo, vazam contexto do system prompt ou disparam ação indevida via ferramenta conectada. Saída sem contrato vira execução sem dono (OWASP LLM01 e LLM02).</p>
+<table><tr><th>Vetor</th><th>Exemplo</th><th>Barreira</th></tr><tr><td>Direta</td><td>Usuário digita ordem de exfiltrar</td><td><code>detect_injection</code> + Moderation</td></tr><tr><td>Indireta</td><td>Texto oculto no documento resumido</td><td>Delimitador + detector</td></tr><tr><td>Output inseguro</td><td>Chamada de ferramenta não validada</td><td><code>validate_output</code> + HITL</td></tr></table>
 <h2><span class="num">3.</span> Solução</h2>
-<p>Proxy de guardrails em Python puro com 3 funcoes (sanitize, detect_injection com 9 familias de padroes, validate_output por contrato JSON), system prompt blindado com precedencia escrita, <code>safety_identifier</code> com hash por sessao e HITL obrigatorio em escrita em CRM, Ads, banco ou mensagem ao cliente.</p>
-<ul><li>Standard com modelo de ameaca, 6 camadas e red team de 60 casos</li><li>Codigo com self-test de 9 casos, todos passando</li><li>Checklist de ativacao por automacao</li></ul>
+<p>Proxy de guardrails em Python puro com 3 funções (sanitize, detect_injection com 9 famílias de padrões, validate_output por contrato JSON), system prompt blindado com precedência escrita, <code>safety_identifier</code> com hash por sessão e HITL obrigatório em escrita em CRM, Ads, banco ou mensagem ao cliente.</p>
+<ul><li>Standard com modelo de ameaça, 6 camadas e red team de 60 casos</li><li>Código com self-test de 9 casos, todos passando</li><li>Checklist de ativação por automação</li></ul>
 <h2><span class="num">4.</span> Como funciona</h2>
 <div class="pipeline"><div class="pipeline-head"><span class="pipeline-title">Pipeline de <em>guardrails</em> por chamada</span><span class="pipeline-live"><span class="dot"></span> fluxo ativo</span></div><div class="pipeline-body"><div class="pl-rail"><span class="pl-pulse p1"></span><span class="pl-pulse p2"></span><span class="pl-pulse g"></span></div><div class="pl-steps">
-<div class="pl-step"><span class="num">1</span><div><div class="name"><code>sanitize()</code> delimita e limita</div><div class="desc">Fonte nao confiavel entre marcadores, teto de 4.000 caracteres.</div><div class="pl-chip"><span class="pl-tag">dado, nunca instrucao</span></div></div></div>
-<div class="pl-step"><span class="num">2</span><div><div class="name"><code>detect_injection()</code> decide</div><div class="desc">9 familias de padroes; duvidoso vai para Moderation ou HITL.</div><div class="pl-chip"><span class="pl-tag">bloqueio com motivo</span></div></div></div>
-<div class="pl-step"><span class="num">3</span><div><div class="name">LLM com prompt blindado</div><div class="desc">Precedencia escrita + <code>safety_identifier</code> com hash da sessao.</div><div class="pl-chip"><span class="pl-tag">rastro por titular</span></div></div></div>
-<div class="pl-step"><span class="num">4</span><div><div class="name"><code>validate_output()</code> valida</div><div class="desc">So passa JSON com as chaves do contrato, sem HTML ativo.</div><div class="pl-chip"><span class="pl-tag">fora do contrato, descarta</span></div></div></div>
-<div class="pl-step pl-terminal"><span class="num">5</span><div><div class="name">HITL + auditoria</div><div class="desc">Acao sensivel exige humano; tudo vai para a trilha.</div><div class="pl-chip"><span class="pl-tag ok">dano irreversivel eliminado</span></div></div></div>
-</div><div class="pl-footer"><span>guardrail_proxy.py | Python puro, sem dependencias</span><span>self-test: 9/9 passando</span></div></div></div>
+<div class="pl-step"><span class="num">1</span><div><div class="name"><code>sanitize()</code> delimita e limita</div><div class="desc">Fonte não confiável entre marcadores, teto de 4.000 caracteres.</div><div class="pl-chip"><span class="pl-tag">dado, nunca instrução</span></div></div></div>
+<div class="pl-step"><span class="num">2</span><div><div class="name"><code>detect_injection()</code> decide</div><div class="desc">9 famílias de padrões; duvidoso vai para Moderation ou HITL.</div><div class="pl-chip"><span class="pl-tag">bloqueio com motivo</span></div></div></div>
+<div class="pl-step"><span class="num">3</span><div><div class="name">LLM com prompt blindado</div><div class="desc">Precedência escrita + <code>safety_identifier</code> com hash da sessão.</div><div class="pl-chip"><span class="pl-tag">rastro por titular</span></div></div></div>
+<div class="pl-step"><span class="num">4</span><div><div class="name"><code>validate_output()</code> valida</div><div class="desc">Só passa JSON com as chaves do contrato, sem HTML ativo.</div><div class="pl-chip"><span class="pl-tag">fora do contrato, descarta</span></div></div></div>
+<div class="pl-step pl-terminal"><span class="num">5</span><div><div class="name">HITL + auditoria</div><div class="desc">Ação sensível exige humano; tudo vai para a trilha.</div><div class="pl-chip"><span class="pl-tag ok">dano irreversível eliminado</span></div></div></div>
+</div><div class="pl-footer"><span>guardrail_proxy.py | Python puro, sem dependências</span><span>self-test: 9/9 passando</span></div></div></div>
 <h2><span class="num">5.</span> Entregas</h2>
-<table><tr><th>Arquivo</th><th>Conteudo</th></tr><tr><td><code>1-standards/STANDARD-GUARDRAILS-LLM.md</code></td><td>Ameaca, 6 camadas, red team, proibicoes</td></tr><tr><td><code>2-implementacao/guardrail_proxy.py</code></td><td>Proxy executavel com self-test 9/9</td></tr><tr><td><code>2-implementacao/CHECKLIST-GUARDRAILS.md</code></td><td>Ativacao por automacao, 8 itens</td></tr><tr><td><code>7-apresentacao/</code></td><td>Deck de 12 slides, demo, roteiro com 5 Q and A, este relatorio em HTML, DOCX e PDF</td></tr></table>
+<table><tr><th>Arquivo</th><th>Conteúdo</th></tr><tr><td><code>1-standards/STANDARD-GUARDRAILS-LLM.md</code></td><td>Ameaça, 6 camadas, red team, proibições</td></tr><tr><td><code>2-implementacao/guardrail_proxy.py</code></td><td>Proxy executável com self-test 9/9</td></tr><tr><td><code>2-implementacao/CHECKLIST-GUARDRAILS.md</code></td><td>Ativação por automação, 8 itens</td></tr><tr><td><code>7-apresentacao/</code></td><td>Deck de 12 slides, demo, roteiro com 5 Q and A, este relatório em HTML, DOCX e PDF</td></tr></table>
 <h2><span class="num">6.</span> Métricas de sucesso</h2>
-<table><tr><th>Metrica</th><th>Atual</th><th>Meta</th></tr><tr><td>Bloqueio em bateria de 60 injecoes</td><td>0% (sem protecao)</td><td>95% (meta)</td></tr><tr><td>Latencia p95 adicionada</td><td>nao medida</td><td>abaixo de 150 ms (meta)</td></tr><tr><td>Alto risco com HITL</td><td>0%</td><td>100% (meta)</td></tr></table>
-<div class="callout"><strong>Status:</strong> Desenvolvido em Setembro 2026, homologacao pendente: ligar Moderation API no piloto de resumo de tickets e publicar o primeiro placar adversarial.</div>
+<table><tr><th>Métrica</th><th>Atual</th><th>Meta</th></tr><tr><td>Bloqueio em bateria de 60 injeções</td><td>0% (sem proteção)</td><td>95% (meta)</td></tr><tr><td>Latência p95 adicionada</td><td>não medida</td><td>abaixo de 150 ms (meta)</td></tr><tr><td>Alto risco com HITL</td><td>0%</td><td>100% (meta)</td></tr></table>
+<div class="callout"><strong>Status:</strong> Desenvolvido em Setembro 2026, homologação pendente: ligar Moderation API no piloto de resumo de tickets e publicar o primeiro placar adversarial.</div>
 </div>
 </div>
 </body>

@@ -2,10 +2,10 @@
 
 ## Quando usar
 - **Adapter**: sempre que chamar API de terceiro.
-- **Strategy**: variacao de algoritmo (modelo de LLM por custo).
+- **Strategy**: variação de algoritmo (modelo de LLM por custo).
 - **Observer**: reagir a eventos sem acoplar.
-- **Command**: acoes de agente re-jogaveis.
-- **Singleton**: NAO. Use DI.
+- **Command**: ações de agente re-jogaveis.
+- **Singleton**: NÃO. Use DI.
 
 ```python
 class Cheap:  def complete(self, p): ...

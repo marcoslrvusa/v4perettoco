@@ -1,4 +1,4 @@
-# Arquitetura Serverless para Processamento Assincrono (event-driven)
+# Arquitetura Serverless para Processamento Assíncrono (event-driven)
 
 Arquitetura Full Stack
 
@@ -26,7 +26,7 @@ Arquitetura Full Stack
 
 <h2><span class="num">5.</span> Antes vs Depois</h2>
 
-<table><tr><th>Cenário</th><th>Antes (servidor fixo)</th><th>Depois (serverless)</th></tr><tr><td>Custo em dia sem uso</td><td>Pago integral</td><td>R$ 0,00</td></tr><tr><td>Pico não previsto</td><td>Timeout / lento</td><td>Auto-scale absorve</td></tr><tr><td>Provisionamento</td><td>Manual e lento</td><td>Instantâneo</td></tr><tr><td>Cold start</td><td>N/A</td><td>Existe, mitigado</td></tr></table>
+<table><tr><th>Cenário</th><th>Antes (servidor fixo)</th><th>Depois (serverless)</th></tr><tr><td>Custo em dia sem uso</td><td>Pago integral</td><td>R$ 0,00</td></tr><tr><td>Pico não previsto</td><td>Timeout / lento</td><td>Auto-scale absorve</td></tr><tr><td>Provisionamento</td><td>Manual é lento</td><td>Instantâneo</td></tr><tr><td>Cold start</td><td>N/A</td><td>Existe, mitigado</td></tr></table>
 
 <h2><span class="num">6.</span> Entregas</h2>
 

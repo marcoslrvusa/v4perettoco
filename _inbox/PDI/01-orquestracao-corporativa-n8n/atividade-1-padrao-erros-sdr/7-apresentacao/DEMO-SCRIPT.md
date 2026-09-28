@@ -1,4 +1,4 @@
-# Script de Demonstracao: Error Handling n8n Enterprise
+# Script de Demonstração: Error Handling n8n Enterprise
 
 ## Setup
 
@@ -71,7 +71,7 @@ No n8n UI:
 # 3. Circuit breaker registrou?
 ```
 
-## Passo 6: Verificar Metricas
+## Passo 6: Verificar Métricas
 
 ```sql
 -- Health score geral
@@ -90,12 +90,12 @@ SELECT * FROM vw_error_summary_24h;
 
 # Verificar:
 SELECT * FROM vw_circuits_open_now;
-# Deve estar vazio apos recovery
+# Deve estar vazio após recovery
 ```
 
 ## Sucesso
 
-- ✅ Notificacao Slack chegou em < 30s
+- ✅ Notificação Slack chegou em < 30s
 - ✅ DLQ com payload completo
 - ✅ Circuit breaker registrou estado
-- ✅ Recovery automatico funcionou
+- ✅ Recovery automático funcionou

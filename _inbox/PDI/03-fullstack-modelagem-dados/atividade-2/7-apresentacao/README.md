@@ -1,4 +1,4 @@
-# APIs Modulares de Missao Critica (FastAPI) com Paginacao, Cache e Rate Limiting
+# APIs Modulares de Missão Crítica (FastAPI) com Paginação, Cache e Rate Limiting
 
 Arquitetura Full Stack
 

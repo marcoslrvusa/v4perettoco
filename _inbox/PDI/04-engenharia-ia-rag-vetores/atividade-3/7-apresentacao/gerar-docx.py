@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Gera o DOCX desta atividade a partir de report.json (padrao PDI senior) + 3 secoes de autoria."""
+"""Gera o DOCX desta atividade a partir de report.json (padrão PDI sênior) + 3 seções de autoria."""
 import json, os
 from docx import Document
 from docx.shared import Pt, Cm, RGBColor
@@ -20,10 +20,10 @@ def cover():
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     r = p.add_run(D['title']); r.bold = True; r.font.size = Pt(23)
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER; p.space_before = Pt(28)
-    r = p.add_run('Documento Tecnico de PDI'); r.font.size = Pt(12); r.font.color.rgb = RGBColor(0x6B,0x7A,0x8A)
+    r = p.add_run('Documento Técnico de PDI'); r.font.size = Pt(12); r.font.color.rgb = RGBColor(0x6B,0x7A,0x8A)
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER; p.space_before = Pt(16)
     for line in [f"Autor: {D['autor']}", f"Unidade: FV Marketing / V4 Company", f"Data: Agosto 2026",
-                 f"Area: 04 Engenharia de IA, RAG e Vetores", "Status: Entregue (desenvolvido)"]:
+                 f"Área: 04 Engenharia de IA, RAG e Vetores", "Status: Entregue (desenvolvido)"]:
         rr = p.add_run(line + '\n'); rr.font.size = Pt(11); rr.font.color.rgb = RGBColor(0x49,0x55,0x60)
     doc.add_page_break()
 
@@ -48,14 +48,14 @@ def add_section(title, blocks):
         elif kind == "note":
             p = doc.add_paragraph(); p.add_run("Nota: ").bold = True; p.add_run(rest[0])
         elif kind == "warn":
-            p = doc.add_paragraph(); p.add_run("Atencao: ").bold = True; p.add_run(rest[0])
+            p = doc.add_paragraph(); p.add_run("Atenção: ").bold = True; p.add_run(rest[0])
         elif kind == "code":
             p = doc.add_paragraph(rest[1]); p.style = doc.styles['No Spacing']
             for r in p.runs: r.font.name = 'Consolas'; r.font.size = Pt(9)
 
-BASE_SECTIONS = [('1. Contexto', [['p', 'Orquestracao multi-agente com supervisor mais especialistas, handoff explicito, isolamento de contexto, timeouts e fallbacks, contra agente unico com prompt de 8k tokens.']]), ('2. Diagnostico', [['p', 'Sem SRP entre agentes, com contexto compartilhado ha vazamento de PII, sem handoff formal e sem timeout um worker travado para o fluxo.']]), ('3. Solucao', [['p', 'Supervisor com route(intent), workers researcher, coder e reviewer isolados, handoff com contexto minimo, memoria de curto e longo prazo, max hops e modelo leve no supervisor.']]), ('4. Entregas', [['ul', ['MULTI-AGENT.md e MULTIAGENT-PROTOCOL.md', 'orchestrator.py, supervisor.py, memory.py e workers isolados', 'handoff_schema.py e handoff.md']]]), ('5. Metricas', [['ul', ['Timeout por agente menor ou igual a 15 s', 'Handoff com fallback 100 por cento', 'Vazamento 0', 'Sucesso de cerca de 49 por cento para cerca de 97 por cento', 'Meta maior ou igual a 95 por cento em tarefas de 3 etapas']]]), ('6. Status final', [['p', 'Desenvolvido e em homologacao. Aguarda revisao antes de producao.']])]
+BASE_SECTIONS = [('1. Contexto', [['p', 'Orquestração multi-agente com supervisor mais especialistas, handoff explícito, isolamento de contexto, timeouts e fallbacks, contra agente único com prompt de 8k tokens.']]), ('2. Diagnóstico', [['p', 'Sem SRP entre agentes, com contexto compartilhado há vazamento de PII, sem handoff formal e sem timeout um worker travado para o fluxo.']]), ('3. Solução', [['p', 'Supervisor com route(intent), workers researcher, coder e reviewer isolados, handoff com contexto mínimo, memória de curto e longo prazo, max hops e modelo leve no supervisor.']]), ('4. Entregas', [['ul', ['MULTI-AGENT.md e MULTIAGENT-PROTOCOL.md', 'orchestrator.py, supervisor.py, memory.py e workers isolados', 'handoff_schema.py e handoff.md']]]), ('5. Métricas', [['ul', ['Timeout por agente menor ou igual a 15 s', 'Handoff com fallback 100 por cento', 'Vazamento 0', 'Sucesso de cerca de 49 por cento para cerca de 97 por cento', 'Meta maior ou igual a 95 por cento em tarefas de 3 etapas']]]), ('6. Status final', [['p', 'Desenvolvido e em homologação. Aguarda revisão antes de produção.']])]
 
-EXTRA_SECTIONS = [('9. Decisoes e tradeoffs', [['ul', ['Supervisor com handoff tipado em vez de agente unico com prompt de 8k tokens: aceitei mais nos para ganhar foco, teste por papel e fronteira clara entre triagem, consulta e proposta.', 'Contexto proprio por agente com passagem de resumo minimo: escolhi isolamento para zerar vazamento, com meta de 0 ocorrencias, mesmo com custo de serializar o handoff.', 'Timeout menor ou igual a 15 s por agente com fallback em 100 por cento dos handoffs: preferi degradar com re-rota a travar o fluxo quando um worker trava.', 'Max hops contra loop e supervisor com modelo leve: contive custo e recursao em vez de deixar o supervisor reiterar sem limite.', 'Memoria de curto e longo prazo com estado preservado: troquei reexecucao do zero por retomada a partir do ultimo handoff valido.']]]), ('10. Impacto no negocio', [['p', 'A orquestracao com timeout menor ou igual a 15 s, fallback em 100 por cento e vazamento 0 eleva o sucesso de cerca de 49 por cento para cerca de 97 por cento, com meta maior ou igual a 95 por cento em tarefas de 3 etapas, o que reduz retrabalho por contaminacao e da previsibilidade de custo por papel.']]), ('11. Referencias de estudo', [['ul', ['Curso: Multi-AI Agent Systems with LangGraph, plataforma DeepLearning.AI.', 'Video: Padroes de orquestracao com supervisor e handoff, plataforma YouTube, canal LangChain.', 'Doc oficial: Documentacao do LangGraph para grafos de agentes, documentacao oficial LangChain.', 'Doc oficial: Guia de function calling e structured outputs, documentacao oficial OpenAI.']]])]
+EXTRA_SECTIONS = [('9. Decisões e tradeoffs', [['ul', ['Supervisor com handoff tipado em vez de agente único com prompt de 8k tokens: aceitei mais nos para ganhar foco, teste por papel e fronteira clara entre triagem, consulta e proposta.', 'Contexto próprio por agente com passagem de resumo mínimo: escolhi isolamento para zerar vazamento, com meta de 0 ocorrências, mesmo com custo de serializar o handoff.', 'Timeout menor ou igual a 15 s por agente com fallback em 100 por cento dos handoffs: preferi degradar com re-rota a travar o fluxo quando um worker trava.', 'Max hops contra loop e supervisor com modelo leve: contive custo e recursão em vez de deixar o supervisor reiterar sem limite.', 'Memória de curto e longo prazo com estado preservado: troquei reexecução do zero por retomada a partir do último handoff valido.']]]), ('10. Impacto no negócio', [['p', 'A orquestração com timeout menor ou igual a 15 s, fallback em 100 por cento e vazamento 0 eleva o sucesso de cerca de 49 por cento para cerca de 97 por cento, com meta maior ou igual a 95 por cento em tarefas de 3 etapas, o que reduz retrabalho por contaminação e da previsibilidade de custo por papel.']]), ('11. Referências de estudo', [['ul', ['Curso: Multi-AI Agent Systems with LangGraph, plataforma DeepLearning.AI.', 'Vídeo: Padrões de orquestração com supervisor e handoff, plataforma YouTube, canal LangChain.', 'Doc oficial: Documentação do LangGraph para grafos de agentes, documentação oficial LangChain.', 'Doc oficial: Guia de function calling e structured outputs, documentação oficial OpenAI.']]])]
 
 cover()
 for title, blocks in (BASE_SECTIONS + EXTRA_SECTIONS):

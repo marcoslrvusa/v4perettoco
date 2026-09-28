@@ -1,21 +1,21 @@
 # Deck PDI: Fundamentos de IA Generativa (NVIDIA DLI) aplicados a RAG
 
-Area: Engenharia de IA
+Área: Engenharia de IA
 
 ## Slide 1: Resumo Executivo
-Conclusao do curso NVIDIA DLI 'Building RAG Agents with LLMs' com transposicao pratica. Entrego notas e um notebook funcional de RAG end-to-end.
-A base sustenta as proximas atividades (RAG hibrido, multi-agente, custos).
-## Slide 2: Contexto de Producao
-Time comenta 'RAG' mas sem padrao de chunking.
+Conclusão do curso NVIDIA DLI 'Building RAG Agents with LLMs' com transposição prática. Entrego notas e um notebook funcional de RAG end-to-end.
+A base sustenta as próximas atividades (RAG híbrido, multi-agente, custos).
+## Slide 2: Contexto de Produção
+Time comenta 'RAG' mas sem padrão de chunking.
 Similaridade pura trazia contexto irrelevante.
-Sem metrica de qualidade.
-## Slide 3: Diagnostico
-Chunk grande -> ruido; pequeno -> perde contexto.
-Embedding sem normalizacao.
-Sem rerank -> top-k ruido.
-## Slide 4: Decisao Arquitetural (ADR)
+Sem métrica de qualidade.
+## Slide 3: Diagnóstico
+Chunk grande -> ruído; pequeno -> perde contexto.
+Embedding sem normalização.
+Sem rerank -> top-k ruído.
+## Slide 4: Decisão Arquitetural (ADR)
 ADR-041: Baseline RAG
-| Opcao | Pro | Contra | Decisao |
+| Opção | Pro | Contra | Decisão |
 | --- | --- | --- | --- |
 | Chunk 512 + overlap 64 + rerank | coeso | mais tokens | ESCOLHIDA |
 > Nota: Normalizar embeddings; top-k=20 + rerank para top-5.
@@ -23,20 +23,20 @@ ADR-041: Baseline RAG
 DLI-NOTES.md.
 rag_baseline.py.
 CONCLUSAO.md.
-## Slide 6: Validacao
+## Slide 6: Validação
 Rodar rag_baseline.py.
 Medir faithfulness em 10 perguntas.
 Comparar com similaridade pura.
-## Slide 7: Metricas
+## Slide 7: Métricas
 | SLO | Alvo |
 | --- | --- |
 | Faithfulness | >= 0.8 |
 | Chunk | 512/64 |
 ## Slide 8: Riscos
-| Risco | Mitigacao |
+| Risco | Mitigação |
 | --- | --- |
 | Contexto irrelevante | rerank |
 | Hallucination | cite trecho |
-## Slide 9: Proximos Passos
-RAG hibrido (04-A2).
-Avaliacao RAGAS.
+## Slide 9: Próximos Passos
+RAG híbrido (04-A2).
+Avaliação RAGAS.

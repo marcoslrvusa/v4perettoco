@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Gera o DOCX desta atividade a partir de report.json (padrao PDI senior)."""
+"""Gera o DOCX desta atividade a partir de report.json (padrão PDI sênior)."""
 import json, os
 from docx import Document
 from docx.shared import Pt, Cm, RGBColor
@@ -20,10 +20,10 @@ def cover():
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     r = p.add_run(D['title']); r.bold = True; r.font.size = Pt(23)
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER; p.space_before = Pt(28)
-    r = p.add_run('Documento Tecnico de PDI'); r.font.size = Pt(12); r.font.color.rgb = RGBColor(0x6B,0x7A,0x8A)
+    r = p.add_run('Documento Técnico de PDI'); r.font.size = Pt(12); r.font.color.rgb = RGBColor(0x6B,0x7A,0x8A)
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER; p.space_before = Pt(16)
     for line in [f"Autor: {D['autor']}", f"Unidade: {D['unidade']}", f"Data: {D['data']}",
-                 f"Area: {D['area']}", "Status: Entregue (desenvolvido)"]:
+                 f"Área: {D['área']}", "Status: Entregue (desenvolvido)"]:
         rr = p.add_run(line + '\n'); rr.font.size = Pt(11); rr.font.color.rgb = RGBColor(0x49,0x55,0x60)
     doc.add_page_break()
 
@@ -48,7 +48,7 @@ def add_section(title, blocks):
         elif kind == "note":
             p = doc.add_paragraph(); p.add_run("Nota: ").bold = True; p.add_run(rest[0])
         elif kind == "warn":
-            p = doc.add_paragraph(); p.add_run("Atencao: ").bold = True; p.add_run(rest[0])
+            p = doc.add_paragraph(); p.add_run("Atenção: ").bold = True; p.add_run(rest[0])
         elif kind == "code":
             p = doc.add_paragraph(rest[1]); p.style = doc.styles['No Spacing']
             for r in p.runs: r.font.name = 'Consolas'; r.font.size = Pt(9)

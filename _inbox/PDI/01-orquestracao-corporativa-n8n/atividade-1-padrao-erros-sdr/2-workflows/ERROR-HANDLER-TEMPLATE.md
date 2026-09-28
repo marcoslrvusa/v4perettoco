@@ -1,11 +1,11 @@
 # Template de Error Handling para Novos Workflows
 
-Use este template ao criar um NOVO workflow para garantir conformidade com o padrao.
+Use este template ao criar um NOVO workflow para garantir conformidade com o padrão.
 
-## Estrutura Minima
+## Estrutura Mínima
 
 ```typescript
-// Em cada no fallivel (HTTP Request, Supabase, etc), adicionar:
+// Em cada nó falível (HTTP Request, Supabase, etc), adicionar:
 {
   onError: 'continueErrorOutput',
   retryOnFail: true,
@@ -30,11 +30,11 @@ Webhook (responseMode: "responseNode")
                   └── error → Respond 502 (upstream_error)
 ```
 
-## Checklist Rapido para Novos Workflows
+## Checklist Rápido para Novos Workflows
 
 - [ ] `retryOnFail: true` em todo HTTP Request, Supabase, API externa
-- [ ] `onError: "continueErrorOutput"` nos nos falliveis
+- [ ] `onError: "continueErrorOutput"` nos nos falíveis
 - [ ] `main[1]` conectado para cada no com `onError`
 - [ ] Error Workflow vinculado em Settings (aponta para `[CC] Error Handler Central`)
 - [ ] Workflow publicado (Shift+P)
-- [ ] Testado com falha provocada (ex: URL invalida)
+- [ ] Testado com falha provocada (ex: URL inválida)

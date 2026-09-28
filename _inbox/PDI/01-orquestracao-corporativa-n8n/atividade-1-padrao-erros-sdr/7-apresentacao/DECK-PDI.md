@@ -1,14 +1,14 @@
-# PDI: Apresentacao: Padrao Universal de Tratamento de Erros n8n
+# PDI: Apresentação: Padrão Universal de Tratamento de Erros n8n
 
 > **Formato:** 15-20 slides | **Tempo:** 20-25 min
-> **Audiencia:** Tech Lead + Squad de Automacao
+> **Audiência:** Tech Lead + Squad de Automação
 
 ---
 
-## Slide 1: Titulo
+## Slide 1: Título
 
 ```
-PDI: PADRAO UNIVERSAL DE TRATAMENTO DE ERROS
+PDI: PADRÃO UNIVERSAL DE TRATAMENTO DE ERROS
               N8N ENTERPRISE
 
         Marcos Perettoco: Tech Lead
@@ -23,31 +23,31 @@ PDI: PADRAO UNIVERSAL DE TRATAMENTO DE ERROS
 
 - ADPLAN: JS timeout 25min (event loop bloqueado)
 - SIGNOR: Task runner desconectado
-- Genics: Redis Cloud inacessivel
+- Genics: Redis Cloud inacessível
 - SOFIA: Rate limit Chatwoot
-- PRO ANALISES: toDateTime undefined
+- PRO ANÁLISES: toDateTime undefined
 - Schwalm: Null constraint telefone
 - V4 INTERNO: 404 no Ekyte
 
-**E o pior:** nenhum notificava ninguem. Falhas passavam dias sem deteccao.
+**E o pior:** nenhum notificava ninguém. Falhas passavam dias sem detecção.
 
 ---
 
-## Slide 3: Diagnostico
+## Slide 3: Diagnóstico
 
-3 Command Centers tambem sem tratamento de erro:
+3 Command Centers também sem tratamento de erro:
 
 | Workflow | Trigger | Risco |
 |----------|---------|-------|
 | Collector | 2min | Dashboard desatualizado |
-| Heartbeat | 5min | Falso positivo de saude |
-| Metrics | 1h | Lacuna historica |
+| Heartbeat | 5min | Falso positivo de saúde |
+| Metrics | 1h | Lacuna histórica |
 
-**Causa raiz:** Cada workflow tratava erro do seu jeito (ou nao tratava).
+**Causa raiz:** Cada workflow tratava erro do seu jeito (ou não tratava).
 
 ---
 
-## Slide 4: A Solucao: Arquitetura em 3 Camadas
+## Slide 4: A Solução: Arquitetura em 3 Camadas
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -68,18 +68,18 @@ PDI: PADRAO UNIVERSAL DE TRATAMENTO DE ERROS
 
 | Antes | Depois |
 |-------|--------|
-| Cada workflow seu proprio jeito | Padrao unificado |
-| Falha silenciosa | Notificacao em < 1 min |
+| Cada workflow seu próprio jeito | Padrão unificado |
+| Falha silenciosa | Notificação em < 1 min |
 | Sem retry | Retry com backoff exponencial |
-| Sem persistencia | Dead Letter Queue no Supabase |
-| Sem protecao | Circuit breaker integrado |
+| Sem persistência | Dead Letter Queue no Supabase |
+| Sem proteção | Circuit breaker integrado |
 | Debug manual | Correlation ID + payload completo |
 
 ---
 
 ## Slide 6: Taxonomia de Erros
 
-| Classe | Severidade | Retentavel? | Exemplo |
+| Classe | Severidade | Retentável? | Exemplo |
 |--------|-----------|-------------|---------|
 | server_error | critical | Sim (3x) | 502, 503 |
 | rate_limit | warning | Sim (c/ backoff) | 429 |
@@ -94,7 +94,7 @@ PDI: PADRAO UNIVERSAL DE TRATAMENTO DE ERROS
 
 ## Slide 7: Retry Matrix
 
-Cada tipo de node tem configuracao especifica:
+Cada tipo de node tem configuração específica:
 
 ```
 HTTP Request  → 3 tries, 5s wait
@@ -114,7 +114,7 @@ Backoff exponencial com jitter para 429 e 5xx.
 PDI/
 ├── 1-standards/        → Documentacao, taxonomia, retry matrix
 ├── 2-workflows/        → 2 workflows .workflow.ts (validados)
-├── 3-supabase/         → Schema v2.1 + guia de migracao
+├── 3-supabase/         → Schema v2.1 + guia de migração
 ├── 4-retrofit/         → Planos de retrofit SDR IA + CC
 ├── 5-monitoring/       → Dashboards + queries de alerta
 ├── 6-automation/       → Scripts de deploy automatizado
@@ -125,7 +125,7 @@ PDI/
 
 ## Slide 9: Error Handler Central (Camada 2)
 
-Workflow unico que captura erros de TODOS os workflows.
+Workflow único que captura erros de TODOS os workflows.
 
 ```
 Error Trigger
@@ -143,7 +143,7 @@ Error Trigger
 
 ## Slide 10: Circuit Breaker (Camada 3)
 
-Protege integracoes contra cascata de falhas.
+Protege integrações contra cascata de falhas.
 
 ```
 closed ──(5 falhas)──→ open ──(5 min)──→ half-open
@@ -152,14 +152,14 @@ closed ──(5 falhas)──→ open ──(5 min)──→ half-open
 ```
 
 - Monitor a cada 5 min
-- Recovery automatico via PATCH na API n8n
+- Recovery automático via PATCH na API n8n
 - Log de todos os estados no Supabase
 
 ---
 
 ## Slide 11: Dead Letter Queue
 
-Persistencia PERMANENTE de todas as falhas.
+Persistência PERMANENTE de todas as falhas.
 
 ```
 error_dlq (
@@ -178,27 +178,27 @@ error_dlq (
 
 ## Slide 12: Retrofit SDR IA
 
-5 workflows com correcoes aplicadas mas nunca pushed.
+5 workflows com correções aplicadas mas nunca pushed.
 
-| Workflow | Correcao | Esforco |
+| Workflow | Correção | Esforço |
 |----------|---------|---------|
 | ADPLAN | SplitInBatches + Code otimizado | 20 min |
 | SOFIA | Wait 500ms + Error Workflow | 10 min |
-| PRO ANALISES | try/catch toDateTime | 10 min |
-| Schwalm | Validacao telefone + IF | 10 min |
+| PRO ANÁLISES | try/catch toDateTime | 10 min |
+| Schwalm | Validação telefone + IF | 10 min |
 | V4 INTERNO | Board ID map + IF | 10 min |
 
 Fase 1: Push (1 dia)
 Fase 2: Configurar error handling (2 dias)
-Fase 3: Validacao (1 dia)
+Fase 3: Validação (1 dia)
 
 ---
 
-## Slide 13: Metricas de Sucesso
+## Slide 13: Métricas de Sucesso
 
-| Metrica | Antes | Meta | Como Medir |
+| Métrica | Antes | Meta | Como Medir |
 |---------|-------|------|-----------|
-| Deteccao de falha | Dias | < 1 min | Tempo entre erro e notificacao |
+| Detecção de falha | Dias | < 1 min | Tempo entre erro e notificação |
 | Auto-cura (retry) | 0% | > 70% | `vw_retry_success_rate` |
 | Circuitos abertos sem alerta | 100% | 0% | `vw_circuits_open_now` |
 | Workflows com error handling | 0 | 100% | `error_dlq` populando |
@@ -206,7 +206,7 @@ Fase 3: Validacao (1 dia)
 
 ---
 
-## Slide 14: Proximos Passos
+## Slide 14: Próximos Passos
 
 ```
 Semana 1:
@@ -229,7 +229,7 @@ Semana 2:
 ```
 "O que era silencioso agora grita.
 O que quebrava sem rastro agora deixa DNA.
-O que era 7 jeitos diferentes agora e um padrao."
+O que era 7 jeitos diferentes agora é um padrão."
 ```
 
 ---
@@ -241,5 +241,5 @@ O que era 7 jeitos diferentes agora e um padrao."
 | `onError` sem `main[1]` | Erro descartado silenciosamente |
 | Retentar 4xx | Queima API credits a toa |
 | Error workflow mesmo canal | Recursion trap |
-| responseCode 200 no erro | Caller nunca ve a falha |
-| Nao publicar error handler | Codigo antigo rodando |
+| responseCode 200 no erro | Caller nunca vê a falha |
+| Não publicar error handler | Código antigo rodando |

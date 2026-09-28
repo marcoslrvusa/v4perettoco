@@ -1,12 +1,12 @@
-# Mensageria: Padrao
+# Mensageria: Padrão
 
 - **Fila**: 1 consumidor (trabalho).
-- **Topico**: N consumidores (evento).
-- **DLQ**: falha apos N -> analise.
-- **ACK**: so apos processar.
+- **Tópico**: N consumidores (evento).
+- **DLQ**: falha após N -> analise.
+- **ACK**: só após processar.
 
 ## Regras
-1. ACK explicito apos sucesso.
+1. ACK explícito após sucesso.
 2. Prefetch limitado (backpressure).
 3. DLQ com maxReceiveCount.
-4. Idempotencia no consumer.
+4. Idempotência no consumer.

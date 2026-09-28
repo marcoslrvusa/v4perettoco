@@ -1,4 +1,4 @@
-# ADR-NNNN: Titulo curto no imperativo
+# ADR-NNNN: Título curto no imperativo
 
 - **Status:** Proposta
 - **Data:** AAAA-MM-DD
@@ -7,9 +7,9 @@
 
 ## Contexto
 
-Descreva a situacao e as forcas em jogo. Use numeros (volume, custo, prazo). Maximo 10 linhas.
+Descreva a situação e as forças em jogo. Use números (volume, custo, prazo). Máximo 10 linhas.
 
-## Decisao
+## Decisão
 
 Uma frase direta: vamos fazer X com Y para atingir Z.
 
@@ -18,8 +18,8 @@ Uma frase direta: vamos fazer X com Y para atingir Z.
 - Alternativa A: motivo do descarte em uma linha.
 - Alternativa B: motivo do descarte em uma linha.
 
-## Consequencias
+## Consequências
 
 - Ganhamos: ...
 - Perdemos: ...
-- Vamos monitorar: metrica ou alerta concreto (ex.: taxa de falha por conta em 24h).
+- Vamos monitorar: métrica ou alerta concreto (ex.: taxa de falha por conta em 24h).

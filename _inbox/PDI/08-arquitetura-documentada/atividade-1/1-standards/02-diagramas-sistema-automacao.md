@@ -1,26 +1,26 @@
-# Diagramas C4 do Sistema Real: Orquestrador de Automacao V4
+# Diagramas C4 do Sistema Real: Orquestrador de Automação V4
 
-## Nivel 1: Contexto
+## Nível 1: Contexto
 
-Pessoas: **Operador de automacao** (equipe FV Marketing) e **Gestor de trafego** (cliente interno).
-Sistema: **Orquestrador de Automacao V4**, executa fluxos de coleta, disparo e sincronizacao.
-Externos: Meta Ads API (leitura de metricas), Gmail API (disparo), Supabase Auth (login do painel).
+Pessoas: **Operador de automação** (equipe FV Marketing) e **Gestor de tráfego** (cliente interno).
+Sistema: **Orquestrador de Automação V4**, executa fluxos de coleta, disparo e sincronização.
+Externos: Meta Ads API (leitura de métricas), Gmail API (disparo), Supabase Auth (login do painel).
 
 ```mermaid
 C4Context
   title Contexto - Orquestrador de Automacao V4
   Person(operador, "Operador de Automacao", "Cria e monitora fluxos")
-  Person(gestor, "Gestor de Trafego", "Consome relatorios e alertas")
+  Person(gestor, "Gestor de Tráfego", "Consome relatórios e alertas")
   System(orquestrador, "Orquestrador de Automacao V4", "Executa fluxos n8n e workers")
   System_Ext(meta, "Meta Ads API", "Metricas de campanhas")
   System_Ext(gmail, "Gmail API", "Disparo de emails")
   Rel(operador, orquestrador, "Opera e monitora")
-  Rel(orquestrador, gestor, "Envia alertas e relatorios")
+  Rel(orquestrador, gestor, "Envia alertas e relatórios")
   Rel(orquestrador, meta, "Le metricas")
   Rel(orquestrador, gmail, "Dispara emails")
 ```
 
-## Nivel 2: Containers
+## Nível 2: Containers
 
 ```mermaid
 C4Container
@@ -44,7 +44,7 @@ C4Container
 
 Portas reais praticadas: n8n em `5678`, workers expostos em `8000`, Supabase via URL do projeto, painel em `3000`. Credenciais de Meta e Gmail ficam no cofre do n8n, nunca em `.env` solto.
 
-## Nivel 3: Componentes do n8n
+## Nível 3: Componentes do n8n
 
 | Componente | Papel | Fala com |
 |------------|-------|----------|
@@ -54,9 +54,9 @@ Portas reais praticadas: n8n em `5678`, workers expostos em `8000`, Supabase via
 | Credenciais no cofre | Tokens Meta e Gmail | Todos os subworkflows |
 | Fila de erros | Registra falha com payload | Supabase Postgres |
 
-## Nivel 4: Codigo do worker critico
+## Nível 4: Código do worker crítico
 
-Apenas a funcao que decide retry da coleta Meta Ads, onde um bug gera lacuna de verba nos relatorios:
+Apenas a função que decide retry da coleta Meta Ads, onde um bug gera lacuna de verba nos relatórios:
 
 ```python
 def executar_com_retry(coleta_fn, conta_id, tentativas=3, base_seg=30):

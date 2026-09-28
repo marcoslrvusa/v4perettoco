@@ -1,31 +1,31 @@
-# STANDARD-LGPD-PIPELINE | Minimizacao, anonimizacao e base legal
+# STANDARD-LGPD-PIPELINE | Minimização, anonimização e base legal
 
-Versao 1.0, Setembro 2026. Escopo: pipelines que coletam, enriquecem, sincronizam ou agregam dados pessoais na operacao (leads pagos, CRM, relatorios).
+Versão 1.0, Setembro 2026. Escopo: pipelines que coletam, enriquecem, sincronizam ou agregam dados pessoais na operação (leads pagos, CRM, relatórios).
 
-## 1. Catalogo de campos (obrigatorio por pipeline)
+## 1. Catálogo de campos (obrigatório por pipeline)
 
-Todo pipeline declara por campo: nome, categoria (pessoal comum, sensivel art. 11, anonimizado), finalidade especifica, base legal (art. 7), prazo de retencao e destino. Campo sem esses 6 itens nao entra em producao.
+Todo pipeline declara por campo: nome, categoria (pessoal comum, sensível art. 11, anonimizado), finalidade específica, base legal (art. 7), prazo de retenção e destino. Campo sem esses 6 itens não entra em produção.
 
-## 2. Base legal: mapa pratico (art. 7)
+## 2. Base legal: mapa prático (art. 7)
 
-| Situacao da operacao | Hipotese usual | Exemplo |
+| Situação da operação | Hipótese usual | Exemplo |
 |----------------------|----------------|---------|
 | Form com aceite claro para contato comercial | I consentimento | "Quero receber proposta" marcado pelo titular |
-| Contrato ou pre-contrato a pedido do titular | V execucao de contrato | Proposta e onboarding de cliente |
-| Obrigacao fiscal ou trabalhista | II obrigacao legal | Nota fiscal, folha |
-| Marketing para base propria com opt-out e teste documentado | IX legitimo interesse | Oferta de servico analogo a cliente ativo |
-| Estudo agregado sem identificar ninguem | IV estudos por orgao de pesquisa, com anonimizacao sempre que possivel | Relatorio estatistico interno |
+| Contrato ou pre-contrato a pedido do titular | V execução de contrato | Proposta e onboarding de cliente |
+| Obrigação fiscal ou trabalhista | II obrigação legal | Nota fiscal, folha |
+| Marketing para base própria com opt-out e teste documentado | IX legítimo interesse | Oferta de serviço análogo a cliente ativo |
+| Estudo agregado sem identificar ninguém | IV estudos por órgão de pesquisa, com anonimização sempre que possível | Relatório estatístico interno |
 
-Legitimo interesse exige teste de proporcionalidade escrito e canal de oposicao (art. 10). Dado sensivel so com as hipoteses estritas do art. 11; saude para vantagem economica e vedada (art. 11, paragrafos 4 e 5).
+Legítimo interesse exige teste de proporcionalidade escrito e canal de oposição (art. 10). Dado sensível só com as hipóteses estritas do art. 11; saúde para vantagem econômica e vedada (art. 11, parágrafos 4 e 5).
 
-## 3. Minimizacao (art. 6, III e principio da necessidade)
+## 3. Minimização (art. 6, III e princípio da necessidade)
 
-Coleta o minimo necessario a finalidade declarada. Regras: sem "campo reserva"; CPF so com justificativa escrita; documento de identidade nunca em form de lead; resposta de API enriquecida e filtrada na borda (descarta o excedente antes de persistir).
+Coleta o mínimo necessário a finalidade declarada. Regras: sem "campo reserva"; CPF só com justificativa escrita; documento de identidade nunca em form de lead; resposta de API enriquecida e filtrada na borda (descarta o excedente antes de persistir).
 
-## 4. Anonimizacao como processo baseado em risco (art. 12)
+## 4. Anonimização como processo baseado em risco (art. 12)
 
-Anonimizacao nao e uma funcao, e um processo: (a) definir o risco aceitavel de reidentificacao para o uso; (b) aplicar o conjunto de tecnicas (supressao, generalizacao, hash com salt, agregacao com k minimo); (c) testar reidentificacao com esforco razoavel; (d) documentar e revisar a cada mudanca de fonte. Pseudonimo com chave separada sob controle continua dado pessoal (art. 13, paragrafo 4) e serve ao operacional; o analitico publicado usa anonimizado sem chave.
+Anonimização não é uma função, é um processo: (a) definir o risco aceitável de reidentificação para o uso; (b) aplicar o conjunto de técnicas (supressão, generalização, hash com salt, agregação com k mínimo); (c) testar reidentificação com esforço razoável; (d) documentar e revisar a cada mudança de fonte. Pseudônimo com chave separada sob controle continua dado pessoal (art. 13, parágrafo 4) e serve ao operacional; o analítico publicado usa anonimizado sem chave.
 
-## 5. Direitos do titular e retencao
+## 5. Direitos do titular e retenção
 
-Pedido de confirmacao, acesso, correcao, anonimizacao, bloqueio, eliminacao ou portabilidade (art. 18) responde em ate 15 dias com rotina escrita e responsavel nomeado. Dado pessoal some apos o termino do tratamento (art. 15 e 16); cada base declara prazo e rotina de descarte. Registro das operacoes mantido para prestar contas (art. 37) e RIPD elaborado quando houver risco relevante (art. 38).
+Pedido de confirmação, acesso, correção, anonimização, bloqueio, eliminação ou portabilidade (art. 18) responde em até 15 dias com rotina escrita e responsável nomeado. Dado pessoal some após o término do tratamento (art. 15 e 16); cada base declara prazo e rotina de descarte. Registro das operações mantido para prestar contas (art. 37) e RIPD elaborado quando houver risco relevante (art. 38).

@@ -1,6 +1,6 @@
-# Idempotencia e Entrega Exactly-Once (na pratica: at-least-once + dedup)
+# Idempotência e Entrega Exactly-Once (na prática: at-least-once + dedup)
 
-Sistemas Distribuidos
+Sistemas Distribuídos
 
 <h2><span class="num">1.</span> Contexto</h2>
 

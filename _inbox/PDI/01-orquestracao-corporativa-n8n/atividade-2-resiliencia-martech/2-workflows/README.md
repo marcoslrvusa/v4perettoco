@@ -1,15 +1,15 @@
-# Workflows: PDI-MARTECH (resiliencia MarTech)
+# Workflows: PDI-MARTECH (resiliência MarTech)
 
-Workflows n8n desenvolvidos para a segunda atividade do PDI. **Nao publicar em
-producao ainda**: aguardando homologacao da apresentacao.
+Workflows n8n desenvolvidos para a segunda atividade do PDI. **Não publicar em
+produção ainda**: aguardando homologação da apresentação.
 
 ## Componentes
 
-| # | Workflow | Tipo | Proposito |
+| # | Workflow | Tipo | Propósito |
 |---|----------|------|-----------|
-| 1 | `[CC] MT Queue Gateway` | Webhook | Recebe requests MarTech e enfileira em `mt_jobs` (ACK imediato, idempotencia por job_key) |
-| 2 | `[CC] MT - Queue Worker` | Schedule (15s) | Consome a fila respeitando semaforo `mt_concurrency`, delega ao Heavy Payload Processor |
-| 3 | `[CC] MT - Heavy Payload Processor` | Sub-workflow (executeWorkflow) | Processa payload pesado: normalizacao JS, progresso em `mt_job_progress`, enriquecimento Python |
+| 1 | `[CC] MT Queue Gateway` | Webhook | Recebe requests MarTech e enfileira em `mt_jobs` (ACK imediato, idempotência por job_key) |
+| 2 | `[CC] MT - Queue Worker` | Schedule (15s) | Consome a fila respeitando semáforo `mt_concurrency`, delega ao Heavy Payload Processor |
+| 3 | `[CC] MT - Heavy Payload Processor` | Sub-workflow (executeWorkflow) | Processa payload pesado: normalização JS, progresso em `mt_job_progress`, enriquecimento Python |
 | 4 | `[CC] MT - CRM Sync Observabilidade` | Webhook (`/mt/crm-sync`) | Loga syncs de CRM, calcula drift, alimenta `mt_sync_log` + `mt_crm_health` + `mt_sync_delta` |
 
 ## Arquitetura
@@ -30,13 +30,13 @@ Requisicao MarTech (pico)
 [4] CRM Sync Observabilidade ──mt_sync_log + health + delta──▶ drift
 ```
 
-## Dependencias
+## Dependências
 
 - Schema v3.0 aplicado (veja `../3-supabase/`)
 - Credencial `Command Center Supabase` (`nRJEEi2QwVVKIAHY`) nos nodes Supabase
 - **Antes de publicar:** trocar `MT_HEAVY_PAYLOAD_PROCESSOR_ID` no worker pelo ID real
   do sub-workflow `[CC] MT - Heavy Payload Processor` criado no n8n
-- O Heavy Payload Processor NÃO tem trigger proprio: e invocado pelo Execute Workflow
+- O Heavy Payload Processor NÃO tem trigger próprio: e invocado pelo Execute Workflow
   (n8n injeta a entrada direto no primeiro node)
 
 ## Como usar (quando autorizado a publicar)
@@ -47,13 +47,13 @@ Requisicao MarTech (pico)
 4. Testar: POST para `https://n8n.fvmarketing.com.br/webhook/mt/gateway` com payload de teste
 
 > **Status: NÃO publicado.** Workflows validados com n8nac (`Workflow is valid`).
-> Implementar/conectar somente apos homologacao da apresentacao.
+> Implementar/conectar somente após homologação da apresentação.
 
-## Configuracao
+## Configuração
 
-| Parametro | Valor default | Onde |
+| Parâmetro | Valor default | Onde |
 |-----------|--------------|------|
 | Intervalo do Worker | 15s | Schedule Trigger do Worker |
 | Limite por fila | 5 slots | Tabela `mt_concurrency` (`max_concurrency`) |
 | Chunk size payload | 100 itens | Node `Unpack Input` (Heavy Processor) |
-| Tolerancia de drift | 5% | Node `Decode Sync Envelope` (Observabilidade) |
+| Tolerância de drift | 5% | Node `Decode Sync Envelope` (Observabilidade) |

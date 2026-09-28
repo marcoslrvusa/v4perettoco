@@ -5,7 +5,7 @@
 - Worker SDR IA rodando polling a cada 15s começou a estourar o timeout do comando.
 - `mt_jobs` quebrou 2.4M linhas; pódio do Grafana mostrava `Seq Scan on mt_jobs`.
 - O pick de job, que rodava em ~50ms, degradou para **1.82s** quando a fila encheu
-  numa campanha de pico (black friday) e o webhook de enfileitamento começou a 504.
+  numa campanha de pico (black friday) e o webhook de enfileiramento começou a 504.
 
 ## Diagnóstico
 

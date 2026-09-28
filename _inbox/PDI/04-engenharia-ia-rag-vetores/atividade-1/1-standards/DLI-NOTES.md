@@ -6,5 +6,5 @@
 - **Evaluation**: faithfulness + answer relevance.
 
 ## Anti-padroes
-- Chunk gigante sem overlap -> ruido.
+- Chunk gigante sem overlap -> ruído.
 - Resposta sem citar fonte -> hallucination invisible.

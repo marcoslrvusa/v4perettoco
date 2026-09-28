@@ -15,11 +15,11 @@ steps:
   - uses: actions/setup-python@v5
     with: { python-version: "3.12" }
   - run: pip install -e .[test]
-  - run: pytest        # respeita --cov-fail-under=80</code></pre><p>Exemplo das 3 camadas:</p><pre><code># unitario: regra isolada
+  - run: pytest        # respeita --cov-fail-under=80</code></pre><p>Exemplo das 3 camadas:</p><pre><code># unitário: regra isolada
 def test_calcula_imposto_pf():
     assert CalculaImposto().executar(Pedido(100)) == 5
 
-# integracao: use case + repo real (fixture de container)
+# integração: use case + repo real (fixture de container)
 def test_finaliza_pedido_salva(repo_postgres):
     FinalizaPedido(repo_postgres).executar(Pedido(100))
     assert repo_postgres.buscar(1) is not None

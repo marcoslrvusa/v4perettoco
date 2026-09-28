@@ -1,4 +1,4 @@
-# Mapa de Dominios (DDD)
+# Mapa de Domínios (DDD)
 
 ## Bounded Contexts
 | Contexto | Raiz de Agregado | Filhos |
@@ -9,9 +9,9 @@
 | Billing | Invoice | Plan, Usage |
 
 ## Linguagem ubíqua
-- **Lead**: contato capturado, ainda nao qualificado.
+- **Lead**: contato capturado, ainda não qualificado.
 - **Deal**: oportunidade com stage e value.
-- **Run**: execucao de um agente com trace_id.
+- **Run**: execução de um agente com trace_id.
 
-## Integracao
+## Integração
 Nunca via tabela compartilhada. Via evento: `LeadCreated` (CRM) -> `CampaignEligibilityCheck`.

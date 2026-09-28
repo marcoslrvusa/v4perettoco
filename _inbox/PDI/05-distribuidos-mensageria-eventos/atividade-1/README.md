@@ -1,46 +1,46 @@
-# Sistemas Distribuidos com Mensageria (fila, topico, DLQ)
+# Sistemas Distribuídos com Mensageria (fila, tópico, DLQ)
 
-Sistemas Distribuidos
+Sistemas Distribuídos
 
 ## Resumo Executivo
 
-Fundamentos de mensageria para desacoplar servicos: fila, topico, DLQ e ACK. Entrego o padrao e um consumidor com backpressure e DLQ.
+Fundamentos de mensageria para desacoplar serviços: fila, tópico, DLQ e ACK. Entrego o padrão e um consumidor com backpressure e DLQ.
 
-O ecossistema de agentes ja e distribuido; sem fila, falha de 1 servico propaga.
+O ecossistema de agentes já e distribuído; sem fila, falha de 1 serviço propaga.
 
-## Contexto de Producao
+## Contexto de Produção
 
-- Agentes chamam uns aos outros via HTTP sincrono.
+- Agentes chamam uns aos outros via HTTP síncrono.
 
 - Falha de downstream derruba a cadeia.
 
 - Sem DLQ: mensagem ruim some.
 
-## Diagnostico
+## Diagnóstico
 
 | Hoje | Alvo |
 
 | --- | --- |
 
-| HTTP sincrono | fila desacoplada |
+| HTTP síncrono | fila desacoplada |
 
 | sem DLQ | DLQ + retry |
 
 | sem backpressure | prefetch limitado |
 
-## Decisao Arquitetural (ADR)
+## Decisão Arquitetural (ADR)
 
 ADR-051: Transporte de Eventos
 
-| Opcao | Pro | Contra | Decisao |
+| Opção | Pro | Contra | Decisão |
 
 | --- | --- | --- | --- |
 
-| Fila + topico + DLQ | desacopla | ops | ESCOLHIDA |
+| Fila + tópico + DLQ | desacopla | ops | ESCOLHIDA |
 
-| HTTP sincrono | simples | cascata | rejeitada |
+| HTTP síncrono | simples | cascata | rejeitada |
 
-> **Nota:** ACK explicito; prefetch limitado; DLQ apos N tentativas.
+> **Nota:** ACK explícito; prefetch limitado; DLQ após N tentativas.
 
 ## Entregas
 
@@ -50,15 +50,15 @@ ADR-051: Transporte de Eventos
 
 - broker.tf.
 
-## Validacao
+## Validação
 
 1. Publicar 1k msg; derrubar consumer; confirmar reprocessamento.
 
-2. Msg invalida -> DLQ (nao perde).
+2. Msg inválida -> DLQ (não perde).
 
-3. Backpressure: consumer lento nao estoura.
+3. Backpressure: consumer lento não estoura.
 
-## Metricas e SLO
+## Métricas e SLO
 
 | SLO | Alvo |
 
@@ -72,34 +72,34 @@ ADR-051: Transporte de Eventos
 
 ## Riscos
 
-| Risco | Mitigacao |
+| Risco | Mitigação |
 
 | --- | --- |
 
-| Duplicata | idempotencia (05-A2) |
+| Duplicata | idempotência (05-A2) |
 
 | DLQ esquecida | alerta |
 
-## Proximos Passos
+## Próximos Passos
 
-- Eventos de dominio do DDD (02-A3).
+- Eventos de domínio do DDD (02-A3).
 
 - Tracing por trace_id.
 
-## Decisoes e tradeoffs
+## Decisões e tradeoffs
 
-- **RabbitMQ para filas de trabalho e Kafka para eventos de fluxo**: a cobranca usa fila com 1 worker por mensagem e o Marketing e a Operacao assinam o mesmo topico em pub/sub. Troca um HTTP simples por um broker que precisa de operacao.
-- **ACK explicito com prefetch limitado**: o consumer confirma depois de processar e recebe poucas mensagens por vez, entao um consumer lento nao estoura. Troca vazao por worker por estabilidade.
-- **DLQ apos N tentativas com runbook de reprocessamento**: mensagem invalida vai para a DLQ em vez de sumir e volta pelo `runbook-mensageria.md`. Exige rotina de revisita em menos de 24h para a DLQ nao virar deposito esquecido.
-- **Publicacao fire-and-forget do `venda.criada`**: o Vendas publica e segue em ~2ms sem esperar os outros times. Troca resposta imediata por consistencia eventual.
+- **RabbitMQ para filas de trabalho e Kafka para eventos de fluxo**: a cobrança usa fila com 1 worker por mensagem e o Marketing e a Operação assinam o mesmo tópico em pub/sub. Troca um HTTP simples por um broker que precisa de operação.
+- **ACK explícito com prefetch limitado**: o consumer confirma depois de processar e recebe poucas mensagens por vez, então um consumer lento não estoura. Troca vazão por worker por estabilidade.
+- **DLQ após N tentativas com runbook de reprocessamento**: mensagem inválida vai para a DLQ em vez de sumir e volta pelo `runbook-mensageria.md`. Exige rotina de revisita em menos de 24h para a DLQ não virar depósito esquecido.
+- **Publicação fire-and-forget do `venda.criada`**: o Vendas publica e segue em ~2ms sem esperar os outros times. Troca resposta imediata por consistência eventual.
 
-## Impacto no negocio
+## Impacto no negócio
 
-Com alvo de 200 msg/s e zero perda em pico, o teste de 1k mensagens com o consumer derrubado prova que pico de campanha vira buffer no broker em vez de timeout em cascata. O P95 de ponta a ponta abaixo de 5s mantem Vendas, Financeiro e Marketing reagindo em segundos, o que reduz lead esquecido e retrabalho de conciliacao. O risco passa a ser operacional e conhecido: manter a DLQ revisitada em menos de 24h.
+Com alvo de 200 msg/s e zero perda em pico, o teste de 1k mensagens com o consumer derrubado prova que pico de campanha vira buffer no broker em vez de timeout em cascata. O P95 de ponta a ponta abaixo de 5s mantém Vendas, Financeiro e Marketing reagindo em segundos, o que reduz lead esquecido e retrabalho de conciliação. O risco passa a ser operacional e conhecido: manter a DLQ revisitada em menos de 24h.
 
-## Referencias de estudo
+## Referências de estudo
 
-- Curso: "Apache Kafka Series: Learn Apache Kafka for Beginners" (Udemy, Stephane Maarek).
-- Video: "RabbitMQ in 100 Seconds" (YouTube, Fireship).
+- Curso: "Apache Kafka Séries: Learn Apache Kafka for Beginners" (Udemy, Stephane Maarek).
+- Vídeo: "RabbitMQ in 100 Seconds" (YouTube, Fireship).
 - Documento oficial: RabbitMQ Documentation (rabbitmq.com).
 - Documento oficial: Apache Kafka Documentation (kafka.apache.org).

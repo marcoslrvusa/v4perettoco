@@ -1,8 +1,8 @@
-# Atividade 3: Gestao de Incidentes e Postmortems sem Culpa
+# Atividade 3: Gestão de Incidentes e Postmortems sem Culpa
 
 | Campo | Valor |
 |---|---|
-| Area | Automacao & Infraestrutura |
+| Área | Automação & Infraestrutura |
 | Unidade | FV Marketing / V4 Company |
 | Autor | Marcos Luciano |
 | Data | Setembro 2026 |
@@ -31,46 +31,46 @@ atividade-3/
 
 ## Problema Resolvido
 
-Quando uma automacao quebrava (relatorio nao chega, lead nao entra no CRM, webhook falha), a resposta era improviso no Slack: ninguem sabia quem lidera, o que ja foi tentado, nem quando avisar a operacao. Depois, nenhum registro: o mesmo incidente voltava meses depois. Esta atividade entrega resposta padronizada (papeis, severidades, comunicacao) e postmortem sem culpa com acoes rastreadas.
+Quando uma automação quebrava (relatório não chega, lead não entra no CRM, webhook falha), a resposta era improviso no Slack: ninguém sabia quem lidera, o que já foi tentado, nem quando avisar a operação. Depois, nenhum registro: o mesmo incidente voltava meses depois. Esta atividade entrega resposta padronizada (papéis, severidades, comunicação) e postmortem sem culpa com ações rastreadas.
 
 ## Arquitetura Resumida
 
 ```
 Alerta/sintoma -> Classifica severidade (S1-S4) -> Comandante assume + canal dedicado
   -> Mitiga (para o sangramento) -> Resolve (corrige a causa)
-  -> Postmortem em ate 5 dias uteis (timeline, 5 porques, acoes com dono e prazo)
-  -> Acoes viram cartoes no kanban ate Pronto
+  -> Postmortem em até 5 dias úteis (timeline, 5 porques, acoes com dono e prazo)
+  -> Acoes viram cartoes no kanban até Pronto
 ```
 
-## Proximos Passos
+## Próximos Passos
 
-1. Aplicar o checklist no proximo incidente real e medir tempo de deteccao e de mitigacao.
-2. Escrever o primeiro postmortem real com o template e acompanhar as acoes ate Pronto.
-3. Criar pagina unica com severidades e contatos colada no canal do time.
+1. Aplicar o checklist no próximo incidente real e medir tempo de detecção e de mitigação.
+2. Escrever o primeiro postmortem real com o template e acompanhar as ações até Pronto.
+3. Criar página única com severidades e contatos colada no canal do time.
 
-## Metricas de Sucesso
+## Métricas de Sucesso
 
-| Metrica | Atual | Meta |
+| Métrica | Atual | Meta |
 |---|---|---|
-| Tempo medio de mitigacao (S1/S2) | nao medido (estimado 4h+) | 1h (meta) |
+| Tempo médio de mitigação (S1/S2) | não medido (estimado 4h+) | 1h (meta) |
 | Incidentes com postmortem em 5 dias | 0% | 100% (meta) |
-| Acoes de postmortem concluidas | nao medido | 80% em 30 dias (meta) |
+| Ações de postmortem concluídas | não medido | 80% em 30 dias (meta) |
 
-## Decisoes e tradeoffs
+## Decisões e tradeoffs
 
-1. **Mitigar antes de entender a causa raiz**: parar o impacto (rollback, desligar automacao) vem antes do diagnostico completo; tradeoff e adiar a curiosidade tecnica em troca de proteger a operacao.
-2. **Postmortem sem culpa por escrito**: proibe "erro humano" como causa e foca em condicao que permitiu o erro; tradeoff e exigir mais rigor na escrita (5 porques de verdade).
-3. **Prazo de 5 dias uteis para o postmortem**: memoria esfria rapido; tradeoff e escrever com acoes ainda em andamento (aceitavel, desde que rastreadas).
-4. **4 severidades em vez de 3**: S4 (dor menor, sem impacto em campanha) evita inflar S3; tradeoff e 1 nivel a mais para classificar sob pressao.
-5. **Acoes viram cartoes no kanban**: postmortem sem acao rastreada e terapia; tradeoff e competir com delivery no WIP (acao S1/S2 tem classe urgente).
+1. **Mitigar antes de entender a causa raiz**: parar o impacto (rollback, desligar automação) vem antes do diagnóstico completo; tradeoff é adiar a curiosidade técnica em troca de proteger a operação.
+2. **Postmortem sem culpa por escrito**: proíbe "erro humano" como causa e foca em condição que permitiu o erro; tradeoff é exigir mais rigor na escrita (5 porquês de verdade).
+3. **Prazo de 5 dias úteis para o postmortem**: memória esfria rápido; tradeoff é escrever com ações ainda em andamento (aceitável, desde que rastreadas).
+4. **4 severidades em vez de 3**: S4 (dor menor, sem impacto em campanha) evita inflar S3; tradeoff é 1 nível a mais para classificar sob pressão.
+5. **Ações viram cartões no kanban**: postmortem sem ação rastreada e terapia; tradeoff é competir com delivery no WIP (ação S1/S2 tem classe urgente).
 
-## Impacto no negocio
+## Impacto no negócio
 
-Resposta padronizada reduz o tempo que campanhas ficam no escuro e postmortem sem culpa impede a repeticao do mesmo incidente, o que protege verba de midia, fluxo de leads e a confianca da operacao na automacao.
+Resposta padronizada reduz o tempo que campanhas ficam no escuro e postmortem sem culpa impede a repetição do mesmo incidente, o que protege verba de mídia, fluxo de leads e a confiança da operação na automação.
 
-## Referencias
+## Referências
 
 - Curso: SRE Fundamentals (Google Cloud Skills Boost)
-- Video: Postmortem culture, SREcon (YouTube)
-- Doc: Site Reliability Engineering, Google SRE Book, indice e capitulos 14 e 15: https://sre.google/sre-book/table-of-contents/
+- Vídeo: Postmortem culture, SREcon (YouTube)
+- Doc: Site Reliability Engineering, Google SRE Book, índice e capítulos 14 e 15: https://sre.google/sre-book/table-of-contents/
 - Doc: Post-Incident Reviews, PagerDuty Docs: https://docs.pagerduty.com/docs/postmortems

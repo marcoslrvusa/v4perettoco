@@ -13,7 +13,7 @@ _inbox/PDI/{NN-modulo}/
     ├── 1-standards/                           ← documentação / padrões / análise
     ├── 2-*/3-*/4-*/5-*/6-*                    ← entregas técnicas da atividade
     │                                            (nomes variam por atividade:
-    │                                            standards, codigo, workflows, supabase,
+    │                                            standards, código, workflows, supabase,
     │                                            sql, scripts, testes, retrofit, etc.)
     └── 7-apresentacao/
         ├── DECK-PDI.md                        ← narrativa do deck
@@ -48,7 +48,7 @@ _inbox/PDI/{NN-modulo}/
 Precisa ter: título, quadro de metadados (Área: Automação & Infraestrutura; Unidade;
 Autor Marcos Luciano/Perettoco; Data; Status), "Entregas desta PDI" com o diagrama de
 árvore (1-standards…7-apresentacao), "Problema Resolvido", "Arquitetura Resumida"
-(reprodução esqueemática), "Próximos Passos" e tabela "Métricas de Sucesso" (Atual/Meta).
+(reprodução esquemática), "Próximos Passos" e tabela "Métricas de Sucesso" (Atual/Meta).
 
 ## README do módulo (card)
 

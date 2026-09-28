@@ -2,23 +2,23 @@
 
 ## Regra
 
-Um nome por semana responde primeiro por qualquer incidente do orquestrador. Troca toda segunda as 9h. Ferias e folga passam o bastao antes, nunca durante.
+Um nome por semana responde primeiro por qualquer incidente do orquestrador. Troca toda segunda as 9h. Férias e folga passam o bastão antes, nunca durante.
 
 ## Escala
 
 1. Pessoa da semana tenta por 15 minutos.
-2. Sem resposta ou sem solucao: chama o dono da peca (matriz).
-3. Dono indisponivel: lideranca FV assume e registra no pos-incidente.
+2. Sem resposta ou sem solução: chama o dono da peça (matriz).
+3. Dono indisponível: liderança FV assume e registra no pos-incidente.
 
 ## Para virar suplente de verdade
 
-Operar a peca uma vez com o dono ao lado (deploy, rollback e leitura da fila de erros) e ter o nome escrito na matriz. Suplente de papel nao conta.
+Operar a peça uma vez com o dono ao lado (deploy, rollback e leitura da fila de erros) e ter o nome escrito na matriz. Suplente de papel não conta.
 
 ## Quadro inicial
 
 | Semana | Responde primeiro |
 |--------|-------------------|
 | Semana 1 | Marcos Luciano |
-| Semana 2 | A definir (posicao aberta para proximo operador) |
+| Semana 2 | A definir (posição aberta para próximo operador) |
 
-Meta: em 60 dias, 2 nomes alternando e zero peca sem suplente.
+Meta: em 60 dias, 2 nomes alternando e zero peça sem suplente.

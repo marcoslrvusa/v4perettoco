@@ -1,10 +1,10 @@
-# Conformidade LGPD em Eventos e Dados (anonimizacao, consentimento, esquecimento)
+# Conformidade LGPD em Eventos e Dados (anonimização, consentimento, esquecimento)
 
-Sistemas Distribuidos
+Sistemas Distribuídos
 
 <h2><span class="num">1.</span> Contexto</h2>
 
-<p>A FV roda dados de clientes em <strong>vários serviços</strong>: o evento <code>lead.criado</code> viaja por Vendas, Marketing, Enriquecimento e Analytics. A <strong>LGPD</strong> exige que dado pessoal só circule com <strong>base legal</strong> (consentimento), seja guardado pelo <strong>tempo mínimo</strong> e possa ser <strong>anonimizado ou apagado</strong>. Num sistema distribuído, o dado pessoal se espalha: e o risco também.</p>
+<p>A FV roda dados de clientes em <strong>vários serviços</strong>: o evento <code>lead.criado</code> viaja por Vendas, Marketing, Enriquecimento e Analytics. A <strong>LGPD</strong> exige que dado pessoal só circule com <strong>base legal</strong> (consentimento), seja guardado pelo <strong>tempo mínimo</strong> e possa ser <strong>anonimizado ou apagado</strong>. Num sistema distribuído, o dado pessoal se espalha: é o risco também.</p>
 
 <div class="didactic"><div class="didactic-title">Analogia do bilhete com CPF</div>Você passa um bilhete com seu CPF para o atendente, que o repassa ao caixa, que o cola num quadro, que o manda ao RH. Se um desses lugares vazar, seu CPF está na rua e ninguém sabe de quem foi a culpa. A LGPD em dados distribuídos é: <strong>só repasse o CPF se o cliente autorizou</strong>, <em>manche o bilhete ao sair do setor</em> (anonimize), e <em>destrua o original quando o prazo vencer</em> (retenção). Cada sala precisa de regra.</div>
 

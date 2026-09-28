@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Gera o DOCX desta atividade (retrofit: tolerante a report.json + 3 novas secoes)."""
+"""Gera o DOCX desta atividade (retrofit: tolerante a report.json + 3 novas seções)."""
 import json, os, re
 from docx import Document
 from docx.shared import Pt, Cm, RGBColor
@@ -25,10 +25,10 @@ def cover():
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     r = p.add_run(TITLE); r.bold = True; r.font.size = Pt(23)
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER; p.space_before = Pt(28)
-    r = p.add_run("Documento Tecnico de PDI"); r.font.size = Pt(12); r.font.color.rgb = RGBColor(0x6B, 0x7A, 0x8A)
+    r = p.add_run("Documento Técnico de PDI"); r.font.size = Pt(12); r.font.color.rgb = RGBColor(0x6B, 0x7A, 0x8A)
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER; p.space_before = Pt(16)
     for line in [f"Autor: {AUTOR}", "Unidade: FV Marketing / V4 Company", "Data: Agosto 2026",
-                 "Area: 02 Praticas de Engenharia e Clean Code", "Status: Entregue (desenvolvido)"]:
+                 "Área: 02 Práticas de Engenharia e Clean Code", "Status: Entregue (desenvolvido)"]:
         rr = p.add_run(line + "\n"); rr.font.size = Pt(11); rr.font.color.rgb = RGBColor(0x49, 0x55, 0x60)
     doc.add_page_break()
 
@@ -72,7 +72,7 @@ def add_blocks(title, blocks):
         elif kind == "note":
             p = doc.add_paragraph(); p.add_run("Nota: ").bold = True; p.add_run(rest[0])
         elif kind == "warn":
-            p = doc.add_paragraph(); p.add_run("Atencao: ").bold = True; p.add_run(rest[0])
+            p = doc.add_paragraph(); p.add_run("Atenção: ").bold = True; p.add_run(rest[0])
         elif kind == "code":
             p = doc.add_paragraph(rest[1]); p.style = doc.styles["No Spacing"]
             for r in p.runs:
@@ -81,19 +81,19 @@ def add_blocks(title, blocks):
 cover()
 for title, blocks in D.get("sections", []):
     add_blocks(title, blocks)
-add_blocks("Decisoes e tradeoffs", [("ul", [
-        "Adapter para CRM e LLM externos: isola o acoplamento a APIs de terceiro em tradutores atras de ports, entao novo fornecedor vira um adapter novo sem tocar o core.",
-        "Strategy para roteamento de modelo de LLM e calculo variavel: troca if e else espalhados por estrategias selecionadas em runtime via factory selecionar.",
-        "Observer para eventos de dominio com bus.assinar: reacoes como e-mail e estoque assinam eventos sem acoplar ao core, aceitando ordem nao garantida entre observadores.",
-        "Singleton para clients rejeitado em favor de DI: evita estado global oculto e mantem o core testavel com fakes dos ports.",
-        "Padrao aplicado so onde ha variacao real, com code review focado em valor: evita over-engineering e impede que padrao vire fim em si mesmo."
+add_blocks("Decisões e tradeoffs", [("ul", [
+        "Adapter para CRM e LLM externos: isola o acoplamento a APIs de terceiro em tradutores atrás de ports, então novo fornecedor vira um adapter novo sem tocar o core.",
+        "Strategy para roteamento de modelo de LLM e cálculo variável: troca if e else espalhados por estratégias selecionadas em runtime via factory selecionar.",
+        "Observer para eventos de domínio com bus.assinar: reações como e-mail e estoque assinam eventos sem acoplar ao core, aceitando ordem não garantida entre observadores.",
+        "Singleton para clients rejeitado em favor de DI: evita estado global oculto e mantém o core testável com fakes dos ports.",
+        "Padrão aplicado só onde há variação real, com code review focado em valor: evita over-engineering e impede que padrão vire fim em si mesmo."
     ])])
-add_blocks("Impacto no negocio", [("p", "Handlers de webhook e workers repetitivos com selecao de modelo por if e else fazem cada onboarding de fornecedor duplicar pontos de falha e travar o time. Com Adapter, Strategy e Observer mais piloto em ao menos 1 CRM, o onboarding cai para ate 2 dias atras de adapter testado, o teste do core usa fake sem chamar terceiro, e o custo de plugar parceiro novo deixa de ser reescrita do fluxo.")])
-add_blocks("Referencias de estudo", [("ul", [
+add_blocks("Impacto no negócio", [("p", "Handlers de webhook e workers repetitivos com seleção de modelo por if e else fazem cada onboarding de fornecedor duplicar pontos de falha e travar o time. Com Adapter, Strategy e Observer mais piloto em ao menos 1 CRM, o onboarding cai para até 2 dias atrás de adapter testado, o teste do core usa fake sem chamar terceiro, e o custo de plugar parceiro novo deixa de ser reescrita do fluxo.")])
+add_blocks("Referências de estudo", [("ul", [
         "Curso: Design Patterns com Python, na Alura.",
-        "Video: Strategy na pratica para trocar if else, no YouTube.",
-        "Doc oficial: Catalogo de padroes com exemplos em Python, em refactoring.guru.",
-        "Doc oficial: Documentacao do Python sobre abc e protocolos para ports e adapters, em docs.python.org."
+        "Vídeo: Strategy na prática para trocar if else, no YouTube.",
+        "Doc oficial: Catálogo de padrões com exemplos em Python, em refactoring.guru.",
+        "Doc oficial: Documentação do Python sobre abc e protocolos para ports e adapters, em docs.python.org."
     ])])
 
 out = os.path.join(HERE, "pdi-" + SLUG + ".docx")

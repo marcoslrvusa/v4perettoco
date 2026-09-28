@@ -1,4 +1,4 @@
-# Atividade 3: Documentacao como Codigo, Mermaid e Diagramas Versionados
+# Atividade 3: Documentação como Código, Mermaid e Diagramas Versionados
 
 | Campo | Valor |
 |-------|-------|
@@ -32,7 +32,7 @@ atividade-3/
 
 ## Problema Resolvido
 
-Diagramas viviam em arquivos de desenho soltos, fora do git, impossiveis de revisar em PR e sempre desatualizados. Ninguem sabia qual era a versao certa do fluxo de coleta. Esta atividade move os diagramas para dentro do repo como texto Mermaid: versionados, revisados em PR e renderizados no GitHub sem ferramenta extra, com dois exemplos reais do orquestrador.
+Diagramas viviam em arquivos de desenho soltos, fora do git, impossíveis de revisar em PR e sempre desatualizados. Ninguém sabia qual era a versão certa do fluxo de coleta. Esta atividade move os diagramas para dentro do repo como texto Mermaid: versionados, revisados em PR e renderizados no GitHub sem ferramenta extra, com dois exemplos reais do orquestrador.
 
 ## Arquitetura Resumida
 
@@ -42,35 +42,35 @@ Diagramas viviam em arquivos de desenho soltos, fora do git, impossiveis de revi
         +------< [Renderiza no GitHub/GitLab] <--------------+
 ```
 
-## Proximos Passos
+## Próximos Passos
 
-1. Converter os 3 fluxos n8n mais criticos em Mermaid no repo.
-2. Ligar validacao de sintaxe Mermaid no CI.
-3. Apagar arquivos de desenho soltos apos migracao (dono: Marcos Luciano).
+1. Converter os 3 fluxos n8n mais críticos em Mermaid no repo.
+2. Ligar validação de sintaxe Mermaid no CI.
+3. Apagar arquivos de desenho soltos após migração (dono: Marcos Luciano).
 
-## Metricas de Sucesso
+## Métricas de Sucesso
 
-| Metrica | Atual | Meta |
+| Métrica | Atual | Meta |
 |---------|-------|------|
 | Diagramas vivos no repo (Mermaid) | 4 | 10 |
 | Diagramas soltos fora do git | 6 | 0 |
 | PRs com diagrama revisado no trimestre | 0 | 5 |
-| Diagramas quebrados (sintaxe invalida) | 0 | 0 |
+| Diagramas quebrados (sintaxe inválida) | 0 | 0 |
 
-## Decisoes e tradeoffs
+## Decisões e tradeoffs
 
-1. **Mermaid em vez de PlantUML.** Mermaid renderiza nativo no GitHub e GitLab; PlantUML exige servidor extra. Custo: menos tipos de diagrama exoticos, suficiente para nosso uso.
-2. **Diagrama mora junto do codigo que descreve.** Fluxo de coleta documentado ao lado do worker, nao em wiki separada. Custo: exige disciplina no PR, ganha frescor.
-3. **CI valida sintaxe, nao semantica.** O pipeline quebra em bloco Mermaid invalido, mas nao julga se o desenho esta certo. Certo ou errado e papel do revisor com o checklist.
-4. **C4 complexo fica no DSL da atividade 1.** Mermaid cobre fluxo, sequencia e contexto simples; C4 detalhado continua no Structurizr. Cada ferramenta no seu quadrado.
+1. **Mermaid em vez de PlantUML.** Mermaid renderiza nativo no GitHub e GitLab; PlantUML exige servidor extra. Custo: menos tipos de diagrama exóticos, suficiente para nosso uso.
+2. **Diagrama mora junto do código que descreve.** Fluxo de coleta documentado ao lado do worker, não em wiki separada. Custo: exige disciplina no PR, ganha frescor.
+3. **CI valida sintaxe, não semântica.** O pipeline quebra em bloco Mermaid inválido, mas não julga se o desenho está certo. Certo ou errado é papel do revisor com o checklist.
+4. **C4 complexo fica no DSL da atividade 1.** Mermaid cobre fluxo, sequência e contexto simples; C4 detalhado continua no Structurizr. Cada ferramenta no seu quadrado.
 
-## Impacto no negocio
+## Impacto no negócio
 
-Com diagramas como codigo, a documentacao anda na mesma velocidade do sistema: cada mudanca de fluxo chega com seu desenho atualizado no mesmo PR, revisado pela mesma pessoa. Acaba a era do diagrama bonito e mentiroso em arquivo solto, e qualquer operador consulta a versao certa direto no repo, sem pedir print no chat.
+Com diagramas como código, a documentação anda na mesma velocidade do sistema: cada mudança de fluxo chega com seu desenho atualizado no mesmo PR, revisado pela mesma pessoa. Acaba a era do diagrama bonito e mentiroso em arquivo solto, e qualquer operador consulta a versão certa direto no repo, sem pedir print no chat.
 
-## Referencias
+## Referências
 
 - Curso: Version Control with Git, Atlassian (Coursera): https://www.coursera.org/learn/version-control-with-git
-- Video: "Mermaid Live Editor e diagramas como codigo", canal oficial Mermaid (YouTube)
+- Vídeo: "Mermaid Live Editor e diagramas como código", canal oficial Mermaid (YouTube)
 - Doc: Site oficial do Mermaid: https://mermaid.js.org/
 - Doc: Sintaxe C4 no Mermaid: https://mermaid.js.org/syntax/c4.html

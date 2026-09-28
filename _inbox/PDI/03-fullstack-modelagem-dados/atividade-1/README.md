@@ -64,9 +64,9 @@ EXPLAIN ANALYZE (método de diagnóstico)
 
 > ⚠️ Nenhum índice foi aplicado em produção nesta etapa: apenas documentado e provado.
 
-## Metricas de Sucesso
+## Métricas de Sucesso
 
-| Metrica | Atual | Meta |
+| Métrica | Atual | Meta |
 |---------|-------|------|
 | Worker da fila `mt_jobs` (pick job) | 1.8s (Seq Scan) | < 10ms |
 | JOIN de sync CRM (auditoria 30d) | 4.2s | < 250ms |
@@ -74,21 +74,21 @@ EXPLAIN ANALYZE (método de diagnóstico)
 | Bloat em tabelas de log | não monitorado | < 20% |
 | Timeout de webhook por query lenta | ~3/dia | 0 |
 
-## Decisoes e tradeoffs
+## Decisões e tradeoffs
 
-1. **Nenhuma query em producao sem `EXPLAIN (ANALYZE, BUFFERS)`:** o plano e a fonte da verdade; o achismo gerou Seq Scan em 2,4M linhas na fila `mt_jobs`. Tradeoff: exige disciplina de revisao e staging com volumetria representativa.
-2. **Indice composto na ordem igualdade, range e depois ORDER BY (`queue, status, scheduled_at`):** cobre filtro e ordenacao num Index Scan sem Sort; o pick da fila saiu de 1,8s para 4ms. Tradeoff: a escrita paga um pouco mais por indice; aceito porque a fila e lida pelo worker a cada 15s.
-3. **Tipo certo por padrao de acesso (B-tree composto, GIN para arrays/jsonb, BRIN para series temporais):** BRIN em `created_at` fica 10x menor que o B-tree equivalente. Tradeoff: o BRIN so funciona se a ordem fisica acompanha o tempo; exige manutencao com vacuum e particionamento.
-4. **Particionamento por range com TTL em tabelas append-only (logs, eventos, sync):** o partition pruning ignora particoes antigas; o dashboard saiu de 8,4s para 1,1s com agregacao materializada. Tradeoff: exige job de particionamento e TTL para manter; sem ele a tabela cresce sem limite.
-5. **`CREATE INDEX CONCURRENTLY` fora de pico + RLS com policies simples e indices respeitados:** o indice novo nao segura `AccessExclusiveLock` nem derruba a escrita. Tradeoff: a criacao e mais lenta e nao roda em transacao; as janelas de deploy precisam prever isso.
+1. **Nenhuma query em produção sem `EXPLAIN (ANALYZE, BUFFERS)`:** o plano e a fonte da verdade; o achismo gerou Seq Scan em 2,4M linhas na fila `mt_jobs`. Tradeoff: exige disciplina de revisão e staging com volumetria representativa.
+2. **Índice composto na ordem igualdade, range e depois ORDER BY (`queue, status, scheduled_at`):** cobre filtro e ordenação num Index Scan sem Sort; o pick da fila saiu de 1,8s para 4ms. Tradeoff: a escrita paga um pouco mais por índice; aceito porque a fila e lida pelo worker a cada 15s.
+3. **Tipo certo por padrão de acesso (B-tree composto, GIN para arrays/jsonb, BRIN para séries temporais):** BRIN em `created_at` fica 10x menor que o B-tree equivalente. Tradeoff: o BRIN só funciona se a ordem física acompanha o tempo; exige manutenção com vacuum e particionamento.
+4. **Particionamento por range com TTL em tabelas append-only (logs, eventos, sync):** o partition pruning ignora partições antigas; o dashboard saiu de 8,4s para 1,1s com agregação materializada. Tradeoff: exige job de particionamento e TTL para manter; sem ele a tabela cresce sem limite.
+5. **`CREATE INDEX CONCURRENTLY` fora de pico + RLS com policies simples e índices respeitados:** o índice novo não segura `AccessExclusiveLock` nem derruba a escrita. Tradeoff: a criação é mais lenta e não roda em transação; as janelas de deploy precisam prever isso.
 
-## Impacto no negocio
+## Impacto no negócio
 
-A fila `mt_jobs` com 2,4M linhas, o sync de CRM e o dashboard sobre 12M linhas geravam timeouts de webhook (cerca de 3 por dia), dashboards de 8s ou mais e backlog invisivel. Com os indices e o metodo EXPLAIN, o pick fica abaixo de 10ms, o sync abaixo de 250ms e o dashboard abaixo de 1,5s, zerando timeouts e devolvendo visibilidade da fila sem trocar de banco.
+A fila `mt_jobs` com 2,4M linhas, o sync de CRM e o dashboard sobre 12M linhas geravam timeouts de webhook (cerca de 3 por dia), dashboards de 8s ou mais e backlog invisível. Com os índices e o método EXPLAIN, o pick fica abaixo de 10ms, o sync abaixo de 250ms e o dashboard abaixo de 1,5s, zerando timeouts e devolvendo visibilidade da fila sem trocar de banco.
 
-## Referencias de estudo
+## Referências de estudo
 
 - Curso: SQL Performance Explained, de Markus Winand (use-the-index-luke.com)
-- Video: Postgres Performance (Supabase, YouTube)
+- Vídeo: Postgres Performance (Supabase, YouTube)
 - Doc oficial: Using EXPLAIN (PostgreSQL), https://www.postgresql.org/docs/current/using-explain.html (verificada em 2026-09-28)
 - Doc oficial: Query Optimization (Supabase), https://supabase.com/docs/guides/database/query-optimization (verificada em 2026-09-28)
