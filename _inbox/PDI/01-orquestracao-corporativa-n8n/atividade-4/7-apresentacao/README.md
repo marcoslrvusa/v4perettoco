@@ -32,6 +32,10 @@ Orquestração Corporativa (n8n)
 
 <ul><li><strong>Workflow</strong> <code>01-sync-4crm.json</code>: orquestração com trace_id e idempotência.</li><li><strong>Script</strong> <code>normalize.py</code>: mapeamento de campos entre CRMs.</li><li><strong>Doc</strong> <code>runbook.md</code>: como investigar um trace_id e fazer rollback.</li><li><strong>Dashboard</strong> de divergência (antes/depois) em tempo real.</li></ul>
 
+<p>Ao lado disso, o contrato de log entrega o schema de evento com oito campos obrigatórios, os quatro níveis de severidade e as proibições explícitas: PII em claro, falha silenciosa, <code>console.log</code> solto e <code>status: ok</code> sem confirmação do servidor. Quem escreve nó novo cópia o template, não inventa formato.</p>
+
+<div class="didactic"><div class="didactic-title">Por que versão no schema</div>Um evento é um contrato entre quem emite e quem consulta. Se o campo <code>duration_ms</code> nascer amanhã, toda query antiga continua válida porque o leitor tolera campo ausente; se um campo obrigatório sumir, a query quebra na hora. <code>schema_version</code> existe para que a quebra seja anunciada, não descoberta.</div>
+
 <h2><span class="num">7.</span> Métricas</h2>
 
 <div class="charts"><div class="chart-card"><div class="chart-title">Divergência resolvida (%)</div><svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Divergência resolvida (%)"><line x1="42" y1="170" x2="330" y2="170" stroke="#c8d0d8"/><line x1="42" y1="170" x2="42" y2="26" stroke="#c8d0d8"/><polyline points="42,170 68,153 94,134 121,112 147,90 173,71 199,57 225,46 251,39 278,33 304,29 330,26" fill="none" stroke="#e6a800" stroke-width="2.5"/><circle cx="330" cy="26" r="3.5" fill="#e6a800"/><text x="42" y="184" fill="#8896a8" font-size="9" text-anchor="middle">S1</text><text x="68" y="184" fill="#8896a8" font-size="9" text-anchor="middle">S2</text><text x="94" y="184" fill="#8896a8" font-size="9" text-anchor="middle">S3</text><text x="121" y="184" fill="#8896a8" font-size="9" text-anchor="middle">S4</text><text x="147" y="184" fill="#8896a8" font-size="9" text-anchor="middle">S5</text><text x="173" y="184" fill="#8896a8" font-size="9" text-anchor="middle">S6</text><text x="199" y="184" fill="#8896a8" font-size="9" text-anchor="middle">S7</text><text x="225" y="184" fill="#8896a8" font-size="9" text-anchor="middle">S8</text><text x="251" y="184" fill="#8896a8" font-size="9" text-anchor="middle">S9</text><text x="278" y="184" fill="#8896a8" font-size="9" text-anchor="middle">S10</text><text x="304" y="184" fill="#8896a8" font-size="9" text-anchor="middle">S11</text><text x="330" y="184" fill="#8896a8" font-size="9" text-anchor="middle">S12</text><text x="46" y="12" fill="#e6a800" font-size="10" font-family="JetBrains Mono">Semana 1</text></svg></div></div>
@@ -41,3 +45,33 @@ Orquestração Corporativa (n8n)
 <h2><span class="num">8.</span> Status final</h2>
 
 <p><span class="status st-warn">NÃO publicado</span>: Desenvolvido e em homologação. Aguarda revisão do time de dados antes de ir a produção.</p>
+
+<h2><span class="num">9.</span> Matemática e capacidade</h2>
+
+<p>Três contas fechadas sustentam o desenho. A primeira é a taxa de erro que dispara o alerta: com 1.200 eventos em 5 min, o limiar de 2% equivale a 24 falhas. A segunda é o tempo de detecção pior caso, que soma janela, consulta e notificação: 5 min + 5 s + 15 s, cerca de 5 min 20 s para o sinal de taxa; para falhas agudas como autenticação, o contrato prevê contagem absoluta na janela de 1 min, que derruba a detecção para menos de 60 s. A terceira é a Lei de Little aplicada à fila de reprocessamento: com 4 eventos/s e 3 s de tempo médio de escrita, <code>L = λW = 12</code> eventos em execução simultânea, e com três tentativas de retry o pico chega a 36 conexões contra o CRM, o que justifica backoff exponencial com jitter.</p>
+
+<div class="callout"><strong>Custo:</strong> cerca de 72 MB/mês de log (meta), retenção de 90 dias em cerca de 216 MB (meta), esforço de construção de 60 h (meta). Infraestrutura adicional: nenhuma, porque usa o banco e o orquestrador já existentes.</div>
+
+<h2><span class="num">10.</span> Modos de falha e runbook</h2>
+
+<table><tr><th>Sintome</th><th>Causa raiz</th><th>Como detecta</th><th>Mitigação</th><th>Recuperação</th></tr><tr><td>Lead some do funil</td><td>escrita marcada ok sem confirmação</td><td>controle de confirmação na view</td><td>exigir resposta do servidor</td><td>replay da DLQ por trace_id</td></tr><tr><td>Alerta falso</td><td>amostra pequena na janela</td><td>piso de 50 eventos</td><td>janela de 15 min</td><td>ajuste do limiar</td></tr><tr><td>Silêncio no painel</td><td>nó parou de emitir log</td><td>heartbeat de 5 min</td><td>alerta de ausência</td><td>reiniciar execução</td></tr><tr><td>PII em claro</td><td>nó legado sem máscara</td><td>varredura por regex</td><td>bloqueio no CI</td><td>reescrever e apagar</td></tr><tr><td>Tempestade de retry</td><td>backoff sem jitter</td><td>pico correlacionado</td><td>exponencial + jitter</td><td>desligar onda</td></tr><tr><td>Evento envenenado</td><td>payload fora de schema</td><td>3 falhas do mesmo trace_id</td><td>envio para DLQ</td><td>corrigir e reinserir</td></tr></table>
+
+<p>Runbook em três tempos: checagem em 2 min, mitigação em 10 min, comunicação em 3 min. Some menos de 15 min, que é exatamente o MTTR contratado. Quem aciona: plantão de integração para falha de CRM, time de dados para divergência de schema, segurança para vazamento de PII. Rollback é desligar o template do nó, porque o contrato é aditivo e não altera payload de negócio.</p>
+
+<h2><span class="num">11.</span> Decisões e alternativas descartadas</h2>
+
+<p><strong>Descartada: fila dedicada (Rabbit/Kafka).</strong> Custo operacional de mais um componente para uma carga de 12 integrações não se paga; o barramento dentro do n8n atende com menos superfície de operação.</p>
+<p><strong>Descartada: alerta por e-mail.</strong> Tempo de leitura medido em horas contra menos de 1 min no Slack. Alerta que ninguém lê em tempo útil não é alerta.</p>
+<p><strong>Descartada: logar o payload completo.</strong> Resolveria debugging e criaria um problema de privacidade maior que o original.</p>
+<p><strong>Descartada: contador no n8n.</strong> Custo zero e investigação impossível: diz quantos erros, nunca quais registros nem qual causa.</p>
+<p><strong>Adiada: APM com trace distribuído nativo.</strong> Só passa a valer quando houver orquestração multi-serviço para correlacionar; hoje todo o percurso vive dentro do n8n e é coberto por um <code>trace_id</code> só.</p>
+
+<div class="callout"><strong>Matriz de tradeoff:</strong> pesos de 40% para primeiro sinal útil, 25% para custo recorrente, 20% para ausência de infra nova e 15% para profundidade de investigação. Log estruturado com painel SQL vence em três dos quatro critérios.</div>
+
+<h2><span class="num">12.</span> Segurança e observabilidade</h2>
+
+<table><tr><th>Controle</th><th>Regra</th><th>Verificação</th></tr><tr><td>PII em log</td><td>máscara obrigatória de e-mail e CNPJ</td><td>varredura por regex deve retornar zero linhas</td></tr><tr><td>Trace de auditoria</td><td>100% dos eventos com trace_id não nulo</td><td>consulta de cobertura por janela de 24 h</td></tr><tr><td>Retenção</td><td>90 dias para log, 180 dias para trace_store</td><td>limpeza automática diária</td></tr><tr><td>Acesso</td><td>log restrito ao time de integração</td><td>revogação quando alguém sai do time</td></tr><tr><td>Segredo</td><td>token de CRM nunca aparece em log</td><td>varredura por prefixo de credencial</td></tr><tr><td>Humano na ação irreversível</td><td>reinserção de DLQ exige confirmação</td><td>registro de quem reinseriu e por quê</td></tr></table>
+
+<p>Observabilidade de negócio não substitui observabilidade técnica: ela responde <em>qual registro de qual CRM está errado desde quando</em>, enquanto a técnica responde <em>qual serviço consumiu CPU</em>. Esta atividade entrega a primeira, porque é a que falta hoje, e deixa a segunda para a evolução com OTel quando existir mais de um serviço para correlacionar.</p>
+
+<div class="callout"><strong>Fecho:</strong> detecção de dias para menos de 1 min, MTTR abaixo de 15 min, visibilidade de 0% para 100% por CRM e retrabalho de cerca de 50h para cerca de 1h por semana (meta). Próximo passo imediato: piloto de 7 dias em 1 integração com critério de saída escrito.</div>

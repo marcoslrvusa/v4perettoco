@@ -125,6 +125,55 @@ curl -X POST https://n8n.fvmarketing.com.br/webhook/nos/python-enricher \
 # Esperado: byTipo {"B2B":1,"B2C":1}, somaScore {"B2B":88,"B2C":45}
 ```
 
+### 4.4 Teste de borda (obrigatório antes do push)
+
+Os testes de escala mostram que o caminho feliz aguenta carga. Os testes de borda
+mostram que o caminho errado não derruba o pipeline. Rode os quatro:
+
+```bash
+# a) Lista vazia
+curl -X POST http://localhost:5678/webhook/nos/js-normalizer \
+  -H 'Content-Type: application/json' -d '{"payload": []}'
+# Esperado: success true, processedItems 0
+
+# b) Payload nulo
+curl -X POST http://localhost:5678/webhook/nos/js-normalizer \
+  -H 'Content-Type: application/json' -d '{"payload": null}'
+# Esperado: success true, processedItems 0, sem erro 500
+
+# c) JSON malformado
+curl -X POST http://localhost:5678/webhook/nos/js-normalizer \
+  -H 'Content-Type: application/json' -d '{"payload": "{quebrado}"}'
+# Esperado: flag de erro de parse visivel, nao lista vazia silenciosa
+
+# d) Itens invalidos misturados com validos
+curl -X POST http://localhost:5678/webhook/nos/js-normalizer \
+  -H 'Content-Type: application/json' \
+  -d '{"payload": [{"id":1,"name":"Ok","score":10},{"name":"sem id"},null]}'
+# Esperado: processedItems 1, execucao nao falha
+```
+
+**Critério de bloqueio:** se qualquer um dos quatro retornar erro 500 ou derrubar
+a execução, o push fica suspenso até o filtro barato ser colocado antes da
+transformação no nó `Normalize in One Pass`.
+
+### 4.5 Registro da baseline
+
+Antes de sair da fase de teste, grave os números. Sem baseline não há como provar
+ganho nem detectar regressão futura:
+
+| Arquivo | O que registrar |
+|---|---|
+| `/tmp/payload-100k.json` | Gerar uma única vez e reutilizar sempre o mesmo |
+| `duration_ms` | Valor da execução de 100k |
+| `items_per_second` | Valor da execução de 100k |
+| `processed_items` / `deduped` | Conferência de integridade |
+| Pico de memória | Conferido no host do n8n durante a execução |
+
+Anote tudo em `5-monitoring/` ou no próprio PR de revisão. A comparação do retrofit
+(Fase 4 do `4-retrofit/RETROFIT.md`) usa exatamente esse arquivo de payload como
+referência.
+
 ---
 
 ## 5. Fase 5: Retrofit dos workflows existentes (2 dias)
@@ -175,6 +224,46 @@ trivial:
 
 Se o problema for em um workflow retrofittado, reverta **somente aquele workflow**
 para a versão anterior no git e re-faça o push: o restante do pipeline permanece.
+
+### 7.1 Sequência exata de rollback por arquivo
+
+```bash
+# 1) Identificar o que mudou
+git status --short "2-workflows/"
+
+# 2) Reverter APENAS o arquivo culpado
+git checkout -- "2-workflows/[CC] NOS - JS Payload Normalizer.workflow.ts"
+
+# 3) Confirmar que o diff sumiu
+git diff --stat "2-workflows/"
+
+# 4) Reapublicar somente aquele workflow
+npx --yes n8nac push "2-workflows/[CC] NOS - JS Payload Normalizer.workflow.ts"
+
+# 5) Revalidar os demais para garantir que nada foi pego junto
+npx --yes n8nac skills validate "2-workflows/[CC] NOS - Python Payload Enricher.workflow.ts"
+```
+
+### 7.2 Níveis de rollback
+
+| Nível | Quando | Ação | Tempo típico |
+|---|---|---|---|
+| Nó | Só um nó regrediu | Reverter o `jsCode` daquele nó e validar | Minutos |
+| Workflow | O workflow inteiro está ruim | `git checkout` do arquivo + `push` | Minutos |
+| Trilha | Vários workflows quebrados | Desativar os webhooks `/nos/*` no UI e investigar | Imediato |
+| Global | Instância instável | Pausar a trilha inteira e acionar coordenação | Conforme impacto |
+
+Regra: o rollback é sempre do menor escopo que resolve. Reverter três workflows
+porque um falhou apaga a evidência dos dois que estavam bons e obriga a refazer
+validação inteira depois.
+
+### 7.3 Depois do rollback
+
+1. Registrar quando, qual arquivo e qual sintoma motivou a reversão.
+2. Repetir a Fase 4 (teste com payload simulado) na versão revertida, para garantir
+   que a reversão não deixou o pipeline em estado misto.
+3. Só re-tentar a publicação depois de reproduzir o problema localmente
+   (`n8n start` em máquina de teste) e aplicar a correção.
 
 ---
 

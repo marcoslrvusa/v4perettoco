@@ -96,3 +96,79 @@ ORDER BY p.updated_at DESC;
 | Drift aberto > 4h | View #4 | Priorizar resolução (cliente impactado) |
 | Health below_min | View #5 | Alertar + revisar `min_health` |
 | Heartbeat antigo > 10 min | Query #6 | Reiniciar worker |
+
+## 9. Throughput da Fila (por hora, 24h)
+
+```sql
+SELECT
+  date_trunc('hour', finished_at) AS hora,
+  queue,
+  COUNT(*) AS concluidos,
+  COUNT(*) FILTER (WHERE status = 'failed') AS falhos,
+  ROUND(100.0 * COUNT(*) FILTER (WHERE status = 'failed') / GREATEST(COUNT(*), 1), 2)
+    AS falha_pct
+FROM mt_jobs
+WHERE finished_at > now() - INTERVAL '24 hours'
+GROUP BY 1, 2
+ORDER BY 1 DESC;
+```
+
+Serve para responder a pergunta que o backlog não responde: "o problema é que
+chegou muito trabalho ou que paramos de concluir?". Se `concluidos` cai com
+`queued` estável, o gargalo está na entrada; se `concluidos` cai com `queued`
+subindo, o gargalo está na execução.
+
+## 10. Latência de ACK do Gateway
+
+```sql
+SELECT
+  ROUND(AVG(EXTRACT(EPOCH FROM (picked_at - created_at)))::numeric, 2) AS espera_s,
+  ROUND(MAX(EXTRACT(EPOCH FROM (picked_at - created_at)))::numeric, 2) AS espera_max_s,
+  COUNT(*) AS jobs
+FROM mt_jobs
+WHERE created_at > now() - INTERVAL '1 hour'
+  AND picked_at IS NOT NULL;
+```
+
+`espera_s` mede o tempo entre o ACK e o início da execução, que é o custo real
+de ter escolhido a fila assíncrona. É o número que se compara ao SLO de 2 s do
+ACK mais o tempo de ciclo do poller (15 s), ou seja, espera mediana esperada na
+faixa de 0 a 15 s e nunca acima do timeout configurado de 10 min.
+
+## 11. Retomadas e Retentativas (indicador de saúde do padrão)
+
+```sql
+SELECT
+  queue,
+  COUNT(*) AS jobs,
+  ROUND(AVG(attempts), 2) AS tentativas_media,
+  COUNT(*) FILTER (WHERE attempts > 1) AS com_retry,
+  COUNT(*) FILTER (WHERE status = 'failed') AS dlq
+FROM mt_jobs
+WHERE created_at > now() - INTERVAL '7 days'
+GROUP BY queue
+ORDER BY com_retry DESC;
+```
+
+- `tentativas_media` perto de 1,00 = fluxo limpo.
+- Acima de 1,50 = investigar causa raiz antes de mexer em `max_attempts`.
+- `dlq > 0` = existe trabalho parado esperando decisão humana.
+
+## Painel sugerido (ordem das cartões)
+
+| Posição | Cartão | Fonte |
+|---------|--------|-------|
+| 1 | Fila agora (por fila) | Query #1 |
+| 2 | Slots em uso | Query #2 |
+| 3 | Taxa de sucesso 24h | Query #3 |
+| 4 | Drifts abertos | Query #4 |
+| 5 | Health abaixo do mínimo | Query #5 |
+| 6 | Jobs lentos | Query #6 |
+| 7 | Top erros (7 dias) | Query #7 |
+| 8 | Checkpoints em execução | Query #8 |
+| 9 | Throughput por hora | Query #9 |
+| 10 | Espera média do ACK | Query #10 |
+| 11 | Tentativas médias | Query #11 |
+
+Os cartões 1 a 6 são de sala de operação (sempre visíveis); os de 7 a 11 são de
+análise semanal, revisados no mesmo horário toda segunda-feira.

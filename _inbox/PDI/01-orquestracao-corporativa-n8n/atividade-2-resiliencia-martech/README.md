@@ -42,6 +42,22 @@ Três frentes de trabalho:
 3. **Observabilidade CRM**: trilha de auditoria de sincronização com CRMs
    terceiros, com detecção precoce de divergência antes de afetar o cliente.
 
+## Modelo mental
+
+O sistema não processa requisições: ele as converte em **jobs duráveis**. O
+webhook de entrada nunca executa lógica de negócio, apenas grava uma linha em
+`mt_jobs` e responde 202, de modo que o tempo de resposta do gateway é o tempo
+de um `INSERT`, não o tempo de uma integração inteira. Depois, um poller a cada
+15s lê a fila em ordem de prioridade e só despacha um job quando o semáforo
+`mt_concurrency` tem slot livre, o que transforma concorrência ilimitada em
+concorrência declarada. O trabalho pesado acontece em um sub-workflow que
+processa o payload em lotes de 500 itens e grava checkpoint a cada lote, de modo
+que falha vira retomada e não retrabalho. Por fim, toda conclusão de sync emite
+um envelope com o esperado e o confirmado; se a diferença ultrapassa a
+tolerância, nasce um registro de divergência em vez de um silêncio. O modelo
+mental completo é: **enfileire barato, execute devagar, registre tudo, compare o
+resultado com a intenção**.
+
 ## Arquitetura Resumida
 
 ```
@@ -53,6 +69,134 @@ Gateways HTTP (pico MarTech)
           → CRM Sync Log (auditoria completa)
             → Detector de divergência (antes de afetar o cliente)
 ```
+
+```mermaid
+flowchart LR
+    W[Webhook MarTech] --> G[Gateway: enfileira e responde 202]
+    G --> J[(mt_jobs: queued)]
+    J --> P[Poller 15s]
+    P -->|slot livre| S[(mt_concurrency)]
+    S --> X[Worker: sub-workflow por job]
+    X --> H[Heavy Payload: chunks + checkpoint]
+    H --> C[CRM terceiro]
+    C --> O[Observabilidade: mt_sync_log]
+    O --> D{drift > tolerancia?}
+    D -->|sim| DL[(mt_sync_delta)]
+    D -->|nao| HS[(mt_crm_health)]
+    DL --> A[Alerta em 15 min]
+```
+
+**Legenda das decisões de borda:**
+
+- **Entrada**: só enfileira, nunca calcula. O ACK é do banco, não do negócio.
+- **Fila**: Postgres em vez de Redis porque o volume atual cabe em uma tabela e
+  o Supabase já é operado pelo time (menos um sistema para monitorar).
+- **Semáforo**: por fila, não global, porque `crm-sync` e `import` têm tolerâncias
+  de latência diferentes e não podem se bloquear (head of line blocking).
+- **Retomada**: checkpoint por chunk porque o custo de reprocessar 10 mil itens
+  é maior que o custo de três escritas extras por lote.
+- **Saída**: auditoria antes de declarar sucesso, porque HTTP 200 do CRM não
+  garante que os dados foram gravados como esperado.
+
+## Matemática da solução
+
+A fila é dimensionada pela Lei de Little: $L = \lambda W$, em que $L$ é o número
+médio de jobs no sistema, $\lambda$ a taxa de chegada e $W$ o tempo médio de
+permanência (aqui, o tempo de processamento mais a espera na fila).
+
+**Exemplo numérico:** com chegada média de 0,5 job/s (1.800 jobs/hora) e tempo
+médio de processamento $W = 10\,s$, temos $L = 0{,}5 \times 10 = 5$ jobs
+simultâneos, exatamente o `max_concurrency` default. Se o processamento piorar
+para $W = 20\,s$ sem mudar a chegada, a exigência vira $L = 10$; com apenas 5
+slots a taxa de saída cai para $5 / 20 = 0{,}25$ job/s, o déficit é
+$0{,}5 - 0{,}25 = 0{,}25$ job/s e em 10 minutos o backlog acumula
+$0{,}25 \times 600 = 150$ jobs. A leitura operacional é direta: backlog crescente
+com `usage_pct` em 100% significa tempo de processamento, não falta de slots.
+
+Custo de escrita do checkpoint: **Exemplo numérico:** um job de 10.000 itens em
+lotes de 500 gera 20 lotes; com duas escritas por lote (`running` e `done`) o
+job custa 40 `UPDATE` em `mt_job_progress`. Se cada `UPDATE` levar 5 ms, o
+overhead total é $40 \times 5 = 200\,ms$ contra o risco de reprocessar os 20
+lotes inteiros depois de um timeout de 10 min.
+
+Latência de ACK: **Exemplo numérico:** `INSERT` no Supabase com round-trip de
+40 ms, serialização do corpo de 2 KB em 5 ms e resposta HTTP em 10 ms somam
+55 ms, folga de 2s é maior que 30x o caso típico, o que deixa margem para picos
+de rede sem virar erro de timeout no cliente.
+
+## Invariantes
+
+| Invariante | Violação correspondente |
+|------------|-------------------------|
+| Um `job_key` existe no máximo uma vez por fila | Processamento duplicado do mesmo evento |
+| `in_use <= max_concurrency` em qualquer instante | Estouro de concorrência e travamento da instância |
+| Todo job em `running` tem `heartbeat_at` com menos de 2 min | Job zumbi segurando slot para sempre |
+| `attempts <= max_attempts` em qualquer job | Retry infinito e fila que nunca esvazia |
+| Todo sync concluído tem linha em `mt_sync_log` | Perda de trilha e impossibilidade de provar impacto |
+| Payload acima de 64 KB nunca é carregado inteiro no webhook | OOM e degradação para os demais workflows |
+| Drift acima da tolerância sempre gera `mt_sync_delta` | Divergência invisível até a reclamação do cliente |
+| O schema v3.0 não altera nenhuma tabela `error_*` da atividade 1 | Migração destrutiva em ambiente homologado |
+
+## Modos de falha
+
+| Sintoma | Causa raiz | Como detecta | Como mitiga | Recuperação |
+|---------|------------|--------------|-------------|-------------|
+| Job parado em `queued` | Worker desligado ou sem slot | `vw_mt_queue_backlog` com `stale_queued > 0` | Subir/reiniciar o Worker | 1 ciclo (15s) após o Worker voltar |
+| Job preso em `running` | Worker morreu sem liberar slot | `heartbeat_at` com mais de 10 min | Reaper devolve para `queued` | 1 min (ciclo do Reaper) |
+| Instância degrada em pico | Payload processado no webhook | CPU/memória da instância e fila interna do n8n | Retrofit para o Gateway (202) | Imediato após o retrofit |
+| Job duplicado | `job_key` ausente ou errado | Contagem por `job_key` no período | `INSERT ... ON CONFLICT DO NOTHING` | Prevenção, sem retrabalho |
+| Erro 429 do CRM | Rate limit do terceiro | `error_class = rate_limit` em `mt_sync_log` | Backoff 30s, 1m, 2m e disjuntor de circuito | Até 2 min por tentativa |
+| Drift não aparece | Envelope sem campo `expected` | Sync parcial com `vw_mt_drift_abertos` vazio | Envelope obrigatório no retrofit | Correção no próximo sync |
+| Backlog crescente contínuo | Taxa de saída menor que a chegada | `usage_pct` em 100% junto com fila estável | Aumentar `max_concurrency` ou reduzir `W` | Dependente da causa de `W` |
+
+## SLO e orçamento de erro
+
+| SLI | Meta (meta) | Janela | Estouro |
+|-----|-------------|--------|---------|
+| Latência p95 do ACK no Gateway | < 2 s | 30 dias | Investigar rede/banco antes de mexer na fila |
+| Jobs concluídos na primeira tentativa | > 95% | 7 dias | Revisar backoff e estabilidade do CRM |
+| Tempo até detectar drift | < 15 min | Contínuo | Verificar cadência do alerta de 15 min |
+| Jobs em `queued` sem Worker por 10 min | 0 | Contínuo | Página imediata para a equipe de automação |
+| Disponibilidade do webhook do Gateway | 99,5% (meta) | 30 dias | Escalar instância n8n |
+
+Orçamento de erro: em um mês com 100 mil jobs, o orçamento de falha na primeira
+tentativa de 5% permite 5.000 retries (meta). Estourou: a prioridade é reduzir a
+causa raiz, não aumentar `max_attempts`, porque cada tentativa extra multiplica a
+pressão sobre o CRM e sobre a própria fila.
+
+## Operação (runbook resumido)
+
+1. **Checagem de rotina** (a cada 15 min no horário de pico): `vw_mt_queue_backlog`,
+   `vw_mt_slots`, `vw_mt_crm_health`. As três consultas cabem em uma tela.
+2. **Fila parada**: confirmar se o Workflow `[CC] MT - Queue Worker` está ativo no
+   n8n e se a credencial `Command Center Supabase` não expirou. Mitigação: reativar
+   o Worker; o backlog se resolve sozinho no próximo ciclo.
+3. **Slot preso**: localizar o job com `heartbeat_at` antigo, confirmar que nenhum
+   Worker está ativo sobre ele e deixar o Reaper devolver para `queued`.
+4. **Drift aberto**: abrir a `execution_url` do `mt_sync_delta`, comparar o payload
+   enviado com a resposta do CRM e decidir reprocessar ou aceitar a diferença com
+   registro.
+5. **Rollback**: a fila é aditiva. Para desligar com segurança, basta desativar o
+   Gateway e o Worker; os jobs remanescentes ficam em `queued` e nenhum workflow
+   legado é afetado.
+6. **Quem aciona**: autonomia do analista para itens 2 e 3; coordenação de
+   Infraestrutura para queda da instância; atendimento ao cliente para decisão de
+   reprocessamento de drift.
+
+## Checklist de domínio
+
+- [ ] Consigo explicar por que o ACK é 202 e não o resultado final.
+- [ ] Sei calcular a concorrência necessária com $L = \lambda W$.
+- [ ] Entendo o que cada status de `mt_jobs` significa e quem o transiciona.
+- [ ] Sei o que acontece com um job quando o Worker morre no meio.
+- [ ] Sei justificar o backoff 30s, 1m, 2m com 3 tentativas.
+- [ ] Entendo por que payload grande vai em lote e não no webhook.
+- [ ] Sei desenhar o caminho de um evento do webhook até o dashboard.
+- [ ] Sei dizer o que é medido, em qual janela e o que acontece no estouro.
+- [ ] Conheço as tabelas `mt_*` e o que cada uma responde.
+- [ ] Sei rodar o rollback sem perder dados nem quebrar a atividade 1.
+- [ ] Sei distinguir retry (esperado), DLQ (espera revisão) e drift (negócio).
+- [ ] Sei apontar onde a detecção de drift antecipa a reclamação do cliente.
 
 ## Próximos Passos (homologação)
 

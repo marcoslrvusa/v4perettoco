@@ -83,6 +83,28 @@ esperado (before) - confirmado (after) / esperado > 5% = drift_flag
 - Sem divergência: `drift = 0`, health atualiza +1 sucesso.
 - Com divergência: grava delta e **não marca o job como concluído** até revisão.
 
+Implementação canônica do cálculo (Code node do Observabilidade):
+
+```js
+const EPSILON = 0.0001; // evita divisão por zero quando expected = 0
+
+function computeDrift(expected, confirmed) {
+  if (!Number.isFinite(expected) || expected <= 0) {
+    return { drift_pct: 0, drift_flag: false, reason: 'sem_base_de_comparacao' };
+  }
+  const diff = Math.abs(expected - confirmed);
+  const drift_pct = diff / Math.max(expected, EPSILON);
+  return { drift_pct, drift_flag: drift_pct > 0.05, reason: null };
+}
+
+// Exemplo numérico: expected 1000, confirmed 860 → 140/1000 = 0,14 = 14%
+```
+
+Regra de negócio importante: `expected = 0` **não** é divergência, é ausência de
+base. Tratar `0/0` como 100% de drift geraria alerta falso a cada criação de
+entidade nova. O retorno explícito `sem_base_de_comparacao` deixa a decisão
+auditável em vez de escondê-la em um `if`.
+
 ### 5.1 Fluxo do Detector
 
 ```
@@ -143,3 +165,77 @@ Todo workflow de sync que produz registros envia para o padrão um envelope:
 | Tratar drift como erro normal | Melhor revisão que verificação |
 | Sem hash de resposta | Não sabe se o CRM salvou igual |
 | Confiar só no status HTTP | HTTP 200 não significa dados corretos |
+
+## 9. Semântica dos hashes
+
+`payload_hash` e `response_hash` são SHA-256 truncado (32 hex) do conteúdo
+canonizado, e não do JSON cru, porque a ordem das chaves varia entre versões da
+API do CRM e produziria falso positivo:
+
+```js
+const crypto = require('crypto');
+
+function canon(value) {
+  if (value === null || typeof value !== 'object') return JSON.stringify(value);
+  if (Array.isArray(value)) return '[' + value.map(canon).join(',') + ']';
+  return '{' + Object.keys(value).sort()
+    .map((k) => JSON.stringify(k) + ':' + canon(value[k]))
+    .join(',') + '}';
+}
+
+function payloadHash(value) {
+  return crypto.createHash('sha256').update(canon(value)).digest('hex').slice(0, 32);
+}
+```
+
+Nunca gravar o payload inteiro: o hash responde "mudou ou não mudou" com 32
+caracteres, enquanto 10 MB de JSON em `mt_sync_log` transformaria a auditoria no
+próprio gargalo que o padrão quer evitar. Quando a investigação exige o corpo, o
+envelope opcional `payload` (já previsto no formato padrão) é armazenado separado
+e com retenção curta.
+
+## 10. Telemetria e Alerta
+
+| Métrica | Fonte | Cardinalidade | Alerta |
+|---------|-------|---------------|--------|
+| `sync_total` por objeto | `mt_sync_log` | objeto + direção | queda de 50% em 24 h (meta) |
+| `sync_error_rate` | view de resumo | objeto | > 10% por 15 min |
+| `drift_abertos` | `vw_mt_drift_abertos` | cliente | qualquer linha com mais de 4 h |
+| `health_score` mínimo | `vw_mt_crm_health` | empresa + objeto | abaixo de `min_health` (0,90) |
+| Latência sync (`finished_at - created_at`) | `mt_sync_log` | global | p95 acima do orçamento da fila |
+
+Alerta por agrupamento, nunca por evento: uma importação de 10 mil registros com
+20 falhas isoladas vira **um** aviso agregado, não 20. O agrupamento é por
+`object + client + janela de 15 min`, que é a granularidade em que o time consegue
+decidir uma ação.
+
+## 11. Plano de Teste e Critérios de Aceite
+
+| Caso | Passo | Esperado | Critério de falha |
+|------|-------|----------|-------------------|
+| Sync limpo | Enviar envelope `expected=120, synced=120` | `drift = 0`, health +1 | Linha em `mt_sync_delta` |
+| Drift dentro do limiar | `expected=120, synced=118` (1,7%) | Sem delta, health +1 | Alerta emitido |
+| Drift fora do limiar | `expected=1000, synced=860` (14%) | Delta aberto e job não concluído | Job marcado `done` |
+| Base nula | `expected=0` | `sem_base_de_comparacao` | Alerta de 100% de drift |
+| Falha do CRM | HTTP 500 na chamada | `status=error` com `error_class` | Linha ausente em `mt_sync_log` |
+| Resposta idêntica | Mesmo corpo em duas chamadas | Mesmo `response_hash` | Hashs diferentes |
+| Resposta diferente | Corpo alterado pelo CRM | `response_hash` diferente | Hashs idênticos |
+| Ausência de trilha | Sync sem chamar o Observabilidade | Falha de validação do retrofit | Registro ausente silenciosamente |
+
+Critério de aceite global: os oito casos passam e o alerta de drift chega ao time
+em menos de 15 min (meta) após a abertura do `mt_sync_delta`.
+
+## 12. Checklist de Adesão
+
+- [ ] Todo workflow de CRM envia o envelope ao final, inclusive em erro.
+- [ ] `expected` é preenchido obrigatoriamente no `push`.
+- [ ] Hash calculado sobre conteúdo canonizado, não sobre JSON cru.
+- [ ] Nenhum payload completo gravado em `mt_sync_log`.
+- [ ] `error_class` segue o mapeamento do Padrão Universal de Erros (atividade 1).
+- [ ] Tolerância de drift configurada em um único lugar (5%).
+- [ ] Job com drift acima do limiar não é concluído automaticamente.
+- [ ] Alerta agrupado por `object + client + janela`.
+- [ ] `execution_url` presente em todo registro para investigação.
+- [ ] Health calculado por `object + direction`, não agregado global.
+- [ ] Retenção do `mt_sync_log` definida (a tabela cresce a cada sync).
+- [ ] Consultas de dashboard batem com os nomes reais das views.

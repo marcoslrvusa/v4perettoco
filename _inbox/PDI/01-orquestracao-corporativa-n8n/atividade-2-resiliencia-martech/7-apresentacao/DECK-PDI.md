@@ -73,11 +73,47 @@ Requisicao MarTech (pico)
 | `mt_concurrency` | Semáforo distribuído (limite por fila) |
 | `mt_job_progress` | Checkpoint de chunk de payload pesado |
 | `mt_sync_log` | Auditoria de cada sync de CRM |
-| `mt_sync_health` | Agregado de saúde por object+direction |
+| `mt_crm_health` | Agregado de saúde por object+direction |
 | `mt_sync_delta` | Divergências abertas |
 
 Views: `vw_mt_queue_backlog` · `vw_mt_slots` · `vw_mt_sync_summary_24h`
 `vw_mt_drift_abertos` · `vw_mt_crm_health`
+
+```mermaid
+erDiagram
+    mt_jobs ||--o{ mt_job_progress : "processa"
+    mt_jobs ||--o| mt_sync_log : "auditoria"
+    mt_concurrency ||--o{ mt_jobs : "limita"
+    mt_sync_log ||--o| mt_crm_health : "alimenta"
+    mt_sync_log ||--o| mt_sync_delta : "gera quando drift"
+```
+
+## 5.1 Matemática: dimensionar a fila
+
+Lei de Little: $L = \lambda W$.
+
+**Exemplo numérico:** chegada de 0,5 job/s (1.800 jobs/hora) com processamento
+médio de 10 s dá $L = 0{,}5 \times 10 = 5$ jobs simultâneos, que é o nosso
+`max_concurrency` default. Se o processamento piorar para 20 s, a exigência dobra
+para 10 slots; com apenas 5 a saída cai para 0,25 job/s e o backlog cresce 0,25
+job/s, ou 150 jobs em 10 minutos. Conclusão apresentável: **se o backlog cresce
+com slot saturado, o problema é tempo de processamento, não quantidade de slot.**
+
+Custo do checkpoint: 10.000 itens em lotes de 500 são 20 lotes, com duas escritas
+por lote totalizam 40 `UPDATE`. A 5 ms cada, o overhead é de 200 ms por job, e o
+que ele evita é reprocessar 20 lotes depois de um timeout de 10 min.
+
+## 5.2 Matriz de tradeoffs
+
+| Opção | Ganha | Perde | Decisão |
+|-------|-------|-------|---------|
+| Processar no webhook | Resposta com o resultado | Estabilidade em pico | Descartada |
+| Fila em Redis | Escala horizontal | Novo sistema para operar | Adiada até 50x |
+| Fila em Postgres (Supabase) | Já operada pelo time, transacional | Throughput limitado | **Escolhida** |
+| Semáforo global | Simplicidade | Bloqueio cruzado entre filas | Descartada |
+| Semáforo por fila | Isolamento entre fluxos | Mais linhas de configuração | **Escolhida** |
+| Retry infinito | Nenhum job perdido | Fila lotada e CRM sobrecarregado | Descartada |
+| 3 tentativas + DLQ | Falha visível e decidível | Exige decisão humana | **Escolhida** |
 
 ## 6. Métricas de sucesso
 
@@ -88,6 +124,34 @@ Views: `vw_mt_queue_backlog` · `vw_mt_slots` · `vw_mt_sync_summary_24h`
 | Falha de sync detectada | Quando o cliente reclama | < 15 min |
 | Divergência (drift) visível | Não | Dashboard em tempo real |
 | Concorrência controlada | Manual/improvisada | Semáforo `mt_concurrency` |
+
+## 6.1 Falha e recuperação (narrativa para a pergunta dura)
+
+Cenário: o Worker morre com um job em `running` no chunk 4 de 10.
+
+```mermaid
+sequenceDiagram
+    participant W as Worker
+    participant J as mt_jobs
+    participant R as Reaper (1 min)
+    participant P as mt_job_progress
+    W->>J: status=running, heartbeat=now
+    W->>P: chunk_index=4, owner=exec-77
+    Note over W: processo cai
+    R->>J: heartbeat > 2 min? sim
+    J->>J: status=queued, owner=null
+    R->>J: nova tentativa (attempts+1)
+    J->>W: Worker novo pega o job
+    W->>P: UPDATE WHERE owner=exec-novo
+    P-->>W: chunk_index atual = 4
+    W->>P: retoma do chunk 4 (não do 0)
+```
+
+O que se responde na sala: o job não perdeu o que já foi feito, não duplicou
+escrita porque o `owner` barrava o Worker antigo, e o atraso máximo é o ciclo do
+Reaper (1 min) mais o backoff da retentativa. Se alguém perguntar "e se o job
+nunca mais rodar?", a resposta é a query de `heartbeat` antigo mais o alerta de
+`stale_queued`, que transformam silêncio em fila de trabalho visível.
 
 ## 7. Próximos passos
 

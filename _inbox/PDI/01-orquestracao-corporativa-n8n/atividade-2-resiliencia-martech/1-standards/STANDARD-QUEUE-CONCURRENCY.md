@@ -115,6 +115,49 @@ ORDER BY q.priority DESC, q.created_at ASC
 LIMIT :window;
 ```
 
+A janela (`LIMIT :window`) é parte do padrão: em vez de tentar esvaziar a fila
+inteira em um único ciclo, o poller consome no máximo `window` jobs por execução,
+o que mantém cada execução do Worker curta e evita que um lote gigante segure o
+event loop do n8n.
+
+## 4.1 Backoff exponencial com jitter
+
+Backoff determinístico agrupa todas as retentativas no mesmo instante e gera um
+segundo pico (efeito "thundering herd"). O padrão usa backoff exponencial com
+jitter uniforme de até 20%:
+
+```js
+// Tenta 1: 30s, tentativa 2: 60s, tentativa 3: 120s, sempre com jitter
+const BASE_MS = [30_000, 60_000, 120_000];
+
+function retryDelay(attempt) {
+  const index = Math.min(Math.max(attempt - 1, 0), BASE_MS.length - 1);
+  const base = BASE_MS[index];
+  const jitter = Math.floor(Math.random() * 0.2 * base);
+  return base + jitter;
+}
+
+return { retry_at: new Date(Date.now() + retryDelay(job.attempts)) };
+```
+
+**Exemplo numérico:** três jobs que falharam juntos no instante `T` viram
+retentativas em `T+30s`, `T+36s` e `T+42s` em vez de todas em `T+30s`,
+diluindo o pico em três ciclos do poller (15s cada).
+
+Decisão de arquitetura: o backoff é calculado no Worker e gravado em `retry_at`,
+não no cliente, de modo que qualquer Worker que pegue a fila enxergue a mesma
+política. `retry_at` nulo significa "pode processar agora", o que mantém a query
+do poller única e indexável.
+
+### 4.1.1 Escolha do cancelamento e da prioridade
+
+| Situação | Decisão |
+|----------|---------|
+| Job com mais de 3 tentativas | Vai para `failed` e entra no `error_dlq` da atividade 1 |
+| Job cujo cliente desistiu (webhook cancelado) | Status `failed` com `error_message = cancelado pelo cliente`, nunca `done` |
+| Dois jobs do mesmo `job_key` chegando ao mesmo tempo | `ON CONFLICT (job_key, queue) DO NOTHING`, o segundo vira ACK do primeiro |
+| Fila `import` lotada e chegando job de `crm-sync` | Filas independentes: cada uma tem seu `max_concurrency`, não há bloqueio cruzado |
+
 ## 5. Limites de Concorrência por Entidade
 
 | Recurso | Limite Default |
@@ -123,6 +166,17 @@ LIMIT :window;
 | Payloads pesados em paralelo | 2 por fila |
 | Timeout de job | 10 min |
 | Max tentativas por job | 3 |
+
+**Exemplo numérico:** três filas (`crm-sync`, `campaign`, `import`) com 5 slots
+cada dão 15 execuções simultâneas no pior caso, contra o cenário anterior de
+concorrência ilimitada em que 200 webhooks simultâneos geravam 200 execuções.
+A redução é de 200 para 15, ou 13,3x menos pressão sobre a instância.
+
+Como chegar ao limite: medir o tempo médio de processamento (`W`) de uma semana
+e a chegada média por fila (`λ`), aplicar $L = \lambda W$ e arredondar para cima
+com folga de 25%. Se o resultado maior que 10 slots por fila, o gargalo está no
+tempo de processamento e não na concorrência: primeiro reduzir `W` com chunking,
+depois aumentar slot.
 
 ## 6. Vias de Escala
 
@@ -142,3 +196,49 @@ LIMIT :window;
 | Sem idempotência | Mesmo dado carregado 3x |
 | Payload inteiro na linha do job | Fila pesada; guarda payload separado |
 | Sync sem trilha | Não da para saber quando o cliente foi afetado |
+
+## 8. Telemetria e Alerta
+
+| Métrica | Fonte | Cardinalidade | Alerta |
+|---------|-------|---------------|--------|
+| `queued_total` por fila | `vw_mt_queue_backlog` | 1 por fila | `stale_queued > 0` por 10 min |
+| `slot_usage_pct` | `vw_mt_slots` | 1 por fila | > 90% por 5 min |
+| `attempts_avg` | `mt_jobs` | 1 global | > 1,5 em 1 h (meta) |
+| `reaper_reclaims` | contagem de devoluções | 1 global | > 5 em 10 min (meta) |
+| Latência p95 do ACK | log do Gateway | 1 global | > 2 s |
+
+Regra de cardinalidade: nenhuma métrica carrega `job_key` ou `sync_id` como
+label. Isso evita séries com milhares de séries distintas e mantém o custo do
+coletor constante mesmo em pico. Identificador de job só entra em log, nunca em
+métrica.
+
+## 9. Plano de Teste e Critérios de Aceite
+
+| Caso | Passo | Esperado | Critério de falha |
+|------|-------|----------|-------------------|
+| ACK rápido | 200 POSTs em rajada de 1 s no Gateway | Todos respondem 202 em < 2 s | Alguma resposta acima de 2 s ou erro 5xx |
+| Idempotência | Mesmo `job_key` enviado 3 vezes | 1 linha em `mt_jobs`, 3 ACKs | 2 ou mais linhas |
+| Limite de slots | Inserir 50 jobs com 5 slots | Nunca mais que 5 em `running` | `in_use > max_concurrency` |
+| Retomada de Worker | Matar o Worker com job em `running` | Reaper devolve para `queued` em 1 min | Job preso por mais de 2 min |
+| Backoff | Simular 3 falhas seguidas | `retry_at` em ~30s, 60s, 120s com jitter | Retentativa imediata ou igual |
+| DLQ | 4 falhas no mesmo job | `status = failed` e linha no `error_dlq` | Job tentando para sempre |
+| Prioridade | Enfileirar `campaign` depois de `crm-sync` | Ordem respeitada por `priority DESC` | Fila sem ordenação |
+
+Critério de aceite global: os sete casos passam duas vezes seguidas, com as
+consultas de `5-monitoring/DASHBOARD-QUERIES.md` mostrando os números esperados
+durante a execução.
+
+## 10. Checklist de Adesão
+
+- [ ] Todo webhook de entrada só grava em `mt_jobs` e responde 202.
+- [ ] `job_key` é estável e determinístico (não usa timestamp aleatório).
+- [ ] Existe `UNIQUE (job_key, queue)` com `ON CONFLICT DO NOTHING`.
+- [ ] Todo Worker atualiza `heartbeat_at` a cada 30 s.
+- [ ] Reaper roda a cada 1 min e devolve job sem heartbeat de 2 min.
+- [ ] `max_attempts` é 3 e a exaustão vai para `failed` + `error_dlq`.
+- [ ] Backoff usa jitter e é gravado em `retry_at`.
+- [ ] `max_concurrency` é declarado por fila em `mt_concurrency`.
+- [ ] Nenhuma query de poller varre a tabela inteira (janela com `LIMIT`).
+- [ ] Métricas não carregam identificador de job como label.
+- [ ] Payload nunca trafega completo na linha do job.
+- [ ] Rollback documentado: desativar Gateway e Worker sem perder jobs.

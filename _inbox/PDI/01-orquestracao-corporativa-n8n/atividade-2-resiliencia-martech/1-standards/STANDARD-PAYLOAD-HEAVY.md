@@ -28,8 +28,8 @@ Quando o n8n processa o JSON inteiro de uma vez:
 | Situação | Estratégia |
 |----------|-----------|
 | Payload < 64 KB | Processa direto no Code node (normal) |
-| 64 KB – 1 MB | Chunking em memória (SplitInBatches do n8n) |
-| 1 MB – 50 MB | Chunking + armazenamento parcial no Supabase |
+| 64 KB-1 MB | Chunking em memória (SplitInBatches do n8n) |
+| 1 MB-50 MB | Chunking + armazenamento parcial no Supabase |
 | > 50 MB | Streaming em arquivo (temporary) + chunks |
 
 ## 4. Chunking no n8n
@@ -47,6 +47,17 @@ HTTP Request (JSON pesado)
 
 - O n8n serializa cada batch individualmente: mantém a memória sob controle.
 - Cada batch roda como item próprio; erros viram retry batch com continueErrorOutput.
+
+**Exemplo numérico:** um JSON de 24 MB com 12.000 contatos carregado inteiro ocupa
+cerca de 24 MB no heap do Node mais o dobro durante a serialização intermediária
+(≈ 48 MB por execução). Em lotes de 500, cada lote tem 12.000 / 500 = 24 batches
+com cerca de 1 MB cada, de modo que o pico de memória por execução cai de ~48 MB
+para ~2 MB, uma redução de 24x, mantendo o mesmo resultado final.
+
+Decisão de arquitetura: o `batchSize` não é aleatório. 500 é o maior lote que
+cabe confortavelmente em um `UPDATE` único no Supabase e ainda menor que o
+limite de 5 MB por chunk, de modo que dobrar o lote (1000) não ganha nada em
+tempo total e dobra o risco de timeout de um único `UPDATE`.
 
 ### 4.1 Kernel JavaScript (Code node)
 
@@ -127,3 +138,71 @@ job_id, chunk_index, total_chunks, status, updated_at
 | Payload completo duplicado em cada node | Serialização cara |
 | Guardar payload inteiro na linha do job | Fila gigante no Supabase |
 | Sem release de referência após chunk | Memory leak em execuções longas |
+
+## 8. Retomabilidade: contrato de checkpoint
+
+O checkpoint tem um contrato explícito, porque é o que separa "retomada" de
+"reprocessamento silencioso":
+
+```sql
+-- Grava o progresso somente se o chunk ainda pertence a este worker
+UPDATE mt_job_progress
+   SET chunk_index = :next_chunk,
+       status = 'running',
+       updated_at = now(),
+       owner = :execution_id
+ WHERE job_id = :job_id
+   AND owner = :execution_id
+   AND status IN ('running', 'paused');
+```
+
+A coluna `owner` guarda o `execution_id` que está processando. Se o Reaper
+devolver o job para outro Worker, o `UPDATE` do Worker antigo não casa (0 linhas)
+e ele aborta, em vez de dois Workers escreverem o mesmo `chunk_index` ao mesmo
+tempo. Sem `owner`, dois Workers processam o mesmo lote e o CRM recebe o dado
+duas vezes: at-least-once sem idempotência vira duplicação visível.
+
+Estados possíveis de `mt_job_progress`:
+
+| Estado | Quem grava | Próxima transição |
+|--------|-----------|-------------------|
+| `queued` | Gateway, ao criar o job | `running` no primeiro lote |
+| `running` | Worker, a cada lote | `done` ou `paused` |
+| `paused` | Worker, em erro | `running` na retentativa |
+| `done` | Worker, último lote | terminal |
+
+## 9. Telemetria e Alerta
+
+| Métrica | Fonte | Alerta |
+|---------|-------|--------|
+| `chunk_duration_ms` (p95) | log do Processor | > 20 s por lote (meta) |
+| `checkpoint_writes` por job | contagem em `mt_job_progress` | zero em job com mais de 5 min de execução |
+| Retomadas por job | contagem de transições `paused` → `running` | > 3 em 1 h (meta) |
+| Pico de memória do processo | runtime do n8n | > 70% do limite do container |
+
+## 10. Plano de Teste e Critérios de Aceite
+
+| Caso | Passo | Esperado | Critério de falha |
+|------|-------|----------|-------------------|
+| Payload pequeno | Enviar 50 itens | Processa sem checkpoint | Qualquer `INSERT` em `mt_job_progress` |
+| Payload médio | Enviar 2.000 itens | 4 lotes de 500 com checkpoint | Lote maior que 500 ou memória acima de 5 MB |
+| Falha no meio | Derrubar a execução no lote 4 de 10 | Retomada em `chunk_index = 4` | Retomada em 0 ou processamento duplicado |
+| Concorrência | Dois Workers no mesmo job | Só o `owner` vence o `UPDATE` | 0 linhas ignoradas pelo Worker antigo |
+| Unicode e nulo | Itens com acento, emoji e campo nulo | Persistência idêntica ao original | Dados alterados ou erro de encoding |
+| Limite superior | Enviar 200 MB | Recusa com mensagem clara antes de processar | OOM ou processo travado |
+
+Critério de aceite global: os seis casos passam e o pico de memória medido
+durante o caso de 2.000 itens fica abaixo de 5 MB por execução.
+
+## 11. Checklist de Adesão
+
+- [ ] Nenhum `JSON.parse` de corpo acima de 64 KB no webhook de entrada.
+- [ ] Array extraído no normalize antes de qualquer transformação.
+- [ ] `SplitInBatches` com `batchSize` de 500 e saída de erro configurada.
+- [ ] Kernel sem estado global entre lotes.
+- [ ] Checkpoint com `owner` para evitar dois Workers no mesmo job.
+- [ ] `batchSize` e limite de 5 MB documentados no próprio workflow.
+- [ ] Timeout de chunk de 30 s e payload máximo de 200 MB respeitados.
+- [ ] Referências soltas liberadas após cada lote.
+- [ ] Retomada testada com falha simulada no meio do processamento.
+- [ ] Nenhum dado sensível gravado inteiro em `mt_jobs.payload`.
