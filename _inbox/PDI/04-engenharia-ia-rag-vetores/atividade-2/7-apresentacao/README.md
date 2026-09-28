@@ -8,6 +8,10 @@ Engenharia de IA
 
 <div class="didactic"><div class="didactic-title">Analogia da enciclopédia</div>RAG é como abrir a enciclopédia na página certa antes de responder. <strong>Chunking</strong> é cortar o livro em tópicos menores e bem-indexados. <strong>GraphRAG</strong> é montar um mapa de "ver também" entre pessoas, produtos e regras: assim dá pra responder "quem aprova esse pedido?" seguindo as setas do grafo, não só lendo um parágrafo isolado.</div>
 
+<p>Três forças explicam por que nenhum recuperador sozinho basta. O <strong>BM25</strong> é estatística de termos: ele responde "esse termo é raro na coleção e aparece aqui várias vezes", comportamento ideal para CNPJ, SKU e número de contrato. O <strong>embedding</strong> é geometria: ele responde "esse vetor está perto daquele no espaço de significados", comportamento ideal para sinônimo e paráfrase. O <strong>grafo</strong> é navegação: ele responde "existe caminho de arestas entre essas duas entidades", comportamento ideal para pergunta do tipo quem ligado a quem. Usar o caminho errado é a forma mais comum de gastar latência sem ganhar nada.</p>
+
+<div class="didactic"><div class="didactic-title">Por que não somar os escores</div>O escore do BM25 cresce sem teto útil e o cosseno vive entre -1 e 1. Somar os dois brutos é somar metro com quilograma. Por isso a fusão olha apenas a <strong>posição</strong> de cada documento em cada lista, pelo método RRF (Reciprocal Rank Fusion), que soma 1/(60 + posição). Com isso, um documento que fica em primeiro numa lista e terceiro na outra ganha de um documento que só brilha numa lista só: <strong>consistência entre listas vale mais do que excelência isolada</strong>.</div>
+
 <h2><span class="num">2.</span> Diagnóstico</h2>
 
 <p>A base de conhecimento era jogada toda num vetor sem critério de corte. Perguntas que dependiam de relação entre documentos voltavam respostas vagas ou contraditórias. O <em>retrieval</em> trazia os 5 trechos mais próximos, mas nenhum ligava os pontos.</p>
@@ -20,17 +24,37 @@ Engenharia de IA
 
 <p>Pipeline em duas camadas: (1) <strong>RAG clássico</strong> com chunking por sentença+overlap e busca por similaridade em índice vetorial; (2) <strong>GraphRAG</strong> que extrai entidades/relações dos documentos e responde perguntas multi-hop seguindo arestas do grafo. O retriever decide qual caminho usar por tipo de pergunta.</p>
 
+<p>Em detalhe, a primeira camada roda dois índices em paralelo: <code>tsvector</code> coberto por índice GIN para a busca lexical e <code>pgvector</code> com índice HNSW e distância cosseno para a busca vetorial. Cada índice devolve até 50 candidatos, os dois rankings entram na fusão RRF com constante 60 e o corte final fica em 10 trechos, deduplicados por id. Se a pergunta contém identificador conhecido, o caminho lexical assume a dianteira e o corte sobe para 20, porque o espaço de resposta é pequeno e o custo de falso positivo é alto. Se a pergunta pede relação, a terceira lista vem dos <code>doc_id</code> das entidades alcançadas pela travessia, de modo que os três ranqueadores devolvem o mesmo tipo de objeto e a fusão continua sendo a única regra de combinação.</p>
+
+<p>A segunda camada só entra quando a resposta é uma <strong>lista de coisas conectadas</strong>. Quando a resposta é um trecho que explica, o grafo é peso morto e não deve ser acionado. Essa distinção é a régua de decisão do sistema, e ela vale mais do que qualquer modelo de classificação: pergunta com CNPJ vai para o lexical, pergunta com sinônimo vai para o vetorial, pergunta com cadeia de entidades vai para o grafo, e pergunta ambígua sai pela fusão dos três.</p>
+
 <h2><span class="num">4.</span> Como funciona (pipeline)</h2>
 
 <div class="pipeline"><div class="pipeline-head"><span class="pipeline-title">Arquitetura RAG + GraphRAG</span><span class="pipeline-live"><span class="dot"></span> fluxo em execução</span></div><div class="pipeline-body"><div class="pl-rail"><span class="pl-pulse p1"></span><span class="pl-pulse p2"></span><span class="pl-pulse g"></span></div><div class="pl-steps"><div class="pl-step"><div class="num">1</div><div><div class="name">Ingestão <code>load_docs()</code></div><div class="desc">Lê PDFs/wiki e normaliza em texto limpo.</div><span class="pl-chip"><span class="pl-tag ok">raw text</span></span></div></div><div class="pl-step"><div class="num">2</div><div><div class="name">Chunking <code>split_semantic()</code></div><div class="desc">Corta por sentença com overlap de 128 tokens preservando contexto.</div><span class="pl-chip"><span class="pl-tag warn">overlap 128</span></span></div></div><div class="pl-step"><div class="num">3</div><div><div class="name">Vetorização <code>embed_chunks()</code></div><div class="desc">Gera embeddings e indexa no banco de vetores.</div><span class="pl-chip"><span class="pl-tag ok">ANN index</span></span></div></div><div class="pl-step"><div class="num">4</div><div><div class="name">Grafo <code>build_graph()</code></div><div class="desc">Extrai entidades/relações e monta GraphRAG (nós+arestas).</div><span class="pl-chip"><span class="pl-tag audit">entidades</span></span></div></div><div class="pl-step"><div class="num">5</div><div><div class="name">Retrieval <code>retrieve(q)</code></div><div class="desc">Decide: busca vetorial OU caminhada no grafo conforme a pergunta.</div><span class="pl-chip"><span class="pl-tag ok">hybrid</span></span></div></div></div><div class="pl-footer"><span>Grafo atualizado por job noturno; chunking reavaliado quando precisão@5 cai abaixo de 0.90.</span></div></div></div>
+
+<p>Três regras de borda desse pipeline. <strong>Idempotência:</strong> o lote usa <code>(doc_id, hash_do_conteudo)</code> como chave de upsert, então reexecutar a mesma noite não duplica trecho nem gasta embedding à toa. <strong>Reindexação seletiva:</strong> só os trechos cujo hash mudou são re-embedados, o que em base de 50.000 trechos com 3 por cento alterados gera 1.500 chamadas em vez de 50.000 (Exemplo numérico). <strong>Unidade de escrita:</strong> índice lexical, índice vetorial e grafo saem do mesmo lote, porque atualizar só um deles faz o sistema responder com duas verdades diferentes sem nenhum sinal externo.</p>
+
+<div class="callout"><strong>Invariante:</strong> toda afirmação factual da resposta rastreia a pelo menos um trecho recuperado. Se a citação não aponta para um id de trecho existente, é falha de segurança de dados, não falha de estilo.</div>
 
 <h2><span class="num">5.</span> Antes vs Depois</h2>
 
 <table><tr><th>Cenário</th><th>Antes (texto solto)</th><th>Depois (RAG+GraphRAG)</th></tr><tr><td>Pergunta relacional</td><td>Resposta vaga</td><td>Caminhada no grafo</td></tr><tr><td>Contexto recuperado</td><td>Desconectado</td><td>Relevante e ligado</td></tr><tr><td>Precisão@5</td><td>~42%</td><td>~98%</td></tr><tr><td>Manutenção</td><td>Manual</td><td>Job automático</td></tr></table>
 
+<p><strong>O que muda na prática depois da mudança:</strong> a pergunta com identificador para de depender de sorte do embedding, a pergunta com sinônimo para de depender da forma canônica do termo, e a pergunta relacional para de exigir que um humano monte a cadeia na mão. O custo assumido é operacional: três índices, um job noturno e uma constante de fusão que precisa de curva de avaliação, não de costume.</p>
+
+<ul>
+<li><strong>Identificador</strong>: o caminho lexical assume a dianteira e o corte sobe para 20, porque o espaço de resposta é pequeno e o falso positivo custa caro.</li>
+<li><strong>Sinônimo</strong>: o caminho vetorial assume, com corte amplo de 40 candidatos para depois cortar em 10.</li>
+<li><strong>Relação</strong>: a travessia no grafo entra como terceira lista na mesma fusão RRF, com profundidade limitada a 4 níveis.</li>
+<li><strong>Ambígua</strong>: os três caminhos rodam juntos, porque classificar errado custa mais latência do que buscar a mais.</li>
+<li><strong>Fora de escopo</strong>: nenhum recuperador é acionado e a resposta é direta, sem consumir orçamento de busca.</li>
+</ul>
+
 <h2><span class="num">6.</span> Entregas</h2>
 
 <ul><li><strong>Pipeline</strong> <code>rag_pipeline.py</code>: chunking semântico + índice vetorial.</li><li><strong>Módulo</strong> <code>graphrag.py</code>: extração de entidades e consulta em grafo.</li><li><strong>Script</strong> <code>eval_rag.py</code>: mede precisão@5 e latência.</li><li><strong>Doc</strong> <code>arquitetura.md</code>: quando usar vetor vs grafo.</li></ul>
+
+<p><strong>Artefatos desta atividade no repositório:</strong> <code>1-standards/RAG-ARCHITECTURE.md</code> e <code>1-standards/HYBRID-RAG.md</code> (padrão canônico com escopo, fórmulas, tabela de decisão, anti-padrões, telemetria e checklist de adesão); <code>2-code/hybrid_rag.py</code> (fusão RRF e recuperador híbrido em Python) e <code>2-code/rag_hybrid.py</code> (consulta híbrida em SQL); <code>3-supabase/001_rag_schema.sql</code> (tabela <code>docs</code>, <code>tsvector</code> gerado e índice HNSW) e <code>3-supabase/graph_schema.cypher</code> (entidades e arestas de exemplo); e esta pasta de apresentação com deck, roteiro de demo e roteiro de domínio.</p>
 
 <h2><span class="num">7.</span> Métricas</h2>
 
@@ -38,6 +62,12 @@ Engenharia de IA
 
 <div class="callout"><strong>Meta:</strong> precisão@5 ≥ 95% e latência de retrieval < 150ms em 90% das consultas.</div>
 
+<p><strong>Como as métricas são lidas.</strong> O relatório nunca sai agregado. Ele sai por categoria de pergunta, porque a média de 30 perguntas esconde exatamente a classe que quebrou. <em>hit@5</em> é a fração de perguntas cujo primeiro relevante aparece nos cinco primeiros trechos. <em>recall@k</em> responde se o relevante entrou em algum lugar do corte. <em>MRR</em> pune quem acerta só no fundo da lista. <em>nDCG@10</em> distingue um trecho tocado de um trecho perfeito. E o <em>p95 por etapa</em> é a soma das etapas críticas da consulta: embedding, lexical, ANN, travessia do grafo, fusão e montagem. Com os parâmetros da atividade a conta fecha em 111 ms contra a meta de 150 ms (Exemplo numérico com parâmetros declarados), deixando 39 ms de folga, e o reranking opcional de 50 ms é o primeiro item a ser desligado quando a folga some.</p>
+
+<div class="callout"><strong>Critério de aceite binário:</strong> hit@5 exato maior ou igual a 0,95, hit@5 relação maior ou igual a 0,9, p95 abaixo de 150 ms em duas janelas de 24 horas, híbrido nunca pior que o vetorial em nenhuma categoria e nenhuma citação sem fonte no contexto (meta).</div>
+
 <h2><span class="num">8.</span> Status final</h2>
 
 <p><span class="status st-warn">NÃO publicado</span>: Desenvolvido e em homologação. Aguarda revisão antes de produção.</p>
+
+<p><strong>O que falta para sair de homologação para produção:</strong> aprovação do padrão <code>RAG-ARCHITECTURE.md</code> pela trilha de IA/RAG, relatório do conjunto-ouro de 30 perguntas por categoria anexado à mudança, teste de rollback por snapshot de índice executado em homologação com registro do tempo (meta de 10 minutos) e ensaio do roteiro de domínio. O gatilho de publicação é binário: cinco critérios de aceite verdes ao mesmo tempo, sem zona de cinza. Depois da publicação, a rotina é diária e curta: contagem de trechos e de nós do grafo, status do job noturno, p95 por etapa, taxa de hit de cache e cinco perguntas do conjunto-ouro rodadas em produção.</p>
