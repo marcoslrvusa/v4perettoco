@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lola Aviamentos | AIO B2 — FAQPage com 10 perguntas sobre entretelas (AG-03)</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --green: #4dc247;
+    --green-deep: #1f7a37;
+    --green-dark: #0f2e18;
+    --ink: #16181d;
+    --ink-soft: #4a505c;
+    --line: #e4e7ec;
+    --bg-soft: #f7f8fa;
+    --accent: #0b5ed7;
+    --warn: #b3261e;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: #f6f7f5;
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ---------- cover ---------- */
+  .cover {
+    background: linear-gradient(135deg, #0a160d 0%, #102415 55%, #17351d 100%);
+    color: #fff;
+    padding: 64px 40px 52px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -60%; left: -30%;
+    width: 160%; height: 200%;
+    background: radial-gradient(circle, rgba(77,194,71,0.10) 0%, transparent 55%);
+    pointer-events: none;
+  }
+  .cover-content { position: relative; z-index: 1; max-width: 880px; margin: 0 auto; }
+  .cover .label {
+    display: inline-block;
+    background: rgba(77,194,71,0.12);
+    border: 1px solid rgba(77,194,71,0.35);
+    padding: 6px 20px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+    color: var(--green);
+  }
+  .cover h1 { font-size: 40px; font-weight: 800; line-height: 1.15; margin-bottom: 14px; letter-spacing: -0.5px; }
+  .cover p.sub { font-size: 17px; opacity: 0.88; margin-bottom: 26px; font-weight: 400; }
+  .cover .rule { width: 60px; height: 3px; background: var(--green); margin: 0 auto 26px; border-radius: 2px; }
+  .cover-meta { display: flex; gap: 10px 26px; justify-content: center; flex-wrap: wrap; font-size: 13px; opacity: 0.75; }
+  .cover-meta span { white-space: nowrap; }
+
+  /* ---------- layout ---------- */
+  .container { max-width: 1040px; margin: -34px auto 56px; padding: 0 20px; position: relative; z-index: 2; }
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: 0 10px 30px -22px rgba(16,24,40,0.35);
+    margin-bottom: 26px;
+    overflow: hidden;
+  }
+  .card-body { padding: 30px 34px 34px; }
+  h2 { font-size: 21px; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.2px; }
+  h2 .n {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 30px; height: 30px; border-radius: 8px;
+    background: var(--green-dark); color: var(--green);
+    font-size: 13px; font-weight: 800; margin-right: 10px;
+    vertical-align: 3px;
+  }
+  h3 { font-size: 16px; font-weight: 700; margin: 22px 0 8px; color: var(--green-deep); }
+  p { margin-bottom: 12px; color: var(--ink-soft); }
+  p strong, li strong { color: var(--ink); }
+
+  /* ---------- kpi ---------- */
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-bottom: 26px; }
+  .kpi-card {
+    background: #fff; border: 1px solid var(--line); border-radius: 14px;
+    padding: 20px 18px 18px; text-align: center;
+    box-shadow: 0 10px 30px -24px rgba(16,24,40,0.4);
+    border-top: 3px solid var(--green);
+  }
+  .kpi-card .value { font-size: 30px; font-weight: 800; color: var(--green-deep); line-height: 1.1; letter-spacing: -0.5px; }
+  .kpi-card .label { font-size: 13px; font-weight: 700; color: var(--ink); margin-top: 4px; }
+  .kpi-card .sub { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+
+  /* ---------- callout ---------- */
+  .callout {
+    background: #f0f9f2; border: 1px solid #cdeed4; border-left: 5px solid var(--green);
+    border-radius: 0 10px 10px 0; padding: 16px 20px; margin-top: 18px;
+  }
+  .callout h4 { font-size: 14px; font-weight: 800; color: var(--green-deep); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.6px; }
+  .callout p { margin: 0; font-size: 14.5px; }
+
+  /* ---------- live button ---------- */
+  .live-box {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 16px;
+    background: linear-gradient(135deg, #102415, #17351d);
+    border-radius: 12px; padding: 22px 24px; margin: 6px 0 18px;
+  }
+  .live-box .url {
+    flex: 1 1 420px; font-family: var(--mono); font-size: 14.5px; color: #d9f5db;
+    word-break: break-all;
+  }
+  .live-box .btn {
+    display: inline-block; background: var(--green); color: #0a160d;
+    font-weight: 800; font-size: 14.5px; padding: 11px 22px; border-radius: 8px;
+    white-space: nowrap;
+  }
+  .live-box .btn:hover { background: #63d45d; text-decoration: none; }
+  .kv { display: grid; grid-template-columns: 190px 1fr; gap: 4px 16px; font-size: 14.5px; margin-top: 8px; }
+  .kv dt { color: var(--ink-soft); font-weight: 600; }
+  .kv dd { color: var(--ink); font-family: var(--mono); font-size: 13.5px; word-break: break-all; }
+
+  /* ---------- tables ---------- */
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 6px; }
+  th {
+    text-align: left; background: var(--bg-soft); color: var(--ink);
+    font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.5px;
+    padding: 10px 12px; border-bottom: 2px solid var(--line);
+  }
+  td { padding: 11px 12px; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--ink-soft); }
+  td:first-child { color: var(--ink); }
+  tr:last-child td { border-bottom: none; }
+  td.num { font-family: var(--mono); font-size: 13px; white-space: nowrap; }
+  .tag {
+    display: inline-block; font-size: 11.5px; font-weight: 800; letter-spacing: 0.4px;
+    padding: 2px 9px; border-radius: 20px; text-transform: uppercase;
+  }
+  .tag.ok { background: #e2f6e6; color: var(--green-deep); }
+  .tag.gap { background: #fdf2f1; color: var(--warn); }
+  .tag.vol { background: #eef4ff; color: var(--accent); }
+
+  /* ---------- code ---------- */
+  .code {
+    background: #14161f; color: #cdd6f4; padding: 18px 20px;
+    border-radius: 10px; overflow-x: auto; font-family: var(--mono);
+    font-size: 12.8px; line-height: 1.65; white-space: pre-wrap;
+    word-break: break-word; margin: 12px 0;
+  }
+  .code .k { color: #89b4fa; }
+  .code .s { color: #a6e3a1; }
+  .code .c { color: #6c7086; }
+
+  /* ---------- lists ---------- */
+  ul.clean, ol.clean { margin: 8px 0 14px 22px; color: var(--ink-soft); }
+  ul.clean li, ol.clean li { margin-bottom: 7px; }
+  .linkgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 8px 22px; margin-top: 6px; }
+  .linkgrid a { display: block; padding: 7px 0; border-bottom: 1px dashed var(--line); font-weight: 600; font-size: 14.5px; }
+  .linkgrid a:hover { color: var(--green-deep); }
+  .anchorchip {
+    display: inline-block; font-family: var(--mono); font-size: 12.5px;
+    background: var(--bg-soft); border: 1px solid var(--line);
+    padding: 1px 8px; border-radius: 6px; color: var(--accent);
+  }
+
+  /* ---------- before/after ---------- */
+  .ba { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 10px; }
+  .ba > div { border-radius: 12px; padding: 18px 20px; border: 1px solid var(--line); }
+  .ba .before { background: #fdf2f1; border-color: #f5c6c2; }
+  .ba .after { background: #f0f9f2; border-color: #cdeed4; }
+  .ba h4 { font-size: 12.5px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .ba .before h4 { color: var(--warn); }
+  .ba .after h4 { color: var(--green-deep); }
+  .ba ul { margin-left: 18px; font-size: 14.5px; color: var(--ink-soft); }
+  .ba li { margin-bottom: 5px; }
+
+  /* ---------- footer ---------- */
+  footer {
+    max-width: 1040px; margin: 0 auto 60px; padding: 0 20px;
+    font-size: 13px; color: var(--ink-soft); text-align: center;
+  }
+  footer .fbox {
+    border-top: 1px solid var(--line); padding-top: 18px;
+    display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: center;
+  }
+  footer strong { color: var(--ink); }
+
+  @media (max-width: 760px) {
+    .cover { padding: 44px 22px 40px; }
+    .cover h1 { font-size: 28px; }
+    .card-body { padding: 22px 18px 26px; }
+    .kv { grid-template-columns: 1fr; }
+    .ba { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-content">
+    <span class="label">AIO B2 · AG-03 · Evidência de execução</span>
+    <h1>FAQPage no ar com 10 perguntas sobre entretelas</h1>
+    <div class="rule"></div>
+    <p class="sub">Lola Aviamentos — entrega do gap <strong>AG-03</strong> da auditoria AIO/GEO: <em>“FAQPage schema com 10+ perguntas sobre entretelas”</em>. Tudo abaixo é clicável e verificável na página viva.</p>
+    <div class="cover-meta">
+      <span>Task eKyte <strong>10049811</strong></span>
+      <span>Fase: Validar Briefing [TECH] (seq 16)</span>
+      <span>Executor: Marcos Luciano</span>
+      <span>Projeto 319128 · Workspace 104796</span>
+      <span>Vence 02/10/2026</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="value">10</div><div class="label">Perguntas no FAQPage</div><div class="sub">mainEntity validado no ar</div></div>
+    <div class="kpi-card"><div class="value">5.030</div><div class="label">Palavras de conteúdo</div><div class="sub">13 H2 · 5 tabelas</div></div>
+    <div class="kpi-card"><div class="value">3</div><div class="label">JSON-LD servidos</div><div class="sub">FAQPage · HowTo · Breadcrumb</div></div>
+    <div class="kpi-card"><div class="value">35/35</div><div class="label">Links e âncoras OK</div><div class="sub">22 URLs + 13 âncoras = 0 falha</div></div>
+    <div class="kpi-card"><div class="value">13º</div><div class="label">Post da malha</div><div class="sub">hub que faltava no blog</div></div>
+  </div>
+
+  <div class="card"><div class="card-body">
+    <div class="callout" style="margin-top:0">
+      <h4>O que você vai encontrar aqui</h4>
+      <p>1) o link vivo do post para clique direto; 2) as 10 perguntas, cada uma com link para a própria âncora na página; 3) o trecho real do JSON-LD servido pelo servidor; 4) a tabela de verificação (curl) com todos os status; 5) a teia de links internos; 6) o checklist AG-03 item a item. Nada de print — tudo é link.</p>
+    </div>
+  </div></div>
+
+  <!-- 01 -->
+  <div class="card"><div class="card-body">
+    <h2><span class="n">01</span>No ar — clique e avalie</h2>
+    <p>Post publicado e respondendo <strong>HTTP 200</strong> com HTML completo, JSON-LD renderizado no servidor (não depende de JavaScript do tema). É a página que o Google e os assistentes de IA vão ler:</p>
+
+    <div class="live-box">
+      <div class="url">https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee</div>
+      <a class="btn" href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee" target="_blank" rel="noopener">Abrir a página viva →</a>
+    </div>
+
+    <dl class="kv">
+      <dt>Título (H1)</dt><dd>Perguntas Frequentes sobre Entretelas: 10 Respostas Rápidas</dd>
+      <dt>Title SEO</dt><dd>Perguntas Frequentes sobre Entretelas: 10 Respostas (51 caracteres)</dd>
+      <dt>Handle</dt><dd>perguntas-frequentes-entretelas-27a7483db9ee</dd>
+      <dt>post_id</dt><dd>01a0f397-ec77-7113-b994-27a7483db9ee</dd>
+      <dt>Publicado em</dt><dd>2026-09-30T18:33:35Z · publicado=true (não é rascunho)</dd>
+      <dt>Trilha (Breadcrumb)</dt><dd>Cluster Bordado › Tipos de Entretela para Bordado › Este post</dd>
+    </dl>
+
+    <div class="ba">
+      <div class="before">
+        <h4>Antes (gap AG-03)</h4>
+        <ul>
+          <li>0 hubs de perguntas frequentes no blog</li>
+          <li>FAQPage presente só em posts avulsos, sem página-faneca de 10 perguntas</li>
+          <li>Perguntas informacionais respondidas só no balcão — nenhuma com página dedicada</li>
+          <li>AG-03 aberto na auditoria AIO/GEO</li>
+        </ul>
+      </div>
+      <div class="after">
+        <h4>Depois (esta entrega)</h4>
+        <ul>
+          <li>Hub com as 10 perguntas informacionais mais buscadas do setor</li>
+          <li>FAQPage com 10 <code>Question</code> + HowTo 5 passos + BreadcrumbList</li>
+          <li>5.030 palavras, 5 tabelas comparativas, 22 links de saída = 0 quebrados</li>
+          <li>13º post vivo da malha do blog</li>
+        </ul>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 02 -->
+  <div class="card"><div class="card-body">
+    <h2><span class="n">02</span>As 10 perguntas — cada linha leva à âncora na página viva</h2>
+    <p>Clique no número ou na pergunta para cair exatamente na seção correspondente do post. A coluna “volume” mostra o dado de busca que justificou a inclusão (fonte: <em>docs/palavras-chave-topic-clusters.md</em>); perguntas sem volume próprio entraram como <strong>lacuna dura</strong> — termo usado no site sem resposta dedicada (marcadas com <span class="tag gap">gap</span>).</p>
+
+    <table>
+      <thead>
+        <tr><th style="width:44px">#</th><th>Pergunta (clique = âncora no post)</th><th>Resposta em uma frase</th><th style="width:130px">Busca</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="num"><a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee#o-que-e-entretela-e-para-que-serve" target="_blank" rel="noopener">01</a></td>
+          <td><a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee#o-que-e-entretela-e-para-que-serve" target="_blank" rel="noopener"><strong>O que é entretela e para que serve?</strong></a></td>
+          <td>Base de reforço de 20 g/m² a 330 g/m² que estabiliza o ponto e dá forma à peça</td>
+          <td><span class="tag vol">2.400/mês</span></td>
+        </tr>
+        <tr>
+          <td class="num"><a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee#qual-a-diferenca-entre-entretela-termocolante-e-entretela-costuravel" target="_blank" rel="noopener">02</a></td>
+          <td><a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee#qual-a-diferenca-entre-entretela-termocolante-e-entretela-costuravel" target="_blank" rel="noopener"><strong>Qual a diferença entre termocolante e costurável?</strong></a></td>
+          <td>Termocolante tem resina e cola em 130–150 °C; costurável não tem resina e sai só na reforma</td>
+          <td><span class="tag vol">280/mês</span> <span class="tag gap">gap</span></td>
+        </tr>
+        <tr>
+          <td class="num"><a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee#entretela-e-estabilizador-sao-a-mesma-coisa" target="_blank" rel="noopener">03</a></td>
+          <td><a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee#entretela-e-estabilizador-sao-a-mesma-coisa" target="_blank" rel="noopener"><strong>Entretela e estabilizador são a mesma coisa?</strong></a></td>
+          <td>Sim — o critério real é a posição no bastidor (fundo/topo), não o nome do rótulo</td>
+          <td><span class="tag vol">500–600/mês</span> <span class="tag gap">gap</span></td>
+        </tr>
+        <tr>
+          <td class="num"><a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee#o-que-e-resina-termofusivel-e-qual-o-ponto-de-fusao-da-entretela" target="_blank" rel="noopener">04</a></td>
+          <td><a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee#o-que-e-resina-termofusivel-e-qual-o-ponto-de-fusao-da-entretela" target="_blank" rel="noopener"><strong>O que é resina termofusível e qual o ponto de fusão?</strong></a></td>
+          <td>Cola que amolece perto de 110 °C e trabalha na janela de 120 °C a 150 °C — termo do glossário §4.4</td>
+          <td><span class="tag vol">glossário</span> <span class="tag gap">gap</span></td>
+        </tr>
+        <tr>
+          <td class="num"><a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee#o-que-e-entretela-dupla-face" target="_blank" rel="noopener">05</a></td>
+          <td><a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee#o-que-e-entretela-dupla-face" target="_blank" rel="noopener"><strong>O que é entretela dupla face?</strong></a></td>
+          <td>Um lado termocolante e outro autoadesiva (EDF-40) — também é termo do glossário §4.4</td>
+          <td><span class="tag vol">320/mês</span></td>
+        </tr>
+        <tr>
+          <td class="num"><a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee#qual-a-diferenca-entre-entretela-rasgavel-e-entretela-de-toque-macio" target="_blank" rel="noopener">06</a></td>
+          <td><a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee#qual-a-diferenca-entre-entretela-rasgavel-e-entretela-de-toque-macio" target="_blank" rel="noopener"><strong>Qual a diferença entre rasgável e toque macio?</strong></a></td>
+          <td>Mesma gramatura, rigidez diferente — Lef-60 x rasgável estrutural 60 g</td>
+          <td><span class="tag vol">110/mês</span> <span class="tag gap">gap</span></td>
+        </tr>
+        <tr>
+          <td class="num"><a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee#qual-a-diferenca-entre-entretela-de-fundo-e-estabilizador-de-topo" target="_blank" rel="noopener">07</a></td>
+          <td><a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee#qual-a-diferenca-entre-entretela-de-fundo-e-estabilizador-de-topo" target="_blank" rel="noopener"><strong>Qual a diferença entre entretela de fundo e estabilizador de topo?</strong></a></td>
+          <td>Fundo dá estrutura; topo evita que o ponto afunde — sanduíche 30–40 g + filme 40 g</td>
+          <td><span class="tag vol">260/mês</span> <span class="tag gap">gap</span></td>
+        </tr>
+        <tr>
+          <td class="num"><a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee#o-que-e-entretela-de-tecido-plano" target="_blank" rel="noopener">08</a></td>
+          <td><a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee#o-que-e-entretela-de-tecido-plano" target="_blank" rel="noopener"><strong>O que é entretela de tecido plano?</strong></a></td>
+          <td>Versão tramada com resina, 30 g e 60 g, para forro, vista e aba</td>
+          <td><span class="tag vol">cluster</span> <span class="tag gap">gap</span></td>
+        </tr>
+        <tr>
+          <td class="num"><a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee#o-que-significa-dureza-macia-na-entretela" target="_blank" rel="noopener">09</a></td>
+          <td><a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee#o-que-significa-dureza-macia-na-entretela" target="_blank" rel="noopener"><strong>O que significa dureza macia na entretela?</strong></a></td>
+          <td>Classe de rigidez do fabricante — diferente de gramatura e diferente de toque</td>
+          <td><span class="tag vol">glossário</span> <span class="tag gap">gap</span></td>
+        </tr>
+        <tr>
+          <td class="num"><a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee#entretela-de-algodao-ou-de-poliester-qual-usar" target="_blank" rel="noopener">10</a></td>
+          <td><a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee#entretela-de-algodao-ou-de-poliester-qual-usar" target="_blank" rel="noopener"><strong>Entretela de algodão ou de poliéster, qual usar?</strong></a></td>
+          <td>Algodão 105–170 g para estrutura; poliéster 40–70 g para caimento</td>
+          <td><span class="tag vol">140/mês</span> <span class="tag gap">gap</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:13.5px">Leitura do volume: a combinação “termocolante x costurável” soma <strong>280 consultas/mês</strong> e “rasgável x toque macio” <strong>110/mês</strong> (documentadas em <em>docs/palavras-chave-topic-clusters.md</em>). 7 das 10 perguntas eram <span class="tag gap">lacunas duras</span>: termos usados no próprio site (produto, categoria ou glossário §4.4 da auditoria) sem nenhuma página que respondesse.</p>
+  </div></div>
+
+  <!-- 03 -->
+  <div class="card"><div class="card-body">
+    <h2><span class="n">03</span>Schema estruturado — trecho real do JSON-LD servido</h2>
+    <p>Três blocos <code>&lt;script type="application/ld+json"&gt;</code> lidos direto do HTML cru retornado pelo servidor (verificação por fetch, sem JavaScript). Trecho do <strong>FAQPage</strong> — as 10 entradas seguem o mesmo formato:</p>
+
+    <div class="code"><span class="c">// https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee</span>
+{
+  <span class="k">"@context"</span>: <span class="s">"https://schema.org"</span>,
+  <span class="k">"@type"</span>: <span class="s">"FAQPage"</span>,
+  <span class="k">"mainEntity"</span>: [
+    {
+      <span class="k">"@type"</span>: <span class="s">"Question"</span>,
+      <span class="k">"name"</span>: <span class="s">"O que é entretela e para que serve?"</span>,
+      <span class="k">"acceptedAnswer"</span>: {
+        <span class="k">"@type"</span>: <span class="s">"Answer"</span>,
+        <span class="k">"text"</span>: <span class="s">"Entretela é a base de reforço aplicada entre o tecido e o ponto para estabilizar o bordado e dar forma à peça. Serve de 20 g/m² a 330 g/m²…"</span>
+      }
+    },
+    {
+      <span class="k">"@type"</span>: <span class="s">"Question"</span>,
+      <span class="k">"name"</span>: <span class="s">"Qual a diferença entre entretela termocolante e entretela costurável?"</span>,
+      <span class="k">"acceptedAnswer"</span>: { <span class="k">"@type"</span>: <span class="s">"Answer"</span>, <span class="k">"text"</span>: <span class="s">"Termocolante tem resina termofusível de um lado e cola com 130–150 °C de 10 a 15 segundos…"</span> }
+    },
+    <span class="c">… + 8 Question idem (total 10) …</span>
+  ]
+}</div>
+
+    <table>
+      <thead><tr><th>JSON-LD</th><th>Conteúdo</th><th>Validação</th></tr></thead>
+      <tbody>
+        <tr><td><strong>FAQPage</strong></td><td class="num">10 × Question + acceptedAnswer (40–80 palavras cada)</td><td><span class="tag ok">servido no HTML</span></td></tr>
+        <tr><td><strong>HowTo</strong></td><td class="num">“Como escolher a entretela certa em 5 passos” — 5 step · totalTime PT15M</td><td><span class="tag ok">servido no HTML</span></td></tr>
+        <tr><td><strong>BreadcrumbList</strong></td><td class="num">3 ListItem (Cluster Bordado › Pilar › Este post)</td><td><span class="tag ok">servido no HTML</span></td></tr>
+      </tbody>
+    </table>
+
+    <p>Para conferir você mesmo: abra a <a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee" target="_blank" rel="noopener">página viva</a> → clique com o botão direito → “Exibir código-fonte” → busque <span class="anchorchip">FAQPage</span>. Ou use os validadores públicos: <a href="https://validator.schema.org/" target="_blank" rel="noopener">validator.schema.org</a> e <a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener">Google Rich Results Test</a>.</p>
+  </div></div>
+
+  <!-- 04 -->
+  <div class="card"><div class="card-body">
+    <h2><span class="n">04</span>Verificação executada — 30/09/2026</h2>
+    <p>Checklist técnico rodado <strong>depois</strong> da publicação, contra a URL ao vivo (não contra o arquivo local):</p>
+
+    <table>
+      <thead><tr><th>Check</th><th>Resultado</th><th style="width:120px">Status</th></tr></thead>
+      <tbody>
+        <tr><td>HTTP do post vivo</td><td class="num">200 · publicado=true · 2026-09-30T18:33:35Z</td><td><span class="tag ok">OK</span></td></tr>
+        <tr><td>H1 / title</td><td class="num">“Perguntas Frequentes sobre Entretelas: 10 Respostas Rápidas” · title 51 car.</td><td><span class="tag ok">OK</span></td></tr>
+        <tr><td>JSON-LD no HTML do servidor</td><td class="num">3 blocos: FAQPage(10) · HowTo(5) · Breadcrumb(3)</td><td><span class="tag ok">OK</span></td></tr>
+        <tr><td>Conteúdo (build do blog)</td><td class="num">5.030 palavras · 13 H2 · 5 tabelas · 60.413 bytes</td><td><span class="tag ok">OK</span></td></tr>
+        <tr><td>Página viva completa</td><td class="num">15.403 palavras renderizadas com o tema da loja</td><td><span class="tag ok">OK</span></td></tr>
+        <tr><td>Âncoras internas do post</td><td class="num">13/13 resolvem para id existente (mapa das 10 + sumário + passos)</td><td><span class="tag ok">OK</span></td></tr>
+        <tr><td>Links de saída do post</td><td class="num">22/22 URLs respondendo HTTP 200 (6 posts irmãos, 6 categorias, 10 produtos)</td><td><span class="tag ok">OK</span></td></tr>
+        <tr><td>Malha do blog</td><td class="num">13 posts vivos · 0 links quebrados (MALHA.md atualizado)</td><td><span class="tag ok">OK</span></td></tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:14px"><strong>Como reproduzir:</strong> <span class="anchorchip">curl -s URL | grep -c application/ld+json</span> → retorna 3. E <span class="anchorchip">… | grep -o '"@type":"FAQPage"'</span> → encontra o bloco com as 10 perguntas.</p>
+  </div></div>
+
+  <!-- 05 -->
+  <div class="card"><div class="card-body">
+    <h2><span class="n">05</span>Teia de links internos — 22 saídas, todas clicáveis</h2>
+    <p>O post sustenta a malha do cluster: pilar, irmãos, categorias e produtos, todos com âncora rica (as 22 URLs foram verificadas com HTTP 200 nesta entrega).</p>
+
+    <h3>Posts do cluster (6)</h3>
+    <div class="linkgrid">
+      <a href="https://lolaaviamentos.com.br/blog/posts/tipos-de-entretela-para-bordado-guia-completo-062f93643185" target="_blank" rel="noopener">Tipos de Entretela para Bordado — guia completo (pilar)</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/como-aplicar-entretela-termocolante-08cc5cd28a4f" target="_blank" rel="noopener">Como aplicar entretela termocolante — temperatura e tempo</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/gramaturas-de-entretela-para-bordado-9e9edbdb6b0c" target="_blank" rel="noopener">Gramaturas de entretela para bordado — tabela 20g a 90g</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/como-usar-filme-hidrossoluvel-bordado-bf0d508deec4" target="_blank" rel="noopener">Como usar filme hidrossolúvel no bordado</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/entretela-rasgavel-vs-hidrossoluvel-dd45830b210a" target="_blank" rel="noopener">Entretela rasgável vs hidrossolúvel</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/entretela-para-alfaiataria-tipos-aplicacoes-b62577073a39" target="_blank" rel="noopener">Entretela para alfaiataria — tipos e aplicações</a>
+    </div>
+
+    <h3>Categorias da loja (6)</h3>
+    <div class="linkgrid">
+      <a href="https://www.lolaaviamentos.com.br/bordado1/" target="_blank" rel="noopener">/bordado1/ — Entretelas para bordado</a>
+      <a href="https://www.lolaaviamentos.com.br/bordado1/termocolante/" target="_blank" rel="noopener">/bordado1/termocolante/ — Termocolantes</a>
+      <a href="https://www.lolaaviamentos.com.br/bordado1/rasgo-facil/" target="_blank" rel="noopener">/bordado1/rasgo-facil/ — Rasgáveis</a>
+      <a href="https://www.lolaaviamentos.com.br/bordado1/hidrossoluvel/" target="_blank" rel="noopener">/bordado1/hidrossoluvel/ — Hidrossolúveis</a>
+      <a href="https://www.lolaaviamentos.com.br/entretela-alfaiataria/tecido-plano/" target="_blank" rel="noopener">/entretela-alfaiataria/tecido-plano/ — Tecido plano</a>
+      <a href="https://www.lolaaviamentos.com.br/entretela-alfaiataria/algodao/" target="_blank" rel="noopener">/entretela-alfaiataria/algodao/ — Algodão (ETP)</a>
+    </div>
+
+    <h3>Produtos citados (10 — todos 200)</h3>
+    <div class="linkgrid">
+      <a href="https://www.lolaaviamentos.com.br/produtos/entretela-dupla-face/" target="_blank" rel="noopener">Entretela dupla face (EDF-40) — pergunta 05</a>
+      <a href="https://www.lolaaviamentos.com.br/produtos/entretela-nao-tecido-para-bordado-toque-macio-rasgavel-60g-lef-60/" target="_blank" rel="noopener">Lef-60 toque macio rasgável — pergunta 06</a>
+      <a href="https://www.lolaaviamentos.com.br/produtos/entretela-para-bordado-rasgavel-40g-90cm-200m/" target="_blank" rel="noopener">Rasgável 40g 90×200m — CTA do post</a>
+      <a href="https://www.lolaaviamentos.com.br/produtos/entretelas-tecido-de-algodao-termocolante-etp-15m-x-100m/" target="_blank" rel="noopener">Algodão termocolante ETP 105–170g — perguntas 09 e 10</a>
+      <a href="https://www.lolaaviamentos.com.br/produtos/filme-hidrossoluvel-para-bordado-40g-fh-10-15sed/" target="_blank" rel="noopener">Filme hidrossolúvel FH-10 40g — pergunta 07</a>
+      <a href="https://www.lolaaviamentos.com.br/produtos/entretela-de-tnt-micro-ponto-termocolante-40g-lab-403-404/" target="_blank" rel="noopener">TNT micro ponto 40g — pergunta 08</a>
+      <a href="https://www.lolaaviamentos.com.br/produtos/entretela-de-malha-termocolante-60g-lab-203-204/" target="_blank" rel="noopener">Malha termocolante 60g — pergunta 10</a>
+      <a href="https://www.lolaaviamentos.com.br/produtos/entretela-de-malha-termocolante-40g-lab-501-502/" target="_blank" rel="noopener">Malha termocolante 40g — pergunta 10</a>
+      <a href="https://www.lolaaviamentos.com.br/produtos/entretela-cavalinho-de-memoria-branca-235g-sem-cola/" target="_blank" rel="noopener">Memória cavalinho 235g sem cola — pergunta 02</a>
+      <a href="https://www.lolaaviamentos.com.br/produtos/entretela-termocolante-de-toque-macio-30g-90cm-100m/" target="_blank" rel="noopener">Termocolante toque macio 30g — pergunta 01</a>
+    </div>
+  </div></div>
+
+  <!-- 06 -->
+  <div class="card"><div class="card-body">
+    <h2><span class="n">06</span>Checklist AG-03 — item a item</h2>
+    <p>Requisito da auditoria AIO/GEO (<em>auditoria-seo-aio-geo-completa.md</em>): <strong>“FAQPage schema com 10+ perguntas sobre entretelas”</strong>. Cada linha tem a prova clicável.</p>
+
+    <table>
+      <thead><tr><th style="width:44px">#</th><th>Requisito</th><th>Prova</th><th style="width:90px">Status</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1</td><td>FAQPage schema com 10+ perguntas sobre entretelas</td><td><a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee" target="_blank" rel="noopener">10 × Question no mainEntity</a> (HTML cru)</td><td><span class="tag ok">feito</span></td></tr>
+        <tr><td class="num">2</td><td>Perguntas informacionais sem resposta dedicada no site</td><td>7 lacunas duras do inventário + 3 clusters sem hub (coluna “Busca” da seção 02)</td><td><span class="tag ok">feito</span></td></tr>
+        <tr><td class="num">3</td><td>Dado numérico obrigatório por seção (padrão AUTHORING)</td><td>5 tabelas + gramaturas, temperaturas e volumes nas 10 seções</td><td><span class="tag ok">feito</span></td></tr>
+        <tr><td class="num">4</td><td>Conteúdo 4.000+ palavras</td><td class="num">5.030 palavras (build) · 15.403 na página viva</td><td><span class="tag ok">feito</span></td></tr>
+        <tr><td class="num">5</td><td>Teia interna: 3+ irmãos, 1 pilar, categorias e produtos</td><td><a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee" target="_blank" rel="noopener">22 links = 0 quebrados</a> (seção 05)</td><td><span class="tag ok">feito</span></td></tr>
+        <tr><td class="num">6</td><td>Padrão do template do AG-03 B1 (FAQPage + apoio)</td><td>3 JSON-LD: FAQPage + HowTo + BreadcrumbList</td><td><span class="tag ok">feito</span></td></tr>
+        <tr><td class="num">7</td><td>Publicado no blog (não rascunho, não staging)</td><td><a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee" target="_blank" rel="noopener">página viva · HTTP 200</a></td><td><span class="tag ok">feito</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <h4>Como o cliente usa isto</h4>
+      <p>Abra a <a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee" target="_blank" rel="noopener">página viva</a>, clique em qualquer uma das 10 perguntas da seção 02 para cair na resposta exata e, se quiser conferir o schema, use o link de “código-fonte” da seção 03. O mesmo URL é o que deve ser compartilhado com a equipe de conteúdo — ele é o hub canônico de perguntas frequentes de entretelas do blog.</p>
+    </div>
+  </div></div>
+
+</div>
+
+<footer>
+  <div class="fbox">
+    <span><strong>Task</strong> eKyte 10049811 — [AIO B2] FAQ Page: 10 perguntas sobre entretelas</span>
+    <span><strong>Fase</strong> Validar Briefing [TECH] · seq 16</span>
+    <span><strong>Executor</strong> Marcos Luciano</span>
+    <span><strong>Projeto</strong> 319128 · Workspace 104796</span>
+    <span><strong>Vence</strong> 02/10/2026</span>
+    <span><strong>Evidência</strong> 30/09/2026 · SEO/AIO squad · Lola Aviamentos</span>
+  </div>
+</footer>
+
+</body>
+</html>
