@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Share of Search | Material didático conceitual | Exemplos ilustrativos</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--red:rgb(229,9,20);--red-dark:rgb(180,7,16);--red-light:rgb(255,60,70);--gold:#c9a96e;--gold-light:#f5f0e6;--gold-border:#e8dcc8;--gray-50:#fafafa;--gray-100:#f5f5f5;--gray-200:#eee;--gray-300:#e0e0e0;--gray-500:#9e9e9e;--gray-600:#757575;--gray-700:#616161;--gray-800:#424242;--gray-900:#212121}
+body{font-family:'Ubuntu',-apple-system,BlinkMacSystemFont,sans-serif;background:#f8f7f4;color:var(--gray-900);line-height:1.7;font-size:16px}
+.cover{background:linear-gradient(135deg,#0d0d0d 0%,#1a1a1a 50%,#2a2a2a 100%);color:#fff;padding:64px 40px 48px;text-align:center;position:relative;overflow:hidden}
+.cover::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(201,169,110,.06) 0%,transparent 60%);pointer-events:none}
+.cover-content{position:relative;z-index:1;max-width:860px;margin:0 auto}
+.cover-content::before{content:'';position:absolute;top:-16px;left:50%;transform:translateX(-50%);width:200px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.cover-content::after{content:'';display:block;width:60px;height:2px;background:var(--gold);margin:28px auto 0;border-radius:1px}
+.cover .label{display:inline-block;background:rgba(201,169,110,.12);border:1px solid rgba(201,169,110,.3);padding:6px 20px;border-radius:20px;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:20px;color:var(--gold)}
+.cover h1{font-size:40px;font-weight:700;line-height:1.15;margin-bottom:14px;letter-spacing:-.5px;font-family:'Plus Jakarta Sans',serif}
+.cover p{font-size:18px;opacity:.85;margin-bottom:24px;font-weight:300}
+.cover-meta{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;font-size:14px;opacity:.7}
+.container{max-width:980px;margin:-36px auto 48px;position:relative;z-index:2;padding:0 12px}
+.card{background:#fff;border-radius:16px;box-shadow:0 2px 20px rgba(0,0,0,.05);margin-bottom:28px;overflow:hidden;border:1px solid var(--gray-300);position:relative}
+.card::before{content:'';position:absolute;top:0;left:40px;right:40px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-border),var(--gold),var(--gold-border),transparent);opacity:.6}
+.card-body{padding:44px 52px}
+h2{font-size:24px;font-weight:700;color:var(--red);margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--gold-border);display:flex;align-items:center;gap:10px;position:relative}
+h2::after{content:'';position:absolute;bottom:-1px;left:0;width:40px;height:2px;background:var(--gold);border-radius:1px}
+h2 .slide-num{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--red);color:#fff;font-size:13px;font-weight:800;flex-shrink:0}
+h3{font-size:18px;font-weight:700;color:var(--gray-900);margin:36px 0 18px}
+h4{font-size:16px;font-weight:700;color:var(--gray-800);margin:22px 0 12px}
+p{font-size:16px;color:var(--gray-700);margin-bottom:16px;line-height:1.8}
+.badge{display:inline-block;padding:5px 16px;border-radius:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px}
+.badge-critico{background:#fef2f2;color:var(--red);border:1px solid #fecaca}
+.badge-alto{background:#fff7ed;color:#c2410c;border:1px solid #fed7aa}
+.badge-ok{background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0}
+.badge-exec{background:#fffbeb;color:#b45309;border:1px solid #fde68a}
+.badge-pend{background:#f5f5f5;color:#6b7280;border:1px solid #d1d5db}
+.badge-info{background:#f5f5f5;color:#616161;border:1px solid #d4d4d4}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14px}
+th,td{padding:13px 15px;text-align:left;border-bottom:1px solid var(--gray-100);vertical-align:top}
+th{background:linear-gradient(135deg,var(--gray-50),#f8f7f4);font-weight:700;color:var(--gray-700);font-size:11px;text-transform:uppercase;letter-spacing:.7px;border-bottom:2px solid var(--gold-border)}
+tr:hover td{background:#fcfaf7}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px}
+.kpi-grid.g3{grid-template-columns:repeat(3,1fr)}
+.kpi-card{background:#f2f0ec;border-radius:10px;padding:20px 12px 18px;text-align:center;border:1px solid var(--gold-border);position:relative;overflow:hidden}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),var(--gold))}
+.kpi-card .value{font-size:28px;font-weight:700;color:var(--red);line-height:1.1}
+.kpi-card .label{font-size:12px;color:var(--gray-600);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:8px}
+.kpi-card .sub{font-size:12px;color:var(--gray-600);margin-top:4px}
+.risk-box{background:linear-gradient(135deg,#fcfaf7,#f8f7f4);border-left:4px solid var(--red);padding:22px 26px;border-radius:0 12px 12px 0;margin-bottom:18px}
+.risk-box.green{border-left-color:#15803d;background:linear-gradient(135deg,#f0fdf4,#f8f7f4)}
+.risk-box.goldbox{border-left-color:var(--gold);background:linear-gradient(135deg,#fffbeb,#f8f7f4)}
+.risk-box h4{margin:0 0 10px;color:var(--red);font-size:16px}
+.risk-box.green h4{color:#15803d}
+.risk-box.goldbox h4{color:#8b7a4a}
+.risk-box p{font-size:15px;margin:0}
+.finding{border:1px solid var(--gray-200);border-radius:12px;padding:26px 30px;margin-bottom:18px;background:#fcfcfc;border-left:3px solid transparent}
+.finding:hover{border-color:var(--gold-border);border-left-color:var(--gold)}
+.finding.modA{border-left-color:var(--red)}
+.finding.modB{border-left-color:var(--gold);background:#fffdf6}
+.finding.modC{border-left-color:#15803d}
+.finding-title{font-weight:700;font-size:17px;color:var(--gray-900)}
+.bar-row{display:flex;align-items:center;gap:16px;margin-bottom:14px}
+.bar-label{width:190px;font-size:13px;font-weight:700;color:var(--gray-700);text-align:right;flex-shrink:0}
+.bar-track{flex:1;height:30px;background:var(--gray-100);border-radius:6px;overflow:hidden}
+.bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:14px;font-size:13px;font-weight:700;color:#fff;white-space:nowrap}
+.bar-fill.red{background:linear-gradient(90deg,var(--red),var(--red-light))}
+.bar-fill.gold{background:linear-gradient(90deg,#b8963a,#d4b96a)}
+.bar-fill.green{background:linear-gradient(90deg,#15803d,#22c55e)}
+.bar-fill.gray{background:linear-gradient(90deg,#616161,#9e9e9e)}
+.bar-fill.dark{background:linear-gradient(90deg,#212121,#616161)}
+.bar-fill.blue{background:linear-gradient(90deg,#1d4ed8,#60a5fa)}
+.chart-box{background:#fcfcfc;border:1px solid var(--gray-200);border-radius:12px;padding:24px;margin:20px 0}
+.chart-box h4{margin:0 0 4px;font-size:15px;color:var(--gray-900)}
+.chart-box .hint{font-size:13px;color:var(--gray-600);margin-bottom:14px}
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.timeline{display:flex;gap:0;margin:32px 0 16px;position:relative}
+.timeline::before{content:'';position:absolute;top:28px;left:5%;right:5%;height:3px;background:linear-gradient(90deg,var(--gold-border),var(--gold),var(--gold-border));border-radius:2px}
+.timeline-phase{flex:1;text-align:center;position:relative;padding:0 8px}
+.timeline-phase .dot{width:16px;height:16px;border-radius:50%;margin:0 auto 12px;position:relative;z-index:1;border:3px solid #fff;box-shadow:0 0 0 2px var(--gold)}
+.timeline-phase .phase-name{font-size:13px;font-weight:700;color:var(--gray-800)}
+.timeline-phase .phase-hours{font-size:20px;font-weight:700;color:var(--red)}
+.timeline-phase .phase-pct{font-size:12px;color:var(--gray-500);font-weight:600}
+.slide-nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 0;justify-content:center}
+.slide-nav a{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.9);font-size:12px;font-weight:600;text-decoration:none}
+.slide-nav a:hover{background:rgba(201,169,110,.18);border-color:var(--gold);color:#fff}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.toc-item{display:flex;gap:14px;align-items:center;padding:14px 16px;border:1px solid var(--gray-200);border-radius:10px;background:#fcfcfc;text-decoration:none}
+.toc-item:hover{border-color:var(--gold);background:#fefcf5}
+.toc-num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--red),var(--red-light));color:#fff;font-weight:800;font-size:13px;flex-shrink:0}
+.toc-title{font-weight:700;color:var(--gray-900);font-size:14px}
+.toc-desc{font-size:12px;color:var(--gray-600);margin-top:2px}
+.callout{background:linear-gradient(135deg,#0d0d0d,#1a1a1a);color:#fff;border-radius:12px;padding:26px 28px;margin:20px 0;position:relative;overflow:hidden}
+.callout::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),var(--gold))}
+.callout h4{color:var(--gold);margin:0 0 8px;font-size:15px;text-transform:uppercase;letter-spacing:.6px}
+.callout p{color:rgba(255,255,255,.82);font-size:15px;margin:0}
+code{font-family:'JetBrains Mono',monospace;background:var(--gray-100);padding:2px 8px;border-radius:3px;font-size:13px;color:var(--red)}
+.check-list{list-style:none;padding:0}
+.check-list li{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--gray-100);font-size:15px;color:var(--gray-700)}
+.check-icon{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;margin-top:1px}
+.check-icon.ok{background:#dcfce7;color:#15803d;border:1px solid #bbf7d0}
+.check-icon.exec{background:#fef3c7;color:#b45309;border:1px solid #fde68a}
+.check-icon.pend{background:#f3f4f6;color:#6b7280;border:1px solid #e5e7eb}
+.gantt{margin:18px 0}
+.gantt-row{display:grid;grid-template-columns:220px 1fr 86px;gap:12px;align-items:center;margin-bottom:10px;font-size:13px}
+.gantt-label{font-weight:700;color:var(--gray-800);text-align:right}
+.gantt-track{height:26px;background:var(--gray-100);border-radius:6px;position:relative;overflow:hidden}
+.gantt-fill{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:10px;font-size:11px;font-weight:700;color:#fff;white-space:nowrap}
+.gantt-hours{font-weight:800;color:var(--red);text-align:right;font-size:13px}
+.footer{text-align:center;padding:36px;font-size:13px;color:var(--gray-500);border-top:1px solid var(--gold-border);position:relative}
+.static-chart{width:100%;background:#fff;border:1px solid var(--gray-200);border-radius:10px;padding:18px 16px 12px;margin:0}
+.static-legend{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;font-size:12px;color:var(--gray-700);margin-top:10px}
+.static-legend span{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.dot-legend{width:12px;height:12px;border-radius:50%;display:inline-block}
+.vert-bars{display:flex;align-items:flex-end;gap:8px;height:190px;padding:10px 4px 0;border-left:1px solid var(--gray-200);border-bottom:1px solid var(--gray-200);margin-top:8px}
+.vert-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+.vert-fill{width:100%;max-width:46px;border-radius:6px 6px 0 0;display:flex;align-items:flex-start;justify-content:center;padding-top:6px;font-size:10px;font-weight:800;color:#fff}
+.vert-label{font-size:10px;font-weight:700;color:var(--gray-600);white-space:nowrap}
+.vert-value{font-size:10px;font-weight:800;color:var(--gray-800)}
+.donut-wrap{display:flex;gap:20px;align-items:center;flex-wrap:wrap;justify-content:center}
+.donut{width:170px;height:170px;border-radius:50%;background:conic-gradient(#212121 0 61%,#e50914 61% 78%,#c9a96e 78% 82.5%,#9e9e9e 82.5% 86.2%,#e8dcc8 86.2% 100%);position:relative;flex-shrink:0;border:1px solid var(--gray-200)}
+.donut::after{content:'600 visitas';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:96px;height:96px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--gray-900);border:1px solid var(--gray-200)}
+.donut-legend{font-size:13px;color:var(--gray-700)}
+.donut-legend div{display:flex;align-items:center;gap:8px;padding:5px 0;font-weight:600}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;background:#f5f0e6;border:1px solid var(--gold-border);color:#8b7a4a;margin:2px 4px 2px 0}
+.source{font-size:12px;color:var(--gray-500);margin-top:8px}
+@media(max-width:640px){.cover h1{font-size:26px}.card-body{padding:22px 20px}.kpi-grid,.kpi-grid.g3{grid-template-columns:repeat(2,1fr)}.chart-grid{grid-template-columns:1fr}.toc-grid{grid-template-columns:1fr}.bar-label{width:110px;font-size:11px}.gantt-row{grid-template-columns:1fr}.gantt-label{text-align:left}}
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="cover-content">
+<div class="label">Material didático | Conceitos com exemplos ilustrativos</div>
+<h1>Share of Search<br>Quem domina a busca domina o mercado</h1>
+<p>Entenda o que é Share of Search, como ele é medido e como ler cada visual. Todos os números aqui são fictícios e servem só para explicar o conceito. Nenhum dado real aparece neste material.</p>
+<div class="cover-meta"><span>Conceitos</span><span>Exemplos fictícios</span><span>Foco em entendimento</span></div>
+<div class="slide-nav">
+<a href="#essencial">01 Essencial</a><a href="#conceito">02 Conceito</a><a href="#medicao">03 Como se mede</a><a href="#exemplo">04 Exemplo visual</a><a href="#concorrentes">05 Concorrentes</a><a href="#brand">06 Brand Visibility</a><a href="#estrategias">07 Estratégias</a><a href="#duvidas">08 Dúvidas</a>
+</div>
+</div>
+</div>
+<div class="container">
+<style>.donut::after{content:'Exemplo';}</style>
+
+<div class="card" id="essencial"><div class="card-body">
+<h2><span class="slide-num">01</span> O essencial em 1 minuto</h2>
+<div class="kpi-grid">
+<div class="kpi-card"><div class="value">32%</div><div class="label">Share exemplo</div><div class="sub">fatia fictícia de um tema</div></div>
+<div class="kpi-card"><div class="value">3</div><div class="label">Corredores de busca</div><div class="sub">Google, IA e busca interna</div></div>
+<div class="kpi-card"><div class="value">4</div><div class="label">Grupos de intenção</div><div class="sub">marca, produto, categoria, técnica</div></div>
+<div class="kpi-card"><div class="value">1</div><div class="label">Frase para guardar</div><div class="sub">share mostra domínio</div></div>
+</div>
+<p><strong>A ideia central:</strong> Share of Search é a fatia das buscas de um tema que lembra de uma empresa. Quando essa fatia sobe, as vendas costumam subir nos meses seguintes. É o indicador que antecipa mercado.</p>
+<div class="toc-grid">
+<a class="toc-item" href="#conceito"><div class="toc-num">1</div><div><div class="toc-title">O que é, com conta simples</div><div class="toc-desc">fórmula e exemplo fictício</div></div></a>
+<a class="toc-item" href="#exemplo"><div class="toc-num" style="background:linear-gradient(135deg,#b8963a,#d4b96a)">2</div><div><div class="toc-title">Como ler cada gráfico</div><div class="toc-desc">visuais com leitura guiada</div></div></a>
+<a class="toc-item" href="#concorrentes"><div class="toc-num" style="background:linear-gradient(135deg,#15803d,#22c55e)">3</div><div><div class="toc-title">Os 3 tipos de concorrente</div><div class="toc-desc">direto, homônimo e gigante</div></div></a>
+<a class="toc-item" href="#duvidas"><div class="toc-num" style="background:linear-gradient(135deg,#616161,#9e9e9e)">4</div><div><div class="toc-title">Dúvidas e conceitos</div><div class="toc-desc">respostas curtas didáticas</div></div></a>
+</div>
+<div class="risk-box goldbox" style="margin-top:20px"><h4>Como usar este material</h4><p>Cada número está sinalizado como exemplo fictício. Os dados reais de cada empresa aparecem somente dentro do diagnóstico contratado, que é o produto em venda.</p></div>
+<p class="source">Todos os valores desta página são ilustrativos.</p>
+</div></div>
+
+<div class="card" id="conceito"><div class="card-body">
+<h2><span class="slide-num">02</span> Share of Search explicado de forma simples</h2>
+<p>Pense em uma eleição diária no Google. Cada busca é um voto. Se 10 mil pessoas buscam um tema no mês e 3,2 mil votos citam uma marca ou chegam ao site dela, o Share of Search dela é 32%.</p>
+<table><tr><th>Fórmula</th><th>Como ler o exemplo</th><th>Referência ilustrativa</th></tr>
+<tr><td><code>SoS = buscas da marca / buscas totais x 100</code></td><td>Termo de marca com 6,2 mil buscas é voto direto. Termo de categoria com marca é voto de categoria. Termo sem marca é voto em aberto.</td><td><span class="badge badge-ok">Exemplo acima de 30%</span></td></tr>
+<tr><td><code>SoS IA = citações da marca / respostas totais x 100</code></td><td>Quando alguém pergunta à IA qual opção compensa, a marca é citada. Se não é citada, a concorrente é.</td><td><span class="badge badge-exec">Exemplo acima de 40%</span></td></tr>
+<tr><td><code>SoS categoria = cliques da empresa / cliques totais</code></td><td>Em termos de categoria, quem fica com o clique fica com o contato comercial.</td><td><span class="badge badge-info">Exemplo: liderar 3 grupos</span></td></tr></table>
+<div class="chart-box"><h4>Exemplo ilustrativo: evolução de Share of Search</h4><div class="hint">Leitura guiada: cada linha é uma empresa fictícia. Valores em % de share, fictícios.</div><div class="static-chart"><svg viewBox="0 0 640 220" width="100%" height="220" role="img" aria-label="Exemplo evolucao Share of Search"><line x1="50" y1="10" x2="50" y2="180" stroke="#e0e0e0" stroke-width="1"/><line x1="50" y1="180" x2="620" y2="180" stroke="#e0e0e0" stroke-width="1"/><text x="8" y="45" font-size="11" fill="#9e9e9e">40%</text><text x="8" y="95" font-size="11" fill="#9e9e9e">30%</text><text x="8" y="145" font-size="11" fill="#9e9e9e">20%</text><polyline points="50,140 143,132 236,120 329,108 422,96 515,86 610,76" fill="none" stroke="#e50914" stroke-width="3"/><circle cx="50" cy="140" r="4" fill="#e50914"/><circle cx="610" cy="76" r="4" fill="#e50914"/><polyline points="50,84 143,84 236,88 329,88 422,92 515,92 610,96" fill="none" stroke="#9e9e9e" stroke-width="2" stroke-dasharray="6 4"/><polyline points="50,60 143,64 236,68 329,72 422,76 515,80 610,84" fill="none" stroke="#c9a96e" stroke-width="2"/><text x="50" y="198" font-size="11" fill="#757575">Início</text><text x="230" y="198" font-size="11" fill="#757575">Meio</text><text x="575" y="198" font-size="11" fill="#757575">Fim</text><text x="440" y="66" font-size="12" font-weight="bold" fill="#e50914">Marca exemplo 18% a 35%</text></svg><div class="static-legend"><span><i class="dot-legend" style="background:#e50914"></i>Marca exemplo em ascensão</span><span><i class="dot-legend" style="background:#9e9e9e"></i>Referência estável</span><span><i class="dot-legend" style="background:#c9a96e"></i>Outra referência</span></div></div></div>
+<div class="callout"><h4>Por que olhar além do Google clássico</h4><p>A compra hoje passa por três buscas. Busca no Google para descobrir e comparar. Busca na IA para perguntar qual opção compensa. Busca interna para checar preço e disponibilidade. Medir só uma delas deixa ponto cego.</p></div>
+<h3>Posição, tráfego e share: a diferença</h3>
+<table><tr><th>Métrica</th><th>O que diz</th><th>Limite</th></tr>
+<tr><td><strong>Posição</strong></td><td>Onde a empresa está em 1 termo</td><td>Não diz o tamanho do tema</td></tr>
+<tr><td><strong>Tráfego</strong></td><td>Quantos clicaram na empresa</td><td>Não diz quanto ficou com o rival</td></tr>
+<tr><td><strong>Share of Search</strong></td><td>A fatia da empresa contra todas</td><td>É a que mostra domínio</td></tr></table>
+</div></div>
+
+<div class="card" id="medicao"><div class="card-body">
+<h2><span class="slide-num">03</span> Como um diagnóstico é montado, em 4 passos</h2>
+<p>Visão didática do método, sem detalhar processo interno. O passo a passo operacional completo faz parte do produto contratado.</p>
+<div class="toc-grid">
+<div class="toc-item"><div class="toc-num">1</div><div><div class="toc-title">Definir o tema</div><div class="toc-desc">grupos de intenção do segmento</div></div></div>
+<div class="toc-item"><div class="toc-num">2</div><div><div class="toc-title">Listar referências</div><div class="toc-desc">rivais diretos e ampliados</div></div></div>
+<div class="toc-item"><div class="toc-num">3</div><div><div class="toc-title">Coletar posição e volume</div><div class="toc-desc">por keyword, com exemplo abaixo</div></div></div>
+<div class="toc-item"><div class="toc-num">4</div><div><div class="toc-title">Calcular por grupo</div><div class="toc-desc">share por intenção, não média solta</div></div></div>
+</div>
+<h3>Mini glossário com exemplos fictícios</h3>
+<table><tr><th>Termo</th><th>Significa</th><th>Exemplo fictício</th></tr>
+<tr><td><strong>Volume</strong></td><td>Quanta gente busca por mês</td><td>8.400 buscas em um termo exemplo</td></tr>
+<tr><td><strong>Posição</strong></td><td>A colocação no Google</td><td>1 é topo, 12 é página 2</td></tr>
+<tr><td><strong>Tráfego estimado</strong></td><td>Cliques que a posição gera</td><td>95 visitas fictícias em um termo</td></tr>
+<tr><td><strong>DA e PA</strong></td><td>Força do domínio e da página, de 0 a 100</td><td>Exemplo: DA 22, PA 31</td></tr>
+<tr><td><strong>Backlink</strong></td><td>Site que linka, voto de confiança</td><td>Exemplo: 120 links de 30 domínios</td></tr></table>
+<div class="risk-box goldbox"><h4>Limites honestos de qualquer medição</h4><p>Volume é estimativa da ferramenta, não censo. Por isso a decisão usa fatia relativa, que é estável. Resposta de IA varia por dia, por isso se mede em janela. Busca interna não abre volume oficial, por isso se usa aproximação qualificada.</p></div>
+</div></div>
+
+<div class="card" id="exemplo"><div class="card-body">
+<h2><span class="slide-num">04</span> Exemplo visual fictício: como ler cada gráfico</h2>
+<p>Todos os visuais abaixo usam números inventados. Servem para treinar a leitura que será feita com dados reais dentro do diagnóstico.</p>
+<div class="chart-box"><h4>Visual 1: tráfego em 12 períodos. Subiu, caiu, retomou.</h4><div class="hint">Leia assim: altura é visita estimada no período. Oscilação mostra dependência de poucas keywords. Valores fictícios.</div><div class="static-chart"><div class="vert-bars"><div class="vert-col"><div class="vert-value">320</div><div class="vert-fill" style="height:95px;background:#e0e0e0;color:#616161"> </div><div class="vert-label">P1</div></div><div class="vert-col"><div class="vert-value">410</div><div class="vert-fill" style="height:122px;background:#e0e0e0;color:#616161"> </div><div class="vert-label">P2</div></div><div class="vert-col"><div class="vert-value">380</div><div class="vert-fill" style="height:113px;background:#e0e0e0;color:#616161"> </div><div class="vert-label">P3</div></div><div class="vert-col"><div class="vert-value">450</div><div class="vert-fill" style="height:134px;background:#e0e0e0;color:#616161"> </div><div class="vert-label">P4</div></div><div class="vert-col"><div class="vert-value">520</div><div class="vert-fill" style="height:154px;background:#c9a96e"> </div><div class="vert-label">P5</div></div><div class="vert-col"><div class="vert-value">610</div><div class="vert-fill" style="height:181px;background:#e50914">pico</div><div class="vert-label">P6</div></div><div class="vert-col"><div class="vert-value">580</div><div class="vert-fill" style="height:172px;background:#c9a96e"> </div><div class="vert-label">P7</div></div><div class="vert-col"><div class="vert-value">490</div><div class="vert-fill" style="height:145px;background:#e0e0e0;color:#616161"> </div><div class="vert-label">P8</div></div><div class="vert-col"><div class="vert-value">530</div><div class="vert-fill" style="height:157px;background:#c9a96e"> </div><div class="vert-label">P9</div></div><div class="vert-col"><div class="vert-value">660</div><div class="vert-fill" style="height:190px;background:#212121">atual</div><div class="vert-label">P10</div></div></div><div class="static-legend"><span><i class="dot-legend" style="background:#e50914"></i>Pico ilustrativo</span><span><i class="dot-legend" style="background:#212121"></i>Período atual fictício</span></div></div></div>
+<div class="chart-box"><h4>Visual 2: onde mora o tráfego. Exemplo com concentração.</h4><div class="hint">Leia assim: cada fatia é um grupo de páginas. Fatia grande demais indica falta de páginas de categoria. Valores fictícios.</div><div class="static-chart"><div class="donut-wrap"><div class="donut"></div><div class="donut-legend"><div><i class="dot-legend" style="background:#212121"></i>Página principal 55% (exemplo)</div><div><i class="dot-legend" style="background:#e50914"></i>Página de marca 20% (exemplo)</div><div><i class="dot-legend" style="background:#c9a96e"></i>Página secundária 10% (exemplo)</div><div><i class="dot-legend" style="background:#e8dcc8;border:1px solid #c9a96e"></i>Demais 15% (exemplo)</div></div></div></div></div>
+<h3>Keywords de exemplo, explicadas</h3>
+<table><tr><th>Keyword exemplo</th><th>Pos. e volume fictícios</th><th>O que significa</th></tr>
+<tr><td><strong>marca exemplo</strong></td><td>2 com 6.200 e 140 visitas</td><td>Quem digita a marca encontra fácil. <span class="badge badge-ok">Defesa</span></td></tr>
+<tr><td><strong>categoria exemplo</strong></td><td>14 com 9.500 e 60 visitas</td><td>Muita busca, página 2. Ir ao top 10 muda o volume. <span class="badge badge-critico">Espaço</span></td></tr>
+<tr><td><strong>produto exemplo</strong></td><td>8 com 2.100 e 55 visitas</td><td>Marca distribuída que já traciona. <span class="badge badge-exec">Expandir</span></td></tr>
+<tr><td><strong>medida exemplo</strong></td><td>26 com 320 e 2 visitas</td><td>Intenção técnica presa na página 3. Página dedicada destrava.</td></tr></table>
+</div></div>
+
+<div class="card" id="concorrentes"><div class="card-body">
+<h2><span class="slide-num">05</span> Concorrentes em 3 camadas simples</h2>
+<p>Exemplo didático com tipos genéricos. Os nomes e números reais entram somente no diagnóstico contratado.</p>
+<div class="finding modA"><div class="finding-title">Camada 1: rivais diretos <span class="badge badge-critico">Exemplo</span></div><p style="margin-top:10px">Empresas do mesmo segmento e modelo. Parte delas costuma ter autoridade baixa e presença zerada, o que indica espaço para ultrapassagem técnica.</p></div>
+<div class="finding modB"><div class="finding-title">Camada 2: homônimo e confusão <span class="badge badge-alto">Exemplo</span></div><p style="margin-top:10px">Marca com nome parecido e grande sobreposição de termos. Quando isso acontece, o Google hesita entre as duas. Cada posição ganha recupera share direto.</p></div>
+<div class="finding modC"><div class="finding-title">Camada 3: gigantes de atenção <span class="badge badge-ok">Exemplo</span></div><p style="margin-top:10px">Marketplaces e portais de reputação. Capturam a busca antes da decisão para comparar preço e confiança. A disputa aqui é ser a resposta confiável na dúvida de compra, não vencer o varejo.</p></div>
+<div class="chart-box"><h4>Visual: força de domínio de 0 a 100. Exemplo fictício.</h4><div class="hint">Leia assim: barra maior é domínio mais forte. Números ilustrativos.</div><div class="static-chart"><div class="bar-row"><div class="bar-label">Empresa exemplo 18</div><div class="bar-track"><div class="bar-fill red" style="width:35%">18 exemplo</div></div></div><div class="bar-row"><div class="bar-label">Meta ilustrativa 30</div><div class="bar-track"><div class="bar-fill gold" style="width:58%">30 referência</div></div></div><div class="bar-row"><div class="bar-label">Referência de varejo 44</div><div class="bar-track"><div class="bar-fill gray" style="width:85%">44 exemplo</div></div></div><div class="bar-row"><div class="bar-label">Referência global 52</div><div class="bar-track"><div class="bar-fill dark" style="width:100%">52 exemplo</div></div></div></div></div>
+</div></div>
+
+<div class="card" id="brand"><div class="card-body">
+<h2><span class="slide-num">06</span> Top Brand Visibility: como ler esse gráfico</h2>
+<p>Este visual mostra quantas vezes cada marca é lembrada nas respostas e buscas de um mercado. Pense como prateleira mental. Quanto maior a barra, mais a marca ocupa a cabeça do comprador. Abaixo, exemplo 100% fictício.</p>
+<div class="chart-box"><h4>Top Brand Visibility. Exemplo fictício, sem dados reais.</h4><div class="hint">Leia assim: altura é lembrança. Nomes e percentuais inventados para treinar a leitura.</div><div class="static-chart"><div class="vert-bars" style="height:210px"><div class="vert-col"><div class="vert-value">55%</div><div class="vert-fill" style="height:116px;background:#f0b49a;color:#7c2d12"> </div><div class="vert-label">Marca A</div></div><div class="vert-col"><div class="vert-value">45%</div><div class="vert-fill" style="height:95px;background:#f0b49a;color:#7c2d12"> </div><div class="vert-label">Marca B</div></div><div class="vert-col"><div class="vert-value">35%</div><div class="vert-fill" style="height:74px;background:#f0b49a;color:#7c2d12"> </div><div class="vert-label">Marca C</div></div><div class="vert-col"><div class="vert-value">15%</div><div class="vert-fill" style="height:32px;background:#f0b49a;color:#7c2d12"> </div><div class="vert-label">Marca D</div></div><div class="vert-col"><div class="vert-value">8%</div><div class="vert-fill" style="height:17px;background:#e0e0e0;color:#616161"> </div><div class="vert-label">Empresa exemplo</div></div></div><div class="static-legend"><span><i class="dot-legend" style="background:#f0b49a"></i>Marcas de referência (fictícias)</span><span><i class="dot-legend" style="background:#212121"></i>Empresa exemplo: espaço a conquistar</span></div></div></div>
+<div class="risk-box goldbox"><h4>Como interpretar sem se assustar</h4><p>Barra pequena não é reprovação, é mapa. Ela indica qual prateleira conquistar: em vez de brigar no jogo das gigantes, a empresa mira a lembrança na pergunta que gera contato, como onde comprar e revender.</p></div>
+<p class="source">Exemplo ilustrativo. Nomes e percentuais fictícios.</p>
+</div></div>
+
+<div class="card" id="estrategias"><div class="card-body">
+<h2><span class="slide-num">07</span> Estratégias aplicadas, explicadas com exemplos</h2>
+<p>O diagnóstico usa 6 estratégias clássicas de Share of Search. Abaixo, o que cada uma significa, com visual e exemplo fictício. O como executar fica fora deste material: ele aparece no mapa entregue pelo diagnóstico.</p>
+<div class="finding modA"><div class="finding-title">01 | Defesa de marca: proteger quem já procura a empresa</div><p style="margin-top:10px"><strong>O que é:</strong> garantir o topo em buscas com o nome da empresa e variações. É a base: quem já conhece precisa encontrar sem desvio.</p><div class="static-chart"><div class="bar-row"><div class="bar-label">Marca exemplo 90%</div><div class="bar-track"><div class="bar-fill green" style="width:90%">defendida</div></div></div><div class="bar-row"><div class="bar-label">Categoria exemplo 20%</div><div class="bar-track"><div class="bar-fill gold" style="width:22%">a expandir</div></div></div></div><p><strong>O que o diagnóstico mostra:</strong> se a defesa está completa ou se há vazamento para homônimos e variações.</p></div>
+<div class="finding modB"><div class="finding-title">02 | Expansão por categoria: alcançar quem ainda não conhece</div><p style="margin-top:10px"><strong>O que é:</strong> disputar termos genéricos do segmento, como fornecedor, atacado ou medida técnica no exemplo fictício. É onde nasce o contato novo.</p><div><span class="pill">termo genérico A</span><span class="pill">termo genérico B</span><span class="pill">termo técnico C</span></div><p style="margin-top:10px"><strong>O que o diagnóstico mostra:</strong> quais grupos de categoria têm volume relevante e cobertura baixa.</p></div>
+<div class="finding modC"><div class="finding-title">03 | Cluster mãe e filhas: responder o tema por completo</div><p style="margin-top:10px"><strong>O que é:</strong> em vez de 1 página isolada, o tema ganha 1 página mãe e páginas filhas por modelo, medida e dúvida. O Google entende domínio completo do assunto.</p><div class="static-chart"><div style="text-align:center;font-size:13px;font-weight:700;color:var(--gray-800)">Página mãe: tema exemplo<div style="display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap"><span class="pill">Filha: modelo A</span><span class="pill">Filha: medida B</span><span class="pill">Filha: dúvida C</span></div></div></div><p style="margin-top:10px"><strong>O que o diagnóstico mostra:</strong> quais temas merecem cluster e quais páginas fariam o papel de mãe.</p></div>
+<div class="finding modA"><div class="finding-title">04 | Entidade e clareza: afirmar quem é quem</div><p style="margin-top:10px"><strong>O que é:</strong> nome consistente, dados estruturados e perfis coerentes para o algoritmo não confundir a empresa com homônimos.</p><ul class="check-list"><li><span class="check-icon ok">1</span> <span>Nome e marca escritos sempre do mesmo jeito.</span></li><li><span class="check-icon ok">2</span> <span>Dados estruturados dizendo o que a empresa é.</span></li><li><span class="check-icon ok">3</span> <span>Conteúdo institucional que diferencia.</span></li></ul><p><strong>O que o diagnóstico mostra:</strong> onde há ambiguidade e qual frente de clareza priorizar.</p></div>
+<div class="finding modB"><div class="finding-title">05 | Reforço interno: distribuir força em vez de acumular</div><p style="margin-top:10px"><strong>O que é:</strong> a página inicial costuma concentrar autoridade. Links internos conduzem parte dessa força para as páginas que geram contato.</p><div class="static-chart"><div style="display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;font-size:13px;font-weight:700"><span class="pill">Página inicial</span><span style="color:var(--red)">→</span><span class="pill">Página de categoria</span><span style="color:var(--red)">→</span><span class="pill">Página de contato</span></div></div><p style="margin-top:10px"><strong>O que o diagnóstico mostra:</strong> onde a força está parada e para onde ela deveria fluir.</p></div>
+<div class="finding modC"><div class="finding-title">06 | Citação em IA: ser a resposta, não só o link</div><p style="margin-top:10px"><strong>O que é:</strong> estruturar conteúdo com perguntas, respostas diretas, dados e FAQ para que assistentes de IA citem a empresa com tom positivo.</p><div class="static-chart"><div class="bar-row"><div class="bar-label">Citação exemplo 12%</div><div class="bar-track"><div class="bar-fill blue" style="width:24%">atual fictícia</div></div></div><div class="bar-row"><div class="bar-label">Meta exemplo 40%</div><div class="bar-track"><div class="bar-fill green" style="width:80%">referência</div></div></div></div><p><strong>O que o diagnóstico mostra:</strong> em quais perguntas a empresa já é citada e onde há silêncio a conquistar.</p></div>
+<table><tr><th>Estratégia</th><th>Quando o mapa acende</th></tr>
+<tr><td><strong>Defesa</strong></td><td>Marca forte com vazamento pontual</td></tr>
+<tr><td><strong>Expansão</strong></td><td>Categoria com volume e cobertura baixa</td></tr>
+<tr><td><strong>Cluster</strong></td><td>Tema com muitas variações sem página própria</td></tr>
+<tr><td><strong>Entidade</strong></td><td>Confusão com nomes parecidos</td></tr>
+<tr><td><strong>Reforço interno</strong></td><td>Força concentrada em poucas URLs</td></tr>
+<tr><td><strong>Citação em IA</strong></td><td>Perguntas do comprador sem resposta citada</td></tr></table>
+<p class="source">Efeitos e números ilustrativos. O plano de execução é definido após o diagnóstico.</p>
+</div></div>
+
+<div class="card" id="duvidas"><div class="card-body">
+<h2><span class="slide-num">08</span> Dúvidas comuns, respondidas com exemplos</h2>
+<p>Perguntas que costumam aparecer na conversa, respondidas de forma curta e sem nenhum dado real.</p>
+<div class="finding modA"><div class="finding-title">O que é Share of Search em 1 frase.</div><p style="margin-top:10px">É a fatia das buscas de um tema que lembra de uma empresa. Exemplo fictício: tema com 10 mil buscas e 1,5 mil chegando até a empresa significa share de 15%.</p></div>
+<div class="finding modB"><div class="finding-title">Por que posição e tráfego sozinhos não bastam.</div><p style="margin-top:10px">Posição mostra onde a empresa está em 1 termo. Tráfego mostra quantos clicaram. Share mostra a fatia contra todas as concorrentes. É o que mostra domínio e risco.</p></div>
+<div class="finding modC"><div class="finding-title">O que significa uma barra pequena no Brand Visibility.</div><p style="margin-top:10px">Que a prateleira a conquistar é outra. Em vez do jogo das gigantes, a empresa mira a lembrança na pergunta que gera contato comercial.</p></div>
+<div class="finding modA"><div class="finding-title">Por que a página inicial concentra tanto.</div><p style="margin-top:10px">É padrão comum: a página inicial acumula termos por falta de páginas de categoria. O diagnóstico mapeia isso por grupo de intenção.</p></div>
+<div class="finding modB"><div class="finding-title">O que o diagnóstico responde ao final.</div><p style="margin-top:10px">Onde a marca está defendida, onde as marcas distribuídas tracionam, onde a categoria está em aberto e quais grupos têm mais potencial. A definição sobre próximos passos acontece depois, com o mapa na mão.</p></div>
+<div class="callout"><h4>Como ler este material</h4><p>Cada conceito vem acompanhado de exemplo fictício sinalizado. Os números reais de cada empresa aparecem somente dentro do diagnóstico contratado.</p></div>
+<p style="font-size:13px;color:var(--gray-600)">Material didático conceitual. Todos os números são fictícios.</p>
+</div></div>
+
+<div class="footer">Share of Search | Material didático conceitual | Todos os números são fictícios</div>
+</div>
+</body>
+</html>
