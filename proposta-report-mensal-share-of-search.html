@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proposta Comercial | Report Mensal Share of Search</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+:root{--red:#e50914;--red-dark:#b40710;--red-light:rgb(255,60,70);--gold:#c9a96e;--gold-light:#f5f0e6;--gold-border:#e8dcc8;--green:#1a8a3f;--ink:#2d2d2d;--muted:#6b6b6b;--bg:#faf9f6;--gray-100:#f5f5f5;--gray-200:#eee;--gray-300:#e0e0e0;--gray-600:#757575;--gray-700:#616161;--gray-900:#212121}
+body{font-family:'Ubuntu',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;font-size:16px}
+.mono{font-family:'JetBrains Mono',monospace}
+.cover{background:linear-gradient(135deg,#0d0d0d 0%,#1a1a1a 55%,#2a2a2a 100%);color:#fff;padding:64px 40px 52px;position:relative;overflow:hidden}
+.cover::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(201,169,110,.07) 0%,transparent 60%);pointer-events:none}
+.cover-grid{position:relative;z-index:1;max-width:1020px;margin:0 auto;display:grid;grid-template-columns:1.4fr .8fr;gap:32px;align-items:center}
+.cover .kicker{display:inline-block;background:rgba(201,169,110,.12);border:1px solid rgba(201,169,110,.35);padding:6px 18px;border-radius:4px;font-size:12px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:18px;font-family:'JetBrains Mono',monospace}
+.cover h1{font-size:42px;font-weight:700;line-height:1.12;letter-spacing:-.5px;font-family:'Plus Jakarta Sans',sans-serif}
+.cover h1 .accent{color:var(--gold)}
+.cover p.sub{font-size:17px;opacity:.82;margin-top:14px;font-weight:300;max-width:560px}
+.doc-meta{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:22px 24px;font-size:13px}
+.doc-meta .row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+.doc-meta .row:last-child{border-bottom:none}
+.doc-meta .k{color:rgba(255,255,255,.55);font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.8px}
+.doc-meta .v{font-weight:700;text-align:right}
+.doc-meta .v.gold{color:var(--gold)}
+.container{max-width:1020px;margin:0 auto;padding:36px 12px 48px}
+.toc{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:30px}
+.toc a{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:6px;background:#fff;border:1px solid var(--gray-300);color:var(--ink);font-size:13px;font-weight:700;text-decoration:none;font-family:'JetBrains Mono',monospace}
+.toc a:hover{border-color:var(--red);color:var(--red)}
+.card{background:#fff;border-radius:14px;box-shadow:0 2px 20px rgba(0,0,0,.05);margin-bottom:26px;overflow:hidden;border:1px solid var(--gray-300);border-top:3px solid var(--red)}
+.card.gold-top{border-top-color:var(--gold)}
+.card.dark-top{border-top-color:var(--gray-900)}
+.card-body{padding:40px 48px}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--gold-border)}
+.sec-id{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:#fff;background:var(--red);padding:4px 12px;border-radius:4px;letter-spacing:1px;flex-shrink:0}
+.sec-id.gold{background:#b8963a}
+.sec-id.dark{background:var(--gray-900)}
+h2{font-size:23px;font-weight:700;color:var(--gray-900)}
+h3{font-size:17px;font-weight:700;margin:28px 0 14px;color:var(--gray-900)}
+p{font-size:15.5px;color:#4a4a4a;margin-bottom:14px;line-height:1.8}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14px}
+th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--gray-200);vertical-align:top}
+th{background:#111;color:#fff;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.7px;font-family:'JetBrains Mono',monospace}
+tr:hover td{background:#fcfaf7}
+td.spec{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--red);white-space:nowrap;font-size:12.5px}
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+.kpi-card{background:var(--bg);border-radius:10px;padding:22px 16px;text-align:center;border:1px solid var(--gold-border);position:relative;overflow:hidden}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--red),var(--gold))}
+.kpi-card .value{font-size:26px;font-weight:700;color:var(--red)}
+.kpi-card .value.dark{color:var(--gray-900)}
+.kpi-card .label{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-top:8px;font-family:'JetBrains Mono',monospace}
+.kpi-card .sub{font-size:12.5px;color:var(--muted);margin-top:4px}
+.pipeline{display:flex;align-items:stretch;gap:0;margin:22px 0;flex-wrap:wrap}
+.pipe-step{flex:1;min-width:110px;background:var(--bg);border:1px solid var(--gold-border);padding:14px 10px;text-align:center;position:relative}
+.pipe-step:first-child{border-radius:10px 0 0 10px}
+.pipe-step:last-child{border-radius:0 10px 10px 0;background:#111;color:#fff;border-color:#111}
+.pipe-step .n{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--red)}
+.pipe-step:last-child .n{color:var(--gold)}
+.pipe-step .t{font-size:12.5px;font-weight:700;margin-top:4px}
+.pipe-arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--red);font-weight:800;font-size:18px}
+.badge{display:inline-block;padding:4px 14px;border-radius:4px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;font-family:'JetBrains Mono',monospace}
+.badge-in{background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0}
+.badge-out{background:#fef2f2;color:var(--red);border:1px solid #fecaca}
+.badge-info{background:#f5f5f5;color:#616161;border:1px solid #d4d4d4}
+.check-list{list-style:none;padding:0}
+.check-list li{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--gray-200);font-size:15px;color:#4a4a4a}
+.check-icon{width:22px;height:22px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;margin-top:1px;font-family:'JetBrains Mono',monospace}
+.check-icon.ok{background:#dcfce7;color:#15803d}
+.check-icon.no{background:#fee2e2;color:var(--red)}
+.check-icon.info{background:#111;color:var(--gold)}
+.callout{background:linear-gradient(135deg,#0d0d0d,#1c1c1c);color:#fff;border-radius:12px;padding:26px 28px;margin:20px 0;border-left:4px solid var(--gold)}
+.callout h4{color:var(--gold);margin:0 0 8px;font-size:14px;text-transform:uppercase;letter-spacing:.8px;font-family:'JetBrains Mono',monospace}
+.callout p{color:rgba(255,255,255,.85);font-size:15px;margin:0}
+.callout .price{font-size:34px;font-weight:700;color:#fff;font-family:'Plus Jakarta Sans',sans-serif}
+.callout .price small{font-size:15px;color:var(--gold);font-weight:400}
+.sig-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:36px}
+.sig-box{border-top:2px solid var(--gray-900);padding-top:10px;font-size:13px;color:var(--muted)}
+.sig-box strong{color:var(--gray-900);display:block;font-size:14px}
+.source{font-size:12px;color:var(--muted);margin-top:10px}
+.footer{text-align:center;padding:32px;font-size:12.5px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+@media(max-width:640px){.cover-grid{grid-template-columns:1fr}.cover h1{font-size:28px}.card-body{padding:24px 20px}.kpi-grid{grid-template-columns:1fr}.sig-grid{grid-template-columns:1fr}.pipe-step{min-width:45%}.pipe-step:first-child,.pipe-step:last-child{border-radius:0}}
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="cover-grid">
+<div>
+<img src="logo-v4-white.png" alt="V4 Company" style="height:44px;width:auto;margin-bottom:20px;display:block">
+<div class="kicker">Proposta comercial | Rev 1.0</div>
+<h1>Report Mensal<br><span class="accent">Share of Search</span></h1>
+<p class="sub">Escopo técnico, inteligência consultiva e investimento do acompanhamento mensal de visibilidade em buscas: empresa, concorrentes e mercado.</p>
+</div>
+<div class="doc-meta">
+<div class="row"><span class="k">Documento</span><span class="v">Proposta comercial</span></div>
+<div class="row"><span class="k">Objeto</span><span class="v">Report mensal SoS</span></div>
+<div class="row"><span class="k">Entrega</span><span class="v">Relatório mais reunião</span></div>
+<div class="row"><span class="k">Investimento</span><span class="v gold">R$ 1.000/mês</span></div>
+<div class="row"><span class="k">Validade</span><span class="v">30 dias</span></div>
+<div class="row"><span class="k">Emissão</span><span class="v">Out 2026</span></div>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="toc">
+<a href="#resumo">01 Resumo</a><a href="#escopo">02 Escopo técnico</a><a href="#intel">03 Inteligência consultiva</a><a href="#entregas">04 Entregas e aceite</a><a href="#esforco">05 Esforço</a><a href="#invest">06 Investimento</a><a href="#termos">07 Termos</a>
+</div>
+
+<div class="card" id="resumo"><div class="card-body">
+<div class="sec-head"><span class="sec-id">01</span><h2>Resumo da proposta</h2></div>
+<div class="kpi-grid">
+<div class="kpi-card"><div class="value">6 itens</div><div class="label">Entregas fixas mensais</div><div class="sub">relatório mais reunião</div></div>
+<div class="kpi-card"><div class="value dark">12 h</div><div class="label">Esforço estimado mensal</div><div class="sub">dimensionamento técnico</div></div>
+<div class="kpi-card"><div class="value">R$ 1.000</div><div class="label">Investimento mensal</div><div class="sub">valor fixo</div></div>
+</div>
+<p>O Report Mensal Share of Search é o acompanhamento contínuo da visibilidade em buscas da Contratante, de seus concorrentes e do mercado, com interpretação dos dados, recomendações estratégicas e reunião mensal de entrega. O escopo é fixo: os mesmos itens, nos mesmos moldes, todos os meses, o que torna os períodos comparáveis.</p>
+</div></div>
+
+<div class="card gold-top" id="escopo"><div class="card-body">
+<div class="sec-head"><span class="sec-id gold">02</span><h2>Escopo técnico</h2></div>
+<p>Atividades executadas a cada mês para geração do report, com saída definida por atividade.</p>
+<div class="pipeline">
+<div class="pipe-step"><div class="n">SPEC-01</div><div class="t">Universo</div></div><div class="pipe-arrow">›</div>
+<div class="pipe-step"><div class="n">SPEC-02</div><div class="t">Coleta</div></div><div class="pipe-arrow">›</div>
+<div class="pipe-step"><div class="n">SPEC-03</div><div class="t">Tratamento</div></div><div class="pipe-arrow">›</div>
+<div class="pipe-step"><div class="n">SPEC-04</div><div class="t">Cálculo</div></div><div class="pipe-arrow">›</div>
+<div class="pipe-step"><div class="n">SPEC-05</div><div class="t">Análise</div></div><div class="pipe-arrow">›</div>
+<div class="pipe-step"><div class="n">SPEC-06</div><div class="t">Relatório</div></div><div class="pipe-arrow">›</div>
+<div class="pipe-step"><div class="n">SPEC-07</div><div class="t">Reunião</div></div>
+</div>
+<table><tr><th>ID</th><th>Atividade</th><th>Descrição</th><th>Saída</th></tr>
+<tr><td class="spec">SPEC-01</td><td><strong>Universo de acompanhamento</strong></td><td>Definição e manutenção dos grupos de intenção e do conjunto de concorrentes monitorados.</td><td>Matriz de acompanhamento vigente</td></tr>
+<tr><td class="spec">SPEC-02</td><td><strong>Coleta mensal</strong></td><td>Coleta dos dados do mês de referência: posições, volumes e indicadores de visibilidade.</td><td>Base de dados do mês</td></tr>
+<tr><td class="spec">SPEC-03</td><td><strong>Tratamento e consolidação</strong></td><td>Validação e consolidação em base única comparável com meses anteriores.</td><td>Base consolidada e comparável</td></tr>
+<tr><td class="spec">SPEC-04</td><td><strong>Cálculo de share</strong></td><td>Apuração da participação de busca por grupo de intenção, contra o total e os concorrentes.</td><td>Share por grupo e evolução</td></tr>
+<tr><td class="spec">SPEC-05</td><td><strong>Análise comparativa</strong></td><td>Confronto com o mês anterior, com identificação de ganhos, perdas e movimentos relevantes.</td><td>Mapa de movimentos do mês</td></tr>
+<tr><td class="spec">SPEC-06</td><td><strong>Relatório mensal</strong></td><td>Redação do relatório com resultados, interpretação e recomendações do período.</td><td>Relatório do mês</td></tr>
+<tr><td class="spec">SPEC-07</td><td><strong>Reunião de entrega</strong></td><td>Apresentação dos achados com espaço para perguntas e discussão.</td><td>Ata com pontos e decisões</td></tr></table>
+</div></div>
+
+<div class="card dark-top" id="intel"><div class="card-body">
+<div class="sec-head"><span class="sec-id dark">03</span><h2>Inteligência consultiva</h2></div>
+<p>Além da apuração técnica, a proposta inclui a inteligência de dados do consultor responsável, contratada como camada consultiva sobre os números.</p>
+<table><tr><th>ID</th><th>Ativo consultivo</th><th>Conteúdo</th></tr>
+<tr><td class="spec">CON-01</td><td><strong>Interpretação dos dados</strong></td><td>Tradução dos resultados em leitura de cenário, em linguagem direta e sem jargão.</td></tr>
+<tr><td class="spec">CON-02</td><td><strong>Recomendações estratégicas</strong></td><td>Prioridades indicadas a partir dos dados do mês, com justificativa por grupo.</td></tr>
+<tr><td class="spec">CON-03</td><td><strong>Discussão em reunião</strong></td><td>Defesa das leituras e recomendações diante de perguntas, com registro em ata.</td></tr></table>
+</div></div>
+
+<div class="card" id="entregas"><div class="card-body">
+<div class="sec-head"><span class="sec-id">04</span><h2>Entregas e critérios de aceite</h2></div>
+<table><tr><th>ID</th><th>Entregável</th><th>Formato</th><th>Critério de aceite</th></tr>
+<tr><td class="spec">ENT-01</td><td><strong>Relatório mensal</strong></td><td>Documento do mês</td><td>Contém os 6 itens do escopo no padrão vigente</td></tr>
+<tr><td class="spec">ENT-02</td><td><strong>Reunião de entrega</strong></td><td>Encontro mensal</td><td>Realizada com apresentação e ata</td></tr></table>
+<h3>Exclusões</h3>
+<ul class="check-list">
+<li><span class="check-icon no">×</span> <span>Investigação aprofundada por página e por grupo além da leitura mensal. <span class="badge badge-out">Fora do escopo</span></span></li>
+<li><span class="check-icon no">×</span> <span>Criação de conteúdo, ajustes técnicos e implementação. <span class="badge badge-out">Fora do escopo</span></span></li>
+<li><span class="check-icon no">×</span> <span>Monitoramento em tempo real. A leitura é por período mensal fechado. <span class="badge badge-out">Fora do escopo</span></span></li>
+<li><span class="check-icon no">×</span> <span>Frentes adicionais fora da matriz vigente sem ajuste de escopo. <span class="badge badge-out">Fora do escopo</span></span></li>
+</ul>
+</div></div>
+
+<div class="card gold-top" id="esforco"><div class="card-body">
+<div class="sec-head"><span class="sec-id gold">05</span><h2>Esforço estimado</h2></div>
+<p>Dimensionamento técnico do trabalho mensal, para composição do valor.</p>
+<table><tr><th>Atividade</th><th>Horas por mês</th></tr>
+<tr><td>Coleta e organização dos dados</td><td class="mono"><strong>3 h</strong></td></tr>
+<tr><td>Análise e interpretação</td><td class="mono"><strong>4 h</strong></td></tr>
+<tr><td>Redação do relatório</td><td class="mono"><strong>3 h</strong></td></tr>
+<tr><td>Preparação e condução da reunião</td><td class="mono"><strong>2 h</strong></td></tr>
+<tr><td><strong>Total estimado</strong></td><td class="mono"><strong>12 h</strong></td></tr></table>
+</div></div>
+
+<div class="card" id="invest"><div class="card-body">
+<div class="sec-head"><span class="sec-id">06</span><h2>Investimento</h2></div>
+<div class="callout"><h4>Mensalidade fixa</h4><div class="price">R$ 1.000<small>/mês</small></div><p style="margin-top:10px">Abrange todas as atividades das Seções 02 e 03, sem variação dentro do escopo contratado.</p></div>
+<table><tr><th>Item</th><th>Detalhe</th></tr>
+<tr><td><strong>Report Mensal Share of Search</strong></td><td>Relatório com leitura de empresa, concorrentes e mercado, interpretação e recomendações.</td></tr>
+<tr><td><strong>Reunião de entrega</strong></td><td>Apresentação mensal já incluída no valor.</td></tr></table>
+</div></div>
+
+<div class="card dark-top" id="termos"><div class="card-body">
+<div class="sec-head"><span class="sec-id dark">07</span><h2>Termos e aceite</h2></div>
+<ul class="check-list">
+<li><span class="check-icon info">1</span> <span><strong>Validade:</strong> 30 dias contados da emissão.</span></li>
+<li><span class="check-icon info">2</span> <span><strong>Vigência:</strong> mensal, renovável por acordo entre as partes.</span></li>
+<li><span class="check-icon info">3</span> <span><strong>Faturamento:</strong> mensal, referente ao mês de referência do report.</span></li>
+<li><span class="check-icon info">4</span> <span><strong>Início:</strong> mês de início definido em conjunto após o aceite, com indicação do interlocutor da Contratante.</span></li>
+</ul>
+<div class="sig-grid">
+<div class="sig-box"><strong>Contratante</strong>Nome, cargo, assinatura e data</div>
+<div class="sig-box"><strong>Contratada: V4 Company</strong>Assinatura e data</div>
+</div>
+</div></div>
+
+<div class="footer">PROPOSTA COMERCIAL | REPORT MENSAL SHARE OF SEARCH | REV 1.0 | OUT 2026</div>
+</div>
+</body>
+</html>
