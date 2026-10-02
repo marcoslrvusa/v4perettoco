@@ -3,97 +3,194 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Diamond Tint &amp; Wraps — Auditoría SEO Completa | Las Vegas</title>
+<title>Auditoría SEO Completa — Diamond Tint &amp; Wraps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
-:root{--red:#e50914;--red-dark:#b40710;--gold:#c9a96e;--gold-light:#f5f0e6;--gold-border:#e8dcc8;--green:#1a8a3f;--amber:#b7791f;--ink:#2d2d2d;--muted:#6b6b6b;--bg:#faf9f6;--gray-100:#f5f5f5;--gray-200:#eee;--gray-300:#e0e0e0;--gray-600:#757575;--gray-900:#212121}
-html{scroll-behavior:smooth}
-body{font-family:'Ubuntu',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;font-size:16px}
-.mono{font-family:'JetBrains Mono',monospace}
-/* ===== HEADER ELEGANTE (estándar share-of-search) ===== */
-.cover{background:linear-gradient(135deg,#0d0d0d 0%,#1a1a1a 55%,#2a2a2a 100%);color:#fff;padding:64px 40px 52px;position:relative;overflow:hidden}
-.cover::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(201,169,110,.07) 0%,transparent 60%);pointer-events:none}
-.cover-grid{position:relative;z-index:1;max-width:1020px;margin:0 auto;display:grid;grid-template-columns:1.4fr .8fr;gap:32px;align-items:center}
-.cover .kicker{display:inline-block;background:rgba(201,169,110,.12);border:1px solid rgba(201,169,110,.35);padding:6px 18px;border-radius:4px;font-size:12px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:18px;font-family:'JetBrains Mono',monospace}
-.cover h1{font-size:42px;font-weight:700;line-height:1.12;letter-spacing:-.5px;font-family:'Plus Jakarta Sans',sans-serif}
-.cover h1 .accent{color:var(--gold)}
-.cover p.sub{font-size:17px;opacity:.82;margin-top:14px;font-weight:300;max-width:560px}
-.doc-meta{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:22px 24px;font-size:13px}
-.doc-meta .row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.1)}
-.doc-meta .row:last-child{border-bottom:none}
-.doc-meta .k{color:rgba(255,255,255,.55);font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.8px}
-.doc-meta .v{font-weight:700;text-align:right}
-.doc-meta .v.gold{color:var(--gold)}
-/* ===== LAYOUT (lógica indianapolis/presentación) ===== */
-.container{max-width:1020px;margin:0 auto;padding:36px 12px 48px}
-.toc{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:30px}
-.toc a{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:6px;background:#fff;border:1px solid var(--gray-300);color:var(--ink);font-size:13px;font-weight:700;text-decoration:none;font-family:'JetBrains Mono',monospace}
-.toc a:hover{border-color:var(--red);color:var(--red)}
-.card{background:#fff;border-radius:14px;box-shadow:0 2px 20px rgba(0,0,0,.05);margin-bottom:26px;overflow:hidden;border:1px solid var(--gray-300);border-top:3px solid var(--red)}
-.card.gold-top{border-top-color:var(--gold)}
-.card.dark-top{border-top-color:var(--gray-900)}
-.card-head{padding:26px 30px 0}
-.card-head .num{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:1.5px;color:var(--red);text-transform:uppercase;font-weight:700}
-.card.gold-top .card-head .num{color:var(--amber)}
-.card-head h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:24px;margin:6px 0 4px;letter-spacing:-.3px}
-.card-head p.lead{color:var(--muted);font-size:15px;margin-bottom:6px}
-.card-body{padding:20px 30px 30px}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0}
-.kpi{background:var(--bg);border:1px solid var(--gray-300);border-radius:10px;padding:16px;text-align:center}
-.kpi .big{font-family:'Plus Jakarta Sans',sans-serif;font-size:30px;font-weight:800}
-.kpi .lbl{font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.6px}
-.kpi.red .big{color:var(--red)}.kpi.gold .big{color:var(--amber)}.kpi.green .big{color:var(--green)}
-.phases{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0}
-.phase{border:1px solid var(--gray-300);border-radius:10px;padding:16px;background:#fff}
-.phase .tag{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
-.phase h3{font-size:15px;margin:6px 0}
-.phase p{font-size:13px;color:var(--muted)}
-.phase .bar{height:8px;background:var(--gray-200);border-radius:4px;margin-top:10px;overflow:hidden}
-.phase .bar i{display:block;height:100%;background:var(--red);border-radius:4px}
-.phase.done .bar i{background:var(--green)}
-table{width:100%;border-collapse:collapse;font-size:14px;margin:14px 0}
-th{background:var(--gray-900);color:#fff;text-align:left;padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.6px}
-td{padding:10px 12px;border-bottom:1px solid var(--gray-200);vertical-align:top}
-tr:last-child td{border-bottom:none}
-.badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.5px}
-.b-crit{background:#fde8e9;color:var(--red-dark)}
-.b-alto{background:#fff4e0;color:#8a5a00}
-.b-med{background:#eef4ff;color:#2b4acb}
-.b-info{background:#e9f7ee;color:var(--green)}
-.b-ok{background:#e9f7ee;color:var(--green)}
-.finding{border:1px solid var(--gray-300);border-left:4px solid var(--red);border-radius:8px;padding:14px 16px;margin:12px 0;background:#fff}
-.finding.alto{border-left-color:#e8a100}
-.finding.medio{border-left-color:#2b4acb}
-.finding.info{border-left-color:var(--green)}
-.finding h4{font-size:15px;margin-bottom:4px}
-.finding h4 .code{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin-right:8px}
-.finding p{font-size:13.5px;color:#444}
-.finding .fix{font-size:13.5px;margin-top:6px}
-.ev{background:var(--gray-100);border-radius:6px;padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:12px;margin-top:8px;color:#333}
-.profile{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--gray-300);border-radius:10px;overflow:hidden;margin:14px 0}
-.profile div{padding:10px 16px;border-bottom:1px solid var(--gray-200);font-size:14px}
-.profile div:nth-child(odd){background:var(--bg);font-weight:700;font-family:'JetBrains Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
-.risk{border:1px solid var(--gold-border);background:linear-gradient(180deg,#fffdf7,#fff);border-radius:10px;padding:16px 18px;margin:12px 0}
-.risk h4{font-size:15px;color:#7a5a1e}
-.risk p{font-size:13.5px}
-.check{list-style:none;margin:12px 0}
-.check li{padding:8px 0 8px 30px;position:relative;font-size:14px;border-bottom:1px dashed var(--gray-200)}
-.check li::before{content:'○';position:absolute;left:4px;color:var(--amber);font-weight:700}
-.check li.done::before{content:'✓';color:var(--green)}
-.note{background:var(--gold-light);border:1px solid var(--gold-border);border-radius:10px;padding:14px 18px;font-size:14px;margin:14px 0}
-.footer{text-align:center;color:var(--muted);font-size:12px;padding:24px;font-family:'JetBrains Mono',monospace}
-@media(max-width:860px){.cover-grid{grid-template-columns:1fr}.kpis,.phases{grid-template-columns:1fr 1fr}.profile{grid-template-columns:1fr}.cover h1{font-size:32px}}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --red: #8B0000; --red-dark: #660000; --red-light: #B22222;
+  --gold: #C9A96E; --gold-light: #f5f0e6; --gold-border: #e8dcc8;
+  --gray-50: #fafafa; --gray-100: #f5f5f5; --gray-200: #eeeeee;
+  --gray-300: #e0e0e0; --gray-400: #bdbdbd; --gray-500: #9e9e9e;
+  --gray-600: #757575; --gray-700: #616161; --gray-800: #424242; --gray-900: #212121;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #F8F7F4; color: var(--gray-900); line-height: 1.7;
+  font-size: 16px; padding-top: 56px;
+}
+.mono { font-family: 'JetBrains Mono', monospace; }
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(13,13,13,0.95); backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(201,169,110,0.2);
+  padding: 0 16px; height: 56px; display: flex; align-items: center;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+}
+nav::-webkit-scrollbar { height: 0; }
+nav a {
+  color: rgba(255,255,255,0.75); text-decoration: none; font-size: 12px;
+  font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase;
+  white-space: nowrap; padding: 0 14px; height: 56px; display: flex;
+  align-items: center; border-bottom: 2px solid transparent; transition: all 0.2s;
+}
+nav a:hover, nav a.active { color: #fff; border-bottom-color: var(--gold); }
+/* ===== HEADER ELEGANTE (estándar share-of-search) + logo V4 blanco ===== */
+.cover {
+  background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 55%, #2a2a2a 100%);
+  color: #fff; padding: 56px 40px 52px; position: relative; overflow: hidden;
+}
+.cover::before {
+  content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(201,169,110,0.07) 0%, transparent 60%);
+  pointer-events: none;
+}
+.cover-grid {
+  position: relative; z-index: 1; max-width: 1020px; margin: 0 auto;
+  display: grid; grid-template-columns: 1.4fr 0.8fr; gap: 32px; align-items: center;
+}
+.cover .brand { margin-bottom: 20px; }
+.cover .brand img { height: 34px; width: auto; display: block; }
+.cover .kicker {
+  display: inline-block; background: rgba(201,169,110,0.12);
+  border: 1px solid rgba(201,169,110,0.35); padding: 6px 18px; border-radius: 4px;
+  font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 18px; font-family: 'JetBrains Mono', monospace;
+}
+.cover h1 {
+  font-size: 42px; font-weight: 700; line-height: 1.12; letter-spacing: -0.5px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.cover h1 .accent { color: var(--gold); }
+.cover p.sub { font-size: 17px; opacity: 0.82; margin-top: 14px; font-weight: 300; max-width: 560px; }
+.doc-meta {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 12px; padding: 22px 24px; font-size: 13px;
+}
+.doc-meta .row {
+  display: flex; justify-content: space-between; gap: 12px; padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.doc-meta .row:last-child { border-bottom: none; }
+.doc-meta .k {
+  color: rgba(255,255,255,0.55); font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px;
+}
+.doc-meta .v { font-weight: 700; text-align: right; }
+.doc-meta .v.gold { color: var(--gold); }
+/* ===== CUERPO (estructura visual allover-audit) ===== */
+.container { max-width: 1000px; margin: -32px auto 48px; position: relative; z-index: 2; }
+.card {
+  background: #fff; border-radius: 14px; box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+  margin-bottom: 24px; overflow: visible; border: 1px solid var(--gray-200);
+}
+.card-body { padding: 40px 48px; }
+.section-ref { scroll-margin-top: 68px; }
+h2 {
+  font-size: 22px; font-weight: 700; color: var(--red-dark); margin-bottom: 20px;
+  padding-bottom: 10px; border-bottom: 2px solid var(--gray-200);
+}
+h3 { font-size: 17px; font-weight: 700; color: var(--gray-800); margin: 28px 0 14px; }
+h3:first-child { margin-top: 0; }
+h4 { font-size: 15px; font-weight: 700; color: var(--gray-700); margin: 18px 0 10px; }
+p { font-size: 15px; color: var(--gray-700); margin-bottom: 14px; line-height: 1.7; }
+.badge {
+  display: inline-block; padding: 3px 12px; border-radius: 4px; font-size: 11px;
+  font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.badge-critico { background: #fef2f2; color: var(--red); border: 1px solid #fecaca; }
+.badge-alto { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+.badge-medio { background: #fefce8; color: #a16207; border: 1px solid #fef08a; }
+.badge-baixo { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+.badge-info { background: #f5f5f5; color: #616161; border: 1px solid #d4d4d4; }
+.badge-green { background: #e8f5e9; color: #1b5e20; border: 1px solid #c8e6c9; }
+table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--gray-200); }
+th { background: var(--gray-50); font-weight: 700; color: var(--gray-700); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+tr:hover td { background: var(--gray-50); }
+tr:last-child td { border-bottom: none; }
+.scroll-wrap { overflow-x: auto; }
+.alert {
+  background: #fef2f2; border-left: 4px solid var(--red); padding: 14px 18px;
+  border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px;
+}
+.alert strong { color: var(--red); }
+.summary-box {
+  background: var(--gray-50); border-left: 4px solid var(--red); padding: 18px 22px;
+  border-radius: 0 8px 8px 0; margin: 16px 0;
+}
+.summary-box strong { color: var(--gray-900); }
+.summary-box p { margin-top: 6px; font-size: 14px; }
+.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 28px; }
+.kpi-card {
+  background: var(--gray-50); border-radius: 10px; padding: 22px 14px 18px;
+  text-align: center; border: 1px solid var(--gray-200); position: relative; overflow: hidden;
+}
+.kpi-card:hover { border-color: var(--gold); }
+.kpi-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--red-dark), var(--gold));
+}
+.kpi-card .value { font-size: 28px; font-weight: 800; color: var(--red-dark); line-height: 1.15; }
+.kpi-card .label { font-size: 11px; color: var(--gray-500); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 6px; }
+.kpi-card .sub { font-size: 12px; color: var(--gray-500); margin-top: 4px; }
+.phase-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 16px 0; }
+.phase-card { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 10px; padding: 18px 14px; text-align: center; }
+.phase-card .hours { font-size: 26px; font-weight: 800; color: var(--red-dark); }
+.phase-card .name { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+.phase-card .pct { font-size: 12px; color: var(--gray-500); }
+.phase-card .bar { height: 6px; background: var(--gray-200); border-radius: 3px; margin-top: 10px; overflow: hidden; }
+.phase-card .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--red-dark), var(--gold)); }
+.finding { border-bottom: 1px solid var(--gray-200); padding: 16px 0; }
+.finding:last-child { border-bottom: none; }
+.finding .title { font-size: 15px; font-weight: 700; color: var(--gray-900); margin-bottom: 8px; }
+.finding .code { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--gray-500); margin-right: 8px; }
+.finding .line { font-size: 14px; color: var(--gray-700); margin-bottom: 6px; }
+.finding .line strong { color: var(--gray-900); }
+.ev {
+  background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 6px;
+  padding: 8px 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  margin: 8px 0; color: var(--gray-700);
+}
+ol.steps { margin: 12px 0 12px 22px; font-size: 15px; color: var(--gray-700); }
+ol.steps li { margin-bottom: 10px; }
+ul.clean { list-style: none; margin: 12px 0; }
+ul.clean li { padding: 8px 0 8px 28px; position: relative; font-size: 14px; border-bottom: 1px dashed var(--gray-200); color: var(--gray-700); }
+ul.clean li::before { content: '○'; position: absolute; left: 4px; color: var(--gold); font-weight: 700; }
+.footer { text-align: center; color: var(--gray-500); font-size: 12px; padding: 24px; font-family: 'JetBrains Mono', monospace; }
+@media (max-width: 860px) {
+  .cover-grid { grid-template-columns: 1fr; }
+  .cover h1 { font-size: 32px; }
+  .card-body { padding: 28px 22px; }
+  .kpi-grid, .phase-grid { grid-template-columns: 1fr 1fr; }
+}
 </style>
 </head>
 <body>
 
-<div class="cover">
+<nav>
+  <a href="#cover">Cover</a>
+  <a href="#resumen">Resumen</a>
+  <a href="#evolucion">Fases</a>
+  <a href="#perfil">Perfil</a>
+  <a href="#diagnostico">Diagnóstico</a>
+  <a href="#fase0">Fase 0</a>
+  <a href="#plan">Plan 3 meses</a>
+  <a href="#proyeccion">Proyección</a>
+  <a href="#kpis">KPIs</a>
+  <a href="#riesgos">Riesgos</a>
+  <a href="#proximos">Próximos</a>
+</nav>
+
+<div class="cover" id="cover">
   <div class="cover-grid">
     <div>
+      <div class="brand"><img src="../logo-v4-white.png" alt="V4 Company"></div>
       <span class="kicker">Auditoría SEO • Las Vegas, NV</span>
       <h1>Auditoría SEO <span class="accent">Completa</span></h1>
-      <p class="sub">Diamond Tint &amp; Wraps — diamondtintlv.com. Diagnóstico técnico basado en rastreo Screaming Frog (35 CSV), con plan de ejecución por fases y reporte mensual.</p>
+      <p class="sub">Diamond Tint &amp; Wraps — diamondtintlv.com · Polarizado automotriz, comercial y residencial + PPF, wraps y ceramic coating</p>
     </div>
     <div class="doc-meta">
       <div class="row"><span class="k">Documento</span><span class="v">Auditoría técnica</span></div>
@@ -107,192 +204,312 @@ tr:last-child td{border-bottom:none}
 </div>
 
 <div class="container">
-  <nav class="toc">
-    <a href="#resumen">01 Resumen</a><a href="#perfil">02 Perfil</a><a href="#riesgos">03 Riesgos</a><a href="#diag">04 Diagnóstico</a><a href="#fase0">05 Fase 0</a><a href="#plan">06 Plan 3 meses</a><a href="#esfuerzo">07 Esfuerzo</a><a href="#kpis">08 KPIs mensuales</a><a href="#proximos">09 Próximos</a>
-  </nav>
 
-  <!-- 01 -->
-  <section class="card" id="resumen">
-    <div class="card-head"><div class="num">01 · Resumen ejecutivo</div><h2>Buena casa, pero sin cimientos de búsqueda</h2>
-    <p class="lead">Sitio activo, indexable y con canonicals correctas — pero con cero schema, H1 promocional en la home, teléfono en los H2 y 180 imágenes pesadas. Lectura en 30 segundos: ordenar la casa (Fase 0) y correr el sprint de 3 meses.</p></div>
+  <!-- RESUMEN -->
+  <div class="card section-ref" id="resumen">
     <div class="card-body">
-      <div class="kpis">
-        <div class="kpi gold"><div class="big">6,1 / 10</div><div class="lbl">Salud SEO</div></div>
-        <div class="kpi red"><div class="big">26</div><div class="lbl">Hallazgos · 5 críticos</div></div>
-        <div class="kpi"><div class="big">137 h</div><div class="lbl">Esfuerzo · 4 fases</div></div>
-        <div class="kpi green"><div class="big">+30–50%</div><div class="lbl">Proyección 90 días</div></div>
+      <h2>Sumario</h2>
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="value">6,1 / 10</div><div class="label">Salud SEO</div></div>
+        <div class="kpi-card"><div class="value">26</div><div class="label">Hallazgos</div><div class="sub">5 críticos · 7 altos · 8 medios · 6 info</div></div>
+        <div class="kpi-card"><div class="value">137 h</div><div class="label">Esfuerzo total</div><div class="sub">Fase 0 + 3 meses</div></div>
+        <div class="kpi-card"><div class="value">+30–50%</div><div class="label">Proyección tráfico</div><div class="sub">90 días tras Fase 0</div></div>
       </div>
-      <div class="phases">
-        <div class="phase"><span class="tag">Fase 0 · Casa en orden</span><h3>Prerrequisito · 22 h</h3><p>Schema base, H1 de la home, teléfono en H2, 404 LINK_DA_GALERIA, headers.</p><div class="bar"><i style="width:16%"></i></div></div>
-        <div class="phase"><span class="tag">Fase 1 · Fundación</span><h3>Mes 1 · 35 h</h3><p>Titles, metas, H2, imágenes, lentas 2–3 s, enlaces.</p><div class="bar"><i style="width:26%"></i></div></div>
-        <div class="phase"><span class="tag">Fase 2 · Contenido</span><h3>Mes 2 · 42 h</h3><p>Thin content, servicios, FAQ schema, GBP, reseñas, clusters.</p><div class="bar"><i style="width:30%"></i></div></div>
-        <div class="phase"><span class="tag">Fase 3 · Expansión</span><h3>Mes 3 · 38 h</h3><p>Hubs, link building local, Core Web Vitals, monitoreo.</p><div class="bar"><i style="width:28%"></i></div></div>
-      </div>
-      <div class="note"><strong>Lógica de sprints:</strong> esta auditoría cubre la <strong>Fase 0 (casa en orden)</strong> + el <strong>Sprint 1 de 3 meses (Fases 1–3)</strong>, con <strong>reporte mensual por fase</strong>. Una vez ordenada la casa, abrimos el <strong>Sprint 2 (próximos 3 meses)</strong> con un nuevo plan basado en los datos de Search Console.</div>
-    </div>
-  </section>
-
-  <!-- 02 -->
-  <section class="card gold-top" id="perfil">
-    <div class="card-head"><div class="num">02 · Perfil del sitio</div><h2>Diamond Tint &amp; Wraps en números</h2><p class="lead">Polarizado automotriz, comercial y residencial + PPF, wraps y ceramic coating — Las Vegas, NV. WordPress + LiteSpeed.</p></div>
-    <div class="card-body">
-      <div class="profile">
-        <div>Dominio</div><div class="mono">diamondtintlv.com</div>
-        <div>URLs rastreadas</div><div><strong>276</strong> (266 indexables · 10 no indexables)</div>
-        <div>URLs HTML indexables</div><div><strong>44</strong> (home + 7 servicios + blog ~20 posts + sistema)</div>
-        <div>Imágenes</div><div><strong>200</strong> archivos · 180 por encima de 100 KB</div>
-        <div>Canonicals</div><div><span class="badge b-ok">100% correctas</span> autorreferentes en todas las HTML</div>
-        <div>HTTPS / Sitemap</div><div>Válido · sitemap presente · robots con noindex correcto en author/category</div>
-        <div>Tiempo de respuesta</div><div>83% &lt; 1 s · <strong>28 URLs entre 2–3 s</strong> (blog, testimonials, commercial)</div>
-        <div>Blog</div><div>Activo: posts de 579–1.471 palabras (ceramic, PPF, wraps, legal, heat)</div>
+      <div class="summary-box">
+        <strong>Lógica de sprints:</strong>
+        <p>Esta auditoría cubre la <strong>Fase 0 (casa en orden)</strong> + el <strong>Sprint 1 de 3 meses (Fases 1–3)</strong>, con <strong>reporte mensual por fase</strong>. Una vez ordenada la casa, abrimos el <strong>Sprint 2 (próximos 3 meses)</strong> con un nuevo plan basado en los datos de Search Console.</p>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- 03 -->
-  <section class="card" id="riesgos">
-    <div class="card-head"><div class="num">03 · Top 3 riesgos (lectura C-level)</div><h2>Lo que hoy frena los ingresos orgánicos</h2></div>
+  <!-- FASES -->
+  <div class="card section-ref" id="evolucion">
     <div class="card-body">
-      <div class="risk"><h4>1 · Cero structured data en 44/44 páginas (100%)</h4><p>Ningún JSON-LD. Los competidores locales con LocalBusiness + FAQ ocupan el doble de espacio visual en el SERP. Pérdida estimada de <strong>20–30% de CTR</strong> en las páginas de servicio.</p></div>
-      <div class="risk"><h4>2 · El H1 de la home es promocional, no posicionable</h4><p><span class="mono">“UPGRADE YOUR COMFORT: UP TO 10% OFF WINDOW TINT!”</span> — Google no entiende el tema ni la ubicación. La página más fuerte del dominio desperdicia la principal señal de título.</p></div>
-      <div class="risk"><h4>3 · 180 imágenes &gt;100 KB (pico de 1,7 MB) + 28 URLs lentas</h4><p>Galería con JPGs de 1,0–1,7 MB que hunden el LCP en las páginas que más convierten (servicios, testimonials). <span class="mono">IMG_20251101_102028.jpg · 1,7 MB</span> es el símbolo del problema.</p></div>
+      <h2>Evolución del proyecto</h2>
+      <p>Distribución del esfuerzo en 4 fases — de la casa en orden a la expansión de contenido. Sin fechas: orden de ejecución por fases.</p>
+      <div class="phase-grid">
+        <div class="phase-card"><div class="hours">22</div><div class="name">Fase 0</div><div class="pct">16% · Casa en orden</div><div class="bar"><i style="width:16%"></i></div></div>
+        <div class="phase-card"><div class="hours">35</div><div class="name">Fase 1</div><div class="pct">26% · Fundación</div><div class="bar"><i style="width:26%"></i></div></div>
+        <div class="phase-card"><div class="hours">42</div><div class="name">Fase 2</div><div class="pct">30% · Contenido</div><div class="bar"><i style="width:30%"></i></div></div>
+        <div class="phase-card"><div class="hours">38</div><div class="name">Fase 3</div><div class="pct">28% · Expansión</div><div class="bar"><i style="width:28%"></i></div></div>
+      </div>
+      <div class="scroll-wrap"><table>
+        <tr><th>Fase</th><th>Foco</th><th>Ejemplos</th></tr>
+        <tr><td><strong>Fase 0</strong></td><td>Casa en orden</td><td>Schema base · H1 home · Teléfono en H2 · 404 LINK_DA_GALERIA</td></tr>
+        <tr><td><strong>Fase 1</strong></td><td>Fundación</td><td>Titles únicos · Metas · H2 · Imágenes · Lentas 2–3 s</td></tr>
+        <tr><td><strong>Fase 2</strong></td><td>Contenido</td><td>Thin content · Services · FAQ schema · GBP · Reseñas</td></tr>
+        <tr><td><strong>Fase 3</strong></td><td>Expansión</td><td>Hubs · Link building · Core Web Vitals · Monitoreo</td></tr>
+      </table></div>
     </div>
-  </section>
+  </div>
 
-  <!-- 04 -->
-  <section class="card dark-top" id="diag">
-    <div class="card-head"><div class="num">04 · Diagnóstico técnico detallado</div><h2>Hallazgos por severidad</h2><p class="lead">Evidencia extraída de los 35 CSV de Screaming Frog. Severidad con el estándar de las auditorías V4.</p></div>
+  <!-- TOP 3 RIESGOS -->
+  <div class="card section-ref" id="riesgos-top">
     <div class="card-body">
-      <p><span class="badge b-crit">Crítico × 5</span></p>
-      <div class="finding"><h4><span class="code">C-01</span> Cero schema en el 100% de las páginas <span class="badge b-crit">Crítico</span></h4><p>44/44 HTML sin JSON-LD ni Microdata, 0 rich-result features.</p><div class="ev">structured_data_all.csv → Rich Result Features = 0 en todas las filas</div><p class="fix"><strong>Solución:</strong> LocalBusiness + servicio profesional global, FAQ en servicios, Article en el blog. <strong>6 h</strong> (Fase 0).</p></div>
-      <div class="finding"><h4><span class="code">C-02</span> H1 promocional en la home + 24 H1 “Post navigation” <span class="badge b-crit">Crítico</span></h4><p>La home no tiene keyword ni ubicación; 24 URLs con H1 duplicado de la navegación de paginación.</p><div class="ev">h1_all.csv → home = “UPGRADE YOUR COMFORT…” · 24× “Post navigation”</div><p class="fix"><strong>Solución:</strong> H1 de la home con “Window Tint Las Vegas”, un H1 único por URL y H1 propio en paginación. <strong>3 h</strong> (Fase 0).</p></div>
-      <div class="finding"><h4><span class="code">C-03</span> Teléfono como H2 en más de 8 páginas de servicio <span class="badge b-crit">Crítico</span></h4><p><span class="mono">702.780.7399</span> marcado como H2 en testimonials, gallery, commercial, vehicle, ceramic, wraps, paint-protection y home — ruido semántico, el mismo patrón ya corregido en Indianapolis.</p><div class="ev">h2_all.csv → H2-2 = “702.780.7399” en 8 servicios · 36 páginas con múltiples H2</div><p class="fix"><strong>Solución:</strong> el teléfono pasa a CTA/botón y los H2 se reescriben con keyword + ubicación. <strong>4 h</strong> (Fase 0).</p></div>
-      <div class="finding"><h4><span class="code">C-04</span> 180 imágenes por encima de 100 KB <span class="badge b-crit">Crítico</span></h4><p>El 90% del banco de imágenes es pesado; 8 JPGs por encima de 1 MB en la galería 2026/03.</p><div class="ev">images_all.csv → 180 &gt;100 KB · pico IMG_20251101_102028.jpg 1.703.936 bytes</div><p class="fix"><strong>Solución:</strong> compresión + WebP + lazy + width/height (174 sin dimensiones). <strong>8 h</strong> (Fase 1).</p></div>
-      <div class="finding"><h4><span class="code">C-05</span> 28 URLs entre 2–3 s <span class="badge b-crit">Crítico</span></h4><p>Blog 2,08 s · testimonials 2,54 s · commercial 2,44 s — LCP en riesgo en las money pages.</p><div class="ev">response_time_(in_seconds).csv → 28 URLs (10,1%) en 2–3 s</div><p class="fix"><strong>Solución:</strong> imágenes + caché LiteSpeed + scripts. <strong>4 h</strong> (Fase 1).</p></div>
-
-      <p style="margin-top:18px"><span class="badge b-alto">Alto × 7</span></p>
-      <div class="finding alto"><h4><span class="code">A-01</span> 15 titles recortados + duplicados de paginación</h4><p>Home 61 caracteres/586 px, blog 64/575, gallery 65/598 + páginas /page/2–3 que repiten el title del blog y de la categoría.</p><p class="fix"><strong>Solución:</strong> titles únicos de 50–60 caracteres, paginación con sufijo “— Página N”. <strong>6 h</strong> (Fase 1).</p></div>
-      <div class="finding alto"><h4><span class="code">A-02</span> 4 metas ausentes en posts indexables + 2 excedidas</h4><p>Sin meta: legal-regulations, professional-window-tinting, maintenance-tips, environmental-benefits. Excedidas: diy-tint-kits 156, ceramic-vegas-heat 177 caracteres.</p><p class="fix"><strong>Solución:</strong> 120–155 caracteres con keyword + CTA + Las Vegas. <strong>6 h</strong> (Fase 1).</p></div>
-      <div class="finding alto"><h4><span class="code">A-03</span> 172 imágenes sin alt text</h4><p>El 86% de las imágenes sin descripción — accesibilidad y SEO de imagen en cero en un negocio visual (wraps/PPF/galería).</p><p class="fix"><strong>Solución:</strong> alt de 50–100 caracteres con servicio + modelo cuando aplique. <strong>5 h</strong> (Fase 1).</p></div>
-      <div class="finding alto"><h4><span class="code">A-04</span> 404 interno LINK_DA_GALERIA + URLs fuera del estándar</h4><p>Enlace interno roto con placeholder de agencia (<span class="mono">/LINK_DA_GALERIA</span>, mayúsculas), 2 URLs con guion bajo, 1 non-ASCII (<span class="mono">window-tinting-for-rvs_</span>).</p><p class="fix"><strong>Solución:</strong> apuntar a /gallery/, estandarizar minúsculas con guion + redirect. <strong>2 h</strong> (Fase 0).</p></div>
-      <div class="finding alto"><h4><span class="code">A-05</span> Thin content en about (300), contact (289) y gallery (401)</h4><p>Por debajo del mínimo competitivo para “window tint las vegas” — los servicios fuertes tienen 993–1.194 palabras.</p><p class="fix"><strong>Solución:</strong> expandir a 600+ palabras con EEAT local, NAP y zonas de servicio. <strong>8 h</strong> (Fase 2).</p></div>
-      <div class="finding alto"><h4><span class="code">A-06</span> Security headers ausentes (HSTS, CSP, X-Frame, XCTO)</h4><p>272 URLs sin headers — estándar de WordPress, esfuerzo bajo, señal de mantenimiento.</p><p class="fix"><strong>Solución:</strong> headers en servidor/LiteSpeed. <strong>2 h</strong> (Fase 0).</p></div>
-      <div class="finding alto"><h4><span class="code">A-07</span> Jerarquía rota: 28 H2 no secuenciales, 24 H1 no secuenciales</h4><p>Estructura H1→H2 interrumpida que afecta la lectura semántica de Google.</p><p class="fix"><strong>Solución:</strong> reordenar headings por página. <strong>4 h</strong> (Fase 1).</p></div>
-
-      <p style="margin-top:18px"><span class="badge b-med">Medio × 8</span> <span class="badge b-info">Info/positivos × 6</span></p>
-      <div class="finding medio"><h4><span class="code">M-01…M-08</span> Oportunidades medias</h4><p>6 URLs con noindex <strong>correcto</strong> (author/category — mantener); redirects /page/1 → canónico (ok, quitar enlaces internos); 9 anchors “click here/learn more”; 6 enlaces salientes sin anchor; 6 páginas con legibilidad difícil (simplificar frases); H2 &gt;70 caracteres en 7 páginas (acortar); externos 403 Yelp (mantener, es bloqueo de Yelp) + 301 royalinkdesign/facebook (actualizar).</p></div>
-      <div class="finding info"><h4><span class="code">I-01…I-06</span> Lo que está bien — mantener</h4><p>Canonicals autorreferentes en el 100% de las HTML · HTTPS válido · sitemap presente · noindex correcto en author/category · blog activo con más de 20 posts densos · distribución sólida de enlaces internos (home 96 inlinks, servicios 44–56).</p></div>
+      <h2>Top 3 riesgos que exigen atención inmediata del C-Level</h2>
+      <div class="alert"><strong>1 · Cero structured data en 44/44 páginas (100%).</strong> Ningún JSON-LD. Los competidores locales con LocalBusiness + FAQ ocupan el doble de espacio visual en el SERP. Pérdida estimada de 20–30% de CTR en las páginas de servicio.</div>
+      <div class="alert"><strong>2 · El H1 de la home es promocional, no posicionable.</strong> <span class="mono">“UPGRADE YOUR COMFORT: UP TO 10% OFF WINDOW TINT!”</span> — Google no entiende el tema ni la ubicación. La página más fuerte del dominio desperdicia la principal señal de título.</div>
+      <div class="alert"><strong>3 · 180 imágenes &gt;100 KB (pico de 1,7 MB) + 28 URLs lentas.</strong> Galería con JPGs de 1,0–1,7 MB que hunden el LCP en las páginas que más convierten. <span class="mono">IMG_20251101_102028.jpg · 1,7 MB</span> es el símbolo del problema.</div>
     </div>
-  </section>
+  </div>
 
-  <!-- 05 -->
-  <section class="card gold-top" id="fase0">
-    <div class="card-head"><div class="num">05 · Fase 0 — Casa en orden (prerrequisito)</div><h2>Sin deuda técnica antes del sprint</h2><p class="lead">Bloqueante: el sprint de 3 meses solo inicia con la Fase 0 concluida. Sin fechas — orden de ejecución.</p></div>
+  <!-- PERFIL -->
+  <div class="card section-ref" id="perfil">
     <div class="card-body">
-      <table><tr><th>#</th><th>Acción</th><th>Horas</th><th>Resp.</th></tr>
-      <tr><td>1</td><td>LocalBusiness + schema de servicios (JSON-LD global)</td><td>6 h</td><td>Dev</td></tr>
-      <tr><td>2</td><td>H1 de la home + H1 “Post navigation” únicos</td><td>3 h</td><td>SEO</td></tr>
-      <tr><td>3</td><td>Teléfono fuera de los H2 (más de 8 servicios) — pasa a CTA</td><td>4 h</td><td>SEO/Dev</td></tr>
-      <tr><td>4</td><td>Corregir 404 LINK_DA_GALERIA + estandarizar URLs</td><td>2 h</td><td>Dev</td></tr>
-      <tr><td>5</td><td>Titles/metas críticos (home, gallery, 4 posts sin meta)</td><td>3 h</td><td>SEO</td></tr>
-      <tr><td>6</td><td>Security headers (HSTS, X-Frame, XCTO, Referrer)</td><td>2 h</td><td>Dev</td></tr>
-      <tr><td>7</td><td>GSC + sitemap + validación de rich results</td><td>2 h</td><td>SEO</td></tr>
-      </table>
-      <div class="note"><strong>Total Fase 0: 22 h.</strong> Entregable: sitio indexable, sin teléfono en H2, con schema validado y cero 404 internos.</div>
+      <h2>Perfil del sitio</h2>
+      <div class="scroll-wrap"><table>
+        <tr><th>Característica</th><th>Detalle</th></tr>
+        <tr><td><strong>Dominio</strong></td><td class="mono">diamondtintlv.com</td></tr>
+        <tr><td><strong>Empresa</strong></td><td>Diamond Tint &amp; Wraps — Las Vegas, NV</td></tr>
+        <tr><td><strong>Segmento</strong></td><td>Polarizado automotriz, comercial y residencial · PPF · Wraps · Ceramic coating</td></tr>
+        <tr><td><strong>CMS</strong></td><td>WordPress + LiteSpeed</td></tr>
+        <tr><td><strong>URLs rastreadas</strong></td><td>276 (266 indexables · 10 no indexables)</td></tr>
+        <tr><td><strong>URLs HTML indexables</strong></td><td>44 (home + 7 servicios + blog + sistema)</td></tr>
+        <tr><td><strong>Imágenes</strong></td><td>200 archivos · 180 por encima de 100 KB</td></tr>
+        <tr><td><strong>Canonicals</strong></td><td><span class="badge badge-green">100% correctas</span> autorreferentes en todas las HTML</td></tr>
+        <tr><td><strong>Sitemap XML</strong></td><td>Presente · noindex correcto en author/category</td></tr>
+        <tr><td><strong>Tiempo de respuesta</strong></td><td>83% &lt; 1 s · 28 URLs entre 2–3 s</td></tr>
+        <tr><td><strong>HTTPS</strong></td><td>Válido · security headers ausentes</td></tr>
+        <tr><td><strong>Blog</strong></td><td>Activo: posts de 579–1.471 palabras</td></tr>
+      </table></div>
     </div>
-  </section>
+  </div>
 
-  <!-- 06 -->
-  <section class="card" id="plan">
-    <div class="card-head"><div class="num">06 · Plan de acción — Sprint 1 (3 meses, por fases)</div><h2>Fases sin fechas, con reporte mensual</h2><p class="lead">Cada fase cierra con un reporte mensual. Orden fijo: fundación → contenido → expansión.</p></div>
+  <!-- DIAGNÓSTICO -->
+  <div class="card section-ref" id="diagnostico">
     <div class="card-body">
-      <h3 class="mono" style="font-size:13px;letter-spacing:1px;color:var(--red)">FASE 1 · FUNDACIÓN TÉCNICA — 35 H</h3>
-      <table><tr><th>#</th><th>Acción</th><th>Horas</th><th>Resp.</th></tr>
-      <tr><td>1</td><td>Titles únicos 50–60 caracteres (15 excedidos + paginaciones)</td><td>6 h</td><td>SEO</td></tr>
-      <tr><td>2</td><td>Metas 120–155 caracteres (4 ausentes + 2 excedidas)</td><td>6 h</td><td>Copy</td></tr>
-      <tr><td>3</td><td>Jerarquía H1→H2 (28 + 24 páginas)</td><td>4 h</td><td>SEO</td></tr>
-      <tr><td>4</td><td>Comprimir 180 imágenes → WebP + width/height</td><td>8 h</td><td>Diseño</td></tr>
-      <tr><td>5</td><td>Alt text en 172 imágenes (servicios + galería)</td><td>5 h</td><td>SEO</td></tr>
-      <tr><td>6</td><td>28 URLs lentas 2–3 s (caché, scripts, LiteSpeed)</td><td>4 h</td><td>Dev</td></tr>
-      <tr><td>7</td><td>Anchors genéricos + enlaces sin texto</td><td>2 h</td><td>SEO</td></tr>
-      </table>
-      <h3 class="mono" style="font-size:13px;letter-spacing:1px;color:var(--amber);margin-top:18px">FASE 2 · CONTENIDO Y ESTRUCTURA — 42 H</h3>
-      <table><tr><th>#</th><th>Acción</th><th>Horas</th><th>Resp.</th></tr>
-      <tr><td>1</td><td>Expandir thin: about 300 → 600+, contact, gallery</td><td>8 h</td><td>Copy</td></tr>
-      <tr><td>2</td><td>Profundizar servicios (vehicle, commercial, home, PPF, wraps, ceramic)</td><td>12 h</td><td>Copy</td></tr>
-      <tr><td>3</td><td>FAQ schema en servicios</td><td>4 h</td><td>Dev</td></tr>
-      <tr><td>4</td><td>Google Business Profile + zonas de Las Vegas</td><td>3 h</td><td>SEO</td></tr>
-      <tr><td>5</td><td>Campaña de reseñas (Google + Yelp)</td><td>3 h</td><td>SEO</td></tr>
-      <tr><td>6</td><td>Malla de enlaces internos (hub ↔ servicios ↔ blog)</td><td>4 h</td><td>SEO</td></tr>
-      <tr><td>7</td><td>Clusters: ceramic vs carbon, heat/UV, leyes de NV</td><td>8 h</td><td>Copy</td></tr>
-      </table>
-      <h3 class="mono" style="font-size:13px;letter-spacing:1px;color:var(--green);margin-top:18px">FASE 3 · EXPANSIÓN Y MONITOREO — 38 H</h3>
-      <table><tr><th>#</th><th>Acción</th><th>Horas</th><th>Resp.</th></tr>
-      <tr><td>1</td><td>llms.txt + GEO/AEO (citación en IAs)</td><td>3 h</td><td>SEO</td></tr>
-      <tr><td>2</td><td>2 hubs de autoridad (ej.: heat protection, PPF vs ceramic)</td><td>12 h</td><td>Copy</td></tr>
-      <tr><td>3</td><td>Link building local (dealers, detailers, directorios NV)</td><td>8 h</td><td>SEO</td></tr>
-      <tr><td>4</td><td>Core Web Vitals final (LCP, CLS, INP)</td><td>6 h</td><td>Dev</td></tr>
-      <tr><td>5</td><td>Galería antes/después optimizada</td><td>3 h</td><td>Diseño</td></tr>
-      <tr><td>6</td><td>Blog semanal + reportes mensuales</td><td>6 h</td><td>Copy/SEO</td></tr>
-      </table>
-    </div>
-  </section>
+      <h2>Diagnóstico técnico detallado</h2>
 
-  <!-- 07 -->
-  <section class="card gold-top" id="esfuerzo">
-    <div class="card-head"><div class="num">07 · Esfuerzo consolidado</div><h2>137 h en 4 fases</h2></div>
-    <div class="card-body">
-      <table><tr><th>Especialidad</th><th>Fase 0</th><th>Fase 1</th><th>Fase 2</th><th>Fase 3</th><th>Total</th></tr>
-      <tr><td>Dev WordPress</td><td>8 h</td><td>4 h</td><td>4 h</td><td>6 h</td><td><strong>22 h</strong></td></tr>
-      <tr><td>SEO</td><td>11 h</td><td>17 h</td><td>14 h</td><td>14 h</td><td><strong>56 h</strong></td></tr>
-      <tr><td>Copywriter</td><td>3 h</td><td>6 h</td><td>24 h</td><td>15 h</td><td><strong>48 h</strong></td></tr>
-      <tr><td>Diseño</td><td>—</td><td>8 h</td><td>—</td><td>3 h</td><td><strong>11 h</strong></td></tr>
-      <tr><td><strong>Total</strong></td><td><strong>22 h</strong></td><td><strong>35 h</strong></td><td><strong>42 h</strong></td><td><strong>38 h</strong></td><td><strong>137 h</strong></td></tr>
-      </table>
-      <div class="note">La Fase 0 es prerrequisito fuera del sprint — el sprint de 3 meses suma <strong>115 h</strong> (Fases 1–3).</div>
-    </div>
-  </section>
+      <h3>Críticos — impiden indexación y ranking</h3>
+      <div class="finding">
+        <div class="title"><span class="code">C-01</span> Cero schema en el 100% de las páginas <span class="badge badge-critico">Crítico</span></div>
+        <div class="line"><strong>Evidencia:</strong> 44/44 HTML sin JSON-LD ni Microdata, 0 rich-result features.</div>
+        <div class="ev">structured_data_all.csv → Rich Result Features = 0 en todas las filas</div>
+        <div class="line"><strong>Impacto:</strong> pérdida total de diferenciación en el SERP; CTR estimado 20–30% inferior.</div>
+        <div class="line"><strong>Solución:</strong> LocalBusiness global + FAQ en servicios + Article en el blog. <strong>Esfuerzo: 6 h</strong> (Fase 0).</div>
+      </div>
+      <div class="finding">
+        <div class="title"><span class="code">C-02</span> H1 promocional en la home + 24 H1 “Post navigation” <span class="badge badge-critico">Crítico</span></div>
+        <div class="line"><strong>Evidencia:</strong> home sin keyword ni ubicación; 24 URLs con H1 duplicado de la navegación de paginación.</div>
+        <div class="ev">h1_all.csv → home = “UPGRADE YOUR COMFORT…” · 24× “Post navigation”</div>
+        <div class="line"><strong>Impacto:</strong> Google no identifica el tema de la página más fuerte del dominio.</div>
+        <div class="line"><strong>Solución:</strong> H1 con “Window Tint Las Vegas”, un H1 único por URL. <strong>Esfuerzo: 3 h</strong> (Fase 0).</div>
+      </div>
+      <div class="finding">
+        <div class="title"><span class="code">C-03</span> Teléfono como H2 en más de 8 páginas de servicio <span class="badge badge-critico">Crítico</span></div>
+        <div class="line"><strong>Evidencia:</strong> <span class="mono">702.780.7399</span> marcado como H2 en testimonials, gallery, commercial, vehicle, ceramic, wraps, paint-protection y home.</div>
+        <div class="ev">h2_all.csv → H2-2 = “702.780.7399” en 8 servicios · 36 páginas con múltiples H2</div>
+        <div class="line"><strong>Impacto:</strong> ruido semántico en el template; Google pierde la jerarquía de tópicos.</div>
+        <div class="line"><strong>Solución:</strong> el teléfono pasa a CTA/botón; H2 reescritos con keyword + ubicación. <strong>Esfuerzo: 4 h</strong> (Fase 0).</div>
+      </div>
+      <div class="finding">
+        <div class="title"><span class="code">C-04</span> 180 imágenes por encima de 100 KB <span class="badge badge-critico">Crítico</span></div>
+        <div class="line"><strong>Evidencia:</strong> el 90% del banco de imágenes es pesado; 8 JPGs por encima de 1 MB en la galería.</div>
+        <div class="ev">images_all.csv → 180 &gt;100 KB · pico IMG_20251101_102028.jpg 1.703.936 bytes</div>
+        <div class="line"><strong>Impacto:</strong> LCP comprometido en las money pages; alta tasa de rebote móvil.</div>
+        <div class="line"><strong>Solución:</strong> compresión + WebP + lazy + width/height (174 sin dimensiones). <strong>Esfuerzo: 8 h</strong> (Fase 1).</div>
+      </div>
+      <div class="finding">
+        <div class="title"><span class="code">C-05</span> 28 URLs entre 2–3 s <span class="badge badge-critico">Crítico</span></div>
+        <div class="line"><strong>Evidencia:</strong> blog 2,08 s · testimonials 2,54 s · commercial 2,44 s.</div>
+        <div class="ev">response_time_(in_seconds).csv → 28 URLs (10,1%) en 2–3 s</div>
+        <div class="line"><strong>Impacto:</strong> Core Web Vitals (LCP) en riesgo; impacto en conversiones.</div>
+        <div class="line"><strong>Solución:</strong> imágenes + caché LiteSpeed + scripts. <strong>Esfuerzo: 4 h</strong> (Fase 1).</div>
+      </div>
 
-  <!-- 08 -->
-  <section class="card" id="kpis">
-    <div class="card-head"><div class="num">08 · KPIs — seguimiento mensual por fase</div><h2>Lo que medimos cada mes</h2><p class="lead">El reporte mensual cierra cada fase. El Sprint 2 (próximos 3 meses) parte de estos números.</p></div>
-    <div class="card-body">
-      <table><tr><th>KPI</th><th>Fase 0</th><th>Fase 1</th><th>Fase 2</th><th>Fase 3</th></tr>
-      <tr><td>Páginas con schema</td><td>0 → 100%</td><td>100%</td><td>100%</td><td>100%</td></tr>
-      <tr><td>H1 único y posicionable</td><td>45% → 100%</td><td>100%</td><td>100%</td><td>100%</td></tr>
-      <tr><td>Titles sin duplicación/recorte</td><td>66% → 80%</td><td>80% → 100%</td><td>100%</td><td>100%</td></tr>
-      <tr><td>Metas únicas 120–155</td><td>86% → 100%</td><td>100%</td><td>100%</td><td>100%</td></tr>
-      <tr><td>Imágenes &gt;100 KB</td><td>180</td><td>180 → 0</td><td>0</td><td>0</td></tr>
-      <tr><td>URLs lentas (2–3 s)</td><td>28 → 14</td><td>14 → 0</td><td>0</td><td>0</td></tr>
-      <tr><td>Thin content (&lt;400)</td><td>3</td><td>3 → 1</td><td>1 → 0</td><td>0</td></tr>
-      <tr><td>Errores 4xx internos</td><td>1 → 0</td><td>0</td><td>0</td><td>0</td></tr>
-      </table>
-      <div class="note"><strong>Proyección:</strong> +30% a +50% de tráfico orgánico en 90 días tras la Fase 0 — impulsado por schema (CTR), H1/home + titles (relevancia) e imágenes/rendimiento (LCP). Indexadas: 44 → 60+ con los hubs de la Fase 3.</div>
-    </div>
-  </section>
+      <h3>Altos — impactan CTR y experiencia</h3>
+      <div class="finding">
+        <div class="title"><span class="code">A-01</span> 15 titles recortados + duplicados de paginación <span class="badge badge-alto">Alto</span></div>
+        <div class="line"><strong>Evidencia:</strong> home 61 caracteres/586 px, blog 64/575, gallery 65/598 + /page/2–3 que repiten titles.</div>
+        <div class="line"><strong>Solución:</strong> titles únicos de 50–60 caracteres; paginación con “— Página N”. <strong>Esfuerzo: 6 h</strong> (Fase 1).</div>
+      </div>
+      <div class="finding">
+        <div class="title"><span class="code">A-02</span> 4 metas ausentes en posts indexables + 2 excedidas <span class="badge badge-alto">Alto</span></div>
+        <div class="line"><strong>Evidencia:</strong> sin meta: legal-regulations, professional-window-tinting, maintenance-tips, environmental-benefits. Excedidas: diy-tint-kits (156), ceramic-vegas-heat (177).</div>
+        <div class="line"><strong>Solución:</strong> 120–155 caracteres con keyword + CTA + Las Vegas. <strong>Esfuerzo: 6 h</strong> (Fase 1).</div>
+      </div>
+      <div class="finding">
+        <div class="title"><span class="code">A-03</span> 172 imágenes sin alt text <span class="badge badge-alto">Alto</span></div>
+        <div class="line"><strong>Evidencia:</strong> el 86% de las imágenes sin descripción, en un negocio visual (wraps/PPF/galería).</div>
+        <div class="line"><strong>Solución:</strong> alt de 50–100 caracteres con servicio + modelo. <strong>Esfuerzo: 5 h</strong> (Fase 1).</div>
+      </div>
+      <div class="finding">
+        <div class="title"><span class="code">A-04</span> 404 interno LINK_DA_GALERIA + URLs fuera del estándar <span class="badge badge-alto">Alto</span></div>
+        <div class="line"><strong>Evidencia:</strong> enlace interno roto con placeholder de agencia (<span class="mono">/LINK_DA_GALERIA</span>, mayúsculas); 2 URLs con guion bajo; 1 non-ASCII.</div>
+        <div class="line"><strong>Solución:</strong> apuntar a /gallery/; minúsculas con guion + redirect. <strong>Esfuerzo: 2 h</strong> (Fase 0).</div>
+      </div>
+      <div class="finding">
+        <div class="title"><span class="code">A-05</span> Thin content en about (300), contact (289) y gallery (401) <span class="badge badge-alto">Alto</span></div>
+        <div class="line"><strong>Evidencia:</strong> por debajo del mínimo competitivo para “window tint las vegas” (servicios fuertes: 993–1.194 palabras).</div>
+        <div class="line"><strong>Solución:</strong> expandir a 600+ palabras con EEAT local, NAP y zonas. <strong>Esfuerzo: 8 h</strong> (Fase 2).</div>
+      </div>
+      <div class="finding">
+        <div class="title"><span class="code">A-06</span> Security headers ausentes <span class="badge badge-alto">Alto</span></div>
+        <div class="line"><strong>Evidencia:</strong> 272 URLs sin HSTS, CSP, X-Frame-Options ni XCTO.</div>
+        <div class="line"><strong>Solución:</strong> headers en servidor/LiteSpeed. <strong>Esfuerzo: 2 h</strong> (Fase 0).</div>
+      </div>
+      <div class="finding">
+        <div class="title"><span class="code">A-07</span> Jerarquía rota: 28 H2 no secuenciales <span class="badge badge-alto">Alto</span></div>
+        <div class="line"><strong>Evidencia:</strong> estructura H1→H2 interrumpida en 28 páginas (+ 24 H1 no secuenciales).</div>
+        <div class="line"><strong>Solución:</strong> reordenar headings por página. <strong>Esfuerzo: 4 h</strong> (Fase 1).</div>
+      </div>
 
-  <!-- 09 -->
-  <section class="card gold-top" id="proximos">
-    <div class="card-head"><div class="num">09 · Próximos pasos + riesgos</div><h2>Cómo cerrar la casa y correr el sprint</h2></div>
-    <div class="card-body">
-      <ul class="check">
-        <li>Agendar la <strong>Fase 0 (22 h)</strong> — bloqueante del sprint</li>
-        <li>Corregir el <strong>404 LINK_DA_GALERIA → /gallery/</strong> (1 enlace interno)</li>
-        <li>Validar schema en rich results + GSC con sitemap</li>
-        <li>Cerrar la <strong>Fase 1</strong> → reporte mensual 1</li>
-        <li>Cerrar la <strong>Fase 2</strong> → reporte mensual 2 (GBP + reseñas)</li>
-        <li>Cerrar la <strong>Fase 3</strong> → reporte mensual 3 + plan del <strong>Sprint 2</strong></li>
-      </ul>
-      <table><tr><th>Riesgo</th><th>Prob.</th><th>Mitigación</th></tr>
-      <tr><td>Saltar la Fase 0 por prisa</td><td>Media</td><td>No iniciar el sprint sin schema + H1 + 404 corregidos</td></tr>
-      <tr><td>Galería pesada que frena el LCP</td><td>Alta</td><td>Comprimir el top 20 de JPGs &gt;500 KB antes de crear contenido nuevo</td></tr>
-      <tr><td>Elementor limita schema/headers</td><td>Media</td><td>JSON-LD manual + headers en el servidor</td></tr>
-      <tr><td>Competencia local establecida (LV tint)</td><td>Alta</td><td>Nichos ceramic/PPF + reseñas + GBP + contenido “Vegas heat”</td></tr>
-      </table>
-      <div class="note"><strong>Glosario:</strong> <span class="badge b-crit">Crítico</span> impide indexación/ranking · <span class="badge b-alto">Alto</span> impacta CTR/experiencia · <span class="badge b-med">Medio</span> mejora moderada · <span class="badge b-info">Info</span> observación/positivo.</div>
-      <p style="font-size:13px;color:var(--muted)"><strong>Fuente:</strong> Screaming Frog — 35 CSV en <span class="mono">projetos/SEO/clientes/diamond-tint/Auditoria</span> (url, response_codes, page_titles, meta_description, h1, h2, images, content, canonicals, structured_data, issues_overview, response_time, external, internal, directives). Patrón visual: cuerpo Indianapolis-presentación + encabezado Share-of-Search + bloques All-Over (riesgos, perfil, KPIs). Documento generado en oct 2026 por el equipo SEO de <strong>V4 Company</strong>.</p>
+      <h3>Medios — oportunidades de mejora</h3>
+      <div class="finding">
+        <div class="title"><span class="code">M-01…M-08</span> Oportunidades medias <span class="badge badge-medio">Medio</span></div>
+        <div class="line">6 URLs con noindex <strong>correcto</strong> (author/category — mantener) · redirects /page/1 → canónico (ok, quitar enlaces internos) · 9 anchors “click here/learn more” · 6 enlaces sin anchor · 6 páginas con legibilidad difícil · H2 &gt;70 caracteres en 7 páginas · externos 403 Yelp (bloqueo de Yelp, mantener) + 301 royalinkdesign/facebook (actualizar).</div>
+      </div>
+
+      <h3>Informativo — observaciones</h3>
+      <div class="finding">
+        <div class="title"><span class="code">I-01…I-06</span> Lo que está bien — mantener <span class="badge badge-green">Info</span></div>
+        <div class="line">Canonicals autorreferentes en el 100% · HTTPS válido · sitemap presente · noindex correcto en author/category · blog activo con más de 20 posts densos · enlaces internos sólidos (home 96 inlinks, servicios 44–56).</div>
+      </div>
     </div>
-  </section>
+  </div>
+
+  <!-- FASE 0 -->
+  <div class="card section-ref" id="fase0">
+    <div class="card-body">
+      <h2>Fase 0 — Casa en orden (22 h)</h2>
+      <p>Sprint de correcciones bloqueantes. Sin esta fase, el sprint de 3 meses no inicia: el sitio seguiría comprometiendo indexación y CTR.</p>
+      <div class="scroll-wrap"><table>
+        <tr><th>#</th><th>Acción</th><th>Horas</th><th>Resp.</th></tr>
+        <tr><td>1</td><td>LocalBusiness + schema de servicios (JSON-LD global)</td><td>6</td><td>Dev</td></tr>
+        <tr><td>2</td><td>H1 de la home + H1 “Post navigation” únicos</td><td>3</td><td>SEO</td></tr>
+        <tr><td>3</td><td>Teléfono fuera de los H2 (más de 8 servicios) — pasa a CTA</td><td>4</td><td>SEO/Dev</td></tr>
+        <tr><td>4</td><td>Corregir 404 LINK_DA_GALERIA + estandarizar URLs</td><td>2</td><td>Dev</td></tr>
+        <tr><td>5</td><td>Titles/metas críticos (home, gallery, 4 posts sin meta)</td><td>3</td><td>SEO</td></tr>
+        <tr><td>6</td><td>Security headers (HSTS, X-Frame, XCTO, Referrer)</td><td>2</td><td>Dev</td></tr>
+        <tr><td>7</td><td>GSC + sitemap + validación de rich results</td><td>2</td><td>SEO</td></tr>
+      </table></div>
+      <div class="summary-box"><strong>Total Fase 0: 22 h</strong><p>Entregable: sitio indexable, sin teléfono en H2, con schema validado y cero 404 internos.</p></div>
+    </div>
+  </div>
+
+  <!-- PLAN -->
+  <div class="card section-ref" id="plan">
+    <div class="card-body">
+      <h2>Plan de acción — Sprint 1 (3 meses)</h2>
+      <h3>Fase 1 — Fundación técnica — 35 h</h3>
+      <div class="scroll-wrap"><table>
+        <tr><th>#</th><th>Acción</th><th>Horas</th><th>Resp.</th></tr>
+        <tr><td>1</td><td>Titles únicos 50–60 caracteres (15 excedidos + paginaciones)</td><td>6</td><td>SEO</td></tr>
+        <tr><td>2</td><td>Metas 120–155 caracteres (4 ausentes + 2 excedidas)</td><td>6</td><td>Copy</td></tr>
+        <tr><td>3</td><td>Jerarquía H1→H2 (28 + 24 páginas)</td><td>4</td><td>SEO</td></tr>
+        <tr><td>4</td><td>Comprimir 180 imágenes → WebP + width/height</td><td>8</td><td>Diseño</td></tr>
+        <tr><td>5</td><td>Alt text en 172 imágenes (servicios + galería)</td><td>5</td><td>SEO</td></tr>
+        <tr><td>6</td><td>28 URLs lentas 2–3 s (caché, scripts, LiteSpeed)</td><td>4</td><td>Dev</td></tr>
+        <tr><td>7</td><td>Anchors genéricos + enlaces sin texto</td><td>2</td><td>SEO</td></tr>
+      </table></div>
+      <h3>Fase 2 — Contenido y estructura — 42 h</h3>
+      <div class="scroll-wrap"><table>
+        <tr><th>#</th><th>Acción</th><th>Horas</th><th>Resp.</th></tr>
+        <tr><td>1</td><td>Expandir thin: about 300 → 600+, contact, gallery</td><td>8</td><td>Copy</td></tr>
+        <tr><td>2</td><td>Profundizar servicios (vehicle, commercial, home, PPF, wraps, ceramic)</td><td>12</td><td>Copy</td></tr>
+        <tr><td>3</td><td>FAQ schema en servicios</td><td>4</td><td>Dev</td></tr>
+        <tr><td>4</td><td>Google Business Profile + zonas de Las Vegas</td><td>3</td><td>SEO</td></tr>
+        <tr><td>5</td><td>Campaña de reseñas (Google + Yelp)</td><td>3</td><td>SEO</td></tr>
+        <tr><td>6</td><td>Malla de enlaces internos (hub ↔ servicios ↔ blog)</td><td>4</td><td>SEO</td></tr>
+        <tr><td>7</td><td>Clusters: ceramic vs carbon, heat/UV, leyes de NV</td><td>8</td><td>Copy</td></tr>
+      </table></div>
+      <h3>Fase 3 — Expansión y monitoreo — 38 h</h3>
+      <div class="scroll-wrap"><table>
+        <tr><th>#</th><th>Acción</th><th>Horas</th><th>Resp.</th></tr>
+        <tr><td>1</td><td>llms.txt + GEO/AEO (citación en IAs)</td><td>3</td><td>SEO</td></tr>
+        <tr><td>2</td><td>2 hubs de autoridad (ej.: heat protection, PPF vs ceramic)</td><td>12</td><td>Copy</td></tr>
+        <tr><td>3</td><td>Link building local (dealers, detailers, directorios NV)</td><td>8</td><td>SEO</td></tr>
+        <tr><td>4</td><td>Core Web Vitals final (LCP, CLS, INP)</td><td>6</td><td>Dev</td></tr>
+        <tr><td>5</td><td>Galería antes/después optimizada</td><td>3</td><td>Diseño</td></tr>
+        <tr><td>6</td><td>Blog semanal + reportes mensuales</td><td>6</td><td>Copy/SEO</td></tr>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- ESFUERZO -->
+  <div class="card section-ref" id="esfuerzo">
+    <div class="card-body">
+      <h2>Resumen de esfuerzo consolidado</h2>
+      <div class="scroll-wrap"><table>
+        <tr><th>Especialidad</th><th>Fase 0</th><th>Fase 1</th><th>Fase 2</th><th>Fase 3</th><th>Total</th></tr>
+        <tr><td>Dev WordPress</td><td>8 h</td><td>4 h</td><td>4 h</td><td>6 h</td><td><strong>22 h</strong></td></tr>
+        <tr><td>SEO</td><td>11 h</td><td>17 h</td><td>14 h</td><td>14 h</td><td><strong>56 h</strong></td></tr>
+        <tr><td>Copywriter</td><td>3 h</td><td>6 h</td><td>24 h</td><td>15 h</td><td><strong>48 h</strong></td></tr>
+        <tr><td>Diseño</td><td>—</td><td>8 h</td><td>—</td><td>3 h</td><td><strong>11 h</strong></td></tr>
+        <tr><td><strong>Total</strong></td><td><strong>22 h</strong></td><td><strong>35 h</strong></td><td><strong>42 h</strong></td><td><strong>38 h</strong></td><td><strong>137 h</strong></td></tr>
+      </table></div>
+      <p>* La Fase 0 es prerrequisito fuera del sprint — el sprint de 3 meses suma <strong>115 h</strong> (Fases 1–3).</p>
+    </div>
+  </div>
+
+  <!-- PROYECCIÓN -->
+  <div class="card section-ref" id="proyeccion">
+    <div class="card-body">
+      <h2>Proyección de impacto</h2>
+      <div class="scroll-wrap"><table>
+        <tr><th>Métrica</th><th>Conservador</th><th>Optimista</th></tr>
+        <tr><td><strong>Tráfico orgánico (90 días)</strong></td><td>+30%</td><td>+50%</td></tr>
+        <tr><td><strong>Páginas indexadas</strong></td><td>44 → 60+</td><td>44 → 70+</td></tr>
+        <tr><td><strong>CTR medio en el SERP</strong></td><td>+10%</td><td>+20%</td></tr>
+        <tr><td><strong>Core Web Vitals pass</strong></td><td>LCP &lt; 2,5 s</td><td>LCP &lt; 2,0 s</td></tr>
+        <tr><td><strong>Rich snippets</strong></td><td>0 → 30+</td><td>0 → 44</td></tr>
+      </table></div>
+      <h3>Factores que influyen en la proyección</h3>
+      <p>El schema markup puede generar una ganancia inmediata de CTR de <strong>+20% a +30%</strong> en las páginas de servicio. El sector de polarizado en Las Vegas tiene alta competencia local con baja madurez SEO: quien estructure primero el SEO local con contenido de calidad domina las posiciones (“Vegas heat” como ángulo diferenciador).</p>
+    </div>
+  </div>
+
+  <!-- KPIS -->
+  <div class="card section-ref" id="kpis">
+    <div class="card-body">
+      <h2>KPIs para seguimiento mensual</h2>
+      <p>El reporte mensual cierra cada fase. El Sprint 2 (próximos 3 meses) parte de estos números.</p>
+      <div class="scroll-wrap"><table>
+        <tr><th>KPI</th><th>Fase 0</th><th>Fase 1</th><th>Fase 2</th><th>Fase 3</th></tr>
+        <tr><td>Páginas con schema</td><td>0 → 100%</td><td>100%</td><td>100%</td><td>100%</td></tr>
+        <tr><td>H1 único y posicionable</td><td>45% → 100%</td><td>100%</td><td>100%</td><td>100%</td></tr>
+        <tr><td>Titles sin duplicación/recorte</td><td>66% → 80%</td><td>80% → 100%</td><td>100%</td><td>100%</td></tr>
+        <tr><td>Metas únicas 120–155</td><td>86% → 100%</td><td>100%</td><td>100%</td><td>100%</td></tr>
+        <tr><td>Imágenes &gt;100 KB</td><td>180</td><td>180 → 0</td><td>0</td><td>0</td></tr>
+        <tr><td>URLs lentas (2–3 s)</td><td>28 → 14</td><td>14 → 0</td><td>0</td><td>0</td></tr>
+        <tr><td>Thin content (&lt;400)</td><td>3</td><td>3 → 1</td><td>1 → 0</td><td>0</td></tr>
+        <tr><td>Errores 4xx internos</td><td>1 → 0</td><td>0</td><td>0</td><td>0</td></tr>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- RIESGOS -->
+  <div class="card section-ref" id="riesgos">
+    <div class="card-body">
+      <h2>Riesgos y mitigaciones</h2>
+      <div class="scroll-wrap"><table>
+        <tr><th>Riesgo</th><th>Prob.</th><th>Impacto</th><th>Mitigación</th></tr>
+        <tr><td>Saltar la Fase 0 por prisa</td><td>Media</td><td>Alto</td><td>No iniciar el sprint sin schema + H1 + 404 corregidos.</td></tr>
+        <tr><td>Galería pesada que frena el LCP</td><td>Alta</td><td>Alto</td><td>Comprimir el top 20 de JPGs &gt;500 KB antes de contenido nuevo.</td></tr>
+        <tr><td>Elementor limita schema/headers</td><td>Media</td><td>Medio</td><td>JSON-LD manual + headers en el servidor.</td></tr>
+        <tr><td>Competencia local establecida (LV tint)</td><td>Alta</td><td>Medio</td><td>Nichos ceramic/PPF + reseñas + GBP + contenido “Vegas heat”.</td></tr>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- PRÓXIMOS -->
+  <div class="card section-ref" id="proximos">
+    <div class="card-body">
+      <h2>Próximos pasos</h2>
+      <ol class="steps">
+        <li><strong>Agendar la Fase 0 (22 h)</strong> — bloqueante del sprint.</li>
+        <li><strong>Corregir el 404 LINK_DA_GALERIA → /gallery/</strong> (1 enlace interno).</li>
+        <li><strong>Validar schema</strong> en rich results + GSC con sitemap.</li>
+        <li><strong>Cerrar la Fase 1</strong> → reporte mensual 1.</li>
+        <li><strong>Cerrar la Fase 2</strong> → reporte mensual 2 (GBP + reseñas).</li>
+        <li><strong>Cerrar la Fase 3</strong> → reporte mensual 3 + plan del <strong>Sprint 2</strong>.</li>
+      </ol>
+      <h3>Glosario de severidad</h3>
+      <p><span class="badge badge-critico">Crítico</span> Impide indexación o ranking. Impacto directo en ingresos. &nbsp; <span class="badge badge-alto">Alto</span> Impacta CTR, experiencia o autoridad. &nbsp; <span class="badge badge-medio">Medio</span> Oportunidad de mejora con impacto moderado. &nbsp; <span class="badge badge-baixo">Bajo</span> Ajuste de pulido. &nbsp; <span class="badge badge-info">Info</span> Observación o buena práctica.</p>
+      <h3>Sobre esta auditoría</h3>
+      <p><strong>Herramienta:</strong> Screaming Frog SEO Spider · 35 CSV en <span class="mono">projetos/SEO/clientes/diamond-tint/Auditoria</span> · <strong>Revisión técnica:</strong> SEO Squad V4 Company · <strong>Alcance:</strong> auditoría técnica estructural basada en crawl. Estructura visual del contenido en el estándar All Over; encabezado elegante con logo V4. Documento generado en oct 2026 por el equipo SEO de <strong>V4 Company</strong>.</p>
+    </div>
+  </div>
 
   <div class="footer">AUDITORÍA SEO · DIAMOND TINT &amp; WRAPS · diamondtintlv.com · FASE 0 + SPRINT 1 (3 MESES) · REPORTE MENSUAL · V4 COMPANY · OCT 2026</div>
 </div>
