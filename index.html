@@ -14,317 +14,281 @@
 <meta name="twitter:title" content="Central de Entregas · Portfólio Operacional Peretto & Co">
 <meta name="twitter:description" content="91 entregas publicadas · 118 URLs · 29 clientes e frentes.">
 <meta name="twitter:image" content="https://marcoslrvusa.github.io/v4perettoco/assets/images/foto-marcos-perettoco.jpg">
-<meta name="theme-color" content="#b91c1c">
+<meta name="theme-color" content="#0a0a0f">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="logo-peretto-red.png">
 <style>
 :root{
-  --color-bg:#ffffff; --color-sidebar:#fafafa; --color-border:#e8e8e8;
-  --color-text:#111111; --color-text-secondary:#555555;
-  --color-accent:#b91c1c; --color-accent-dark:#7f1d1d; --color-accent-light:#fef2f2;
-  --color-accent-gradient:linear-gradient(135deg,#b91c1c 0%,#dc2626 100%);
-  --color-code-bg:#f5f5f5; --color-table-border:#e5e5e5;
-  --font-sans:'Ubuntu',-apple-system,BlinkMacSystemFont,sans-serif;
-  --font-mono:'JetBrains Mono','SF Mono',monospace;
-  --sidebar-width:280px; --header-height:64px;
-  --radius-sm:6px; --radius-md:10px; --radius-lg:16px;
-  --shadow-sm:0 1px 2px rgba(0,0,0,0.04); --shadow-md:0 4px 12px rgba(0,0,0,0.06);
+  --sans:'Montserrat',-apple-system,'Segoe UI',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --accent:#e50914; --accent-dark:#b0060f; --accent-soft:rgba(229,9,20,.07);
+  --accent-grad:linear-gradient(135deg,#e50914 0%,#ff222d 100%);
+  --sb-bg:#0a0a0f; --sb-line:#1a1a26; --sb-tx:#9494a8; --sb-hd:#e4e4ec; --sb-hv:#1a1a22;
+  --bg:#fff; --ink:#1a1a2e; --mut:#6a6a84; --line:#e2e2ec; --card:#f8f8fc;
+  --sbw:292px; --tbh:62px; --r:10px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:var(--font-sans);font-size:15px;line-height:1.7;color:var(--color-text);background:var(--color-bg);display:flex;min-height:100vh;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
-/* ===== HEADER ===== */
-.header{position:fixed;top:0;left:var(--sidebar-width);right:0;height:var(--header-height);background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--color-border);display:flex;align-items:center;padding:0 36px;z-index:100;gap:14px}
-.header h1{font-size:15px;font-weight:700;color:var(--color-accent)}
-.header .subtitle{font-size:13px;color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.header-badge{margin-left:auto;font-size:11px;font-weight:600;color:#fff;background:var(--color-accent-gradient);padding:4px 12px;border-radius:20px;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
-.menu-btn{display:none;background:#fff;border:1px solid var(--color-border);border-radius:6px;padding:6px 10px;font-size:15px;cursor:pointer;color:var(--color-text)}
-/* ===== SIDEBAR ===== */
-.sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-width);background:var(--color-sidebar);border-right:1px solid var(--color-border);overflow-y:auto;z-index:200;display:flex;flex-direction:column}
-.sidebar-logo{padding:24px 20px 20px;border-bottom:1px solid var(--color-border);display:flex;flex-direction:column;align-items:center;text-align:center}
-.sidebar-logo .logo-img{width:120px;height:auto;object-fit:contain;margin-bottom:10px}
-.sidebar-logo .version{font-size:10.5px;color:var(--color-text-secondary);font-weight:500;text-transform:uppercase;letter-spacing:.5px}
-.sidebar nav ul{list-style:none;padding:0;margin:0}
-.nav-link{display:block;padding:8px 20px;font-size:13px;font-weight:500;color:var(--color-text);text-decoration:none;transition:all .2s ease;border-left:3px solid transparent;line-height:1.4;cursor:pointer}
-.nav-link:hover{background:var(--color-accent-light);color:var(--color-accent);border-left-color:var(--color-accent)}
-.nav-link.level-0{font-weight:600;font-size:12.5px;padding:12px 20px 6px;color:var(--color-accent);text-transform:uppercase;letter-spacing:.4px;cursor:default}
-.nav-link.level-0:hover{background:none}
-.nav-link.nav-sub{padding-left:32px;font-size:12px}
-.nav-link .n{float:right;font-size:10.5px;font-weight:600;color:var(--color-text-secondary);background:#fff;border:1px solid var(--color-border);border-radius:4px;padding:0 7px}
-.sb-foot{margin-top:auto;padding:14px 20px;border-top:1px solid var(--color-border);font-size:11px;color:var(--color-text-secondary);line-height:1.6}
-.sb-foot code{font-family:var(--font-mono);font-size:10px;background:#f5f5f5;border:1px solid var(--color-border);padding:1px 5px;border-radius:4px}
-/* ===== MAIN ===== */
-.main{margin-left:var(--sidebar-width);margin-top:var(--header-height);flex:1;max-width:1020px;padding:44px 56px 100px;min-width:0}
-.main section{margin-bottom:36px;padding:28px 32px 32px;background:#fff;border-radius:var(--radius-lg);border:1px solid var(--color-border);box-shadow:var(--shadow-sm);scroll-margin-top:calc(var(--header-height) + 16px)}
-h1.section-title{font-size:24px;font-weight:700;color:var(--color-accent);margin-bottom:6px;padding-bottom:12px;border-bottom:3px solid var(--color-accent);letter-spacing:-.4px;display:flex;align-items:center;gap:10px}
-h1.section-title::before{content:'';display:inline-block;width:4px;height:26px;background:var(--color-accent-gradient);border-radius:2px;flex-shrink:0}
-.sec-desc{font-size:13.5px;color:var(--color-text-secondary);margin-bottom:18px}
-.main h2{font-size:18px;font-weight:600;margin-top:24px;margin-bottom:10px}
-.main p{margin-bottom:12px}
-.main code{font-family:var(--font-mono);font-size:13px;background:var(--color-code-bg);padding:2px 7px;border-radius:4px;color:#b91c1c;border:1px solid #eee}
-/* hero */
-.hero-personal{background:#161619;color:#fff;border-radius:var(--radius-lg);padding:26px 28px;margin-bottom:20px;display:flex;gap:22px;align-items:center;position:relative;overflow:hidden}
-.hero-personal::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#e50914,#ff222d)}
-.hero-personal .photo{width:104px;height:104px;border-radius:50%;object-fit:cover;border:3px solid #e50914;flex-shrink:0;background:#222}
-.hero-personal .role{font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#ff6b74;margin-bottom:4px}
-.hero-personal h2{font-size:clamp(22px,3vw,30px);font-weight:700;letter-spacing:-.6px;line-height:1.15;color:#fff;margin:0}
-.hero-personal .bio{font-size:12.5px;color:#c9c9d1;margin-top:8px;max-width:640px}
-.hero-personal .bio strong{color:#fff}
-.pstats{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-.pstat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:8px 14px;min-width:104px}
-.pstat .n{font-size:19px;font-weight:700;color:#fff}
-.pstat .n.red{color:#ff6b74}
-.pstat .l{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:#a7a7b3}
-.hero-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
-/* buttons */
-.btn{font-family:var(--font-sans);font-size:12.5px;font-weight:600;padding:9px 16px;border-radius:6px;border:1px solid var(--color-border);background:#fff;color:var(--color-text);cursor:pointer;text-decoration:none;display:inline-block}
-.btn:hover{border-color:var(--color-text)}
-.btn-red{background:var(--color-accent);border-color:var(--color-accent);color:#fff}
-.btn-red:hover{background:var(--color-accent-dark)}
-.btn-ghost-w{background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff}
-.btn-ghost-w:hover{border-color:#fff}
-/* agent-grid (destaques) */
-.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px}
-.agent-card{background:#fafafa;border:1px solid var(--color-border);border-radius:8px;padding:14px 16px;transition:all .2s;display:flex;flex-direction:column}
-.agent-card:hover{border-color:var(--color-accent);box-shadow:var(--shadow-md);transform:translateY(-2px)}
-.agent-card .name{font-weight:600;font-size:13.5px;margin-bottom:4px;line-height:1.4}
-.agent-card .name a{color:var(--color-text);text-decoration:none}
-.agent-card .name a:hover{color:var(--color-accent)}
-.agent-card .desc{font-size:12px;color:var(--color-text-secondary);margin-bottom:8px;line-height:1.5;flex:1}
-.agent-card .meta{display:flex;flex-wrap:wrap;gap:4px}
-.meta-tag{font-size:10px;padding:2px 7px;border-radius:4px;background:#fff;color:var(--color-text-secondary);border:1px solid var(--color-border);font-family:var(--font-mono)}
-.meta-tag.hot{color:#b91c1c;border-color:#fecaca;background:#fef2f2}
-/* flow */
-.flow-card{background:#fafafa;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:20px 24px;margin-bottom:14px}
-.flow-card h3{margin:0 0 10px;font-size:15px}
-.flow-steps{counter-reset:step;list-style:none;padding:0;margin:0}
-.flow-steps li{counter-increment:step;padding:9px 0 9px 34px;position:relative;font-size:13.5px;border-bottom:1px solid var(--color-border)}
-.flow-steps li::before{content:counter(step);position:absolute;left:0;top:9px;width:22px;height:22px;background:var(--color-accent);color:#fff;font-size:10px;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center}
-.flow-steps li:last-child{border:none}
-/* callout */
-.callout{padding:12px 16px;border-radius:8px;margin:14px 0;font-size:13px;border-left:3px solid}
-.callout-good{background:#f0fdf4;border-color:#22c55e}
-/* toolbar */
-.toolbar{background:#fafafa;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:14px 16px;margin-bottom:14px}
-.tb-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.tb-row input[type=text]{flex:2;min-width:200px;font-family:var(--font-sans);font-size:12.5px;padding:9px 12px 9px 34px;border:1px solid var(--color-border);border-radius:6px;background:#fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%23555555" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>') no-repeat 11px center;outline:none}
-.tb-row input[type=text]:focus{border-color:var(--color-accent)}
-.tb-row select{font-family:var(--font-sans);font-size:12px;font-weight:500;padding:9px 10px;border:1px solid var(--color-border);border-radius:6px;background:#fff;color:var(--color-text);outline:none;cursor:pointer;max-width:220px}
-.tb-status{font-size:12px;color:var(--color-text-secondary);margin-top:9px}
-.tb-status strong{color:var(--color-text)}
-/* tables */
-.main table.grid{width:100%;border-collapse:separate;border-spacing:0;margin:0;font-size:12.5px;border-radius:var(--radius-sm);overflow:hidden;border:1px solid var(--color-table-border)}
-table.grid thead th{background:var(--color-accent);font-weight:600;text-align:left;padding:10px 14px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#fff;white-space:nowrap}
-table.grid thead th:not(:last-child){border-right:1px solid rgba(255,255,255,.12)}
-table.grid td{padding:9px 13px;border-bottom:1px solid var(--color-table-border);vertical-align:top;background:#fff}
-table.grid tr:last-child td{border-bottom:none}
-table.grid tbody tr.data:hover td{background:var(--color-accent-light)}
-td.id{font-family:var(--font-mono);font-size:11px;color:var(--color-text-secondary);white-space:nowrap;width:64px}
-td.main .tt{font-weight:600;font-size:12.5px}
-td.main .tt a{color:var(--color-text);text-decoration:none}
-td.main .tt a:hover{color:var(--color-accent);text-decoration:underline}
-td.main .cc{font-size:11px;color:var(--color-text-secondary);font-weight:500;margin-top:1px}
-td.main .pp{font-family:var(--font-mono);font-size:10.5px;color:var(--color-text-secondary);margin-top:3px;word-break:break-all}
-td.main .pp a{color:var(--color-text-secondary);text-decoration:none}
-td.main .pp a:hover{color:var(--color-accent)}
-tr.child td{background:#fafafa}
-tr.child td.main{padding-left:34px}
-tr.grp td{background:#f4f4f5;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:8px 14px}
-tr.grp td .cnt{color:var(--color-text-secondary)}
-tr.grp .gcopy{margin-left:10px;font-family:var(--font-sans);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;background:#fff;border:1px solid var(--color-border);border-radius:4px;padding:3px 9px;cursor:pointer;color:var(--color-text-secondary)}
-tr.grp .gcopy:hover{color:var(--color-accent);border-color:var(--color-accent)}
-.bdg{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.3px;border-radius:4px;padding:2px 7px;border:1px solid var(--color-border);background:#f5f5f4;color:#44403c;white-space:nowrap}
-.bdg.st-ok{color:#15803d;border-color:#bbf7d0;background:#f0fdf4}
-.bdg.st-warn{color:#a16207;border-color:#fef08a;background:#fefce8}
-.bdg.st-off{color:#44403c;border-color:#e7e5e4;background:#f5f5f4}
-.bdg.ty-hub{color:#b91c1c;border-color:#fecaca;background:#fef2f2}
-td.acts{white-space:nowrap;width:120px}
-.icon-btn{display:inline-flex;align-items:center;gap:5px;font-family:var(--font-sans);font-size:11px;font-weight:600;padding:6px 10px;border-radius:5px;border:1px solid var(--color-border);background:#fff;color:var(--color-text);cursor:pointer;text-decoration:none;margin:0 4px 4px 0}
-.icon-btn:hover{border-color:var(--color-text)}
-.icon-btn.go{color:var(--color-accent);border-color:#eec9c9}
-.icon-btn.go:hover{background:var(--color-accent);border-color:var(--color-accent);color:#fff}
-.toggle-link{font-size:11px;font-weight:600;color:var(--color-accent);cursor:pointer;background:none;border:none;font-family:var(--font-sans);padding:0;margin-top:5px}
+body{font-family:var(--sans);font-size:14.5px;line-height:1.7;color:var(--ink);background:var(--bg);display:flex;min-height:100vh;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.topbar{position:fixed;top:0;left:var(--sbw);right:0;height:var(--tbh);background:var(--sb-bg);border-bottom:1px solid var(--sb-line);display:flex;align-items:center;gap:12px;padding:0 32px;z-index:100}
+.topbar h1{font-size:14px;font-weight:800;color:var(--sb-hd);letter-spacing:-.2px;white-space:nowrap}
+.topbar .sub{font-size:12px;color:var(--sb-tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar .spacer{flex:1}
+.ver-badge{font-size:10.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#fff;background:var(--accent);padding:4px 12px;border-radius:20px;white-space:nowrap}
+.menu-btn{display:none;background:none;border:1px solid var(--sb-line);color:var(--sb-hd);border-radius:8px;padding:6px 11px;font-size:15px;cursor:pointer}
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sbw);background:var(--sb-bg);border-right:1px solid var(--sb-line);overflow-y:auto;z-index:200;display:flex;flex-direction:column}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-thumb{background:#2a2a3e;border-radius:4px}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid var(--sb-line);display:flex;gap:12px;align-items:center}
+.sb-logo img{width:46px;height:auto}
+.sb-logo .n{font-size:13px;font-weight:800;color:var(--sb-hd);line-height:1.3}
+.sb-logo .s{font-size:10px;font-weight:600;color:var(--sb-tx);text-transform:uppercase;letter-spacing:.7px;margin-top:2px}
+.sb-nav{flex:1;padding:10px 0 18px}
+.sb-nav ul{list-style:none}
+.sb-sec{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--accent);padding:14px 20px 6px}
+.sb-link{display:block;padding:7px 20px;font-size:12.5px;font-weight:500;color:var(--sb-tx);text-decoration:none;border-left:3px solid transparent;cursor:pointer;line-height:1.45}
+.sb-link:hover{background:var(--sb-hv);color:var(--sb-hd);border-left-color:var(--accent)}
+.sb-link.active{color:#fff;border-left-color:var(--accent);background:var(--sb-hv)}
+.sb-link .n{float:right;font-size:10.5px;font-weight:700;color:var(--sb-tx);background:#1a1a26;border:1px solid var(--sb-line);border-radius:4px;padding:0 7px;font-family:var(--mono)}
+.sb-foot{padding:14px 20px;border-top:1px solid var(--sb-line);font-size:11px;color:var(--sb-tx);line-height:1.6}
+.sb-foot code{font-family:var(--mono);font-size:10px;background:#1a1a26;padding:1px 6px;border-radius:4px;color:#ffb3b8}
+.main{margin-left:var(--sbw);margin-top:var(--tbh);flex:1;min-width:0}
+.wrap{max-width:1020px;margin:0 auto;padding:36px 48px 90px}
+.hero{border:1px solid var(--line);border-radius:16px;padding:30px 34px;margin-bottom:30px;background:linear-gradient(180deg,#fff 0%,var(--accent-soft) 160%);position:relative;overflow:hidden;scroll-margin-top:calc(var(--tbh) + 14px)}
+.hero::after{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--accent-grad)}
+.hero .kicker{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;color:var(--accent);background:#fff;border:1px solid #f3c2c2;border-radius:20px;padding:4px 13px;margin-bottom:12px}
+.hero h2{font-size:clamp(22px,3vw,30px);font-weight:800;letter-spacing:-.6px;line-height:1.2;margin-bottom:10px}
+.hero h2 span{color:var(--accent)}
+.hero p{font-size:13.5px;color:var(--mut);max-width:760px}
+.hero-person{display:flex;gap:16px;align-items:center;margin:16px 0 4px}
+.hero-person img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--accent);background:#eee}
+.hero-person .n{font-size:14px;font-weight:800}
+.hero-person .s{font-size:11.5px;color:var(--mut)}
+section.block{margin-bottom:34px;scroll-margin-top:calc(var(--tbh) + 14px)}
+.sec-head{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+.sec-num{flex-shrink:0;min-width:36px;height:36px;border-radius:9px;background:var(--accent-grad);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;padding:0 10px}
+.sec-head h2{font-size:19px;font-weight:800;letter-spacing:-.4px}
+.sec-sub{font-size:12.5px;color:var(--mut);margin:2px 0 16px 48px;max-width:820px}
+h3{font-size:15px;font-weight:700;margin:22px 0 10px}
+p{margin-bottom:10px}
+code{font-family:var(--mono);font-size:11.5px;background:var(--card);padding:2px 7px;border-radius:4px;color:var(--accent);border:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:12px 0 18px;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+th{background:var(--accent);color:#fff;font-weight:700;text-align:left;padding:9px 13px;font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+td{padding:8px 13px;border-bottom:1px solid var(--line);vertical-align:top;background:#fff}
+tr:last-child td{border-bottom:none}
+tr:nth-child(even) td{background:var(--card)}
+tr.data:hover td{background:rgba(229,9,20,.05)}
+td.id{font-family:var(--mono);font-size:11px;color:var(--mut);white-space:nowrap}
+td.main .tt{font-weight:700}
+td.main .tt a{color:var(--ink);text-decoration:none}
+td.main .tt a:hover{color:var(--accent);text-decoration:underline}
+td.main .cc{font-size:11px;color:var(--mut)}
+td.main .pp{font-family:var(--mono);font-size:10.5px;color:var(--mut);margin-top:3px;word-break:break-all}
+td.main .pp a{color:var(--mut);text-decoration:none}
+td.main .pp a:hover{color:var(--accent)}
+tr.child td{background:var(--card)}
+tr.child td.main{padding-left:30px}
+tr.grp td{background:#ececf4;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}
+tr.grp td .cnt{color:var(--mut)}
+.gcopy{margin-left:10px;font-family:var(--sans);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;background:#fff;border:1px solid var(--line);border-radius:4px;padding:3px 9px;cursor:pointer;color:var(--mut)}
+.gcopy:hover{color:var(--accent);border-color:var(--accent)}
+.st{font-weight:700;font-size:11.5px;white-space:nowrap}
+.st-ok{color:#16a34a}
+.st-warn{color:#b98a00}
+.st-off{color:var(--mut)}
+td.acts{white-space:nowrap}
+.btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-size:12px;font-weight:700;padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;text-decoration:none;margin:0 6px 6px 0}
+.btn:hover{border-color:var(--ink)}
+.btn.go{color:var(--accent);border-color:#f3c2c2}
+.btn.go:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary{background:var(--accent-grad);border:none;color:#fff}
+.btn.primary:hover{filter:brightness(.94)}
+.toggle-link{font-size:11px;font-weight:700;color:var(--accent);cursor:pointer;background:none;border:none;font-family:var(--sans);padding:0;margin-top:5px}
 .toggle-link:hover{text-decoration:underline}
+.callout{padding:12px 16px;border-radius:8px;margin:12px 0;font-size:13px;border-left:3px solid}
+.callout.info{background:var(--accent-soft);border-color:var(--accent)}
+.callout.good{background:rgba(34,197,94,.07);border-color:#22c55e}
+.callout.warn{background:#fff8e6;border-color:#d9a400}
+ul.tight,ol.tight{margin:8px 0 12px 22px}
+ul.tight li,ol.tight li{margin-bottom:5px}
+li::marker{color:var(--accent)}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:14px 0}
+.kv .k{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px 15px}
+.kv .k .l{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:var(--mut);margin-bottom:3px}
+.kv .k .v{font-size:22px;font-weight:800}
+.kv .k .v.red{color:var(--accent)}
+.toolbar{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:6px}
+.tb-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tb-row input[type=text]{flex:2;min-width:200px;font-family:var(--sans);font-size:12.5px;padding:9px 12px 9px 34px;border:1px solid var(--line);border-radius:8px;background:#fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%236a6a84" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>') no-repeat 11px center;outline:none}
+.tb-row input[type=text]:focus{border-color:var(--accent)}
+.tb-row select{font-family:var(--sans);font-size:12px;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);outline:none;cursor:pointer;max-width:230px}
+.tb-status{font-size:12px;color:var(--mut);margin-top:9px}
+.tb-status strong{color:var(--ink)}
 .tbl-wrap{overflow-x:auto}
-table.grid{min-width:860px}
-.panel-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.panel-head h3{font-size:15px;font-weight:600;margin:0}
-.panel-head .hint{font-size:12px;color:var(--color-text-secondary)}
-.panel-head .right{margin-left:auto}
-.split{display:grid;grid-template-columns:1.3fr 1fr;gap:14px;margin-top:16px}
-table.mini{width:100%;border-collapse:collapse;font-size:12px}
-table.mini th{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#fff;background:var(--color-accent);text-align:left;padding:9px 14px}
-table.mini td{padding:8px 14px;border-bottom:1px solid var(--color-table-border);background:#fff}
-table.mini tr:nth-child(even) td{background:#fafafa}
-table.mini td.n{text-align:right;font-weight:700}
-.empty{display:none;padding:40px 20px;text-align:center;font-size:13px;color:var(--color-text-secondary)}
+.tbl-wrap table{min-width:880px}
+.split{display:grid;grid-template-columns:1.3fr 1fr;gap:14px;margin-top:4px}
+.split table{min-width:0}
+td.n{text-align:right;font-weight:800;font-family:var(--mono)}
+.empty{display:none;padding:40px 20px;text-align:center;font-size:13px;color:var(--mut)}
 .empty.show{display:block}
-.footer{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:11.5px;color:var(--color-text-secondary);padding:20px 2px 0}
-.footer img{height:24px;width:auto}
-.footer .r{margin-left:auto;font-family:var(--font-mono);font-size:10.5px}
-.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(16px);background:#111;color:#fff;font-size:12px;font-weight:500;padding:11px 18px;border-radius:8px;opacity:0;pointer-events:none;transition:all .25s;z-index:999;max-width:90vw;word-break:break-all}
+.footer{border-top:1px solid var(--line);margin-top:26px;padding-top:18px;font-size:11.5px;color:var(--mut);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.footer img{height:24px}
+.footer .r{margin-left:auto;font-family:var(--mono);font-size:10.5px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(16px);background:#0a0a0f;color:#fff;font-size:12px;padding:11px 18px;border-radius:8px;opacity:0;pointer-events:none;transition:all .25s;z-index:999;max-width:90vw;word-break:break-all}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 @media(max-width:1100px){.split{grid-template-columns:1fr}}
 @media(max-width:900px){
-  .sidebar{transform:translateX(-100%);transition:transform .25s ease;box-shadow:0 8px 30px rgba(0,0,0,.12)}
+  .sidebar{transform:translateX(-100%);transition:transform .25s}
   .sidebar.open{transform:translateX(0)}
-  .header{left:0;padding:0 14px}
-  .header .subtitle{display:none}
+  .topbar{left:0;padding:0 14px}
+  .topbar .sub{display:none}
   .menu-btn{display:block}
-  .main{margin-left:0;padding:20px 16px 60px}
-  .main section{padding:20px}
-  .hero-personal{flex-direction:column;align-items:flex-start}
+  .main{margin-left:0}
+  .wrap{padding:22px 16px 70px}
+  .hero{padding:22px 20px}
+  .sec-sub{margin-left:0}
 }
 </style>
 </head>
 <body>
-
-<div class="header">
+<header class="topbar">
   <button class="menu-btn" id="menuBtn" aria-label="Abrir menu">☰</button>
   <h1>Central de Entregas</h1>
-  <span class="subtitle">Portfólio operacional · Peretto &amp; Co</span>
-  <span class="header-badge">Out 2026 · GitHub Pages</span>
-</div>
+  <span class="sub">Portfólio operacional · Peretto &amp; Co</span>
+  <div class="spacer"></div>
+  <span class="ver-badge">Out 2026</span>
+</header>
 
-<div class="sidebar">
-  <div class="sidebar-logo">
-    <img class="logo-img" src="logo-peretto-red.png" alt="Peretto &amp; Co.">
-    <div class="version">Portfólio operacional · 2026</div>
+<aside class="sidebar" id="sidebar">
+  <div class="sb-logo">
+    <img src="logo-peretto-red.png" alt="Peretto &amp; Co.">
+    <div><div class="n">Central de Entregas<br>Peretto &amp; Co</div><div class="s">Portfólio operacional</div></div>
   </div>
-  <nav><ul id="sideNav">
-    <li><a class="nav-link level-0">Portal</a></li>
-    <li><a class="nav-link" href="#visao">Visão geral</a></li>
-    <li><a class="nav-link" href="#destaques">Destaques recentes</a></li>
-    <li><a class="nav-link" href="#como-usar">Como usar</a></li>
-    <li><a class="nav-link" href="#catalogo">Catálogo completo</a></li>
-    <li><a class="nav-link level-0">Categorias</a></li>
+  <nav class="sb-nav"><ul id="sideNav">
+    <li class="sb-sec">Leitura</li>
+    <li><a class="sb-link" href="#visao">Visão geral</a></li>
+    <li><a class="sb-link" href="#destaques">Destaques recentes</a></li>
+    <li><a class="sb-link" href="#como-usar">Como usar</a></li>
+    <li><a class="sb-link" href="#catalogo">Catálogo completo</a></li>
+    <li class="sb-sec">Categorias</li>
   </ul></nav>
-  <div class="sb-foot">Base pública<br><code>marcoslrvusa.github.io/v4perettoco/</code></div>
-</div>
+  <div class="sb-foot">Base pública:<br><code>marcoslrvusa.github.io/v4perettoco/</code></div>
+</aside>
 
-<div class="main">
+<div class="main"><div class="wrap">
 
-<section id="visao">
-  <h1 class="section-title">Visão geral</h1>
-  <p class="sec-desc">Quem opera, o que já foi entregue e onde encontrar cada material. Tudo publicado aqui tem data, situação e link verificável.</p>
-  <div class="hero-personal">
-    <img class="photo" src="assets/images/foto-marcos-perettoco.jpg" alt="Marcos Luciano">
-    <div style="min-width:0;flex:1">
-      <div class="role">Investidor · V4 Company: Operação Peretto &amp; Co</div>
-      <h2 style="font-size:clamp(22px,3vw,30px);font-weight:700;color:#fff;margin:0">Marcos Luciano</h2>
-      <p class="bio" style="font-size:12.5px;color:#c9c9d1;margin-top:8px">Eu transformo operação de marketing em <strong style="color:#fff">ativo auditável</strong>: cada auditoria, relatório e entrega que produzo é publicada aqui com data, situação e link verificado. Este portal é meu portfólio vivo e minha ferramenta diária de organização.</p>
-      <div class="pstats">
-        <div class="pstat"><div class="n" id="pEntregas">···</div><div class="l">Entregas</div></div>
-        <div class="pstat"><div class="n red" id="pUrls">···</div><div class="l">URLs públicas</div></div>
-        <div class="pstat"><div class="n" id="pClients">···</div><div class="l">Clientes e frentes</div></div>
-        <div class="pstat"><div class="n">74</div><div class="l">Skills no hub</div></div>
-      </div>
-      <div class="hero-actions">
-        <button class="btn btn-red" id="btnShare">Compartilhar portfólio</button>
-        <button class="btn btn-ghost-w" id="btnGoCsv">Exportar CSV</button>
-      </div>
+  <div class="hero" id="visao">
+    <span class="kicker">Portfólio operacional · base pública</span>
+    <h2>Cada entrega publicada, <span>localizável em segundos</span></h2>
+    <p>Eu publico aqui todo material que produzo na operação: auditorias, relatórios, hubs, propostas e apresentações. Cada item tem data, situação e endereço verificável. Quem chega por curiosidade começa pelos destaques. Quem procura algo específico usa a busca do catálogo.</p>
+    <div class="hero-person">
+      <img src="assets/images/foto-marcos-perettoco.jpg" alt="Marcos Luciano">
+      <div><div class="n">Marcos Luciano</div><div class="s">AI Engineering | SEO Specialist · V4 Company</div></div>
+    </div>
+    <div class="kv">
+      <div class="k"><div class="l">Entregas publicadas</div><div class="v red" id="kTotal">···</div></div>
+      <div class="k"><div class="l">URLs no catálogo</div><div class="v" id="kUrls">···</div></div>
+      <div class="k"><div class="l">Clientes e frentes</div><div class="v" id="kClients">···</div></div>
+      <div class="k"><div class="l">Skills no hub</div><div class="v">74</div></div>
+    </div>
+    <div style="margin-top:6px">
+      <button class="btn primary" id="btnShare">Compartilhar portfólio</button>
+      <button class="btn" id="btnGoCsv">Exportar CSV</button>
     </div>
   </div>
-  <div class="callout callout-good"><strong>Como ler as situações:</strong> <code>Atual</code> é o material vigente. <code>Legado parcial</code> é espelho ou versão superada. <code>Legado</code> está descontinuado e fica só para referência.</div>
-</section>
 
-<section id="destaques">
-  <h1 class="section-title">Destaques recentes</h1>
-  <p class="sec-desc">As entregas mais novas do portfólio, na ordem em que entraram. Bom ponto de partida para quem chega agora.</p>
-  <div class="agent-grid" id="featGrid"></div>
-</section>
+  <section class="block" id="destaques">
+    <div class="sec-head"><div class="sec-num">01</div><h2>Destaques recentes</h2></div>
+    <p class="sec-sub">As entregas mais novas do portfólio, na ordem em que entraram. Ponto de partida para quem chega agora.</p>
+    <table id="featTable"><tr><th>Entrega</th><th>Categoria</th><th>Data</th></tr><tbody id="featRows"></tbody></table>
+  </section>
 
-<section id="como-usar">
-  <h1 class="section-title">Como usar este portal</h1>
-  <p class="sec-desc">Cinco passos cobrem tudo que dá para fazer no catálogo.</p>
-  <div class="flow-card">
-    <h3>Do primeiro olhar ao link copiado</h3>
-    <ol class="flow-steps">
+  <section class="block" id="como-usar">
+    <div class="sec-head"><div class="sec-num">02</div><h2>Como usar este portal</h2></div>
+    <p class="sec-sub">Cinco passos cobrem tudo que dá para fazer no catálogo.</p>
+    <ol class="tight">
       <li><strong>Busque</strong> por título, cliente, categoria ou parte do endereço.</li>
       <li><strong>Filtre</strong> por cliente, categoria, tipo ou situação.</li>
       <li><strong>Abra</strong> a entrega em nova aba para conferir o material.</li>
       <li><strong>Copie</strong> o link publicado para enviar a quem precisa.</li>
       <li><strong>Exporte</strong> o recorte filtrado em CSV quando precisar da lista.</li>
     </ol>
-  </div>
-</section>
+    <div class="callout good"><strong>Como ler as situações:</strong> <code>Atual</code> é o material vigente. <code>Legado parcial</code> é espelho ou versão superada. <code>Legado</code> está descontinuado e fica só para referência.</div>
+  </section>
 
-<section id="catalogo">
-  <h1 class="section-title">Catálogo completo</h1>
-  <p class="sec-desc">Todas as entregas publicadas, organizadas por categoria, cliente e tipo, com busca, filtros e ordenação.</p>
-  <div class="toolbar">
-    <div class="tb-row">
-      <input type="text" id="q" placeholder="Buscar por título, cliente, categoria ou caminho…">
-      <select id="fClient"><option value="">Todos os clientes</option></select>
-      <select id="fCat"><option value="">Todas as categorias</option></select>
-      <select id="fType">
-        <option value="">Todos os tipos</option>
-        <option value="hub">Hub / Sistema</option>
-        <option value="auditoria">Auditoria</option>
-        <option value="relatorio">Relatório</option>
-        <option value="trafego">Tráfego pago</option>
-        <option value="conteudo">Conteúdo</option>
-        <option value="automacao">Automação / IA</option>
-        <option value="site">Site / Template</option>
-        <option value="estrategia">Estratégia</option>
-      </select>
-      <select id="fStatus">
-        <option value="">Todas as situações</option>
-        <option value="atual">Atuais</option>
-        <option value="parcial">Legado parcial</option>
-        <option value="legado">Legado total</option>
-      </select>
-      <select id="fSort">
-        <option value="cat">Ordenar: Categoria</option>
-        <option value="date">Ordenar: Mais recentes</option>
-        <option value="title">Ordenar: Título A/Z</option>
-        <option value="client">Ordenar: Cliente A/Z</option>
-        <option value="type">Ordenar: Tipo</option>
-      </select>
-      <button class="btn btn-dark" id="btnCsv" style="background:#111;border-color:#111;color:#fff">Exportar CSV</button>
-      <button class="btn btn-red" id="btnCopyAll">Copiar links filtrados</button>
+  <section class="block" id="catalogo">
+    <div class="sec-head"><div class="sec-num">03</div><h2>Catálogo completo</h2></div>
+    <p class="sec-sub">Todas as entregas publicadas, organizadas por categoria, cliente e tipo, com busca, filtros e ordenação.</p>
+    <div class="toolbar">
+      <div class="tb-row">
+        <input type="text" id="q" placeholder="Buscar por título, cliente, categoria ou caminho…">
+        <select id="fClient"><option value="">Todos os clientes</option></select>
+        <select id="fCat"><option value="">Todas as categorias</option></select>
+        <select id="fType">
+          <option value="">Todos os tipos</option>
+          <option value="hub">Hub / Sistema</option>
+          <option value="auditoria">Auditoria</option>
+          <option value="relatorio">Relatório</option>
+          <option value="trafego">Tráfego pago</option>
+          <option value="conteudo">Conteúdo</option>
+          <option value="automacao">Automação / IA</option>
+          <option value="site">Site / Template</option>
+          <option value="estrategia">Estratégia</option>
+        </select>
+        <select id="fStatus">
+          <option value="">Todas as situações</option>
+          <option value="atual">Atuais</option>
+          <option value="parcial">Legado parcial</option>
+          <option value="legado">Legado total</option>
+        </select>
+        <select id="fSort">
+          <option value="cat">Ordenar: Categoria</option>
+          <option value="date">Ordenar: Mais recentes</option>
+          <option value="title">Ordenar: Título A/Z</option>
+          <option value="client">Ordenar: Cliente A/Z</option>
+          <option value="type">Ordenar: Tipo</option>
+        </select>
+        <button class="btn" id="btnCsv">Exportar CSV</button>
+        <button class="btn go" id="btnCopyAll" style="color:var(--accent);border-color:#f3c2c2">Copiar links filtrados</button>
+      </div>
+      <div class="tb-status" id="statusLine"></div>
     </div>
-    <div class="tb-status" id="statusLine"></div>
-  </div>
-  <div class="panel-head"><h3>Registro de entregas</h3><span class="hint" id="tblCount">···</span></div>
-  <div class="tbl-wrap"><table class="grid" id="grid">
-    <thead><tr>
-      <th>ID</th><th>Entrega</th><th>Categoria</th><th>Tipo</th><th>Data</th><th>Situação</th><th style="text-align:right">URLs</th><th>Ações</th>
-    </tr></thead>
-    <tbody id="rows"></tbody>
-  </table></div>
-  <div class="empty" id="empty">Nenhuma entrega corresponde aos filtros. Ajuste a busca ou limpe os filtros.</div>
-  <div class="split">
-    <div><div class="panel-head"><h3>Entregas por cliente</h3></div><div class="tbl-wrap"><table class="mini" id="tblClient"></table></div></div>
-    <div><div class="panel-head"><h3>Entregas por categoria</h3></div><div class="tbl-wrap"><table class="mini" id="tblCat"></table></div></div>
-  </div>
-  <div class="footer">
-    <img src="logo-peretto-red.png" alt="Peretto &amp; Co.">
-    <span><strong>Marcos Luciano · Investidor V4</strong>: portfólio operacional Peretto &amp; Co. O que eu faço está publicado aqui.</span>
-    <span class="r" id="footLine"></span>
-  </div>
-</section>
+    <h3>Registro de entregas <span class="mono" id="tblCount" style="font-size:11px;color:var(--mut)"></span></h3>
+    <div class="tbl-wrap"><table id="grid">
+      <tr><th>ID</th><th>Entrega</th><th>Categoria</th><th>Tipo</th><th>Data</th><th>Situação</th><th style="text-align:right">URLs</th><th>Ações</th></tr>
+      <tbody id="rows"></tbody>
+    </table></div>
+    <div class="empty" id="empty">Nenhuma entrega corresponde aos filtros. Ajuste a busca ou limpe os filtros.</div>
+    <h3>Entregas por cliente</h3>
+    <div class="tbl-wrap"><table id="tblClient"><tr><th>Cliente / frente</th><th style="text-align:right">Entregas</th><th style="text-align:right">URLs</th></tr></table></div>
+    <h3>Entregas por categoria</h3>
+    <div class="tbl-wrap"><table id="tblCat"><tr><th>Categoria</th><th style="text-align:right">Entregas</th><th style="text-align:right">URLs</th></tr></table></div>
+    <div class="footer">
+      <img src="logo-peretto-red.png" alt="Peretto &amp; Co.">
+      <span><strong>Marcos Luciano · AI Engineering | SEO Specialist</strong>: portfólio operacional Peretto &amp; Co. O que eu faço está publicado aqui.</span>
+      <span class="r" id="footLine"></span>
+    </div>
+  </section>
 
-</div>
+</div></div>
 <div class="toast" id="toast"></div>
 <script>
 const BASE = 'https://marcoslrvusa.github.io/v4perettoco/';
 const CATS = [
-  {id:'hub', n:'01', label:'Hub de Agentes & Infraestrutura', short:'Hub & Sistema', desc:'Ecossistema de agentes, documentação operacional, PDI e automações corporativas.'},
-  {id:'seo-auditoria', n:'02', label:'SEO · Auditorias Técnicas', short:'Auditorias SEO', desc:'Diagnósticos completos de SEO técnico, AIO e GEO por cliente.'},
-  {id:'seo-reports', n:'03', label:'SEO · Prestação de Contas & Relatórios', short:'Reports SEO', desc:'Evolução, receita, overview estratégico e apresentações executivas.'},
-  {id:'trafego', n:'04', label:'Tráfego Pago · Google / Meta / Bing', short:'Tráfego pago', desc:'Auditorias de mídia, estratégias de search e reports de performance.'},
-  {id:'conteudo', n:'05', label:'Conteúdo · Blog & Editorial', short:'Conteúdo', desc:'Artigos, lotes de blog, definition blocks AIO e kits on-page.'},
-  {id:'sdr-ia', n:'06', label:'SDR IA · Hub & Correções', short:'SDR IA', desc:'Hub de correções das SDRs IA por cliente e entregas de confiabilidade.'},
-  {id:'ai-visibility', n:'07', label:'AI Visibility · AIO / GEO', short:'AI Visibility', desc:'Produto de visibilidade em IAs: arquitetura, landing, portal e templates.'},
-  {id:'marketplace', n:'08', label:'Marketplaces & Estratégia', short:'Marketplaces', desc:'Auditorias de expansão e frameworks de operação em marketplaces.'},
-  {id:'sites', n:'09', label:'Sites, Landing Pages & Templates', short:'Sites & Templates', desc:'Websites entregues, front-ends de campanha e templates reutilizáveis.'},
-  {id:'share-search', n:'10', label:'Share of Search · Produto, Propostas & Diagnóstico', short:'Share of Search', desc:'Produto de inteligência de busca: referência técnica, apresentação didática, escopo e proposta do report mensal.'}
+  {id:'hub', n:'01', label:'Hub de Agentes & Infraestrutura', short:'Hub & Sistema'},
+  {id:'seo-auditoria', n:'02', label:'SEO · Auditorias Técnicas', short:'Auditorias SEO'},
+  {id:'seo-reports', n:'03', label:'SEO · Prestação de Contas & Relatórios', short:'Reports SEO'},
+  {id:'trafego', n:'04', label:'Tráfego Pago · Google / Meta / Bing', short:'Tráfego pago'},
+  {id:'conteudo', n:'05', label:'Conteúdo · Blog & Editorial', short:'Conteúdo'},
+  {id:'sdr-ia', n:'06', label:'SDR IA · Hub & Correções', short:'SDR IA'},
+  {id:'ai-visibility', n:'07', label:'AI Visibility · AIO / GEO', short:'AI Visibility'},
+  {id:'marketplace', n:'08', label:'Marketplaces & Estratégia', short:'Marketplaces'},
+  {id:'sites', n:'09', label:'Sites, Landing Pages & Templates', short:'Sites & Templates'},
+  {id:'share-search', n:'10', label:'Share of Search · Produto, Propostas & Diagnóstico', short:'Share of Search'}
 ];
 const D = [
-/* ============ 01 HUB ============ */
 {cat:'hub', client:'V4 Peretto', type:'hub', t:'Tipo', title:'Hub de Agentes V4 Peretto: Portal Principal', desc:'Ecossistema completo: 37 agentes, 102 skills, 8 times e Opensquad. Documentação navegável + export ZIP.', href:'hub-de-agentes/',dt:'17/08/2026',st:'parcial'},
 {cat:'hub', client:'V4 Peretto', type:'hub', t:'Docs', title:'Documentação Completa do Agent Hub', desc:'Referência integral do hub: arquitetura, camadas, skills, agentes e governança.', href:'hub-de-agentes/documentacao-completa.html',dt:'17/08/2026',st:'parcial'},
 {cat:'hub', client:'V4 Peretto', type:'hub', t:'Infra', title:'Infraestrutura Inteligente: 11 Skills Técnicas', desc:'Camada técnica do hub: skills de infra, integrações, MCPs e operação.', href:'hub-de-agentes/infra-skills-completa.html',dt:'17/08/2026',st:'parcial'},
@@ -334,7 +298,6 @@ const D = [
 {cat:'hub', client:'V4 Peretto', type:'hub', t:'PDI', title:'PDI: Padrão Universal de Erros n8n', desc:'Padrão corporativo de tratamento de erros em workflows n8n + apresentações.', href:'pdi-err-n8n/',dt:'25/08/2026', sub:[['Apresentação A1: Orquestração corporativa','pdi-err-n8n/pdi-orquestracao-corporativa-n8n-a1.html']]},
 {cat:'hub', client:'V4 Peretto', type:'automacao', t:'Rotina', title:'P·I·A: Análise de Rotinas × Agentes de Operação', desc:'Mapeamento de rotinas internas versus capacidade dos agentes de operação v4.', href:'projetos/Rotinas%20P.I.A/pia-analise-completa.html',dt:'08/06/2026'},
 {cat:'hub', client:'V4 Peretto', type:'automacao', t:'AI Ops', title:'AI Ops V4: Apresentação Principal', desc:'Visão da infraestrutura de AI Ops corporativa da operação.', href:'projetos/Infraestrutura%20AI/v4-automations/documenta%C3%A7%C3%A3o/AI-OPS-APRESENTACAO.html',dt:'13/07/2026', sub:[['AI Ops: Case Mata Leão','projetos/Infraestrutura%20AI/v4-automations/documenta%C3%A7%C3%A3o/AI-OPS-APRESENTACAO-2.html'],['AI Ops: Infraestrutura corporativa','projetos/Infraestrutura%20AI/v4-automations/documenta%C3%A7%C3%A3o/AI-OPS-APRESENTACAO-3.html'],['AI Ops: Fórum de operações','projetos/Infraestrutura%20AI/v4-automations/documenta%C3%A7%C3%A3o/AI-OPS-APRESENTACAO-4.html']]},
-/* ============ 02 AUDITORIAS ============ */
 {cat:'seo-auditoria', client:'All Over Exterior', type:'auditoria', t:'Auditoria', title:'Auditoria SEO Completa: All Over Exterior', desc:'413 URLs, 35 problemas (7 críticos, 8 altos). Quick wins, schema e plano 90 dias.', href:'allover-audit/',dt:'25/08/2026'},
 {cat:'seo-auditoria', client:'All Over Exterior', type:'auditoria', t:'Auditoria', title:'Auditoria SEO Completa: All Over (mirror S1)', desc:'Variação de escopo da auditoria All Over para segunda leitura executiva.', href:'allover-seo-audit/',dt:'17/08/2026',st:'parcial'},
 {cat:'seo-auditoria', client:'Premium Cleaning', type:'auditoria', t:'Auditoria', title:'Auditoria SEO: Premium Cleaning Services NJ', desc:'211 URLs, 28 problemas (6 críticos, 7 altos). Schema local + plano 90 dias.', href:'premium-audit/',dt:'17/08/2026'},
@@ -347,7 +310,6 @@ const D = [
 {cat:'seo-auditoria', client:'TekSea', type:'auditoria', t:'Auditoria', title:'Auditoria Técnica SEO: TekSea', desc:'Diagnóstico técnico completo + backlog priorizado de correção.', href:'audit-teksea/',dt:'25/08/2026', sub:[['Variação TekSea (mirror)','teksea-audit/','parcial'],['Arquivo em projetos','projetos/SEO/clientes/tek%20sea/auditoria-seo-teksea.html','parcial']]},
 {cat:'seo-auditoria', client:'Grupo R1', type:'auditoria', t:'Auditoria', title:'Auditoria Técnica SEO: Grupo R1 (Q2 2026)', desc:'Diagnóstico técnico e plano de correção trimestral do Grupo R1.', href:'projetos/SEO/clientes/grupo-r1/auditoria-seo-r1grupo-Q2-2026.html',dt:'20/07/2026'},
 {cat:'seo-auditoria', client:'V4 Peretto', type:'auditoria', t:'Base', title:'SEO Problems Hub: Knowledge Base (29 problemas)', desc:'Catálogo operacional de problemas de SEO com causa, diagnóstico, solução e POP.', href:'projetos/seo/seo-problems-hub/',dt:'17/08/2026', sub:[['Mirror: SEO/seo-problems-hub','projetos/SEO/seo-problems-hub/','parcial'],['Mirror: clientes/seo-problems-hub','projetos/SEO/clientes/seo-problems-hub/','parcial']]},
-/* ============ 03 REPORTS ============ */
 {cat:'seo-reports', client:'All Over Exterior', type:'relatorio', t:'Report', title:'SEO · Prestação de Contas: All Over (Jun 2026)', desc:'9 meses de evolução: AS 8, +106% referring domains, 40+ artigos e roadmap.', href:'allover-seo/',dt:'17/08/2026'},
 {cat:'seo-reports', client:'All Over Exterior', type:'relatorio', t:'Overview', title:'Overview Estratégico 360°: All Over', desc:'Performance, canais e recomendações executivas consolidadas.', href:'allover-overview/',dt:'17/08/2026'},
 {cat:'seo-reports', client:'All Over Exterior', type:'relatorio', t:'Receita', title:'Receita por Canais: All Over', desc:'Ticket médio, mix de canais e comparativos de receita.', href:'allover-revenue/',dt:'17/08/2026'},
@@ -364,7 +326,6 @@ const D = [
 {cat:'seo-reports', client:'Metal Indianápolis', type:'relatorio', t:'Atualização', title:'Atualização 18/09: Metal Indianápolis', desc:'Atualização operacional de setembro: evolução, pendências e próximos passos.', href:'indianapolis-atualizacao-18-09.html',dt:'18/09/2026'},
 {cat:'seo-reports', client:'Metal Indianápolis', type:'relatorio', t:'Atualização', title:'Atualização 30/09: Metal Indianápolis', desc:'Atualização de fechamento do mês com o estado da operação.', href:'indianapolis-atualizacao-30-09.html',dt:'30/09/2026'},
 {cat:'seo-reports', client:'Metal Indianápolis', type:'relatorio', t:'Check-in', title:'Check-in Fase 3: Indianápolis', desc:'Leitura de check-in da fase 3: avanços, travas e combinados.', href:'indianapolis-fase3-checkin.html',dt:'30/09/2026'},
-/* ============ 04 TRÁFEGO ============ */
 {cat:'trafego', client:'Atlas Copco', type:'trafego', t:'Google Ads', title:'Traffic Report: Atlas Copco (1ª quinz. Jun/2026)', desc:'US$ 725 · 337 cliques · 0 conversões. Diagnóstico de tracking e roadmap.', href:'atlas-copco/relatorio-consolidado.html',dt:'17/08/2026'},
 {cat:'trafego', client:'All Over Exterior', type:'trafego', t:'Google Ads', title:'Auditoria Google Ads: All Over Exterior', desc:'Estrutura, desperdício, termos e plano de reestruturação da conta.', href:'allover-google-ads-audit/',dt:'25/08/2026'},
 {cat:'trafego', client:'All Over Exterior', type:'trafego', t:'Estratégia', title:'Google Ads Search Strategy: Install · Replace · Repair', desc:'Arquitetura de campanhas search por intenção e serviço.', href:'allover-search-strategy/',dt:'11/09/2026'},
@@ -372,7 +333,6 @@ const D = [
 {cat:'trafego', client:'Conserva Irrigation', type:'trafego', t:'Google Ads', title:'Nova Estrutura de Campanhas Search: Conserva Q3', desc:'Reestruturação de campanhas search para o trimestre.', href:'nova-estrutura-campanhas-conserva-2026-q3.html',dt:'17/08/2026'},
 {cat:'trafego', client:'GSET Tennis', type:'trafego', t:'Meta Ads', title:'Meta Ads Report: GSET Tennis Academy (Jun 2026)', desc:'Performance de Meta Ads com criativos, CPL e próximos testes.', href:'gset-meta-ads-junho-2026.html',dt:'17/08/2026'},
 {cat:'trafego', client:'Construction Florida', type:'trafego', t:'Auditoria', title:'Auditoria de Mídia Paga: Construction Florida', desc:'Diagnóstico de conta e plano de correção da operação de mídia.', href:'projetos/ajuda%20rede%20v4/auditoria-media-construction-florida.html',dt:'25/08/2026'},
-/* ============ 05 CONTEÚDO ============ */
 {cat:'conteudo', client:'Lola Aviamentos', type:'conteudo', t:'Blog', title:'Blog AG04: Aviamentos (v1)', desc:'Peça editorial do lote AG04 para o blog da Lola.', href:'lola-blog-ag04-aviamentos.html',dt:'31/08/2026',st:'parcial'},
 {cat:'conteudo', client:'Lola Aviamentos', type:'conteudo', t:'Blog', title:'Blog AG04: Aviamentos (v2)', desc:'Segunda versão do artigo AG04 com ajustes editoriais.', href:'lola-blog-ag04-aviamentos-v2.html',dt:'01/09/2026',st:'parcial'},
 {cat:'conteudo', client:'Lola Aviamentos', type:'conteudo', t:'Blog', title:'Blog AG04: Aviamentos (v3)', desc:'Versão final do artigo AG04 aprovada para publicação.', href:'lola-blog-ag04-aviamentos-v3.html',dt:'01/09/2026'},
@@ -383,7 +343,6 @@ const D = [
 {cat:'conteudo', client:'Metal Indianápolis', type:'conteudo', t:'On-page', title:'Page Titles: Planilha Operacional · Metal', desc:'Mapa de titles por página para implantação on-page.', href:'projetos/SEO/clientes/metal-indianapolis/page-titles-planilha.html',dt:'28/07/2026'},
 {cat:'conteudo', client:'Metal Indianápolis', type:'conteudo', t:'Imagem', title:'Relatório Alt-Text: Metal Indianápolis', desc:'Inventário e reescrita de alt-texts das imagens do site.', href:'projetos/SEO/clientes/metal-indianapolis/docs/alt-text/relatorio-alt-text.html',dt:'25/08/2026'},
 {cat:'conteudo', client:'Metal Indianápolis', type:'conteudo', t:'Schema', title:'Kit SEO JSON: Metal (implantação + schemas)', desc:'Pacote de implantação: conteúdo otimizado de produtos + schemas.', href:'projetos/SEO/clientes/metal-indianapolis/seo-json/implantacao.html',dt:'27/07/2026', sub:[['Produtos: conteúdo otimizado','projetos/SEO/clientes/metal-indianapolis/seo-json/produtos-conteudo-otimizado.html'],['Schema: Contato','projetos/SEO/clientes/metal-indianapolis/seo-json/schemas/contato.html'],['Schema: Empresa','projetos/SEO/clientes/metal-indianapolis/seo-json/schemas/empresa.html'],['Schema: Homepage','projetos/SEO/clientes/metal-indianapolis/seo-json/schemas/homepage.html'],['Schema: Produtos','projetos/SEO/clientes/metal-indianapolis/seo-json/schemas/produtos.html']]},
-/* ============ 06 SDR IA ============ */
 {cat:'sdr-ia', client:'V4 Company', type:'automacao', t:'Hub', title:'SDR IA: Hub de Correções', desc:'Índice de todos os fixes das SDRs IA por cliente, com causa e solução.', href:'sdr-ia-hub/',dt:'17/08/2026'},
 {cat:'sdr-ia', client:'Adplan', type:'automacao', t:'Fix', title:'ADPLAN · Correção de Fluxo: SDR IA', desc:'Correção documentada do fluxo da SDR IA da Adplan.', href:'sdr-ia-hub/fixes/adplan-001.html',dt:'17/08/2026'},
 {cat:'sdr-ia', client:'Genics', type:'automacao', t:'Fix', title:'GENICS · Redis DNS: SDR IA', desc:'Correção de resolução DNS do Redis na operação Genics.', href:'sdr-ia-hub/fixes/genics-001.html',dt:'17/08/2026'},
@@ -394,10 +353,9 @@ const D = [
 {cat:'sdr-ia', client:'V4 Interno', type:'automacao', t:'Fix', title:'V4 INTERNO · Ekyte 404: SDR IA', desc:'Correção de 404 na integração com o Ekyte.', href:'sdr-ia-hub/fixes/v4-interno-001.html',dt:'17/08/2026'},
 {cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Entrega', title:'Signor × V4: Alinhamento SDR IA', desc:'Engenharia de confiabilidade: alinhamento técnico da operação.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-alinhamento-ia.html',dt:'19/08/2026'},
 {cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Entrega', title:'Signor · A obra por trás da conversa (v4)', desc:'Narrativa de confiança da SDR IA. Versão executiva v4.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-checkin-confianca-v4.html',dt:'13/08/2026'},
-{cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Story', title:'Signor · A história da SDR IA (storytelling)', desc:'Versão narrativa da evolução da SDR IA da Signor.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-checkin-storytelling.html',dt:'04/08/2026',st:'parcial'},
+{cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Entrega', title:'Signor · Check-in de Confiança', desc:'Leitura de confiança da operação SDR IA no check-in.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-checkin-confianca.html',dt:'04/08/2026',st:'parcial'},
 {cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Report', title:'SDR IA Signor · Relatório de Melhorias', desc:'Backlog de melhorias aplicadas e planejadas na SDR.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-checkin-relatorio-melhorias.html',dt:'04/08/2026'},
 {cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Story', title:'Signor · A história da SDR IA (storytelling)', desc:'Versão narrativa da evolução da SDR IA da Signor.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-checkin-storytelling.html',dt:'04/08/2026'},
-/* ============ 07 AI VISIBILITY ============ */
 {cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Produto', title:'AI Visibility: Arquitetura de Agentes', desc:'Desenho técnico do produto de visibilidade em IAs.', href:'projetos/AEO-GEO/ai-visibility-agent-architecture.html',dt:'31/05/2026'},
 {cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Docs', title:'AI Visibility: Documentação Técnica (dev)', desc:'Especificação para implementação do produto.', href:'projetos/AEO-GEO/ai-visibility-dev.html',dt:'31/05/2026'},
 {cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Landing', title:'AI Visibility: Landing Comercial', desc:'Página de venda: sua marca citada por inteligências artificiais.', href:'projetos/AEO-GEO/ai-visibility-landing.html',dt:'31/05/2026'},
@@ -406,19 +364,16 @@ const D = [
 {cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Template', title:'Template: Dashboard de Auditoria AI Visibility', desc:'Modelo reutilizável de dashboard de diagnóstico.', href:'projetos/AEO-GEO/docs/templates/dashboard-auditoria.html',dt:'31/05/2026'},
 {cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Template', title:'Template: Kickoff AIO/GEO', desc:'Formulário padrão de kickoff para projetos AIO/GEO.', href:'projetos/AEO-GEO/docs/templates/kickoff-aio-geo.html',dt:'31/05/2026'},
 {cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Base', title:'MASTER AIO/GEO: Documentação Completa', desc:'Referência principal de AIO/GEO da operação.', href:'docs/seo/MASTER_AIO_GEO.html',dt:'27/07/2026'},
-/* ============ 08 MARKETPLACE ============ */
 {cat:'marketplace', client:'Alto Calçados', type:'estrategia', t:'Apresentação', title:'Alto Calçados: Expansão em Marketplaces', desc:'Deck de expansão: canais, sortimento e operação.', href:'alto-calcados-apresentacao.html',dt:'12/09/2026'},
 {cat:'marketplace', client:'Alto Calçados', type:'estrategia', t:'Auditoria', title:'Alto Calçados: Auditoria & Expansão', desc:'Diagnóstico e plano de expansão em marketplaces.', href:'alto-calcados-auditoria.html',dt:'10/09/2026'},
 {cat:'marketplace', client:'Marcos Luciano', type:'estrategia', t:'Framework', title:'Pattern Detection: Gestão de Marketplace (light)', desc:'Framework pessoal: 5 dimensões, 8 padrões e playbook de operação.', href:'gestao-marketplace-marcos-light.html',dt:'17/08/2026'},
 {cat:'marketplace', client:'Marcos Luciano', type:'estrategia', t:'Framework', title:'Pattern Detection: Gestão de Marketplace (dark)', desc:'Versão dark do framework para apresentação.', href:'gestao-marketplace-marcos-dark.html',dt:'17/08/2026'},
 {cat:'marketplace', client:'Amiguros', type:'estrategia', t:'Experiência', title:'Amiguros: Experiência de Conexão', desc:'Entrega de experiência e posicionamento da operação Amiguros.', href:'experiencia-amiguros.html',dt:'29/07/2026'},
-/* ============ 09 SITES ============ */
 {cat:'sites', client:'Premium Contractors', type:'site', t:'Website', title:'Premium Contractors LLC: Website (Newark, NJ)', desc:'Website comercial de construção entregue em produção.', href:'projetos/Websites/premium-contractors-website/',dt:'13/05/2026'},
 {cat:'sites', client:'Brinks / Cofres', type:'site', t:'Landing', title:'Rede Brinks Pay: Front', desc:'Front-end da campanha Rede Brinks Pay.', href:'mkt_landpages/redebrinkspay-front/redebrinkspay-front/index.html',dt:'01/06/2026'},
 {cat:'sites', client:'Brinks / Cofres', type:'site', t:'Landing', title:'Valores que se Completam: Front', desc:'Front-end institucional da campanha.', href:'mkt_landpages/valoresquesecompletam-front/valoresquesecompletam-front/index.html',dt:'01/06/2026'},
 {cat:'sites', client:'Brinks / Cofres', type:'site', t:'E-mail', title:'Meu Cofre Inteligente: E-mail Marketing', desc:'Template de e-mail da campanha Meu Cofre Inteligente.', href:'mkt_landpages/meucofreinteligente-front/meucofreinteligente-front/email.html',dt:'01/06/2026'},
 {cat:'sites', client:'V4 Peretto', type:'site', t:'Template', title:'Dashboard Gestão de Projetos SEO (template)', desc:'Modelo de dashboard executivo reutilizável por cliente.', href:'dashboard/',dt:'02/09/2026'},
-/* ============ 10 SHARE OF SEARCH ============ */
 {cat:'share-search', client:'V4 Company', type:'estrategia', t:'Referência', title:'Share of Search: Documento de referência do produto', desc:'Base técnica do produto: conceito, módulos e método de medição de share.', href:'share-of-search/',dt:'18/09/2026'},
 {cat:'share-search', client:'V4 Company', type:'estrategia', t:'Relatório', title:'Share of Search: Relatório inicial de produtização', desc:'Versão relatório do documento de produtização do produto.', href:'share-of-search-relatorio.html',dt:'18/09/2026',st:'parcial'},
 {cat:'share-search', client:'V4 Company', type:'estrategia', t:'Apresentação', title:'Share of Search: Apresentação didática conceitual', desc:'Material didático com exemplos fictícios: conceito, leitura de gráficos, concorrentes, brand visibility e estratégias.', href:'gpcorp-share-of-search.html',dt:'02/10/2026'},
@@ -426,7 +381,6 @@ const D = [
 {cat:'share-search', client:'V4 Company', type:'estrategia', t:'Escopo', title:'Report Mensal Share of Search: Escopo do acompanhamento', desc:'Escopo do report mensal: itens fixos, cadência, limites e investimento.', href:'escopo-report-mensal-share-of-search.html',dt:'02/10/2026'},
 {cat:'hub', client:'V4 Peretto', type:'hub', t:'Docs v2', title:'Documentação de Software: Hub de Agentes (v2 canônica)', desc:'Documentação de software: existência, arquitetura, inventário verificado, manutenção e roadmap.', href:'projetos/hub-agentes-ia/',dt:'14/09/2026'}
 ];
-/* ===== App: mesma lógica de operação do Hub, adaptada ao catálogo ===== */
 const $ = id => document.getElementById(id);
 const absUrl = h => h.startsWith('http') ? h : BASE + h;
 const escQ = s => s.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
@@ -448,40 +402,35 @@ D.forEach((d, i) => {
 });
 const openKids = new Set();
 
-/* Sidebar + filtros */
 const sideNav = $('sideNav');
 CATS.forEach(c => {
   const n = D.filter(d => d.cat === c.id).length;
   const li = document.createElement('li');
-  li.innerHTML = '<a class="nav-link nav-sub" data-nav="' + c.id + '">' + c.n + ' · ' + c.short + '<span class="n">' + n + '</span></a>';
+  li.innerHTML = '<a class="sb-link" data-nav="' + c.id + '">' + c.n + ' · ' + c.short + ' <span class="n">' + n + '</span></a>';
   sideNav.appendChild(li);
 });
 const clients = [...new Set(D.map(d => d.client))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
 clients.forEach(c => { const o=document.createElement('option'); o.value=c; o.textContent=c; $('fClient').appendChild(o); });
 CATS.forEach(c => { const o=document.createElement('option'); o.value=c.id; o.textContent=c.n+' · '+c.label; $('fCat').appendChild(o); });
 
-/* Números do portal calculados do próprio catálogo */
 (function stats(){
-  const urls = ROWS.length;
-  const nClients = clients.length;
   $('pEntregas').textContent = D.length;
-  $('pUrls').textContent = urls;
-  $('pClients').textContent = nClients;
-  $('footLine').textContent = D.length + ' entregas · ' + urls + ' URLs · ' + nClients + ' clientes e frentes';
+  $('pUrls').textContent = ROWS.length;
+  $('pClients').textContent = clients.length;
+  $('footLine').textContent = D.length + ' entregas · ' + ROWS.length + ' URLs · ' + clients.length + ' clientes e frentes';
 })();
 
-/* Destaques: as 6 entregas mais recentes */
 (function feat(){
   const top = D.slice().sort((a,b)=>dtKey(b.dt).localeCompare(dtKey(a.dt))).slice(0,6);
-  $('featGrid').innerHTML = top.map(d => {
+  $('featRows').innerHTML = top.map(d => {
     const c = CATMAP[d.cat];
-    return '<div class="agent-card"><div class="name"><a href="' + d.href + '" target="_blank" rel="noopener">' + d.title + '</a></div>'
-      + '<div class="desc">' + d.desc + '</div>'
-      + '<div class="meta"><span class="meta-tag hot">' + d.dt + '</span><span class="meta-tag">' + c.short + '</span><span class="meta-tag">' + d.client + '</span></div></div>';
+    return '<tr><td class="main"><div class="tt"><a href="' + d.href + '" target="_blank" rel="noopener">' + d.title + '</a></div>'
+      + '<div class="cc">' + d.client + ' · ' + d.desc + '</div></div></td>'
+      + '<td>' + c.short + '</td>'
+      + '<td style="white-space:nowrap">' + d.dt + '</td></tr>';
   }).join('');
 })();
 
-/* Tabelas por cliente e por categoria */
 (function portfolio(){
   let hc = '<tr><th>Cliente / frente</th><th style="text-align:right">Entregas</th><th style="text-align:right">URLs</th></tr>';
   clients.map(c => {
@@ -521,7 +470,7 @@ function sorted(rows){
   else if (m === 'client') arr.sort((a,b)=>a.client.localeCompare(b.client,'pt-BR')||a.title.localeCompare(b.title,'pt-BR'));
   else if (m === 'type') arr.sort((a,b)=>a.tlabel.localeCompare(b.tlabel,'pt-BR')||a.title.localeCompare(b.title,'pt-BR'));
   else if (m === 'date') arr.sort((a,b)=>(dtKey(b.dt).localeCompare(dtKey(a.dt)))||(a.parent-b.parent)||(a.child-b.child));
-  else arr.sort((a,b)=>(CATS.findIndex(c=>c.id===a.cat)-CATS.findIndex(c.id===b.cat))||(a.parent-b.parent)||(a.child-b.child));
+  else arr.sort((a,b)=>(CATS.findIndex(c=>c.id===a.cat)-CATS.findIndex(c=>c.id===b.cat))||(a.parent-b.parent)||(a.child-b.child));
   return arr;
 }
 function kidCount(i){ return ROWS.filter(r=>r.parent===i && r.child>=0).length; }
@@ -542,12 +491,12 @@ function render(){
       html += '<tr class="data child"><td class="id">' + r.code + '</td>'
         + '<td class="main"><div class="tt"><a href="' + r.href + '" target="_blank" rel="noopener">' + r.title + '</a></div>'
         + '<div class="pp"><a href="' + r.href + '" target="_blank" rel="noopener">' + absUrl(r.href) + '</a></div></td>'
-        + '<td><span class="bdg">' + CATMAP[r.cat].short + '</span></td>'
-        + '<td><span class="bdg">Vinculada</span></td>'
+        + '<td>' + CATMAP[r.cat].short + '</td>'
+        + '<td>Vinculada</td>'
         + '<td style="white-space:nowrap">' + r.dt + '</td>'
-        + '<td><span class="bdg ' + ST_CLASS[r.st] + '">' + ST_LABEL[r.st] + '</span></td>'
+        + '<td><span class="st ' + ST_CLASS[r.st] + '">' + ST_LABEL[r.st] + '</span></td>'
         + '<td style="text-align:right">·</td>'
-        + '<td class="acts"><a class="icon-btn go" href="' + r.href + '" target="_blank" rel="noopener">Abrir ↗</a><button class="icon-btn" onclick="copyLink(\'' + escQ(r.href) + '\',this)">Copiar ⧉</button></td></tr>';
+        + '<td class="acts"><a class="btn go" href="' + r.href + '" target="_blank" rel="noopener">Abrir ↗</a><button class="btn" onclick="copyLink(\'' + escQ(r.href) + '\',this)">Copiar ⧉</button></td></tr>';
     } else {
       const kc = kidCount(r.parent);
       const open = openKids.has(r.parent);
@@ -557,12 +506,12 @@ function render(){
         + '<div class="pp"><a href="' + r.href + '" target="_blank" rel="noopener">' + absUrl(r.href) + '</a></div>'
         + (kc ? '<button class="toggle-link" onclick="toggleKids(' + r.parent + ')">' + (open ? '▾ Ocultar ' : '▸ Ver ') + kc + ' link(s) vinculado(s)</button>' : '')
         + '</td>'
-        + '<td><span class="bdg">' + CATMAP[r.cat].short + '</span></td>'
-        + '<td><span class="bdg ty-hub">' + r.tlabel + '</span></td>'
+        + '<td>' + CATMAP[r.cat].short + '</td>'
+        + '<td>' + r.tlabel + '</td>'
         + '<td style="white-space:nowrap">' + r.dt + '</td>'
-        + '<td><span class="bdg ' + ST_CLASS[r.st] + '">' + ST_LABEL[r.st] + '</span></td>'
+        + '<td><span class="st ' + ST_CLASS[r.st] + '">' + ST_LABEL[r.st] + '</span></td>'
         + '<td style="text-align:right"><strong>' + (1 + kc) + '</strong></td>'
-        + '<td class="acts"><a class="icon-btn go" href="' + r.href + '" target="_blank" rel="noopener">Abrir ↗</a><button class="icon-btn" onclick="copyLink(\'' + escQ(r.href) + '\',this)">Copiar ⧉</button></td></tr>';
+        + '<td class="acts"><a class="btn go" href="' + r.href + '" target="_blank" rel="noopener">Abrir ↗</a><button class="btn" onclick="copyLink(\'' + escQ(r.href) + '\',this)">Copiar ⧉</button></td></tr>';
     }
   });
   tb.innerHTML = html;
@@ -621,16 +570,11 @@ $('btnCsv').onclick = function(){
 };
 document.querySelectorAll('#sideNav [data-nav]').forEach(a => a.addEventListener('click', e => {
   e.preventDefault();
-  const v = a.getAttribute('data-nav');
-  $('fCat').value = v; render();
+  $('fCat').value = a.getAttribute('data-nav'); render();
   document.getElementById('catalogo').scrollIntoView({behavior:'smooth'});
   if (window.innerWidth <= 900) document.querySelector('.sidebar').classList.remove('open');
 }));
-document.querySelectorAll('.sidebar nav a[href^="#"]').forEach(a => a.addEventListener('click', e => {
-  if (a.hasAttribute('data-nav')) return;
-  e.preventDefault();
-  const t = document.querySelector(a.getAttribute('href'));
-  if (t) t.scrollIntoView({behavior:'smooth'});
+document.querySelectorAll('#sideNav a[href^="#"]:not([data-nav])').forEach(a => a.addEventListener('click', () => {
   if (window.innerWidth <= 900) document.querySelector('.sidebar').classList.remove('open');
 }));
 $('btnShare').onclick = function(){ writeText(BASE, 'Link do portfólio copiado'); this.textContent='Link copiado ✓'; setTimeout(()=>this.textContent='Compartilhar portfólio',1500); };
