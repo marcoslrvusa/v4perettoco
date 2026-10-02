@@ -3,225 +3,222 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Marcos Luciano · Investidor V4 — Portfólio Operacional</title>
-<meta name="description" content="Portfólio operacional de Marcos Luciano, investidor e operador V4: 83 entregas publicadas, 110 URLs, 29 clientes e frentes, ecossistema de 74 skills.">
+<title>Central de Entregas · Portfólio Operacional Peretto & Co</title>
+<meta name="description" content="Portfólio operacional: 91 entregas publicadas, 118 URLs, 29 clientes e frentes. Auditorias, relatórios, hubs e propostas com busca, filtros e links verificados.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Marcos Luciano · Investidor V4 — Portfólio Operacional">
-<meta property="og:description" content="83 entregas publicadas · 110 URLs · 29 clientes e frentes · 74 skills. Operação auditável, links verificados.">
+<meta property="og:title" content="Central de Entregas · Portfólio Operacional Peretto & Co">
+<meta property="og:description" content="91 entregas publicadas · 118 URLs · 29 clientes e frentes. Operação auditável, links verificados.">
 <meta property="og:url" content="https://marcoslrvusa.github.io/v4perettoco/">
 <meta property="og:image" content="https://marcoslrvusa.github.io/v4perettoco/assets/images/foto-marcos-perettoco.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Marcos Luciano · Investidor V4 — Portfólio Operacional">
-<meta name="twitter:description" content="83 entregas publicadas · 110 URLs · 29 clientes e frentes · 74 skills.">
+<meta name="twitter:title" content="Central de Entregas · Portfólio Operacional Peretto & Co">
+<meta name="twitter:description" content="91 entregas publicadas · 118 URLs · 29 clientes e frentes.">
 <meta name="twitter:image" content="https://marcoslrvusa.github.io/v4perettoco/assets/images/foto-marcos-perettoco.jpg">
 <meta name="theme-color" content="#b91c1c">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="logo-peretto-red.png">
 <style>
 :root{
-  --bg:#f4f4f5; --panel:#ffffff; --line:#e4e4e7; --line-soft:#eeeeF0;
-  --ink:#131316; --ink-2:#52525b; --ink-3:#8a8a93;
-  --accent:#b91c1c; --accent-dark:#7f1d1d; --accent-soft:#fef2f2;
-  --dark:#161619;
-  --mono:'JetBrains Mono',ui-monospace,monospace;
-  --sans:'Montserrat',-apple-system,'Segoe UI',sans-serif;
-  --sbw:264px; --tbh:60px; --r:8px;
+  --color-bg:#ffffff; --color-sidebar:#fafafa; --color-border:#e8e8e8;
+  --color-text:#111111; --color-text-secondary:#555555;
+  --color-accent:#b91c1c; --color-accent-dark:#7f1d1d; --color-accent-light:#fef2f2;
+  --color-accent-gradient:linear-gradient(135deg,#b91c1c 0%,#dc2626 100%);
+  --color-code-bg:#f5f5f5; --color-table-border:#e5e5e5;
+  --font-sans:'Ubuntu',-apple-system,BlinkMacSystemFont,sans-serif;
+  --font-mono:'JetBrains Mono','SF Mono',monospace;
+  --sidebar-width:280px; --header-height:64px;
+  --radius-sm:6px; --radius-md:10px; --radius-lg:16px;
+  --shadow-sm:0 1px 2px rgba(0,0,0,0.04); --shadow-md:0 4px 12px rgba(0,0,0,0.06);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:var(--sans);font-size:13.5px;line-height:1.55;color:var(--ink);background:var(--bg);display:flex;min-height:100vh;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
-/* ===== TOPBAR ===== */
-.topbar{position:fixed;top:0;left:var(--sbw);right:0;height:var(--tbh);background:var(--panel);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:0 28px;z-index:100}
-.topbar .brand-mini{display:flex;align-items:center;gap:10px;min-width:0}
-.topbar .brand-mini img{height:26px;width:auto}
-.topbar .brand-mini .t1{font-size:13px;font-weight:800;letter-spacing:-.2px;white-space:nowrap}
-.topbar .brand-mini .t1 span{color:var(--accent)}
-.topbar .brand-mini .t2{font-size:11px;color:var(--ink-2);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.topbar .spacer{flex:1}
-.env-badge{font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);border:1px solid #f3c2c2;background:var(--accent-soft);border-radius:4px;padding:4px 10px;white-space:nowrap}
-.menu-btn{display:none;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:6px 10px;font-size:15px;cursor:pointer;color:var(--ink)}
+body{font-family:var(--font-sans);font-size:15px;line-height:1.7;color:var(--color-text);background:var(--color-bg);display:flex;min-height:100vh;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+/* ===== HEADER ===== */
+.header{position:fixed;top:0;left:var(--sidebar-width);right:0;height:var(--header-height);background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--color-border);display:flex;align-items:center;padding:0 36px;z-index:100;gap:14px}
+.header h1{font-size:15px;font-weight:700;color:var(--color-accent)}
+.header .subtitle{font-size:13px;color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.header-badge{margin-left:auto;font-size:11px;font-weight:600;color:#fff;background:var(--color-accent-gradient);padding:4px 12px;border-radius:20px;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
+.menu-btn{display:none;background:#fff;border:1px solid var(--color-border);border-radius:6px;padding:6px 10px;font-size:15px;cursor:pointer;color:var(--color-text)}
 /* ===== SIDEBAR ===== */
-.sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sbw);background:var(--panel);border-right:1px solid var(--line);z-index:200;display:flex;flex-direction:column;overflow-y:auto}
-.sb-logo{padding:22px 20px 18px;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center}
-.sb-logo img{width:44px;height:auto;flex-shrink:0}
-.sb-logo .n{font-size:12.5px;font-weight:800;line-height:1.3;letter-spacing:-.2px}
-.sb-logo .s{font-size:10px;font-weight:600;color:var(--ink-2);text-transform:uppercase;letter-spacing:.7px;margin-top:2px}
-.sb-nav{flex:1;padding:12px 0 16px}
-.sb-nav ul{list-style:none}
-.sb-sec{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.9px;color:var(--ink-3);padding:12px 20px 6px}
-.sb-link{display:flex;align-items:center;gap:8px;padding:7px 20px;font-size:12.5px;font-weight:600;color:var(--ink-2);text-decoration:none;border-left:2px solid transparent;cursor:pointer}
-.sb-link:hover{color:var(--ink);background:#fafafa}
-.sb-link.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}
-.sb-link .n{margin-left:auto;font-size:11px;font-weight:700;color:var(--ink-3);background:#f4f4f5;border:1px solid var(--line);border-radius:4px;padding:0 7px}
-.sb-link.active .n{color:var(--accent);border-color:#f3c2c2;background:#fff}
-.sb-foot{padding:14px 20px;border-top:1px solid var(--line);font-size:11px;color:var(--ink-2);line-height:1.6}
-.sb-foot code{font-family:var(--mono);font-size:10px;background:#f4f4f5;border:1px solid var(--line);padding:1px 5px;border-radius:4px}
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-width);background:var(--color-sidebar);border-right:1px solid var(--color-border);overflow-y:auto;z-index:200;display:flex;flex-direction:column}
+.sidebar-logo{padding:24px 20px 20px;border-bottom:1px solid var(--color-border);display:flex;flex-direction:column;align-items:center;text-align:center}
+.sidebar-logo .logo-img{width:120px;height:auto;object-fit:contain;margin-bottom:10px}
+.sidebar-logo .version{font-size:10.5px;color:var(--color-text-secondary);font-weight:500;text-transform:uppercase;letter-spacing:.5px}
+.sidebar nav ul{list-style:none;padding:0;margin:0}
+.nav-link{display:block;padding:8px 20px;font-size:13px;font-weight:500;color:var(--color-text);text-decoration:none;transition:all .2s ease;border-left:3px solid transparent;line-height:1.4;cursor:pointer}
+.nav-link:hover{background:var(--color-accent-light);color:var(--color-accent);border-left-color:var(--color-accent)}
+.nav-link.level-0{font-weight:600;font-size:12.5px;padding:12px 20px 6px;color:var(--color-accent);text-transform:uppercase;letter-spacing:.4px;cursor:default}
+.nav-link.level-0:hover{background:none}
+.nav-link.nav-sub{padding-left:32px;font-size:12px}
+.nav-link .n{float:right;font-size:10.5px;font-weight:600;color:var(--color-text-secondary);background:#fff;border:1px solid var(--color-border);border-radius:4px;padding:0 7px}
+.sb-foot{margin-top:auto;padding:14px 20px;border-top:1px solid var(--color-border);font-size:11px;color:var(--color-text-secondary);line-height:1.6}
+.sb-foot code{font-family:var(--font-mono);font-size:10px;background:#f5f5f5;border:1px solid var(--color-border);padding:1px 5px;border-radius:4px}
 /* ===== MAIN ===== */
-.main{margin-left:var(--sbw);margin-top:var(--tbh);flex:1;min-width:0}
-.wrap{max-width:1240px;margin:0 auto;padding:28px 32px 70px}
-.page-head{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
-.page-head h2{font-size:22px;font-weight:800;letter-spacing:-.5px}
-.page-head h2 span{color:var(--accent)}
-.page-head p{font-size:12.5px;color:var(--ink-2);width:100%;max-width:860px}
-.page-head .meta{margin-left:auto;display:flex;gap:8px;align-items:center}
-/* KPIs */
-.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px}
-.kpi{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
-.kpi .l{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--ink-3);margin-bottom:4px}
-.kpi .v{font-size:25px;font-weight:800;letter-spacing:-.6px;line-height:1.1}
-.kpi .v.red{color:var(--accent)}
-.kpi .d{font-size:11px;color:var(--ink-2);margin-top:2px}
-/* TOOLBAR */
-.toolbar{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;margin-bottom:14px}
-.tb-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.tb-row input[type=text]{flex:2;min-width:200px;font-family:var(--sans);font-size:12.5px;padding:9px 12px 9px 34px;border:1px solid var(--line);border-radius:6px;background:#fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%238a8a93" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>') no-repeat 11px center;outline:none}
-.tb-row input[type=text]:focus{border-color:var(--accent)}
-.tb-row select{font-family:var(--sans);font-size:12px;font-weight:600;padding:9px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink);outline:none;cursor:pointer;max-width:220px}
-.btn{font-family:var(--sans);font-size:12px;font-weight:700;padding:9px 14px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;transition:all .15s;white-space:nowrap}
-.btn:hover{border-color:var(--ink)}
-.btn-dark{background:var(--dark);border-color:var(--dark);color:#fff}
-.btn-dark:hover{background:#000}
-.btn-red{background:var(--accent);border-color:var(--accent);color:#fff}
-.btn-red:hover{background:var(--accent-dark)}
-.tb-status{font-size:11.5px;color:var(--ink-2);margin-top:9px}
-.tb-status strong{color:var(--ink)}
-/* TABLE PANEL */
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:14px}
-.panel-head{display:flex;align-items:center;gap:10px;padding:13px 18px;border-bottom:1px solid var(--line)}
-.panel-head h3{font-size:13px;font-weight:800;letter-spacing:-.2px}
-.panel-head .hint{font-size:11.5px;color:var(--ink-2)}
-.panel-head .right{margin-left:auto;display:flex;gap:8px}
-.tbl-wrap{overflow-x:auto}
-table.grid{width:100%;border-collapse:collapse;font-size:12.5px;min-width:860px}
-table.grid thead th{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:var(--ink-2);background:#fafafa;text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);white-space:nowrap;position:sticky;top:0}
-table.grid thead th.sortable{cursor:pointer;user-select:none}
-table.grid thead th.sortable:hover{color:var(--accent)}
-table.grid tbody td{padding:10px 14px;border-bottom:1px solid var(--line-soft);vertical-align:top}
-table.grid tbody tr:last-child td{border-bottom:none}
-table.grid tbody tr.data:hover td{background:#fafafa}
-td.id{font-family:var(--mono);font-size:11px;color:var(--ink-3);white-space:nowrap;width:64px}
-td.main .tt{font-weight:700;font-size:12.5px;letter-spacing:-.1px}
-td.main .tt a{color:var(--ink);text-decoration:none}
-td.main .tt a:hover{color:var(--accent);text-decoration:underline}
-td.main .cc{font-size:11px;color:var(--ink-2);font-weight:600;margin-top:1px}
-td.main .pp{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);margin-top:3px;word-break:break-all}
-td.main .pp a{color:var(--ink-3);text-decoration:none}
-td.main .pp a:hover{color:var(--accent)}
-tr.child td{background:#fafafa}
-tr.child td.main{padding-left:34px}
-tr.child .tt{font-weight:600;font-size:12px}
-tr.grp td{background:#f4f4f5;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--ink);padding:8px 14px;border-bottom:1px solid var(--line);border-top:1px solid var(--line)}
-tr.grp td .cnt{color:var(--ink-3);font-weight:700}
-tr.grp .gcopy{margin-left:10px;font-family:var(--sans);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;background:#fff;border:1px solid var(--line);border-radius:4px;padding:3px 9px;cursor:pointer;color:var(--ink-2)}
-tr.grp .gcopy:hover{color:var(--accent);border-color:var(--accent)}
-.bdg{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;border-radius:3px;padding:2px 7px;border:1px solid var(--line);background:#f4f4f5;color:var(--ink-2);white-space:nowrap}
-.bdg.t-hub{background:var(--accent);border-color:var(--accent);color:#fff}
-.bdg.t-audit{background:#fef6e7;border-color:#ecd9ac;color:#8a5a00}
-.bdg.t-report{background:#eef7ee;border-color:#bfe0bf;color:#1c6b1c}
-.bdg.t-ads{background:#eff4fe;border-color:#c3d4f5;color:#1e40af}
-.bdg.t-content{background:#f3effd;border-color:#d5c8f5;color:#5b21b6}
-.bdg.t-auto{background:#ecfafd;border-color:#b4e3ef;color:#0e7490}
-td.acts{white-space:nowrap;width:118px}
-.icon-btn{display:inline-flex;align-items:center;gap:5px;font-family:var(--sans);font-size:11px;font-weight:700;padding:6px 10px;border-radius:5px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;text-decoration:none;margin:0 4px 4px 0}
-.icon-btn:hover{border-color:var(--ink)}
-.icon-btn.go{color:var(--accent);border-color:#eec9c9}
-.icon-btn.go:hover{background:var(--accent);border-color:var(--accent);color:#fff}
-.toggle-link{font-size:11px;font-weight:700;color:var(--accent);cursor:pointer;background:none;border:none;font-family:var(--sans);padding:0;margin-top:5px}
-.toggle-link:hover{text-decoration:underline}
-/* SPLIT */
-.split{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;margin-bottom:14px}
-table.mini{width:100%;border-collapse:collapse;font-size:12px}
-table.mini th{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:var(--ink-2);background:#fafafa;text-align:left;padding:9px 14px;border-bottom:1px solid var(--line)}
-table.mini td{padding:8px 14px;border-bottom:1px solid var(--line-soft)}
-table.mini tr:last-child td{border-bottom:none}
-table.mini td.n{text-align:right;font-weight:800}
-.empty{display:none;padding:40px 20px;text-align:center;font-size:13px;color:var(--ink-2)}
-.empty.show{display:block}
-/* FOOTER */
-.footer{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:11.5px;color:var(--ink-2);padding:4px 2px}
-.footer img{height:24px;width:auto}
-.footer .r{margin-left:auto;font-family:var(--mono);font-size:10.5px}
-/* ===== PERSONAL BRAND ===== */
-.topbar .avatar{width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid var(--accent);flex-shrink:0}
-.hero-personal{background:var(--dark);color:#fff;border-radius:12px;padding:26px 28px;margin-bottom:14px;display:flex;gap:22px;align-items:center;position:relative;overflow:hidden}
+.main{margin-left:var(--sidebar-width);margin-top:var(--header-height);flex:1;max-width:1020px;padding:44px 56px 100px;min-width:0}
+.main section{margin-bottom:36px;padding:28px 32px 32px;background:#fff;border-radius:var(--radius-lg);border:1px solid var(--color-border);box-shadow:var(--shadow-sm);scroll-margin-top:calc(var(--header-height) + 16px)}
+h1.section-title{font-size:24px;font-weight:700;color:var(--color-accent);margin-bottom:6px;padding-bottom:12px;border-bottom:3px solid var(--color-accent);letter-spacing:-.4px;display:flex;align-items:center;gap:10px}
+h1.section-title::before{content:'';display:inline-block;width:4px;height:26px;background:var(--color-accent-gradient);border-radius:2px;flex-shrink:0}
+.sec-desc{font-size:13.5px;color:var(--color-text-secondary);margin-bottom:18px}
+.main h2{font-size:18px;font-weight:600;margin-top:24px;margin-bottom:10px}
+.main p{margin-bottom:12px}
+.main code{font-family:var(--font-mono);font-size:13px;background:var(--color-code-bg);padding:2px 7px;border-radius:4px;color:#b91c1c;border:1px solid #eee}
+/* hero */
+.hero-personal{background:#161619;color:#fff;border-radius:var(--radius-lg);padding:26px 28px;margin-bottom:20px;display:flex;gap:22px;align-items:center;position:relative;overflow:hidden}
 .hero-personal::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#e50914,#ff222d)}
 .hero-personal .photo{width:104px;height:104px;border-radius:50%;object-fit:cover;border:3px solid #e50914;flex-shrink:0;background:#222}
-.hero-personal .who{min-width:0;flex:1}
-.hero-personal .role{font-size:10.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#ff6b74;margin-bottom:4px}
-.hero-personal h2{font-size:clamp(22px,3vw,30px);font-weight:800;letter-spacing:-.6px;line-height:1.15;color:#fff}
+.hero-personal .role{font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#ff6b74;margin-bottom:4px}
+.hero-personal h2{font-size:clamp(22px,3vw,30px);font-weight:700;letter-spacing:-.6px;line-height:1.15;color:#fff;margin:0}
 .hero-personal .bio{font-size:12.5px;color:#c9c9d1;margin-top:8px;max-width:640px}
 .hero-personal .bio strong{color:#fff}
 .pstats{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
 .pstat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:8px 14px;min-width:104px}
-.pstat .n{font-size:19px;font-weight:800;letter-spacing:-.4px;color:#fff}
+.pstat .n{font-size:19px;font-weight:700;color:#fff}
 .pstat .n.red{color:#ff6b74}
-.pstat .l{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:#a7a7b3}
+.pstat .l{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:#a7a7b3}
 .hero-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+/* buttons */
+.btn{font-family:var(--font-sans);font-size:12.5px;font-weight:600;padding:9px 16px;border-radius:6px;border:1px solid var(--color-border);background:#fff;color:var(--color-text);cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{border-color:var(--color-text)}
+.btn-red{background:var(--color-accent);border-color:var(--color-accent);color:#fff}
+.btn-red:hover{background:var(--color-accent-dark)}
 .btn-ghost-w{background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff}
 .btn-ghost-w:hover{border-color:#fff}
-.sb-profile{display:flex;gap:10px;align-items:center;padding:4px 20px 2px}
-.sb-profile img{width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid var(--accent)}
-.sb-profile .n{font-size:12px;font-weight:800}
-.sb-profile .s{font-size:10px;color:var(--ink-2);font-weight:600}
-/* TOAST */
-.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--dark);color:#fff;font-size:12px;font-weight:600;padding:11px 18px;border-radius:8px;opacity:0;pointer-events:none;transition:all .25s;z-index:999;max-width:90vw;word-break:break-all}
+/* agent-grid (destaques) */
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px}
+.agent-card{background:#fafafa;border:1px solid var(--color-border);border-radius:8px;padding:14px 16px;transition:all .2s;display:flex;flex-direction:column}
+.agent-card:hover{border-color:var(--color-accent);box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.agent-card .name{font-weight:600;font-size:13.5px;margin-bottom:4px;line-height:1.4}
+.agent-card .name a{color:var(--color-text);text-decoration:none}
+.agent-card .name a:hover{color:var(--color-accent)}
+.agent-card .desc{font-size:12px;color:var(--color-text-secondary);margin-bottom:8px;line-height:1.5;flex:1}
+.agent-card .meta{display:flex;flex-wrap:wrap;gap:4px}
+.meta-tag{font-size:10px;padding:2px 7px;border-radius:4px;background:#fff;color:var(--color-text-secondary);border:1px solid var(--color-border);font-family:var(--font-mono)}
+.meta-tag.hot{color:#b91c1c;border-color:#fecaca;background:#fef2f2}
+/* flow */
+.flow-card{background:#fafafa;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:20px 24px;margin-bottom:14px}
+.flow-card h3{margin:0 0 10px;font-size:15px}
+.flow-steps{counter-reset:step;list-style:none;padding:0;margin:0}
+.flow-steps li{counter-increment:step;padding:9px 0 9px 34px;position:relative;font-size:13.5px;border-bottom:1px solid var(--color-border)}
+.flow-steps li::before{content:counter(step);position:absolute;left:0;top:9px;width:22px;height:22px;background:var(--color-accent);color:#fff;font-size:10px;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.flow-steps li:last-child{border:none}
+/* callout */
+.callout{padding:12px 16px;border-radius:8px;margin:14px 0;font-size:13px;border-left:3px solid}
+.callout-good{background:#f0fdf4;border-color:#22c55e}
+/* toolbar */
+.toolbar{background:#fafafa;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:14px 16px;margin-bottom:14px}
+.tb-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tb-row input[type=text]{flex:2;min-width:200px;font-family:var(--font-sans);font-size:12.5px;padding:9px 12px 9px 34px;border:1px solid var(--color-border);border-radius:6px;background:#fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%23555555" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>') no-repeat 11px center;outline:none}
+.tb-row input[type=text]:focus{border-color:var(--color-accent)}
+.tb-row select{font-family:var(--font-sans);font-size:12px;font-weight:500;padding:9px 10px;border:1px solid var(--color-border);border-radius:6px;background:#fff;color:var(--color-text);outline:none;cursor:pointer;max-width:220px}
+.tb-status{font-size:12px;color:var(--color-text-secondary);margin-top:9px}
+.tb-status strong{color:var(--color-text)}
+/* tables */
+.main table.grid{width:100%;border-collapse:separate;border-spacing:0;margin:0;font-size:12.5px;border-radius:var(--radius-sm);overflow:hidden;border:1px solid var(--color-table-border)}
+table.grid thead th{background:var(--color-accent);font-weight:600;text-align:left;padding:10px 14px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#fff;white-space:nowrap}
+table.grid thead th:not(:last-child){border-right:1px solid rgba(255,255,255,.12)}
+table.grid td{padding:9px 13px;border-bottom:1px solid var(--color-table-border);vertical-align:top;background:#fff}
+table.grid tr:last-child td{border-bottom:none}
+table.grid tbody tr.data:hover td{background:var(--color-accent-light)}
+td.id{font-family:var(--font-mono);font-size:11px;color:var(--color-text-secondary);white-space:nowrap;width:64px}
+td.main .tt{font-weight:600;font-size:12.5px}
+td.main .tt a{color:var(--color-text);text-decoration:none}
+td.main .tt a:hover{color:var(--color-accent);text-decoration:underline}
+td.main .cc{font-size:11px;color:var(--color-text-secondary);font-weight:500;margin-top:1px}
+td.main .pp{font-family:var(--font-mono);font-size:10.5px;color:var(--color-text-secondary);margin-top:3px;word-break:break-all}
+td.main .pp a{color:var(--color-text-secondary);text-decoration:none}
+td.main .pp a:hover{color:var(--color-accent)}
+tr.child td{background:#fafafa}
+tr.child td.main{padding-left:34px}
+tr.grp td{background:#f4f4f5;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:8px 14px}
+tr.grp td .cnt{color:var(--color-text-secondary)}
+tr.grp .gcopy{margin-left:10px;font-family:var(--font-sans);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;background:#fff;border:1px solid var(--color-border);border-radius:4px;padding:3px 9px;cursor:pointer;color:var(--color-text-secondary)}
+tr.grp .gcopy:hover{color:var(--color-accent);border-color:var(--color-accent)}
+.bdg{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.3px;border-radius:4px;padding:2px 7px;border:1px solid var(--color-border);background:#f5f5f4;color:#44403c;white-space:nowrap}
+.bdg.st-ok{color:#15803d;border-color:#bbf7d0;background:#f0fdf4}
+.bdg.st-warn{color:#a16207;border-color:#fef08a;background:#fefce8}
+.bdg.st-off{color:#44403c;border-color:#e7e5e4;background:#f5f5f4}
+.bdg.ty-hub{color:#b91c1c;border-color:#fecaca;background:#fef2f2}
+td.acts{white-space:nowrap;width:120px}
+.icon-btn{display:inline-flex;align-items:center;gap:5px;font-family:var(--font-sans);font-size:11px;font-weight:600;padding:6px 10px;border-radius:5px;border:1px solid var(--color-border);background:#fff;color:var(--color-text);cursor:pointer;text-decoration:none;margin:0 4px 4px 0}
+.icon-btn:hover{border-color:var(--color-text)}
+.icon-btn.go{color:var(--color-accent);border-color:#eec9c9}
+.icon-btn.go:hover{background:var(--color-accent);border-color:var(--color-accent);color:#fff}
+.toggle-link{font-size:11px;font-weight:600;color:var(--color-accent);cursor:pointer;background:none;border:none;font-family:var(--font-sans);padding:0;margin-top:5px}
+.toggle-link:hover{text-decoration:underline}
+.tbl-wrap{overflow-x:auto}
+table.grid{min-width:860px}
+.panel-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.panel-head h3{font-size:15px;font-weight:600;margin:0}
+.panel-head .hint{font-size:12px;color:var(--color-text-secondary)}
+.panel-head .right{margin-left:auto}
+.split{display:grid;grid-template-columns:1.3fr 1fr;gap:14px;margin-top:16px}
+table.mini{width:100%;border-collapse:collapse;font-size:12px}
+table.mini th{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#fff;background:var(--color-accent);text-align:left;padding:9px 14px}
+table.mini td{padding:8px 14px;border-bottom:1px solid var(--color-table-border);background:#fff}
+table.mini tr:nth-child(even) td{background:#fafafa}
+table.mini td.n{text-align:right;font-weight:700}
+.empty{display:none;padding:40px 20px;text-align:center;font-size:13px;color:var(--color-text-secondary)}
+.empty.show{display:block}
+.footer{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:11.5px;color:var(--color-text-secondary);padding:20px 2px 0}
+.footer img{height:24px;width:auto}
+.footer .r{margin-left:auto;font-family:var(--font-mono);font-size:10.5px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(16px);background:#111;color:#fff;font-size:12px;font-weight:500;padding:11px 18px;border-radius:8px;opacity:0;pointer-events:none;transition:all .25s;z-index:999;max-width:90vw;word-break:break-all}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-@media(max-width:1100px){.kpis{grid-template-columns:repeat(3,1fr)}.split{grid-template-columns:1fr}}
+@media(max-width:1100px){.split{grid-template-columns:1fr}}
 @media(max-width:900px){
   .sidebar{transform:translateX(-100%);transition:transform .25s ease;box-shadow:0 8px 30px rgba(0,0,0,.12)}
   .sidebar.open{transform:translateX(0)}
-  .topbar{left:0;padding:0 14px}
-  .topbar .brand-mini .t2{display:none}
+  .header{left:0;padding:0 14px}
+  .header .subtitle{display:none}
   .menu-btn{display:block}
-  .main{margin-left:0}
-  .wrap{padding:18px 14px 60px}
-  .kpis{grid-template-columns:1fr 1fr}
-  .hero-personal{flex-direction:column;align-items:flex-start;padding:22px 20px}
+  .main{margin-left:0;padding:20px 16px 60px}
+  .main section{padding:20px}
+  .hero-personal{flex-direction:column;align-items:flex-start}
 }
 </style>
 </head>
 <body>
 
-<header class="topbar">
+<div class="header">
   <button class="menu-btn" id="menuBtn" aria-label="Abrir menu">☰</button>
-  <div class="brand-mini">
-    <img class="avatar" src="assets/images/foto-marcos-perettoco.jpg" alt="Marcos Luciano">
-    <div><div class="t1">Marcos Luciano <span>· Investidor V4</span></div><div class="t2">Portfólio operacional · Peretto &amp; Co</div></div>
-  </div>
-  <div class="spacer"></div>
-  <span class="env-badge">Produção · GitHub Pages</span>
-</header>
+  <h1>Central de Entregas</h1>
+  <span class="subtitle">Portfólio operacional · Peretto &amp; Co</span>
+  <span class="header-badge">Out 2026 · GitHub Pages</span>
+</div>
 
-<aside class="sidebar" id="sidebar">
-  <div class="sb-logo">
-    <img src="logo-peretto-red.png" alt="Peretto &amp; Co.">
-    <div><div class="n">Central de Entregas</div><div class="s">Operação · 2026</div></div>
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <img class="logo-img" src="logo-peretto-red.png" alt="Peretto &amp; Co.">
+    <div class="version">Portfólio operacional · 2026</div>
   </div>
-  <nav class="sb-nav"><ul id="sideNav">
-    <li class="sb-sec">Marcos Luciano</li>
-    <li><div class="sb-profile"><img src="assets/images/foto-marcos-perettoco.jpg" alt="Marcos Luciano"><div><div class="n">Marcos Luciano</div><div class="s">Investidor · V4 Company</div></div></div></li>
-    <li><a class="sb-link" href="#sobre">Sobre e portfólio</a></li>
-    <li class="sb-sec">Sistema</li>
-    <li><a class="sb-link" href="#topo" data-nav="">Visão geral</a></li>
-    <li class="sb-sec">Categorias</li>
+  <nav><ul id="sideNav">
+    <li><a class="nav-link level-0">Portal</a></li>
+    <li><a class="nav-link" href="#visao">Visão geral</a></li>
+    <li><a class="nav-link" href="#destaques">Destaques recentes</a></li>
+    <li><a class="nav-link" href="#como-usar">Como usar</a></li>
+    <li><a class="nav-link" href="#catalogo">Catálogo completo</a></li>
+    <li><a class="nav-link level-0">Categorias</a></li>
   </ul></nav>
   <div class="sb-foot">Base pública<br><code>marcoslrvusa.github.io/v4perettoco/</code></div>
-</aside>
+</div>
 
-<div class="main" id="topo"><div class="wrap">
+<div class="main">
 
-  <div class="hero-personal" id="sobre">
-    <img class="photo" src="assets/images/foto-marcos-perettoco.jpg" alt="Marcos Luciano — Investidor V4">
-    <div class="who">
-      <div class="role">Investidor · V4 Company — Operação Peretto &amp; Co</div>
-      <h2>Marcos Luciano</h2>
-      <p class="bio">Eu transformo operação de marketing em <strong>ativo auditável</strong>: cada auditoria, relatório e entrega que produzo é publicada aqui com data, situação e link verificado. Este portal é meu portfólio vivo — e minha ferramenta diária de organização.</p>
+<section id="visao">
+  <h1 class="section-title">Visão geral</h1>
+  <p class="sec-desc">Quem opera, o que já foi entregue e onde encontrar cada material. Tudo publicado aqui tem data, situação e link verificável.</p>
+  <div class="hero-personal">
+    <img class="photo" src="assets/images/foto-marcos-perettoco.jpg" alt="Marcos Luciano">
+    <div style="min-width:0;flex:1">
+      <div class="role">Investidor · V4 Company: Operação Peretto &amp; Co</div>
+      <h2 style="font-size:clamp(22px,3vw,30px);font-weight:700;color:#fff;margin:0">Marcos Luciano</h2>
+      <p class="bio" style="font-size:12.5px;color:#c9c9d1;margin-top:8px">Eu transformo operação de marketing em <strong style="color:#fff">ativo auditável</strong>: cada auditoria, relatório e entrega que produzo é publicada aqui com data, situação e link verificado. Este portal é meu portfólio vivo e minha ferramenta diária de organização.</p>
       <div class="pstats">
-        <div class="pstat"><div class="n">83</div><div class="l">Entregas</div></div>
-        <div class="pstat"><div class="n red">110</div><div class="l">URLs públicas</div></div>
-        <div class="pstat"><div class="n">29</div><div class="l">Clientes/frentes</div></div>
+        <div class="pstat"><div class="n" id="pEntregas">···</div><div class="l">Entregas</div></div>
+        <div class="pstat"><div class="n red" id="pUrls">···</div><div class="l">URLs públicas</div></div>
+        <div class="pstat"><div class="n" id="pClients">···</div><div class="l">Clientes e frentes</div></div>
         <div class="pstat"><div class="n">74</div><div class="l">Skills no hub</div></div>
       </div>
       <div class="hero-actions">
@@ -230,20 +227,33 @@ table.mini td.n{text-align:right;font-weight:800}
       </div>
     </div>
   </div>
-  <div class="page-head">
-    <h2>Gestão operacional <span>das entregas</span></h2>
-    <p>Todas as entregas publicadas no GitHub Pages, organizadas por categoria, cliente e tipo — com busca, filtros, ordenação, cópia imediata de links e exportação.</p>
-    <div class="meta"><span class="bdg" id="headCount">—</span></div>
-  </div>
+  <div class="callout callout-good"><strong>Como ler as situações:</strong> <code>Atual</code> é o material vigente. <code>Legado parcial</code> é espelho ou versão superada. <code>Legado</code> está descontinuado e fica só para referência.</div>
+</section>
 
-  <div class="kpis">
-    <div class="kpi"><div class="l">Entregas</div><div class="v" id="kTotal">—</div><div class="d">itens no catálogo</div></div>
-    <div class="kpi"><div class="l">URLs publicadas</div><div class="v red" id="kUrls">—</div><div class="d">inclui vinculadas</div></div>
-    <div class="kpi"><div class="l">Clientes / frentes</div><div class="v" id="kClients">—</div><div class="d">cobertura do portfólio</div></div>
-    <div class="kpi"><div class="l">Auditorias</div><div class="v" id="kAudit">—</div><div class="d">SEO · AIO · GEO</div></div>
-    <div class="kpi"><div class="l">Status de publicação</div><div class="v" id="kHealth">—</div><div class="d" id="kHealthD">verificado via HTTP</div></div>
-  </div>
+<section id="destaques">
+  <h1 class="section-title">Destaques recentes</h1>
+  <p class="sec-desc">As entregas mais novas do portfólio, na ordem em que entraram. Bom ponto de partida para quem chega agora.</p>
+  <div class="agent-grid" id="featGrid"></div>
+</section>
 
+<section id="como-usar">
+  <h1 class="section-title">Como usar este portal</h1>
+  <p class="sec-desc">Cinco passos cobrem tudo que dá para fazer no catálogo.</p>
+  <div class="flow-card">
+    <h3>Do primeiro olhar ao link copiado</h3>
+    <ol class="flow-steps">
+      <li><strong>Busque</strong> por título, cliente, categoria ou parte do endereço.</li>
+      <li><strong>Filtre</strong> por cliente, categoria, tipo ou situação.</li>
+      <li><strong>Abra</strong> a entrega em nova aba para conferir o material.</li>
+      <li><strong>Copie</strong> o link publicado para enviar a quem precisa.</li>
+      <li><strong>Exporte</strong> o recorte filtrado em CSV quando precisar da lista.</li>
+    </ol>
+  </div>
+</section>
+
+<section id="catalogo">
+  <h1 class="section-title">Catálogo completo</h1>
+  <p class="sec-desc">Todas as entregas publicadas, organizadas por categoria, cliente e tipo, com busca, filtros e ordenação.</p>
   <div class="toolbar">
     <div class="tb-row">
       <input type="text" id="q" placeholder="Buscar por título, cliente, categoria ou caminho…">
@@ -269,150 +279,154 @@ table.mini td.n{text-align:right;font-weight:800}
       <select id="fSort">
         <option value="cat">Ordenar: Categoria</option>
         <option value="date">Ordenar: Mais recentes</option>
-        <option value="title">Ordenar: Título A–Z</option>
-        <option value="client">Ordenar: Cliente A–Z</option>
+        <option value="title">Ordenar: Título A/Z</option>
+        <option value="client">Ordenar: Cliente A/Z</option>
         <option value="type">Ordenar: Tipo</option>
       </select>
-      <button class="btn btn-dark" id="btnCsv">Exportar CSV</button>
+      <button class="btn btn-dark" id="btnCsv" style="background:#111;border-color:#111;color:#fff">Exportar CSV</button>
       <button class="btn btn-red" id="btnCopyAll">Copiar links filtrados</button>
     </div>
     <div class="tb-status" id="statusLine"></div>
   </div>
-
-  <div class="panel" id="panel">
-    <div class="panel-head"><h3>Registro de entregas</h3><span class="hint">Abrir em nova aba · copiar URL publicada · expandir vinculadas · <strong>Atual</strong> = vigente · <strong>Legado parcial</strong> = espelho/versão superada · <strong>Legado</strong> = descontinuado</span>
-      <div class="right"><span class="bdg" id="tblCount">—</span></div>
-    </div>
-    <div class="tbl-wrap"><table class="grid" id="grid">
-      <thead><tr>
-        <th>ID</th><th>Entrega</th><th>Categoria</th><th>Tipo</th><th>Data</th><th>Situação</th><th style="text-align:right">URLs</th><th>Ações</th>
-      </tr></thead>
-      <tbody id="rows"></tbody>
-    </table></div>
-    <div class="empty" id="empty">Nenhuma entrega corresponde aos filtros. Ajuste a busca ou limpe os filtros.</div>
-  </div>
-
+  <div class="panel-head"><h3>Registro de entregas</h3><span class="hint" id="tblCount">···</span></div>
+  <div class="tbl-wrap"><table class="grid" id="grid">
+    <thead><tr>
+      <th>ID</th><th>Entrega</th><th>Categoria</th><th>Tipo</th><th>Data</th><th>Situação</th><th style="text-align:right">URLs</th><th>Ações</th>
+    </tr></thead>
+    <tbody id="rows"></tbody>
+  </table></div>
+  <div class="empty" id="empty">Nenhuma entrega corresponde aos filtros. Ajuste a busca ou limpe os filtros.</div>
   <div class="split">
-    <div class="panel"><div class="panel-head"><h3>Entregas por cliente</h3></div><div class="tbl-wrap"><table class="mini" id="tblClient"></table></div></div>
-    <div class="panel"><div class="panel-head"><h3>Entregas por categoria</h3></div><div class="tbl-wrap"><table class="mini" id="tblCat"></table></div></div>
+    <div><div class="panel-head"><h3>Entregas por cliente</h3></div><div class="tbl-wrap"><table class="mini" id="tblClient"></table></div></div>
+    <div><div class="panel-head"><h3>Entregas por categoria</h3></div><div class="tbl-wrap"><table class="mini" id="tblCat"></table></div></div>
   </div>
-
   <div class="footer">
     <img src="logo-peretto-red.png" alt="Peretto &amp; Co.">
-    <span><strong>Marcos Luciano · Investidor V4</strong> — portfólio operacional Peretto &amp; Co. O que eu faço está publicado aqui.</span>
+    <span><strong>Marcos Luciano · Investidor V4</strong>: portfólio operacional Peretto &amp; Co. O que eu faço está publicado aqui.</span>
     <span class="r" id="footLine"></span>
   </div>
+</section>
 
-</div></div>
+</div>
 <div class="toast" id="toast"></div>
 <script>
 const BASE = 'https://marcoslrvusa.github.io/v4perettoco/';
 const CATS = [
-  {id:'hub', n:'01', label:'Hub de Agentes & Infraestrutura', short:'Hub & Sistema', desc:'Ecossistema de agentes, documentação operacional, PDI e automações corporativas. Porta de entrada da operação.'},
-  {id:'seo-auditoria', n:'02', label:'SEO · Auditorias Técnicas', short:'Auditorias SEO', desc:'Diagnósticos completos — Screaming Frog, Core Web Vitals, schema, headings e plano de ação 90 dias.'},
-  {id:'seo-reports', n:'03', label:'SEO · Prestação de Contas & Relatórios', short:'Reports SEO', desc:'Evolução, receita, overview estratégico e apresentações executivas por cliente.'},
-  {id:'trafego', n:'04', label:'Tráfego Pago · Google / Meta / Bing', short:'Tráfego pago', desc:'Auditorias de mídia, estratégias de search, planejamento de canais e reports de performance.'},
-  {id:'conteudo', n:'05', label:'Conteúdo · Blog & Editorial', short:'Conteúdo', desc:'Artigos, lotes de blog, definition blocks AIO e kits de otimização on-page e schema.'},
-  {id:'sdr-ia', n:'06', label:'SDR IA · Hub & Correções', short:'SDR IA', desc:'Hub de correções das SDRs IA por cliente + entregas de confiabilidade da operação Signor.'},
-  {id:'ai-visibility', n:'07', label:'AI Visibility · AIO / GEO', short:'AI Visibility', desc:'Produto de visibilidade em IAs — arquitetura, landing, portal de diagnóstico e templates.'},
-  {id:'marketplace', n:'08', label:'Marketplaces & Estratégia', short:'Marketplaces', desc:'Auditorias de expansão, pattern detection e frameworks de operação em marketplaces.'},
-  {id:'sites', n:'09', label:'Sites, Landing Pages & Templates', short:'Sites & Templates', desc:'Websites entregues, front-ends de campanha e templates operacionais reutilizáveis.'}
+  {id:'hub', n:'01', label:'Hub de Agentes & Infraestrutura', short:'Hub & Sistema', desc:'Ecossistema de agentes, documentação operacional, PDI e automações corporativas.'},
+  {id:'seo-auditoria', n:'02', label:'SEO · Auditorias Técnicas', short:'Auditorias SEO', desc:'Diagnósticos completos de SEO técnico, AIO e GEO por cliente.'},
+  {id:'seo-reports', n:'03', label:'SEO · Prestação de Contas & Relatórios', short:'Reports SEO', desc:'Evolução, receita, overview estratégico e apresentações executivas.'},
+  {id:'trafego', n:'04', label:'Tráfego Pago · Google / Meta / Bing', short:'Tráfego pago', desc:'Auditorias de mídia, estratégias de search e reports de performance.'},
+  {id:'conteudo', n:'05', label:'Conteúdo · Blog & Editorial', short:'Conteúdo', desc:'Artigos, lotes de blog, definition blocks AIO e kits on-page.'},
+  {id:'sdr-ia', n:'06', label:'SDR IA · Hub & Correções', short:'SDR IA', desc:'Hub de correções das SDRs IA por cliente e entregas de confiabilidade.'},
+  {id:'ai-visibility', n:'07', label:'AI Visibility · AIO / GEO', short:'AI Visibility', desc:'Produto de visibilidade em IAs: arquitetura, landing, portal e templates.'},
+  {id:'marketplace', n:'08', label:'Marketplaces & Estratégia', short:'Marketplaces', desc:'Auditorias de expansão e frameworks de operação em marketplaces.'},
+  {id:'sites', n:'09', label:'Sites, Landing Pages & Templates', short:'Sites & Templates', desc:'Websites entregues, front-ends de campanha e templates reutilizáveis.'},
+  {id:'share-search', n:'10', label:'Share of Search · Produto, Propostas & Diagnóstico', short:'Share of Search', desc:'Produto de inteligência de busca: referência técnica, apresentação didática, escopo e proposta do report mensal.'}
 ];
 const D = [
 /* ============ 01 HUB ============ */
-{cat:'hub', client:'V4 Peretto', type:'hub', t:'Tipo', title:'Hub de Agentes V4 Peretto — Portal Principal', desc:'Ecossistema completo: 37 agentes, 102 skills, 8 times e Opensquad. Documentação navegável + export ZIP.', href:'hub-de-agentes/',dt:'17/08/2026',st:'parcial'},
-{cat:'hub', client:'V4 Peretto', type:'hub', t:'Docs', title:'Documentação Completa do Agent Hub', desc:'Referência integral do hub — arquitetura, camadas, skills, agentes e governança.', href:'hub-de-agentes/documentacao-completa.html',dt:'17/08/2026',st:'parcial'},
-{cat:'hub', client:'V4 Peretto', type:'hub', t:'Infra', title:'Infraestrutura Inteligente — 11 Skills Técnicas', desc:'Camada técnica do hub: skills de infra, integrações, MCPs e operação.', href:'hub-de-agentes/infra-skills-completa.html',dt:'17/08/2026',st:'parcial'},
-{cat:'hub', client:'V4 Peretto', type:'hub', t:'Operação', title:'Manual Operacional — Times de Agentes', desc:'Rotina de operação dos times: papéis, ritos, checkpoints e qualidade.', href:'hub-de-agentes/manual-operacional-times.html',dt:'17/08/2026',st:'parcial'},
-{cat:'hub', client:'V4 Peretto', type:'hub', t:'Legado', title:'Agents Hub — Versão Legada (101 skills)', desc:'Versão anterior do hub mantida para referência histórica e links externos.', href:'agents-hub.html',dt:'17/08/2026',st:'legado'},
-{cat:'hub', client:'V4 Peretto', type:'hub', t:'PDI', title:'Portal de Entregas — PDI Marcos Perettoco', desc:'Índice das atividades do PDI: orquestração n8n, clean code, dados e IA.', href:'pdi-portal.html',dt:'27/08/2026'},
-{cat:'hub', client:'V4 Peretto', type:'hub', t:'PDI', title:'PDI — Padrão Universal de Erros n8n', desc:'Padrão corporativo de tratamento de erros em workflows n8n + apresentações.', href:'pdi-err-n8n/',dt:'25/08/2026', sub:[['Apresentação A1 — Orquestração corporativa','pdi-err-n8n/pdi-orquestracao-corporativa-n8n-a1.html']]},
-{cat:'hub', client:'V4 Peretto', type:'automacao', t:'Rotina', title:'P·I·A — Análise de Rotinas × Agentes de Operação', desc:'Mapeamento de rotinas internas versus capacidade dos agentes de operação v4.', href:'projetos/Rotinas%20P.I.A/pia-analise-completa.html',dt:'08/06/2026'},
-{cat:'hub', client:'V4 Peretto', type:'automacao', t:'AI Ops', title:'AI Ops V4 — Apresentação Principal', desc:'Visão da infraestrutura de AI Ops corporativa da operação.', href:'projetos/Infraestrutura%20AI/v4-automations/documenta%C3%A7%C3%A3o/AI-OPS-APRESENTACAO.html',dt:'13/07/2026', sub:[['AI Ops — Case Mata Leão','projetos/Infraestrutura%20AI/v4-automations/documenta%C3%A7%C3%A3o/AI-OPS-APRESENTACAO-2.html'],['AI Ops — Infraestrutura corporativa','projetos/Infraestrutura%20AI/v4-automations/documenta%C3%A7%C3%A3o/AI-OPS-APRESENTACAO-3.html'],['AI Ops — Fórum de operações','projetos/Infraestrutura%20AI/v4-automations/documenta%C3%A7%C3%A3o/AI-OPS-APRESENTACAO-4.html']]},
+{cat:'hub', client:'V4 Peretto', type:'hub', t:'Tipo', title:'Hub de Agentes V4 Peretto: Portal Principal', desc:'Ecossistema completo: 37 agentes, 102 skills, 8 times e Opensquad. Documentação navegável + export ZIP.', href:'hub-de-agentes/',dt:'17/08/2026',st:'parcial'},
+{cat:'hub', client:'V4 Peretto', type:'hub', t:'Docs', title:'Documentação Completa do Agent Hub', desc:'Referência integral do hub: arquitetura, camadas, skills, agentes e governança.', href:'hub-de-agentes/documentacao-completa.html',dt:'17/08/2026',st:'parcial'},
+{cat:'hub', client:'V4 Peretto', type:'hub', t:'Infra', title:'Infraestrutura Inteligente: 11 Skills Técnicas', desc:'Camada técnica do hub: skills de infra, integrações, MCPs e operação.', href:'hub-de-agentes/infra-skills-completa.html',dt:'17/08/2026',st:'parcial'},
+{cat:'hub', client:'V4 Peretto', type:'hub', t:'Operação', title:'Manual Operacional: Times de Agentes', desc:'Rotina de operação dos times: papéis, ritos, checkpoints e qualidade.', href:'hub-de-agentes/manual-operacional-times.html',dt:'17/08/2026',st:'parcial'},
+{cat:'hub', client:'V4 Peretto', type:'hub', t:'Legado', title:'Agents Hub: Versão Legada (101 skills)', desc:'Versão anterior do hub mantida para referência histórica e links externos.', href:'agents-hub.html',dt:'17/08/2026',st:'legado'},
+{cat:'hub', client:'V4 Peretto', type:'hub', t:'PDI', title:'Portal de Entregas: PDI Marcos Perettoco', desc:'Índice das atividades do PDI: orquestração n8n, clean code, dados e IA.', href:'pdi-portal.html',dt:'27/08/2026'},
+{cat:'hub', client:'V4 Peretto', type:'hub', t:'PDI', title:'PDI: Padrão Universal de Erros n8n', desc:'Padrão corporativo de tratamento de erros em workflows n8n + apresentações.', href:'pdi-err-n8n/',dt:'25/08/2026', sub:[['Apresentação A1: Orquestração corporativa','pdi-err-n8n/pdi-orquestracao-corporativa-n8n-a1.html']]},
+{cat:'hub', client:'V4 Peretto', type:'automacao', t:'Rotina', title:'P·I·A: Análise de Rotinas × Agentes de Operação', desc:'Mapeamento de rotinas internas versus capacidade dos agentes de operação v4.', href:'projetos/Rotinas%20P.I.A/pia-analise-completa.html',dt:'08/06/2026'},
+{cat:'hub', client:'V4 Peretto', type:'automacao', t:'AI Ops', title:'AI Ops V4: Apresentação Principal', desc:'Visão da infraestrutura de AI Ops corporativa da operação.', href:'projetos/Infraestrutura%20AI/v4-automations/documenta%C3%A7%C3%A3o/AI-OPS-APRESENTACAO.html',dt:'13/07/2026', sub:[['AI Ops: Case Mata Leão','projetos/Infraestrutura%20AI/v4-automations/documenta%C3%A7%C3%A3o/AI-OPS-APRESENTACAO-2.html'],['AI Ops: Infraestrutura corporativa','projetos/Infraestrutura%20AI/v4-automations/documenta%C3%A7%C3%A3o/AI-OPS-APRESENTACAO-3.html'],['AI Ops: Fórum de operações','projetos/Infraestrutura%20AI/v4-automations/documenta%C3%A7%C3%A3o/AI-OPS-APRESENTACAO-4.html']]},
 /* ============ 02 AUDITORIAS ============ */
-{cat:'seo-auditoria', client:'All Over Exterior', type:'auditoria', t:'Auditoria', title:'Auditoria SEO Completa — All Over Exterior', desc:'413 URLs, 35 problemas (7 críticos, 8 altos). Quick wins, schema e plano 90 dias.', href:'allover-audit/',dt:'25/08/2026'},
-{cat:'seo-auditoria', client:'All Over Exterior', type:'auditoria', t:'Auditoria', title:'Auditoria SEO Completa — All Over (mirror S1)', desc:'Variação de escopo da auditoria All Over para segunda leitura executiva.', href:'allover-seo-audit/',dt:'17/08/2026',st:'parcial'},
-{cat:'seo-auditoria', client:'Premium Cleaning', type:'auditoria', t:'Auditoria', title:'Auditoria SEO — Premium Cleaning Services NJ', desc:'211 URLs, 28 problemas (6 críticos, 7 altos). Schema local + plano 90 dias.', href:'premium-audit/',dt:'17/08/2026'},
-{cat:'seo-auditoria', client:'Premium Cleaning', type:'auditoria', t:'Auditoria', title:'Auditoria SEO — Premium Cleaning (variação)', desc:'Segunda variação da auditoria Premium para comparação de escopo.', href:'premium-seo-audit/',dt:'17/08/2026',st:'parcial'},
-{cat:'seo-auditoria', client:'Brasland', type:'auditoria', t:'Auditoria', title:'Auditoria Técnica SEO — Brasland', desc:'18 URLs, 19 problemas (6 críticos). noindex global, robots quebrado e Fase 0 de go-live.', href:'brasland-seo-audit/',dt:'25/08/2026', sub:[['Entrega espelho — auditoria Brasland (projetos)','projetos/seo/clientes/brasland/entregas/auditoria-seo-brasland.html','parcial']]},
-{cat:'seo-auditoria', client:'Metal Indianápolis', type:'auditoria', t:'Auditoria', title:'Auditoria Técnica SEO — Metal Indianápolis', desc:'260 URLs, 25 problemas (7 críticos). Quick wins de pré-lançamento e roadmap.', href:'indianapolis-seo-audit/',dt:'17/08/2026', sub:[['Versão arquivo Q2 2026','metal-indianapolis/auditoria-seo-metal-indianapolis-Q2-2026.html']]},
-{cat:'seo-auditoria', client:'Lola Aviamentos', type:'auditoria', t:'Auditoria', title:'Auditoria Completa — SEO + AIO + GEO · Lola', desc:'Auditoria full-funnel de conteúdo, técnica e citabilidade em IAs.', href:'lola-seo-audit/',dt:'25/08/2026'},
-{cat:'seo-auditoria', client:'Lola Aviamentos', type:'auditoria', t:'AIO/GEO', title:'Auditoria AIO + GEO — Lola Aviamentos', desc:'Foco em AI Search: definition blocks, extractability e share of AI voice.', href:'lola-seo-aiogeo-audit/',dt:'25/08/2026'},
-{cat:'seo-auditoria', client:'Bioperfectus', type:'auditoria', t:'AIO/GEO', title:'Auditoria AIO/GEO — Bioperfectus', desc:'Diagnóstico de citabilidade e autoridade temática para respostas de IA.', href:'bioperfectus-aio-geo-audit/',dt:'28/08/2026'},
-{cat:'seo-auditoria', client:'TekSea', type:'auditoria', t:'Auditoria', title:'Auditoria Técnica SEO — TekSea', desc:'Diagnóstico técnico completo + backlog priorizado de correção.', href:'audit-teksea/',dt:'25/08/2026', sub:[['Variação TekSea (mirror)','teksea-audit/','parcial'],['Arquivo em projetos','projetos/SEO/clientes/tek%20sea/auditoria-seo-teksea.html','parcial']]},
-{cat:'seo-auditoria', client:'Grupo R1', type:'auditoria', t:'Auditoria', title:'Auditoria Técnica SEO — Grupo R1 (Q2 2026)', desc:'Diagnóstico técnico e plano de correção trimestral do Grupo R1.', href:'projetos/SEO/clientes/grupo-r1/auditoria-seo-r1grupo-Q2-2026.html',dt:'20/07/2026'},
-{cat:'seo-auditoria', client:'V4 Peretto', type:'auditoria', t:'Base', title:'SEO Problems Hub — Knowledge Base (29 problemas)', desc:'Catálogo operacional de problemas de SEO com causa, diagnóstico, solução e POP.', href:'projetos/seo/seo-problems-hub/',dt:'17/08/2026', sub:[['Mirror — SEO/seo-problems-hub','projetos/SEO/seo-problems-hub/','parcial'],['Mirror — clientes/seo-problems-hub','projetos/SEO/clientes/seo-problems-hub/','parcial']]},
+{cat:'seo-auditoria', client:'All Over Exterior', type:'auditoria', t:'Auditoria', title:'Auditoria SEO Completa: All Over Exterior', desc:'413 URLs, 35 problemas (7 críticos, 8 altos). Quick wins, schema e plano 90 dias.', href:'allover-audit/',dt:'25/08/2026'},
+{cat:'seo-auditoria', client:'All Over Exterior', type:'auditoria', t:'Auditoria', title:'Auditoria SEO Completa: All Over (mirror S1)', desc:'Variação de escopo da auditoria All Over para segunda leitura executiva.', href:'allover-seo-audit/',dt:'17/08/2026',st:'parcial'},
+{cat:'seo-auditoria', client:'Premium Cleaning', type:'auditoria', t:'Auditoria', title:'Auditoria SEO: Premium Cleaning Services NJ', desc:'211 URLs, 28 problemas (6 críticos, 7 altos). Schema local + plano 90 dias.', href:'premium-audit/',dt:'17/08/2026'},
+{cat:'seo-auditoria', client:'Premium Cleaning', type:'auditoria', t:'Auditoria', title:'Auditoria SEO: Premium Cleaning (variação)', desc:'Segunda variação da auditoria Premium para comparação de escopo.', href:'premium-seo-audit/',dt:'17/08/2026',st:'parcial'},
+{cat:'seo-auditoria', client:'Brasland', type:'auditoria', t:'Auditoria', title:'Auditoria Técnica SEO: Brasland', desc:'18 URLs, 19 problemas (6 críticos). noindex global, robots quebrado e Fase 0 de go-live.', href:'brasland-seo-audit/',dt:'25/08/2026', sub:[['Entrega espelho: auditoria Brasland (projetos)','projetos/seo/clientes/brasland/entregas/auditoria-seo-brasland.html','parcial']]},
+{cat:'seo-auditoria', client:'Metal Indianápolis', type:'auditoria', t:'Auditoria', title:'Auditoria Técnica SEO: Metal Indianápolis', desc:'260 URLs, 25 problemas (7 críticos). Quick wins de pré-lançamento e roadmap.', href:'indianapolis-seo-audit/',dt:'17/08/2026', sub:[['Versão arquivo Q2 2026','metal-indianapolis/auditoria-seo-metal-indianapolis-Q2-2026.html']]},
+{cat:'seo-auditoria', client:'Lola Aviamentos', type:'auditoria', t:'Auditoria', title:'Auditoria Completa: SEO + AIO + GEO · Lola', desc:'Auditoria full-funnel de conteúdo, técnica e citabilidade em IAs.', href:'lola-seo-audit/',dt:'25/08/2026'},
+{cat:'seo-auditoria', client:'Lola Aviamentos', type:'auditoria', t:'AIO/GEO', title:'Auditoria AIO + GEO: Lola Aviamentos', desc:'Foco em AI Search: definition blocks, extractability e share of AI voice.', href:'lola-seo-aiogeo-audit/',dt:'25/08/2026'},
+{cat:'seo-auditoria', client:'Bioperfectus', type:'auditoria', t:'AIO/GEO', title:'Auditoria AIO/GEO: Bioperfectus', desc:'Diagnóstico de citabilidade e autoridade temática para respostas de IA.', href:'bioperfectus-aio-geo-audit/',dt:'28/08/2026'},
+{cat:'seo-auditoria', client:'TekSea', type:'auditoria', t:'Auditoria', title:'Auditoria Técnica SEO: TekSea', desc:'Diagnóstico técnico completo + backlog priorizado de correção.', href:'audit-teksea/',dt:'25/08/2026', sub:[['Variação TekSea (mirror)','teksea-audit/','parcial'],['Arquivo em projetos','projetos/SEO/clientes/tek%20sea/auditoria-seo-teksea.html','parcial']]},
+{cat:'seo-auditoria', client:'Grupo R1', type:'auditoria', t:'Auditoria', title:'Auditoria Técnica SEO: Grupo R1 (Q2 2026)', desc:'Diagnóstico técnico e plano de correção trimestral do Grupo R1.', href:'projetos/SEO/clientes/grupo-r1/auditoria-seo-r1grupo-Q2-2026.html',dt:'20/07/2026'},
+{cat:'seo-auditoria', client:'V4 Peretto', type:'auditoria', t:'Base', title:'SEO Problems Hub: Knowledge Base (29 problemas)', desc:'Catálogo operacional de problemas de SEO com causa, diagnóstico, solução e POP.', href:'projetos/seo/seo-problems-hub/',dt:'17/08/2026', sub:[['Mirror: SEO/seo-problems-hub','projetos/SEO/seo-problems-hub/','parcial'],['Mirror: clientes/seo-problems-hub','projetos/SEO/clientes/seo-problems-hub/','parcial']]},
 /* ============ 03 REPORTS ============ */
-{cat:'seo-reports', client:'All Over Exterior', type:'relatorio', t:'Report', title:'SEO · Prestação de Contas — All Over (Jun 2026)', desc:'9 meses de evolução: AS 8, +106% referring domains, 40+ artigos e roadmap.', href:'allover-seo/',dt:'17/08/2026'},
-{cat:'seo-reports', client:'All Over Exterior', type:'relatorio', t:'Overview', title:'Overview Estratégico 360° — All Over', desc:'Performance, canais e recomendações executivas consolidadas.', href:'allover-overview/',dt:'17/08/2026'},
-{cat:'seo-reports', client:'All Over Exterior', type:'relatorio', t:'Receita', title:'Receita por Canais — All Over', desc:'Ticket médio, mix de canais e comparativos de receita.', href:'allover-revenue/',dt:'17/08/2026'},
-{cat:'seo-reports', client:'All Over Exterior', type:'relatorio', t:'Apresentação', title:'Presença Digital na Era da IA — All Over (v4)', desc:'Deck executivo da estratégia de presença digital orientada a IA.', href:'projetos/SEO/clientes/allover-seo/entregas/all-over-exterior-presentation-v4.html',dt:'27/07/2026', sub:[['Versão anterior da apresentação','projetos/SEO/clientes/allover-seo/entregas/all-over-exterior-presentation.html']]},
-{cat:'seo-reports', client:'Conserva Irrigation', type:'relatorio', t:'Histórico', title:'Histórico de Check-ins — Conserva Irrigation', desc:'Linha do tempo de check-ins e combinados da operação.', href:'conserva-irrigation-report.html',dt:'17/08/2026'},
-{cat:'seo-reports', client:'Conserva Irrigation', type:'relatorio', t:'Consolidado', title:'Relatório Consolidado — Conserva (Jul 2026)', desc:'Consolidação mensal de performance, canais e próximos passos.', href:'consolidado-conserva-junho-2026.html',dt:'17/08/2026'},
+{cat:'seo-reports', client:'All Over Exterior', type:'relatorio', t:'Report', title:'SEO · Prestação de Contas: All Over (Jun 2026)', desc:'9 meses de evolução: AS 8, +106% referring domains, 40+ artigos e roadmap.', href:'allover-seo/',dt:'17/08/2026'},
+{cat:'seo-reports', client:'All Over Exterior', type:'relatorio', t:'Overview', title:'Overview Estratégico 360°: All Over', desc:'Performance, canais e recomendações executivas consolidadas.', href:'allover-overview/',dt:'17/08/2026'},
+{cat:'seo-reports', client:'All Over Exterior', type:'relatorio', t:'Receita', title:'Receita por Canais: All Over', desc:'Ticket médio, mix de canais e comparativos de receita.', href:'allover-revenue/',dt:'17/08/2026'},
+{cat:'seo-reports', client:'All Over Exterior', type:'relatorio', t:'Apresentação', title:'Presença Digital na Era da IA: All Over (v4)', desc:'Deck executivo da estratégia de presença digital orientada a IA.', href:'projetos/SEO/clientes/allover-seo/entregas/all-over-exterior-presentation-v4.html',dt:'27/07/2026', sub:[['Versão anterior da apresentação','projetos/SEO/clientes/allover-seo/entregas/all-over-exterior-presentation.html']]},
+{cat:'seo-reports', client:'Conserva Irrigation', type:'relatorio', t:'Histórico', title:'Histórico de Check-ins: Conserva Irrigation', desc:'Linha do tempo de check-ins e combinados da operação.', href:'conserva-irrigation-report.html',dt:'17/08/2026'},
+{cat:'seo-reports', client:'Conserva Irrigation', type:'relatorio', t:'Consolidado', title:'Relatório Consolidado: Conserva (Jul 2026)', desc:'Consolidação mensal de performance, canais e próximos passos.', href:'consolidado-conserva-junho-2026.html',dt:'17/08/2026'},
 {cat:'seo-reports', client:'Conserva Irrigation', type:'relatorio', t:'Performance', title:'Performance Analítica H1 2025 → H1 2026 (Dark)', desc:'1.347 pedidos · $997.6K líquidos · 18 meses de ServiceMinder.', href:'conserva-irrigation/relatorio-dark.html',dt:'17/08/2026'},
-{cat:'seo-reports', client:'Conserva Irrigation', type:'relatorio', t:'Semanal', title:'Relatório Analítico — Semana 2 · Conserva', desc:'Leitura semanal de performance com teoria das restrições.', href:'conserva-irrigation/analise-conserva-new-structure.html',dt:'17/08/2026'},
-{cat:'seo-reports', client:'Conserva Irrigation', type:'relatorio', t:'Mídia', title:'ROPRE Check-in · Mídia Paga — Conserva', desc:'Junho 2026: análise 80/20, otimizações de 5 minutos e plano 15 dias.', href:'conserva/analise-otimizacoes.html',dt:'17/08/2026'},
-{cat:'seo-reports', client:'Premium Cleaning', type:'relatorio', t:'Report', title:'Relatório Unificado — Premium Cleaning (Jun 2026)', desc:'Consolidação de SEO + mídia + próximos passos da conta.', href:'premium-cleaning-junho-2026.html',dt:'17/08/2026'},
-{cat:'seo-reports', client:'Diamond Tint', type:'relatorio', t:'Report', title:'Otimizações Executadas — Diamond Tint (Jun 2026)', desc:'Antes/depois das otimizações aplicadas no período.', href:'diamond-tint-optimization-jun26/',dt:'17/08/2026'},
-{cat:'seo-reports', client:'Metal Indianápolis', type:'relatorio', t:'Conteúdo', title:'Metal Indianápolis — SEO & Conteúdo', desc:'Hub de conteúdo e SEO da operação Metal Indianápolis.', href:'metal-indianapolis.html',dt:'17/08/2026'},
-{cat:'seo-reports', client:'Metal Indianápolis', type:'relatorio', t:'Inteligência', title:'Channel Intelligence Report — Metal Indianapolis', desc:'Relatório de inteligência de canais com narrativa executiva.', href:'projetos/SEO/clientes/metal-indianapolis/entregas/metal-indianapolis-storytelling.html',dt:'19/08/2026'},
+{cat:'seo-reports', client:'Conserva Irrigation', type:'relatorio', t:'Semanal', title:'Relatório Analítico: Semana 2 · Conserva', desc:'Leitura semanal de performance com teoria das restrições.', href:'conserva-irrigation/analise-conserva-new-structure.html',dt:'17/08/2026'},
+{cat:'seo-reports', client:'Conserva Irrigation', type:'relatorio', t:'Mídia', title:'ROPRE Check-in · Mídia Paga: Conserva', desc:'Junho 2026: análise 80/20, otimizações de 5 minutos e plano 15 dias.', href:'conserva/analise-otimizacoes.html',dt:'17/08/2026'},
+{cat:'seo-reports', client:'Premium Cleaning', type:'relatorio', t:'Report', title:'Relatório Unificado: Premium Cleaning (Jun 2026)', desc:'Consolidação de SEO + mídia + próximos passos da conta.', href:'premium-cleaning-junho-2026.html',dt:'17/08/2026'},
+{cat:'seo-reports', client:'Diamond Tint', type:'relatorio', t:'Report', title:'Otimizações Executadas: Diamond Tint (Jun 2026)', desc:'Antes e depois das otimizações aplicadas no período.', href:'diamond-tint-optimization-jun26/',dt:'17/08/2026'},
+{cat:'seo-reports', client:'Metal Indianápolis', type:'relatorio', t:'Conteúdo', title:'Metal Indianápolis: SEO & Conteúdo', desc:'Hub de conteúdo e SEO da operação Metal Indianápolis.', href:'metal-indianapolis.html',dt:'17/08/2026'},
+{cat:'seo-reports', client:'Metal Indianápolis', type:'relatorio', t:'Inteligência', title:'Channel Intelligence Report: Metal Indianapolis', desc:'Relatório de inteligência de canais com narrativa executiva.', href:'projetos/SEO/clientes/metal-indianapolis/entregas/metal-indianapolis-storytelling.html',dt:'19/08/2026'},
+{cat:'seo-reports', client:'Metal Indianápolis', type:'relatorio', t:'Atualização', title:'Atualização 18/09: Metal Indianápolis', desc:'Atualização operacional de setembro: evolução, pendências e próximos passos.', href:'indianapolis-atualizacao-18-09.html',dt:'18/09/2026'},
+{cat:'seo-reports', client:'Metal Indianápolis', type:'relatorio', t:'Atualização', title:'Atualização 30/09: Metal Indianápolis', desc:'Atualização de fechamento do mês com o estado da operação.', href:'indianapolis-atualizacao-30-09.html',dt:'30/09/2026'},
+{cat:'seo-reports', client:'Metal Indianápolis', type:'relatorio', t:'Check-in', title:'Check-in Fase 3: Indianápolis', desc:'Leitura de check-in da fase 3: avanços, travas e combinados.', href:'indianapolis-fase3-checkin.html',dt:'30/09/2026'},
 /* ============ 04 TRÁFEGO ============ */
-{cat:'trafego', client:'Atlas Copco', type:'trafego', t:'Google Ads', title:'Traffic Report — Atlas Copco (1ª quinz. Jun/2026)', desc:'US$ 725 · 337 cliques · 0 conversões. Diagnóstico de tracking e roadmap.', href:'atlas-copco/relatorio-consolidado.html',dt:'17/08/2026'},
-{cat:'trafego', client:'All Over Exterior', type:'trafego', t:'Google Ads', title:'Auditoria Google Ads — All Over Exterior', desc:'Estrutura, desperdício, termos e plano de reestruturação da conta.', href:'allover-google-ads-audit/',dt:'25/08/2026'},
-{cat:'trafego', client:'All Over Exterior', type:'trafego', t:'Estratégia', title:'Google Ads Search Strategy — Install · Replace · Repair', desc:'Arquitetura de campanhas search por intenção e serviço.', href:'allover-search-strategy/',dt:'11/09/2026'},
-{cat:'trafego', client:'Conserva Irrigation', type:'trafego', t:'Bing Ads', title:'Bing Ads Planning — Conserva (Jun–Set 2026)', desc:'Abertura de canal: estrutura, budget faseado e projeção 3 meses.', href:'conserva/bing-ads-planning.html',dt:'17/08/2026'},
-{cat:'trafego', client:'Conserva Irrigation', type:'trafego', t:'Google Ads', title:'Nova Estrutura de Campanhas Search — Conserva Q3', desc:'Reestruturação de campanhas search para o trimestre.', href:'nova-estrutura-campanhas-conserva-2026-q3.html',dt:'17/08/2026'},
-{cat:'trafego', client:'GSET Tennis', type:'trafego', t:'Meta Ads', title:'Meta Ads Report — GSET Tennis Academy (Jun 2026)', desc:'Performance de Meta Ads com criativos, CPL e próximos testes.', href:'gset-meta-ads-junho-2026.html',dt:'17/08/2026'},
-{cat:'trafego', client:'Construction Florida', type:'trafego', t:'Auditoria', title:'Auditoria de Mídia Paga — Construction Florida', desc:'Diagnóstico de conta e plano de correção da operação de mídia.', href:'projetos/ajuda%20rede%20v4/auditoria-media-construction-florida.html',dt:'25/08/2026'},
+{cat:'trafego', client:'Atlas Copco', type:'trafego', t:'Google Ads', title:'Traffic Report: Atlas Copco (1ª quinz. Jun/2026)', desc:'US$ 725 · 337 cliques · 0 conversões. Diagnóstico de tracking e roadmap.', href:'atlas-copco/relatorio-consolidado.html',dt:'17/08/2026'},
+{cat:'trafego', client:'All Over Exterior', type:'trafego', t:'Google Ads', title:'Auditoria Google Ads: All Over Exterior', desc:'Estrutura, desperdício, termos e plano de reestruturação da conta.', href:'allover-google-ads-audit/',dt:'25/08/2026'},
+{cat:'trafego', client:'All Over Exterior', type:'trafego', t:'Estratégia', title:'Google Ads Search Strategy: Install · Replace · Repair', desc:'Arquitetura de campanhas search por intenção e serviço.', href:'allover-search-strategy/',dt:'11/09/2026'},
+{cat:'trafego', client:'Conserva Irrigation', type:'trafego', t:'Bing Ads', title:'Bing Ads Planning: Conserva (Jun a Set 2026)', desc:'Abertura de canal: estrutura, budget faseado e projeção 3 meses.', href:'conserva/bing-ads-planning.html',dt:'17/08/2026'},
+{cat:'trafego', client:'Conserva Irrigation', type:'trafego', t:'Google Ads', title:'Nova Estrutura de Campanhas Search: Conserva Q3', desc:'Reestruturação de campanhas search para o trimestre.', href:'nova-estrutura-campanhas-conserva-2026-q3.html',dt:'17/08/2026'},
+{cat:'trafego', client:'GSET Tennis', type:'trafego', t:'Meta Ads', title:'Meta Ads Report: GSET Tennis Academy (Jun 2026)', desc:'Performance de Meta Ads com criativos, CPL e próximos testes.', href:'gset-meta-ads-junho-2026.html',dt:'17/08/2026'},
+{cat:'trafego', client:'Construction Florida', type:'trafego', t:'Auditoria', title:'Auditoria de Mídia Paga: Construction Florida', desc:'Diagnóstico de conta e plano de correção da operação de mídia.', href:'projetos/ajuda%20rede%20v4/auditoria-media-construction-florida.html',dt:'25/08/2026'},
 /* ============ 05 CONTEÚDO ============ */
-{cat:'conteudo', client:'Lola Aviamentos', type:'conteudo', t:'Blog', title:'Blog AG04 — Aviamentos (v1)', desc:'Peça editorial do lote AG04 para o blog da Lola.', href:'lola-blog-ag04-aviamentos.html',dt:'31/08/2026',st:'parcial'},
-{cat:'conteudo', client:'Lola Aviamentos', type:'conteudo', t:'Blog', title:'Blog AG04 — Aviamentos (v2)', desc:'Segunda versão do artigo AG04 com ajustes editoriais.', href:'lola-blog-ag04-aviamentos-v2.html',dt:'01/09/2026',st:'parcial'},
-{cat:'conteudo', client:'Lola Aviamentos', type:'conteudo', t:'Blog', title:'Blog AG04 — Aviamentos (v3)', desc:'Versão final do artigo AG04 aprovada para publicação.', href:'lola-blog-ag04-aviamentos-v3.html',dt:'01/09/2026'},
-{cat:'conteudo', client:'Lola Aviamentos', type:'conteudo', t:'AIO', title:'AG-02 — Definition Blocks — Lola Aviamentos', desc:'Blocos de definição otimizados para citação em IAs.', href:'projetos/SEO/clientes/lola/entregas/AIO-B1-AG02-definition-blocks.html',dt:'10/08/2026'},
-{cat:'conteudo', client:'Marcos V4', type:'conteudo', t:'Blog', title:'marcosv4.cloud — Blog Posts', desc:'Compilado de posts do blog pessoal / autoridade.', href:'marcosv4-blog-posts.html',dt:'17/08/2026'},
-{cat:'conteudo', client:'Conserva Irrigation', type:'conteudo', t:'Blog', title:'Blog Posts — Lote Combinado · Conserva', desc:'Lote de posts produzidos para a operação de conteúdo.', href:'conserva-irrigation/conserva-posts.html',dt:'17/08/2026'},
-{cat:'conteudo', client:'Metal Indianápolis', type:'conteudo', t:'Coleção', title:'Coleção Metal — 12 Artigos de Blog', desc:'Todos os 12 textos da operação de conteúdo Metal Indianápolis em um só lugar.', href:'projetos/SEO/clientes/metal-indianapolis/blog-textos/01-ferro-fundido-cinzento.html',dt:'27/07/2026', sub:[['02 — Preço do ferro fundido (kg)','projetos/SEO/clientes/metal-indianapolis/blog-textos/02-preco-do-ferro-fundido-kg.html'],['03 — Fábrica de roldanas','projetos/SEO/clientes/metal-indianapolis/blog-textos/03-fabrica-de-roldanas.html'],['04 — Camisa de compressor','projetos/SEO/clientes/metal-indianapolis/blog-textos/04-camisa-compressor.html'],['05 — Cabeçote para compressor','projetos/SEO/clientes/metal-indianapolis/blog-textos/05-cabecote-para-compressor.html'],['06 — Anel de segmento do motor','projetos/SEO/clientes/metal-indianapolis/blog-textos/06-anel-de-segmento-do-motor.html'],['07 — Anel de segmento preço','projetos/SEO/clientes/metal-indianapolis/blog-textos/07-anel-de-segmento-preco.html'],['08 — Preço ferro fundido','projetos/SEO/clientes/metal-indianapolis/blog-textos/08-preco-ferro-fundido.html'],['09 — Peças para tratores','projetos/SEO/clientes/metal-indianapolis/blog-textos/09-pecas-para-tratores.html'],['10 — Fundição de ferros','projetos/SEO/clientes/metal-indianapolis/blog-textos/10-fundicao-de-ferros.html'],['11 — Anel de segmento','projetos/SEO/clientes/metal-indianapolis/blog-textos/11-anel-de-segmento.html'],['12 — Fabricante de peças automotivas','projetos/SEO/clientes/metal-indianapolis/blog-textos/12-fabricante-de-pecas-automotivas.html']]},
-{cat:'conteudo', client:'Metal Indianápolis', type:'conteudo', t:'On-page', title:'Page Titles — Planilha Operacional · Metal', desc:'Mapa de titles por página para implantação on-page.', href:'projetos/SEO/clientes/metal-indianapolis/page-titles-planilha.html',dt:'28/07/2026'},
-{cat:'conteudo', client:'Metal Indianápolis', type:'conteudo', t:'Imagem', title:'Relatório Alt-Text — Metal Indianápolis', desc:'Inventário e reescrita de alt-texts das imagens do site.', href:'projetos/SEO/clientes/metal-indianapolis/docs/alt-text/relatorio-alt-text.html',dt:'25/08/2026'},
-{cat:'conteudo', client:'Metal Indianápolis', type:'conteudo', t:'Schema', title:'Kit SEO JSON — Metal (implantação + schemas)', desc:'Pacote de implantação: conteúdo otimizado de produtos + schemas.', href:'projetos/SEO/clientes/metal-indianapolis/seo-json/implantacao.html',dt:'27/07/2026', sub:[['Produtos — conteúdo otimizado','projetos/SEO/clientes/metal-indianapolis/seo-json/produtos-conteudo-otimizado.html'],['Schema — Contato','projetos/SEO/clientes/metal-indianapolis/seo-json/schemas/contato.html'],['Schema — Empresa','projetos/SEO/clientes/metal-indianapolis/seo-json/schemas/empresa.html'],['Schema — Homepage','projetos/SEO/clientes/metal-indianapolis/seo-json/schemas/homepage.html'],['Schema — Produtos','projetos/SEO/clientes/metal-indianapolis/seo-json/schemas/produtos.html']]},
+{cat:'conteudo', client:'Lola Aviamentos', type:'conteudo', t:'Blog', title:'Blog AG04: Aviamentos (v1)', desc:'Peça editorial do lote AG04 para o blog da Lola.', href:'lola-blog-ag04-aviamentos.html',dt:'31/08/2026',st:'parcial'},
+{cat:'conteudo', client:'Lola Aviamentos', type:'conteudo', t:'Blog', title:'Blog AG04: Aviamentos (v2)', desc:'Segunda versão do artigo AG04 com ajustes editoriais.', href:'lola-blog-ag04-aviamentos-v2.html',dt:'01/09/2026',st:'parcial'},
+{cat:'conteudo', client:'Lola Aviamentos', type:'conteudo', t:'Blog', title:'Blog AG04: Aviamentos (v3)', desc:'Versão final do artigo AG04 aprovada para publicação.', href:'lola-blog-ag04-aviamentos-v3.html',dt:'01/09/2026'},
+{cat:'conteudo', client:'Lola Aviamentos', type:'conteudo', t:'AIO', title:'AG-02: Definition Blocks: Lola Aviamentos', desc:'Blocos de definição otimizados para citação em IAs.', href:'projetos/SEO/clientes/lola/entregas/AIO-B1-AG02-definition-blocks.html',dt:'10/08/2026'},
+{cat:'conteudo', client:'Marcos V4', type:'conteudo', t:'Blog', title:'marcosv4.cloud: Blog Posts', desc:'Compilado de posts do blog pessoal e de autoridade.', href:'marcosv4-blog-posts.html',dt:'17/08/2026'},
+{cat:'conteudo', client:'Conserva Irrigation', type:'conteudo', t:'Blog', title:'Blog Posts: Lote Combinado · Conserva', desc:'Lote de posts produzidos para a operação de conteúdo.', href:'conserva-irrigation/conserva-posts.html',dt:'17/08/2026'},
+{cat:'conteudo', client:'Metal Indianápolis', type:'conteudo', t:'Coleção', title:'Coleção Metal: 12 Artigos de Blog', desc:'Todos os 12 textos da operação de conteúdo Metal Indianápolis em um só lugar.', href:'projetos/SEO/clientes/metal-indianapolis/blog-textos/01-ferro-fundido-cinzento.html',dt:'27/07/2026', sub:[['02: Preço do ferro fundido (kg)','projetos/SEO/clientes/metal-indianapolis/blog-textos/02-preco-do-ferro-fundido-kg.html'],['03: Fábrica de roldanas','projetos/SEO/clientes/metal-indianapolis/blog-textos/03-fabrica-de-roldanas.html'],['04: Camisa de compressor','projetos/SEO/clientes/metal-indianapolis/blog-textos/04-camisa-compressor.html'],['05: Cabeçote para compressor','projetos/SEO/clientes/metal-indianapolis/blog-textos/05-cabecote-para-compressor.html'],['06: Anel de segmento do motor','projetos/SEO/clientes/metal-indianapolis/blog-textos/06-anel-de-segmento-do-motor.html'],['07: Anel de segmento preço','projetos/SEO/clientes/metal-indianapolis/blog-textos/07-anel-de-segmento-preco.html'],['08: Preço ferro fundido','projetos/SEO/clientes/metal-indianapolis/blog-textos/08-preco-ferro-fundido.html'],['09: Peças para tratores','projetos/SEO/clientes/metal-indianapolis/blog-textos/09-pecas-para-tratores.html'],['10: Fundição de ferros','projetos/SEO/clientes/metal-indianapolis/blog-textos/10-fundicao-de-ferros.html'],['11: Anel de segmento','projetos/SEO/clientes/metal-indianapolis/blog-textos/11-anel-de-segmento.html'],['12: Fabricante de peças automotivas','projetos/SEO/clientes/metal-indianapolis/blog-textos/12-fabricante-de-pecas-automotivas.html']]},
+{cat:'conteudo', client:'Metal Indianápolis', type:'conteudo', t:'On-page', title:'Page Titles: Planilha Operacional · Metal', desc:'Mapa de titles por página para implantação on-page.', href:'projetos/SEO/clientes/metal-indianapolis/page-titles-planilha.html',dt:'28/07/2026'},
+{cat:'conteudo', client:'Metal Indianápolis', type:'conteudo', t:'Imagem', title:'Relatório Alt-Text: Metal Indianápolis', desc:'Inventário e reescrita de alt-texts das imagens do site.', href:'projetos/SEO/clientes/metal-indianapolis/docs/alt-text/relatorio-alt-text.html',dt:'25/08/2026'},
+{cat:'conteudo', client:'Metal Indianápolis', type:'conteudo', t:'Schema', title:'Kit SEO JSON: Metal (implantação + schemas)', desc:'Pacote de implantação: conteúdo otimizado de produtos + schemas.', href:'projetos/SEO/clientes/metal-indianapolis/seo-json/implantacao.html',dt:'27/07/2026', sub:[['Produtos: conteúdo otimizado','projetos/SEO/clientes/metal-indianapolis/seo-json/produtos-conteudo-otimizado.html'],['Schema: Contato','projetos/SEO/clientes/metal-indianapolis/seo-json/schemas/contato.html'],['Schema: Empresa','projetos/SEO/clientes/metal-indianapolis/seo-json/schemas/empresa.html'],['Schema: Homepage','projetos/SEO/clientes/metal-indianapolis/seo-json/schemas/homepage.html'],['Schema: Produtos','projetos/SEO/clientes/metal-indianapolis/seo-json/schemas/produtos.html']]},
 /* ============ 06 SDR IA ============ */
-{cat:'sdr-ia', client:'V4 Company', type:'automacao', t:'Hub', title:'SDR IA — Hub de Correções', desc:'Índice de todos os fixes das SDRs IA por cliente, com causa e solução.', href:'sdr-ia-hub/',dt:'17/08/2026'},
-{cat:'sdr-ia', client:'Adplan', type:'automacao', t:'Fix', title:'ADPLAN · Correção de Fluxo — SDR IA', desc:'Correção documentada do fluxo da SDR IA da Adplan.', href:'sdr-ia-hub/fixes/adplan-001.html',dt:'17/08/2026'},
-{cat:'sdr-ia', client:'Genics', type:'automacao', t:'Fix', title:'GENICS · Redis DNS — SDR IA', desc:'Correção de resolução DNS do Redis na operação Genics.', href:'sdr-ia-hub/fixes/genics-001.html',dt:'17/08/2026'},
-{cat:'sdr-ia', client:'Pro Análises', type:'automacao', t:'Fix', title:'PRO ANÁLISES · toDateTime Undefined — SDR IA', desc:'Correção de erro de data no pipeline da SDR.', href:'sdr-ia-hub/fixes/pro-analises-001.html',dt:'17/08/2026'},
-{cat:'sdr-ia', client:'Schwalm', type:'automacao', t:'Fix', title:'SCHWALM · Null Constraint Telefone — SDR IA', desc:'Correção de constraint nula no campo telefone.', href:'sdr-ia-hub/fixes/schwalm-001.html',dt:'17/08/2026'},
-{cat:'sdr-ia', client:'Signor', type:'automacao', t:'Fix', title:'SIGNOR · Task Runner — SDR IA', desc:'Correção do task runner da SDR IA da Signor.', href:'sdr-ia-hub/fixes/signor-001.html',dt:'17/08/2026'},
-{cat:'sdr-ia', client:'Sofia', type:'automacao', t:'Fix', title:'SOFIA · Rate Limit Chatwoot — SDR IA', desc:'Tratamento de rate limit da integração Chatwoot.', href:'sdr-ia-hub/fixes/sofia-001.html',dt:'17/08/2026'},
-{cat:'sdr-ia', client:'V4 Interno', type:'automacao', t:'Fix', title:'V4 INTERNO · Ekyte 404 — SDR IA', desc:'Correção de 404 na integração com o Ekyte.', href:'sdr-ia-hub/fixes/v4-interno-001.html',dt:'17/08/2026'},
-{cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Entrega', title:'Signor × V4 — Alinhamento SDR IA', desc:'Engenharia de confiabilidade: alinhamento técnico da operação.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-alinhamento-ia.html',dt:'19/08/2026'},
-{cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Entrega', title:'Signor · A obra por trás da conversa (v4)', desc:'Narrativa de confiança da SDR IA — versão executiva v4.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-checkin-confianca-v4.html',dt:'13/08/2026'},
-{cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Entrega', title:'Signor · Check-in de Confiança', desc:'Leitura de confiança da operação SDR IA no check-in.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-checkin-confianca.html',dt:'04/08/2026',st:'parcial'},
+{cat:'sdr-ia', client:'V4 Company', type:'automacao', t:'Hub', title:'SDR IA: Hub de Correções', desc:'Índice de todos os fixes das SDRs IA por cliente, com causa e solução.', href:'sdr-ia-hub/',dt:'17/08/2026'},
+{cat:'sdr-ia', client:'Adplan', type:'automacao', t:'Fix', title:'ADPLAN · Correção de Fluxo: SDR IA', desc:'Correção documentada do fluxo da SDR IA da Adplan.', href:'sdr-ia-hub/fixes/adplan-001.html',dt:'17/08/2026'},
+{cat:'sdr-ia', client:'Genics', type:'automacao', t:'Fix', title:'GENICS · Redis DNS: SDR IA', desc:'Correção de resolução DNS do Redis na operação Genics.', href:'sdr-ia-hub/fixes/genics-001.html',dt:'17/08/2026'},
+{cat:'sdr-ia', client:'Pro Análises', type:'automacao', t:'Fix', title:'PRO ANÁLISES · toDateTime Undefined: SDR IA', desc:'Correção de erro de data no pipeline da SDR.', href:'sdr-ia-hub/fixes/pro-analises-001.html',dt:'17/08/2026'},
+{cat:'sdr-ia', client:'Schwalm', type:'automacao', t:'Fix', title:'SCHWALM · Null Constraint Telefone: SDR IA', desc:'Correção de constraint nula no campo telefone.', href:'sdr-ia-hub/fixes/schwalm-001.html',dt:'17/08/2026'},
+{cat:'sdr-ia', client:'Signor', type:'automacao', t:'Fix', title:'SIGNOR · Task Runner: SDR IA', desc:'Correção do task runner da SDR IA da Signor.', href:'sdr-ia-hub/fixes/signor-001.html',dt:'17/08/2026'},
+{cat:'sdr-ia', client:'Sofia', type:'automacao', t:'Fix', title:'SOFIA · Rate Limit Chatwoot: SDR IA', desc:'Tratamento de rate limit da integração Chatwoot.', href:'sdr-ia-hub/fixes/sofia-001.html',dt:'17/08/2026'},
+{cat:'sdr-ia', client:'V4 Interno', type:'automacao', t:'Fix', title:'V4 INTERNO · Ekyte 404: SDR IA', desc:'Correção de 404 na integração com o Ekyte.', href:'sdr-ia-hub/fixes/v4-interno-001.html',dt:'17/08/2026'},
+{cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Entrega', title:'Signor × V4: Alinhamento SDR IA', desc:'Engenharia de confiabilidade: alinhamento técnico da operação.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-alinhamento-ia.html',dt:'19/08/2026'},
+{cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Entrega', title:'Signor · A obra por trás da conversa (v4)', desc:'Narrativa de confiança da SDR IA. Versão executiva v4.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-checkin-confianca-v4.html',dt:'13/08/2026'},
+{cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Story', title:'Signor · A história da SDR IA (storytelling)', desc:'Versão narrativa da evolução da SDR IA da Signor.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-checkin-storytelling.html',dt:'04/08/2026',st:'parcial'},
 {cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Report', title:'SDR IA Signor · Relatório de Melhorias', desc:'Backlog de melhorias aplicadas e planejadas na SDR.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-checkin-relatorio-melhorias.html',dt:'04/08/2026'},
 {cat:'sdr-ia', client:'Signor Concretos', type:'automacao', t:'Story', title:'Signor · A história da SDR IA (storytelling)', desc:'Versão narrativa da evolução da SDR IA da Signor.', href:'projetos/SDR%20IA/%5BSDR-AI%5D%20Signor/entregas/signor-checkin-storytelling.html',dt:'04/08/2026'},
 /* ============ 07 AI VISIBILITY ============ */
-{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Produto', title:'AI Visibility — Arquitetura de Agentes', desc:'Desenho técnico do produto de visibilidade em IAs.', href:'projetos/AEO-GEO/ai-visibility-agent-architecture.html',dt:'31/05/2026'},
-{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Docs', title:'AI Visibility — Documentação Técnica (dev)', desc:'Especificação para implementação do produto.', href:'projetos/AEO-GEO/ai-visibility-dev.html',dt:'31/05/2026'},
-{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Landing', title:'AI Visibility — Landing Comercial', desc:'Página de venda: sua marca citada por inteligências artificiais.', href:'projetos/AEO-GEO/ai-visibility-landing.html',dt:'31/05/2026'},
-{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Produto', title:'AI Visibility — Documentação Cliente', desc:'Visão do produto para apresentação a clientes.', href:'projetos/AEO-GEO/ai-visibility-produto.html',dt:'31/05/2026'},
-{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Portal', title:'AI Visibility — Portal de Diagnóstico Gratuito', desc:'Ferramenta de entrada: diagnóstico gratuito de visibilidade em IA.', href:'projetos/AEO-GEO/portal/',dt:'31/05/2026'},
-{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Template', title:'Template — Dashboard de Auditoria AI Visibility', desc:'Modelo reutilizável de dashboard de diagnóstico.', href:'projetos/AEO-GEO/docs/templates/dashboard-auditoria.html',dt:'31/05/2026'},
-{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Template', title:'Template — Kickoff AIO/GEO', desc:'Formulário padrão de kickoff para projetos AIO/GEO.', href:'projetos/AEO-GEO/docs/templates/kickoff-aio-geo.html',dt:'31/05/2026'},
-{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Base', title:'MASTER AIO/GEO — Documentação Completa', desc:'Referência-mãe de AIO/GEO da operação.', href:'docs/seo/MASTER_AIO_GEO.html',dt:'27/07/2026'},
+{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Produto', title:'AI Visibility: Arquitetura de Agentes', desc:'Desenho técnico do produto de visibilidade em IAs.', href:'projetos/AEO-GEO/ai-visibility-agent-architecture.html',dt:'31/05/2026'},
+{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Docs', title:'AI Visibility: Documentação Técnica (dev)', desc:'Especificação para implementação do produto.', href:'projetos/AEO-GEO/ai-visibility-dev.html',dt:'31/05/2026'},
+{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Landing', title:'AI Visibility: Landing Comercial', desc:'Página de venda: sua marca citada por inteligências artificiais.', href:'projetos/AEO-GEO/ai-visibility-landing.html',dt:'31/05/2026'},
+{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Produto', title:'AI Visibility: Documentação Cliente', desc:'Visão do produto para apresentação a clientes.', href:'projetos/AEO-GEO/ai-visibility-produto.html',dt:'31/05/2026'},
+{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Portal', title:'AI Visibility: Portal de Diagnóstico Gratuito', desc:'Ferramenta de entrada: diagnóstico gratuito de visibilidade em IA.', href:'projetos/AEO-GEO/portal/',dt:'31/05/2026'},
+{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Template', title:'Template: Dashboard de Auditoria AI Visibility', desc:'Modelo reutilizável de dashboard de diagnóstico.', href:'projetos/AEO-GEO/docs/templates/dashboard-auditoria.html',dt:'31/05/2026'},
+{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Template', title:'Template: Kickoff AIO/GEO', desc:'Formulário padrão de kickoff para projetos AIO/GEO.', href:'projetos/AEO-GEO/docs/templates/kickoff-aio-geo.html',dt:'31/05/2026'},
+{cat:'ai-visibility', client:'V4 Company', type:'automacao', t:'Base', title:'MASTER AIO/GEO: Documentação Completa', desc:'Referência principal de AIO/GEO da operação.', href:'docs/seo/MASTER_AIO_GEO.html',dt:'27/07/2026'},
 /* ============ 08 MARKETPLACE ============ */
-{cat:'marketplace', client:'Alto Calçados', type:'estrategia', t:'Apresentação', title:'Alto Calçados — Expansão em Marketplaces', desc:'Deck de expansão: canais, sortimento e operação.', href:'alto-calcados-apresentacao.html',dt:'12/09/2026'},
-{cat:'marketplace', client:'Alto Calçados', type:'estrategia', t:'Auditoria', title:'Alto Calçados — Auditoria & Expansão', desc:'Diagnóstico + plano de expansão em marketplaces.', href:'alto-calcados-auditoria.html',dt:'10/09/2026'},
-{cat:'marketplace', client:'Marcos Luciano', type:'estrategia', t:'Framework', title:'Pattern Detection — Gestão de Marketplace (light)', desc:'Framework pessoal: 5 dimensões, 8 padrões, RMPE/ROPE e playbook 90 dias.', href:'gestao-marketplace-marcos-light.html',dt:'17/08/2026'},
-{cat:'marketplace', client:'Marcos Luciano', type:'estrategia', t:'Framework', title:'Pattern Detection — Gestão de Marketplace (dark)', desc:'Versão dark do framework para apresentação.', href:'gestao-marketplace-marcos-dark.html',dt:'17/08/2026'},
-{cat:'marketplace', client:'Amiguros', type:'estrategia', t:'Experiência', title:'Amiguros — Experiência de Conexão', desc:'Entrega de experiência / posicionamento da operação Amiguros.', href:'experiencia-amiguros.html',dt:'29/07/2026'},
+{cat:'marketplace', client:'Alto Calçados', type:'estrategia', t:'Apresentação', title:'Alto Calçados: Expansão em Marketplaces', desc:'Deck de expansão: canais, sortimento e operação.', href:'alto-calcados-apresentacao.html',dt:'12/09/2026'},
+{cat:'marketplace', client:'Alto Calçados', type:'estrategia', t:'Auditoria', title:'Alto Calçados: Auditoria & Expansão', desc:'Diagnóstico e plano de expansão em marketplaces.', href:'alto-calcados-auditoria.html',dt:'10/09/2026'},
+{cat:'marketplace', client:'Marcos Luciano', type:'estrategia', t:'Framework', title:'Pattern Detection: Gestão de Marketplace (light)', desc:'Framework pessoal: 5 dimensões, 8 padrões e playbook de operação.', href:'gestao-marketplace-marcos-light.html',dt:'17/08/2026'},
+{cat:'marketplace', client:'Marcos Luciano', type:'estrategia', t:'Framework', title:'Pattern Detection: Gestão de Marketplace (dark)', desc:'Versão dark do framework para apresentação.', href:'gestao-marketplace-marcos-dark.html',dt:'17/08/2026'},
+{cat:'marketplace', client:'Amiguros', type:'estrategia', t:'Experiência', title:'Amiguros: Experiência de Conexão', desc:'Entrega de experiência e posicionamento da operação Amiguros.', href:'experiencia-amiguros.html',dt:'29/07/2026'},
 /* ============ 09 SITES ============ */
-{cat:'sites', client:'Premium Contractors', type:'site', t:'Website', title:'Premium Contractors LLC — Website (Newark, NJ)', desc:'Website comercial de construção entregue em produção.', href:'projetos/Websites/premium-contractors-website/',dt:'13/05/2026'},
-{cat:'sites', client:'Brinks / Cofres', type:'site', t:'Landing', title:'Rede Brinks Pay — Front', desc:'Front-end da campanha Rede Brinks Pay.', href:'mkt_landpages/redebrinkspay-front/redebrinkspay-front/index.html',dt:'01/06/2026'},
-{cat:'sites', client:'Brinks / Cofres', type:'site', t:'Landing', title:'Valores que se Completam — Front', desc:'Front-end institucional da campanha.', href:'mkt_landpages/valoresquesecompletam-front/valoresquesecompletam-front/index.html',dt:'01/06/2026'},
-{cat:'sites', client:'Brinks / Cofres', type:'site', t:'E-mail', title:'Meu Cofre Inteligente — E-mail Marketing', desc:'Template de e-mail da campanha Meu Cofre Inteligente.', href:'mkt_landpages/meucofreinteligente-front/meucofreinteligente-front/email.html',dt:'01/06/2026'},
+{cat:'sites', client:'Premium Contractors', type:'site', t:'Website', title:'Premium Contractors LLC: Website (Newark, NJ)', desc:'Website comercial de construção entregue em produção.', href:'projetos/Websites/premium-contractors-website/',dt:'13/05/2026'},
+{cat:'sites', client:'Brinks / Cofres', type:'site', t:'Landing', title:'Rede Brinks Pay: Front', desc:'Front-end da campanha Rede Brinks Pay.', href:'mkt_landpages/redebrinkspay-front/redebrinkspay-front/index.html',dt:'01/06/2026'},
+{cat:'sites', client:'Brinks / Cofres', type:'site', t:'Landing', title:'Valores que se Completam: Front', desc:'Front-end institucional da campanha.', href:'mkt_landpages/valoresquesecompletam-front/valoresquesecompletam-front/index.html',dt:'01/06/2026'},
+{cat:'sites', client:'Brinks / Cofres', type:'site', t:'E-mail', title:'Meu Cofre Inteligente: E-mail Marketing', desc:'Template de e-mail da campanha Meu Cofre Inteligente.', href:'mkt_landpages/meucofreinteligente-front/meucofreinteligente-front/email.html',dt:'01/06/2026'},
 {cat:'sites', client:'V4 Peretto', type:'site', t:'Template', title:'Dashboard Gestão de Projetos SEO (template)', desc:'Modelo de dashboard executivo reutilizável por cliente.', href:'dashboard/',dt:'02/09/2026'},
-{cat:'hub', client:'V4 Peretto', type:'hub', t:'Docs v2', title:'Documentação de Software — Hub de Agentes (v2 canônica)', desc:'Documentação séria de software: existência, arquitetura, inventário verificado, manutenção e roadmap. Base permanente da empresa.', href:'projetos/hub-agentes-ia/',dt:'14/09/2026'},
+/* ============ 10 SHARE OF SEARCH ============ */
+{cat:'share-search', client:'V4 Company', type:'estrategia', t:'Referência', title:'Share of Search: Documento de referência do produto', desc:'Base técnica do produto: conceito, módulos e método de medição de share.', href:'share-of-search/',dt:'18/09/2026'},
+{cat:'share-search', client:'V4 Company', type:'estrategia', t:'Relatório', title:'Share of Search: Relatório inicial de produtização', desc:'Versão relatório do documento de produtização do produto.', href:'share-of-search-relatorio.html',dt:'18/09/2026',st:'parcial'},
+{cat:'share-search', client:'V4 Company', type:'estrategia', t:'Apresentação', title:'Share of Search: Apresentação didática conceitual', desc:'Material didático com exemplos fictícios: conceito, leitura de gráficos, concorrentes, brand visibility e estratégias.', href:'gpcorp-share-of-search.html',dt:'02/10/2026'},
+{cat:'share-search', client:'V4 Company', type:'estrategia', t:'Proposta', title:'Report Mensal Share of Search: Proposta comercial', desc:'Proposta corporativa: escopo técnico SPEC, inteligência consultiva, esforço e investimento.', href:'proposta-report-mensal-share-of-search.html',dt:'02/10/2026'},
+{cat:'share-search', client:'V4 Company', type:'estrategia', t:'Escopo', title:'Report Mensal Share of Search: Escopo do acompanhamento', desc:'Escopo do report mensal: itens fixos, cadência, limites e investimento.', href:'escopo-report-mensal-share-of-search.html',dt:'02/10/2026'},
+{cat:'hub', client:'V4 Peretto', type:'hub', t:'Docs v2', title:'Documentação de Software: Hub de Agentes (v2 canônica)', desc:'Documentação de software: existência, arquitetura, inventário verificado, manutenção e roadmap.', href:'projetos/hub-agentes-ia/',dt:'14/09/2026'}
 ];
-/* ===== Central de Entregas — app ===== */
+/* ===== App: mesma lógica de operação do Hub, adaptada ao catálogo ===== */
 const $ = id => document.getElementById(id);
 const absUrl = h => h.startsWith('http') ? h : BASE + h;
 const escQ = s => s.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
@@ -420,51 +434,54 @@ const TYPE_LABEL = {hub:'Hub / Sistema', auditoria:'Auditoria', relatorio:'Relat
 const CATMAP = {}; CATS.forEach(c => CATMAP[c.id] = c);
 const CODE = {}; CATS.forEach(c => CODE[c.id] = c.short.split(' ')[0].slice(0,3).toUpperCase());
 const ST_LABEL = {atual:'Atual', parcial:'Legado parcial', legado:'Legado'};
-const ST_CLASS = {atual:'', parcial:'t-audit', legado:'t-hub'};
+const ST_CLASS = {atual:'st-ok', parcial:'st-warn', legado:'st-off'};
 const dtKey = s => { const m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(s || ''); return m ? (m[3]+m[2]+m[1]) : '00000000'; };
 
-/* Flatten: each URL (main + sublinks) is a row; children collapse under parent */
 let ROWS = [];
 D.forEach((d, i) => {
   const code = (CODE[d.cat] || 'IT') + '-' + String(i + 1).padStart(2, '0');
   const pst = d.st || 'atual';
-  ROWS.push({code, parent:i, child:-1, cat:d.cat, client:d.client, type:d.type, tlabel:d.t || TYPE_LABEL[d.type] || d.type, title:d.title, desc:d.desc, href:d.href, dt:d.dt || '—', st:pst});
+  ROWS.push({code, parent:i, child:-1, cat:d.cat, client:d.client, type:d.type, tlabel:d.t || TYPE_LABEL[d.type] || d.type, title:d.title, desc:d.desc, href:d.href, dt:d.dt || 'n/d', st:pst});
   (d.sub || []).forEach((s, j) => {
-    ROWS.push({code:code + '.' + (j + 1), parent:i, child:j, cat:d.cat, client:d.client, type:d.type, tlabel:'Vinculada', title:s[0], desc:'Link vinculado a “' + d.title + '”.', href:s[1], dt:d.dt || '—', st:s[2] || pst});
+    ROWS.push({code:code + '.' + (j + 1), parent:i, child:j, cat:d.cat, client:d.client, type:d.type, tlabel:'Vinculada', title:s[0], desc:'Link vinculado a "' + d.title + '".', href:s[1], dt:d.dt || 'n/d', st:s[2] || pst});
   });
 });
 const openKids = new Set();
 
-/* Sidebar + filters */
+/* Sidebar + filtros */
 const sideNav = $('sideNav');
 CATS.forEach(c => {
   const n = D.filter(d => d.cat === c.id).length;
   const li = document.createElement('li');
-  li.innerHTML = '<a class="sb-link" href="#panel" data-nav="' + c.id + '">' + c.n + ' · ' + c.short + '<span class="n">' + n + '</span></a>';
+  li.innerHTML = '<a class="nav-link nav-sub" data-nav="' + c.id + '">' + c.n + ' · ' + c.short + '<span class="n">' + n + '</span></a>';
   sideNav.appendChild(li);
 });
 const clients = [...new Set(D.map(d => d.client))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
 clients.forEach(c => { const o=document.createElement('option'); o.value=c; o.textContent=c; $('fClient').appendChild(o); });
 CATS.forEach(c => { const o=document.createElement('option'); o.value=c.id; o.textContent=c.n+' · '+c.label; $('fCat').appendChild(o); });
 
-/* KPIs */
-(function kpis(){
+/* Números do portal calculados do próprio catálogo */
+(function stats(){
   const urls = ROWS.length;
-  const cats = CATS.length;
   const nClients = clients.length;
-  const audits = ROWS.filter(r=>r.child<0 && r.type==='auditoria').length;
-  $('kTotal').textContent = D.length;
-  $('kUrls').textContent = urls;
-  $('kClients').textContent = nClients;
-  $('kAudit').textContent = audits;
-  const leg = D.filter(d=>(d.st||'atual')!=='atual').length + ROWS.filter(r=>r.child>=0 && r.st!=='atual').length;
-  $('kHealth').textContent = leg;
-  $('kHealthD').textContent = 'itens em legado (total/parcial)';
-  $('headCount').textContent = D.length + ' entregas · ' + urls + ' URLs';
-  $('footLine').textContent = D.length + ' entregas · ' + urls + ' URLs · ' + nClients + ' clientes/frentes';
+  $('pEntregas').textContent = D.length;
+  $('pUrls').textContent = urls;
+  $('pClients').textContent = nClients;
+  $('footLine').textContent = D.length + ' entregas · ' + urls + ' URLs · ' + nClients + ' clientes e frentes';
 })();
 
-/* Portfolio tables */
+/* Destaques: as 6 entregas mais recentes */
+(function feat(){
+  const top = D.slice().sort((a,b)=>dtKey(b.dt).localeCompare(dtKey(a.dt))).slice(0,6);
+  $('featGrid').innerHTML = top.map(d => {
+    const c = CATMAP[d.cat];
+    return '<div class="agent-card"><div class="name"><a href="' + d.href + '" target="_blank" rel="noopener">' + d.title + '</a></div>'
+      + '<div class="desc">' + d.desc + '</div>'
+      + '<div class="meta"><span class="meta-tag hot">' + d.dt + '</span><span class="meta-tag">' + c.short + '</span><span class="meta-tag">' + d.client + '</span></div></div>';
+  }).join('');
+})();
+
+/* Tabelas por cliente e por categoria */
 (function portfolio(){
   let hc = '<tr><th>Cliente / frente</th><th style="text-align:right">Entregas</th><th style="text-align:right">URLs</th></tr>';
   clients.map(c => {
@@ -504,7 +521,7 @@ function sorted(rows){
   else if (m === 'client') arr.sort((a,b)=>a.client.localeCompare(b.client,'pt-BR')||a.title.localeCompare(b.title,'pt-BR'));
   else if (m === 'type') arr.sort((a,b)=>a.tlabel.localeCompare(b.tlabel,'pt-BR')||a.title.localeCompare(b.title,'pt-BR'));
   else if (m === 'date') arr.sort((a,b)=>(dtKey(b.dt).localeCompare(dtKey(a.dt)))||(a.parent-b.parent)||(a.child-b.child));
-  else arr.sort((a,b)=>(CATS.findIndex(c=>c.id===a.cat)-CATS.findIndex(c=>c.id===b.cat))||(a.parent-b.parent)||(a.child-b.child));
+  else arr.sort((a,b)=>(CATS.findIndex(c=>c.id===a.cat)-CATS.findIndex(c.id===b.cat))||(a.parent-b.parent)||(a.child-b.child));
   return arr;
 }
 function kidCount(i){ return ROWS.filter(r=>r.parent===i && r.child>=0).length; }
@@ -512,14 +529,14 @@ function kidCount(i){ return ROWS.filter(r=>r.parent===i && r.child>=0).length; 
 function render(){
   const rows = sorted(filtered());
   const tb = $('rows');
-  let html = '', lastCat = null, shown = 0;
+  let html = '', lastCat = null;
   const grouped = $('fSort').value === 'cat' && !$('q').value.trim();
   rows.forEach(r => {
     if (grouped && r.child < 0 && r.cat !== lastCat){
       lastCat = r.cat;
       const c = CATMAP[r.cat];
       const n = rows.filter(x=>x.cat===r.cat && x.child<0).length;
-      html += '<tr class="grp"><td colspan="8">' + c.n + ' · ' + c.label + ' <span class="cnt">— ' + n + ' entrega(s)</span><button class="gcopy" onclick="copyCat(\''+c.id+'\',this)">Copiar links da categoria</button></td></tr>';
+      html += '<tr class="grp"><td colspan="8">' + c.n + ' · ' + c.label + ' <span class="cnt">· ' + n + ' entrega(s)</span><button class="gcopy" onclick="copyCat(\''+c.id+'\',this)">Copiar links da categoria</button></td></tr>';
     }
     if (r.child >= 0){
       html += '<tr class="data child"><td class="id">' + r.code + '</td>'
@@ -529,7 +546,7 @@ function render(){
         + '<td><span class="bdg">Vinculada</span></td>'
         + '<td style="white-space:nowrap">' + r.dt + '</td>'
         + '<td><span class="bdg ' + ST_CLASS[r.st] + '">' + ST_LABEL[r.st] + '</span></td>'
-        + '<td style="text-align:right">—</td>'
+        + '<td style="text-align:right">·</td>'
         + '<td class="acts"><a class="icon-btn go" href="' + r.href + '" target="_blank" rel="noopener">Abrir ↗</a><button class="icon-btn" onclick="copyLink(\'' + escQ(r.href) + '\',this)">Copiar ⧉</button></td></tr>';
     } else {
       const kc = kidCount(r.parent);
@@ -541,19 +558,18 @@ function render(){
         + (kc ? '<button class="toggle-link" onclick="toggleKids(' + r.parent + ')">' + (open ? '▾ Ocultar ' : '▸ Ver ') + kc + ' link(s) vinculado(s)</button>' : '')
         + '</td>'
         + '<td><span class="bdg">' + CATMAP[r.cat].short + '</span></td>'
-        + '<td><span class="bdg t-' + r.type + '">' + r.tlabel + '</span></td>'
+        + '<td><span class="bdg ty-hub">' + r.tlabel + '</span></td>'
         + '<td style="white-space:nowrap">' + r.dt + '</td>'
         + '<td><span class="bdg ' + ST_CLASS[r.st] + '">' + ST_LABEL[r.st] + '</span></td>'
         + '<td style="text-align:right"><strong>' + (1 + kc) + '</strong></td>'
         + '<td class="acts"><a class="icon-btn go" href="' + r.href + '" target="_blank" rel="noopener">Abrir ↗</a><button class="icon-btn" onclick="copyLink(\'' + escQ(r.href) + '\',this)">Copiar ⧉</button></td></tr>';
     }
-    shown++;
   });
   tb.innerHTML = html;
   $('empty').classList.toggle('show', !rows.length);
-  $('tblCount').textContent = rows.length + ' linha(s)';
+  $('tblCount').textContent = rows.length + ' linha(s) no filtro atual';
   const scope = ($('q').value || $('fClient').value || $('fCat').value || $('fType').value || $('fStatus').value)
-    ? 'Exibindo <strong>' + rows.filter(r=>r.child<0).length + '</strong> entrega(s) no filtro — de <strong>' + D.length + '</strong> no total.'
+    ? 'Exibindo <strong>' + rows.filter(r=>r.child<0).length + '</strong> entrega(s) no filtro, de <strong>' + D.length + '</strong> no total.'
     : 'Catálogo completo: <strong>' + D.length + '</strong> entregas · <strong>' + ROWS.length + '</strong> URLs publicadas.';
   $('statusLine').innerHTML = scope;
 }
@@ -603,18 +619,23 @@ $('btnCsv').onclick = function(){
   setTimeout(()=>URL.revokeObjectURL(a.href), 2000);
   toast('CSV exportado');
 };
-document.querySelectorAll('[data-nav]').forEach(a => a.addEventListener('click', e => {
+document.querySelectorAll('#sideNav [data-nav]').forEach(a => a.addEventListener('click', e => {
+  e.preventDefault();
   const v = a.getAttribute('data-nav');
-  document.querySelectorAll('.sb-link').forEach(x=>x.classList.remove('active'));
-  a.classList.add('active');
   $('fCat').value = v; render();
-  document.getElementById('panel') || null;
-  document.querySelector('.panel').scrollIntoView({behavior:'smooth'});
-  if (window.innerWidth <= 900) $('sidebar').classList.remove('open');
+  document.getElementById('catalogo').scrollIntoView({behavior:'smooth'});
+  if (window.innerWidth <= 900) document.querySelector('.sidebar').classList.remove('open');
+}));
+document.querySelectorAll('.sidebar nav a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+  if (a.hasAttribute('data-nav')) return;
+  e.preventDefault();
+  const t = document.querySelector(a.getAttribute('href'));
+  if (t) t.scrollIntoView({behavior:'smooth'});
+  if (window.innerWidth <= 900) document.querySelector('.sidebar').classList.remove('open');
 }));
 $('btnShare').onclick = function(){ writeText(BASE, 'Link do portfólio copiado'); this.textContent='Link copiado ✓'; setTimeout(()=>this.textContent='Compartilhar portfólio',1500); };
 $('btnGoCsv').onclick = () => $('btnCsv').click();
-$('menuBtn').onclick = () => $('sidebar').classList.toggle('open');
+$('menuBtn').onclick = () => document.querySelector('.sidebar').classList.toggle('open');
 
 render();
 </script>
