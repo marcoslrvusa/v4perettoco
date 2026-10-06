@@ -1,0 +1,370 @@
+{
+  "meta": {
+    "task": "10049804 — [AIO B1] BreadcrumbList schema global",
+    "gargalo": "AG-01",
+    "cliente": "Lola Aviamentos (Lola Soluções em Têxteis)",
+    "site": "https://www.lolaaviamentos.com.br",
+    "plataforma": "Nuvemshop (Tema Amazonas)",
+    "gtm": "GTM-MQW27G8G",
+    "data": "2026-08-10",
+    "objetivo": "Implantar BreadcrumbList schema em todas as páginas para dar contexto hierárquico aos LLMs e validar profundidade/consistência com a árvore real de categorias do site."
+  },
+  "arvore_real_de_categorias": {
+    "home": "https://www.lolaaviamentos.com.br/",
+    "categorias_nivel_1": {
+      "Entretela de Memória": "/entretela-de-memoria/",
+      "Bordado": "/bordado1/",
+      "Entretelas para Alfaiataria": "/entretela-alfaiataria/",
+      "Insumos para Bonés": "/insumos-para-bones/",
+      "Acessórios": "/acessorios/",
+      "Máquinas para Confecção": "/maquinas-acessorios/"
+    },
+    "subcategorias_bordado": {
+      "Filmes": "/bordado1/filmes/",
+      "Hidrossolúvel": "/bordado1/hidrossoluvel/",
+      "Toque Macio": "/bordado1/toque-macio/",
+      "Termocolante": "/bordado1/termocolante/",
+      "Rasgo Fácil": "/bordado1/rasgo-facil/"
+    },
+    "subcategorias_entretela_memoria": {
+      "Cinza": "/entretela-de-memoria/cinza/",
+      "Branca": "/entretela-de-memoria/branca/",
+      "Preta": "/entretela-de-memoria/preta/"
+    },
+    "subcategorias_insumos_bones": {
+      "Regulador Plástico": "/insumos-para-bones/regulador-plastico/",
+      "Tela": "/insumos-para-bones/tela/",
+      "Tecidos (Suede)": "/insumos-para-bones/suede1/",
+      "Aba Plástica": "/insumos-para-bones/aba-plastica/",
+      "Viés": "/insumos-para-bones/vies1/"
+    },
+    "subcategorias_alfaiataria": {
+      "Tecido Plano": "/entretela-alfaiataria/tecido-plano/",
+      "Entretelas de Malha": "/entretela-alfaiataria/entretelas-de-malha/",
+      "TNT Termocolante": "/entretela-alfaiataria/tnt-termocolante/",
+      "Termocolante": "/entretela-alfaiataria/termocolante1/",
+      "Algodão": "/entretela-alfaiataria/algodao/"
+    },
+    "institucionais": {
+      "Empresa": "/empresa/",
+      "Contato": "/contato/",
+      "Política de Privacidade": "/politica_privacidade/",
+      "Trocas e Devoluções": "/trocas-devolucoes/"
+    },
+    "base_www": "https://www.lolaaviamentos.com.br"
+  },
+  "templates": {
+    "home": {
+      "recomendacao": "Breadcrumb na home é desnecessário — a barra de navegação já representa o início. Schema só quando a página tem nível acima do 'Início'.",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Início",
+            "item": "https://www.lolaaviamentos.com.br/"
+          }
+        ]
+      }
+    },
+    "categoria_nivel_1_entretela_memoria": {
+      "paginas": ["https://www.lolaaviamentos.com.br/entretela-de-memoria/"],
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Início",
+            "item": "https://www.lolaaviamentos.com.br/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Entretela de Memória",
+            "item": "https://www.lolaaviamentos.com.br/entretela-de-memoria/"
+          }
+        ]
+      }
+    },
+    "categoria_nivel_1_bordado": {
+      "paginas": ["https://www.lolaaviamentos.com.br/bordado1/"],
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Início",
+            "item": "https://www.lolaaviamentos.com.br/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Bordado",
+            "item": "https://www.lolaaviamentos.com.br/bordado1/"
+          }
+        ]
+      }
+    },
+    "categoria_nivel_1_insumos_bones": {
+      "paginas": ["https://www.lolaaviamentos.com.br/insumos-para-bones/"],
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Início",
+            "item": "https://www.lolaaviamentos.com.br/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Insumos para Bonés",
+            "item": "https://www.lolaaviamentos.com.br/insumos-para-bones/"
+          }
+        ]
+      }
+    },
+    "categoria_nivel_1_alfaiataria": {
+      "paginas": ["https://www.lolaaviamentos.com.br/entretela-alfaiataria/"],
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Início",
+            "item": "https://www.lolaaviamentos.com.br/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Entretelas para Alfaiataria",
+            "item": "https://www.lolaaviamentos.com.br/entretela-alfaiataria/"
+          }
+        ]
+      }
+    },
+    "categoria_nivel_1_acessorios": {
+      "paginas": ["https://www.lolaaviamentos.com.br/acessorios/"],
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Início",
+            "item": "https://www.lolaaviamentos.com.br/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Acessórios",
+            "item": "https://www.lolaaviamentos.com.br/acessorios/"
+          }
+        ]
+      }
+    },
+    "categoria_nivel_1_maquinas": {
+      "paginas": ["https://www.lolaaviamentos.com.br/maquinas-acessorios/"],
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Início",
+            "item": "https://www.lolaaviamentos.com.br/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Máquinas para Confecção",
+            "item": "https://www.lolaaviamentos.com.br/maquinas-acessorios/"
+          }
+        ]
+      }
+    },
+    "subcategoria_bordado": {
+      "exemplo_pagina": "https://www.lolaaviamentos.com.br/bordado1/rasgo-facil/",
+      "regra": "posição 3 = nome da subcategoria (usar o título do menu, não a slug). Ex.: 'Rasgo Fácil', 'Hidrossolúvel', 'Toque Macio', 'Filmes', 'Termocolante'",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Início",
+            "item": "https://www.lolaaviamentos.com.br/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Bordado",
+            "item": "https://www.lolaaviamentos.com.br/bordado1/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Rasgo Fácil",
+            "item": "https://www.lolaaviamentos.com.br/bordado1/rasgo-facil/"
+          }
+        ]
+      }
+    },
+    "subcategoria_entretela_memoria": {
+      "exemplo_pagina": "https://www.lolaaviamentos.com.br/entretela-de-memoria/cinza/",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Início",
+            "item": "https://www.lolaaviamentos.com.br/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Entretela de Memória",
+            "item": "https://www.lolaaviamentos.com.br/entretela-de-memoria/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Cinza",
+            "item": "https://www.lolaaviamentos.com.br/entretela-de-memoria/cinza/"
+          }
+        ]
+      }
+    },
+    "subcategoria_insumos_bones": {
+      "exemplo_pagina": "https://www.lolaaviamentos.com.br/insumos-para-bones/aba-plastica/",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Início",
+            "item": "https://www.lolaaviamentos.com.br/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Insumos para Bonés",
+            "item": "https://www.lolaaviamentos.com.br/insumos-para-bones/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Aba Plástica",
+            "item": "https://www.lolaaviamentos.com.br/insumos-para-bones/aba-plastica/"
+          }
+        ]
+      }
+    },
+    "produto": {
+      "exemplo_pagina": "https://www.lolaaviamentos.com.br/produtos/entretela-para-bordado-rasgavel-40g-90cm-200m/",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Início",
+            "item": "https://www.lolaaviamentos.com.br/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Bordado",
+            "item": "https://www.lolaaviamentos.com.br/bordado1/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Rasgo Fácil",
+            "item": "https://www.lolaaviamentos.com.br/bordado1/rasgo-facil/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": "Entretela Não Tecido para Bordado Rasgável 40g Lec-40",
+            "item": "https://www.lolaaviamentos.com.br/produtos/entretela-para-bordado-rasgavel-40g-90cm-200m/"
+          }
+        ]
+      }
+    },
+    "institucional_empresa": {
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Início",
+            "item": "https://www.lolaaviamentos.com.br/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Empresa",
+            "item": "https://www.lolaaviamentos.com.br/empresa/"
+          }
+        ]
+      }
+    },
+    "institucional_contato": {
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Início",
+            "item": "https://www.lolaaviamentos.com.br/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Contato",
+            "item": "https://www.lolaaviamentos.com.br/contato/"
+          }
+        ]
+      }
+    }
+  },
+  "validacao": {
+    "profundidade_maxima": 4,
+    "exemplos_validos": [
+      "Início > Entretela de Memória (2 níveis)",
+      "Início > Bordado > Rasgo Fácil (3 níveis)",
+      "Início > Bordado > Rasgo Fácil > [Produto] (4 níveis)",
+      "Início > Entretela de Memória > Cinza (3 níveis)"
+    ],
+    "regras": [
+      "Usar SEMPRE a URL canônica www.lolaaviamentos.com.br (site canonicaliza de non-www para www).",
+      "name deve copiar exatamente o texto visível do breadcrumb do tema Amazonas (ex.: 'Rasgo Fácil', não 'rasgo-facil').",
+      "Position sequencial começando em 1; item do último nível = URL da própria página.",
+      "Compatível com o padrão do tema Amazonas, que já renderiza a trilha visual — o schema apenas o espelha.",
+      "Não remover o JSON-LD de Product que a Nuvemshop injeta na home."
+    ]
+  }
+}

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lola Aviamentos | SEO/AIO — Evidências de entregas do projeto até 30/09/2026</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --green: #4dc247;
+    --green-deep: #1f7a37;
+    --green-dark: #0f2e18;
+    --ink: #16181d;
+    --ink-soft: #4a505c;
+    --line: #e4e7ec;
+    --bg-soft: #f7f8fa;
+    --accent: #0b5ed7;
+    --warn: #b3261e;
+    --amber: #9a6700;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: #f6f7f5;
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ---------- cover ---------- */
+  .cover {
+    background: linear-gradient(135deg, #0a160d 0%, #102415 55%, #17351d 100%);
+    color: #fff;
+    padding: 64px 40px 52px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -60%; left: -30%;
+    width: 160%; height: 200%;
+    background: radial-gradient(circle, rgba(77,194,71,0.10) 0%, transparent 55%);
+    pointer-events: none;
+  }
+  .cover-content { position: relative; z-index: 1; max-width: 880px; margin: 0 auto; }
+  .cover .label {
+    display: inline-block;
+    background: rgba(77,194,71,0.12);
+    border: 1px solid rgba(77,194,71,0.35);
+    padding: 6px 20px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+    color: var(--green);
+  }
+  .cover h1 { font-size: 38px; font-weight: 800; line-height: 1.15; margin-bottom: 14px; letter-spacing: -0.5px; }
+  .cover p.sub { font-size: 17px; opacity: 0.88; margin-bottom: 26px; font-weight: 400; }
+  .cover .rule { width: 60px; height: 3px; background: var(--green); margin: 0 auto 26px; border-radius: 2px; }
+  .cover-meta { display: flex; gap: 10px 26px; justify-content: center; flex-wrap: wrap; font-size: 13px; opacity: 0.75; }
+  .cover-meta span { white-space: nowrap; }
+
+  /* ---------- layout ---------- */
+  .container { max-width: 1040px; margin: -34px auto 56px; padding: 0 20px; position: relative; z-index: 2; }
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: 0 10px 30px -22px rgba(16,24,40,0.35);
+    margin-bottom: 26px;
+    overflow: hidden;
+  }
+  .card-body { padding: 30px 34px 34px; }
+  h2 { font-size: 21px; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.2px; }
+  h2 .n {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 30px; height: 30px; border-radius: 8px;
+    background: var(--green-dark); color: var(--green);
+    font-size: 13px; font-weight: 800; margin-right: 10px;
+    vertical-align: 3px;
+  }
+  h3 { font-size: 16px; font-weight: 700; margin: 22px 0 8px; color: var(--green-deep); }
+  p { margin-bottom: 12px; color: var(--ink-soft); }
+  p strong, li strong { color: var(--ink); }
+
+  /* ---------- kpi ---------- */
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-bottom: 26px; }
+  .kpi-card {
+    background: #fff; border: 1px solid var(--line); border-radius: 14px;
+    padding: 20px 18px 18px; text-align: center;
+    box-shadow: 0 10px 30px -24px rgba(16,24,40,0.4);
+    border-top: 3px solid var(--green);
+  }
+  .kpi-card .value { font-size: 30px; font-weight: 800; color: var(--green-deep); line-height: 1.1; letter-spacing: -0.5px; }
+  .kpi-card .label { font-size: 13px; font-weight: 700; color: var(--ink); margin-top: 4px; }
+  .kpi-card .sub { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+
+  /* ---------- callout ---------- */
+  .callout {
+    background: #f0f9f2; border: 1px solid #cdeed4; border-left: 5px solid var(--green);
+    border-radius: 0 10px 10px 0; padding: 16px 20px; margin-top: 18px;
+  }
+  .callout h4 { font-size: 14px; font-weight: 800; color: var(--green-deep); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.6px; }
+  .callout p { margin: 0; font-size: 14.5px; }
+  .callout.warn { background: #fff8ec; border-color: #f0dcb4; border-left-color: var(--amber); }
+  .callout.warn h4 { color: var(--amber); }
+
+  /* ---------- tables ---------- */
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 6px; }
+  th {
+    text-align: left; background: var(--bg-soft); color: var(--ink);
+    font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.5px;
+    padding: 10px 12px; border-bottom: 2px solid var(--line);
+  }
+  td { padding: 11px 12px; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--ink-soft); }
+  td:first-child { color: var(--ink); }
+  tr:last-child td { border-bottom: none; }
+  td.num { font-family: var(--mono); font-size: 13px; white-space: nowrap; }
+  .tag {
+    display: inline-block; font-size: 11.5px; font-weight: 800; letter-spacing: 0.4px;
+    padding: 2px 9px; border-radius: 20px; text-transform: uppercase; white-space: nowrap;
+  }
+  .tag.ok { background: #e2f6e6; color: var(--green-deep); }
+  .tag.gap { background: #fdf2f1; color: var(--warn); }
+  .tag.vol { background: #eef4ff; color: var(--accent); }
+  .tag.pend { background: #fff4dd; color: var(--amber); }
+
+  /* ---------- lists ---------- */
+  ul.clean, ol.clean { margin: 8px 0 14px 22px; color: var(--ink-soft); }
+  ul.clean li, ol.clean li { margin-bottom: 7px; }
+  .linkgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 8px 22px; margin-top: 6px; }
+  .linkgrid a { display: block; padding: 7px 0; border-bottom: 1px dashed var(--line); font-weight: 600; font-size: 14.5px; }
+
+  /* ---------- footer ---------- */
+  footer {
+    max-width: 1040px; margin: 0 auto 60px; padding: 0 20px;
+    font-size: 13px; color: var(--ink-soft); text-align: center;
+  }
+  footer .fbox {
+    border-top: 1px solid var(--line); padding-top: 18px;
+    display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: center;
+  }
+  footer strong { color: var(--ink); }
+
+  @media (max-width: 760px) {
+    .cover { padding: 44px 22px 40px; }
+    .cover h1 { font-size: 28px; }
+    .card-body { padding: 22px 18px 26px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-content">
+    <span class="label">SEO / AIO · Evidência de projeto</span>
+    <h1>Tudo que o projeto Lola entregou até aqui — com link e prova</h1>
+    <div class="rule"></div>
+    <p class="sub">Lola Aviamentos — do diagnóstico de julho aos 13 posts vivos de setembro: fundação de schema, conteúdo citável e o que vem a seguir. Cada linha abaixo é clicável e foi verificada ao vivo em 30/09/2026.</p>
+    <div class="cover-meta">
+      <span>Projeto eKyte <strong>319128</strong></span>
+      <span>Workspace 104796</span>
+      <span>Executor: Marcos Luciano</span>
+      <span>Verificação ao vivo: 30/09/2026</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="value">11/23</div><div class="label">Tasks concluídas</div><div class="sub">11 ativas · 1 cancelada</div></div>
+    <div class="kpi-card"><div class="value">13/13</div><div class="label">Posts no ar</div><div class="sub">100% com 3 JSON-LD</div></div>
+    <div class="kpi-card"><div class="value">66 mil</div><div class="label">Palavras de conteúdo</div><div class="sub">66.308 no builder</div></div>
+    <div class="kpi-card"><div class="value">25,4 h</div><div class="label">Apontadas no eKyte</div><div class="sub">Blocos 1 + 2</div></div>
+    <div class="kpi-card"><div class="value">5</div><div class="label">Docs de diagnóstico</div><div class="sub">auditorias + pesquisas</div></div>
+  </div>
+
+  <div class="card"><div class="card-body">
+    <div class="callout" style="margin-top:0">
+      <h4>O que você vai encontrar aqui</h4>
+      <p>1) o mapa do projeto por bloco; 2) a fundação de schema com o status de cada item <strong>no ar</strong>; 3) os 13 posts vivos, um a um; 4) os documentos de diagnóstico; 5) a tabela da verificação ao vivo de 30/09; 6) os 3 pontos que pedem confirmação de implantação; 7) o que vem a seguir. Método: leitura direta do HTML público e do container GTM público — <strong>“entregue” e “no ar” estão marcados em colunas separadas, sem maquiagem.</strong></p>
+    </div>
+  </div></div>
+
+  <!-- 01 -->
+  <div class="card"><div class="card-body">
+    <h2><span class="n">01</span>Mapa do projeto</h2>
+    <p>Projeto <strong>319128 “Lola Aviamentos - SEO / AIO”</strong>, workspace 104796, responsável André Bock. Três blocos de execução mais o diagnóstico inicial:</p>
+    <table>
+      <thead><tr><th>Fase</th><th>Conteúdo</th><th>Status em 30/09</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Diagnóstico</strong></td><td>2 auditorias + pesquisa de keywords/clusters + pesquisa de concorrência + análise de performance (jul/2026)</td><td><span class="tag ok">entregue</span></td></tr>
+        <tr><td><strong>Bloco 1 — Fundação</strong></td><td>5 tasks: Organization+Store, Product, Definition blocks, BreadcrumbList, template FAQPage (04–18/08)</td><td><span class="tag ok">5/5 concluídas</span></td></tr>
+        <tr><td><strong>Bloco 2 — Conteúdo citável</strong></td><td>6 conteúdos + glossário + FAQ 10 perguntas + apresentação setembro</td><td><span class="tag ok">6 concluídas</span> <span class="tag pend">FAQ em execução</span> <span class="tag pend">glossário briefing</span></td></tr>
+        <tr><td><strong>Bloco 3 — Aceleração</strong></td><td>GBP + 6 artigos de outubro + reserva técnica + apresentação de fechamento (05–30/10)</td><td><span class="tag vol">9 tasks a iniciar</span></td></tr>
+      </tbody>
+    </table>
+  </div></div>
+
+  <!-- 02 -->
+  <div class="card"><div class="card-body">
+    <h2><span class="n">02</span>Bloco 1 — Fundação de schema</h2>
+    <p>Cinco tasks concluídas em agosto, todas com artefato versionado em <span style="font-family:var(--mono);font-size:13px">entregas/</span>. A coluna “no ar” é o resultado da leitura direta feita em 30/09/2026 (HTML cru + container público <strong>GTM-MQW27G8G</strong>):</p>
+    <table>
+      <thead><tr><th>Task</th><th>Entregável (clique)</th><th>No ar em 30/09</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="num">10049800<br>Organization + Store</td>
+          <td><a href="https://marcoslrvusa.github.io/v4perettoco/projetos/SEO/clientes/lola/entregas/AG-01-jsonld-organization.json">Organization JSON-LD</a> · <a href="https://marcoslrvusa.github.io/v4perettoco/projetos/SEO/clientes/lola/entregas/AG-01-jsonld-store.json">Store JSON-LD</a> · <a href="https://marcoslrvusa.github.io/v4perettoco/projetos/SEO/clientes/lola/entregas/AIO-B1-AG01-organization-store-tags-gtm.md">guia das tags GTM</a> · <a href="https://marcoslrvusa.github.io/v4perettoco/projetos/SEO/clientes/lola/entregas/AG-01-gtm-guia-implementacao.md">guia de implantação</a></td>
+          <td><span class="tag ok">no ar</span><br>tags 67 e 68 no container GTM</td>
+        </tr>
+        <tr>
+          <td class="num">10049805<br>Template FAQPage</td>
+          <td><a href="https://marcoslrvusa.github.io/v4perettoco/projetos/SEO/clientes/lola/entregas/AIO-B1-AG03-faqpage-template-jsonld.json">template JSON-LD</a> · <a href="https://marcoslrvusa.github.io/v4perettoco/projetos/SEO/clientes/lola/entregas/AIO-B1-AG03-faqpage-gtm-guia.md">guia GTM</a> · <a href="https://marcoslrvusa.github.io/v4perettoco/projetos/SEO/clientes/lola/entregas/AIO-B1-AG03-faqpage-entrega.md">entrega</a></td>
+          <td><span class="tag ok">no ar</span><br>mecanismo data-faq → ld-json-faqpage no container</td>
+        </tr>
+        <tr>
+          <td class="num">10049803<br>Definition blocks</td>
+          <td><a href="https://marcoslrvusa.github.io/v4perettoco/projetos/SEO/clientes/lola/entregas/AIO-B1-AG02-definition-blocks.html">4 blocos em HTML</a> · <a href="https://marcoslrvusa.github.io/v4perettoco/projetos/SEO/clientes/lola/entregas/AIO-B1-AG02-definition-blocks-entrega.md">entrega</a> · <a href="https://marcoslrvusa.github.io/v4perettoco/projetos/SEO/clientes/lola/entregas/AIO-B1-AG02-relatorio-task.md">relatório</a></td>
+          <td><span class="tag pend">2 de 4 no ar</span><br><a href="https://www.lolaaviamentos.com.br/entretela-de-memoria/">memória ✓</a> · <a href="https://www.lolaaviamentos.com.br/insumos-para-bones/">bonés ✓</a> · rasgo ✗ · hidrossolúvel ✗</td>
+        </tr>
+        <tr>
+          <td class="num">10049804<br>BreadcrumbList</td>
+          <td><a href="https://marcoslrvusa.github.io/v4perettoco/projetos/SEO/clientes/lola/entregas/AIO-B1-AG01-breadcrumblist-jsonld.json">JSON-LD</a> · <a href="https://marcoslrvusa.github.io/v4perettoco/projetos/SEO/clientes/lola/entregas/AIO-B1-AG01-breadcrumblist-gtm-guia.md">guia GTM</a> · <a href="https://marcoslrvusa.github.io/v4perettoco/projetos/SEO/clientes/lola/entregas/AIO-B1-AG01-breadcrumblist-entrega.md">entrega</a></td>
+          <td><span class="tag pend">blog 13/13 ✓</span> <span class="tag gap">loja: confirmar</span></td>
+        </tr>
+        <tr>
+          <td class="num">10049802<br>Product 78 páginas</td>
+          <td><a href="https://marcoslrvusa.github.io/v4perettoco/projetos/SEO/clientes/lola/entregas/AIO-B1-AG01-product-schema-competitivo-gtm.md">guia GTM (versão enriquecida)</a> · <a href="https://marcoslrvusa.github.io/v4perettoco/projetos/SEO/clientes/lola/entregas/AIO-B1-AG02-product-schema-dados-corrigidos.md">dados corrigidos</a> · <a href="https://marcoslrvusa.github.io/v4perettoco/projetos/SEO/clientes/lola/entregas/AIO-B1-AG02-relatorio.pdf">relatório (PDF)</a></td>
+          <td><span class="tag ok">Product nativo no ar</span> <span class="tag gap">versão enriquecida: confirmar</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="callout">
+      <h4>Como ler esta tabela</h4>
+      <p><span class="tag ok">no ar</span> = encontrado hoje no HTML público ou no container GTM público. <span class="tag gap">confirmar</span> = artefato entregue e task concluída, mas não localizado na verificação de 30/09 — ver seção 06.</p>
+    </div>
+  </div></div>
+
+  <!-- 03 -->
+  <div class="card"><div class="card-body">
+    <h2><span class="n">03</span>Bloco 2 — Conteúdo citável: 13 posts vivos</h2>
+    <p>Quatro clusters (Bordado, Bonés, Memória, Alfaiataria) em malha pilar → filho, todos respondendo <strong>HTTP 200</strong> e todos servindo <strong>FAQPage + HowTo + BreadcrumbList no HTML do servidor</strong>. Clique em qualquer título para abrir a página viva:</p>
+    <h3>Cluster A — Bordado (tasks 10049806, 10049807, 10049819, 10049811)</h3>
+    <div class="linkgrid">
+      <a href="https://lolaaviamentos.com.br/blog/posts/tipos-de-entretela-para-bordado-guia-completo-062f93643185">★ Pilar: Tipos de Entretela para Bordado</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/como-aplicar-entretela-termocolante-08cc5cd28a4f">Como Aplicar Entretela Termocolante</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/como-usar-filme-hidrossoluvel-bordado-bf0d508deec4">Como Usar Filme Hidrossolúvel</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/entretela-rasgavel-vs-hidrossoluvel-dd45830b210a">Entretela Rasgável vs Hidrossolúvel</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/gramaturas-de-entretela-para-bordado-9e9edbdb6b0c">Gramaturas de Entretela para Bordado</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee">FAQ: 10 Perguntas sobre Entretelas (30/09)</a>
+    </div>
+    <h3>Cluster B — Insumos para Bonés (task 10049808)</h3>
+    <div class="linkgrid">
+      <a href="https://lolaaviamentos.com.br/blog/posts/aviamentos-para-confeccao-guia-completo-bones-0ca5bc5ffc6d">★ Pilar: Aviamentos para Confecção</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/aba-plastica-curva-vs-reta-e07bd5a82d9c">Aba Plástica: Curva x Reta</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/tela-de-poliester-vs-mesh-2868f3ecb5d5">Tela de Poliéster vs Mesh</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/vies-de-carneira-e-regulador-ec70111505f3">Viés de Carneira e Regulador</a>
+    </div>
+    <h3>Cluster C — Memória (task 10049809) · Cluster D — Alfaiataria</h3>
+    <div class="linkgrid">
+      <a href="https://lolaaviamentos.com.br/blog/posts/entretela-de-memoria-guia-completo-aaebeeb83be6">★ Pilar: Entretela de Memória</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/gramatura-entretela-memoria-bone-e43fb2a2639c">Gramatura de Memória para Boné</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/entretela-para-alfaiataria-tipos-aplicacoes-b62577073a39">★ Pilar: Entretela para Alfaiataria</a>
+    </div>
+    <div class="callout">
+      <h4>Entrega de hoje (task 10049811)</h4>
+      <p>Post <strong>FAQ com 10 perguntas</strong> publicado em 30/09 (FAQPage 10 + HowTo 5 + Breadcrumb, 5.030 palavras, 22 links = 0 quebrados). Evidência detalhada pergunta a pergunta: <a href="https://marcoslrvusa.github.io/v4perettoco/projetos/SEO/clientes/lola/entregas/AIO-B2-AG03-faqpage-evidencias.html">AIO-B2-AG03-faqpage-evidencias.html →</a></p>
+    </div>
+  </div></div>
+
+  <!-- 04 -->
+  <div class="card"><div class="card-body">
+    <h2><span class="n">04</span>Diagnóstico e pesquisa (julho/2026)</h2>
+    <p>A base que originou todos os blocos — auditorias publicadas (clique para abrir) e pesquisas de apoio:</p>
+    <table>
+      <thead><tr><th>Documento</th><th>Data</th><th>Acesso</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Auditoria Completa — SEO + AIO + GEO</strong></td><td>23/07/2026</td><td><a href="https://marcoslrvusa.github.io/v4perettoco/lola-seo-audit/">abrir auditoria →</a></td></tr>
+        <tr><td><strong>Auditoria AIO + GEO</strong></td><td>jul/2026</td><td><a href="https://marcoslrvusa.github.io/v4perettoco/lola-seo-aiogeo-audit/">abrir auditoria →</a></td></tr>
+        <tr><td><strong>Pesquisa de Palavras-Chave e Topic Clusters</strong></td><td>23/07/2026</td><td>arquivo interno da operação</td></tr>
+        <tr><td><strong>Pesquisa de Concorrência — Aviamentos 2026</strong></td><td>jul/2026</td><td>arquivo interno da operação</td></tr>
+        <tr><td><strong>Análise de Performance SEO (dados)</strong></td><td>jul/2026</td><td>arquivo interno da operação</td></tr>
+      </tbody>
+    </table>
+  </div></div>
+
+  <!-- 05 -->
+  <div class="card"><div class="card-body">
+    <h2><span class="n">05</span>Verificação ao vivo — 30/09/2026</h2>
+    <p>Leitura direta (sem navegador, sem cache): HTTP + JSON-LD do HTML cru em cada URL, e inspeção do JavaScript público do container GTM-MQW27G8G:</p>
+    <table>
+      <thead><tr><th>Checagem</th><th>Resultado</th></tr></thead>
+      <tbody>
+        <tr><td>13/13 posts do blog respondem HTTP 200</td><td><span class="tag ok">13/13 OK</span></td></tr>
+        <tr><td>FAQPage presente nos 13 posts</td><td><span class="tag ok">13/13 (8–10 perguntas)</span></td></tr>
+        <tr><td>HowTo presente nos 13 posts</td><td><span class="tag ok">13/13 (5–9 passos)</span></td></tr>
+        <tr><td>BreadcrumbList presente nos 13 posts</td><td><span class="tag ok">13/13</span></td></tr>
+        <tr><td>GTM-MQW27G8G presente (home + 4 categorias + 2 produtos)</td><td><span class="tag ok">7/7 OK</span></td></tr>
+        <tr><td>JSON-LD nativo WebPage + Product nas páginas da loja</td><td><span class="tag ok">home 17 · categorias 9–13 · produtos 3–6 blocos</span></td></tr>
+        <tr><td>Organization (tag 67) e Store (tag 68) no container GTM</td><td><span class="tag ok">no ar via GTM</span></td></tr>
+        <tr><td>Mecanismo FAQPage dinâmico (data-faq) no container GTM</td><td><span class="tag ok">no ar via GTM</span></td></tr>
+        <tr><td>Definition blocks nas 4 categorias</td><td><span class="tag pend">2/4</span> — memória e bonés no ar; rasgo e hidrossolúvel ausentes</td></tr>
+      </tbody>
+    </table>
+  </div></div>
+
+  <!-- 06 -->
+  <div class="card"><div class="card-body">
+    <div class="callout warn" style="margin-top:0">
+      <h4>⚠ 3 pontos que pedem confirmação de implantação</h4>
+      <p>Nada aqui invalida as entregas — os artefatos existem e as tasks foram concluídas — mas a verificação de hoje não os localizou no ar: <strong>1)</strong> tag GTM do BreadcrumbList global nas páginas da loja (no blog está 13/13); <strong>2)</strong> tag GTM do Product enriquecido por variante (o tema segue emitindo o Product básico nativo); <strong>3)</strong> definition blocks nas categorias rasgo-fácil e hidrossolúvel. Ação sugerida: confirmar publicação no GTM / colar os 2 blocos restantes.</p>
+    </div>
+  </div></div>
+
+  <!-- 07 -->
+  <div class="card"><div class="card-body">
+    <h2><span class="n">06</span>O que vem a seguir</h2>
+    <table>
+      <thead><tr><th>Task</th><th>Entrega</th><th>Prazo</th></tr></thead>
+      <tbody>
+        <tr><td class="num">10049812</td><td>Glossário — 35 termos citáveis</td><td>09/10</td></tr>
+        <tr><td class="num">10049813</td><td>Google Business Profile</td><td>09/10</td></tr>
+        <tr><td class="num">10049814–18</td><td>5 artigos de outubro (viés, tela, aba, regulador ×2)</td><td>05–20/10</td></tr>
+        <tr><td class="num">10049801</td><td>Alfaiataria avançada</td><td>27/10</td></tr>
+        <tr><td class="num">10049810</td><td>Reserva técnica</td><td>30/10</td></tr>
+        <tr><td class="num">10383917</td><td>Apresentação de fechamento do projeto</td><td>30/10</td></tr>
+      </tbody>
+    </table>
+  </div></div>
+
+</div>
+
+<footer>
+  <div class="fbox">
+    <span>Projeto eKyte <strong>319128</strong> · Workspace <strong>104796</strong></span>
+    <span>GTM <strong>GTM-MQW27G8G</strong></span>
+    <span>23 tasks · 11 concluídas · 25,4 h apontadas</span>
+    <span>Gerado em <strong>30/09/2026</strong> · V4 Company</span>
+  </div>
+</footer>
+
+</body>
+</html>
