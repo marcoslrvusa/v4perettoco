@@ -73,7 +73,7 @@
 
   function css() {
     return '' +
-      '#portal-gate{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;background:#F5F0E6;font-family:Montserrat,-apple-system,"Segoe UI",sans-serif}' +
+      '#portal-gate{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;background:#F5F0E6;font-family:Montserrat,-apple-system,"Segoe UI",sans-serif;visibility:visible}' +
       '#portal-gate .pg-card{background:#FFFCF5;border:1px solid #E2D8C6;border-radius:8px;padding:34px 36px;max-width:400px;width:100%;box-shadow:0 24px 60px -20px rgba(27,22,17,.38);position:relative;overflow:hidden}' +
       '#portal-gate .pg-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#E50914,#ff5a5a)}' +
       '#portal-gate .pg-kicker{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#B20710;background:#FCE9E9;border:1px solid #f3c2c2;border-radius:20px;padding:5px 13px;margin-bottom:14px}' +
