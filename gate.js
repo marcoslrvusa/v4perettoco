@@ -7,6 +7,11 @@
   'use strict';
   var PORTAL_HASH = '83b55819c2dd8106142b5497ed3599951125c39e4429c64092eaa4fb5055f539';
   var STORE_KEY = 'portal-v4-unlock-v1';
+  var LOGO_SRC = 'logo-peretto-red.png';
+  try {
+    var cs = document.currentScript;
+    if (cs && cs.src) LOGO_SRC = cs.src.replace(/gate\.js(\?.*)?$/, '') + 'logo-peretto-red.png';
+  } catch (e) {}
 
   try { document.documentElement.className += ' gated'; } catch (e) {}
 
@@ -86,10 +91,12 @@
       '#portal-gate button:hover{background:#B20710}' +
       '#portal-gate .pg-err{display:none;font-size:12px;font-weight:700;color:#B20710;background:#FCE9E9;border:1px solid #f3c2c2;border-radius:8px;padding:9px 12px;margin-top:12px}' +
       '#portal-gate .pg-err.show{display:block}' +
-      '#portal-gate .pg-foot{margin-top:16px;font-size:10.5px;color:#B5A996;text-align:center}';
+      '#portal-gate .pg-foot{margin-top:16px;font-size:10.5px;color:#B5A996;text-align:center}' +
+      '#portal-gate .pg-logo{display:block;height:44px;width:auto;margin:0 auto 16px}' ;
   }
 
   function mount() {
+    var base = LOGO_SRC;
     var st = document.createElement('style');
     st.type = 'text/css';
     st.appendChild(document.createTextNode(css()));
@@ -97,7 +104,7 @@
     var g = document.createElement('div');
     g.id = 'portal-gate';
     g.innerHTML =
-      '<div class="pg-card"><span class="pg-kicker">Acesso restrito</span>' +
+      '<div class="pg-card"><img class="pg-logo" src="' + base + '" alt="Peretto &amp; Co" onerror="this.style.display=\'none\'"><span class="pg-kicker">Acesso restrito</span>' +
       '<h2>Área do portal</h2>' +
       '<p>Este material é de circulação restrita. Digite a senha única para continuar.</p>' +
       '<form id="pg-form" autocomplete="off"><label for="pg-pass">Senha</label>' +
