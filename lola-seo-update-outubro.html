@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lola Aviamentos | Update Outubro: do diagnóstico ao Bloco 2 completo</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --green: #4dc247;
+    --green-deep: #1f7a37;
+    --green-dark: #0f2e18;
+    --ink: #16181d;
+    --ink-soft: #4a505c;
+    --line: #e4e7ec;
+    --bg-soft: #f7f8fa;
+    --accent: #0b5ed7;
+    --warn: #b3261e;
+    --amber: #9a6700;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: #f6f7f5; color: var(--ink); line-height: 1.7; font-size: 16px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .cover { background: linear-gradient(135deg, #0a160d 0%, #102415 55%, #17351d 100%); color: #fff; padding: 64px 40px 52px; text-align: center; position: relative; overflow: hidden; }
+  .cover::before { content: ''; position: absolute; top: -60%; left: -30%; width: 160%; height: 200%; background: radial-gradient(circle, rgba(77,194,71,0.10) 0%, transparent 55%); pointer-events: none; }
+  .cover-content { position: relative; z-index: 1; max-width: 880px; margin: 0 auto; }
+  .cover .label { display: inline-block; background: rgba(77,194,71,0.12); border: 1px solid rgba(77,194,71,0.35); padding: 6px 20px; border-radius: 20px; font-size: 12px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; margin-bottom: 22px; color: var(--green); }
+  .cover h1 { font-size: 38px; font-weight: 800; line-height: 1.15; margin-bottom: 14px; letter-spacing: -0.5px; }
+  .cover p.sub { font-size: 17px; opacity: 0.88; margin-bottom: 26px; }
+  .cover .rule { width: 60px; height: 3px; background: var(--green); margin: 0 auto 26px; border-radius: 2px; }
+  .cover-meta { display: flex; gap: 10px 26px; justify-content: center; flex-wrap: wrap; font-size: 13px; opacity: 0.75; }
+  .cover-meta span { white-space: nowrap; }
+
+  .container { max-width: 1040px; margin: -34px auto 56px; padding: 0 20px; position: relative; z-index: 2; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 10px 30px -22px rgba(16,24,40,0.35); margin-bottom: 26px; overflow: hidden; }
+  .card-body { padding: 30px 34px 34px; }
+  h2 { font-size: 21px; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.2px; }
+  h2 .n { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 8px; background: var(--green-dark); color: var(--green); font-size: 13px; font-weight: 800; margin-right: 10px; vertical-align: 3px; }
+  h3 { font-size: 16px; font-weight: 700; margin: 22px 0 8px; color: var(--green-deep); }
+  p { margin-bottom: 12px; color: var(--ink-soft); }
+  p strong, li strong { color: var(--ink); }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-bottom: 26px; }
+  .kpi-card { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 20px 18px 18px; text-align: center; box-shadow: 0 10px 30px -24px rgba(16,24,40,0.4); border-top: 3px solid var(--green); }
+  .kpi-card .value { font-size: 30px; font-weight: 800; color: var(--green-deep); line-height: 1.1; letter-spacing: -0.5px; }
+  .kpi-card .label { font-size: 13px; font-weight: 700; color: var(--ink); margin-top: 4px; }
+  .kpi-card .sub { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+
+  .callout { background: #f0f9f2; border: 1px solid #cdeed4; border-left: 5px solid var(--green); border-radius: 0 10px 10px 0; padding: 16px 20px; margin-top: 18px; }
+  .callout h4 { font-size: 14px; font-weight: 800; color: var(--green-deep); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.6px; }
+  .callout p { margin: 0; font-size: 14.5px; }
+  .callout.warn { background: #fff8ec; border-color: #f0dcb4; border-left-color: var(--amber); }
+  .callout.warn h4 { color: var(--amber); }
+
+  .live-box { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; background: linear-gradient(135deg, #102415, #17351d); border-radius: 12px; padding: 22px 24px; margin: 6px 0 18px; }
+  .live-box .url { flex: 1 1 420px; font-family: var(--mono); font-size: 14.5px; color: #d9f5db; word-break: break-all; }
+  .live-box .btn { display: inline-block; background: var(--green); color: #0a160d; font-weight: 800; font-size: 14.5px; padding: 11px 22px; border-radius: 8px; white-space: nowrap; }
+  .live-box .btn:hover { background: #63d45d; text-decoration: none; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 6px; }
+  th { text-align: left; background: var(--bg-soft); color: var(--ink); font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 12px; border-bottom: 2px solid var(--line); }
+  td { padding: 11px 12px; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--ink-soft); }
+  td:first-child { color: var(--ink); }
+  tr:last-child td { border-bottom: none; }
+  td.num { font-family: var(--mono); font-size: 13px; white-space: nowrap; }
+  .tag { display: inline-block; font-size: 11.5px; font-weight: 800; letter-spacing: 0.4px; padding: 2px 9px; border-radius: 20px; text-transform: uppercase; white-space: nowrap; }
+  .tag.ok { background: #e2f6e6; color: var(--green-deep); }
+  .tag.gap { background: #fdf2f1; color: var(--warn); }
+  .tag.vol { background: #eef4ff; color: var(--accent); }
+  .tag.pend { background: #fff4dd; color: var(--amber); }
+
+  ul.clean, ol.clean { margin: 8px 0 14px 22px; color: var(--ink-soft); }
+  ul.clean li, ol.clean li { margin-bottom: 7px; }
+  .linkgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 8px 22px; margin-top: 6px; }
+  .linkgrid a { display: block; padding: 7px 0; border-bottom: 1px dashed var(--line); font-weight: 600; font-size: 14.5px; }
+
+  footer { max-width: 1040px; margin: 0 auto 60px; padding: 0 20px; font-size: 13px; color: var(--ink-soft); text-align: center; }
+  footer .fbox { border-top: 1px solid var(--line); padding-top: 18px; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: center; }
+  footer strong { color: var(--ink); }
+
+  @media (max-width: 760px) {
+    .cover { padding: 44px 22px 40px; }
+    .cover h1 { font-size: 28px; }
+    .card-body { padding: 22px 18px 26px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-content">
+    <span class="label">Lola Aviamentos · Update Outubro/2026</span>
+    <h1>Do diagnóstico ao Bloco 2 completo: o projeto até aqui</h1>
+    <div class="rule"></div>
+    <p class="sub">Evolução 30/09 → 09/10: mais 2 posts no ar, kit de presença local pronto, loja com titles e descrições corrigidos e Bloco 2 encerrado. Tudo abaixo é clicável.</p>
+    <div class="cover-meta">
+      <span>Projeto eKyte <strong>319128</strong></span>
+      <span>15 posts vivos</span>
+      <span>Verificado em <strong>09/10/2026</strong></span>
+      <span>V4 Company</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="value">15/23</div><div class="label">Tasks concluídas</div><div class="sub">Bloco 2 em 100%</div></div>
+    <div class="kpi-card"><div class="value">15</div><div class="label">Posts no ar</div><div class="sub">todos com 3–4 schemas</div></div>
+    <div class="kpi-card"><div class="value">74 mil</div><div class="label">Palavras publicadas</div><div class="sub">74.316 no total</div></div>
+    <div class="kpi-card"><div class="value">35</div><div class="label">Termos no glossário</div><div class="sub">hub citável por IA</div></div>
+    <div class="kpi-card"><div class="value">93/93</div><div class="label">Links verificados</div><div class="sub">zero quebrados</div></div>
+  </div>
+
+  <!-- 00 -->
+  <div class="card"><div class="card-body">
+    <h2><span class="n">00</span>Sumário executivo — o que mudou desde 30/09</h2>
+    <table>
+      <thead><tr><th>Frente</th><th>Em 30/09</th><th>Em 09/10</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Conteúdo</strong></td><td>13 posts vivos</td><td><span class="tag ok">15 posts</span> — glossário 35 termos + guia patchwork (4 mil palavras cada)</td></tr>
+        <tr><td><strong>Bloco 2</strong></td><td>FAQ em execução</td><td><span class="tag ok">100% concluído</span> — FAQ, glossário e apresentação fechados</td></tr>
+        <tr><td><strong>Presença local</strong></td><td>diagnóstico</td><td><span class="tag ok">kit pronto-para-aplicar</span> (30 min, sem acesso ao painel)</td></tr>
+        <tr><td><strong>Loja</strong></td><td>titles e metas genéricos</td><td><span class="tag ok">corrigidos via API</span> em rasgo-fácil e hidrossolúvel</td></tr>
+        <tr><td><strong>Schemas</strong></td><td>FAQ/HowTo/Breadcrumb</td><td><span class="tag ok">+ DefinedTerm + Article</span> (pipeline evoluído, posts antigos intactos)</td></tr>
+      </tbody>
+    </table>
+    <div class="callout">
+      <h4>Em uma frase</h4>
+      <p>O projeto saiu da fase de construção para a fase de colheita: a fundação técnica está no ar, o conteúdo citável está completo e o que resta é aceleração (Bloco 3) mais aplicação do kit local.</p>
+    </div>
+  </div></div>
+
+  <!-- 01 -->
+  <div class="card"><div class="card-body">
+    <h2><span class="n">01</span>Mapa do projeto</h2>
+    <table>
+      <thead><tr><th>Fase</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Diagnóstico</strong> — 2 auditorias + keywords + concorrência + performance (jul/2026)</td><td><span class="tag ok">entregue</span></td></tr>
+        <tr><td><strong>Bloco 1 — Fundação</strong> — 5 tasks de schema (Organization, Store, Product, Breadcrumb, FAQPage, definition blocks)</td><td><span class="tag ok">5/5 concluídas</span></td></tr>
+        <tr><td><strong>Bloco 2 — Conteúdo citável</strong> — 6 conteúdos + glossário + FAQ + apresentação setembro</td><td><span class="tag ok">100% concluído</span></td></tr>
+        <tr><td><strong>Bloco 3 — Aceleração</strong> — presença local + 6 artigos + reserva técnica + fechamento (até 30/10)</td><td><span class="tag vol">artigo 1 pronto · 8 tasks a iniciar</span></td></tr>
+      </tbody>
+    </table>
+  </div></div>
+
+  <!-- 02 -->
+  <div class="card"><div class="card-body">
+    <h2><span class="n">02</span>O que está no ar — clique e confira</h2>
+    <h3>Cluster Bordado (7 posts)</h3>
+    <div class="linkgrid">
+      <a href="https://lolaaviamentos.com.br/blog/posts/tipos-de-entretela-para-bordado-guia-completo-062f93643185">★ Pilar: Tipos de Entretela para Bordado</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/como-aplicar-entretela-termocolante-08cc5cd28a4f">Como Aplicar Entretela Termocolante</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/como-usar-filme-hidrossoluvel-bordado-bf0d508deec4">Como Usar Filme Hidrossolúvel</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/entretela-rasgavel-vs-hidrossoluvel-dd45830b210a">Rasgável vs Hidrossolúvel</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/gramaturas-de-entretela-para-bordado-9e9edbdb6b0c">Gramaturas de Entretela</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/perguntas-frequentes-entretelas-27a7483db9ee">FAQ: 10 Perguntas</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/patchwork-guia-completo-tecidos-entretelas-insumos-b6ef852e8d7c">Patchwork: Guia Completo (novo)</a>
+    </div>
+    <h3>Cluster Bonés (4 posts)</h3>
+    <div class="linkgrid">
+      <a href="https://lolaaviamentos.com.br/blog/posts/aviamentos-para-confeccao-guia-completo-bones-0ca5bc5ffc6d">★ Pilar: Aviamentos para Confecção</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/aba-plastica-curva-vs-reta-e07bd5a82d9c">Aba Plástica: Curva x Reta</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/tela-de-poliester-vs-mesh-2868f3ecb5d5">Tela de Poliéster vs Mesh</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/vies-de-carneira-e-regulador-ec70111505f3">Viés de Carneira e Regulador</a>
+    </div>
+    <h3>Memória, Alfaiataria + hub de referência</h3>
+    <div class="linkgrid">
+      <a href="https://lolaaviamentos.com.br/blog/posts/entretela-de-memoria-guia-completo-aaebeeb83be6">★ Pilar: Entretela de Memória</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/gramatura-entretela-memoria-bone-e43fb2a2639c">Gramatura de Memória para Boné</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/entretela-para-alfaiataria-tipos-aplicacoes-b62577073a39">★ Pilar: Entretela para Alfaiataria</a>
+      <a href="https://lolaaviamentos.com.br/blog/posts/glossario-entretelas-insumos-confeccao-b04c9a50f077">★ Glossário: 35 Termos (novo)</a>
+    </div>
+    <h3>Fundação técnica + diagnóstico</h3>
+    <div class="linkgrid">
+      <a href="https://marcoslrvusa.github.io/v4perettoco/lola-seo-audit/">Auditoria Completa SEO + AIO + GEO</a>
+      <a href="https://marcoslrvusa.github.io/v4perettoco/lola-seo-aiogeo-audit/">Auditoria AIO + GEO</a>
+      <a href="https://marcoslrvusa.github.io/v4perettoco/projetos/SEO/clientes/lola/entregas/AIO-PROJETO-evidencias-ate-2026-09-30.html">Evidências do projeto até 30/09</a>
+      <a href="https://marcoslrvusa.github.io/v4perettoco/projetos/SEO/clientes/lola/entregas/AIO-B3-GBP-kit-aplicacao.md">Kit de presença local (novo)</a>
+    </div>
+  </div></div>
+
+  <!-- 03 -->
+  <div class="card"><div class="card-body">
+    <h2><span class="n">03</span>Novo desde 30/09 — em destaque</h2>
+    <div class="live-box">
+      <div class="url">Glossário de Entretelas e Insumos: 35 Termos Técnicos</div>
+      <a class="btn" href="https://lolaaviamentos.com.br/blog/posts/glossario-entretelas-insumos-confeccao-b04c9a50f077" target="_blank" rel="noopener">Abrir →</a>
+    </div>
+    <p>Hub de referência com 35 definições citáveis, índice A–Z e o schema que alimenta respostas de IA. É a peça que faltava para o Google e os assistentes citarem a Lola como fonte do setor.</p>
+    <div class="live-box">
+      <div class="url">Patchwork: Guia Completo de Tecidos, Entretelas e Insumos</div>
+      <a class="btn" href="https://lolaaviamentos.com.br/blog/posts/patchwork-guia-completo-tecidos-entretelas-insumos-b6ef852e8d7c" target="_blank" rel="noopener">Abrir →</a>
+    </div>
+    <p>Primeiro artigo do Bloco 3 mirando o maior volume de busca do projeto (patchwork), com passo a passo, tabelas de metragem e gancho regional do polo de Apucarana.</p>
+    <ul class="clean">
+      <li><strong>Kit de presença local</strong> — descrição, categorias, produtos, perguntas, fotos, pedido de avaliação e mapa prontos para aplicar em 30 minutos, mesmo sem acesso ao painel.</li>
+      <li><strong>Loja corrigida via API</strong> — titles e descrições dedicados nas categorias rasgo-fácil e hidrossolúvel, no lugar do texto automático genérico.</li>
+      <li><strong>FAQ de 10 perguntas concluído</strong> — gap AG-03 da auditoria fechado.</li>
+    </ul>
+  </div></div>
+
+  <!-- 04 -->
+  <div class="card"><div class="card-body">
+    <h2><span class="n">04</span>Executado × no ar × pendente — sem maquiagem</h2>
+    <table>
+      <thead><tr><th>Item</th><th>Status real</th></tr></thead>
+      <tbody>
+        <tr><td>15 posts + schemas + malha de links</td><td><span class="tag ok">no ar</span>, 93/93 links verificados</td></tr>
+        <tr><td>Organization + Store + mecanismo FAQ via GTM</td><td><span class="tag ok">no ar</span> (container público)</td></tr>
+        <tr><td>Titles/metas rasgo + hidrossolúvel</td><td><span class="tag ok">salvos</span>, propagando após cache da loja</td></tr>
+        <tr><td>Blocos de definição nas subcategorias</td><td><span class="tag pend">no admin</span> — o tema só exibe em categoria-pai; render pleno exige ajuste no tema</td></tr>
+        <tr><td>Kit local (perfil, mapa, avaliações)</td><td><span class="tag pend">pronto, aguardando aplicação</span> por quem tem os acessos</td></tr>
+        <tr><td>Artigos 2–6 + reserva + fechamento</td><td><span class="tag vol">cronograma até 30/10</span></td></tr>
+      </tbody>
+    </table>
+  </div></div>
+
+  <!-- 05 -->
+  <div class="card"><div class="card-body">
+    <h2><span class="n">05</span>Próximos passos</h2>
+    <table>
+      <thead><tr><th>Quando</th><th>O quê</th></tr></thead>
+      <tbody>
+        <tr><td class="num">15–23/10</td><td>Artigos 2 a 5 do Bloco 3 (um a cada ~3 dias)</td></tr>
+        <tr><td class="num">até 29/10</td><td>Artigo 6 + reserva técnica (revisão de schema, reindexação, medição)</td></tr>
+        <tr><td class="num">30/10</td><td>Apresentação de fechamento do projeto com números</td></tr>
+        <tr><td><strong>Paralelo</strong></td><td>Aplicação do kit local + pedido de acesso ao painel do perfil</td></tr>
+      </tbody>
+    </table>
+    <div class="callout warn">
+      <h4>O que mais acelera o resultado agora</h4>
+      <p>1) aplicar o kit local (perfil + avaliações); 2) liberar o acesso ao painel para posts semanais; 3) medir Search Console e citações em IA antes/depois — a reserva técnica fecha com esses números.</p>
+    </div>
+  </div></div>
+
+</div>
+
+<footer>
+  <div class="fbox">
+    <span>Projeto eKyte <strong>319128</strong> · Lola Aviamentos</span>
+    <span>15 posts · 74.316 palavras · 93/93 links OK</span>
+    <span>Atualizado em <strong>09/10/2026</strong> · V4 Company</span>
+  </div>
+</footer>
+
+</body>
+</html>
