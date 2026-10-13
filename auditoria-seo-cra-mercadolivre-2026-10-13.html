@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRA Comércio: auditoria SEO focada em Mercado Livre | V4 Company</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--red:rgb(229,9,20);--red-dark:rgb(180,7,16);--red-light:rgb(255,60,70);--gold:#c9a96e;--gold-light:#f5f0e6;--gold-border:#e8dcc8;--gray-50:#fafafa;--gray-100:#f5f5f5;--gray-200:#eee;--gray-300:#e0e0e0;--gray-400:#bdbdbd;--gray-500:#9e9e9e;--gray-600:#757575;--gray-700:#616161;--gray-800:#424242;--gray-900:#212121}
+body{font-family:'Ubuntu',-apple-system,BlinkMacSystemFont,sans-serif;background:#f8f7f4;color:var(--gray-900);line-height:1.7;font-size:16px}
+.cover{background:linear-gradient(135deg,#0d0d0d 0%,#1a1a1a 50%,#2a2a2a 100%);color:#fff;padding:64px 40px 48px;text-align:center;position:relative;overflow:hidden}
+.cover::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(201,169,110,.04) 0%,transparent 60%);pointer-events:none}
+.cover-content{position:relative;z-index:1;max-width:860px;margin:0 auto}
+.cover-content::before{content:'';position:absolute;top:-16px;left:50%;transform:translateX(-50%);width:200px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.cover-content::after{content:'';display:block;width:60px;height:2px;background:var(--gold);margin:28px auto 0;border-radius:1px}
+.cover .label{display:inline-block;background:rgba(201,169,110,.12);border:1px solid rgba(201,169,110,.3);padding:6px 20px;border-radius:20px;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:20px;color:var(--gold)}
+.cover h1{font-size:40px;font-weight:700;line-height:1.15;margin-bottom:14px;letter-spacing:-.5px;font-family:'Plus Jakarta Sans',serif}
+.cover p{font-size:17px;opacity:.85;margin-bottom:24px;font-weight:300;letter-spacing:.2px}
+.cover-meta{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;font-size:13px;opacity:.7;letter-spacing:.5px}
+.slide-nav{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 0;justify-content:center}
+.slide-nav a{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.9);font-size:11px;font-weight:600;letter-spacing:.4px;text-decoration:none}
+.slide-nav a:hover{background:rgba(201,169,110,.18);border-color:var(--gold);color:#fff}
+.slide-nav a span{font-size:10px;opacity:.7}
+.container{max-width:1020px;margin:-36px auto 48px;position:relative;z-index:2;padding:0 16px}
+.card{background:#fff;border-radius:16px;box-shadow:0 2px 20px rgba(0,0,0,.05);margin-bottom:28px;overflow:hidden;border:1px solid var(--gray-300);position:relative}
+.card::before{content:'';position:absolute;top:0;left:40px;right:40px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-border),var(--gold),var(--gold-border),transparent);opacity:.6}
+.card-body{padding:44px 52px}
+h2{font-size:24px;font-weight:700;color:var(--red);margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--gold-border);display:flex;align-items:center;gap:10px;letter-spacing:-.3px;position:relative}
+h2::after{content:'';position:absolute;bottom:-1px;left:0;width:40px;height:2px;background:var(--gold);border-radius:1px}
+h2 .slide-num{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--red);color:#fff;font-size:13px;font-weight:800;flex-shrink:0}
+h3{font-size:18px;font-weight:700;color:var(--gray-900);margin:36px 0 18px;letter-spacing:-.2px}
+p{font-size:16px;color:var(--gray-700);margin-bottom:16px;line-height:1.8}
+.badge{display:inline-block;padding:5px 16px;border-radius:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px}
+.badge-critico{background:#fef2f2;color:var(--red);border:1px solid #fecaca}
+.badge-alto{background:#fff7ed;color:#c2410c;border:1px solid #fed7aa}
+.badge-medio{background:#fefce8;color:#a16207;border:1px solid #fef08a}
+.badge-baixo{background:var(--gold-light);color:#8b7a4a;border:1px solid var(--gold-border)}
+.badge-info{background:#f5f5f5;color:#616161;border:1px solid #d4d4d4}
+.badge-ok{background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0}
+.badge-pend{background:#f5f5f5;color:#6b7280;border:1px solid #d1d5db}
+.severity{display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.sev-critico{color:var(--red)}.sev-alto{color:#c2410c}.sev-medio{color:#a16207}.sev-info{color:#616161}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14px}
+th,td{padding:13px 14px;text-align:left;border-bottom:1px solid var(--gray-100);vertical-align:top}
+th{background:linear-gradient(135deg,var(--gray-50),#f8f7f4);font-weight:700;color:var(--gray-700);font-size:11px;text-transform:uppercase;letter-spacing:.8px;border-bottom:2px solid var(--gold-border)}
+tr:hover td{background:#fcfaf7}tr:last-child td{border-bottom:none}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:32px}
+.kpi-card{background:#f2f0ec;border-radius:10px;padding:20px 12px 18px;text-align:center;border:1px solid var(--gold-border);position:relative;overflow:hidden}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),var(--gold))}
+.kpi-card .value{font-size:28px;font-weight:700;color:var(--red);line-height:1.1;letter-spacing:-.5px}
+.kpi-card .label{font-size:11px;color:var(--gray-600);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:8px}
+.kpi-card .sub{font-size:11px;color:var(--gray-600);margin-top:4px;line-height:1.4}
+.risk-box{background:linear-gradient(135deg,#fcfaf7,#f8f7f4);border-left:4px solid var(--red);padding:22px 26px;border-radius:0 12px 12px 0;margin-bottom:18px}
+.risk-box h4{margin:0 0 10px;color:var(--red);font-size:16px}
+.risk-box p{font-size:15px;color:var(--gray-700);margin:0;line-height:1.7}
+.finding{border:1px solid var(--gray-200);border-radius:12px;padding:26px 30px;margin-bottom:18px;background:#fcfcfc;border-left:3px solid transparent}
+.finding:hover{box-shadow:0 2px 16px rgba(0,0,0,.04);border-color:var(--gold-border);border-left-color:var(--gold)}
+.finding-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;gap:12px;flex-wrap:wrap}
+.finding-title{font-weight:700;font-size:17px;color:var(--gray-900);letter-spacing:-.2px}
+.finding-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 32px;font-size:15px}
+.finding-grid .field{font-weight:600;color:var(--gray-800)}
+.finding-grid .value{color:var(--gray-700)}
+.finding-grid .full{grid-column:1/-1}
+code{font-family:'JetBrains Mono',monospace;background:var(--gray-100);padding:2px 8px;border-radius:3px;font-size:13px;color:var(--red)}
+.callout{background:linear-gradient(135deg,#0d0d0d,#1a1a1a);color:#fff;border-radius:12px;padding:26px 28px;margin:20px 0;position:relative;overflow:hidden}
+.callout::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),var(--gold))}
+.callout h4{color:var(--gold);margin:0 0 8px;font-size:15px;text-transform:uppercase;letter-spacing:.6px}
+.callout p{color:rgba(255,255,255,.82);font-size:15px;line-height:1.7;margin:0}
+.callout code{background:rgba(255,255,255,.1);color:#ffd9a0}
+.status-note{background:linear-gradient(135deg,#fcfaf7,#f8f7f4);border-left:4px solid var(--gold);padding:18px 22px;border-radius:0 12px 12px 0;margin:16px 0}
+.status-note p{font-size:15px;margin:0}
+.timeline{display:flex;gap:0;margin:32px 0 16px;position:relative;padding:0 0 20px}
+.timeline::before{content:'';position:absolute;top:28px;left:5%;right:5%;height:3px;background:linear-gradient(90deg,var(--gold-border),var(--gold),var(--gold-border));border-radius:2px}
+.timeline-phase{flex:1;text-align:center;position:relative;padding:0 8px}
+.timeline-phase .dot{width:16px;height:16px;border-radius:50%;margin:0 auto 12px;position:relative;z-index:1;border:3px solid #fff;box-shadow:0 0 0 2px var(--gold)}
+.timeline-phase .dot.red{background:var(--red)}.timeline-phase .dot.orange{background:#c2410c}.timeline-phase .dot.gold{background:var(--gold)}
+.timeline-phase .phase-name{font-size:13px;font-weight:700;color:var(--gray-800);margin-bottom:2px}
+.timeline-phase .phase-hours{font-size:22px;font-weight:700;color:var(--red);letter-spacing:-.5px}
+.timeline-phase .phase-pct{font-size:12px;color:var(--gray-500);font-weight:600}
+.timeline-deliverables{display:flex;gap:0;margin-top:4px}
+.timeline-deliverables .deliv{flex:1;text-align:center;padding:0 6px;font-size:12px;color:var(--gray-600);line-height:1.4}
+.timeline-deliverables .deliv strong{display:block;color:var(--gray-700);font-size:11px;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px}
+.footer{text-align:center;padding:36px;font-size:14px;color:var(--gray-500);border-top:1px solid var(--gold-border);letter-spacing:.3px;position:relative;background:#fff;border-radius:0 0 16px 16px}
+.footer::before{content:'';position:absolute;top:-2px;left:50%;transform:translateX(-50%);width:40px;height:3px;background:var(--gold);border-radius:2px}
+.evidence{font-family:'JetBrains Mono',monospace;font-size:12px;background:#141414;color:#d8d8d8;border-radius:10px;padding:16px 18px;margin:16px 0;white-space:pre-wrap;line-height:1.65}
+.evidence b{color:#f0b429}
+@media(max-width:640px){.cover h1{font-size:26px}.cover{padding:40px 20px 32px}.card-body{padding:20px}.finding-grid{grid-template-columns:1fr}.kpi-grid{grid-template-columns:1fr 1fr}table{font-size:12px}th,td{padding:8px 10px}.timeline-deliverables{flex-direction:column;gap:8px}}
+@media print{body{background:#fff;font-size:12px}.card{box-shadow:none;page-break-inside:avoid}.card-body{padding:20px 24px}.finding{page-break-inside:avoid}@page{margin:1.5cm 1cm}}
+</style>
+</head>
+<body>
+
+<div class="cover"><div class="cover-content">
+<div class="label">Confidencial · Outubro 2026 · SEO + Marketplace</div>
+<h1>CRA Comércio: auditoria SEO focada em Mercado Livre</h1>
+<p>O que está travando as vendas na loja, o que o site tem a ver com isso e o plano para virar o jogo. Explicado de um jeito que qualquer pessoa entende, com o detalhe que quem executa precisa.</p>
+<div class="cover-meta"><span>• cra.com.br · 7 páginas no ar</span><span>• Loja ULTRALEGER · seller 2461665031</span><span>• 33 planilhas do Frog + loja + Ubersuggest</span></div>
+<div class="slide-nav">
+<a href="#sumario">00 <span>Resumo</span></a><a href="#metodo">01 <span>Método</span></a><a href="#site">02 <span>Site</span></a><a href="#ubs">03 <span>Google</span></a><a href="#ml">04 <span>Loja ML</span></a><a href="#bench">05 <span>Prova externa</span></a><a href="#causas">06 <span>Causas</span></a><a href="#solucao">07 <span>Plano</span></a><a href="#abertos">08 <span>Pendências</span></a><a href="#roadmap">09 <span>Cronograma</span></a>
+</div>
+</div></div>
+
+<div class="container">
+
+<div class="card" id="sumario"><div class="card-body">
+<h2><span class="slide-num">00</span> Resumo: o essencial em um minuto</h2>
+<div class="kpi-grid">
+<div class="kpi-card"><div class="value">7</div><div class="label">Páginas no site</div><div class="sub">O sitemap tem 8 endereços e um deles é redirect. Pouca linha no relatório não é erro de leitura.</div></div>
+<div class="kpi-card"><div class="value">ULTRA?</div><div class="label">Nome da loja</div><div class="sub">A loja se chama ULTRALEGER, não CRA. Quem procura CRA não encontra CRA no ML.</div></div>
+<div class="kpi-card"><div class="value">0</div><div class="label">Vendas visíveis</div><div class="sub">Cerca de 20 anúncios no ar e nenhum com contador de vendas. Sem venda não há posição.</div></div>
+<div class="kpi-card"><div class="value">6</div><div class="label">Produtos CRA em revenda</div><div class="sub">Uma loja de terceiros vende seus códigos com preço cheio. A procura existe.</div></div>
+</div>
+<h3>Os 3 pontos que a diretoria precisa entender</h3>
+<div class="risk-box"><h4>1. A loja oficial não leva o nome da fábrica</h4><p>Vocês fabricam há 25 anos, têm 8 lojas e o nome CRA lidera a busca no Google. No Mercado Livre a loja se apresenta como ULTRALEGER, com pouco mais de 120 seguidores. O cliente que confia na marca não faz a ligação. Os títulos também não trazem a marca CRA nem o código da peça, então a busca por código original cai no concorrente.</p></div>
+<div class="risk-box"><h4>2. O site não tem página para o que realmente vende autopeça</h4><p>Autopeça vende por combinação de peça, carro, ano e código original. O site fala de categorias genéricas e guarda o detalhe dentro de um aplicativo que o Google não lê. Resultado: a home não tem título principal, a página de produtos tem oito títulos principais ao mesmo tempo e nenhuma página responde pela busca que traz comprador.</p></div>
+<div class="risk-box"><h4>3. Nenhum anúncio tem histórico para o algoritmo confiar</h4><p>Posição no Mercado Livre se conquista com venda repetida, avaliação, resposta rápida e envio confiável. Hoje quase tudo está zerado e a venda está espalhada. Sem concentrar pedido em poucos anúncios campeões, com frete bom e anúncio patrocinado no começo, nada sobe, mesmo com preço justo.</p></div>
+<div class="callout"><h4>Google e Mercado Livre são dois jogos diferentes</h4><p>O Google ordena por página, conteúdo e autoridade. O Mercado Livre ordena por título, categoria, ficha completa, venda, reputação, envio e preço. O site não muda a posição no ML diretamente. Ele ajuda de três formas: manda visita pronta para comprar, sustenta a confiança na marca e publica a tabela de aplicação e código que alimenta a ficha do anúncio. Hoje as três estão zeradas. Este plano liga as três.</p></div>
+</div></div>
+
+<div class="card" id="metodo"><div class="card-body">
+<h2><span class="slide-num">01</span> Como auditamos e onde fomos até o limite</h2>
+<p>Antes do diagnóstico, o combinado sobre os dados. Tudo abaixo foi verificado de verdade. Nada foi estimado sem avisar.</p>
+<table><tr><th>Fonte</th><th>O que olhamos</th><th>Situação</th></tr>
+<tr><td><strong>Relatório do site (33 planilhas)</strong></td><td>As 7 páginas: títulos, cabeçalhos, descrições, canonical, idiomas, 84 imagens, dados estruturados, tempo de resposta</td><td><span class="badge badge-ok">Completo</span></td></tr>
+<tr><td><strong>Site no ar</strong></td><td>Robôs liberado, mapa com 8 endereços, velocidade inicial boa, página de 646KB, 1 marcador WebSite</td><td><span class="badge badge-ok">Completo</span></td></tr>
+<tr><td><strong>Vitrine da loja no ML</strong></td><td>Nome, seguidores, 2 corredores, cerca de 20 títulos com preços de R$33 a R$1225, frete, destaque TRW de R$128</td><td><span class="badge badge-medio">Parte pública</span></td></tr>
+<tr><td><strong>Página de cada anúncio e API do ML</strong></td><td>A página do produto pede login e a API oficial devolveu acesso negado nos testes de 13/10</td><td><span class="badge badge-critico">Pede acesso interno</span></td></tr>
+<tr><td><strong>Ubersuggest</strong></td><td>Vale para o site: autoridade 11 de 100, 33 sites linkando, 7 buscas. O número gigante do ML é do marketplace inteiro, não da sua loja</td><td><span class="badge badge-medio">Só site</span></td></tr>
+<tr><td><strong>Lojas de terceiros</strong></td><td>Seis códigos CRA à venda com preço, ficha modelo de concorrente e anúncio com 50 vendas no mesmo nicho</td><td><span class="badge badge-ok">Completo</span></td></tr>
+</table>
+<h3>Cada acesso que vocês liberarem destrava uma camada</h3>
+<table><tr><th>Se vocês mandarem</th><th>O que a gente entrega em troca</th></tr>
+<tr><td>3 prints do Seller Center (vendas, visitas, reputação)</td><td>Ordem exata de ataque por retorno: qual anúncio mexe primeiro e quanto cada um pode render</td></tr>
+<tr><td>A planilha do aplicativo (código CRA, original, carro, ano)</td><td>A matriz completa: 500 fichas e páginas prontas, sem chute</td></tr>
+<tr><td>Margem, estoque e o que pode ir para o Full</td><td>Decisão de preço, frete grátis e patrocinado por produto, sem queimar margem</td></tr>
+<tr><td>Acesso de leitura à conta de anúncios do ML</td><td>Posição diária por busca e ajuste fino de lance e título</td></tr>
+</table>
+<div class="status-note"><p><strong>O recado honesto:</strong> o lote inicial de 20 produtos deste plano não depende de nada disso. Ele usa dado público já conferido. Os acessos servem para acelerar e priorizar, não para começar.</p></div>
+</div></div>
+
+<div class="card" id="site"><div class="card-body">
+<h2><span class="slide-num">02</span> O site: pequeno por desenho, não por defeito</h2>
+<p>Pouca linha no relatório assusta, mas aqui é normal. O mapa do site tem 8 endereços e um deles só redireciona. O problema não é tamanho. É que falta a camada que vende: página por peça, carro, ano e código.</p>
+<div class="kpi-grid">
+<div class="kpi-card"><div class="value">71%</div><div class="label">Sem título principal</div><div class="sub">5 de 7 páginas sem H1. A home é uma delas.</div></div>
+<div class="kpi-card"><div class="value">100%</div><div class="label">Descrição longa</div><div class="sub">As 7 passam de 155 caracteres e cortam no Google.</div></div>
+<div class="kpi-card"><div class="value">0</div><div class="label">Destaque no Google</div><div class="sub">Nenhum marcador de produto, avaliação ou pergunta.</div></div>
+<div class="kpi-card"><div class="value">740KB</div><div class="label">Imagens pesadas</div><div class="sub">3 arquivos perto de 740KB cada e 30 sem tamanho definido.</div></div>
+</div>
+<div class="finding"><div class="finding-header"><div><span class="finding-title">S-01. A home não diz o assunto e produtos grita 8 assuntos</span></div><div><span class="severity sev-critico">Crítico</span></div></div>
+<div class="finding-grid">
+<div class="full"><span class="field">O que encontramos:</span> <span class="value">A inicial tem zero título principal e zero subtítulo. A página de produtos tem 8 títulos principais de 17 pixels cada (<code>reparos hidráulicas, eletromecânicas, bombas, cremalheiras</code> e por aí vai) e zero subtítulo. Na página sobre nós o único título principal é <code>MEIO ambiente</code>, que não tem a ver com a venda.</span></div>
+<div class="full"><span class="field">Por que isso derruba venda:</span> <span class="value">O Google usa o título principal para entender do que trata a página. Sem ele, a home não concorre por nada. Com oito, a página de produtos divide a força em oito e não concorre por nada também.</span></div>
+<div class="full"><span class="field">O que fazer segunda de manhã:</span> <span class="value">Um título principal na home com <code>Reparos para direção hidráulica, elétrica e câmbio automático, direto da fábrica há 25 anos</code>. Em produtos, um título principal só e os 8 blocos viram subtítulos, cada um com 2 ou 3 linhas (para que serve, quais códigos, quais carros, link para a página da aplicação).</span></div>
+</div></div>
+<div class="finding"><div class="finding-header"><div><span class="finding-title">S-02. Títulos curtos demais, descrições longas demais, rodapé confuso</span></div><div><span class="severity sev-alto">Alto</span></div></div>
+<div class="finding-grid">
+<div class="full"><span class="field">O que encontramos:</span> <span class="value"><code>PRODUTOS | CRA</code> tem 14 caracteres e usa 156 pixels de uns 600 possíveis. É espaço de graça para a palavra que traz cliente. As 7 descrições têm de 206 a 267 caracteres e o Google corta. O rodapé repete <code>caixa direção hidráulica caixa direção elétricaoverhaulpinhão</code> grudado, sem espaço.</span></div>
+<div class="full"><span class="field">O que fazer segunda de manhã:</span> <span class="value">Reescrever os 7 títulos com a busca de cada página e as 7 descrições com até 155 caracteres. Trocar o rodapé por links organizados por categoria. Renomear as fotos com nome de gente (<code>kit-reparo-caixa-direcao-hidraulica-cra.jpg</code>), comprimir os 3 arquivos pesados e rodar o teste de velocidade nas 3 páginas principais (o relatório de velocidade veio vazio).</span></div>
+</div></div>
+<div class="finding"><div class="finding-header"><div><span class="finding-title">S-03. O catálogo mora no aplicativo e o Google não entra lá</span></div><div><span class="severity sev-critico">Crítico</span></div></div>
+<div class="finding-grid">
+<div class="full"><span class="field">O que encontramos:</span> <span class="value">A página do catálogo manda baixar o app com QR Code. A tabela de carro, ano e código original, que é o ouro da empresa, não existe em HTML. A melhor página de texto do site (<code>A novela da direção eletromecânica acabou na sua oficina</code>) está fora do menu e quase ninguém chega nela.</span></div>
+<div class="full"><span class="field">O que fazer segunda de manhã:</span> <span class="value">Tirar os 20 produtos que mais giram no balcão de dentro do app e publicar como página normal, com tabela de aplicação e código. Colocar a página da direção eletromecânica no menu e repetir o formato para hidráulica e câmbio.</span></div>
+</div></div>
+</div></div>
+
+<div class="card" id="ubs"><div class="card-body">
+<h2><span class="slide-num">03</span> O Google hoje: marca forte, venda fraca</h2>
+<table><tr><th>Dado</th><th>Número</th><th>O que quer dizer</th></tr>
+<tr><td>Força do domínio</td><td>11 de 100, 33 sites linkando, 114 visitas estimadas</td><td>Site pequeno e pouco citado. O trabalho agora é arquitetura, não comprar link.</td></tr>
+<tr><td>Página inicial</td><td>Força 18, 220 visitas, 7 buscas</td><td>Tudo concentrado na home. Nada distribui força para dentro.</td></tr>
+<tr><td>Primeiro lugar (2 buscas)</td><td><code>cra direção hidráulica</code> (320 buscas/mês) e <code>cra componentes</code> (170)</td><td><span class="badge badge-ok">Marca dominada</span>. Quem procura CRA acha CRA.</td></tr>
+<tr><td>Posição 30 a 66 (5 buscas)</td><td><code>peças para direção hidráulica</code> (210/mês, clique a R$2,69, concorrência 91%) e variações</td><td><span class="badge badge-medio">Chance aberta</span>. É a busca de quem quer comprar e vocês estão na página 4 em diante.</td></tr>
+</table>
+<div class="status-note"><p><strong>Um cuidado:</strong> apareceu por aí número gigante com o nome Mercado Livre (autoridade 93, milhões de buscas). Aquilo é o marketplace inteiro, não a sua loja. Não serve de meta. Loja se mede por posição na busca de dentro do ML, visita, conversão, venda e reputação.</p></div>
+</div></div>
+
+<div class="card" id="ml"><div class="card-body">
+<h2><span class="slide-num">04</span> A loja no ML vista por fora</h2>
+<p>Endereço da loja com <code>seller 2461665031</code>, categoria principal <code>MLB193737</code>. A página de cada produto pede login e a API oficial negou acesso nos testes de 13/10, então tudo aqui vem da vitrine pública, que abre normalmente.</p>
+<div class="kpi-grid">
+<div class="kpi-card"><div class="value">+120</div><div class="label">Seguidores</div><div class="sub">Base inicial, sem força de marca CRA.</div></div>
+<div class="kpi-card"><div class="value">20</div><div class="label">Anúncios à mostra</div><div class="sub">Bomba, câmbio e correias.</div></div>
+<div class="kpi-card"><div class="value">33 a 1225</div><div class="label">Reais de faixa</div><div class="sub">Bomba gira volume, câmbio dá margem.</div></div>
+<div class="kpi-card"><div class="value">+25</div><div class="label">Únicas vendas visíveis</div><div class="sub">De uma escova fora do nicho. O resto zerado.</div></div>
+</div>
+<table><tr><th>Anúncio real na vitrine</th><th>Preço</th><th>O que falta nele</th></tr>
+<tr><td>Reparo de bomba Fox e Polo Kyb</td><td>R$71</td><td>Marca CRA, código original e anos completos</td></tr>
+<tr><td>Reparo de bomba L200 Triton Kyb</td><td>R$69</td><td><code>2008 a 2016</code> e OEM <code>MR333500</code> (o concorrente informa)</td></tr>
+<tr><td>Reparo de bomba F1000 e F4000 ZF 7673 698 022</td><td>R$40</td><td>Este é o padrão bom: marca da bomba mais código. Repetir nos outros.</td></tr>
+<tr><td>Reparo de caixa Palio, Strada, Uno e Doblo TRW (destaque)</td><td>R$128,74</td><td>Marca CRA, código CRA e anos de cada carro</td></tr>
+<tr><td>Kit de câmbio 948TE para Toro, Compass e Renegade</td><td>R$1.225</td><td>Conferir ficha 100% completa e 8 fotos</td></tr>
+<tr><td>Escova circular Norton</td><td>R$65</td><td><span class="badge badge-critico">Fora do nicho: tirar</span> para conta separada</td></tr>
+</table>
+<div class="callout"><h4>A ordem que o Mercado Livre usa para ordenar</h4><p>Título com a palavra no começo, categoria certa, ficha com código e compatibilidade completos, histórico de vendas, reputação, envio pelo Full, preço com estoque e fotos com descrição que respondem tudo. Link de fora não conta ponto aqui.</p></div>
+</div></div>
+
+<div class="card" id="bench"><div class="card-body">
+<h2><span class="slide-num">05</span> A prova de que tem procura: revenda vende seu código</h2>
+<p>Uma loja de terceiros vende seis produtos com a marca e o código de vocês, com preço cheio e estoque imediato. Quem fabrica está fora dessa venda hoje.</p>
+<table><tr><th>Produto CRA na revenda</th><th>Preço lá</th><th>Sua jogada no ML</th></tr>
+<tr><td><code>316.343</code> Sonata</td><td>R$796</td><td>Anunciar entre R$769 e R$819 com código e anos</td></tr>
+<tr><td><code>315.304</code> Chery Face</td><td>R$490</td><td>Espelho com página no site</td></tr>
+<tr><td><code>311.027</code> Jetta</td><td>R$410</td><td>Carro chefe: <code>Kit reparo caixa direção hid Jetta 2007 a 2013 CRA 311.027</code></td></tr>
+<tr><td><code>312.104</code> Grand Vitara</td><td>R$645</td><td>Âncora de margem</td></tr>
+<tr><td><code>313.001F</code> Monza, Kadett, Astra e Vectra</td><td>R$289</td><td>Volume: 4 carros em um anúncio</td></tr>
+<tr><td><code>318.042</code> Iveco Daily</td><td>R$419</td><td>Nicho pesado com pouca briga</td></tr>
+</table>
+<div class="finding"><div class="finding-header"><div><span class="finding-title">O modelo de ficha que funciona (concorrente Corteco na Dinatec)</span></div><div><span class="badge badge-ok">Copiar a estrutura</span></div></div>
+<div class="finding-grid"><div class="full"><span class="field">Estrutura:</span> <span class="value"><strong>APLICAÇÃO</strong> com carro, caixa e ano (Agile, Celta e Corsa DHB 2009 em diante) mais <strong>REFERÊNCIA CRUZADA</strong> (original 57096K, DHB 24466, Steer 10100146, Corteco 9950400) mais NCM, peso e aviso de instalação em oficina. É essa estrutura que a sua ficha e a sua página precisam ter. Hoje nenhuma das duas tem.</span></div></div></div>
+</div></div>
+
+<div class="card" id="causas"><div class="card-body">
+<h2><span class="slide-num">06</span> As 7 travas, em ordem de prejuízo</h2>
+<table><tr><th>Nº</th><th>Trava</th><th>Efeito no caixa</th><th>Nível</th></tr>
+<tr><td>1</td><td>Loja sem o nome da fábrica</td><td>Cliente da marca não encontra a loja</td><td><span class="badge badge-critico">Crítico</span></td></tr>
+<tr><td>2</td><td>Título sem código e sem ano</td><td>Perde a busca de quem já sabe o que quer</td><td><span class="badge badge-critico">Crítico</span></td></tr>
+<tr><td>3</td><td>Ficha incompleta, detalhe preso no app</td><td>O algoritmo entende o anúncio como fraco</td><td><span class="badge badge-critico">Crítico</span></td></tr>
+<tr><td>4</td><td>Nenhuma prova (venda e avaliação)</td><td>Sem histórico não há posição</td><td><span class="badge badge-critico">Crítico</span></td></tr>
+<tr><td>5</td><td>Produto fora do nicho e anúncio repetido</td><td>Impede o campeão de subir</td><td><span class="badge badge-alto">Alto</span></td></tr>
+<tr><td>6</td><td>Frete comum, sem Full</td><td>Perde entrega rápida e conversão</td><td><span class="badge badge-alto">Alto</span></td></tr>
+<tr><td>7</td><td>Site e loja não se falam</td><td>Visita pronta para comprar se perde</td><td><span class="badge badge-alto">Alto</span></td></tr>
+</table>
+</div></div>
+
+<div class="card" id="solucao"><div class="card-body">
+<h2><span class="slide-num">07</span> O plano em 5 frentes (pronto para executar)</h2>
+<h3>A. A loja passa a se apresentar como a fábrica (48 horas)</h3>
+<p>Logo, faixa e texto com 25 anos, 8 lojas, CNPJ e WhatsApp (11) 4426-8888, mais link do catálogo com origem marcada. Os corredores passam a repetir as 8 categorias do site. A escova vai para outra conta.</p>
+<h3>B. Um carro, um anúncio campeão</h3>
+<p>Juntar repetido e concentrar pedido. Vinte campeões para começar: os 6 da revenda mais 14 da vitrine (bombas de Fox, L200, Hilux, Civic e linha DHB, câmbios 948TE, TF-80SC e ZF4HP14, correias de BMW, Mercedes e Fusion). Kit de câmbio acima de R$800 entra como Premium com Full e patrocinado. Bomba abaixo de R$100 entra como Clássico com envio normal até somar 25 vendas.</p>
+<div class="callout"><h4>Modelo de título (copiar e colar, palavra no começo)</h4><p><code>Kit reparo caixa direção hid Jetta 2.0 2007 a 2013 CRA 311.027</code><br><code>Reparo bomba hidráulica L200 Triton 3.2 2008 a 2016 Kyb CRA</code><br><code>Kit reparo câmbio 948TE ZF9HP48 Toro Compass Renegade CRA</code></p></div>
+<div class="callout"><h4>Modelo de descrição e ficha (igual no site e no anúncio)</h4><p>APLICAÇÃO com montadora, modelo, caixa e ano de cada carro.<br>REFERÊNCIA CRUZADA com original, CRA, DHB, TRW e ZF, mais NCM e peso.<br>ITENS INCLUSOS com quantidade de retentor, coifa e abraçadeira, com foto aberta.<br>GARANTIA de 6 meses com nota e peça gravada CRA.<br>Ficha 100 por cento: marca CRA, número da peça, código original, tipo de caixa, o que acompanha, se é kit e ano de cada carro.</p></div>
+<div class="callout"><h4>As 8 fotos de todo anúncio</h4><p>1 kit fechado, 2 kit aberto, 3 peça gravada de perto, 4 medida com paquímetro, 5 peça velha ao lado da nova, 6 embalagem, 7 tabela de aplicação, 8 QR do catálogo. Arquivo com nome claro, tipo <code>kit-reparo-caixa-direcao-jetta-cra-311027-01.jpg</code>.</p></div>
+<h3>C. Preço, envio, patrocinado e ponte com o site</h3>
+<p>Preço ancorado na revenda (Jetta de R$410 na Tray vira R$389 a R$429 no ML com frete embutido). Envio do ML em 100 por cento e Full nos 10 campeões. Patrocinado de 15 por cento por 14 dias para buscar as primeiras 25 vendas. Resposta em menos de 1 hora usando o texto da página da eletromecânica e pedido de avaliação com foto. No site, 20 páginas por carro e código com a mesma tabela, botão de comprar no ML com origem marcada e marcador de produto, trilha e pergunta.</p>
+</div></div>
+
+<div class="card" id="abertos"><div class="card-body">
+<h2><span class="slide-num">08</span> Pendências com dono e prazo (nada aqui trava o começo)</h2>
+<p>O lote inicial de 20 roda com dado público já conferido. A lista abaixo serve para a escala dos 500.</p>
+<table><tr><th>Nº</th><th>O que depende de vocês</th><th>O combinado até chegar</th><th>Como valida</th></tr>
+<tr><td>1</td><td>Planilha do app (código CRA, original, carro, ano)</td><td>Lote 1 com 6 da revenda mais 14 da vitrine. O resto entra como em validação</td><td>Exportar o CSV e a gente faz a diferença</td></tr>
+<tr><td>2</td><td>Margem, estoque e o que pode ir ao Full</td><td>Câmbio acima de 800 de Premium com Full. Bomba abaixo de 100 de Clássico</td><td>Planilha de custo mais print da tela de Full</td></tr>
+<tr><td>3</td><td>Vendas, visitas, conversão e posição por anúncio</td><td>Consideramos zerado (só 120 seguidores). Ordem pelo preço da revenda</td><td>3 prints: desempenho, visitas, reputação</td></tr>
+<tr><td>4</td><td>Reputação, atraso e devolução</td><td>Consideramos loja nova verde. Se amarelar, pausa patrocinado</td><td>Print da reputação</td></tr>
+<tr><td>5</td><td>NCM, peso, garantia e troca</td><td>Valor provisório marcado para confirmar: NCM 40169300, 0,3kg, 6 meses com nota</td><td>Fiscal confirma uma linha por família</td></tr>
+<tr><td>6</td><td>Tabela original de códigos</td><td>Usamos código da vitrine e da revenda marcado como provisório</td><td>Engenharia manda uma página</td></tr>
+</table>
+<div class="status-note"><p><strong>Por que não chutamos os 500 por conta própria?</strong> Por fora dá para ver a ponta (o que a revenda publica), não a matriz inteira com troca de código e ano exato. Ficha errada vira devolução e reclamação, e reclamação derruba a reputação que a gente está construindo. Lote 1 com dado conferido mais resto com planilha é o caminho seguro.</p></div>
+</div></div>
+
+<div class="card" id="roadmap"><div class="card-body">
+<h2><span class="slide-num">09</span> Cronograma 7, 30 e 90 dias</h2>
+<div class="timeline">
+<div class="timeline-phase"><div class="dot red"></div><div class="phase-hours">7 dias</div><div class="phase-name">Destravar</div><div class="phase-pct">Lote 1</div></div>
+<div class="timeline-phase"><div class="dot orange"></div><div class="phase-hours">30 dias</div><div class="phase-name">Posicionar</div><div class="phase-pct">20 espelhos</div></div>
+<div class="timeline-phase"><div class="dot gold"></div><div class="phase-hours">90 dias</div><div class="phase-name">Escalar</div><div class="phase-pct">500 itens</div></div>
+</div>
+<div class="timeline-deliverables">
+<div class="deliv"><strong>7 dias</strong>Nome CRA na loja, 20 títulos, Full e patrocinado, H1 e H2, <b>meta de 25 vendas</b></div>
+<div class="deliv"><strong>30 dias</strong>20 páginas com botão para o ML, 6 códigos da revenda no ML, conta limpa, <b>meta de top 20 com conversão acima de 1,2%</b></div>
+<div class="deliv"><strong>90 dias</strong>Planilha cheia virando resto, textos por sintoma, avaliação virando prova, <b>meta de top 3 com 15% das visitas vindas do site</b></div>
+</div>
+<h3>Como saber que funcionou (toda semana, no Seller Center)</h3>
+<p>Por anúncio: posição na busca do ML, clique, visita, conversão, venda em 30 dias, tempo de resposta e devolução. Na loja: reputação, percentual no Full, retorno do patrocinado e seguidores. No site: páginas indexadas saindo de 7 para 27, <code>peças para direção hidráulica</code> saindo da posição 35 para o top 10 e clique com origem marcada rumo ao ML.</p>
+</div></div>
+
+<div class="footer">V4 COMPANY · SEO + MARKETPLACE · Base: 33 planilhas do site, site no ar, vitrine ULTRALEGER, Ubersuggest, Caspper, Dinatec e Partfix · Testes de acesso em 13/10/2026 · Próximo passo: planilha do app para o lote completo</div>
+
+</div>
+</body>
+</html>
