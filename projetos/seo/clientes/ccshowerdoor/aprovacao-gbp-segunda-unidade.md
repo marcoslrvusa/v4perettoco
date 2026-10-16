@@ -69,6 +69,7 @@ Perfil aprovado e vazio não ranqueia. Completar com: 10 ou mais fotos reais com
 - 0:30 a 1:00, entrada contínua. Entre pela porta principal sem cortar o vídeo. Mostre em movimento mesa, computador ligado, cadeira, amostras e prêmios na parede. Abra uma pasta de obra ou o sistema de agendamentos na tela, como prova de operação ativa.
 - 1:00 a 1:30, prova documental. Pare sobre a mesa e foque com calma cada documento por 3 a 4 segundos: lease em nome CL Choice com o endereço, correspondência ou conta com o mesmo endereço, cartão ou documento da empresa. Não cubra o endereço com o dedo.
 - 1:30 a 1:50, amarração digital. Mostre o computador com o site da empresa exibindo o novo endereço. Encerre mostrando de novo a placa interna ou a parede de prêmios. Isso fecha o ciclo rua, loja, prova e marca.
+- Adaptação para condomínio com entrada distante. Comece na placa do condomínio ou na rua em frente a ele, com o nome legível. Caminhe sem parar de filmar até o bloco e a sala, com alguém na frente abrindo portas e portões para a câmera nunca parar. Cronometre o trajeto antes, a pé e em ritmo decidido, para caber em 90 a 110 segundos. Como há salas residenciais no condomínio, reforce a leitura comercial: placa na porta, interior de escritório ou mostruário e documentos à mostra.
 
 ## 6. Checklist de envio: confira antes de submeter
 
@@ -77,6 +78,7 @@ Perfil aprovado e vazio não ranqueia. Completar com: 10 ou mais fotos reais com
 - Categoria primária e secundárias preenchidas.
 - Telefone novo e exclusivo, com atendimento. Horário real publicado.
 - Vídeo em tomada única, menos de 2 minutos, com localização ativa, filmado na loja.
+- Trajeto da portaria até a sala cronometrado abaixo de 2 minutos, do início ao fim sem cortes.
 - Nenhuma edição no perfil nas 48 horas seguintes ao envio.
 - Vídeo original guardado, mais lease em PDF, para eventual recurso.
 
