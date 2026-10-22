@@ -76,8 +76,31 @@ pre{background:#141414;color:#e8eef7;padding:18px;border-radius:12px;overflow:au
 .toc{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
 .toc a{display:block;background:#fafafa;border:1px solid var(--gold-border);border-radius:10px;padding:10px 14px;font-size:13.5px;color:var(--gray-800);text-decoration:none;font-weight:600}
 .toc a:hover{border-color:var(--gold)}
+.quote{background:linear-gradient(135deg,#0d0d0d 0%,#1a1a1a 55%,#2e2a26 100%);color:#fff;border-radius:18px;border:1px solid rgba(201,169,110,.35);position:relative;overflow:hidden;margin-bottom:26px;box-shadow:0 16px 44px rgba(0,0,0,.18)}
+.quote::before{content:'';position:absolute;inset:-40%;background:radial-gradient(circle at 82% 0%,rgba(201,169,110,.20) 0%,transparent 55%);pointer-events:none}
+.quote-inner{position:relative;z-index:1;padding:44px 48px}
+.quote-head{display:flex;justify-content:space-between;gap:24px;align-items:flex-end;flex-wrap:wrap;border-bottom:1px solid rgba(201,169,110,.25);padding-bottom:24px;margin-bottom:28px}
+.quote-kicker{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700}
+.quote-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:27px;font-weight:800;letter-spacing:-.5px;margin-top:8px;color:#fff}
+.quote-title span{color:var(--gold)}
+.quote-price{text-align:right;line-height:1}
+.q-amount{font-family:'Plus Jakarta Sans',sans-serif;font-size:54px;font-weight:800;letter-spacing:-2px;background:linear-gradient(135deg,#ffffff 0%,#f0e2c6 45%,#c9a96e 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.q-per{font-size:13px;color:#cfc6b8;margin-top:10px;letter-spacing:.4px}
+.quote-grid{display:grid;grid-template-columns:1.35fr .85fr;gap:42px;align-items:start}
+.quote h3{font-size:12px;text-transform:uppercase;letter-spacing:1.4px;color:var(--gold);margin:0 0 16px;font-weight:700}
+.q-list{list-style:none;margin:0;padding:0}
+.q-list li{position:relative;padding-left:30px;margin-bottom:12px;font-size:14.5px;color:#e6e1d9;line-height:1.6}
+.q-list li::before{content:'✓';position:absolute;left:0;top:-1px;width:19px;height:19px;border-radius:50%;background:rgba(201,169,110,.16);border:1px solid rgba(201,169,110,.45);color:var(--gold);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.q-box{background:rgba(255,255,255,.045);border:1px solid rgba(201,169,110,.28);border-radius:14px;padding:22px 24px}
+.q-row{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:13.5px}
+.q-row:last-child{border-bottom:none;padding-bottom:0}
+.q-row span:first-child{color:#a8a29a}
+.q-row span:last-child{color:#fff;font-weight:600;text-align:right}
+.q-close{margin-top:30px;padding-top:22px;border-top:1px solid rgba(201,169,110,.25);font-size:15.5px;color:#efe9df;line-height:1.7}
+.q-close strong{color:var(--gold)}
+.q-note{font-size:12.5px;color:#9c968d;margin-top:14px}
 .footer{text-align:center;color:#999;font-size:12.5px;padding:26px}
-@media(max-width:760px){.card-body{padding:26px 20px}.kpi-grid{grid-template-columns:1fr 1fr}.cover h1{font-size:29px}.toc{grid-template-columns:1fr}.timeline{flex-direction:column}.timeline::before{display:none}}
+@media(max-width:760px){.card-body{padding:26px 20px}.kpi-grid{grid-template-columns:1fr 1fr}.cover h1{font-size:29px}.toc{grid-template-columns:1fr}.timeline{flex-direction:column}.timeline::before{display:none}.quote-inner{padding:30px 22px}.quote-grid{grid-template-columns:1fr;gap:26px}.quote-head{align-items:flex-start}.quote-price{text-align:left}.q-amount{font-size:42px}.quote-title{font-size:22px}}
 </style>
 </head>
 <body>
@@ -99,8 +122,9 @@ pre{background:#141414;color:#e8eef7;padding:18px;border-radius:12px;overflow:au
  <span>🧾 <a href="https://share.google/YRhZN48qBMWNAHjgJ">Ficha atual no Google</a></span>
  </div>
  <div class="cover-cta">
- <a class="btn btn-gold" href="#roadmap">Ver o cronograma</a>
- <a class="btn btn-ghost" href="#aprovacao">Ver etapas da aprovação</a>
+<a class="btn btn-gold" href="#roadmap">Ver o cronograma</a>
+<a class="btn btn-ghost" href="#aprovacao">Ver etapas da aprovação</a>
+<a class="btn btn-ghost" href="#investimento">Ver proposta</a>
  </div>
  </div>
 </div>
@@ -121,6 +145,7 @@ pre{background:#141414;color:#e8eef7;padding:18px;border-radius:12px;overflow:au
 <a href="#aiogeo">7. AIO / GEO, aparecer no ChatGPT e no AI Overviews</a>
 <a href="#roadmap">8. Roadmap de 12 semanas + próximos passos</a>
 <a href="#kpis">9. Metas, KPIs e placar</a>
+<a href="#investimento">10. Investimento e condições</a>
 </div>
 </div></div>
 
@@ -410,6 +435,52 @@ Loja 2: Clear Choice Shower Door | 12412 San Jose Blvd, Jacksonville, FL [ZIP] |
 <div class="risk"><h4>Por que essa ordem vence</h4><p>Porque sequência é estratégia: <strong>contrato → perfil válido → dados consistentes → site corrigido → conteúdo de bairro → ritmo de avaliações → aceleração paga</strong>. Pular etapa foi o que quebrou Orlando. Empilhado do jeito certo, cada fase alimenta a próxima, fichas, autoridade do domínio e citações em IA rendendo como juros compostos.</p></div>
 <p class="small">Fontes: transcrição + anotações do check-in 09/10/2026 · crawl Screaming Frog 13/10 (438 URLs, 71 HTML, 252 imagens) · ccshowerdoor.com (live) · <a href="https://share.google/YRhZN48qBMWNAHjgJ">ficha no Google</a> · pesquisa web: BrightLocal/Whitespark/Yext (citações), Google Business Help (multi-unidade/verificação em vídeo), estudo Yext 155M citações T1-2026, SOCi Local Visibility Index 2026, Seer/First Page Sage (conversão em IA), concorrentes ativos (Lee &amp; Cates, Bold City, Sky Glass, Jax Custom, MY Shower Door).</p>
 </div></div>
+
+<div class="quote" id="investimento">
+<div class="quote-inner">
+<div class="quote-head">
+<div>
+<div class="quote-kicker">Proposta de parceria</div>
+<div class="quote-title">Investimento mensal <span>fixo</span></div>
+</div>
+<div class="quote-price">
+<div class="q-amount">$1,500</div>
+<div class="q-per">por mês &bull; sem percentual sobre o que for fechado</div>
+</div>
+</div>
+
+<div class="quote-grid">
+<div>
+<h3>Incluído todo mês</h3>
+<ul class="q-list">
+<li>Todas as fichas do Google otimizadas: serviços, produtos, fotos, perguntas e posts</li>
+<li>Novas fichas entram sem custo adicional, conforme a expansão avança</li>
+<li>Domínio completo: 4 pilares e 20 páginas de bairro</li>
+<li>Correção técnica do site: metas, schema, 301, imagens e 404</li>
+<li>Citações e NAP em todos os diretórios prioritários</li>
+<li>Ritmo de avaliações 3:1, com script e QR no balcão</li>
+<li>Monitoramento em IA em 30 prompts e relatório mensal</li>
+<li>Check semanal e placar mensal de resultado</li>
+</ul>
+</div>
+
+<div>
+<div class="q-box">
+<h3>Condições</h3>
+<div class="q-row"><span>Modelo</span><span>Mensal fixo</span></div>
+<div class="q-row"><span>Setup</span><span>Já embutido</span></div>
+<div class="q-row"><span>Implementação</span><span>3 meses</span></div>
+<div class="q-row"><span>Mídia paga</span><span>Verba separada</span></div>
+<div class="q-row"><span>Pagamento</span><span>Mensal, sem antecipação</span></div>
+<div class="q-row"><span>Validade</span><span>5 dias</span></div>
+</div>
+</div>
+</div>
+
+<div class="q-close">A ficha já está aprovada. O que falta é <strong>ocupar o sul de Jacksonville antes do concorrente</strong>. Os 3 meses de implementação são o ciclo que cria a base de escala. E quando a terceira loja vier, ela entra no mesmo valor.</div>
+<div class="q-note">Escopo de todas as fichas e do domínio completo, sem limite de quantidade. Aceite formalizado por contrato, de forma manual. Proposta válida por 5 dias.</div>
+</div>
+</div>
 
 <div class="footer">V4 Company · Plano SEO / AIO / GEO: Clear Choice Shower Door · Jacksonville FL · Out 2026 · Construído do check-in + Screaming Frog + pesquisa competitiva USA</div>
 </div>
