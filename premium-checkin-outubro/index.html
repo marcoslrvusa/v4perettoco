@@ -829,6 +829,13 @@
   .gallery-meta strong { display: block; font-size: 13px; color: var(--gray-900); line-height: 1.3; }
   .gallery-meta span { display: block; font-size: 11.5px; color: var(--gray-600); line-height: 1.45; margin-top: 3px; }
   .gallery-approve { margin-top: 24px; }
+  .editorial-cta { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 26px; padding: 22px 24px; border: 1px solid var(--gray-200); border-left: 4px solid var(--gold); border-radius: 0 12px 12px 0; background: linear-gradient(135deg, #fffdf8, #f8f7f4); text-decoration: none; transition: border-color .18s, box-shadow .18s, transform .18s; }
+  .editorial-cta:hover { border-color: var(--gold); box-shadow: 0 8px 24px rgba(0,0,0,.06); transform: translateY(-1px); }
+  .editorial-cta .ec-copy { display: block; min-width: 0; }
+  .editorial-cta .ec-kicker { display: block; margin-bottom: 4px; color: #8b7a4a; font-size: 10px; font-weight: 800; letter-spacing: .8px; text-transform: uppercase; }
+  .editorial-cta strong { display: block; color: var(--gray-900); font-size: 18px; line-height: 1.3; letter-spacing: -.3px; }
+  .editorial-cta .ec-copy > span:last-child { display: block; margin-top: 5px; color: var(--gray-600); font-size: 13.5px; line-height: 1.55; }
+  .editorial-cta .ec-btn { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; border-radius: 999px; background: var(--red); color: #fff; font-size: 11.5px; font-weight: 800; letter-spacing: .4px; text-transform: uppercase; }
   .lightbox[hidden] { display: none; }
   .lightbox { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 28px; background: rgba(8,8,8,.94); }
   .lightbox figure { margin: 0; max-width: min(92vw, 1200px); text-align: center; }
@@ -847,6 +854,8 @@
   }
   @media (max-width: 640px) {
     .gallery-tabs { gap: 6px; }
+    .editorial-cta { align-items: flex-start; flex-direction: column; gap: 14px; padding: 18px; }
+    .editorial-cta .ec-btn { justify-content: center; width: 100%; }
     .gallery-tab { padding: 7px 11px; font-size: 11.5px; }
     .gallery-tab span { display: none; }
     .gallery-grid { grid-template-columns: 1fr 1fr; gap: 9px; }
@@ -1482,6 +1491,15 @@
         </button>
       </div>
     </section>
+
+    <a class="editorial-cta" href="editorial-criativos/">
+      <span class="ec-copy">
+        <span class="ec-kicker">Extensão do check-in · Editorial de criativos</span>
+        <strong>8 criativos + 2 vídeos nas linhas aprovadas</strong>
+        <span>Institucional e Antes &amp; Depois, calendário de 5 semanas com Thanksgiving. Abrir a página de aprovação.</span>
+      </span>
+      <span class="ec-btn">Abrir editorial →</span>
+    </a>
 
     <div class="callout">
       <h4>Recomendação para o próximo teste</h4>
