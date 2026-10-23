@@ -136,6 +136,25 @@
   .cal-legend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 14px; color: var(--muted); font-size: 10.5px; }
   .cal-legend span { display: inline-flex; align-items: center; gap: 6px; }
   .cal-note { margin-top: 16px; padding: 14px 16px; border-left: 3px solid var(--gold); background: #fbf8f1; color: #655b4b; font-size: 12.5px; line-height: 1.55; }
+  .cal-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+  .btn-dark { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .btn-dark:hover { background: #2a2a2a; transform: translateY(-1px); }
+  .opening { overflow: hidden; }
+  .carousel-track { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 24px) / 3); gap: 12px; overflow-x: auto; padding-bottom: 8px; scroll-snap-type: x mandatory; scrollbar-width: thin; scrollbar-color: var(--gold) var(--gray-200); }
+  .carousel-slide { margin: 0; scroll-snap-align: start; }
+  .carousel-slide img { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; border: 1px solid var(--line); border-radius: 10px; background: var(--gray-100); }
+  .carousel-slide figcaption { display: flex; justify-content: space-between; gap: 8px; margin-top: 8px; font-size: 9px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .carousel-slide figcaption span { color: var(--red); }
+  .carousel-slide.is-l2 figcaption span { color: #8a6420; }
+  .carousel-slide figcaption strong { color: var(--muted); font-weight: 700; }
+  .carousel-legend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 14px; color: var(--muted); font-size: 10.5px; }
+  .carousel-legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .carousel-legend span:last-child { margin-left: auto; }
+  .links-note { margin-bottom: 16px; padding: 12px 14px; border-left: 3px solid var(--red); background: #fbf8f1; color: #655b4b; font-size: 12px; line-height: 1.55; }
+  .site-link { display: grid; gap: 2px; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 10.5px; }
+  .site-link span { color: var(--muted); font-size: 8px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+  .site-link a { color: var(--ink); font-weight: 700; text-decoration: none; overflow-wrap: anywhere; }
+  .site-link a:hover { color: var(--red); text-decoration: underline; }
   .pieces-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .piece { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: #fdfcf9; }
   .piece-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--line); background: #fff; }
@@ -214,6 +233,7 @@
   .footer a:hover { color: var(--red); }
   @media (max-width: 920px) {
     .cal-grid { grid-template-columns: repeat(3, 1fr); }
+    .carousel-track { grid-auto-columns: calc((100% - 12px) / 2); }
     .video-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 760px) {
@@ -229,6 +249,8 @@
     .line-card { min-height: 0; }
     .callout { grid-template-columns: 1fr; gap: 6px; }
     .cal-grid { grid-template-columns: 1fr 1fr; }
+    .carousel-track { grid-auto-columns: 74%; }
+    .carousel-legend span:last-child { margin-left: 0; }
     .video-card { grid-template-columns: 92px 1fr; gap: 12px; }
     .video-frame { min-height: 230px; padding: 10px; }
   }
@@ -255,7 +277,7 @@
 <header class="hero">
   <div class="hero-inner">
     <div class="topbar">
-      <a href="../">← Voltar ao check-in</a>
+      <a href="../">← Voltar ao deck do check-in</a>
       <span>Premium Cleaning NJ · Aprovação de conteúdo · 22/10/2026</span>
     </div>
     <div class="eyebrow">Editorial de criativos · Novembro 2026</div>
@@ -276,6 +298,47 @@
 </header>
 
 <main class="container">
+
+  <section class="card opening" id="abertura">
+    <div class="sec-head">
+      <div>
+        <span class="sec-kicker">Abertura · Referência visual</span>
+        <h2>As linhas aprovadas, em imagem</h2>
+      </div>
+      <p>Linha A para o approach institucional; Linha D, a geométrica branca, para o antes &amp; depois. Use o carrossel como referência de direção visual antes de entrar na copy.</p>
+    </div>
+    <div class="carousel-track" aria-label="Referências visuais das linhas aprovadas">
+      <figure class="carousel-slide">
+        <img src="../criativos/thumbs/A1.webp" alt="Linha A, institucional, hotel" width="600" height="600" loading="lazy" decoding="async">
+        <figcaption><span>Linha A · Institucional</span><strong>A1 · Hotel</strong></figcaption>
+      </figure>
+      <figure class="carousel-slide">
+        <img src="../criativos/thumbs/A2.webp" alt="Linha A, institucional, office" width="600" height="600" loading="lazy" decoding="async">
+        <figcaption><span>Linha A · Institucional</span><strong>A2 · Office</strong></figcaption>
+      </figure>
+      <figure class="carousel-slide">
+        <img src="../criativos/thumbs/A3.webp" alt="Linha A, institucional, carpet" width="600" height="600" loading="lazy" decoding="async">
+        <figcaption><span>Linha A · Institucional</span><strong>A3 · Carpet</strong></figcaption>
+      </figure>
+      <figure class="carousel-slide is-l2">
+        <img src="../criativos/thumbs/C10.webp" alt="Linha D, geométrica branca, hotel" width="600" height="600" loading="lazy" decoding="async">
+        <figcaption><span>Linha D · Antes &amp; Depois</span><strong>C10 · Hotel</strong></figcaption>
+      </figure>
+      <figure class="carousel-slide is-l2">
+        <img src="../criativos/thumbs/C11.webp" alt="Linha D, geométrica branca, office" width="600" height="600" loading="lazy" decoding="async">
+        <figcaption><span>Linha D · Antes &amp; Depois</span><strong>C11 · Office</strong></figcaption>
+      </figure>
+      <figure class="carousel-slide is-l2">
+        <img src="../criativos/thumbs/C12.webp" alt="Linha D, geométrica branca, carpet" width="600" height="600" loading="lazy" decoding="async">
+        <figcaption><span>Linha D · Antes &amp; Depois</span><strong>C12 · Carpet</strong></figcaption>
+      </figure>
+    </div>
+    <div class="carousel-legend">
+      <span><i class="dot"></i> Linha A · Institucional</span>
+      <span><i class="dot l2"></i> Linha D · Geométrica branca</span>
+      <span>Deslize para o lado →</span>
+    </div>
+  </section>
 
   <section class="card" id="decisao">
     <div class="sec-head">
@@ -389,6 +452,9 @@
       <span><strong>10 publicações</strong> · 8 estáticos + 2 vídeos</span>
     </div>
     <div class="cal-note"><strong>Thanksgiving:</strong> as peças de urgência entram em 23 e 24/11. Em 25–27/11, pausa de aquisição B2B; se houver, apenas Stories orgânicos de bastidor. O ângulo não é “Happy Thanksgiving” — é <strong>o pico chega antes de você perceber</strong>.</div>
+    <div class="cal-actions">
+      <a class="btn btn-dark" href="https://marcoslrvusa.github.io/v4perettoco/premium-ai-strategy/" target="_blank" rel="noopener">Cronograma do projeto ↗</a>
+    </div>
   </section>
 
   <section class="card" id="pecas">
@@ -399,6 +465,7 @@
       </div>
       <p>Copy em inglês para o mercado de NJ. Direção em português para aprovação. Claims operacionais seguem marcados.</p>
     </div>
+    <div class="links-note"><strong>Link de destino:</strong> cada peça aponta para a página do site mais próxima do público e do CTA. Na programação do social, use esse link no post para transformar atenção em tráfego qualificado — em vez de manter o clique dentro da rede.</div>
     <div class="pieces-grid">
 
       <article class="piece" id="l1-01">
@@ -424,6 +491,7 @@
             <div><span>Direção</span><strong>Preto, branco e uma linha vermelha. Foto documental em P&amp;B.</strong></div>
             <div><span>Formato</span><strong>1:1 · 1080×1080</strong></div>
           </div>
+          <div class="site-link"><span>Link de destino no site</span><a href="https://premiumcleaningnj.com/commercial-cleaning-new-jersey" target="_blank" rel="noopener">/commercial-cleaning-new-jersey ↗</a></div>
           <div class="piece-why"><strong>Por que funciona:</strong> abre com tese, não com serviço. O concorrente pode copiar a foto; não consegue assinar a frase.</div>
           <span class="claim-note">Claim a validar: supervisor em toda visita</span>
         </div>
@@ -452,6 +520,7 @@
             <div><span>Direção</span><strong>Retrato real do supervisor no local. Faixa cobre com “owner-operated”.</strong></div>
             <div><span>Formato</span><strong>1:1 · 1080×1080</strong></div>
           </div>
+          <div class="site-link"><span>Link de destino no site</span><a href="https://premiumcleaningnj.com/office-cleaning-new-jersey" target="_blank" rel="noopener">/office-cleaning-new-jersey ↗</a></div>
           <div class="piece-why"><strong>Por que funciona:</strong> transforma estrutura de negócio em benefício percebido. É o argumento que uma franquia não consegue usar.</div>
           <span class="claim-note">Claim a validar: sem taxa de franquia / mesmo crew</span>
         </div>
@@ -480,6 +549,7 @@
             <div><span>Direção</span><strong>Corredor corporativo vazio, luz fria, geometria dura. Texto preto, detalhe vermelho.</strong></div>
             <div><span>Formato</span><strong>9:16 · 1080×1920</strong></div>
           </div>
+          <div class="site-link"><span>Link de destino no site</span><a href="https://premiumcleaningnj.com/commercial-cleaning-new-jersey" target="_blank" rel="noopener">/commercial-cleaning-new-jersey ↗</a></div>
           <div class="piece-why"><strong>Por que funciona:</strong> coloca o institucional no calendário de compra: orçamento, renovação e ano novo.</div>
           <span class="claim-note">Claim a validar: photo log / auditoria</span>
         </div>
@@ -508,6 +578,7 @@
             <div><span>Direção</span><strong>Lobby hoteleiro no fim do dia, luz quente. Texto branco sobre foto escura; selo “Pre-Thanksgiving readiness”.</strong></div>
             <div><span>Formato</span><strong>9:16 · 1080×1920</strong></div>
           </div>
+          <div class="site-link"><span>Link de destino no site</span><a href="https://premiumcleaningnj.com/hotel-cleaning-services-new-jersey" target="_blank" rel="noopener">/hotel-cleaning-services-new-jersey ↗</a></div>
           <div class="piece-why"><strong>Por que funciona:</strong> urgência específica e defensável. Vende prevenção no momento em que o erro fica visível.</div>
         </div>
       </article>
@@ -536,6 +607,7 @@
             <div><span>Direção</span><strong>Split 50/50, mesma lente. Before dessaturado; after limpo. Formas brancas cortando o quadro.</strong></div>
             <div><span>Formato</span><strong>1:1 · 1080×1080</strong></div>
           </div>
+          <div class="site-link"><span>Link de destino no site</span><a href="https://premiumcleaningnj.com/hotel-housekeeping-services" target="_blank" rel="noopener">/hotel-housekeeping-services ↗</a></div>
           <div class="piece-why"><strong>Por que funciona:</strong> prova visual sem explicação. A transformação é o argumento, não a legenda.</div>
         </div>
       </article>
@@ -564,6 +636,7 @@
             <div><span>Direção</span><strong>Macro de carpete e rodapé. Antes/depois no mesmo ângulo; diagonal branca; nada de sujeira encenada.</strong></div>
             <div><span>Formato</span><strong>1:1 · 1080×1080</strong></div>
           </div>
+          <div class="site-link"><span>Link de destino no site</span><a href="https://premiumcleaningnj.com/commercial-carpet-cleaning" target="_blank" rel="noopener">/commercial-carpet-cleaning ↗</a></div>
           <div class="piece-why"><strong>Por que funciona:</strong> torna visível o que o cliente não vê. Responde à objeção “já temos diarista”.</div>
         </div>
       </article>
@@ -592,6 +665,7 @@
             <div><span>Direção</span><strong>Lobby ou quarto antes/depois, luz quente, geometria branca. Carimbo “Thanksgiving readiness”.</strong></div>
             <div><span>Formato</span><strong>9:16 · 1080×1920</strong></div>
           </div>
+          <div class="site-link"><span>Link de destino no site</span><a href="https://premiumcleaningnj.com/hospitality-cleaning-services-nj" target="_blank" rel="noopener">/hospitality-cleaning-services-nj ↗</a></div>
           <div class="piece-why"><strong>Por que funciona:</strong> conecta antes/depois ao pico de Thanksgiving sem cair em promoção sazonal.</div>
         </div>
       </article>
@@ -620,6 +694,7 @@
             <div><span>Direção</span><strong>Salão, mesma mesa e ângulo. Detalhe de cadeira, piso e entrada; branco + cobre.</strong></div>
             <div><span>Formato</span><strong>9:16 · 1080×1920</strong></div>
           </div>
+          <div class="site-link"><span>Link de destino no site</span><a href="https://premiumcleaningnj.com/restaurant-commercial-cleaning" target="_blank" rel="noopener">/restaurant-commercial-cleaning ↗</a></div>
           <div class="piece-why"><strong>Por que funciona:</strong> fala no critério do dono de restaurante: percepção do salão, não “limpeza”.</div>
         </div>
       </article>
@@ -684,13 +759,12 @@
     <div class="sec-head">
       <div>
         <span class="sec-kicker">05 · Aprovação</span>
-        <h2>O que precisa sair desta reunião</h2>
+        <h2>Checklist de aprovação</h2>
       </div>
       <p>Sem aprovar arte final. A decisão é sobre tese, copy, sequência e viabilidade de captação.</p>
     </div>
     <div class="approval-grid">
       <ul class="checklist">
-        <li>Aprovar a tese das duas linhas: Institucional e Antes &amp; Depois.</li>
         <li>Aprovar as 8 headlines, bodies e CTAs como base de produção.</li>
         <li>Aprovar os 2 roteiros e o formato de captação (real, mesma lente, sem IA).</li>
         <li>Confirmar claims operacionais: supervisor, owner-operated, photo log e SLA.</li>
