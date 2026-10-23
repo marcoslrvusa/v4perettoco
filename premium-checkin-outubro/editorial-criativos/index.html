@@ -64,6 +64,8 @@
     opacity: .55;
   }
   .hero-inner { max-width: 1120px; margin: 0 auto; position: relative; z-index: 1; }
+  .hero-brand { display: flex; align-items: center; padding-bottom: 22px; }
+  .hero-brand img { display: block; height: 34px; width: auto; }
   .topbar { display: flex; justify-content: space-between; gap: 18px; align-items: center; padding-bottom: 26px; border-bottom: 1px solid rgba(255,255,255,.14); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
   .topbar a { color: rgba(255,255,255,.72); text-decoration: none; font-weight: 700; }
   .topbar a:hover { color: #fff; }
@@ -264,7 +266,7 @@
   @media print {
     body { background: #fff; }
     .hero { background: #fff; color: #000; padding: 20px 0; }
-    .hero::before, .hero::after, .hero-actions, .topbar { display: none; }
+    .hero::before, .hero::after, .hero-actions, .topbar, .hero-brand { display: none; }
     .hero h1 em { color: #000; }
     .hero p, .hero-meta { color: #333; }
     .container { margin: 0 auto; padding: 0; max-width: none; }
@@ -277,6 +279,9 @@
 
 <header class="hero">
   <div class="hero-inner">
+    <div class="hero-brand">
+      <img src="../logo-v4-white.png" alt="V4 Company" width="132" height="34" decoding="async" onerror="this.style.display='none'">
+    </div>
     <div class="topbar">
       <a href="../">← Voltar ao deck do check-in</a>
       <span>Premium Cleaning NJ · Aprovação de conteúdo · 22/10/2026</span>
