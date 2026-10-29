@@ -868,10 +868,19 @@
     .lightbox-close { top: 10px; right: 10px; }
   }
   .bing-prints { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
-  .print-slot { border: 2px dashed var(--gold-border); border-radius: 12px; padding: 36px 20px; text-align: center; color: var(--gray-500); background: var(--gray-100); font-size: 13.5px; line-height: 1.6; }
-  .print-slot strong { display: block; color: var(--gray-700); margin-bottom: 6px; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.02em; }
   .bing-prints img { width: 100%; border-radius: 10px; border: 1px solid var(--gray-200); display: block; }
   @media (max-width: 700px) { .bing-prints { grid-template-columns: 1fr; } }
+  .lead-card { border: 1px solid var(--gray-200); border-radius: 12px; background: #fff; overflow: hidden; }
+  .lead-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 16px; background: var(--gray-100); border-bottom: 1px solid var(--gray-200); }
+  .lead-tag { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--red); background: #fff; border: 1px solid var(--gold-border); border-radius: 999px; padding: 3px 10px; }
+  .lead-geo { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--gray-600); }
+  .lead-title { margin: 0; padding: 12px 16px 0; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 14px; color: var(--gray-800); }
+  .lead-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12.5px; }
+  .lead-table th { text-align: left; font-weight: 500; color: var(--gray-500); padding: 7px 16px; vertical-align: top; width: 38%; border-top: 1px solid var(--gray-200); }
+  .lead-table td { padding: 7px 16px; color: var(--gray-800); border-top: 1px solid var(--gray-200); }
+  .lead-table tr:first-child th, .lead-table tr:first-child td { border-top: 0; }
+  .lead-pii { margin: 0; padding: 10px 16px 14px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--gray-500); }
+  .lead-note { font-size: 11.5px; color: var(--gray-500); margin-top: 10px; }
 </style>
 </head>
 
@@ -1380,15 +1389,15 @@
     <h3>Reposicionamento de audiência — as 2 conversões</h3>
     <div class="two-col">
       <div class="risk-box goldbox" style="margin-bottom:0">
-        <h4>Conv. #1 · Residencial — fora do ICP</h4>
-        <p>Veio de keyword genérica + mobile (comportamento de consumidor doméstico). O investimento B2B não deve financiar lead residencial: <strong>negatives residenciais</strong> imediatas (house cleaning, home cleaning, maid, housekeeper, cleaning lady, apartment) + cortar genéricos embaralhados.</p>
+        <h4>Conv. #1 · Residencial, 08850 (NJ) — fora do ICP</h4>
+        <p>Negócio “Home”, serviço “Other”, keyword genérica e tráfego vindo de syndication MSN — comportamento de consumidor doméstico. O investimento B2B não deve financiar lead residencial: <strong>negatives residenciais</strong> imediatas (house cleaning, home cleaning, maid, housekeeper, cleaning lady, apartment) + cortar genéricos embaralhados.</p>
       </div>
       <div class="risk-box green" style="margin-bottom:0">
-        <h4>Conv. #2 · Comercial, perto de Madison Avenue — boa</h4>
-        <p>Casa com o case Madison (luxury retail, $2.800/semana, retainer $145k/ano). Criar ad group dedicado <strong>“Manhattan Luxury Corridor”</strong>: luxury retail cleaning NYC, flagship store cleaning, boutique hotel cleaning, high end retail cleaning Manhattan — roteado para a página NYC + prova do case. Headline âncora: “Trusted by luxury retailers on Madison” (1,58% CTR nas descritivas).</p>
+        <h4>Conv. #2 · Comercial, Manhattan 10044 — boa</h4>
+        <p>Serviço pedido <strong>Retail Cleaning</strong>, keyword “commercial cleaning janitorial services”, busca paga no Yahoo (rede Bing) — intenção B2B/retail em Manhattan, exatamente o terreno do case Madison (luxury retail, $2.800/semana, retainer $145k/ano). Criar ad group dedicado <strong>“Manhattan Luxury Corridor”</strong>: luxury retail cleaning NYC, flagship store cleaning, boutique hotel cleaning, high end retail cleaning Manhattan — roteado para a página NYC + prova do case. Headline âncora: “Trusted by luxury retailers on Madison” (1,58% CTR nas descritivas).</p>
       </div>
     </div>
-    <div class="note">Tese: a campanha gasta 86% em NY sem nunca mirar lá deliberadamente — e a única conversão boa veio exatamente de onde o acaso jogou o tráfego. O corredor Manhattan (luxury retail/hospitality) + NJ B2B core passam a ser alvo deliberado.</div>
+    <div class="note">Tese: a campanha gasta 86% em NY sem nunca mirar lá deliberadamente — e a única conversão boa veio exatamente de onde o acaso jogou o tráfego. O corredor Manhattan (retail/hospitality) + NJ B2B core passam a ser alvo deliberado. Nas duas conversões o ad group foi o mesmo (Core), o que confirma o gargalo de roteamento por intenção.</div>
 
     <h3>Plano de 2 dias</h3>
     <div class="scen-grid">
@@ -1415,13 +1424,36 @@
       </div>
     </div>
 
-    <h3>Evidência — prints das conversões</h3>
+    <h3>Evidência — as duas conversões do período</h3>
     <div class="bing-prints">
-      <div class="print-slot"><strong>Placeholder · Print 1</strong>Conversão #1 — lead residencial (fora do ICP). Arquivo: <span class="link-mono">bing-conversoes-1.png</span> nesta pasta.</div>
-      <img src="bing-conversoes-1.png" alt="Print da conversão 1 do Bing — lead residencial" style="display:none" onload="this.previousElementSibling.style.display='none';this.style.display='block'">
-      <div class="print-slot"><strong>Placeholder · Print 2</strong>Conversão #2 — lead comercial perto de Madison Avenue, Manhattan. Arquivo: <span class="link-mono">bing-conversoes-2.png</span> nesta pasta.</div>
-      <img src="bing-conversoes-2.png" alt="Print da conversão 2 do Bing — lead comercial Madison Avenue, Manhattan" style="display:none" onload="this.previousElementSibling.style.display='none';this.style.display='block'">
+      <div class="lead-card">
+        <div class="lead-head"><span class="lead-tag">Conversão 1</span><span class="lead-geo">NJ · 08850</span></div>
+        <p class="lead-title">Residencial — fora do ICP</p>
+        <table class="lead-table">
+          <tr><th>Negócio</th><td>Home</td></tr>
+          <tr><th>Serviço pedido</th><td>Other</td></tr>
+          <tr><th>Keyword</th><td>commercial cleaning services</td></tr>
+          <tr><th>Ad group</th><td>Ad Group 1 — Commercial Cleaning Services (Core)</td></tr>
+          <tr><th>Referrer</th><td>ntp.msn.com (Microsoft syndication)</td></tr>
+          <tr><th>Origem</th><td>Paid Search · CPC · Bing</td></tr>
+        </table>
+        <p class="lead-pii">Contato mascarado: As*** · +1 732 ***-**06 · as***@gmail.com</p>
+      </div>
+      <div class="lead-card">
+        <div class="lead-head"><span class="lead-tag">Conversão 2</span><span class="lead-geo">Manhattan · 10044</span></div>
+        <p class="lead-title">Comercial — Retail Cleaning</p>
+        <table class="lead-table">
+          <tr><th>Negócio</th><td>Celso de Lemos</td></tr>
+          <tr><th>Serviço pedido</th><td>Retail Cleaning</td></tr>
+          <tr><th>Keyword</th><td>commercial cleaning janitorial services</td></tr>
+          <tr><th>Ad group</th><td>Ad Group 1 — Commercial Cleaning Services (Core)</td></tr>
+          <tr><th>Referrer</th><td>search.yahoo.com (Bing network)</td></tr>
+          <tr><th>Origem</th><td>Paid Search · CPC · Bing</td></tr>
+        </table>
+        <p class="lead-pii">Contato mascarado: Irene K. · +1 917 ***-**11 · kalogrias***@gmail.com</p>
+      </div>
     </div>
+    <p class="lead-note">Dados de contato mascarados por privacidade — a página é pública. CEP, serviço, keyword e ad group são os campos que sustentam a leitura abaixo.</p>
 
     <div class="callout">
       <h4>Leitura estratégica</h4>
