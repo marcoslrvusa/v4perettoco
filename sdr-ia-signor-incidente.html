@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SDR IA Signor · Diagnóstico e Plano de Estabilização</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #c62828;
+    --red-dark: #8e0000;
+    --red-light: #ff5f52;
+    --gold: #c9a96e;
+    --gold-soft: #e8dcc8;
+    --ink: #1a1a1a;
+    --gray-50: #fafafa;
+    --gray-100: #f5f5f5;
+    --gray-200: #eeeeee;
+    --gray-300: #e0e0e0;
+    --gray-400: #bdbdbd;
+    --gray-500: #9e9e9e;
+    --gray-600: #757575;
+    --gray-700: #616161;
+    --gray-800: #424242;
+    --gray-900: #212121;
+    --green: #2e7d32;
+    --green-soft: #e8f5e9;
+    --amber: #b26a00;
+    --amber-soft: #fff4e0;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f8f7f4;
+    color: var(--gray-900);
+    line-height: 1.7;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- CAPA ---------- */
+  .cover {
+    background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 55%, #2a2a2a 100%);
+    color: #fff;
+    padding: 76px 40px 88px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -60%; left: -30%;
+    width: 160%; height: 220%;
+    background: radial-gradient(circle at 50% 45%, rgba(201,169,110,0.07) 0%, transparent 58%);
+    pointer-events: none;
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 64px 64px;
+    pointer-events: none;
+    mask-image: radial-gradient(circle at 50% 40%, #000 20%, transparent 75%);
+  }
+  .cover-inner { position: relative; z-index: 2; max-width: 780px; margin: 0 auto; }
+
+  .label {
+    display: inline-block;
+    background: rgba(201,169,110,0.12);
+    border: 1px solid rgba(201,169,110,0.35);
+    padding: 7px 20px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 26px;
+  }
+  .cover h1 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 46px;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 18px;
+  }
+  .cover h1 span { color: var(--gold); }
+  .cover .sub {
+    font-size: 19px;
+    font-weight: 300;
+    opacity: 0.82;
+    max-width: 620px;
+    margin: 0 auto 34px;
+    line-height: 1.55;
+  }
+  .cover-rule {
+    width: 64px; height: 2px;
+    background: var(--gold);
+    margin: 0 auto 30px;
+    border-radius: 1px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 34px;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 13px;
+    letter-spacing: 0.4px;
+    opacity: 0.62;
+  }
+  .cover-meta strong { color: #fff; font-weight: 600; }
+
+  /* ---------- ESTRUTURA ---------- */
+  .container {
+    max-width: 1020px;
+    margin: -44px auto 0;
+    padding: 0 24px 72px;
+    position: relative;
+    z-index: 3;
+  }
+
+  /* ---------- KPIs ---------- */
+  .kpi-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--gray-300);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 18px 44px rgba(0,0,0,0.10);
+    margin-bottom: 56px;
+  }
+  .kpi {
+    background: #fff;
+    padding: 26px 20px;
+    text-align: center;
+  }
+  .kpi .num {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .kpi .num.red { color: var(--red); }
+  .kpi .num.green { color: var(--green); }
+  .kpi .num.gold { color: #9a7b3f; }
+  .kpi .cap {
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 1.1px;
+    color: var(--gray-600);
+    font-weight: 500;
+  }
+
+  /* ---------- SEÇÕES ---------- */
+  section { margin-bottom: 62px; }
+
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 8px;
+  }
+  .sec-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 1px;
+    font-weight: 500;
+  }
+  h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 27px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    line-height: 1.2;
+  }
+  .sec-sub {
+    color: var(--gray-600);
+    font-size: 15.5px;
+    max-width: 760px;
+    margin-bottom: 26px;
+  }
+
+  /* ---------- LEITURA RÁPIDA ---------- */
+  .quick {
+    background: #fff;
+    border-radius: 12px;
+    padding: 34px 38px;
+    border-left: 3px solid var(--gold);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.04);
+  }
+  .quick p { font-size: 17px; color: var(--gray-800); margin-bottom: 16px; }
+  .quick p:last-child { margin-bottom: 0; }
+  .quick strong { color: var(--ink); font-weight: 600; }
+  .quick .lead-line {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.6px;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+
+  /* ---------- CARDS DE CONTEXTO ---------- */
+  .ctx-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .ctx-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 24px 22px;
+    border-top: 3px solid var(--red);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+  }
+  .ctx-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  .ctx-card h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 10px;
+  }
+  .ctx-card p { font-size: 14px; color: var(--gray-700); margin-bottom: 14px; }
+  .ctx-quote {
+    font-size: 13px;
+    color: var(--gray-600);
+    font-style: italic;
+    border-left: 2px solid var(--gold-soft);
+    padding-left: 12px;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+  .ctx-impact {
+    margin-top: auto;
+    font-size: 12.5px;
+    background: var(--gray-100);
+    border-radius: 6px;
+    padding: 10px 12px;
+    color: var(--gray-700);
+  }
+  .ctx-impact b { color: var(--ink); }
+
+  /* ---------- CORRENTE CAUSAL ---------- */
+  .chain {
+    background: #fff;
+    border-radius: 12px;
+    padding: 34px 30px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+  }
+  .chain-step {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    padding: 16px 0;
+  }
+  .chain-step + .chain-step { border-top: 1px dashed var(--gray-300); }
+  .chain-dot {
+    flex: 0 0 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--gray-100);
+    border: 1px solid var(--gray-300);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-700);
+  }
+  .chain-step.hot .chain-dot {
+    background: var(--red);
+    border-color: var(--red);
+    color: #fff;
+  }
+  .chain-step.ok .chain-dot {
+    background: var(--green);
+    border-color: var(--green);
+    color: #fff;
+  }
+  .chain-body h4 {
+    font-size: 15.5px;
+    font-weight: 600;
+    margin-bottom: 3px;
+    color: var(--ink);
+  }
+  .chain-body p { font-size: 14.5px; color: var(--gray-700); }
+
+  /* ---------- DIVISÃO DE RESPONSABILIDADE ---------- */
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .split-col {
+    border-radius: 10px;
+    padding: 26px 24px;
+    background: #fff;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+  }
+  .split-col.ext { border-top: 3px solid var(--gold); }
+  .split-col.int { border-top: 3px solid var(--red); }
+  .split-col h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .split-col.ext h3 { color: #9a7b3f; }
+  .split-col.int h3 { color: var(--red); }
+  .split-col .who { font-size: 12.5px; color: var(--gray-500); margin-bottom: 16px; }
+  .split-col ul { list-style: none; }
+  .split-col li {
+    font-size: 14.5px;
+    color: var(--gray-800);
+    padding: 9px 0 9px 24px;
+    position: relative;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .split-col li:last-child { border-bottom: none; }
+  .split-col li::before {
+    content: '';
+    position: absolute;
+    left: 4px; top: 17px;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+  }
+  .split-col.ext li::before { background: var(--gold); }
+  .split-col.int li::before { background: var(--red); }
+  .split-foot {
+    margin-top: 22px;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 10px;
+    padding: 22px 28px;
+    font-size: 15.5px;
+    line-height: 1.6;
+  }
+  .split-foot b { color: var(--gold); font-weight: 600; }
+
+  /* ---------- LINHA DO TEMPO ---------- */
+  .timeline { position: relative; padding-left: 30px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--red), var(--gold), var(--green));
+    opacity: 0.35;
+  }
+  .tl-item { position: relative; padding-bottom: 26px; }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -30px; top: 6px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid var(--gray-400);
+  }
+  .tl-item.bad::before { border-color: var(--red); }
+  .tl-item.good::before { border-color: var(--green); }
+  .tl-item.warn::before { border-color: var(--amber); }
+  .tl-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: var(--gray-500);
+    letter-spacing: 0.6px;
+    margin-bottom: 4px;
+  }
+  .tl-item h4 { font-size: 15.5px; font-weight: 600; margin-bottom: 3px; }
+  .tl-item p { font-size: 14px; color: var(--gray-700); }
+
+  /* ---------- CORRIGIDO / ANDAMENTO ---------- */
+  .fix-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .fix-card {
+    background: #fff;
+    border-radius: 9px;
+    padding: 20px 22px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.045);
+    border-left: 3px solid var(--green);
+  }
+  .fix-card.pending { border-left-color: var(--amber); }
+  .fix-icon {
+    flex: 0 0 26px; height: 26px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+    background: var(--green-soft); color: var(--green);
+    margin-top: 1px;
+  }
+  .fix-card.pending .fix-icon { background: var(--amber-soft); color: var(--amber); }
+  .fix-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .fix-card p { font-size: 13.5px; color: var(--gray-700); }
+  .fix-date {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    margin-top: 8px;
+  }
+  .fix-card.pending .fix-date { color: var(--amber); }
+
+  /* ---------- MÉTRICAS DE COMPROMISSO ---------- */
+  .metrics { background: #fff; border-radius: 12px; padding: 32px 34px; box-shadow: 0 4px 18px rgba(0,0,0,0.05); }
+  .metric-row { margin-bottom: 24px; }
+  .metric-row:last-child { margin-bottom: 0; }
+  .metric-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 9px;
+  }
+  .metric-top .name { font-size: 14.5px; font-weight: 600; }
+  .metric-top .vals { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--gray-600); }
+  .metric-top .vals b { color: var(--green); }
+  .track {
+    height: 8px;
+    background: var(--gray-200);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+  .fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--gold), #d8c193);
+  }
+  .fill.now { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+
+  /* ---------- PROVAS ---------- */
+  .proof {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+  }
+  .proof-item {
+    padding: 22px 28px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .proof-item:last-child { border-bottom: none; }
+  .proof-src {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 7px;
+  }
+  .proof-item h4 { font-size: 15px; margin-bottom: 6px; }
+  .proof-item p { font-size: 13.5px; color: var(--gray-700); margin-bottom: 8px; }
+  .proof-item a {
+    font-size: 12.5px;
+    color: var(--gray-600);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--gray-400);
+    word-break: break-all;
+  }
+  .proof-item a:hover { color: var(--red); border-color: var(--red); }
+
+  /* ---------- FECHO ---------- */
+  .closing {
+    background: linear-gradient(135deg, #161616, #242424);
+    color: #fff;
+    border-radius: 14px;
+    padding: 40px 40px;
+  }
+  .closing h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 22px;
+    margin-bottom: 14px;
+    line-height: 1.3;
+  }
+  .closing h3 span { color: var(--gold); }
+  .closing p { font-size: 15.5px; opacity: 0.82; margin-bottom: 12px; max-width: 780px; }
+  .closing p:last-child { margin-bottom: 0; }
+
+  footer {
+    text-align: center;
+    padding: 36px 24px 48px;
+    font-size: 12px;
+    color: var(--gray-500);
+    letter-spacing: 0.3px;
+  }
+  footer b { color: var(--gray-700); }
+
+  /* ---------- RESPONSIVO ---------- */
+  @media (max-width: 860px) {
+    .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+    .ctx-grid { grid-template-columns: 1fr; }
+    .split { grid-template-columns: 1fr; }
+    .fix-grid { grid-template-columns: 1fr; }
+    .cover h1 { font-size: 34px; }
+    .cover { padding: 52px 22px 68px; }
+    .container { padding: 0 18px 56px; }
+    h2 { font-size: 22px; }
+    .quick { padding: 26px 22px; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .cover { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    section { break-inside: avoid; }
+  }
+
+  /* ---------- VALIDAÇÃO ---------- */
+  .resume {
+    background: #fff; border-radius: 12px; overflow: hidden;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.05); margin-bottom: 18px;
+  }
+  .resume-row {
+    display: grid; grid-template-columns: 172px 1fr 1fr; gap: 18px;
+    padding: 13px 22px; border-bottom: 1px solid var(--gray-100);
+    font-size: 13.5px; color: var(--gray-700); align-items: baseline;
+  }
+  .resume-row:last-child { border-bottom: none; }
+  .resume-row b { color: var(--ink); font-weight: 600; font-size: 14px; }
+  .resume-row i {
+    display: block; font-style: normal; font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; color: var(--gray-500); letter-spacing: 0.5px; margin-top: 2px;
+  }
+  .resume-head {
+    background: var(--gray-50); font-size: 10.5px; text-transform: uppercase;
+    letter-spacing: 1.4px; color: var(--gray-500); font-weight: 600;
+    padding: 12px 22px;
+  }
+  .check-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    background: var(--gray-200); border-radius: 10px; overflow: hidden;
+  }
+  .check-item { background: #fff; padding: 18px 14px; text-align: center; }
+  .check-item b {
+    display: block; font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 24px; font-weight: 800; color: var(--green); line-height: 1;
+  }
+  .check-item span {
+    display: block; font-size: 11px; text-transform: uppercase;
+    letter-spacing: 1px; color: var(--gray-600); margin-top: 7px;
+  }
+
+  /* ---------- CICLOS ---------- */
+  .cycles {
+    background: #fff; border-radius: 12px; padding: 26px 28px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.05); margin-top: 18px;
+    border-left: 3px solid var(--gold);
+  }
+  .cycles-head {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 1.6px;
+    color: #9a7b3f; font-weight: 700; margin-bottom: 16px;
+  }
+  .cycle-row {
+    display: grid; grid-template-columns: 108px 1fr; gap: 16px;
+    padding: 11px 0; border-bottom: 1px dashed var(--gray-200);
+    align-items: baseline;
+  }
+  .cycle-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .cycle-date {
+    font-family: 'JetBrains Mono', monospace; font-size: 11.5px;
+    color: var(--gray-500); letter-spacing: 0.5px;
+  }
+  .cycle-row p { font-size: 14px; color: var(--gray-700); }
+  .cycle-row:last-child p { color: var(--ink); font-weight: 500; }
+
+  @media (max-width: 860px) {
+    .resume-row { grid-template-columns: 1fr; gap: 4px; padding: 14px 18px; }
+    .resume-head { display: none; }
+    .check-strip { grid-template-columns: repeat(2, 1fr); }
+    .cycle-row { grid-template-columns: 1fr; gap: 3px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-inner">
+    <div class="label">Outubro de 2026</div>
+    <h1>SDR IA <span>Signor</span></h1>
+    <div class="cover-rule"></div>
+    <div class="cover-meta">
+      <span><strong>Documento</strong> · Diagnóstico e plano de estabilização</span>
+      <span><strong>Data</strong> · 30 de outubro de 2026</span>
+      <span><strong>Horários</strong> · Brasília</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="kpi-strip">
+    <div class="kpi">
+      <div class="num red">45h</div>
+      <div class="cap">Última janela de indisponibilidade</div>
+    </div>
+    <div class="kpi">
+      <div class="num green">11</div>
+      <div class="cap">Conversas retomadas hoje</div>
+    </div>
+    <div class="kpi">
+      <div class="num">6</div>
+      <div class="cap">Correções publicadas</div>
+    </div>
+    <div class="kpi">
+      <div class="num gold">4</div>
+      <div class="cap">Itens em implantação</div>
+    </div>
+  </div>
+
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <h2>Leitura em trinta segundos</h2>
+    </div>
+    <div class="quick">
+      <div class="lead-line">O resumo antes do detalhe</div>
+      <p>A SDR não quebrou por um defeito isolado. Ela opera sobre três plataformas externas que mudaram de contrato nos últimos meses: o provedor de modelo descontinuou a versão que usávamos, e o WhatsApp alterou a forma de entregar mídia de forma gradual, sem data única para todos.</p>
+      <p>Essas mudanças chegam sem aviso no canal do usuário final. Elas chegam por documentação técnica, em liberação gradual, e cada integração do mercado precisa se adaptar sozinha. Foi o que aconteceu aqui.</p>
+      <p>O fluxo recebeu isolamento de erro e teve o parâmetro incompatível removido. Alarme e teste de fumaça ainda estão em implantação, com data. Enquanto não entrarem, a proteção é parcial.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <h2>Validação em produção, hoje</h2>
+    </div>
+    <p class="sec-sub">A correção foi publicada às 11h08. Entre 11h26 e 11h31 o fluxo foi reprocessado nas conversas que estavam sem resposta. Onze mensagens reais saíram para dez leads, com resposta coerente ao histórico de cada um. Resultado validado em execução real.</p>
+
+    <div class="resume">
+      <div class="resume-row resume-head">
+        <span>Lead</span><span>O que estava sem resposta</span><span>O que a SDR respondeu</span>
+      </div>
+      <div class="resume-row"><span><b>Daiane</b><i>11h28</i></span><span>Três janelas, uma porta de caminhão, piso concretado, terreno com desnível</span><span>Explicou o mínimo de 400 m² e encerrou com o contato comercial</span></div>
+      <div class="resume-row"><span><b>Edson Gobbo</b><i>11h30</i></span><span>Perguntou se atendemos Curitiba</span><span>Confirmou atendimento e pediu o tipo de construção</span></div>
+      <div class="resume-row"><span><b>Guilherme Rosa</b><i>11h29</i></span><span>Projeto em pré-moldado, 250 m²</span><span>Pediu a cidade da obra para seguir a qualificação</span></div>
+      <div class="resume-row"><span><b>Paulo</b><i>11h29</i></span><span>Metragem abaixo do mínimo</span><span>Explicou a inviabilidade e passou contato direto</span></div>
+      <div class="resume-row"><span><b>Yalina</b><i>11h29</i></span><span>Até 100 m², disse ter interesse</span><span>Explicou a regra de lotes a partir de 10 unidades</span></div>
+      <div class="resume-row"><span><b>Ilaine Schwarzer</b><i>11h29</i></span><span>Pediu modelos para enviar</span><span>Perguntou o tipo de construção</span></div>
+      <div class="resume-row"><span><b>Leonardo Führ</b><i>11h30</i></span><span>Pediu valores e condições</span><span>Direcionou ao consultor e pediu o tipo de obra</span></div>
+      <div class="resume-row"><span><b>Brida</b><i>11h29</i></span><span>Orçamento de escada pré-moldada</span><span>Explicou que não há venda de peça avulsa</span></div>
+      <div class="resume-row"><span><b>Ricardo Sena</b><i>11h29</i></span><span>Pedido de orçamento vindo da landing page</span><span>Abriu a qualificação com o tipo de obra</span></div>
+      <div class="resume-row"><span><b>Comercial</b><i>11h29</i></span><span>Mensagem de fornecedor, não de usuário</span><span>Direcionou ao canal de compras</span></div>
+    </div>
+
+    <div class="check-strip">
+      <div class="check-item"><b>10</b><span>conversas retomadas</span></div>
+      <div class="check-item"><b>11</b><span>mensagens enviadas</span></div>
+      <div class="check-item"><b>0</b><span>erro de execução</span></div>
+      <div class="check-item"><b>100%</b><span>histórico preservado</span></div>
+    </div>
+
+    <div class="split-foot" style="margin-top:16px">
+      O que isso prova, em termos técnicos: o fluxo recebe, entende, responde e grava o histórico da conversa. O Bitrix24 só recebe lead qualificado, por desenho, não por falha. <b>Nenhuma das dez conversas segue sem resposta.</b>
+    </div>
+
+    <div class="proof" style="margin-top:18px">
+      <div class="proof-item">
+        <div class="proof-src">Pendência isolada · Bitrix24</div>
+        <h4>O arquivo do lead Armando não foi anexado</h4>
+        <p>Lead 7756, criado no Bitrix24 em 27/10 às 17h30. O cadastro está correto, com telefone, cidade e metragem. O campo de arquivo está vazio. O envio entrou pelo caminho de mídia, que é justamente o ponto afetado pela liberação gradual da Meta, e é o único item ainda sem correção publicada.</p>
+        <p>Correção prevista para 31/10, com teste controlado antes de liberar. Até lá o caminho está isolado: falha de mídia não derruba mais a conversa nem impede o registro no CRM.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <h2>O ambiente mudou por fora</h2>
+    </div>
+    <p class="sec-sub">Três mudanças verificáveis, com documentação pública, que atingem toda integração que depende de WhatsApp e de modelos de linguagem. Não são exclusivas da Signor.</p>
+
+    <div class="ctx-grid">
+      <div class="ctx-card">
+        <div class="ctx-tag">Meta · WhatsApp</div>
+        <h3>Mídia passou a chegar em liberação gradual</h3>
+        <div class="ctx-quote">"Propriedade liberada para desenvolvedores gradualmente ao longo de várias semanas, a partir de 12 de novembro de 2025, e pode não estar disponível imediatamente."</div>
+        <p>O contrato do webhook de mídia passou a variar por conta e por momento. Integrações que leem o campo direto recebem payloads diferentes.</p>
+        <div class="ctx-impact"><b>Impacto:</b> arquivos enviados por lead podem não ser reconhecidos, dependendo do momento da conta.</div>
+      </div>
+
+      <div class="ctx-card">
+        <div class="ctx-tag">Meta · Graph API</div>
+        <h3>Versões entram em descontinuidade em ciclos</h3>
+        <div class="ctx-quote">Cada versão da API tem prazo de vida e é desativada em data própria, com mudanças de campos e de formato entre versões.</div>
+        <p>Quem integra precisa acompanhar changelog e migrar antes do corte. Não existe versão permanente.</p>
+        <div class="ctx-impact"><b>Impacto:</b> manutenção contínua obrigatória em qualquer integração de WhatsApp.</div>
+      </div>
+
+      <div class="ctx-card">
+        <div class="ctx-tag">OpenAI · Modelos</div>
+        <h3>O modelo em uso foi descontinuado</h3>
+        <div class="ctx-quote">A página oficial marca o gpt-4.1 como descontinuado e recomenda a família GPT-5 para tarefas complexas e de múltiplas trocas.</div>
+        <p>Um agente de vendas é exatamente esse caso. A migração deixou de ser escolha e passou a ser obrigação técnica.</p>
+        <div class="ctx-impact"><b>Impacto:</b> troca de modelo em produção, com risco de incompatibilidade de parâmetros.</div>
+      </div>
+    </div>
+
+    <div class="cycles">
+      <div class="cycles-head">Por que isso se repete</div>
+      <div class="cycle-row"><span class="cycle-date">12/11/2025</span><p>A Meta inicia a liberação gradual do campo de URL de mídia no webhook. Contas passam a receber payloads diferentes entre si, sem data única de conclusão.</p></div>
+      <div class="cycle-row"><span class="cycle-date">Contínuo</span><p>Versões da Graph API ganham prazo de validade. Cada desativação muda campos e formato e exige migração de quem integra.</p></div>
+      <div class="cycle-row"><span class="cycle-date">2026</span><p>A OpenAI descontinua o gpt-4.1 e passa a recomendar a família GPT-5. Toda integração em produção precisa migrar, sem exceção.</p></div>
+      <div class="cycle-row"><span class="cycle-date">Efeito</span><p>Três ondas de mudança independentes no mesmo período. Nenhuma é escolha do usuário e nenhuma avisa no canal de quem opera a conta.</p></div>
+    </div>
+
+    <div class="cycles" style="margin-top:18px">
+      <div class="cycles-head">O detalhe que explica a segunda parada</div>
+      <div class="cycle-row"><span class="cycle-date">Regra de negócio</span><p>Qualificação de lead precisa de resposta estável. Mesma pergunta, mesma classificação. Por isso o agente rodava com temperatura 0,3, o valor que reduz variação de saída.</p></div>
+      <div class="cycle-row"><span class="cycle-date">O que mudou</span><p>A versão nova do modelo deixou de aceitar 0,3 no modo padrão. O parâmetro passou a ser recusado na chamada, antes de gerar qualquer resposta.</p></div>
+      <div class="cycle-row"><span class="cycle-date">Teste de hoje</span><p>Três chamadas na mesma credencial, mesmo modelo, 30/10. Com temperatura 0,3 e raciocínio desligado a resposta volta 200. Com temperatura 0,3 no modo padrão volta 400. Sem temperatura volta 200.</p></div>
+      <div class="cycle-row"><span class="cycle-date">Leitura</span><p>O determinismo não foi abandonado. Ele passou a exigir outra combinação de parâmetros. O caminho que devolve 0,3 está identificado e validado em chamada isolada.</p></div>
+    </div>
+
+    <div class="proof" style="margin-top:14px">
+      <div class="proof-item">
+        <div class="proof-src">Teste controlado · 30/10 · mesma credencial</div>
+        <h4>Três configurações, três resultados</h4>
+        <div class="resume" style="box-shadow:none;margin:10px 0 0">
+          <div class="resume-row resume-head"><span>Configuração</span><span>Resultado</span><span>Leitura</span></div>
+          <div class="resume-row"><span><b>0,3 com raciocínio desligado</b></span><span>200, resposta gerada</span><span>Determinismo disponível neste modo</span></div>
+          <div class="resume-row"><span><b>0,3 no modo padrão</b></span><span>400, parâmetro recusado</span><span>É a falha que parou a operação</span></div>
+          <div class="resume-row"><span><b>Sem temperatura</b></span><span>200, resposta gerada</span><span>É o que está em produção hoje</span></div>
+        </div>
+        <p style="margin-top:12px">Produção segue na terceira linha. A primeira entra depois de teste comparativo de precisão de qualificação, para não trocar estabilidade por variação sem medir.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <h2>Como a mudança externa virou indisponibilidade</h2>
+    </div>
+    <p class="sec-sub">A cadeia abaixo explica os dois sintomas que a operação sentiu, silêncio da IA e lead incompleto, com uma única sequência de eventos.</p>
+
+    <div class="chain">
+      <div class="chain-step">
+        <div class="chain-dot">1</div>
+        <div class="chain-body">
+          <h4>A plataforma muda o contrato</h4>
+          <p>Modelo descontinuado, payload de mídia em transição, versão de API em ciclo de vida.</p>
+        </div>
+      </div>
+      <div class="chain-step">
+        <div class="chain-dot">2</div>
+        <div class="chain-body">
+          <h4>A integração recebe erro ou dado incompleto</h4>
+          <p>O provedor devolve erro de limite de uso, ou entrega um payload sem o campo que o fluxo esperava.</p>
+        </div>
+      </div>
+      <div class="chain-step hot">
+        <div class="chain-dot">3</div>
+        <div class="chain-body">
+          <h4>Sem isolamento, a falha atravessa a execução</h4>
+          <p>Qualificação e resposta rodavam no mesmo caminho. O erro de uma etapa derrubava a etapa seguinte.</p>
+        </div>
+      </div>
+      <div class="chain-step hot">
+        <div class="chain-dot">4</div>
+        <div class="chain-body">
+          <h4>Resposta e CRM caem juntos</h4>
+          <p>O lead não recebe resposta e o registro no Bitrix24 não acontece. Um problema técnico vira dois problemas percebidos.</p>
+        </div>
+      </div>
+      <div class="chain-step">
+        <div class="chain-dot">5</div>
+        <div class="chain-body">
+          <h4>Sem alarme, a descoberta depende do usuário</h4>
+          <p>Era a etapa que faltava. Sem monitoramento, o tempo entre a falha e a correção passa a ser o tempo da reclamação.</p>
+        </div>
+      </div>
+      <div class="chain-step ok">
+        <div class="chain-dot">✓</div>
+        <div class="chain-body">
+          <h4>Onde estamos agora</h4>
+          <p>Etapas 3 e 4 isoladas. Etapa 5 em implantação com data. A etapa 1 não depende de nós, e por isso a proteção passa a ser permanente.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">05</span>
+      <h2>O que é do ambiente e o que é nosso</h2>
+    </div>
+    <p class="sec-sub">Separação honesta. É essa divisão que permite dizer o que garante estabilidade daqui para frente, sem prometer o que não controlamos.</p>
+
+    <div class="split">
+      <div class="split-col ext">
+        <h3>Fora do nosso controle</h3>
+        <div class="who">Decisões de plataforma que chegam por documentação</div>
+        <ul>
+          <li>Descontinuação do modelo que a operação usava</li>
+          <li>Mudança no formato do payload de mídia do WhatsApp, em liberação gradual</li>
+          <li>Ciclo de vida e desativação de versões da API</li>
+          <li>Comunicação feita em changelog técnico, não no canal do usuário final</li>
+        </ul>
+      </div>
+
+      <div class="split-col int">
+        <h3>Nosso, e já tratado</h3>
+        <div class="who">Engenharia de resiliência da integração</div>
+        <ul>
+          <li>Falha de dependência externa derrubava a execução inteira</li>
+          <li>Troca de modelo sem teste de fumaça que pegasse incompatibilidade</li>
+          <li>Ausência de alarme de erro em tempo real</li>
+          <li>Caminho de mídia dependente de um campo que pode não vir</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="split-foot">
+      Nenhuma das duas colunas explica o problema sozinha. <b>A primeira criou o gatilho, a segunda definiu o tamanho do estrago.</b> É por isso que a correção não foi apenas religar o serviço. Foi construir a camada que faltava.
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">06</span>
+      <h2>Linha do tempo</h2>
+    </div>
+    <p class="sec-sub">Tudo em horário de Brasília, com o que aconteceu e o que foi feito em cada ponto.</p>
+
+    <div class="timeline">
+      <div class="tl-item bad">
+        <div class="tl-time">26/10 · 11h07</div>
+        <h4>Primeira falha de integração registrada</h4>
+        <p>O provedor de IA começa a devolver erro de limite de uso de forma intermitente.</p>
+      </div>
+      <div class="tl-item bad">
+        <div class="tl-time">26/10 · 22h13</div>
+        <h4>Pico do incidente</h4>
+        <p>Treze execuções falham em dois minutos. Leads escrevem, não recebem resposta e o registro no CRM não acontece.</p>
+      </div>
+      <div class="tl-item bad">
+        <div class="tl-time">27/10 · 07h53</div>
+        <h4>Última falha da primeira janela</h4>
+        <p>O volume cai e a condição de erro deixa de se repetir de forma contínua.</p>
+      </div>
+      <div class="tl-item good">
+        <div class="tl-time">27/10 · 18h17</div>
+        <h4>Serviço restabelecido e validado ponta a ponta</h4>
+        <p>Lead criado no CRM com identificador confirmado e ramo de atualização de conversa também validado.</p>
+      </div>
+      <div class="tl-item good">
+        <div class="tl-time">27/10 · 19h55</div>
+        <h4>Primeiro pacote de correções publicado</h4>
+        <p>Isolamento da qualificação, proteção de lead novo e gravação explícita do estado de CRM.</p>
+      </div>
+      <div class="tl-item warn">
+        <div class="tl-time">28/10 · 13h29</div>
+        <h4>Nova falha, agora na configuração pós-migração</h4>
+        <p>A migração de modelo exigida pela descontinuação deixou um parâmetro incompatível no agente vendedor. Toda mensagem passou a falhar antes da resposta.</p>
+      </div>
+      <div class="tl-item good">
+        <div class="tl-time">30/10 · 11h08</div>
+        <h4>Correção publicada e verificada</h4>
+        <p>Parâmetro incompatível removido e caminho de mídia isolado. A falha deixa de derrubar a conversa.</p>
+      </div>
+      <div class="tl-item good">
+        <div class="tl-time">30/10 · 11h26 a 11h31</div>
+        <h4>Fila de conversas zerada</h4>
+        <p>Dez conversas que estavam sem resposta foram reprocessadas no fluxo corrigido. Onze mensagens enviadas, nenhum erro de execução.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">07</span>
+      <h2>O que já está corrigido</h2>
+    </div>
+    <p class="sec-sub">Publicado em produção e verificado por leitura direta da configuração, não por promessa.</p>
+
+    <div class="fix-grid">
+      <div class="fix-card">
+        <div class="fix-icon">✓</div>
+        <div>
+          <h4>Isolamento da qualificação</h4>
+          <p>Falha do agente de qualificação deixa de interromper a resposta ao lead e o registro no CRM.</p>
+          <div class="fix-date">Publicado 27/10 · 19h55</div>
+        </div>
+      </div>
+      <div class="fix-card">
+        <div class="fix-icon">✓</div>
+        <div>
+          <h4>Proteção no primeiro contato</h4>
+          <p>A detecção de lead novo passou a tratar resposta vazia da consulta, sem risco de perder contato.</p>
+          <div class="fix-date">Publicado 27/10 · 19h55</div>
+        </div>
+      </div>
+      <div class="fix-card">
+        <div class="fix-icon">✓</div>
+        <div>
+          <h4>Estado de CRM gravado na origem</h4>
+          <p>O cadastro passa a registrar explicitamente se o lead já existe no CRM, eliminando decisão por ausência de dado.</p>
+          <div class="fix-date">Publicado 27/10 · 19h55</div>
+        </div>
+      </div>
+      <div class="fix-card">
+        <div class="fix-icon">✓</div>
+        <div>
+          <h4>Compatibilidade de modelo</h4>
+          <p>Parâmetro incompatível com o novo modelo removido. O agente voltou a responder dentro das regras de persona.</p>
+          <div class="fix-date">Publicado 30/10 · 11h08</div>
+        </div>
+      </div>
+      <div class="fix-card">
+        <div class="fix-icon">✓</div>
+        <div>
+          <h4>Isolamento do caminho de mídia</h4>
+          <p>Falha ao processar arquivo, imagem ou áudio deixa de silenciar a conversa. O lead continua sendo atendido.</p>
+          <div class="fix-date">Publicado 30/10 · 11h08</div>
+        </div>
+      </div>
+      <div class="fix-card">
+        <div class="fix-icon">✓</div>
+        <div>
+          <h4>Modelo em ciclo de vida ativo</h4>
+          <p>Migração concluída para a versão atual, com mais contexto e política de preço estável no uso real.</p>
+          <div class="fix-date">Publicado 27/10 · 19h55</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">08</span>
+      <h2>O que está em implantação</h2>
+    </div>
+    <p class="sec-sub">Com escopo definido e data. Sem promessa genérica de melhoria contínua.</p>
+
+    <div class="fix-grid">
+      <div class="fix-card pending">
+        <div class="fix-icon">→</div>
+        <div>
+          <h4>Anexo de arquivos pelo método documentado</h4>
+          <p>Consulta da mídia pelo identificador, conforme manual do provedor, em vez de depender de campo opcional no payload. Entra com teste controlado antes de liberar.</p>
+          <div class="fix-date">Previsão · 31/10</div>
+        </div>
+      </div>
+      <div class="fix-card pending">
+        <div class="fix-icon">→</div>
+        <div>
+          <h4>Alarme de erro em tempo real</h4>
+          <p>Gatilho automático em cinco falhas em cinco minutos, com notificação para o time técnico antes do usuário perceber.</p>
+          <div class="fix-date">Previsão · 03/11</div>
+        </div>
+      </div>
+      <div class="fix-card pending">
+        <div class="fix-icon">→</div>
+        <div>
+          <h4>Teste de fumaça pós-migração</h4>
+          <p>Rotina obrigatória que valida modelo, parâmetros e payloads antes de qualquer troca entrar em produção. Foi a lacuna que permitiu a falha de 28/10.</p>
+          <div class="fix-date">Previsão · 05/11</div>
+        </div>
+      </div>
+      <div class="fix-card pending">
+        <div class="fix-icon">→</div>
+        <div>
+          <h4>Monitoramento de consumo da integração</h4>
+          <p>Alerta antecipado de consumo do provedor de IA, para que limite de uso não vire indisponibilidade silenciosa.</p>
+          <div class="fix-date">Previsão · 05/11</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">09</span>
+      <h2>Como medimos daqui para frente</h2>
+    </div>
+    <p class="sec-sub">Indicadores combinados com a operação. Se não melhorarem, o compromisso não foi cumprido.</p>
+
+    <div class="metrics">
+      <div class="metric-row">
+        <div class="metric-top">
+          <span class="name">Tempo até a detecção de uma falha</span>
+          <span class="vals">hoje reativo · <b>meta abaixo de 5 min</b></span>
+        </div>
+        <div class="track"><div class="fill now" style="width:12%"></div></div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-top">
+          <span class="name">Mensagens de lead respondidas</span>
+          <span class="vals">100% do que chega · <b>meta 100%</b></span>
+        </div>
+        <div class="track"><div class="fill" style="width:100%"></div></div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-top">
+          <span class="name">Leads com registro no CRM</span>
+          <span class="vals">100% dos qualificados · <b>meta 100%</b></span>
+        </div>
+        <div class="track"><div class="fill" style="width:100%"></div></div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-top">
+          <span class="name">Arquivos anexados ao lead</span>
+          <span class="vals">em correção · <b>meta 100% com validação</b></span>
+        </div>
+        <div class="track"><div class="fill now" style="width:35%"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">10</span>
+      <h2>Prova documental</h2>
+    </div>
+    <p class="sec-sub">Fontes públicas consultadas em 30 de outubro de 2026. Não é interpretação nossa, é documentação dos fornecedores.</p>
+
+    <div class="proof">
+      <div class="proof-item">
+        <div class="proof-src">Meta · WhatsApp Cloud API</div>
+        <h4>Liberação gradual do campo de URL de mídia</h4>
+        <p>O manual do webhook de mensagens com documento registra que a propriedade de URL está sendo liberada gradualmente desde 12/11/2025 e pode não estar disponível imediatamente para todas as contas.</p>
+        <a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/webhooks/reference/messages/document" target="_blank" rel="noopener">developers.facebook.com/documentation/business-messaging/whatsapp/webhooks/reference/messages/document</a>
+      </div>
+      <div class="proof-item">
+        <div class="proof-src">Meta · WhatsApp Cloud API</div>
+        <h4>Referência geral do webhook de mensagens</h4>
+        <p>Documenta que o payload varia por tipo de mensagem e por versão da API, e que mensagens de erro chegam em formato próprio. Integração precisa tratar cada variação.</p>
+        <a href="https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples" target="_blank" rel="noopener">developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples</a>
+      </div>
+      <div class="proof-item">
+        <div class="proof-src">OpenAI · Modelos</div>
+        <h4>gpt-4.1 marcado como descontinuado</h4>
+        <p>A página oficial do modelo informa status descontinuado e recomenda a família GPT-5 para tarefas complexas e de múltiplas trocas, que é o caso de um agente de vendas.</p>
+        <a href="https://developers.openai.com/api/docs/models/gpt-4.1" target="_blank" rel="noopener">developers.openai.com/api/docs/models/gpt-4.1</a>
+      </div>
+      <div class="proof-item">
+        <div class="proof-src">OpenAI · Modelos</div>
+        <h4>Modelo atual em produção</h4>
+        <p>Página oficial do gpt-5.6-terra, com janela de contexto ampliada, saída de 128 mil tokens e corte de conhecimento de fevereiro de 2026.</p>
+        <a href="https://developers.openai.com/api/docs/models/gpt-5.6-terra" target="_blank" rel="noopener">developers.openai.com/api/docs/models/gpt-5.6-terra</a>
+      </div>
+      <div class="proof-item">
+        <div class="proof-src">Bitrix24 · REST</div>
+        <h4>Formato de anexo em campo de arquivo</h4>
+        <p>O manual de upload de arquivos descreve o objeto fileData com nome e conteúdo em base64 para campos de arquivo em lead. É o formato usado pelo fluxo.</p>
+        <a href="https://apidocs.bitrix24.com/api-reference/files/how-to-upload-files.html" target="_blank" rel="noopener">apidocs.bitrix24.com/api-reference/files/how-to-upload-files.html</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="closing">
+      <h3>O que muda a partir de hoje, <span>em uma frase</span></h3>
+      <p>A integração deixa de depender de o fornecedor manter o contrato parado. Toda mudança externa passa a ser contida na etapa afetada, monitorada por alarme e validada por teste antes de entrar em produção.</p>
+      <p>O sistema agora isolada falhas externas, detecta antes do usuário perceber e valida antes de publicar. É a diferença entre uma falha que o time corrige em minutos e uma falha que o usuário descobre.</p>
+      <p style="margin-top:22px"><b style="color:var(--gold)">Estado hoje:</b> o caminho de mídia está isolado, o parâmetro incompatível foi removido e as conversas em atraso foram respondidas. Seguem abertos o anexo de arquivo pelo método documentado, com previsão de 31/10, e o alarme de erro, com previsão de 03/11.</p>
+      <p><b style="color:var(--gold)">O que não está no nosso controle:</b> o calendário da Meta e da OpenAI. A descontinuação seguinte já está publicada por elas, com data. O que está no nosso controle é o intervalo entre a mudança e a adaptação, e é isso que passa a ser medido.</p>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <b>SDR IA Signor</b> · Diagnóstico técnico e plano de estabilização · 30 de outubro de 2026<br>
+  Documento interno para check-in. Dados extraídos da instância de produção e das APIs dos fornecedores.
+</footer>
+
+</body>
+</html>
