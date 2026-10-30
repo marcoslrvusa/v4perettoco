@@ -665,7 +665,7 @@
       <div class="cap">Última janela de indisponibilidade</div>
     </div>
     <div class="kpi">
-      <div class="num green">11</div>
+      <div class="num green">10</div>
       <div class="cap">Conversas retomadas hoje</div>
     </div>
     <div class="kpi">
@@ -685,9 +685,10 @@
     </div>
     <div class="quick">
       <div class="lead-line">O resumo antes do detalhe</div>
-      <p>A SDR não quebrou por um defeito isolado. Ela opera sobre três plataformas externas que mudaram de contrato nos últimos meses: o provedor de modelo descontinuou a versão que usávamos, e o WhatsApp alterou a forma de entregar mídia de forma gradual, sem data única para todos.</p>
-      <p>Essas mudanças chegam sem aviso no canal do usuário final. Elas chegam por documentação técnica, em liberação gradual, e cada integração do mercado precisa se adaptar sozinha. Foi o que aconteceu aqui.</p>
-      <p>O fluxo recebeu isolamento de erro e teve o parâmetro incompatível removido. Alarme e teste de fumaça ainda estão em implantação, com data. Enquanto não entrarem, a proteção é parcial.</p>
+      <p>Foram duas janelas, com causas diferentes. A primeira, entre 26 e 27 de outubro, por erro de limite de uso na chamada do provedor de IA. A segunda, entre 28 e 30, por um parâmetro incompatível que a migração de modelo levou junto. A primeira foi fechada em 27. A segunda, hoje, às 11h08.</p>
+      <p>As duas aconteceram dentro do mesmo ciclo de mudança de contrato de terceiros. A OpenAI descontinuou o modelo em uso, com data de corte publicada, e a migração foi antecipada para antes do corte. A Meta libera o campo de mídia do webhook de forma gradual desde 12 de novembro de 2025, sem data única por conta. Nenhuma das duas mudanças é decisão nossa. A adaptação a elas é.</p>
+      <p>Do nosso lado, dois pontos ficaram abertos por mais tempo do que deveriam. A migração não teve teste que pegasse incompatibilidade de parâmetro, e o caminho de mídia ainda dependia de um campo que pode não vir. O primeiro está fechado. O segundo está isolado, com correção definitiva prevista para 31/10. O alarme de erro, que teria encurtado a segunda janela, entra em 03/11.</p>
+      <p><strong>Risco residual hoje:</strong> falha de mídia não silencia mais o atendimento. Falha de modelo ainda não gera alarme automático até 03/11. É a lacuna conhecida, com data.</p>
     </div>
   </section>
 
@@ -730,7 +731,7 @@
         <div class="proof-src">Pendência isolada · Bitrix24</div>
         <h4>O arquivo do lead Armando não foi anexado</h4>
         <p>Lead 7756, criado no Bitrix24 em 27/10 às 17h30. O cadastro está correto, com telefone, cidade e metragem. O campo de arquivo está vazio. O envio entrou pelo caminho de mídia, que é justamente o ponto afetado pela liberação gradual da Meta, e é o único item ainda sem correção publicada.</p>
-        <p>Correção prevista para 31/10, com teste controlado antes de liberar. Até lá o caminho está isolado: falha de mídia não derruba mais a conversa nem impede o registro no CRM.</p>
+        <p>Entra em teste controlado a partir de 31/10 e só é liberado depois de validado. Até lá o caminho está isolado: falha de mídia não derruba mais a conversa nem impede o registro no CRM.</p>
       </div>
     </div>
   </section>
@@ -740,7 +741,7 @@
       <span class="sec-num">03</span>
       <h2>O ambiente mudou por fora</h2>
     </div>
-    <p class="sec-sub">Três mudanças verificáveis, com documentação pública, que atingem toda integração que depende de WhatsApp e de modelos de linguagem. Não são exclusivas da Signor.</p>
+    <p class="sec-sub">Três mudanças verificáveis, com documentação pública, que atingem qualquer integração que dependa de WhatsApp e de modelos de linguagem. Não são exclusivas da Signor.</p>
 
     <div class="ctx-grid">
       <div class="ctx-card">
@@ -773,7 +774,7 @@
       <div class="cycle-row"><span class="cycle-date">12/11/2025</span><p>A Meta inicia a liberação gradual do campo de URL de mídia no webhook. Contas passam a receber payloads diferentes entre si, sem data única de conclusão.</p></div>
       <div class="cycle-row"><span class="cycle-date">Contínuo</span><p>Versões da Graph API ganham prazo de validade. Cada desativação muda campos e formato e exige migração de quem integra.</p></div>
       <div class="cycle-row"><span class="cycle-date">2026</span><p>A OpenAI descontinua o gpt-4.1 e passa a recomendar a família GPT-5. Toda integração em produção precisa migrar, sem exceção.</p></div>
-      <div class="cycle-row"><span class="cycle-date">Efeito</span><p>Três ondas de mudança independentes no mesmo período. Nenhuma é escolha do usuário e nenhuma avisa no canal de quem opera a conta.</p></div>
+      <div class="cycle-row"><span class="cycle-date">Efeito</span><p>Três ondas de mudança independentes no mesmo período. Nenhuma é escolha do usuário, e todas chegam por documentação técnica, não pelo canal de quem opera a conta.</p></div>
     </div>
 
     <div class="ledger">
@@ -827,7 +828,28 @@
         <p style="margin-top:12px">Produção segue na terceira linha. A primeira entra depois de teste comparativo de precisão de qualificação, para não trocar estabilidade por variação sem medir.</p>
       </div>
     </div>
-  </section>
+  
+    <div class="ctx-grid" style="margin-top:18px">
+      <div class="ctx-card" style="border-top-color:var(--ink)">
+        <div class="ctx-tag" style="color:var(--ink)">Ponto de partida</div>
+        <h3>O fluxo chegou com 142 etapas</h3>
+        <p>Foi recebido assim, não construído do zero por nós. Cada etapa é um ponto que pode quebrar quando o fornecedor altera a documentação da API.</p>
+        <div class="ctx-impact"><b>Decisão:</b> consolidar para 68 etapas, hoje 64, com 16 nós mortos removidos.</div>
+      </div>
+      <div class="ctx-card" style="border-top-color:var(--ink)">
+        <div class="ctx-tag" style="color:var(--ink)">Por que ainda é largo</div>
+        <h3>Cinco sistemas externos</h3>
+        <p>WhatsApp, OpenAI, Bitrix24, Supabase e Redis. Cada um tem contrato próprio, calendário próprio e forma própria de falhar.</p>
+        <div class="ctx-impact"><b>Efeito:</b> uma mudança de contrato atinge um ponto por vez, e cada ponto quebra de um jeito diferente.</div>
+      </div>
+      <div class="ctx-card" style="border-top-color:var(--ink)">
+        <div class="ctx-tag" style="color:var(--ink)">Onde o erro caiu</div>
+        <h3>Integração, nunca na regra</h3>
+        <p>Oito intervenções registradas, todas em camada de integração. Nenhuma no critério de qualificação nem na persona de venda.</p>
+        <div class="ctx-impact"><b>Conclusão:</b> o erro não esteve na regra de venda. Esteve na superfície que carrega a regra.</div>
+      </div>
+    </div>
+</section>
 
   <section>
     <div class="sec-head">
