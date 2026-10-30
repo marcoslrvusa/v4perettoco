@@ -685,7 +685,7 @@
     </div>
     <div class="quick">
       <div class="lead-line">O resumo antes do detalhe</div>
-      <p>Foram duas janelas, com causas diferentes. A primeira, entre 26 e 27 de outubro, por erro de limite de uso na chamada do provedor de IA. A segunda, entre 28 e 30, por um parâmetro incompatível que a migração de modelo levou junto. A primeira foi fechada em 27. A segunda, hoje, às 11h08.</p>
+      <p>Foram duas janelas, com causas diferentes. A primeira, entre 26 e 27 de outubro, por erro de indisponibilidade na chamada do provedor de IA. A segunda, entre 28 e 30, por um parâmetro incompatível que a migração de modelo levou junto. A primeira foi fechada em 27. A segunda, hoje, às 11h08.</p>
       <p>As duas aconteceram dentro do mesmo ciclo de mudança de contrato de terceiros. A OpenAI descontinuou o modelo em uso, com data de corte publicada, e a migração foi antecipada para antes do corte. A Meta libera o campo de mídia do webhook de forma gradual desde 12 de novembro de 2025, sem data única por conta. Nenhuma das duas mudanças é decisão nossa. A adaptação a elas é.</p>
       <p>Do nosso lado, dois pontos ficaram abertos por mais tempo do que deveriam. A migração não teve teste que pegasse incompatibilidade de parâmetro, e o caminho de mídia ainda dependia de um campo que pode não vir. O primeiro está fechado. O segundo está isolado, com correção definitiva prevista para 31/10. O alarme de erro, que teria encurtado a segunda janela, entra em 03/11.</p>
       <p><strong>Risco residual hoje:</strong> falha de mídia não silencia mais o atendimento. Falha de modelo ainda não gera alarme automático até 03/11. É a lacuna conhecida, com data.</p>
@@ -870,7 +870,7 @@
         <div class="chain-dot">2</div>
         <div class="chain-body">
           <h4>A integração recebe erro ou dado incompleto</h4>
-          <p>O provedor devolve erro de limite de uso, ou entrega um payload sem o campo que o fluxo esperava.</p>
+          <p>O provedor devolve erro na chamada, ou entrega um payload sem o campo que o fluxo esperava.</p>
         </div>
       </div>
       <div class="chain-step hot">
@@ -1086,7 +1086,7 @@
         <div class="fix-icon">→</div>
         <div>
           <h4>Monitoramento de consumo da integração</h4>
-          <p>Alerta antecipado de consumo do provedor de IA, para que limite de uso não vire indisponibilidade silenciosa.</p>
+          <p>Alerta antecipado de falha na chamada do provedor de IA, para que uma indisponibilidade não passe em silêncio.</p>
           <div class="fix-date">Previsão · 05/11</div>
         </div>
       </div>
