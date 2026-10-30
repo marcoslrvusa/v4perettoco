@@ -604,6 +604,42 @@
     .check-strip { grid-template-columns: repeat(2, 1fr); }
     .cycle-row { grid-template-columns: 1fr; gap: 3px; }
   }
+
+  /* ---------- REGISTRO ---------- */
+  .ledger {
+    background: #fff; border-radius: 12px; padding: 26px 28px; margin-top: 18px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.05); border-top: 3px solid var(--ink);
+  }
+  .ledger-head {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 24px; margin-bottom: 18px; flex-wrap: wrap;
+  }
+  .ledger-title {
+    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 17px;
+    font-weight: 700; color: var(--ink); margin-bottom: 5px;
+  }
+  .ledger-sub { font-size: 13.5px; color: var(--gray-600); max-width: 520px; line-height: 1.5; }
+  .ledger-stats { display: flex; gap: 22px; }
+  .ledger-stats div { text-align: center; }
+  .ledger-stats b {
+    display: block; font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 22px; font-weight: 800; color: var(--ink); line-height: 1;
+  }
+  .ledger-stats span {
+    display: block; font-size: 10px; text-transform: uppercase;
+    letter-spacing: 0.8px; color: var(--gray-500); margin-top: 5px;
+  }
+  .ledger .resume-row { font-size: 13px; grid-template-columns: 140px 1fr 1fr; padding: 12px 16px; }
+  .ledger .resume-row b { font-size: 13px; }
+  .ledger-foot { margin-top: 16px; border-top: 1px solid var(--gray-200); padding-top: 16px; }
+  .ledger-foot p { font-size: 14px; color: var(--gray-700); margin-bottom: 10px; }
+  .ledger-foot p:last-child { margin-bottom: 0; }
+  .ledger-foot b { color: var(--ink); }
+
+  @media (max-width: 860px) {
+    .ledger-stats { width: 100%; justify-content: space-between; }
+    .ledger .resume-row { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -738,6 +774,36 @@
       <div class="cycle-row"><span class="cycle-date">Contínuo</span><p>Versões da Graph API ganham prazo de validade. Cada desativação muda campos e formato e exige migração de quem integra.</p></div>
       <div class="cycle-row"><span class="cycle-date">2026</span><p>A OpenAI descontinua o gpt-4.1 e passa a recomendar a família GPT-5. Toda integração em produção precisa migrar, sem exceção.</p></div>
       <div class="cycle-row"><span class="cycle-date">Efeito</span><p>Três ondas de mudança independentes no mesmo período. Nenhuma é escolha do usuário e nenhuma avisa no canal de quem opera a conta.</p></div>
+    </div>
+
+    <div class="ledger">
+      <div class="ledger-head">
+        <div>
+          <div class="ledger-title">Registro de intervenções</div>
+          <div class="ledger-sub">Cada linha tem data, camada afetada e efeito observado. É o histórico que responde à pergunta sobre recorrência.</div>
+        </div>
+        <div class="ledger-stats">
+          <div><b>8</b><span>intervenções</span></div>
+          <div><b>4</b><span>camadas</span></div>
+          <div><b>0</b><span>mesmo defeito reaberto</span></div>
+        </div>
+      </div>
+      <div class="resume" style="box-shadow:none">
+        <div class="resume-row resume-head"><span>Data</span><span>Camada e correção aplicada</span><span>Efeito observado</span></div>
+        <div class="resume-row"><span><b>18/06/2026</b><i>infraestrutura</i></span><span>Task runner do n8n desconectava após 120 s de inatividade. Timeout elevado para 600 s, CPU de 1 para 2 núcleos e RAM de 2 para 4 GB.</span><span>Desconexões caíram de 5 a 8 por dia para zero.</span></div>
+        <div class="resume-row"><span><b>junho/2026</b><i>roteamento</i></span><span>PDF era enviado a um nó que lia campo de imagem, e documento não tem esse campo. A URL passou a ser resolvida por tipo de mídia.</span><span>Documento, áudio e vídeo deixaram de derrubar a execução.</span></div>
+        <div class="resume-row"><span><b>junho/2026</b><i>áudio</i></span><span>A cadeia de transcrição apontava para um nó morto de versão anterior. Foi reapontada para o trigger em uso.</span><span>Áudio voltou a ser transcrito.</span></div>
+        <div class="resume-row"><span><b>junho/2026</b><i>duplicidade</i></span><span>Dois pipelines ativos no mesmo número respondiam duas vezes ao mesmo lead. Consolidado em um, de 142 para 68 nós, com 16 nós mortos removidos.</span><span>Fim da resposta duplicada e da criação dupla de lead.</span></div>
+        <div class="resume-row"><span><b>junho/2026</b><i>credencial</i></span><span>Download de arquivo rodava sem credencial e com token expirado. Credencial aplicada ao nó de download.</span><span>Falha de autorização no download eliminada.</span></div>
+        <div class="resume-row"><span><b>27/10/2026</b><i>isolamento</i></span><span>Erro na qualificação derrubava a resposta e o registro no Bitrix. Isolamento aplicado e estado de CRM passou a ser gravado na origem.</span><span>Falha de qualificação não interrompe mais o atendimento.</span></div>
+        <div class="resume-row"><span><b>27/10/2026</b><i>modelo</i></span><span>Migração para a versão vigente do modelo, exigida pela descontinuação da anterior.</span><span>Modelo em ciclo de vida ativo, com janela de contexto maior.</span></div>
+        <div class="resume-row"><span><b>30/10/2026</b><i>parâmetro</i></span><span>Parâmetro de temperatura incompatível removido e caminho de mídia isolado.</span><span>Onze mensagens enviadas, zero erro de execução.</span></div>
+      </div>
+      <div class="ledger-foot">
+        <p><b>O controle existia, e está registrado.</b> Oito intervenções em quatro camadas, todas com data, causa e efeito. Nenhuma correção foi revertida depois. Cada uma reduziu a superfície de falha da camada que tratou, e a próxima partiu do estado corrigido da anterior.</p>
+        <p><b>O que fugiu do controle.</b> Três mudanças de contrato de terceiros no mesmo trimestre. A Meta passou a liberar o campo de mídia de forma gradual desde 12 de novembro de 2025, sem data única por conta. O ciclo de vida da Graph API desativa versões em datas próprias. A OpenAI descontinuou o modelo em uso e publicou a data de corte. Nenhuma dessas decisões é nossa, todas atingiram o mercado inteiro, e todas foram comunicadas apenas em documentação técnica.</p>
+        <p><b>Por que o sintoma se repetiu.</b> Porque cada onda atingiu uma camada diferente que ainda não estava contida. A direção das correções nunca mudou: isolar o caminho, registrar o estado, validar antes de publicar. O que mudou foi a profundidade com que cada caminho passou a ser protegido. O resíduo que sobrou é o que a blindagem fecha agora.</p>
+</div>
     </div>
 
     <div class="cycles" style="margin-top:18px">
