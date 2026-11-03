@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auditoria SEO + AIO + GEO | Reversee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: rgb(229, 9, 20);
+    --red-dark: rgb(180, 7, 16);
+    --red-light: rgb(255, 60, 70);
+    --gold: #c9a96e;
+    --gold-light: #f5f0e6;
+    --gold-border: #e8dcc8;
+    --green: #16a34a;
+    --blue: #2563eb;
+    --purple: #7c3aed;
+    --gray-50: #fafafa;
+    --gray-100: #f5f5f5;
+    --gray-200: #eeeeee;
+    --gray-300: #e0e0e0;
+    --gray-400: #bdbdbd;
+    --gray-500: #9e9e9e;
+    --gray-600: #757575;
+    --gray-700: #616161;
+    --gray-800: #424242;
+    --gray-900: #212121;
+  }
+
+  body { font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, sans-serif; background: #f8f7f4; color: var(--gray-900); line-height: 1.7; font-size: 16px; }
+
+  .cover { background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #2a2a2a 100%); color: #fff; padding: 56px 40px 56px; text-align: center; position: relative; overflow: hidden; }
+  .cover::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(201,169,110,0.05) 0%, transparent 60%); pointer-events: none; }
+  .cover-content { position: relative; z-index: 1; max-width: 840px; margin: 0 auto; }
+  .cover-logos { display: flex; align-items: center; justify-content: space-between; gap: 32px; margin-bottom: 44px; }
+  .cover-logos img { height: 40px; width: auto; object-fit: contain; }
+  .cover-logos .client-logo { height: 62px; }
+  .cover .label { display: inline-block; background: rgba(201,169,110,0.12); border: 1px solid rgba(201,169,110,0.3); padding: 6px 20px; border-radius: 20px; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px; color: var(--gold); }
+  .cover h1 { font-size: 42px; font-weight: 700; line-height: 1.15; margin-bottom: 14px; letter-spacing: -0.5px; font-family: 'Plus Jakarta Sans', serif; }
+  .cover p { font-size: 18px; color: rgba(255,255,255,0.82); margin-bottom: 24px; font-weight: 300; letter-spacing: 0.2px; }
+  .cover-meta { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; font-size: 13px; opacity: 0.7; letter-spacing: 0.4px; }
+  .pillar-badges { display: flex; gap: 12px; justify-content: center; margin: 24px 0 8px; flex-wrap: wrap; }
+  .pillar-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; border-radius: 8px; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+  .pillar-badge.seo { background: rgba(37,99,235,0.15); border: 1px solid rgba(37,99,235,0.3); color: #93c5fd; }
+  .pillar-badge.aio { background: rgba(229,9,20,0.15); border: 1px solid rgba(229,9,20,0.3); color: #fca5a5; }
+  .pillar-badge.geo { background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3); color: #c4b5fd; }
+  .cover-content::after { content: ''; display: block; width: 60px; height: 2px; background: var(--gold); margin: 28px auto 0; border-radius: 1px; }
+
+  .container { max-width: 980px; margin: -36px auto 48px; padding: 0 20px; position: relative; z-index: 2; }
+  .card { background: #fff; border-radius: 16px; box-shadow: 0 2px 20px rgba(0,0,0,0.05); margin-bottom: 28px; overflow: hidden; border: 1px solid var(--gray-300); position: relative; }
+  .card::before { content: ''; position: absolute; top: 0; left: 40px; right: 40px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-border), var(--gold), var(--gold-border), transparent); opacity: 0.6; }
+  .card-body { padding: 44px 52px; }
+  .card-pillar { border-top: 3px solid var(--gray-300); }
+  .card-pillar.seo { border-top-color: var(--blue); }
+  .card-pillar.aio { border-top-color: var(--red); }
+  .card-pillar.geo { border-top-color: var(--purple); }
+  .card-pillar.gold { border-top-color: var(--gold); }
+
+  .pillar-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+  .pillar-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 800; color: #fff; flex-shrink: 0; }
+  .pillar-icon.seo { background: linear-gradient(135deg, var(--blue), #60a5fa); }
+  .pillar-icon.aio { background: linear-gradient(135deg, var(--red), var(--red-light)); }
+  .pillar-icon.geo { background: linear-gradient(135deg, var(--purple), #a78bfa); }
+  .pillar-icon.gold { background: linear-gradient(135deg, #b8963a, #d4b96a); }
+  .pillar-title { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+  .pillar-title.seo { color: var(--blue); }
+  .pillar-title.aio { color: var(--red); }
+  .pillar-title.geo { color: var(--purple); }
+  .pillar-subtitle { font-size: 12px; color: var(--gray-500); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 1px; }
+
+  h2 { font-size: 24px; font-weight: 700; color: var(--red); margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--gold-border); display: flex; align-items: center; gap: 10px; letter-spacing: -0.3px; position: relative; }
+  h2::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 40px; height: 2px; background: var(--gold); border-radius: 1px; }
+  h3 { font-size: 18px; font-weight: 700; color: var(--gray-900); margin: 34px 0 16px; letter-spacing: -0.2px; }
+  h4 { font-size: 15px; font-weight: 700; color: var(--gray-800); margin: 20px 0 10px; }
+  p { font-size: 15.5px; color: var(--gray-700); margin-bottom: 14px; line-height: 1.8; }
+  p:last-child { margin-bottom: 0; }
+  ul, ol { margin: 0 0 16px 22px; }
+  li { font-size: 15.5px; color: var(--gray-700); margin-bottom: 6px; line-height: 1.75; }
+
+  .badge { display: inline-block; padding: 5px 14px; border-radius: 6px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; white-space: nowrap; }
+  .badge-critico { background: #fef2f2; color: var(--red); border: 1px solid #fecaca; }
+  .badge-alto { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+  .badge-medio { background: #fefce8; color: #a16207; border: 1px solid #fef08a; }
+  .badge-baixo { background: var(--gold-light); color: #8b7a4a; border: 1px solid var(--gold-border); }
+  .badge-info { background: #f5f5f5; color: #616161; border: 1px solid #d4d4d4; }
+  .badge-ok { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14.5px; }
+  th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--gray-100); vertical-align: top; }
+  th { background: linear-gradient(135deg, var(--gray-50), #f8f7f4); font-weight: 700; color: var(--gray-700); font-size: 11px; text-transform: uppercase; letter-spacing: 0.7px; border-bottom: 2px solid var(--gold-border); }
+  tr:hover td { background: #fcfaf7; }
+  tr:last-child td { border-bottom: none; }
+  .table-wrap { overflow-x: auto; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-bottom: 30px; }
+  .kpi-group { background: #f2f0ec; border-radius: 10px; padding: 18px 10px 16px; text-align: center; border: 1px solid var(--gold-border); position: relative; overflow: hidden; }
+  .kpi-group .value { font-size: 26px; font-weight: 700; color: var(--red); line-height: 1.1; letter-spacing: -0.5px; }
+  .kpi-group .label { font-size: 10px; color: var(--gray-600); font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; margin-top: 6px; line-height: 1.35; }
+  .kpi-group::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--red), var(--red-light)); }
+
+  .risk-box { background: linear-gradient(135deg, #fcfaf7, #f8f7f4); border-left: 4px solid var(--red); padding: 22px 26px; border-radius: 0 12px 12px 0; margin: 18px 0; }
+  .risk-box h4 { margin: 0 0 8px; color: var(--red); font-size: 15px; }
+  .risk-box p { font-size: 15px; margin: 0; }
+  .risk-box.blue { border-left-color: var(--blue); }
+  .risk-box.blue h4 { color: var(--blue); }
+  .risk-box.gold { border-left-color: var(--gold); }
+  .risk-box.gold h4 { color: #8b7a4a; }
+
+  .finding { border: 1px solid var(--gray-200); border-radius: 12px; padding: 24px 28px; margin-bottom: 16px; background: #fcfcfc; transition: box-shadow 0.2s, border-color 0.2s; border-left: 3px solid transparent; }
+  .finding:hover { box-shadow: 0 2px 16px rgba(0,0,0,0.04); border-color: var(--gold-border); }
+  .finding.seo-finding { border-left-color: var(--blue); }
+  .finding.aio-finding { border-left-color: var(--red); }
+  .finding.geo-finding { border-left-color: var(--purple); }
+  .finding.gold-finding { border-left-color: var(--gold); }
+  .finding-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; gap: 12px; }
+  .finding-title { font-weight: 700; font-size: 16.5px; color: var(--gray-900); letter-spacing: -0.2px; }
+  .finding-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 28px; font-size: 14.5px; }
+  .finding-grid .field { font-weight: 700; color: var(--gray-800); }
+  .finding-grid .value { color: var(--gray-700); }
+  .finding-grid .full { grid-column: 1 / -1; }
+  .finding-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px 24px; font-size: 14px; }
+  .finding-grid-3 .field { font-weight: 700; color: var(--gray-800); }
+  .finding-grid-3 .value { color: var(--gray-700); }
+  .finding-grid-3 .full { grid-column: 1 / -1; }
+
+  code { font-family: 'JetBrains Mono', monospace; background: var(--gray-100); padding: 2px 7px; border-radius: 3px; font-size: 13px; color: var(--red); word-break: break-word; }
+  pre { background: var(--gray-900); color: #e2e8f0; border-radius: 12px; padding: 22px 26px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; overflow-x: auto; line-height: 1.65; margin: 14px 0; }
+  pre code { background: none; color: inherit; padding: 0; font-size: 12.5px; }
+  .code-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--gray-500); margin: 18px 0 6px; }
+
+  .bar-container { margin: 20px 0; }
+  .bar-row { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+  .bar-label { width: 230px; font-size: 13.5px; font-weight: 700; color: var(--gray-700); text-align: right; flex-shrink: 0; }
+  .bar-track { flex: 1; height: 28px; background: var(--gray-100); border-radius: 6px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding-right: 12px; font-size: 12px; font-weight: 700; color: #fff; }
+  .bar-fill.blue { background: linear-gradient(90deg, var(--blue), #60a5fa); }
+  .bar-fill.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .bar-fill.purple { background: linear-gradient(90deg, var(--purple), #a78bfa); }
+  .bar-fill.orange { background: linear-gradient(90deg, #c2410c, #ea580c); }
+  .bar-fill.gold { background: linear-gradient(90deg, #b8963a, #d4b96a); }
+  .bar-fill.gray { background: linear-gradient(90deg, #616161, #9e9e9e); }
+
+  .timeline { display: flex; gap: 0; margin: 28px 0 16px; position: relative; padding: 0 0 18px; }
+  .timeline::before { content: ''; position: absolute; top: 26px; left: 6%; right: 6%; height: 3px; background: linear-gradient(90deg, var(--gold-border), var(--gold), var(--gold-border)); border-radius: 2px; }
+  .timeline-phase { flex: 1; text-align: center; position: relative; padding: 0 8px; }
+  .timeline-phase .dot { width: 16px; height: 16px; border-radius: 50%; margin: 0 auto 12px; position: relative; z-index: 1; border: 3px solid #fff; box-shadow: 0 0 0 2px var(--gold); }
+  .timeline-phase .dot.blue { background: var(--blue); }
+  .timeline-phase .dot.red { background: var(--red); }
+  .timeline-phase .dot.purple { background: var(--purple); }
+  .timeline-phase .dot.orange { background: #c2410c; }
+  .timeline-phase .phase-name { font-size: 12.5px; font-weight: 700; color: var(--gray-800); margin-bottom: 2px; }
+  .timeline-phase .phase-weeks { font-size: 11px; color: var(--gray-500); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .timeline-phase .phase-hours { font-size: 20px; font-weight: 700; color: var(--red); letter-spacing: -0.5px; margin-top: 4px; }
+  .timeline-phase .phase-pillar { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+  .timeline-phase .phase-pillar.blue { color: var(--blue); }
+  .timeline-phase .phase-pillar.red { color: var(--red); }
+  .timeline-phase .phase-pillar.purple { color: var(--purple); }
+  .timeline-phase .phase-pillar.orange { color: #c2410c; }
+
+  .checklist { display: grid; gap: 10px; }
+  .check-item { display: flex; gap: 12px; align-items: flex-start; padding: 13px 16px; background: #fcfcfc; border: 1px solid var(--gray-200); border-radius: 10px; }
+  .check-item .num { width: 26px; height: 26px; border-radius: 50%; background: var(--red); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .check-item .txt { font-size: 14.5px; color: var(--gray-700); }
+  .check-item .txt strong { color: var(--gray-900); }
+
+  .status { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 4px; white-space: nowrap; }
+  .status.ok { background: rgba(34,197,94,0.1); color: #16a34a; }
+  .status.warn { background: rgba(217,119,6,0.1); color: #c2410c; }
+  .status.fail { background: rgba(229,9,20,0.1); color: var(--red); }
+
+  .note { background: #f8f7f4; border: 1px solid var(--gold-border); border-radius: 10px; padding: 16px 20px; font-size: 14px; color: var(--gray-700); margin: 16px 0; }
+  .note strong { color: var(--gray-900); }
+
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .metric-big { font-size: 40px; font-weight: 800; color: var(--red); line-height: 1; letter-spacing: -1.5px; }
+  .metric-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--gray-500); margin-top: 4px; }
+
+  .footer { text-align: center; padding: 36px; font-size: 13px; color: var(--gray-500); border-top: 1px solid var(--gold-border); background: #0d0d0d; position: relative; }
+  .footer::before { content: ''; position: absolute; top: -2px; left: 50%; transform: translateX(-50%); width: 40px; height: 3px; background: var(--gold); border-radius: 2px; }
+  .footer-logos { display: flex; justify-content: center; align-items: center; gap: 40px; margin-bottom: 16px; }
+  .footer-logos img { height: 30px; width: auto; }
+  .footer-logos .client { height: 46px; }
+
+  @media print {
+    body { background: #fff; font-size: 12px; }
+    .cover { padding: 40px 30px; }
+    .container { max-width: 100%; margin: 0; padding: 0; }
+    .card { box-shadow: none; border: 1px solid var(--gray-200); page-break-inside: avoid; }
+    .card-body { padding: 20px 24px; }
+    .finding { page-break-inside: avoid; }
+    table { page-break-inside: avoid; }
+    .footer { background: #fff; color: var(--gray-700); }
+    @page { margin: 1.5cm 1cm; }
+  }
+
+  @media (max-width: 760px) {
+    .cover h1 { font-size: 27px; }
+    .cover { padding: 36px 20px 40px; }
+    .cover-logos { gap: 16px; }
+    .cover-logos img { height: 28px; }
+    .cover-logos .client-logo { height: 44px; }
+    .card-body { padding: 22px 20px; }
+    .finding-grid, .finding-grid-3, .split { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .bar-label { width: 110px; font-size: 11.5px; }
+    .bar-row { gap: 8px; }
+    .timeline { flex-wrap: wrap; gap: 14px; }
+    .timeline::before { display: none; }
+    .timeline-phase { flex: 1 1 40%; }
+    table { font-size: 13px; }
+    th, td { padding: 9px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="cover">
+  <div class="cover-content">
+    <div class="cover-logos">
+      <img src="assets/logo-v4-white.png" alt="V4 Company">
+      <img src="assets/logo-reversee.png" alt="Reversee" class="client-logo">
+    </div>
+    <div class="label">Auditoria técnica · Novembro 2026</div>
+    <h1>Auditoria SEO + AIO + GEO</h1>
+    <p>Reversee — Soluções em Tecnologia Reversa</p>
+    <div class="pillar-badges">
+      <span class="pillar-badge seo">SEO</span>
+      <span class="pillar-badge aio">AIO</span>
+      <span class="pillar-badge geo">GEO</span>
+    </div>
+    <div class="cover-meta">
+      <span>Screaming Frog · crawl 02/11/2026</span>
+      <span>Lighthouse 13.6 · mobile + desktop</span>
+      <span>DOM renderizado · 11 rotas</span>
+      <span>10 URLs no sitemap</span>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<!-- ===================== SUMÁRIO EXECUTIVO ===================== -->
+<section class="card">
+  <div class="card-body">
+    <h2>Sumário executivo</h2>
+
+    <div class="kpi-grid">
+      <div class="kpi-group"><div class="value">29</div><div class="label">Score V4<br>de saúde SEO</div></div>
+      <div class="kpi-group"><div class="value">1</div><div class="label">URL indexável<br>de fato (de 10)</div></div>
+      <div class="kpi-group"><div class="value">0</div><div class="label">Palavras no<br>HTML bruto</div></div>
+      <div class="kpi-group"><div class="value">0</div><div class="label">Canonicals<br>corretos</div></div>
+      <div class="kpi-group"><div class="value">0</div><div class="label">Tipos de<br>dados estruturados</div></div>
+      <div class="kpi-group"><div class="value">48</div><div class="label">Performance<br>mobile</div></div>
+    </div>
+
+    <p>O Reversee tem um site bem desenhado, com boa identidade visual, títulos e descrições em português bem escritos e um conjunto real de certificações (R2v3, ISO, Blancco, BitRaser) que é um ativo de autoridade e confiança. Do ponto de vista de mecanismos de busca, porém, <strong>o site entrega uma página em branco</strong>.</p>
+
+    <p>O site é uma SPA React/Vite: o HTML inicial tem <strong>2.265 bytes, zero palavras, zero H1 e zero links</strong>. Todo o conteúdo só existe depois que o JavaScript executa. O crawl do Screaming Frog encontrou apenas 3 URLs (a home, o bundle JS e o CSS) exatamente por isso — e mesmo com renderização ativada, o crawl só encontraria a home, porque o HTML bruto não tem nenhum link.</p>
+
+    <div class="risk-box">
+      <h4>O risco em uma frase</h4>
+      <p>Hoje o teto orgânico do Reversee é a home. As 5 páginas de serviço não podem rankear de forma independente, nenhum artigo pode ser indexado, e as IAs (ChatGPT, Perplexity, Gemini, Claude) não conseguem ler uma única linha do site. O problema não é de conteúdo — é de entrega.</p>
+    </div>
+
+    <h3>Os 5 fatos que resumem a auditoria</h3>
+    <ol>
+      <li><strong>Todo o conteúdo depende de JavaScript.</strong> O Googlebot consegue renderizar (com custo e atraso), mas Bing, GPTBot, ClaudeBot, PerplexityBot e os scrapers de redes sociais não. O site é invisível para a maior parte da web.</li>
+      <li><strong>Todas as rotas declaram canonical para a home.</strong> O <code>&lt;link rel="canonical"&gt;</code> é estático no <code>index.html</code> e nunca é atualizado pelo app. Na prática, cada página de serviço diz ao Google: “eu sou a home”.</li>
+      <li><strong>Qualquer URL inexistente responde 200.</strong> O servidor devolve o shell do SPA para <code>/qualquer-coisa</code>, para <code>/llms.txt</code> e até para <code>/sitemap_index.xml</code>. Não existe 404 real.</li>
+      <li><strong>O idioma é decidido pelo navegador, sem URL e sem hreflang.</strong> <code>navigator.language</code> define PT ou EN. O Googlebot renderiza com locale <code>en-US</code>; a versão em português não tem URL própria para ser indexada.</li>
+      <li><strong>Conteúdo editorial indexável: zero.</strong> A página “Artigos” é um mural de 5 cards que apontam para LinkedIn e YouTube. Não existe uma única URL de artigo no domínio.</li>
+    </ol>
+
+    <h3>O que já está funcionando</h3>
+    <div class="split">
+      <div>
+        <ul>
+          <li><span class="badge badge-ok">OK</span> Títulos e descriptions em PT claros e dentro do tamanho ideal (29–59 e 65–137 caracteres).</li>
+          <li><span class="badge badge-ok">OK</span> 100% das imagens têm <code>alt</code> preenchido.</li>
+          <li><span class="badge badge-ok">OK</span> HTTPS ativo, <code>robots.txt</code> e <code>sitemap.xml</code> existem e respondem.</li>
+        </ul>
+      </div>
+      <div>
+        <ul>
+          <li><span class="badge badge-ok">OK</span> CLS de 0,002 e TTFB de 86 ms — a base técnica de servidor é boa.</li>
+          <li><span class="badge badge-ok">OK</span> Design consistente, hierarquia visual clara e CTAs de WhatsApp bem posicionados.</li>
+          <li><span class="badge badge-ok">OK</span> Certificações e clientes (Prefeitura de SP, Bombeiros, Ibama) são prova real de autoridade.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>Nota sobre o Lighthouse:</strong> o relatório dá SEO 100/100 na home. Isso não contradiz a auditoria: o Lighthouse avalia uma única página já renderizada e não detecta canonical cruzado entre URLs, soft 404, ausência de hreflang ou conteúdo invisível para crawlers que não executam JS. É um teste de página, não de site.
+    </div>
+  </div>
+</section>
+
+<!-- ===================== DIAGNÓSTICO DO CRAWL ===================== -->
+<section class="card">
+  <div class="card-body">
+    <h2>Por que o Screaming Frog encontrou só 3 arquivos</h2>
+
+    <p>Os 29 CSVs exportados mostram um crawl de <strong>1 documento HTML</strong> (a home) mais 2 assets. Não é falha da ferramenta: é o comportamento esperado de um SPA quando a renderização de JavaScript está desligada e o crawl não é alimentado pelo sitemap.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Métrica</th><th>Screaming Frog (CSV)</th><th>Navegador (DOM renderizado)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>URLs descobertas</td><td>3 (home + JS + CSS)</td><td>11 rotas</td></tr>
+          <tr><td>Palavras na home</td><td><strong>0</strong></td><td>539</td></tr>
+          <tr><td>H1 / H2</td><td>0 / 0</td><td>1 / 5</td></tr>
+          <tr><td>Links internos na home</td><td><strong>0</strong></td><td>13</td></tr>
+          <tr><td>Tamanho do HTML</td><td>2.265 bytes</td><td>~40 KB de texto</td></tr>
+          <tr><td>Dados estruturados</td><td>0</td><td>0</td></tr>
+          <tr><td>Canonical</td><td>https://www.reversee.com.br/</td><td>https://www.reversee.com.br/ (em todas as rotas)</td></tr>
+          <tr><td>Conteúdo no HTML bruto</td><td><code>&lt;div id="root"&gt;&lt;/div&gt;</code></td><td>Aplicação React completa</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Como reconfigurar o crawl</h3>
+    <ol>
+      <li>Em <strong>Configuration → Spider → Rendering</strong>, ativar <em>Render JavaScript</em> (JavaScript rendering). Sem isso, qualquer auditoria neste site mede apenas o shell.</li>
+      <li>Em <strong>Configuration → Spider → Crawl</strong>, ativar <em>Crawl Sitemap</em> e informar <code>https://www.reversee.com.br/sitemap.xml</code>. O sitemap é a única forma de descobrir as 10 URLs, já que o HTML bruto não tem links.</li>
+      <li>Em <strong>Configuration → Spider → Limits</strong>, aumentar o tempo de espera de renderização (o app busca fontes e scripts de terceiros; 3–5 s é razoável).</li>
+      <li>Rodar também com o user-agent do Googlebot e com <code>Accept-Language: pt-BR</code> para capturar a versão em português.</li>
+    </ol>
+
+    <div class="risk-box blue">
+      <h4>O que o crawl “cru” já prova</h4>
+      <p>Mesmo sem renderização, os CSVs são conclusivos em um ponto: o HTML entregue ao crawler não tem conteúdo, não tem headings e não tem links. Isso é exatamente o que um crawler de IA recebe. O problema é real e não depende de configuração da ferramenta.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PILAR SEO — TÉCNICO ===================== -->
+<section class="card card-pillar seo">
+  <div class="card-body">
+    <div class="pillar-header">
+      <div class="pillar-icon seo">T</div>
+      <div>
+        <div class="pillar-title seo">Pilar SEO — Técnico</div>
+        <div class="pillar-subtitle">Rastreamento · indexação · canonicalização · arquitetura</div>
+      </div>
+    </div>
+
+    <div class="bar-container">
+      <div class="bar-row"><div class="bar-label">Rastreamento e indexação</div><div class="bar-track"><div class="bar-fill red" style="width:15%">15</div></div></div>
+      <div class="bar-row"><div class="bar-label">Canonicalização</div><div class="bar-track"><div class="bar-fill red" style="width:5%">5</div></div></div>
+      <div class="bar-row"><div class="bar-label">Arquitetura e links</div><div class="bar-track"><div class="bar-fill orange" style="width:25%">25</div></div></div>
+      <div class="bar-row"><div class="bar-label">Idioma e internacionalização</div><div class="bar-track"><div class="bar-fill red" style="width:10%">10</div></div></div>
+      <div class="bar-row"><div class="bar-label">Sitemap e robots</div><div class="bar-track"><div class="bar-fill gold" style="width:45%">45</div></div></div>
+      <div class="bar-row"><div class="bar-label">Servidor e headers</div><div class="bar-track"><div class="bar-fill orange" style="width:40%">40</div></div></div>
+    </div>
+
+    <h3>T1 · SPA sem renderização no servidor</h3>
+    <div class="finding seo-finding">
+      <div class="finding-header"><span class="finding-title">O HTML entregue ao crawler tem 2.265 bytes e zero conteúdo</span><span class="badge badge-critico">Crítico</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">O HTML bruto termina em <code>&lt;div id="root"&gt;&lt;/div&gt;</code>. Não há H1, texto, links, imagens nem JSON-LD. Todo o conteúdo é montado pelo bundle <code>/assets/index-CE3DJ_H6.js</code>.</div>
+        <div class="field">Impacto</div><div class="value">Google renderiza JS, mas com orçamento e atraso. Bing renderiza de forma parcial. GPTBot, ClaudeBot, PerplexityBot, CCBot e a maioria dos scrapers <strong>não executam JS</strong> — para eles o site é vazio. Pré-visualizações de link no WhatsApp/LinkedIn também ficam sem conteúdo.</div>
+        <div class="field">Correção</div><div class="value">Pré-renderizar cada rota no build (SSG) e hidratar no cliente. Opções: <code>vite-plugin-prerender</code> / <code>@prerenderer/rollup-plugin</code>, Vike, ou migração para Astro/Next. Para 11 rotas, o prerender estático resolve sem trocar o app.</div>
+        <div class="field">Aceite</div><div class="value"><code>curl -A "Googlebot"</code> em cada URL retorna H1, texto, links e canonical no HTML — sem executar JS.</div>
+        <div class="field">Esforço estimado</div><div class="value">16–24 h (dev front-end)</div>
+        <div class="field">Prioridade</div><div class="value">P0 — bloqueia todo o resto</div>
+      </div>
+    </div>
+
+    <div class="code-label">Evidência — HTML bruto da home</div>
+    <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-BR"&gt;
+&lt;head&gt;
+  &lt;link rel="canonical" href="https://www.reversee.com.br/" /&gt;
+  &lt;script type="module" src="/assets/index-CE3DJ_H6.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id="root"&gt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+# 2.265 bytes · 0 palavras · 0 H1 · 0 links</code></pre>
+
+    <h3>T2 · Canonical global apontando para a home</h3>
+    <div class="finding seo-finding">
+      <div class="finding-header"><span class="finding-title">Todas as rotas declaram a home como versão canônica</span><span class="badge badge-critico">Crítico</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">O <code>index.html</code> tem <code>&lt;link rel="canonical" href="https://www.reversee.com.br/" /&gt;</code> fixo. O app atualiza <code>document.title</code> e a meta description por rota, mas <strong>nunca</strong> atualiza o canonical. Verificado nas 11 rotas renderizadas: todas apontam para a home.</div>
+        <div class="field">Impacto</div><div class="value">É o problema mais grave depois do SPA. Cada página de serviço sinaliza “não me indexe, indexe a home”. O Google consolida sinais na home e ignora as URLs de serviço. Nenhuma página de ITAD, Data Wipe, Destruição Física, Reciclagem ou Consultoria pode rankear sozinha.</div>
+        <div class="field">Correção</div><div class="value">Remover o canonical do <code>index.html</code> e injetar um canonical absoluto e auto-referente por rota no prerender. Padronizar barra final (recomendo <code>sem barra</code>, como o sitemap já usa) e aplicar a mesma regra em links, sitemap e canonical.</div>
+        <div class="field">Aceite</div><div class="value">Cada URL do sitemap tem canonical igual à própria URL, incluindo protocolo, host e barra final.</div>
+        <div class="field">Esforço estimado</div><div class="value">4 h</div>
+        <div class="field">Prioridade</div><div class="value">P0</div>
+      </div>
+    </div>
+
+    <div class="code-label">Evidência — canonical em 3 rotas diferentes</div>
+    <pre><code>GET /                    → canonical: https://www.reversee.com.br/
+GET /solucoes-itad       → canonical: https://www.reversee.com.br/   ✗
+GET /solucoes-datawipe   → canonical: https://www.reversee.com.br/   ✗
+GET /contato             → canonical: https://www.reversee.com.br/   ✗</code></pre>
+
+    <h3>T3 · Soft 404 universal</h3>
+    <div class="finding seo-finding">
+      <div class="finding-header"><span class="finding-title">Qualquer URL inexistente responde 200 com o shell do site</span><span class="badge badge-critico">Crítico</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value"><code>/pagina-que-nao-existe-xyz123</code>, <code>/sitemap_index.xml</code>, <code>/llms.txt</code>, <code>/ads.txt</code> e <code>/humans.txt</code> retornam <strong>HTTP 200 + 2.265 bytes</strong> do SPA. O servidor IIS tem um rewrite catch-all sem allowlist de rotas.</div>
+        <div class="field">Impacto</div><div class="value">URLs infinitas indexáveis, desperdício de crawl budget, conteúdo duplicado em escala e impossibilidade de sinalizar remoção (410). Também quebra a expectativa de arquivos padrão: quem pede <code>/llms.txt</code> recebe HTML.</div>
+        <div class="field">Correção</div><div class="value">No <code>web.config</code>, aplicar o fallback do SPA apenas para a lista fechada de rotas válidas. Para todo o resto, retornar <strong>404 real</strong> com página de erro útil (busca, links para soluções, contato). Usar 410 para URLs removidas.</div>
+        <div class="field">Aceite</div><div class="value">URL aleatória retorna 404; <code>curl -I /llms.txt</code> retorna 404 (ou o arquivo real, se criado).</div>
+        <div class="field">Esforço estimado</div><div class="value">4–6 h (dev/DevOps IIS)</div>
+        <div class="field">Prioridade</div><div class="value">P0</div>
+      </div>
+    </div>
+
+    <div class="code-label">Evidência — status code por URL</div>
+    <pre><code>/                                       200  2.265 bytes
+/solucoes-itad                          200  2.265 bytes
+/pagina-que-nao-existe-xyz123           200  2.265 bytes   ✗ deveria ser 404
+/sitemap_index.xml                      200  2.265 bytes   ✗ deveria ser 404
+/llms.txt                               200  2.265 bytes   ✗ deveria ser 404
+/ads.txt                                200  2.265 bytes   ✗ deveria ser 404</code></pre>
+
+    <h3>T4 · Idioma sem URL e sem hreflang</h3>
+    <div class="finding seo-finding">
+      <div class="finding-header"><span class="finding-title">PT e EN disputam a mesma URL; o Googlebot tende a ver inglês</span><span class="badge badge-critico">Crítico</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">O app lê <code>localStorage("reversee-lang")</code> e, na ausência, usa <code>navigator.language</code>. O HTML não tem <code>hreflang</code> (0 ocorrências) e a troca de idioma não altera a URL. Renderizando com locale <code>pt-BR</code>, a home tem 539 palavras em português; com <code>en-US</code>, 486 palavras em inglês — <strong>na mesma URL</strong>.</div>
+        <div class="field">Impacto</div><div class="value">O Googlebot renderiza por padrão com locale <code>en-US</code>. A versão mais provável de ser indexada é a inglesa, para uma empresa brasileira que vende para o mercado brasileiro. Não há como o Google entender que existem duas versões, nem como o usuário escolher uma URL indexável.</div>
+        <div class="field">Correção</div><div class="value">Criar URLs distintas: <code>/pt/…</code> (padrão) e <code>/en/…</code>, com <code>hreflang</code> recíproco + <code>x-default</code>. O seletor de idioma deve ser um <code>&lt;a href&gt;</code> para a URL equivalente, não um estado React.</div>
+        <div class="field">Aceite</div><div class="value">Cada página PT tem par EN com hreflang recíproco; o switcher navega por URL; <code>x-default</code> aponta para PT.</div>
+        <div class="field">Esforço estimado</div><div class="value">16–24 h</div>
+        <div class="field">Prioridade</div><div class="value">P0</div>
+      </div>
+    </div>
+
+    <div class="code-label">Correção — hreflang recomendado</div>
+    <pre><code>&lt;link rel="canonical" href="https://www.reversee.com.br/pt/solucoes-itad/" /&gt;
+&lt;link rel="alternate" hreflang="pt-BR" href="https://www.reversee.com.br/pt/solucoes-itad/" /&gt;
+&lt;link rel="alternate" hreflang="en"    href="https://www.reversee.com.br/en/itad-solutions/" /&gt;
+&lt;link rel="alternate" hreflang="x-default" href="https://www.reversee.com.br/pt/solucoes-itad/" /&gt;</code></pre>
+
+    <h3>T5 · Quatro variantes de host, nenhum redirect</h3>
+    <div class="finding seo-finding">
+      <div class="finding-header"><span class="finding-title">http, https, com e sem www respondem 200 com o mesmo conteúdo</span><span class="badge badge-alto">Alto</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value"><code>http://reversee.com.br</code>, <code>https://reversee.com.br</code>, <code>http://www.reversee.com.br</code> e <code>https://www.reversee.com.br</code> retornam 200, sem <code>Location</code>. Não há HSTS.</div>
+        <div class="field">Impacto</div><div class="value">Até 4 cópias do mesmo site, sinais divididos, risco de conteúdo misto e de indexação da versão errada. Para um site que já tem canonical frágil, isso amplifica o problema.</div>
+        <div class="field">Correção</div><div class="value">301 único para <code>https://www.reversee.com.br/</code> em todas as variantes + <code>Strict-Transport-Security</code>. Garantir que o certificado cubra o apex e o www.</div>
+        <div class="field">Aceite</div><div class="value">Todas as variantes retornam 301 em uma única etapa para a URL canônica.</div>
+        <div class="field">Esforço estimado</div><div class="value">2 h</div>
+        <div class="field">Prioridade</div><div class="value">P1</div>
+      </div>
+    </div>
+
+    <h3>T6 · Sitemap incompleto e com URLs não canônicas</h3>
+    <div class="finding seo-finding">
+      <div class="finding-header"><span class="finding-title">10 URLs, sem lastmod, sem a página de autodiagnóstico</span><span class="badge badge-alto">Alto</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">O <code>sitemap.xml</code> tem 10 URLs, todas sem <code>lastmod</code>. A rota <code>/autodiagnostico/</code> existe, recebe tráfego de lead gen e ficou de fora. As 10 URLs do sitemap declaram canonical para a home — ou seja, o próprio sitemap aponta para páginas que dizem não ser canônicas.</div>
+        <div class="field">Impacto</div><div class="value">Descoberta limitada, sinais contraditórios e perda da página de maior intenção comercial (o diagnóstico de maturidade).</div>
+        <div class="field">Correção</div><div class="value">Gerar o sitemap no build a partir das rotas reais, com <code>lastmod</code> e apenas URLs 200 auto-canônicas. Incluir <code>/autodiagnostico</code>. Enviar no Search Console e no Bing Webmaster.</div>
+        <div class="field">Aceite</div><div class="value">Sitemap com 11 URLs, todas 200, auto-canônicas e com lastmod válido.</div>
+        <div class="field">Esforço estimado</div><div class="value">4 h</div>
+        <div class="field">Prioridade</div><div class="value">P1</div>
+      </div>
+    </div>
+
+    <h3>T7 · /autodiagnostico quebrado</h3>
+    <div class="finding seo-finding">
+      <div class="finding-header"><span class="finding-title">301 desnecessário, sem H1, sem canonical e fora do sitemap</span><span class="badge badge-alto">Alto</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value"><code>/autodiagnostico</code> responde <strong>301</strong> para <code>/autodiagnostico/</code> (diretório físico no IIS). A versão final não tem H1, não tem canonical, tem 117 palavras e não está no sitemap. O link interno na página de conteúdos aponta para a versão sem barra, gerando um hop em cada clique.</div>
+        <div class="field">Impacto</div><div class="value">A página de diagnóstico — provavelmente a de maior intenção de fundo de funil — é invisível para busca e para IA, e perde um redirect em cada acesso.</div>
+        <div class="field">Correção</div><div class="value">Padronizar a rota em uma única URL, adicionar H1 (“Diagnóstico de Maturidade ITAD”), canonical auto-referente, incluir no sitemap e linkar a partir das páginas de serviço.</div>
+        <div class="field">Aceite</div><div class="value">1 URL final 200, com H1, canonical e linkada em ≥ 3 páginas.</div>
+        <div class="field">Esforço estimado</div><div class="value">2 h</div>
+        <div class="field">Prioridade</div><div class="value">P1</div>
+      </div>
+    </div>
+
+    <h3>T8 · /quiz bloqueado no robots.txt</h3>
+    <div class="finding seo-finding">
+      <div class="finding-header"><span class="finding-title">A regra Disallow impede o crawl, mas não garante desindexação</span><span class="badge badge-medio">Médio</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value"><code>robots.txt</code>: <code>Disallow: /quiz</code>. A URL responde 200 com o shell. Se a intenção é não indexar, o bloqueio no robots impede o Google de ver um <code>noindex</code>.</div>
+        <div class="field">Impacto</div><div class="value">Se o quiz é uma etapa de conversão, não deveria estar no índice — mas o bloqueio não é o mecanismo correto. Se for conteúdo, está impedido de rankear.</div>
+        <div class="field">Correção</div><div class="value">Decidir: (a) manter fora do índice → remover <code>Disallow</code> e usar <code>noindex, nofollow</code> + canonical; ou (b) tornar indexável → remover o bloqueio, adicionar H1, conteúdo e incluir no sitemap.</div>
+        <div class="field">Aceite</div><div class="value">Regra coerente entre robots, meta robots e sitemap.</div>
+        <div class="field">Esforço estimado</div><div class="value">1 h</div>
+        <div class="field">Prioridade</div><div class="value">P2</div>
+      </div>
+    </div>
+
+    <h3>T9 · Servidor: HTTP/1.1, sem cache e sem Brotli</h3>
+    <div class="finding seo-finding">
+      <div class="finding-header"><span class="finding-title">Assets estáticos sem Cache-Control e protocolo HTTP/1.1</span><span class="badge badge-alto">Alto</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">A resposta é <code>HTTP/1.1</code>. Nenhum asset tem <code>Cache-Control</code> ou <code>Expires</code>. O JS/CSS usam apenas gzip; não há Brotli. O Lighthouse estima <strong>1.474 KiB</strong> desperdiçados por falta de cache.</div>
+        <div class="field">Impacto</div><div class="value">Cada visita baixa novamente 1 MB de hero, 115 KB de JS e 17 KB de CSS. Em mobile, isso degrada LCP e consome dados do usuário.</div>
+        <div class="field">Correção</div><div class="value">Ativar HTTP/2 no IIS; <code>Cache-Control: public, max-age=31536000, immutable</code> para assets com hash; 7–30 dias para imagens; Brotli para HTML/JS/CSS.</div>
+        <div class="field">Aceite</div><div class="value">Lighthouse “cache” com savings &lt; 50 KiB; protocolo h2; Content-Encoding br.</div>
+        <div class="field">Esforço estimado</div><div class="value">4 h (DevOps)</div>
+        <div class="field">Prioridade</div><div class="value">P1</div>
+      </div>
+    </div>
+
+    <h3>T10 · Headers de segurança e cookie de infraestrutura</h3>
+    <div class="finding seo-finding">
+      <div class="finding-header"><span class="finding-title">Sem HSTS/CSP e cookie ARRAffinity exposto</span><span class="badge badge-medio">Médio</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">Não há <code>Strict-Transport-Security</code>, <code>Content-Security-Policy</code>, <code>X-Content-Type-Options</code> nem <code>Referrer-Policy</code>. O servidor envia <code>ARRAffinity</code> com <code>Domain=reversee1.hospedage</code>, sem <code>Secure</code>, <code>HttpOnly</code> ou <code>SameSite</code>, e expõe <code>X-Powered-By: ASP.NET</code>.</div>
+        <div class="field">Impacto</div><div class="value">Risco de segurança e de compliance; vazamento do host interno de hospedagem; cookie desnecessário em todas as respostas.</div>
+        <div class="field">Correção</div><div class="value">Adicionar headers, desativar ARR affinity (se não houver múltiplos nós) ou configurar o cookie com <code>Secure; HttpOnly; SameSite=Lax</code>, e remover <code>X-Powered-By</code>.</div>
+        <div class="field">Aceite</div><div class="value">securityheaders.com ≥ A; cookie com os 3 atributos.</div>
+        <div class="field">Esforço estimado</div><div class="value">3 h</div>
+        <div class="field">Prioridade</div><div class="value">P2</div>
+      </div>
+    </div>
+
+    <h3>T11 · Favicon e nomes de arquivo</h3>
+    <div class="finding seo-finding">
+      <div class="finding-header"><span class="finding-title">Favicon com espaço no nome e 34 KB para 16 px</span><span class="badge badge-baixo">Baixo</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">O ícone é <code>/icone olho.png</code> — com espaço literal, 401×401 px e 34,8 KB. Também é usado como logo no header. Outras imagens têm nomes como <code>logo branca nova.png</code> e <code>Ibama MMA.png</code>.</div>
+        <div class="field">Impacto</div><div class="value">URLs feias e frágeis, desperdício de bytes, e perda de sinal semântico em imagens que poderiam ser encontradas na busca de imagens.</div>
+        <div class="field">Correção</div><div class="value">Renomear para <code>favicon-32.png</code>, <code>icon-192.png</code>, <code>logo-reversee-branco.png</code>, <code>certificacao-ibama.png</code>. Gerar <code>favicon.ico</code> + <code>apple-touch-icon</code> + manifest.</div>
+        <div class="field">Aceite</div><div class="value">Zero arquivos com espaço no nome; favicon &lt; 5 KB.</div>
+        <div class="field">Esforço estimado</div><div class="value">1 h</div>
+        <div class="field">Prioridade</div><div class="value">P3</div>
+      </div>
+    </div>
+
+    <div class="risk-box blue">
+      <h4>Ordem de execução recomendada</h4>
+      <p>T1 (prerender) → T2 (canonical) → T3 (404) → T5 (host) → T6 (sitemap) → T4 (idioma). Fazer T2 antes de T1 é possível (basta injetar no HTML de cada rota), mas T1 é o que destrava todo o resto: sem HTML com conteúdo, canonical e sitemap corretos medem um site que os bots não leem.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PILAR SEO — ON-PAGE & CONTEÚDO ===================== -->
+<section class="card card-pillar seo">
+  <div class="card-body">
+    <div class="pillar-header">
+      <div class="pillar-icon seo">C</div>
+      <div>
+        <div class="pillar-title seo">Pilar SEO — On-page &amp; Conteúdo</div>
+        <div class="pillar-subtitle">Títulos · headings · profundidade · links internos · E-E-A-T</div>
+      </div>
+    </div>
+
+    <div class="bar-container">
+      <div class="bar-row"><div class="bar-label">Títulos e descriptions</div><div class="bar-track"><div class="bar-fill gold" style="width:70%">70</div></div></div>
+      <div class="bar-row"><div class="bar-label">Estrutura de headings</div><div class="bar-track"><div class="bar-fill orange" style="width:45%">45</div></div></div>
+      <div class="bar-row"><div class="bar-label">Profundidade de conteúdo</div><div class="bar-track"><div class="bar-fill red" style="width:30%">30</div></div></div>
+      <div class="bar-row"><div class="bar-label">Conteúdo editorial</div><div class="bar-track"><div class="bar-fill red" style="width:5%">5</div></div></div>
+      <div class="bar-row"><div class="bar-label">Links internos</div><div class="bar-track"><div class="bar-fill red" style="width:20%">20</div></div></div>
+      <div class="bar-row"><div class="bar-label">E-E-A-T e autoridade</div><div class="bar-track"><div class="bar-fill orange" style="width:35%">35</div></div></div>
+    </div>
+
+    <h3>O1 · Conteúdo raso nas páginas comerciais</h3>
+    <div class="finding seo-finding">
+      <div class="finding-header"><span class="finding-title">Páginas de serviço entre 212 e 433 palavras</span><span class="badge badge-alto">Alto</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">Reciclagem 212, Consultoria 235, Destruição Física 287, Política Integrada 300, Data Wipe 422, ITAD 433, Home 539. Nenhuma página tem FAQ, estudo de caso, tabela de comparação, preço ou especificação técnica aprofundada.</div>
+        <div class="field">Impacto</div><div class="value">Não há massa semântica para competir por termos comerciais como “empresa de ITAD”, “destruição de HD empresarial” ou “descarte de eletrônicos corporativo”. O conteúdo atual descreve o serviço, mas não responde às perguntas que antecedem a compra.</div>
+        <div class="field">Correção</div><div class="value">Expandir cada serviço para 800–1.200 palavras com: o problema, para quem, como funciona (etapas), o que está incluso, prazos, certificações, LGPD/PNRS, perguntas frequentes, prova social e CTA. Manter o tom consultivo atual.</div>
+        <div class="field">Aceite</div><div class="value">≥ 800 palavras por serviço, ≥ 1 FAQ com 5 perguntas, ≥ 1 bloco de prova (case, certificado ou número).</div>
+        <div class="field">Esforço estimado</div><div class="value">24–32 h (conteúdo + revisão)</div>
+        <div class="field">Prioridade</div><div class="value">P1</div>
+      </div>
+    </div>
+
+    <h3>O2 · Zero artigos indexáveis</h3>
+    <div class="finding seo-finding">
+      <div class="finding-header"><span class="finding-title">A página “Artigos” é um mural de links para LinkedIn e YouTube</span><span class="badge badge-critico">Crítico</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value"><code>/artigoseconteudos</code> tem 5 cards com “Continuar Lendo” que apontam para posts do LinkedIn e vídeos do YouTube. Não existe nenhuma URL de artigo em <code>reversee.com.br</code>. A página tem 0 H2 e 253 palavras.</div>
+        <div class="field">Impacto</div><div class="value">Sem blog, o site não tem como capturar busca informacional (topo de funil), não renova conteúdo, não constrói entidade temática e não gera material citável por IA. Todo o esforço de conteúdo feito no LinkedIn está construindo autoridade para o LinkedIn, não para o domínio.</div>
+        <div class="field">Correção</div><div class="value">Criar <code>/blog</code> com artigos próprios (1.200–2.000 palavras), cada um com H1, sumário, FAQ, autor, data e links para serviços. Publicar 8–10 artigos no primeiro ciclo. O LinkedIn passa a ser canal de distribuição, não destino.</div>
+        <div class="field">Aceite</div><div class="value">≥ 8 URLs de artigo indexáveis, com Article schema, links internos para ≥ 2 serviços e atualização mensal.</div>
+        <div class="field">Esforço estimado</div><div class="value">40–60 h (8 artigos)</div>
+        <div class="field">Prioridade</div><div class="value">P0 estratégico</div>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>Pauta inicial sugerida:</strong> “O que é ITAD e por que sua empresa precisa”, “Data wipe x destruição física: qual escolher”, “LGPD e descarte de equipamentos: obrigações práticas”, “Como escolher uma empresa de descarte de eletrônicos em São Paulo”, “Logística reversa de eletrônicos passo a passo”, “Certificação R2v3: o que é e por que importa”, “Quanto vale o parque tecnológico da sua empresa”, “7 erros que expõem dados no descarte de HDs”, “Economia circular em TI: métricas e ROI”, “PNRS e compliance ambiental para empresas”. Validar volumes no Keyword Planner antes de produzir.
+    </div>
+
+    <h3>O3 · Links internos: só o menu global</h3>
+    <div class="finding seo-finding">
+      <div class="finding-header"><span class="finding-title">13 links, todos de navegação; nenhum link contextual entre conteúdos</span><span class="badge badge-alto">Alto</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">Todas as páginas repetem os mesmos 13 links de header/footer. Nenhuma página de serviço linka para outra; nenhuma linka para o autodiagnóstico; não há breadcrumbs; não há “conteúdos relacionados”.</div>
+        <div class="field">Impacto</div><div class="value">O grafo interno é plano e raso. As páginas não distribuem autoridade entre si e o usuário não tem caminho de descoberta além do menu.</div>
+        <div class="field">Correção</div><div class="value">Adicionar breadcrumbs visuais + BreadcrumbList, bloco “soluções relacionadas” em cada serviço, links contextuais no corpo do texto (ex.: Data Wipe → Destruição Física → Reciclagem), e artigos linkando para serviços e vice-versa.</div>
+        <div class="field">Aceite</div><div class="value">≥ 5 links contextuais por página; profundidade máxima de 3 cliques a partir da home.</div>
+        <div class="field">Esforço estimado</div><div class="value">8 h</div>
+        <div class="field">Prioridade</div><div class="value">P1</div>
+      </div>
+    </div>
+
+    <h3>O4 · H2 ausente e hierarquia quebrada</h3>
+    <div class="finding seo-finding">
+      <div class="finding-header"><span class="finding-title">Quatro páginas sem H2 e políticas que pulam de H1 para H3</span><span class="badge badge-medio">Médio</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value"><code>/artigoseconteudos</code>, <code>/politica-integrada</code>, <code>/politica-de-privacidade</code> e <code>/contato</code> têm 0 H2. Nas políticas, o conteúdo vai de H1 direto para H3. <code>/autodiagnostico</code> não tem H1 nenhum.</div>
+        <div class="field">Impacto</div><div class="value">Perda de sinal semântico e de oportunidades de featured snippet. A hierarquia também prejudica leitores de tela.</div>
+        <div class="field">Correção</div><div class="value">Definir H2 para as seções principais de cada página e rebaixar os H3 para H4 quando necessário. Criar H1 no autodiagnóstico.</div>
+        <div class="field">Aceite</div><div class="value">Toda página com exatamente 1 H1 e ≥ 2 H2; nenhum salto de nível.</div>
+        <div class="field">Esforço estimado</div><div class="value">4 h</div>
+        <div class="field">Prioridade</div><div class="value">P2</div>
+      </div>
+    </div>
+
+    <h3>O5 · Metadados, Open Graph e compartilhamento</h3>
+    <div class="finding seo-finding">
+      <div class="finding-header"><span class="finding-title">OG fixo em português, sem imagem e sem Twitter Card</span><span class="badge badge-alto">Alto</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">Os títulos e descriptions em PT são bons (29–59 e 65–137 caracteres). Mas o <code>index.html</code> tem <code>og:title</code> e <code>og:description</code> fixos em português, sem <code>og:image</code>, sem <code>og:url</code> e sem Twitter Card. A versão EN herda os OG em PT.</div>
+        <div class="field">Impacto</div><div class="value">Compartilhamentos no WhatsApp e LinkedIn ficam sem imagem e com texto genérico — justamente os canais de prospecção do Reversee. A versão em inglês aparece com metadados em português.</div>
+        <div class="field">Correção</div><div class="value">Metadados por rota e por idioma, <code>og:image</code> 1200×630 (capa com logo + título), <code>og:url</code>, <code>twitter:card=summary_large_image</code>. Gerar OG images no build.</div>
+        <div class="field">Aceite</div><div class="value">Cada URL tem OG completo e imagem válida; validador do LinkedIn sem erro.</div>
+        <div class="field">Esforço estimado</div><div class="value">6 h</div>
+        <div class="field">Prioridade</div><div class="value">P1</div>
+      </div>
+    </div>
+
+    <h3>O6 · Não existe página “A Empresa”</h3>
+    <div class="finding seo-finding">
+      <div class="finding-header"><span class="finding-title">O item “A Empresa” do menu aponta para a própria home</span><span class="badge badge-alto">Alto</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">O link “A Empresa” tem <code>href="/"</code>. Não existe <code>/empresa</code>, <code>/sobre</code> ou <code>/quem-somos</code> (todos retornam o shell). CNPJ, endereço e telefone só aparecem dentro da Política de Privacidade.</div>
+        <div class="field">Impacto</div><div class="value">Falta a página que sustenta E-E-A-T: história, time, certificações, instalações, clientes, números. É também a página natural para receber o schema de Organization/LocalBusiness e para dar contexto a compradores B2B.</div>
+        <div class="field">Correção</div><div class="value">Criar <code>/empresa</code> com história (10+ anos), time, certificações (R2v3, ISO, Blancco, BitRaser), instalações, endereço, CNPJ, clientes atendidos, números (300+ empresas, 0 aterro) e CTA. Corrigir o menu.</div>
+        <div class="field">Aceite</div><div class="value">Página publicada, linkada no menu e no footer, com Organization schema.</div>
+        <div class="field">Esforço estimado</div><div class="value">8–12 h</div>
+        <div class="field">Prioridade</div><div class="value">P1</div>
+      </div>
+    </div>
+
+    <h3>O7 · Imagens: PNG pesado, sem dimensões e sem lazy</h3>
+    <div class="finding seo-finding">
+      <div class="finding-header"><span class="finding-title">Hero de 1 MB em PNG e logos sem width/height</span><span class="badge badge-alto">Alto</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value"><code>backgroundherohome.png</code> tem 1.005 KB (1920×1080). <code>Bombeiros.png</code> 74 KB, <code>Ibama MMA.png</code> 58 KB, <code>icone olho.png</code> 35 KB. Nenhuma imagem declara <code>width</code>/<code>height</code>; apenas o logo do footer tem <code>loading="lazy"</code>.</div>
+        <div class="field">Impacto</div><div class="value">Peso de página (3,2 MB) e risco de CLS. O Lighthouse estima 884 KiB de economia só em entrega de imagens.</div>
+        <div class="field">Correção</div><div class="value">Converter para WebP/AVIF com <code>&lt;picture&gt;</code> e <code>srcset</code>; definir largura/altura; <code>loading="lazy"</code> + <code>decoding="async"</code> abaixo da dobra; hero com <code>fetchpriority="high"</code> e versão mobile menor.</div>
+        <div class="field">Aceite</div><div class="value">Hero &lt; 250 KB; nenhuma imagem sem dimensões; Lighthouse image savings &lt; 100 KiB.</div>
+        <div class="field">Esforço estimado</div><div class="value">8 h</div>
+        <div class="field">Prioridade</div><div class="value">P1</div>
+      </div>
+    </div>
+
+    <h3>O8 · Conteúdo não responde à intenção comercial</h3>
+    <div class="finding seo-finding">
+      <div class="finding-header"><span class="finding-title">Copy institucional, sem blocos de decisão</span><span class="badge badge-medio">Médio</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">As páginas descrevem “o que fazemos”, mas não respondem “quanto custa”, “quanto tempo leva”, “para qual volume”, “o que acontece com os dados”, “quais documentos recebo”, “atende minha região”.</div>
+        <div class="field">Impacto</div><div class="value">O visitante B2B chega com dúvidas de decisão e não encontra resposta; a página perde conversão e perde a chance de ranquear para perguntas de alta intenção.</div>
+        <div class="field">Correção</div><div class="value">Adicionar blocos de decisão em cada serviço: “Como funciona”, “O que está incluso”, “Prazos e volume”, “Documentação entregue”, “Perguntas frequentes”. Usar linguagem de comprador, não de brochure.</div>
+        <div class="field">Aceite</div><div class="value">Cada serviço responde às 5 perguntas acima de forma explícita.</div>
+        <div class="field">Esforço estimado</div><div class="value">Incluído em O1</div>
+        <div class="field">Prioridade</div><div class="value">P1</div>
+      </div>
+    </div>
+
+    <div class="risk-box gold">
+      <h4>Ponto positivo a preservar</h4>
+      <p>Os títulos em português estão bem construídos: têm marca, termo principal e diferencial, sem keyword stuffing. O <code>alt</code> das imagens está 100% preenchido. Essa base de escrita deve ser mantida e apenas aprofundada — o problema não é a qualidade do texto, é a quantidade e a arquitetura.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PILAR SEO — PERFORMANCE ===================== -->
+<section class="card card-pillar seo">
+  <div class="card-body">
+    <div class="pillar-header">
+      <div class="pillar-icon seo">P</div>
+      <div>
+        <div class="pillar-title seo">Pilar SEO — Performance &amp; Core Web Vitals</div>
+        <div class="pillar-subtitle">LCP · TBT · CLS · peso · terceiros · cache</div>
+      </div>
+    </div>
+
+    <div class="split" style="margin-bottom:24px;">
+      <div>
+        <div class="metric-big">48<span style="font-size:18px;color:var(--gray-500);">/100</span></div>
+        <div class="metric-label">Performance mobile</div>
+      </div>
+      <div>
+        <div class="metric-big">56<span style="font-size:18px;color:var(--gray-500);">/100</span></div>
+        <div class="metric-label">Performance desktop</div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Métrica</th><th>Mobile</th><th>Desktop</th><th>Meta</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>LCP — Largest Contentful Paint</td><td><strong>4,4 s</strong></td><td>4,3 s</td><td>≤ 2,5 s</td><td><span class="status fail">Falha</span></td></tr>
+          <tr><td>TBT — Total Blocking Time</td><td><strong>1.130 ms</strong></td><td>240 ms</td><td>≤ 200 ms</td><td><span class="status fail">Falha</span></td></tr>
+          <tr><td>FCP — First Contentful Paint</td><td>4,4 s</td><td>1,9 s</td><td>≤ 1,8 s</td><td><span class="status fail">Falha</span></td></tr>
+          <tr><td>Speed Index</td><td>5,9 s</td><td>2,8 s</td><td>≤ 3,4 s</td><td><span class="status warn">Atenção</span></td></tr>
+          <tr><td>CLS — Cumulative Layout Shift</td><td>0,002</td><td>0,002</td><td>≤ 0,1</td><td><span class="status ok">Ótimo</span></td></tr>
+          <tr><td>TTI — Time to Interactive</td><td>13,0 s</td><td>4,3 s</td><td>≤ 3,8 s</td><td><span class="status fail">Falha</span></td></tr>
+          <tr><td>TTFB — Time to First Byte</td><td>250 ms</td><td>290 ms</td><td>≤ 800 ms</td><td><span class="status ok">Bom</span></td></tr>
+          <tr><td>Peso total da página</td><td><strong>3.287 KiB</strong></td><td>3.288 KiB</td><td>≤ 1.600 KiB</td><td><span class="status fail">Falha</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>P1 · Hero de 1 MB</h3>
+    <div class="finding seo-finding">
+      <div class="finding-header"><span class="finding-title">backgroundherohome.png = 1.005 KB de um total de 3.287 KB</span><span class="badge badge-critico">Crítico</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">Uma única imagem PNG de 1920×1080 responde por <strong>31% do peso da página</strong>. É o elemento de LCP mais provável.</div>
+        <div class="field">Impacto</div><div class="value">Em 4G, só essa imagem consome ~1 s de download. O LCP de 4,4 s está 76% acima da meta.</div>
+        <div class="field">Correção</div><div class="value">Exportar em WebP/AVIF (qualidade 75) com <code>srcset</code> para 1920/1280/768/480. Se for puramente decorativa, usar CSS gradient ou imagem &lt; 100 KB. <code>fetchpriority="high"</code> + preload apenas na versão correta.</div>
+        <div class="field">Aceite</div><div class="value">Hero ≤ 250 KB; LCP mobile ≤ 2,5 s.</div>
+        <div class="field">Esforço estimado</div><div class="value">4 h</div>
+        <div class="field">Prioridade</div><div class="value">P0 de performance</div>
+      </div>
+    </div>
+
+    <h3>P2 · Embed do YouTube carregando ~1 MB de JavaScript</h3>
+    <div class="finding seo-finding">
+      <div class="finding-header"><span class="finding-title">O player do YouTube é o segundo maior custo da home</span><span class="badge badge-alto">Alto</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">O iframe do YouTube carrega <code>player_embed_es6</code> (471,8 KB), <code>ytembeds.base</code> (222,8 KB), mais 152,7 KB + 58,2 KB + 67,8 KB de documento. Total estimado: <strong>~1 MB</strong>.</div>
+        <div class="field">Impacto</div><div class="value">TBT de 1.130 ms e TTI de 13 s no mobile. O vídeo nem é essencial para a primeira dobra.</div>
+        <div class="field">Correção</div><div class="value">Usar fachada (facade): thumbnail estática + botão de play que injeta o iframe só no clique. Bibliotecas como <code>lite-youtube-embed</code> resolvem com ~2 KB. Aplicar o mesmo padrão ao Vimeo da página de Data Wipe.</div>
+        <div class="field">Aceite</div><div class="value">Nenhum script do YouTube no carregamento inicial; TBT ≤ 300 ms.</div>
+        <div class="field">Esforço estimado</div><div class="value">4 h</div>
+        <div class="field">Prioridade</div><div class="value">P1</div>
+      </div>
+    </div>
+
+    <h3>P3 · Tag bloat: GTM, duas GA4, Ads, Meta e LeadConnector</h3>
+    <div class="finding seo-finding">
+      <div class="finding-header"><span class="finding-title">Scripts de terceiros somam mais de 1,2 MB e bloqueiam a renderização</span><span class="badge badge-alto">Alto</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">GTM (173,8 KB) + gtag GA4 <code>G-7G7X39C5CN</code> (177,3 KB) + gtag Ads <code>AW-16733104904</code> (195,3 KB) + Meta Pixel (112,2 KB) + LeadConnector/msgsndr (106,4 KB). Há ainda um segundo stream GA4 (<code>_ga_E38DFJK66R</code>) disparando junto do <code>_ga_7G7X39C5CN</code>.</div>
+        <div class="field">Impacto</div><div class="value">Além do peso, há risco de <strong>dupla contagem</strong> de sessões e conversões entre os dois streams GA4. O msgsndr é o maior bloqueador de renderização: 1.492 ms estimados.</div>
+        <div class="field">Correção</div><div class="value">Auditar o GTM: manter uma única propriedade GA4, remover tags duplicadas, carregar msgsndr só no submit do formulário, usar <code>defer</code>/<code>async</code> e Consent Mode v2.</div>
+        <div class="field">Aceite</div><div class="value">Uma propriedade GA4; nenhum script de terceiro bloqueando render; TBT ≤ 300 ms.</div>
+        <div class="field">Esforço estimado</div><div class="value">6 h (analytics + dev)</div>
+        <div class="field">Prioridade</div><div class="value">P1</div>
+      </div>
+    </div>
+
+    <h3>P4 · Cache e protocolo</h3>
+    <div class="finding seo-finding">
+      <div class="finding-header"><span class="finding-title">1.474 KiB rebaixados a cada visita por falta de Cache-Control</span><span class="badge badge-alto">Alto</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">Todos os assets estão com <code>cacheLifetimeMs = 0</code>. O servidor responde em HTTP/1.1 e usa apenas gzip.</div>
+        <div class="field">Impacto</div><div class="value">Usuários recorrentes pagam o mesmo custo de download; o navegador não reaproveita o bundle.</div>
+        <div class="field">Correção</div><div class="value">Cache imutável para assets com hash; HTTP/2; Brotli. Ver T9.</div>
+        <div class="field">Aceite</div><div class="value">Savings de cache &lt; 50 KiB; h2; br.</div>
+        <div class="field">Esforço estimado</div><div class="value">4 h</div>
+        <div class="field">Prioridade</div><div class="value">P1</div>
+      </div>
+    </div>
+
+    <h3>P5 · Fontes duplicadas e render-blocking</h3>
+    <div class="finding seo-finding">
+      <div class="finding-header"><span class="finding-title">Duas requisições de Google Fonts com famílias e pesos repetidos</span><span class="badge badge-medio">Médio</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">Duas chamadas a <code>fonts.googleapis.com</code> (Inter + Outfit) com conjuntos de pesos diferentes. O Lighthouse estima 497 ms de bloqueio e 50 ms de <code>font-display</code>.</div>
+        <div class="field">Impacto</div><div class="value">Render-blocking e requisições duplicadas em um caminho crítico que já tem 1 MB de hero.</div>
+        <div class="field">Correção</div><div class="value">Consolidar em uma única requisição, self-host das fontes usadas, <code>font-display: swap</code> e <code>preload</code> apenas do WOFF2 crítico.</div>
+        <div class="field">Aceite</div><div class="value">1 requisição de fonte; zero bloqueio de render por fontes.</div>
+        <div class="field">Esforço estimado</div><div class="value">3 h</div>
+        <div class="field">Prioridade</div><div class="value">P2</div>
+      </div>
+    </div>
+
+    <h3>P6 · JS não minificado de terceiro</h3>
+    <div class="finding seo-finding">
+      <div class="finding-header"><span class="finding-title">87 KiB de JavaScript não minificado (LeadConnector)</span><span class="badge badge-medio">Médio</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value"><code>link.msgsndr.com/js/external-tracking.js</code> tem 108 KB, dos quais 87 KB são espaços/comentários. O bundle do app também tem 304 KB de JS não utilizado.</div>
+        <div class="field">Impacto</div><div class="value">Parse e execução desnecessários no main thread.</div>
+        <div class="field">Correção</div><div class="value">Carregar o script só quando necessário (interação com formulário) e revisar imports do bundle com code splitting por rota.</div>
+        <div class="field">Aceite</div><div class="value">JS de terceiros fora do caminho crítico; bundle inicial &lt; 200 KB gzip.</div>
+        <div class="field">Esforço estimado</div><div class="value">6 h</div>
+        <div class="field">Prioridade</div><div class="value">P2</div>
+      </div>
+    </div>
+
+    <div class="risk-box blue">
+      <h4>Meta realista</h4>
+      <p>Com hero otimizado, YouTube em facade e tags reorganizadas, o LCP mobile cai de 4,4 s para a faixa de 2,2–2,6 s e o TBT de 1.130 ms para 250–350 ms. Não é necessário reescrever o app para isso — é trabalho de entrega de mídia e de terceiros.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PILAR SEO — DADOS ESTRUTURADOS ===================== -->
+<section class="card card-pillar seo">
+  <div class="card-body">
+    <div class="pillar-header">
+      <div class="pillar-icon seo">S</div>
+      <div>
+        <div class="pillar-title seo">Pilar SEO — Dados Estruturados</div>
+        <div class="pillar-subtitle">Schema.org · JSON-LD · rich results · entidade</div>
+      </div>
+    </div>
+
+    <div class="risk-box">
+      <h4>0 tipos de dados estruturados em 100% das páginas</h4>
+      <p>O Screaming Frog e o DOM renderizado confirmam: nenhuma das 11 rotas tem <code>application/ld+json</code>. O site não tem como gerar rich results, não constrói grafo de entidade e não dá às IAs um resumo estruturado do negócio.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Tipo</th><th>Onde aplicar</th><th>Por que</th><th>Prioridade</th></tr></thead>
+        <tbody>
+          <tr><td><code>Organization</code></td><td>Todas as páginas</td><td>Nome, logo, CNPJ, endereço, telefone, redes e certificações. Base do grafo de entidade.</td><td><span class="badge badge-critico">P0</span></td></tr>
+          <tr><td><code>WebSite</code> + <code>SearchAction</code></td><td>Home</td><td>Define o site e a caixa de busca (quando houver busca interna).</td><td><span class="badge badge-alto">P1</span></td></tr>
+          <tr><td><code>BreadcrumbList</code></td><td>Todas as internas</td><td>Trilha de navegação no SERP e contexto hierárquico.</td><td><span class="badge badge-alto">P1</span></td></tr>
+          <tr><td><code>Service</code></td><td>5 páginas de solução</td><td>Nome do serviço, descrição, área atendida, provedor. Ajuda a IA a entender a oferta.</td><td><span class="badge badge-alto">P1</span></td></tr>
+          <tr><td><code>FAQPage</code></td><td>Serviços e artigos</td><td>Perguntas e respostas elegíveis a rich result e altamente citáveis por IA.</td><td><span class="badge badge-alto">P1</span></td></tr>
+          <tr><td><code>Article</code> / <code>BlogPosting</code></td><td>Blog</td><td>Autor, data, imagem, publisher. Requisito para aparecer em Google News/Discover e ser citado.</td><td><span class="badge badge-alto">P1</span></td></tr>
+          <tr><td><code>VideoObject</code></td><td>Home, conteúdos</td><td>Vídeos do YouTube e Vimeo com thumbnail, duração e descrição.</td><td><span class="badge badge-medio">P2</span></td></tr>
+          <tr><td><code>LocalBusiness</code> / <code>ProfessionalService</code></td><td>Contato e Empresa</td><td>Endereço em São Paulo, horário, geo, telefone. Base do SEO local.</td><td><span class="badge badge-alto">P1</span></td></tr>
+          <tr><td><code>ImageObject</code></td><td>Imagens principais</td><td>Licenciamento e descrição, útil para Google Imagens.</td><td><span class="badge badge-baixo">P3</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="code-label">Exemplo — Organization + LocalBusiness (home e /empresa)</div>
+    <pre><code>&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": ["Organization", "ProfessionalService"],
+  "@id": "https://www.reversee.com.br/#organizacao",
+  "name": "Reversee — Soluções em Tecnologia Reversa",
+  "legalName": "REVERSEE — Soluções em Tecnologia Reversa Ltda.",
+  "url": "https://www.reversee.com.br/",
+  "logo": "https://www.reversee.com.br/assets/logo-reversee.png",
+  "taxID": "23.760.763/0001-36",
+  "telephone": "+55-11-4063-8991",
+  "email": "atendimento@reversee.com.br",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Av. Tenente Amaro Felicíssimo da Silveira, 1468",
+    "addressLocality": "São Paulo",
+    "addressRegion": "SP",
+    "postalCode": "02177-010",
+    "addressCountry": "BR"
+  },
+  "areaServed": { "@type": "Country", "name": "Brasil" },
+  "sameAs": [
+    "https://www.linkedin.com/company/reversee-solu%C3%A7%C3%B5es-em-tecnologia-reversa/",
+    "https://www.instagram.com/reverseetecnologia/",
+    "https://www.facebook.com/www.reversee.com.br",
+    "https://www.youtube.com/@reverseesolucoesemtecnologia"
+  ],
+  "knowsAbout": ["ITAD", "Data Wipe", "Destruição Física de Dados", "Reciclagem de Eletrônicos", "Logística Reversa", "R2v3", "LGPD", "PNRS"]
+}
+&lt;/script&gt;</code></pre>
+
+    <div class="code-label">Exemplo — Service (página de Data Wipe)</div>
+    <pre><code>&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Data Wipe — Exclusão Definitiva de Dados",
+  "serviceType": "Sanitização de dados e destruição segura de mídias",
+  "description": "Sanitização lógica conforme NIST 800-88 e DoD 5220.22-M, com certificação e relatório de conformidade.",
+  "provider": { "@id": "https://www.reversee.com.br/#organizacao" },
+  "areaServed": { "@type": "Country", "name": "Brasil" },
+  "url": "https://www.reversee.com.br/solucoes-datawipe",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Modalidades de Data Wipe",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Data Wipe On Site" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Data Wipe no Centro Reversee" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Destruição Física Mobile" } }
+    ]
+  }
+}
+&lt;/script&gt;</code></pre>
+
+    <div class="code-label">Exemplo — FAQPage (acrescentar em cada serviço)</div>
+    <pre><code>&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "O que é data wipe e quando ele é obrigatório?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Data wipe é a sanitização lógica que sobrescreve os dados... [resposta de 40–60 palavras]" }
+    },
+    {
+      "@type": "Question",
+      "name": "Qual a diferença entre data wipe e destruição física?",
+      "acceptedAnswer": { "@type": "Answer", "text": "..." }
+    },
+    {
+      "@type": "Question",
+      "name": "Quais documentos a Reversee entrega após o serviço?",
+      "acceptedAnswer": { "@type": "Answer", "text": "..." }
+    }
+  ]
+}
+&lt;/script&gt;</code></pre>
+
+    <div class="note">
+      <strong>Regra de ouro:</strong> o schema precisa refletir o conteúdo visível. Não criar FAQPage com perguntas que não estão na página — isso é violação das diretrizes do Google e pode gerar ação manual. O schema é a camada de tradução, não uma segunda copy.
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PILAR SEO — LOCAL ===================== -->
+<section class="card card-pillar seo">
+  <div class="card-body">
+    <div class="pillar-header">
+      <div class="pillar-icon seo">L</div>
+      <div>
+        <div class="pillar-title seo">Pilar SEO — Local</div>
+        <div class="pillar-subtitle">São Paulo · NAP · Google Business Profile · citações</div>
+      </div>
+    </div>
+
+    <p>O Reversee tem endereço físico em São Paulo (Av. Tenente Amaro Felicíssimo da Silveira, 1468 — CEP 02177-010) e atende empresas em todo o território nacional. O potencial local existe, mas hoje ele não está explorado: o NAP (nome, endereço, telefone) aparece apenas dentro da Política de Privacidade, em texto corrido, sem schema e sem página de contato estruturada.</p>
+
+    <div class="finding seo-finding">
+      <div class="finding-header"><span class="finding-title">Nenhum sinal local estruturado</span><span class="badge badge-alto">Alto</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">Sem <code>LocalBusiness</code>, sem mapa incorporado, sem horário de funcionamento, sem página de localização. O endereço só existe na política de privacidade.</div>
+        <div class="field">Impacto</div><div class="value">Perda de buscas “descarte de eletrônicos em São Paulo”, “empresa de ITAD SP” e de intenção “perto de mim”. O Google não consegue associar a empresa a um lugar.</div>
+        <div class="field">Correção</div><div class="value">1) Criar/verificar o Google Business Profile com categoria “Serviço de reciclagem de eletrônicos” e serviços. 2) Publicar NAP visível em <code>/contato</code> e <code>/empresa</code>. 3) Aplicar <code>LocalBusiness</code>. 4) Construir citações consistentes (R2 facility listing já existe — replicar em diretórios setoriais e associações). 5) Coletar avaliações de clientes B2B.</div>
+        <div class="field">Aceite</div><div class="value">GBP verificado; NAP idêntico em site, GBP e 5+ citações; LocalBusiness válido no Rich Results Test.</div>
+        <div class="field">Esforço estimado</div><div class="value">8–12 h</div>
+        <div class="field">Prioridade</div><div class="value">P1</div>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>Página de localização:</strong> só criar se houver operação real e conteúdo próprio. Uma página “ITAD em São Paulo” com o mesmo texto da home é doorway page. O caminho correto é uma página que detalhe cobertura, estrutura, prazos e cases da região.
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PILAR AIO ===================== -->
+<section class="card card-pillar aio">
+  <div class="card-body">
+    <div class="pillar-header">
+      <div class="pillar-icon aio">AI</div>
+      <div>
+        <div class="pillar-title aio">Pilar AIO — AI Overviews &amp; Answer Engines</div>
+        <div class="pillar-subtitle">ChatGPT · Perplexity · Gemini · Copilot · Google AI Overviews</div>
+      </div>
+    </div>
+
+    <div class="risk-box">
+      <h4>Score de visibilidade em IA: 4/100</h4>
+      <p>Não é uma nota sobre a qualidade da empresa — é sobre a capacidade de uma IA ler o site. Hoje, um crawler de IA recebe 2.265 bytes com <code>&lt;div id="root"&gt;&lt;/div&gt;</code>. Não há o que citar.</p>
+    </div>
+
+    <h3>AI1 · Crawlers de IA não executam JavaScript</h3>
+    <div class="finding aio-finding">
+      <div class="finding-header"><span class="finding-title">GPTBot, ClaudeBot e PerplexityBot veem uma página vazia</span><span class="badge badge-critico">Crítico</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">A requisição com user-agent de bot retorna exatamente os mesmos 2.265 bytes da home, sem conteúdo. Não há <code>llms.txt</code> (<code>/llms.txt</code> devolve o shell HTML com status 200).</div>
+        <div class="field">Impacto</div><div class="value">O Reversee não aparece em respostas geradas sobre “melhores empresas de ITAD no Brasil”, “quem faz destruição de dados em SP” ou “como descartar ativos de TI com LGPD”. Quem aparece são os concorrentes com conteúdo rastreável.</div>
+        <div class="field">Correção</div><div class="value">O mesmo prerender de T1 resolve a base. Somar: <code>llms.txt</code> com resumo da empresa, serviços, certificações e links; HTML semântico com resposta direta no primeiro parágrafo; FAQ; glossário; e dados estruturados.</div>
+        <div class="field">Aceite</div><div class="value"><code>curl -A GPTBot</code> retorna o texto completo; <code>/llms.txt</code> retorna 200 com conteúdo estruturado.</div>
+        <div class="field">Esforço estimado</div><div class="value">Incluído em T1 + 2 h para llms.txt</div>
+        <div class="field">Prioridade</div><div class="value">P0</div>
+      </div>
+    </div>
+
+    <h3>AI2 · Conteúdo não é “answer-first”</h3>
+    <div class="finding aio-finding">
+      <div class="finding-header"><span class="finding-title">As páginas descrevem, mas não respondem</span><span class="badge badge-alto">Alto</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">A home começa com “Soluções completas em Exclusão Definitiva de Dados…”; a página de Data Wipe começa com “A segurança dos dados da sua empresa começa no descarte”. São aberturas de marca, não respostas extraíveis.</div>
+        <div class="field">Impacto</div><div class="value">IAs generativas preferem trechos que respondem uma pergunta em 2–3 frases, com definição, número ou passo a passo. Sem esses blocos, a chance de citação cai.</div>
+        <div class="field">Correção</div><div class="value">Adicionar em cada página um bloco “Resposta rápida” no topo (40–60 palavras), seguido de definição, “como funciona”, “quanto tempo”, “o que está incluso” e FAQ. Usar listas e tabelas — são mais extraíveis.</div>
+        <div class="field">Aceite</div><div class="value">Cada serviço com 1 bloco de resposta direta + 5 FAQs + 1 tabela comparativa.</div>
+        <div class="field">Esforço estimado</div><div class="value">Incluído em O1</div>
+        <div class="field">Prioridade</div><div class="value">P1</div>
+      </div>
+    </div>
+
+    <h3>AI3 · Falta entidade e prova citável</h3>
+    <div class="finding aio-finding">
+      <div class="finding-header"><span class="finding-title">A empresa não tem uma “ficha” estruturada na web</span><span class="badge badge-alto">Alto</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">Não há página <code>/empresa</code>, não há schema de Organization, o CNPJ só aparece na política de privacidade e as certificações estão em imagens/logos sem texto descritivo.</div>
+        <div class="field">Impacto</div><div class="value">Para uma IA, o Reversee é uma marca sem atributos verificáveis. A certificação R2v3 — que é o ativo mais forte — não está declarada em texto estruturado.</div>
+        <div class="field">Correção</div><div class="value">Página <code>/empresa</code> com dados verificáveis; Organization schema com <code>knowsAbout</code>, <code>hasCredential</code> e <code>sameAs</code>; menção textual às certificações (R2v3, ISO, Blancco, BitRaser); link para o registro no site da Sustainable Electronics.</div>
+        <div class="field">Aceite</div><div class="value">Organization válido + página /empresa + certificações em texto.</div>
+        <div class="field">Esforço estimado</div><div class="value">10 h</div>
+        <div class="field">Prioridade</div><div class="value">P1</div>
+      </div>
+    </div>
+
+    <h3>AI4 · Distribuição e menções</h3>
+    <div class="finding aio-finding">
+      <div class="finding-header"><span class="finding-title">Conteúdo só no LinkedIn, sem versão própria</span><span class="badge badge-medio">Médio</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">Os 5 conteúdos da página de artigos vivem no LinkedIn/YouTube. O domínio não tem uma versão própria, com URL, data e autor.</div>
+        <div class="field">Impacto</div><div class="value">IAs citam a fonte que conseguem rastrear. Hoje, citariam o LinkedIn — não o Reversee.</div>
+        <div class="field">Correção</div><div class="value">Publicar no blog e usar o LinkedIn como distribuição, com link para o artigo completo. Incluir dados originais (ex.: relatório anual de descarte, volumes processados, taxa de recuperação) — conteúdo original é o que mais gera citação.</div>
+        <div class="field">Aceite</div><div class="value">8 artigos próprios + 1 estudo original com dados do Reversee.</div>
+        <div class="field">Esforço estimado</div><div class="value">40–60 h</div>
+        <div class="field">Prioridade</div><div class="value">P1</div>
+      </div>
+    </div>
+
+    <div class="code-label">Exemplo — /llms.txt</div>
+    <pre><code># Reversee — Soluções em Tecnologia Reversa
+
+> Empresa brasileira especializada em ITAD (IT Asset Disposition), data wipe,
+> destruição física de dados e reciclagem de eletrônicos com certificação R2v3.
+> Sede em São Paulo, atendimento nacional. 10+ anos, 300+ empresas atendidas.
+
+## Serviços
+- [ITAD e Logística Reversa](https://www.reversee.com.br/solucoes-itad): gestão do ciclo final de ativos de TI com retorno financeiro.
+- [Data Wipe](https://www.reversee.com.br/solucoes-datawipe): sanitização NIST 800-88 e DoD 5220.22-M.
+- [Destruição Física](https://www.reversee.com.br/solucoes-destruicaofisica): trituração de HDDs e SSDs com verificação visual.
+- [Reciclagem de Eletrônicos](https://www.reversee.com.br/solucoes-reciclagem): economia circular e política zero aterro.
+- [Consultoria](https://www.reversee.com.br/solucoes-consultoria): reparo, redeployment e white glove.
+
+## Empresa
+- [Sobre a Reversee](https://www.reversee.com.br/empresa)
+- [Contato](https://www.reversee.com.br/contato)
+- [Política Integrada](https://www.reversee.com.br/politica-integrada)
+
+## Conteúdo
+- [Blog](https://www.reversee.com.br/blog)
+- [Autodiagnóstico de maturidade ITAD](https://www.reversee.com.br/autodiagnostico)</code></pre>
+  </div>
+</section>
+
+<!-- ===================== PILAR GEO ===================== -->
+<section class="card card-pillar geo">
+  <div class="card-body">
+    <div class="pillar-header">
+      <div class="pillar-icon geo">G</div>
+      <div>
+        <div class="pillar-title geo">Pilar GEO — Generative Engine Optimization</div>
+        <div class="pillar-subtitle">Entidade · autoridade · citações · presença em respostas generativas</div>
+      </div>
+    </div>
+
+    <p>GEO é o trabalho de fazer a marca existir no corpus que os modelos usam para responder. Não é só ter conteúdo: é ter <strong>entidade consistente, provas verificáveis e menções em fontes que os modelos citam</strong>. Hoje o Reversee tem a prova (R2v3, ISO, 300+ empresas), mas não a declara de forma rastreável.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Sinal de GEO</th><th>Situação</th><th>O que fazer</th></tr></thead>
+        <tbody>
+          <tr><td>Entidade com schema</td><td><span class="status fail">Ausente</span></td><td>Organization + LocalBusiness + sameAs + knowsAbout + hasCredential.</td></tr>
+          <tr><td>Página institucional</td><td><span class="status fail">Ausente</span></td><td>Criar <code>/empresa</code> com história, time, CNPJ, endereço e certificações.</td></tr>
+          <tr><td>Conteúdo original citável</td><td><span class="status fail">Ausente</span></td><td>Publicar estudo com dados próprios (volumes, recuperação, casos).</td></tr>
+          <tr><td>Definições e glossário</td><td><span class="status warn">Parcial</span></td><td>Glossário ITAD/Data Wipe/LGPD/PNRS com definições curtas e linkáveis.</td></tr>
+          <tr><td>Comparativos</td><td><span class="status fail">Ausente</span></td><td>“Data wipe x destruição física”, “ITAD x descarte comum”, “R2v3 x e-Stewards”.</td></tr>
+          <tr><td>Menções externas</td><td><span class="status warn">Parcial</span></td><td>Listagem R2 já existe; buscar associações, prêmios, podcasts, imprensa ESG.</td></tr>
+          <tr><td>Autoria e E-E-A-T</td><td><span class="status fail">Ausente</span></td><td>Autor com nome, cargo, bio, LinkedIn e credenciais em cada artigo.</td></tr>
+          <tr><td>Dados de contato consistentes</td><td><span class="status warn">Parcial</span></td><td>NAP igual em site, GBP, LinkedIn, diretórios e associações.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>G1 · Construção de entidade</h3>
+    <div class="finding geo-finding">
+      <div class="finding-header"><span class="finding-title">O Reversee não é uma entidade reconhecível para os modelos</span><span class="badge badge-alto">Alto</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">Sem Wikidata, sem página institucional, sem schema, sem descrição consistente da empresa fora do site. O LinkedIn existe, mas não é suficiente para ancorar a entidade.</div>
+        <div class="field">Impacto</div><div class="value">Quando alguém pergunta “quem faz ITAD no Brasil?”, o modelo responde com quem tem corpus. O Reversee não está no corpus.</div>
+        <div class="field">Correção</div><div class="value">Criar a ficha institucional (site + schema + LinkedIn + diretórios setoriais), padronizar a descrição em uma frase canônica e replicá-la. Registrar a empresa em bases setoriais e associações de reciclagem/economia circular.</div>
+        <div class="field">Aceite</div><div class="value">Descrição canônica idêntica em ≥ 5 fontes; entidade presente em ≥ 3 bases setoriais.</div>
+        <div class="field">Esforço estimado</div><div class="value">16 h (off-page + conteúdo)</div>
+        <div class="field">Prioridade</div><div class="value">P1</div>
+      </div>
+    </div>
+
+    <h3>G2 · Conteúdo comparativo e definicional</h3>
+    <div class="finding geo-finding">
+      <div class="finding-header"><span class="finding-title">Nenhuma página responde “o que é”, “qual a diferença” ou “quanto custa”</span><span class="badge badge-alto">Alto</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">As páginas de serviço explicam o serviço, mas não definem o termo, não comparam alternativas e não dão faixas de decisão.</div>
+        <div class="field">Impacto</div><div class="value">São exatamente essas as perguntas que as pessoas fazem a um modelo. Sem página própria, o modelo usa a definição do concorrente.</div>
+        <div class="field">Correção</div><div class="value">Criar 4–6 páginas de definição/comparação: “O que é ITAD”, “Data wipe x destruição física”, “O que é R2v3”, “Quanto custa o descarte de eletrônicos”, “LGPD e descarte de ativos”, “ITAD x descarte comum”.</div>
+        <div class="field">Aceite</div><div class="value">≥ 4 páginas publicadas, cada uma com definição, tabela e FAQ.</div>
+        <div class="field">Esforço estimado</div><div class="value">24–32 h</div>
+        <div class="field">Prioridade</div><div class="value">P1</div>
+      </div>
+    </div>
+
+    <h3>G3 · Prova original</h3>
+    <div class="finding geo-finding">
+      <div class="finding-header"><span class="finding-title">O Reversee tem dados que ninguém mais tem — e não publica</span><span class="badge badge-medio">Médio</span></div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">Mais de 300 empresas atendidas, 10+ anos de operação, política zero aterro, recuperação de materiais. Nada disso vira dado público.</div>
+        <div class="field">Impacto</div><div class="value">Conteúdo original com números é o formato com maior probabilidade de citação por IA e de link editorial.</div>
+        <div class="field">Correção</div><div class="value">Publicar um relatório anual: volume de equipamentos processados, toneladas desviadas de aterro, mídias destruídas, tempo médio de coleta, taxa de reaproveitamento, cases anonimizados. Divulgar em LinkedIn, imprensa ESG e associações.</div>
+        <div class="field">Aceite</div><div class="value">1 relatório com dados proprietários + 3 placements externos.</div>
+        <div class="field">Esforço estimado</div><div class="value">24–40 h</div>
+        <div class="field">Prioridade</div><div class="value">P2</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== MATRIZ DE PRIORIZAÇÃO ===================== -->
+<section class="card card-pillar gold">
+  <div class="card-body">
+    <h2>Matriz de priorização</h2>
+
+    <p>Critério: <strong>impacto no resultado</strong> (capacidade de destravar indexação, tráfego e conversão) × <strong>esforço de execução</strong>. Tudo que é P0 bloqueia o restante — não adianta produzir conteúdo se o HTML não chega ao crawler.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="width:34px;">#</th><th>Ação</th><th>Pilar</th><th>Impacto</th><th>Esforço</th><th>Prazo</th><th>Dono</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><strong>Prerender/SSG das 11 rotas</strong> — HTML com conteúdo, H1 e links</td><td>Técnico</td><td><span class="badge badge-critico">Crítico</span></td><td>16–24 h</td><td>Semana 1</td><td>Dev front</td></tr>
+          <tr><td>2</td><td><strong>Canonical auto-referente por rota</strong> e por idioma</td><td>Técnico</td><td><span class="badge badge-critico">Crítico</span></td><td>4 h</td><td>Semana 1</td><td>Dev front</td></tr>
+          <tr><td>3</td><td><strong>404 real</strong> + allowlist de rotas no IIS</td><td>Técnico</td><td><span class="badge badge-critico">Crítico</span></td><td>4–6 h</td><td>Semana 1</td><td>DevOps</td></tr>
+          <tr><td>4</td><td><strong>301 de host</strong> (http/https/www) + HSTS</td><td>Técnico</td><td><span class="badge badge-alto">Alto</span></td><td>2 h</td><td>Semana 1</td><td>DevOps</td></tr>
+          <tr><td>5</td><td><strong>Hero em WebP/AVIF</strong> com srcset e prioridade</td><td>Performance</td><td><span class="badge badge-critico">Crítico</span></td><td>4 h</td><td>Semana 1</td><td>Dev/Design</td></tr>
+          <tr><td>6</td><td><strong>Sitemap gerado no build</strong> com lastmod e 11 URLs</td><td>Técnico</td><td><span class="badge badge-alto">Alto</span></td><td>4 h</td><td>Semana 1</td><td>Dev front</td></tr>
+          <tr><td>7</td><td><strong>Idioma por URL</strong> (/pt/ e /en/) + hreflang + x-default</td><td>Técnico</td><td><span class="badge badge-critico">Crítico</span></td><td>16–24 h</td><td>Semanas 2–3</td><td>Dev front</td></tr>
+          <tr><td>8</td><td><strong>Schema base</strong>: Organization, LocalBusiness, BreadcrumbList, Service</td><td>Técnico</td><td><span class="badge badge-alto">Alto</span></td><td>8–12 h</td><td>Semanas 2–3</td><td>Dev + SEO</td></tr>
+          <tr><td>9</td><td><strong>Página /empresa</strong> com história, time, CNPJ, certificações</td><td>Conteúdo</td><td><span class="badge badge-alto">Alto</span></td><td>8–12 h</td><td>Semanas 2–3</td><td>Conteúdo</td></tr>
+          <tr><td>10</td><td><strong>Blog próprio</strong> + 8 artigos (1.200–2.000 palavras)</td><td>Conteúdo</td><td><span class="badge badge-critico">Crítico</span></td><td>40–60 h</td><td>Semanas 3–8</td><td>Conteúdo</td></tr>
+          <tr><td>11</td><td><strong>Expandir 5 páginas de serviço</strong> para 800–1.200 palavras com FAQ</td><td>Conteúdo</td><td><span class="badge badge-alto">Alto</span></td><td>24–32 h</td><td>Semanas 3–6</td><td>Conteúdo</td></tr>
+          <tr><td>12</td><td><strong>Internal linking contextual</strong> + breadcrumbs visuais</td><td>On-page</td><td><span class="badge badge-alto">Alto</span></td><td>8 h</td><td>Semanas 3–4</td><td>SEO</td></tr>
+          <tr><td>13</td><td><strong>OG dinâmico</strong> + og:image 1200×630 + Twitter Card</td><td>On-page</td><td><span class="badge badge-alto">Alto</span></td><td>6 h</td><td>Semanas 3–4</td><td>Dev/Design</td></tr>
+          <tr><td>14</td><td><strong>Imagens</strong>: dimensões, lazy, nomes descritivos, WebP</td><td>Performance</td><td><span class="badge badge-alto">Alto</span></td><td>8 h</td><td>Semanas 4–5</td><td>Dev</td></tr>
+          <tr><td>15</td><td><strong>YouTube/Vimeo facade</strong> + reorganizar tags (1 GA4)</td><td>Performance</td><td><span class="badge badge-alto">Alto</span></td><td>10 h</td><td>Semanas 4–6</td><td>Dev + Analytics</td></tr>
+          <tr><td>16</td><td><strong>Cache-Control, HTTP/2, Brotli</strong></td><td>Performance</td><td><span class="badge badge-alto">Alto</span></td><td>4 h</td><td>Semanas 4–5</td><td>DevOps</td></tr>
+          <tr><td>17</td><td><strong>Corrigir /autodiagnostico</strong>: H1, canonical, sitemap, links</td><td>Técnico</td><td><span class="badge badge-medio">Médio</span></td><td>2 h</td><td>Semana 3</td><td>Dev</td></tr>
+          <tr><td>18</td><td><strong>Search Console + Bing Webmaster</strong> + monitoramento</td><td>Técnico</td><td><span class="badge badge-alto">Alto</span></td><td>3 h</td><td>Semana 1</td><td>SEO</td></tr>
+          <tr><td>19</td><td><strong>llms.txt</strong> + bloco “resposta rápida” nos serviços</td><td>AIO</td><td><span class="badge badge-alto">Alto</span></td><td>6 h</td><td>Semanas 5–6</td><td>SEO + Conteúdo</td></tr>
+          <tr><td>20</td><td><strong>Google Business Profile</strong> + NAP + citações</td><td>Local</td><td><span class="badge badge-medio">Médio</span></td><td>8–12 h</td><td>Semanas 6–8</td><td>SEO</td></tr>
+          <tr><td>21</td><td><strong>Páginas de definição/comparação</strong> (GEO)</td><td>GEO</td><td><span class="badge badge-alto">Alto</span></td><td>24–32 h</td><td>Semanas 7–10</td><td>Conteúdo</td></tr>
+          <tr><td>22</td><td><strong>Relatório anual com dados próprios</strong></td><td>GEO</td><td><span class="badge badge-medio">Médio</span></td><td>24–40 h</td><td>Semanas 9–12</td><td>Conteúdo + Diretoria</td></tr>
+          <tr><td>23</td><td><strong>Contraste e acessibilidade</strong> (WCAG AA)</td><td>UX</td><td><span class="badge badge-medio">Médio</span></td><td>4 h</td><td>Semanas 8–9</td><td>Design</td></tr>
+          <tr><td>24</td><td><strong>Consentimento LGPD</strong> + security headers + cookie</td><td>Compliance</td><td><span class="badge badge-medio">Médio</span></td><td>6 h</td><td>Semanas 8–10</td><td>Dev/DevOps</td></tr>
+          <tr><td>25</td><td><strong>Favicon, nomes de arquivo e limpeza</strong></td><td>Técnico</td><td><span class="badge badge-baixo">Baixo</span></td><td>1 h</td><td>Semana 12</td><td>Dev</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="risk-box gold">
+      <h4>Se só houver tempo para 3 coisas</h4>
+      <p><strong>1) Prerender.</strong> Sem isso, nada mais funciona. <strong>2) Canonical por rota.</strong> Sem isso, o prerender indexa 10 páginas que se declaram duplicatas da home. <strong>3) 404 real.</strong> Sem isso, o site continua convidando o Google a indexar URLs infinitas. Essas três ações, juntas, mudam a categoria do problema.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PLANO 90 DIAS ===================== -->
+<section class="card">
+  <div class="card-body">
+    <h2>Plano de execução — 90 dias</h2>
+
+    <div class="timeline">
+      <div class="timeline-phase">
+        <div class="dot blue"></div>
+        <div class="phase-name">Fundação técnica</div>
+        <div class="phase-weeks">Semanas 1–2</div>
+        <div class="phase-hours">~40 h</div>
+        <div class="phase-pillar blue">SEO</div>
+      </div>
+      <div class="timeline-phase">
+        <div class="dot orange"></div>
+        <div class="phase-name">Idioma &amp; entidade</div>
+        <div class="phase-weeks">Semanas 3–4</div>
+        <div class="phase-hours">~50 h</div>
+        <div class="phase-pillar orange">SEO</div>
+      </div>
+      <div class="timeline-phase">
+        <div class="dot red"></div>
+        <div class="phase-name">Conteúdo</div>
+        <div class="phase-weeks">Semanas 5–8</div>
+        <div class="phase-hours">~100 h</div>
+        <div class="phase-pillar red">AIO</div>
+      </div>
+      <div class="timeline-phase">
+        <div class="dot purple"></div>
+        <div class="phase-name">Performance &amp; GEO</div>
+        <div class="phase-weeks">Semanas 9–12</div>
+        <div class="phase-hours">~80 h</div>
+        <div class="phase-pillar purple">GEO</div>
+      </div>
+    </div>
+
+    <h3>Fase 1 — Fundação técnica (semanas 1–2)</h3>
+    <ul>
+      <li>Prerender das 11 rotas; validar HTML em <code>curl</code> com e sem JS.</li>
+      <li>Canonical por rota + remoção do canonical global do <code>index.html</code>.</li>
+      <li>404 real, allowlist de rotas e página de erro útil.</li>
+      <li>301 de host + HSTS + headers de segurança.</li>
+      <li>Sitemap gerado no build, com lastmod e 11 URLs.</li>
+      <li>Hero em WebP/AVIF + srcset; primeira medição de LCP.</li>
+      <li>Search Console e Bing Webmaster configurados; sitemap enviado.</li>
+    </ul>
+    <p><strong>Entregável:</strong> HTML rastreável, canonical correto, 404 real, sitemap válido e baseline de CWV.</p>
+
+    <h3>Fase 2 — Idioma e entidade (semanas 3–4)</h3>
+    <ul>
+      <li>Migrar PT/EN para URLs distintas com hreflang e x-default.</li>
+      <li>Switcher de idioma como link crawlável.</li>
+      <li>Schema Organization + LocalBusiness + BreadcrumbList + Service.</li>
+      <li>Página <code>/empresa</code> publicada e linkada.</li>
+      <li>OG dinâmico e og:image por página.</li>
+      <li>Correção do <code>/autodiagnostico</code> e do <code>/quiz</code>.</li>
+    </ul>
+    <p><strong>Entregável:</strong> duas versões indexáveis, entidade declarada e compartilhamento social correto.</p>
+
+    <h3>Fase 3 — Conteúdo (semanas 5–8)</h3>
+    <ul>
+      <li>Expandir as 5 páginas de serviço para 800–1.200 palavras com FAQ.</li>
+      <li>Publicar o blog e os 8 primeiros artigos.</li>
+      <li>Internal linking contextual e breadcrumbs visuais.</li>
+      <li>Blocos “resposta rápida” e tabelas comparativas.</li>
+      <li>FAQPage e Article schema nas páginas publicadas.</li>
+    </ul>
+    <p><strong>Entregável:</strong> 8 artigos + 5 serviços aprofundados, todos linkados e com schema.</p>
+
+    <h3>Fase 4 — Performance, AIO e GEO (semanas 9–12)</h3>
+    <ul>
+      <li>YouTube/Vimeo facade; reorganização do GTM e consolidação de GA4.</li>
+      <li>Cache-Control, HTTP/2 e Brotli.</li>
+      <li><code>llms.txt</code> publicado e validado.</li>
+      <li>4–6 páginas de definição/comparação.</li>
+      <li>Google Business Profile, NAP e citações.</li>
+      <li>Relatório anual com dados proprietários.</li>
+      <li>Reauditoria completa e comparação de baseline.</li>
+    </ul>
+    <p><strong>Entregável:</strong> CWV na meta, site citável por IA e plano de conteúdo para o trimestre seguinte.</p>
+  </div>
+</section>
+
+<!-- ===================== QUICK WINS ===================== -->
+<section class="card">
+  <div class="card-body">
+    <h2>Quick wins — primeiros 7 dias</h2>
+    <p>Ações de baixo esforço e alto retorno que podem ser feitas antes mesmo do projeto de prerender.</p>
+
+    <div class="checklist">
+      <div class="check-item"><div class="num">1</div><div class="txt"><strong>Canonical por rota.</strong> Injetar o canonical correto no HTML de cada página (mesmo que via script de build) e remover o global. 4 h.</div></div>
+      <div class="check-item"><div class="num">2</div><div class="txt"><strong>404 real.</strong> Allowlist de rotas no IIS e página de erro com links úteis. 4 h.</div></div>
+      <div class="check-item"><div class="num">3</div><div class="txt"><strong>301 de host.</strong> http → https, apex → www, em uma única etapa. 2 h.</div></div>
+      <div class="check-item"><div class="num">4</div><div class="txt"><strong>Hero em WebP.</strong> Substituir o PNG de 1 MB por WebP ≤ 250 KB com srcset. 4 h.</div></div>
+      <div class="check-item"><div class="num">5</div><div class="txt"><strong>Sitemap com lastmod</strong> e inclusão do <code>/autodiagnostico</code>. 4 h.</div></div>
+      <div class="check-item"><div class="num">6</div><div class="txt"><strong>og:image 1200×630</strong> + og:url + Twitter Card. 3 h.</div></div>
+      <div class="check-item"><div class="num">7</div><div class="txt"><strong>Cache-Control</strong> nos assets com hash e nas imagens. 3 h.</div></div>
+      <div class="check-item"><div class="num">8</div><div class="txt"><strong>Renomear favicon</strong> e arquivos com espaço; gerar favicon.ico e apple-touch-icon. 1 h.</div></div>
+    </div>
+
+    <div class="note">
+      <strong>Impacto esperado em 7 dias:</strong> canonical correto, fim do soft 404, host único, LCP menor e compartilhamento social com imagem. Não resolve a indexação das páginas de serviço — isso é o prerender — mas elimina os erros que farão o Google desconfiar do site durante a migração.
+    </div>
+  </div>
+</section>
+
+<!-- ===================== MEDIÇÃO ===================== -->
+<section class="card">
+  <div class="card-body">
+    <h2>Como medir o resultado</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>KPI</th><th>Fonte</th><th>Baseline</th><th>Meta 90 dias</th><th>Cadência</th></tr></thead>
+        <tbody>
+          <tr><td>URLs indexadas</td><td>Search Console → Páginas</td><td>A confirmar (sem acesso)</td><td>≥ 20 (11 rotas × idiomas + artigos)</td><td>Semanal</td></tr>
+          <tr><td>Impressões orgânicas</td><td>Search Console → Desempenho</td><td>A confirmar</td><td>Crescimento mês a mês após indexação</td><td>Mensal</td></tr>
+          <tr><td>Cliques orgânicos</td><td>Search Console / GA4</td><td>A confirmar</td><td>Crescimento consistente a partir do mês 2</td><td>Mensal</td></tr>
+          <tr><td>CTR médio</td><td>Search Console</td><td>A confirmar</td><td>≥ 3% nas páginas de serviço</td><td>Mensal</td></tr>
+          <tr><td>Posição média</td><td>Search Console</td><td>A confirmar</td><td>Top 10 para termos de cauda longa</td><td>Mensal</td></tr>
+          <tr><td>LCP mobile</td><td>PageSpeed / CrUX</td><td>4,4 s</td><td>≤ 2,5 s</td><td>Quinzenal</td></tr>
+          <tr><td>TBT mobile</td><td>Lighthouse</td><td>1.130 ms</td><td>≤ 300 ms</td><td>Quinzenal</td></tr>
+          <tr><td>Peso da home</td><td>Lighthouse</td><td>3.287 KiB</td><td>≤ 1.600 KiB</td><td>Quinzenal</td></tr>
+          <tr><td>Dados estruturados válidos</td><td>Rich Results Test</td><td>0</td><td>≥ 8 tipos, 0 erros</td><td>Mensal</td></tr>
+          <tr><td>Citações em IA</td><td>Prompt tracking manual (ChatGPT, Perplexity, Gemini)</td><td>0</td><td>≥ 3 prompts com menção</td><td>Mensal</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Rotina recomendada</h3>
+    <div class="split">
+      <div>
+        <h4>Semanal</h4>
+        <ul>
+          <li>Search Console: erros de cobertura, páginas não indexadas, ações manuais.</li>
+          <li>Core Web Vitals: LCP e TBT mobile.</li>
+          <li>Publicação de conteúdo (1 artigo/semana a partir do mês 2).</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Mensal</h4>
+        <ul>
+          <li>Crawl completo com JS rendering + sitemap.</li>
+          <li>Validação de schema e links quebrados.</li>
+          <li>Relatório de tráfego, rankings e citações em IA.</li>
+          <li>Revisão do backlog P1/P2.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="risk-box blue">
+      <h4>Pré-requisito de medição</h4>
+      <p>Sem acesso ao Search Console e ao GA4 não é possível afirmar o baseline de tráfego atual. O primeiro passo da Fase 1 é garantir acesso de proprietário às duas ferramentas e registrar o estado inicial antes de qualquer mudança. Sem baseline, não há como provar impacto.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ANEXO — INVENTÁRIO ===================== -->
+<section class="card">
+  <div class="card-body">
+    <h2>Anexo A — Inventário de URLs</h2>
+
+    <p>Dados extraídos do DOM renderizado em português (Chromium, locale <code>pt-BR</code>). “Canonical” é o valor presente no HTML de cada rota — todas apontam para a home.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>URL</th><th>Status</th><th>Canonical</th><th>Título</th><th>Palavras</th><th>H1</th><th>H2</th><th>JSON-LD</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>/</code></td><td><span class="status ok">200</span></td><td><code>/</code></td><td>Reversee | Especialistas em ITAD e Sustentabilidade</td><td>539</td><td>1</td><td>5</td><td>0</td></tr>
+          <tr><td><code>/solucoes-itad</code></td><td><span class="status ok">200</span></td><td><code>/</code> <span class="badge badge-critico">erro</span></td><td>Soluções ITAD | Logística Reversa de Eletrônicos | Reversee</td><td>433</td><td>1</td><td>4</td><td>0</td></tr>
+          <tr><td><code>/solucoes-datawipe</code></td><td><span class="status ok">200</span></td><td><code>/</code> <span class="badge badge-critico">erro</span></td><td>Data Wipe | Exclusão Definitiva de Dados | Reversee</td><td>422</td><td>1</td><td>3</td><td>0</td></tr>
+          <tr><td><code>/solucoes-destruicaofisica</code></td><td><span class="status ok">200</span></td><td><code>/</code> <span class="badge badge-critico">erro</span></td><td>Destruição Física de Dados | Trituração de HDs | Reversee</td><td>287</td><td>1</td><td>4</td><td>0</td></tr>
+          <tr><td><code>/solucoes-reciclagem</code></td><td><span class="status ok">200</span></td><td><code>/</code> <span class="badge badge-critico">erro</span></td><td>Reciclagem de Eletrônicos e Economia Circular | Reversee</td><td>212</td><td>1</td><td>1</td><td>0</td></tr>
+          <tr><td><code>/solucoes-consultoria</code></td><td><span class="status ok">200</span></td><td><code>/</code> <span class="badge badge-critico">erro</span></td><td>Consultoria e Soluções Personalizadas em TI | Reversee</td><td>235</td><td>1</td><td>2</td><td>0</td></tr>
+          <tr><td><code>/artigoseconteudos</code></td><td><span class="status ok">200</span></td><td><code>/</code> <span class="badge badge-critico">erro</span></td><td>Artigos e Conteúdos | Insights sobre ITAD e ESG | Reversee</td><td>253</td><td>1</td><td>0</td><td>0</td></tr>
+          <tr><td><code>/politica-integrada</code></td><td><span class="status ok">200</span></td><td><code>/</code> <span class="badge badge-critico">erro</span></td><td>Política Integrada | Compromisso Ambiental | Reversee</td><td>300</td><td>1</td><td>0</td><td>0</td></tr>
+          <tr><td><code>/politica-de-privacidade</code></td><td><span class="status ok">200</span></td><td><code>/</code> <span class="badge badge-critico">erro</span></td><td>Política de Privacidade | Proteção de Dados | Reversee</td><td>732</td><td>1</td><td>0</td><td>0</td></tr>
+          <tr><td><code>/contato</code></td><td><span class="status ok">200</span></td><td><code>/</code> <span class="badge badge-critico">erro</span></td><td>Contato | Fale com a Reversee</td><td>105</td><td>1</td><td>0</td><td>0</td></tr>
+          <tr><td><code>/autodiagnostico/</code></td><td><span class="status warn">301→200</span></td><td><span class="status fail">ausente</span></td><td>Diagnóstico de Maturidade ITAD | Reversee</td><td>117</td><td>0</td><td>2</td><td>0</td></tr>
+          <tr><td><code>/quiz</code></td><td><span class="status ok">200</span></td><td><code>/</code></td><td>— (bloqueado no robots.txt)</td><td>—</td><td>—</td><td>—</td><td>0</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <strong>Leitura da tabela:</strong> 10 URLs com <code>canonical=/</code> significam 10 páginas pedindo para não serem indexadas. A única URL que o Google pode tratar como canônica é a home — e, dependendo do locale do crawler, ela pode ser a versão em inglês.
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ANEXO — EVIDÊNCIAS ===================== -->
+<section class="card">
+  <div class="card-body">
+    <h2>Anexo B — Evidências técnicas</h2>
+
+    <div class="code-label">1. HTML bruto da home (2.265 bytes)</div>
+    <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-BR"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8" /&gt;
+  &lt;link rel="canonical" href="https://www.reversee.com.br/" /&gt;
+  &lt;title&gt;Reversee | Especialistas em ITAD e Sustentabilidade&lt;/title&gt;
+  &lt;meta name="description" content="Soluções completas para gestão do ciclo final..." /&gt;
+  &lt;script type="module" crossorigin src="/assets/index-CE3DJ_H6.js"&gt;&lt;/script&gt;
+  &lt;link rel="stylesheet" crossorigin href="/assets/index-Besn60ba.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id="root"&gt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+    <div class="code-label">2. Status code de URLs inexistentes</div>
+    <pre><code>$ curl -sI https://www.reversee.com.br/pagina-que-nao-existe-xyz123
+HTTP/1.1 200 OK
+Content-Length: 2265
+Content-Type: text/html
+
+$ curl -sI https://www.reversee.com.br/llms.txt
+HTTP/1.1 200 OK
+Content-Type: text/html
+Content-Length: 2265</code></pre>
+
+    <div class="code-label">3. Canonical em rotas distintas (DOM renderizado)</div>
+    <pre><code>/                      → https://www.reversee.com.br/
+/solucoes-itad         → https://www.reversee.com.br/
+/solucoes-datawipe     → https://www.reversee.com.br/
+/solucoes-reciclagem   → https://www.reversee.com.br/
+/contato               → https://www.reversee.com.br/</code></pre>
+
+    <div class="code-label">4. Seleção de idioma no bundle</div>
+    <pre><code>const [t, n] = useState(() => {
+  const a = localStorage.getItem("reversee-lang");
+  return a === "pt" || a === "en" ? a
+    : navigator.language.split("-")[0] === "pt" ? "pt" : "en";
+});
+// não altera a URL; não há hreflang no HTML</code></pre>
+
+    <div class="code-label">5. Headers da home</div>
+    <pre><code>HTTP/1.1 200 OK
+Content-Type: text/html
+Server: Microsoft-IIS/10.0
+X-Powered-By: ASP.NET
+X-Powered-By: ARR/3.0
+Set-Cookie: ARRAffinity=...;Path=/;Domain=reversee1.hospedage
+# sem Cache-Control, sem HSTS, sem CSP, sem Content-Language</code></pre>
+
+    <div class="code-label">6. Lighthouse mobile — resumo</div>
+    <pre><code>Performance      48 / 100
+Accessibility    96 / 100
+Best Practices   77 / 100
+SEO             100 / 100  (auditoria de página única; não detecta canonical cruzado)
+
+FCP 4,4 s · LCP 4,4 s · TBT 1.130 ms · CLS 0,002 · SI 5,9 s · TTI 13,0 s
+Peso total: 3.287 KiB</code></pre>
+
+    <div class="code-label">7. Peso por recurso (top 6)</div>
+    <pre><code>1.005,2 KB  backgroundherohome.png
+  471,8 KB  youtube player_embed_es6
+  222,8 KB  youtube ytembeds.base
+  195,3 KB  gtag Google Ads (AW-16733104904)
+  177,3 KB  gtag GA4 (G-7G7X39C5CN)
+  173,8 KB  GTM (GTM-NN2XP75B)</code></pre>
+  </div>
+</section>
+
+<!-- ===================== ANEXO — METODOLOGIA ===================== -->
+<section class="card">
+  <div class="card-body">
+    <h2>Anexo C — Metodologia e limitações</h2>
+
+    <h3>O que foi analisado</h3>
+    <ul>
+      <li><strong>Screaming Frog:</strong> 29 CSVs exportados em 02/11/2026 (crawl de 3 URLs: home, JS e CSS).</li>
+      <li><strong>Lighthouse 13.6:</strong> mobile (throttling simulado) e desktop, executado em 03/11/2026.</li>
+      <li><strong>DOM renderizado:</strong> Chromium via Playwright, locale <code>pt-BR</code> e <code>en-US</code>, viewport 1440×900, em 11 rotas.</li>
+      <li><strong>Requisições diretas:</strong> status codes, headers, robots.txt, sitemap.xml, redirects, variantes de host e arquivos padrão.</li>
+      <li><strong>Inspeção do bundle:</strong> rotas, lógica de idioma, canonical, metadados e dependências de terceiros.</li>
+    </ul>
+
+    <h3>O que não foi possível verificar</h3>
+    <ul>
+      <li><strong>Search Console e GA4:</strong> sem acesso. Não há baseline de impressões, cliques, CTR, posição ou páginas indexadas. O primeiro passo da Fase 1 é obter acesso e registrar o baseline.</li>
+      <li><strong>Backlinks e autoridade de domínio:</strong> não foram coletados (sem Ahrefs/Semrush no escopo). A análise de autoridade é qualitativa, baseada em certificações e clientes declarados.</li>
+      <li><strong>Google Business Profile:</strong> não foi possível confirmar se existe, se está verificado ou se o NAP está consistente.</li>
+      <li><strong>Volumes de busca:</strong> as pautas sugeridas são hipóteses de intenção; os volumes precisam ser validados no Keyword Planner ou ferramenta equivalente.</li>
+      <li><strong>Acesso ao servidor e logs:</strong> não houve acesso ao IIS, ao <code>web.config</code> ou aos logs de acesso. As recomendações de rewrite são baseadas no comportamento observado.</li>
+      <li><strong>Teste de rich results:</strong> não aplicável — não há schema para validar.</li>
+    </ul>
+
+    <h3>Critério do score</h3>
+    <p>O score de 29/100 é um índice composto proprietário, com os seguintes pesos: indexação e canonicalização (25%), conteúdo (20%), performance (20%), on-page (15%), dados estruturados (10%) e AIO/GEO (10%). A nota não mede potencial de mercado nem qualidade da operação — mede a saúde técnica e editorial do site como ativo de busca.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Dimensão</th><th>Nota</th><th>Peso</th><th>Contribuição</th></tr></thead>
+        <tbody>
+          <tr><td>Indexação e canonicalização</td><td>20/100</td><td>25%</td><td>5,00</td></tr>
+          <tr><td>Conteúdo</td><td>30/100</td><td>20%</td><td>6,00</td></tr>
+          <tr><td>Performance</td><td>48/100</td><td>20%</td><td>9,60</td></tr>
+          <tr><td>On-page</td><td>55/100</td><td>15%</td><td>8,25</td></tr>
+          <tr><td>Dados estruturados</td><td>0/100</td><td>10%</td><td>0,00</td></tr>
+          <tr><td>AIO/GEO</td><td>5/100</td><td>10%</td><td>0,50</td></tr>
+          <tr><td><strong>Total</strong></td><td><strong>29/100</strong></td><td>100%</td><td><strong>29,35</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Arquivos analisados</h3>
+    <p><code>accessibility_all.csv</code>, <code>ai_all.csv</code>, <code>analytics_all.csv</code>, <code>canonicals_all.csv</code>, <code>content_all.csv</code>, <code>custom_extraction_all.csv</code>, <code>custom_javascript_all.csv</code>, <code>custom_search_all.csv</code>, <code>directives_all.csv</code>, <code>external_all.csv</code>, <code>h1_all.csv</code>, <code>h2_all.csv</code>, <code>hreflang_all.csv</code>, <code>internal_all.csv</code>, <code>javascript_all.csv</code>, <code>link_metrics_all.csv</code>, <code>links_all.csv</code>, <code>meta_description_all.csv</code>, <code>meta_keywords_all.csv</code>, <code>mobile_all.csv</code>, <code>page_titles_all.csv</code>, <code>pagespeed_all.csv</code>, <code>pagination_all.csv</code>, <code>response_codes_all.csv</code>, <code>search_console_all.csv</code>, <code>sitemaps_all.csv</code>, <code>structured_data_all.csv</code>, <code>url_all.csv</code>, <code>validation_all.csv</code>.</p>
+
+    <div class="risk-box blue">
+      <h4>Recomendação de reauditoria</h4>
+      <p>Reexecutar esta auditoria em 90 dias, com crawl configurado para renderização de JavaScript e alimentado pelo sitemap. Comparar: URLs indexadas, canonical, LCP/TBT, tipos de schema e citações em IA. Sem essa comparação, não há como separar efeito de execução de efeito de mercado.</p>
+    </div>
+  </div>
+</section>
+
+
+
+</main>
+
+<footer class="footer">
+  <div class="footer-logos">
+    <img src="assets/logo-v4-white.png" alt="V4 Company">
+    <img src="assets/logo-reversee.png" alt="Reversee" class="client">
+  </div>
+  V4 Company &amp; peretto.co · Auditoria SEO + AIO + GEO · Reversee · Novembro 2026
+</footer>
+
+</body>
+</html>
