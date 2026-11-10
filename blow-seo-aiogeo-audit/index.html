@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blow: Auditoria SEO + AIO + GEO | meublow.com.br</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+:root{--red:rgb(229,9,20);--red-dark:rgb(180,7,16);--red-light:rgb(255,60,70);--gold:#c9a96e;--gold-light:#f5f0e6;--gold-border:#e8dcc8;--gray-50:#fafafa;--gray-100:#f5f5f5;--gray-200:#eee;--gray-300:#e0e0e0;--gray-600:#757575;--gray-700:#616161;--gray-800:#424242;--gray-900:#212121}
+body{font-family:'Ubuntu',-apple-system,sans-serif;background:#f8f7f4;color:var(--gray-900);line-height:1.7;font-size:16px}
+.cover{background:linear-gradient(135deg,#0d0d0d 0%,#1a1a1a 50%,#2e2a26 100%);color:#fff;padding:36px 40px 56px;text-align:center;position:relative;overflow:hidden}
+.cover::before{content:'';position:absolute;inset:-50%;background:radial-gradient(circle,rgba(201,169,110,.10) 0%,transparent 60%);pointer-events:none}
+.topbar{display:flex;justify-content:space-between;align-items:center;max-width:1020px;margin:0 auto 34px;position:relative;z-index:1}
+.topbar img{height:42px}
+.topbar .tag{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,169,110,.4);padding:6px 14px;border-radius:20px;background:rgba(201,169,110,.08)}
+.cover-content{position:relative;z-index:1;max-width:840px;margin:0 auto}
+.cover .label{display:inline-block;background:rgba(201,169,110,.12);border:1px solid rgba(201,169,110,.3);padding:6px 20px;border-radius:20px;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:20px;color:var(--gold)}
+.cover h1{font-size:40px;font-weight:800;line-height:1.15;margin-bottom:14px;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:-.5px}
+.cover h1 span{color:var(--gold)}
+.cover p.sub{font-size:17px;opacity:.88;margin-bottom:22px;font-weight:300}
+.cover-meta{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;font-size:13px;opacity:.85}
+.cover-meta a{color:#fff;text-decoration:underline;text-underline-offset:3px}
+.cover-cta{margin-top:26px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-block;padding:12px 26px;border-radius:10px;font-weight:700;font-size:14px;text-decoration:none}
+.btn-gold{background:linear-gradient(135deg,#c9a96e,#e2c98f);color:#1a1a1a}
+.btn-ghost{border:1px solid rgba(255,255,255,.3);color:#fff}
+.container{max-width:1000px;margin:-34px auto 60px;position:relative;z-index:2;padding:0 18px}
+.card{background:#fff;border-radius:16px;box-shadow:0 2px 20px rgba(0,0,0,.05);margin-bottom:26px;overflow:hidden;border:1px solid var(--gray-300);position:relative}
+.card::before{content:'';position:absolute;top:0;left:40px;right:40px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-border),var(--gold),var(--gold-border),transparent);opacity:.6}
+.card-body{padding:40px 46px}
+h2{font-size:23px;font-weight:700;color:var(--red);margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--gold-border);letter-spacing:-.3px;position:relative}
+h2::after{content:'';position:absolute;bottom:-1px;left:0;width:44px;height:2px;background:var(--gold)}
+h3{font-size:18px;font-weight:700;margin:30px 0 14px}
+h4{font-size:15px;font-weight:700;color:var(--gray-800);margin:20px 0 10px}
+p{font-size:15.5px;color:var(--gray-700);margin-bottom:14px;line-height:1.8}
+ul,ol{margin:10px 0 16px 22px;color:var(--gray-700);font-size:15.5px}
+li{margin-bottom:8px}
+.badge{display:inline-block;padding:4px 14px;border-radius:6px;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px}
+.b-crit{background:#fef2f2;color:var(--red);border:1px solid #fecaca}
+.b-alto{background:#fff7ed;color:#c2410c;border:1px solid #fed7aa}
+.b-medio{background:#fefce8;color:#a16207;border:1px solid #fef08a}
+.b-ok{background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px}
+th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--gray-100);vertical-align:top}
+th{background:linear-gradient(135deg,var(--gray-50),#f8f7f4);font-weight:700;color:var(--gray-700);font-size:11.5px;text-transform:uppercase;letter-spacing:.7px;border-bottom:2px solid var(--gold-border)}
+tr:hover td{background:#fcfaf7}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0 8px}
+.kpi{background:#f2f0ec;border-radius:10px;padding:18px 10px;text-align:center;border:1px solid var(--gold-border);position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),var(--gold))}
+.kpi .v{font-size:28px;font-weight:800;color:var(--red);line-height:1.1}
+.kpi .l{font-size:11.5px;color:var(--gray-600);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:6px}
+.kpi .s{font-size:12px;color:var(--gray-600)}
+.finding{border:1px solid var(--gray-200);border-radius:12px;padding:22px 24px;margin-bottom:14px;background:#fcfcfc;border-left:3px solid var(--gold)}
+.finding.crit{border-left-color:var(--red)}
+.f-head{display:flex;justify-content:space-between;gap:12px;margin-bottom:10px;align-items:flex-start}
+.f-title{font-weight:700;font-size:16px}
+.risk{background:linear-gradient(135deg,#fcfaf7,#f8f7f4);border-left:4px solid var(--red);padding:18px 22px;border-radius:0 12px 12px 0;margin-bottom:16px}
+.risk h4{margin:0 0 8px;color:var(--red)}
+.timeline{display:flex;gap:0;margin:24px 0 10px;position:relative}
+.timeline::before{content:'';position:absolute;top:26px;left:5%;right:5%;height:3px;background:linear-gradient(90deg,var(--gold-border),var(--gold),var(--gold-border));border-radius:2px}
+.phase{flex:1;text-align:center;padding:0 6px;position:relative}
+.dot{width:15px;height:15px;border-radius:50%;margin:19px auto 10px;border:3px solid #fff;box-shadow:0 0 0 2px var(--gold);position:relative;z-index:1}
+.phase .pn{font-size:12.5px;font-weight:700}
+.phase .pd{font-size:12px;color:var(--gray-600)}
+.check{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:14px 18px;margin:10px 0;font-size:14.5px}
+.warn{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:14px 18px;margin:10px 0;font-size:14.5px}
+.step{border:1px solid var(--gray-200);border-radius:12px;padding:20px 22px;margin-bottom:12px;background:#fff}
+.step .s-top{display:flex;gap:12px;align-items:center;margin-bottom:8px}
+.s-num{display:inline-flex;width:30px;height:30px;border-radius:50%;background:var(--red);color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.s-who{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--gray-600)}
+.step ul{margin-bottom:6px}
+code{background:#f5f5f5;padding:2px 7px;border-radius:6px;font-size:13.5px}
+pre{background:#141414;color:#e8eef7;padding:18px;border-radius:12px;overflow:auto;font-size:13px;line-height:1.6;margin:14px 0}
+.small{font-size:13px;color:var(--gray-600)}
+.toc{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.toc a{display:block;background:#fafafa;border:1px solid var(--gold-border);border-radius:10px;padding:10px 14px;font-size:13.5px;color:var(--gray-800);text-decoration:none;font-weight:600}
+.toc a:hover{border-color:var(--gold)}
+.quote{background:linear-gradient(135deg,#0d0d0d 0%,#1a1a1a 55%,#2e2a26 100%);color:#fff;border-radius:18px;border:1px solid rgba(201,169,110,.35);position:relative;overflow:hidden;margin-bottom:26px;box-shadow:0 16px 44px rgba(0,0,0,.18)}
+.quote::before{content:'';position:absolute;inset:-40%;background:radial-gradient(circle at 82% 0%,rgba(201,169,110,.20) 0%,transparent 55%);pointer-events:none}
+.quote-inner{position:relative;z-index:1;padding:44px 48px}
+.quote-head{display:flex;justify-content:space-between;gap:24px;align-items:flex-end;flex-wrap:wrap;border-bottom:1px solid rgba(201,169,110,.25);padding-bottom:24px;margin-bottom:28px}
+.quote-kicker{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700}
+.quote-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:27px;font-weight:800;letter-spacing:-.5px;margin-top:8px;color:#fff}
+.quote-title span{color:var(--gold)}
+.quote-price{text-align:right;line-height:1}
+.q-amount{font-family:'Plus Jakarta Sans',sans-serif;font-size:54px;font-weight:800;letter-spacing:-2px;background:linear-gradient(135deg,#ffffff 0%,#f0e2c6 45%,#c9a96e 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.q-per{font-size:13px;color:#cfc6b8;margin-top:10px;letter-spacing:.4px}
+.quote-grid{display:grid;grid-template-columns:1.35fr .85fr;gap:42px;align-items:start}
+.quote h3{font-size:12px;text-transform:uppercase;letter-spacing:1.4px;color:var(--gold);margin:0 0 16px;font-weight:700}
+.q-list{list-style:none;margin:0;padding:0}
+.q-list li{position:relative;padding-left:30px;margin-bottom:12px;font-size:14.5px;color:#e6e1d9;line-height:1.6}
+.q-list li::before{content:'✓';position:absolute;left:0;top:-1px;width:19px;height:19px;border-radius:50%;background:rgba(201,169,110,.16);border:1px solid rgba(201,169,110,.45);color:var(--gold);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.q-box{background:rgba(255,255,255,.045);border:1px solid rgba(201,169,110,.28);border-radius:14px;padding:22px 24px}
+.q-row{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:13.5px}
+.q-row:last-child{border-bottom:none;padding-bottom:0}
+.q-row span:first-child{color:#a8a29a}
+.q-row span:last-child{color:#fff;font-weight:600;text-align:right}
+.q-close{margin-top:30px;padding-top:22px;border-top:1px solid rgba(201,169,110,.25);font-size:15.5px;color:#efe9df;line-height:1.7}
+.q-close strong{color:var(--gold)}
+.q-note{font-size:12.5px;color:#9c968d;margin-top:14px}
+.footer{text-align:center;color:#999;font-size:12.5px;padding:26px}
+@media(max-width:760px){.card-body{padding:26px 20px}.kpi-grid{grid-template-columns:1fr 1fr}.cover h1{font-size:29px}.toc{grid-template-columns:1fr}.timeline{flex-direction:column}.timeline::before{display:none}.quote-inner{padding:30px 22px}.quote-grid{grid-template-columns:1fr;gap:26px}.quote-head{align-items:flex-start}.quote-price{text-align:left}.q-amount{font-size:42px}.quote-title{font-size:22px}}
+</style>
+</style>
+</head>
+<body>
+
+<div class="cover">
+ <div class="topbar">
+ <img src="assets/logo-v4-white.png" alt="V4 Company">
+ <span class="tag">SEO &bull; AIO &bull; GEO &bull; E-commerce</span>
+ </div>
+ <div class="cover-content">
+ <span class="label">Auditoria t&eacute;cnica &bull; Novembro 2026</span>
+ <h1>BLOW<br><span>Auditoria SEO + AIO / GEO</span></h1>
+ <p class="sub">Diagn&oacute;stico do site meublow.com.br em dois recortes isolados (SEO t&eacute;cnico e prontid&atilde;o para IA), com prioriza&ccedil;&atilde;o pensada para entregas pontuais em e-commerce, franquia e cart&atilde;o-presente.</p>
+ <div class="cover-meta">
+ <span>🌐 meublow.com.br</span>
+ <span>🕷️ Screaming Frog (09/11/2026): 78 URLs, 61 HTML</span>
+ <span>🏬 ~40 lojas inauguradas</span>
+ <span>🎁 Campanha de cart&atilde;o-presente: nov&ndash;dez</span>
+ </div>
+ <div class="cover-cta">
+<a class="btn btn-gold" href="#roadmap">Ver prioriza&ccedil;&atilde;o</a>
+<a class="btn btn-ghost" href="#seo">Recorte SEO</a>
+<a class="btn btn-ghost" href="#aiogeo">Recorte AIO / GEO</a>
+ </div>
+ </div>
+</div>
+
+<div class="container">
+
+<div class="card"><div class="card-body">
+<h2>📑 Como usar esta auditoria</h2>
+<p>Origem: reuni&atilde;o de alinhamento de 09/11/2026 com a Blow. Ficou acordado preparar uma <strong>proposta de entregas pontuais</strong> de SEO e AIO/GEO, adequada ao or&ccedil;amento, cobrindo as tr&ecirc;s vertentes do mesmo site: e-commerce, p&aacute;ginas de franquia e cart&atilde;o-presente. Esta auditoria separa o que &eacute; SEO t&eacute;cnico do que &eacute; prontid&atilde;o para respostas de IA.</p>
+<div class="toc">
+<a href="#resumo">Resumo executivo</a>
+<a href="#seo">1. Recorte SEO t&eacute;cnico / on-page</a>
+<a href="#aiogeo">2. Recorte AIO / GEO</a>
+<a href="#vertentes">3. As tr&ecirc;s vertentes do site</a>
+<a href="#roadmap">4. Prioriza&ccedil;&atilde;o para a proposta pontual</a>
+<a href="#pendencias">5. Pend&ecirc;ncias e perguntas ao cliente</a>
+</div>
+<div class="warn">⚠️ <strong>Limites:</strong> o crawl n&atilde;o renderiza todo o JavaScript e n&atilde;o h&aacute; dados de Search Console, GA nem de cita&ccedil;&otilde;es em IA. Este material mede <strong>prontid&atilde;o t&eacute;cnica</strong>, n&atilde;o ranking, tr&aacute;fego ou share-of-voice.</div>
+</div></div>
+
+<div class="card" id="resumo"><div class="card-body">
+<h2>Resumo executivo</h2>
+<div class="kpi-grid">
+<div class="kpi"><div class="v">95%</div><div class="l">Sem H1</div><div class="s">55 de 58 p&aacute;ginas</div></div>
+<div class="kpi"><div class="v">43%</div><div class="l">Sem meta description</div><div class="s">25 p&aacute;ginas</div></div>
+<div class="kpi"><div class="v">3</div><div class="l">Erros 404 internos</div><div class="s">1 deles no sitemap</div></div>
+<div class="kpi"><div class="v">0</div><div class="l">llms.txt</div><div class="s">redireciona e d&aacute; 404</div></div>
+</div>
+<div class="risk"><h4>Leitura executiva</h4><p>O site tem estrutura limpa (canonical autorreferente, URLs organizadas, schema de produto), mas perde sinal em tr&ecirc;s pontos de template: <strong>sem H1, title/meta fracos e conte&uacute;do ralo nas p&aacute;ginas que sustentam as tr&ecirc;s vertentes</strong>. Quase tudo se corrige uma vez no template do e-commerce, o que cabe em escopo pontual. O recorte AIO/GEO existe e vale fazer, mas depende dessa base.</p></div>
+</div></div>
+
+<div class="card" id="seo"><div class="card-body">
+<h2>1. Recorte SEO t&eacute;cnico / on-page</h2>
+<p>Base: crawl de 09/11/2026 (78 URLs, 61 HTML) + verifica&ccedil;&atilde;o ao vivo.</p>
+
+<div class="finding crit">
+<div class="f-head"><span class="f-title">🔴 CR&Iacute;TICO: H1 ausente em 55 de 58 p&aacute;ginas (94,8%)</span><span class="badge b-crit">Cr&iacute;tico</span></div>
+<p>Home, franquia, vale-presente, categorias e produtos n&atilde;o t&ecirc;m <code>&lt;h1&gt;</code> (confirmado ao vivo na home, em <code>/produto/gift-card-55</code> e em <code>/p/franquia</code>).</p>
+<p><strong>Corre&ccedil;&atilde;o:</strong> no template, H1 = nome do produto / categoria / p&aacute;gina. Maior ganho por esfor&ccedil;o de toda a auditoria.</p>
+</div>
+
+<div class="finding crit">
+<div class="f-head"><span class="f-title">🔴 CR&Iacute;TICO: titles vazios ou fracos em p&aacute;ginas-chave</span><span class="badge b-crit">Cr&iacute;tico</span></div>
+<table>
+<tr><th>URL</th><th>Title atual</th><th>Problema</th></tr>
+<tr><td><code>/</code></td><td>Meu bLOw</td><td>8 caracteres, sem inten&ccedil;&atilde;o de busca.</td></tr>
+<tr><td><code>/vale-presente</code></td><td>&ldquo; - Blow E-commerce&rdquo;</td><td>Vazio antes do sufixo. P&aacute;gina central da campanha.</td></tr>
+<tr><td><code>/blowparaempresas</code></td><td>&ldquo; - Blow E-commerce&rdquo;</td><td>Vazio. Vertente B2B.</td></tr>
+<tr><td><code>/categoria</code></td><td>&ldquo; - Blow E-commerce&rdquo;</td><td>Vazio.</td></tr>
+</table>
+<p><strong>Correção:</strong> title próprio por vertente (produto, franquia, vale-presente, B2B), com a intenção de busca no começo. No site inteiro: 6 titles duplicados e 18 abaixo de 30 caracteres, por causa do padrão &ldquo;X - Blow E-commerce&rdquo;.</p>
+</div>
+
+<div class="finding crit">
+<div class="f-head"><span class="f-title">🔴 CR&Iacute;TICO: 25 p&aacute;ginas sem meta description (43%)</span><span class="badge b-crit">Cr&iacute;tico</span></div>
+<p>Franquia, vale-presente, B2B e todas as categorias est&atilde;o sem meta. A home tem <code>&lt;p&gt;Lava, escova e vai!&lt;/p&gt;</code>: HTML dentro da meta, com 26 caracteres. Outras 29 p&aacute;ginas t&ecirc;m meta acima de 155 caracteres (truncada) e 8 est&atilde;o duplicadas.</p>
+<p><strong>Corre&ccedil;&atilde;o:</strong> metas &uacute;nicas nas p&aacute;ginas priorit&aacute;rias (140&ndash;155 caracteres, palavra-chave + prova + CTA) e corrigir a da home.</p>
+</div>
+
+<div class="finding">
+<div class="f-head"><span class="f-title">🟠 ALTO: 404 internos e sitemap sujo</span><span class="badge b-alto">Alto</span></div>
+<ul>
+<li><code>/produto/shampoo-detox-blowlab-7</code>: 404 e <strong>listado no sitemap</strong>. Existe a vers&atilde;o ativa <code>shampoo-detox-blowlab-32</code>.</li>
+<li><code>/ativadordecachos</code>: 404. Existe <code>/produto/ativador-de-cachos-e-ondas...</code>.</li>
+<li><code>/cdn-cgi/l/email-protection</code>: artefato do Cloudflare, pode ignorar.</li>
+</ul>
+<p><strong>Correção:</strong> 301 das duas URLs antigas para as ativas e retirar o 404 do sitemap.</p>
+</div>
+
+<div class="finding">
+<div class="f-head"><span class="f-title">🟠 ALTO: conte&uacute;do duplicado nas vertentes de cart&atilde;o-presente e B2B</span><span class="badge b-alto">Alto</span></div>
+<table>
+<tr><th>Grupo</th><th>URLs</th><th>Problema</th></tr>
+<tr><td>Gift cards</td><td><code>gift-card-55</code>, <code>-56</code>, <code>-57</code></td><td>Mesmo title, mesma meta, 371 palavras id&ecirc;nticas, cada um canonical para si.</td></tr>
+<tr><td>Kits corporativos</td><td><code>kit-10/15/20/25/30-colaboradores</code></td><td>5 p&aacute;ginas com 247 palavras id&ecirc;nticas.</td></tr>
+<tr><td>Landing B2B</td><td><code>/blowparaempresas</code></td><td>Title vazio e 128 palavras: a p&aacute;gina que deveria concentrar a vertente.</td></tr>
+</table>
+<p><strong>Correção:</strong> consolidar os gift cards numa URL principal (ou diferenciar por valor) e criar a landing <code>/vale-presente</code> com FAQ; consolidar os kits numa landing B2B com variantes de quantidade. <strong>Prioridade nov&ndash;dez</strong>, por causa da campanha.</p>
+</div>
+
+<div class="finding">
+<div class="f-head"><span class="f-title">🟡 M&Eacute;DIO: thin content e pagina&ccedil;&atilde;o</span><span class="badge b-medio">M&eacute;dio</span></div>
+<ul>
+<li><strong>17 p&aacute;ginas com menos de 200 palavras</strong>, sobretudo categorias (115&ndash;140 palavras: detox, nutri&ccedil;&atilde;o, touca, m&aacute;scara etc.).</li>
+<li><code>?page=2</code> canonicalizada para a p&aacute;gina 1 em <code>/todos-produtos</code> e <code>/queridinhos</code>: confirmar que os produtos s&oacute; listados na p&aacute;gina 2 t&ecirc;m outro caminho de links internos.</li>
+<li><code>/p/clube-do-blow</code> com <strong>18.978 palavras</strong> (provavelmente regulamento): decidir se indexa e como segmentar.</li>
+<li>Links internos sem texto &acirc;ncora em 100% das p&aacute;ginas (provavelmente &iacute;cone/imagem sem alt).</li>
+<li>Baixa prioridade: sem HSTS, CSP, X-Frame-Options e X-Content-Type-Options; recursos protocol-relative; <code>target=_blank</code> sem <code>rel=noopener</code> (74%).</li>
+</ul>
+</div>
+
+<div class="check">✅ <strong>J&aacute; est&aacute; bom:</strong> canonical autorreferente em todas as p&aacute;ginas index&aacute;veis · URLs limpas (<code>/produto/</code>, <code>/p/</code>) · sitemap presente · <code>/conta</code> corretamente bloqueada no robots · schema <code>Product</code> e <code>BreadcrumbList</code> nas p&aacute;ginas de produto.</div>
+</div></div>
+
+<div class="card" id="aiogeo"><div class="card-body">
+<h2>2. Recorte AIO / GEO: prontid&atilde;o para respostas de IA</h2>
+<p>Resposta &agrave; d&uacute;vida levantada na reuni&atilde;o: <strong>sim, h&aacute; um recorte AIO/GEO a fazer</strong>, mas ele vem depois da base de SEO (H1, title, meta), que &eacute; pr&eacute;-requisito.</p>
+<table>
+<tr><th>#</th><th>Achado</th><th>Evid&ecirc;ncia</th><th>A&ccedil;&atilde;o</th></tr>
+<tr><td>1</td><td><strong>robots.txt sem pol&iacute;tica para crawlers de IA</strong> (GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Google-Extended). N&atilde;o bloqueia, mas n&atilde;o declara. H&aacute; <code>Crawl-delay</code> de 60s para Meta.</td><td>robots.txt ao vivo</td><td>Decis&atilde;o do cliente: permitir explicitamente os bots de busca de IA.</td></tr>
+<tr><td>2</td><td><strong><code>/llms.txt</code> n&atilde;o existe</strong>: 301 para <code>/llms-txt</code>, que retorna 404.</td><td>curl</td><td>Criar com marca, cole&ccedil;&otilde;es, franquia, vale-presente, B2B e FAQ. Baixo esfor&ccedil;o; boa pr&aacute;tica, n&atilde;o garantia de cita&ccedil;&atilde;o.</td></tr>
+<tr><td>3</td><td><strong>Home com schema gen&eacute;rico</strong>: <code>Thing</code> + <code>WebSite</code> + <code>Organization</code>, com campo <code>Address</code> fora do padr&atilde;o.</td><td>JSON-LD ao vivo</td><td>Corrigir <code>Organization</code> (<code>address</code> como <code>PostalAddress</code>, <code>sameAs</code>, redes).</td></tr>
+<tr><td>4</td><td><strong>Sem <code>FAQPage</code> e sem <code>LocalBusiness</code></strong>. <code>/p/atendimento</code> (FAQ) e <code>/p/nossas-lojas</code> (40 lojas, 105 palavras) sem JSON-LD; <code>/p/franquia</code> sem schema e sem H1.</td><td>structured_data + curl</td><td>FAQ marcado; p&aacute;gina por loja com <code>LocalBusiness</code> (endere&ccedil;o, hor&aacute;rio, telefone).</td></tr>
+<tr><td>5</td><td><strong>Produto sem <code>aggregateRating</code>/<code>review</code></strong> e com campo <code>gtin0</code> (n&atilde;o padr&atilde;o).</td><td>gift-card-55</td><td>Ajustar na plataforma; incluir avalia&ccedil;&otilde;es se existirem.</td></tr>
+<tr><td>6</td><td><strong>Conte&uacute;do pouco extra&iacute;vel</strong>: categorias com ~120 palavras e sem perguntas e respostas diretas.</td><td>content_all</td><td>Blocos &ldquo;o que &eacute; / para quem / como usar&rdquo; no in&iacute;cio de produto e categoria, com frases autocontidas.</td></tr>
+<tr><td>7</td><td><strong>Franquia sem conte&uacute;do de decis&atilde;o</strong> (investimento, retorno, passo a passo, n&uacute;mero de lojas) em 280 palavras.</td><td>/p/franquia</td><td>P&aacute;gina com FAQ e dados cit&aacute;veis. &Eacute; onde est&aacute; a verba de m&iacute;dia de ~R$ 40 mil/m&ecirc;s da frente de franquias.</td></tr>
+</table>
+<div class="warn">⚠️ Schema e <code>llms.txt</code> sozinhos n&atilde;o geram cita&ccedil;&atilde;o. O que gera: entidade clara + dados consistentes + conte&uacute;do em formato de resposta + presen&ccedil;a fora do site. <strong>N&atilde;o medido:</strong> share-of-voice em ChatGPT, Perplexity e AI Overviews. Se o cliente quiser, rodar um teste manual de 20&ndash;30 prompts (ex.: &ldquo;melhor shampoo para reconstru&ccedil;&atilde;o&rdquo;, &ldquo;franquia de sal&atilde;o de beleza&rdquo;, &ldquo;vale-presente de sal&atilde;o&rdquo;).</div>
+</div></div>
+
+<div class="card" id="vertentes"><div class="card-body">
+<h2>3. As tr&ecirc;s vertentes do mesmo site</h2>
+<table>
+<tr><th>Vertente</th><th>Situa&ccedil;&atilde;o hoje</th><th>Principal alavanca</th></tr>
+<tr><td><strong>🎁 Cart&atilde;o-presente</strong> (campanha nov&ndash;dez)</td><td>3 URLs duplicadas, sem landing, title/meta de <code>/vale-presente</code> vazios.</td><td>Consolidar + landing com FAQ e schema.</td></tr>
+<tr><td><strong>🏬 Franquia</strong></td><td>280 palavras, sem H1, sem meta, sem schema.</td><td>Reescrever com dados de decis&atilde;o + FAQ.</td></tr>
+<tr><td><strong>🛍️ E-commerce</strong></td><td>Produtos razo&aacute;veis (200&ndash;900 palavras); categorias finas; kits B2B duplicados.</td><td>H1/title/meta em template + texto nas categorias de maior inten&ccedil;&atilde;o.</td></tr>
+</table>
+</div></div>
+
+<div class="card" id="roadmap"><div class="card-body">
+<h2>4. Prioriza&ccedil;&atilde;o para a proposta pontual</h2>
+<div class="timeline">
+<div class="phase"><div class="dot"></div><div class="pn">Fase 1: funda&ccedil;&atilde;o</div><div class="pd">1&ndash;2 semanas</div></div>
+<div class="phase"><div class="dot"></div><div class="pn">Fase 2: vertentes</div><div class="pd">cart&atilde;o-presente primeiro</div></div>
+<div class="phase"><div class="dot"></div><div class="pn">Fase 3: AIO / GEO</div><div class="pd">depois da base</div></div>
+</div>
+<div class="step"><div class="s-top"><span class="s-num">1</span><span class="s-who">Fase 1 &middot; quase tudo em template</span></div>
+<ul><li>H1 em todos os templates (produto, categoria, p&aacute;ginas <code>/p/</code>).</li><li>Title e meta para home, franquia, vale-presente, B2B e categorias.</li><li>Corrigir os 404 e limpar o sitemap.</li></ul></div>
+<div class="step"><div class="s-top"><span class="s-num">2</span><span class="s-who">Fase 2 &middot; vertentes</span></div>
+<ul><li><strong>Cart&atilde;o-presente (urgente, nov&ndash;dez):</strong> consolidar os 3 gift cards; landing <code>/vale-presente</code> com FAQ e schema.</li><li><strong>Franquia:</strong> reescrita com H1, FAQ e schema.</li><li><strong>E-commerce:</strong> texto nas categorias de maior inten&ccedil;&atilde;o; consolidar os kits B2B.</li></ul></div>
+<div class="step"><div class="s-top"><span class="s-num">3</span><span class="s-who">Fase 3 &middot; AIO / GEO</span></div>
+<ul><li><code>llms.txt</code>.</li><li>Schema: <code>Organization</code>, <code>FAQPage</code>, <code>LocalBusiness</code>, <code>Product</code> corrigido.</li><li>Pol&iacute;tica de bots de IA no robots.txt.</li></ul></div>
+<p class="small">Estimativa de horas e investimento n&atilde;o incluídos: dependem da defini&ccedil;&atilde;o de escopo com o cliente e da libera&ccedil;&atilde;o do or&ccedil;amento.</p>
+</div></div>
+
+<div class="card" id="pendencias"><div class="card-body">
+<h2>5. Pend&ecirc;ncias e perguntas ao cliente</h2>
+<ul>
+<li>Acesso ao <strong>Search Console e GA4</strong> para priorizar com dados reais.</li>
+<li>Qual &eacute; a plataforma do e-commerce e <strong>quem edita templates</strong> (equipe interna de 2 pessoas, integra&ccedil;&otilde;es e BI)? Boa parte das corre&ccedil;&otilde;es depende disso.</li>
+<li>Or&ccedil;amento: Pablo vai solicitar a libera&ccedil;&atilde;o dos valores; a proposta final depende disso.</li>
+<li>Alinhar com a Blow: planejamento trimestral com GPTs na pr&oacute;xima quarta-feira (pr&oacute;ximo passo da reuni&atilde;o).</li>
+</ul>
+<p class="small">Fontes: reuni&atilde;o de 09/11/2026 · crawl Screaming Frog (09/11/2026, 78 URLs, 61 HTML) · verifica&ccedil;&atilde;o ao vivo de robots.txt, llms.txt e JSON-LD (10/11/2026).</p>
+</div></div>
+
+<div class="footer">V4 Company · Auditoria SEO / AIO / GEO: Blow · Nov 2026</div>
+</div>
+</body>
+</html>
