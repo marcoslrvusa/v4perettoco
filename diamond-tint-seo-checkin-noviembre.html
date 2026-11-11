@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diamond Tint &amp; Wraps | Check-in SEO 11/11/2026 · Sprint 1 publicado y verificado</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --red: rgb(229, 9, 20);
+    --red-dark: rgb(180, 7, 16);
+    --red-light: rgb(255, 60, 70);
+    --gold: #c9a96e;
+    --gold-light: #f5f0e6;
+    --gold-border: #e8dcc8;
+    --gray-50: #fafafa;
+    --gray-100: #f5f5f5;
+    --gray-200: #eeeeee;
+    --gray-300: #e0e0e0;
+    --gray-400: #bdbdbd;
+    --gray-500: #9e9e9e;
+    --gray-600: #757575;
+    --gray-700: #616161;
+    --gray-800: #424242;
+    --gray-900: #212121;
+  }
+
+  body {
+    font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f8f7f4;
+    color: var(--gray-900);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  .cover {
+    background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #2a2a2a 100%);
+    color: #fff;
+    padding: 64px 40px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(201,169,110,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .cover-content { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; }
+  .cover-content::before {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .cover-content::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin: 28px auto 0;
+    border-radius: 1px;
+  }
+  .cover .label {
+    display: inline-block;
+    background: rgba(201,169,110,0.12);
+    border: 1px solid rgba(201,169,110,0.3);
+    padding: 6px 20px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    color: var(--gold);
+  }
+  .cover h1 {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 14px;
+    letter-spacing: -0.5px;
+    font-family: 'Plus Jakarta Sans', serif;
+  }
+  .cover p {
+    font-size: 17px;
+    opacity: 0.85;
+    margin-bottom: 24px;
+    font-weight: 300;
+    letter-spacing: 0.2px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 13px;
+    opacity: 0.7;
+    letter-spacing: 0.5px;
+  }
+
+  .container { max-width: 1020px; margin: -36px auto 48px; position: relative; z-index: 2; }
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+    margin-bottom: 28px;
+    overflow: hidden;
+    border: 1px solid var(--gray-300);
+    position: relative;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 40px;
+    right: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-border), var(--gold), var(--gold-border), transparent);
+    opacity: 0.6;
+  }
+  .card-body { padding: 44px 52px; }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--gold-border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -0.3px;
+    position: relative;
+  }
+  h2::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 1px;
+  }
+  h2 .slide-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--red);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin: 36px 0 18px;
+    letter-spacing: -0.2px;
+  }
+  h4 { font-size: 16px; font-weight: 700; color: var(--gray-800); margin: 22px 0 12px; }
+  p { font-size: 16px; color: var(--gray-700); margin-bottom: 16px; line-height: 1.8; }
+  p:last-child { margin-bottom: 0; }
+
+  .badge {
+    display: inline-block;
+    padding: 5px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .badge-critico { background: #fef2f2; color: var(--red); border: 1px solid #fecaca; }
+  .badge-alto { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+  .badge-medio { background: #fefce8; color: #a16207; border: 1px solid #fef08a; }
+  .badge-baixo { background: var(--gold-light); color: #8b7a4a; border: 1px solid var(--gold-border); }
+  .badge-info { background: #f5f5f5; color: #616161; border: 1px solid #d4d4d4; }
+  .badge-ok { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+  .badge-exec { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+  .badge-pend { background: #f5f5f5; color: #6b7280; border: 1px solid #d1d5db; }
+
+  table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 14px; }
+  th, td { padding: 13px 14px; text-align: left; border-bottom: 1px solid var(--gray-100); vertical-align: top; }
+  th {
+    background: linear-gradient(135deg, var(--gray-50), #f8f7f4);
+    font-weight: 700;
+    color: var(--gray-700);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 2px solid var(--gold-border);
+    position: relative;
+  }
+  tr:hover td { background: #fcfaf7; }
+  tr:last-child td { border-bottom: none; }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .kpi-card {
+    background: #f2f0ec;
+    border-radius: 10px;
+    padding: 20px 12px 18px;
+    text-align: center;
+    border: 1px solid var(--gold-border);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .kpi-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 2px 12px rgba(201,169,110,0.1);
+  }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--red), var(--gold));
+  }
+  .kpi-card .value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--red);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+  .kpi-card .label {
+    font-size: 11px;
+    color: var(--gray-600);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 8px;
+  }
+  .kpi-card .sub { font-size: 11px; color: var(--gray-600); margin-top: 4px; line-height: 1.4; }
+
+  .risk-box {
+    background: linear-gradient(135deg, #fcfaf7, #f8f7f4);
+    border-left: 4px solid var(--red);
+    padding: 22px 26px;
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 18px;
+  }
+  .risk-box h4 { margin: 0 0 10px; color: var(--red); font-size: 16px; letter-spacing: -0.2px; }
+  .risk-box p { font-size: 15px; color: var(--gray-700); margin: 0; line-height: 1.7; }
+
+  .finding {
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 26px 30px;
+    margin-bottom: 18px;
+    background: #fcfcfc;
+    transition: box-shadow 0.2s, border-color 0.2s;
+    border-left: 3px solid transparent;
+  }
+  .finding:hover {
+    box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+    border-color: var(--gold-border);
+    border-left-color: var(--gold);
+  }
+  .finding-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .finding-title { font-weight: 700; font-size: 17px; color: var(--gray-900); letter-spacing: -0.2px; }
+  .finding-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 32px;
+    font-size: 15px;
+  }
+  .finding-grid .field { font-weight: 600; color: var(--gray-800); }
+  .finding-grid .value { color: var(--gray-700); }
+  .finding-grid .full { grid-column: 1 / -1; }
+  .finding p { font-size: 15px; }
+
+  .bar-container { margin: 22px 0; }
+  .bar-row { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+  .bar-label { width: 160px; font-size: 14px; font-weight: 700; color: var(--gray-700); text-align: right; flex-shrink: 0; letter-spacing: -0.2px; }
+  .bar-track { flex: 1; height: 30px; background: var(--gray-100); border-radius: 6px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding-right: 14px; font-size: 13px; font-weight: 700; color: #fff; letter-spacing: 0.3px; min-width: 52px; }
+  .bar-fill.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .bar-fill.green { background: linear-gradient(90deg, #15803d, #22c55e); }
+  .bar-note { font-size: 12px; color: var(--gray-600); margin: -6px 0 14px 176px; }
+
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--gray-100);
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 13px;
+    color: var(--red);
+  }
+
+  .footer {
+    text-align: center;
+    padding: 36px;
+    font-size: 14px;
+    color: var(--gray-500);
+    border-top: 1px solid var(--gold-border);
+    letter-spacing: 0.3px;
+    position: relative;
+  }
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 2px;
+  }
+
+  .slide-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 18px 0 0;
+    justify-content: center;
+  }
+  .slide-nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.9);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .slide-nav a:hover { background: rgba(201,169,110,0.18); border-color: var(--gold); color: #fff; }
+  .slide-nav a span { font-size: 10px; opacity: 0.7; }
+
+  .callout {
+    background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+    color: #fff;
+    border-radius: 12px;
+    padding: 26px 28px;
+    margin: 20px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .callout::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--red), var(--gold)); }
+  .callout h4 { color: var(--gold); margin: 0 0 8px; font-size: 15px; text-transform: uppercase; letter-spacing: 0.6px; }
+  .callout p { color: rgba(255,255,255,0.82); font-size: 15px; line-height: 1.7; margin: 0; }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 1px solid;
+  }
+  .pill-noar { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
+  .pill-exec { background: #fffbeb; color: #b45309; border-color: #fde68a; }
+  .pill-pend { background: #f5f5f5; color: #6b7280; border-color: #d1d5db; }
+  .pill { white-space: nowrap; }
+  .badge { white-space: nowrap; }
+
+  /* Componentes Indianapolis */
+  .progress-ring {
+    width: 140px; height: 140px; border-radius: 50%;
+    background: conic-gradient(var(--red) 0% 100%, var(--gray-200) 100%);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    margin: 0 auto;
+  }
+  .progress-ring::before {
+    content: '';
+    position: absolute; width: 108px; height: 108px;
+    background: #fff; border-radius: 50%;
+  }
+  .progress-ring-inner { position: relative; z-index: 1; text-align: center; }
+  .progress-ring-inner .big { font-size: 32px; font-weight: 800; color: var(--red); line-height: 1; letter-spacing: -0.5px; }
+  .progress-ring-inner .small { font-size: 11px; font-weight: 700; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.6px; margin-top: 2px; }
+
+  .status-note {
+    background: linear-gradient(135deg, #fcfaf7, #f8f7f4);
+    border-left: 4px solid var(--gold);
+    padding: 18px 22px; border-radius: 0 12px 12px 0; margin: 16px 0;
+  }
+  .status-note p { font-size: 15px; margin: 0; }
+
+  .status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+  .status-dot.ok { background: #15803d; }
+  .status-dot.exec { background: #d97706; }
+  .status-dot.pend { background: #9ca3af; }
+
+  .check-list { list-style: none; padding: 0; }
+  .check-list li { display: flex; gap: 12px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--gray-100); font-size: 15px; color: var(--gray-700); }
+  .check-list li:last-child { border: none; }
+  .check-icon { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex-shrink: 0; margin-top: 1px; }
+  .check-icon.ok { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+  .check-icon.exec { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+  .check-icon.pend { background: #f3f4f6; color: #6b7280; border: 1px solid #e5e7eb; }
+
+  details.fold { border: 1px solid var(--gold-border); border-radius: 12px; margin: 0 0 18px; background: #fff; }
+  details.fold summary { cursor: pointer; padding: 16px 20px; font-weight: 800; font-size: 15px; list-style: none; }
+  details.fold summary::-webkit-details-marker { display: none; }
+  details.fold summary:before { content: "\25B8  "; color: var(--red); }
+  details.fold[open] summary:before { content: "\25BE  "; }
+  details.fold .fold-body { padding: 0 20px 20px; }
+  .draft-badge { display: inline-block; background: #b45309; color: #fff; font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 20px; letter-spacing: .5px; }
+
+  .url-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 14px 0 4px;
+  }
+  .url-grid a {
+    display: block;
+    padding: 9px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--gold-border);
+    background: #fcfaf7;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--gray-800);
+    text-decoration: none;
+    line-height: 1.4;
+    transition: all 0.15s;
+  }
+  .url-grid a:hover { border-color: var(--gold); background: #fff; box-shadow: 0 2px 10px rgba(201,169,110,0.12); }
+  .url-grid a span { display: block; font-size: 10px; font-weight: 700; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.5px; }
+  .url-group { margin: 10px 0 2px; font-size: 11px; font-weight: 700; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.8px; }
+
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; margin: 14px 0 4px; font-size: 12.5px; color: var(--gray-600); }
+
+  @media (max-width: 900px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .url-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 640px) {
+    .cover h1 { font-size: 26px; }
+    .cover { padding: 40px 20px 32px; }
+    .card-body { padding: 20px; }
+    .finding-grid { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: 1fr 1fr; }
+    table { font-size: 12px; }
+    th, td { padding: 8px 10px; }
+    .bar-label { width: 90px; font-size: 12px; }
+    .bar-note { margin-left: 0; }
+    .url-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="cover">
+  <div class="cover-content">
+    <div class="label">Check-in SEO | Sprint 1 | 11 de noviembre de 2026</div>
+    <h1>Diamond Tint &amp; Wraps<br>Sprint 1: todo en línea</h1>
+    <p>18,449 palabras publicadas y verificadas en vivo el 11/11: 6 páginas de servicio, 3 clusters reescritos, 2 hubs nuevos, About/Contact/Gallery y una malla interna con 154 de 159 pares validados. Este informe muestra lo que está publicado, lo que medimos, los hallazgos para decidir y lo que pedimos para desbloquear lo que falta.</p>
+    <div class="cover-meta">
+      <span>• Contenido del Sprint 1: 100% en línea y verificado</span>
+      <span>• 11 URLs nuevas + 3 páginas institucionales</span>
+      <span>• Medición 10/11 · publicación y verificación 11/11</span>
+    </div>
+    <div class="slide-nav">
+      <a href="#sumario">01 <span>Sumario</span></a>
+      <a href="#entregas">02 <span>Entregas</span></a>
+      <a href="#performance">03 <span>Performance</span></a>
+      <a href="#hallazgos">04 <span>Hallazgos</span></a>
+      <a href="#solicitudes">05 <span>Solicitudes</span></a>
+      <a href="#dependencias">06 <span>Dependencias</span></a>
+      <a href="#archivos">F <span>Archivos</span></a>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- 01 SUMARIO -->
+  <div class="card" id="sumario">
+    <div class="card-body">
+      <h2><span class="slide-num">01</span> Sumario ejecutivo</h2>
+
+      <div style="display:grid; grid-template-columns: 180px 1fr; gap: 28px; align-items:center; margin-bottom: 24px;">
+        <div>
+          <div class="progress-ring">
+            <div class="progress-ring-inner">
+              <div class="big">100%</div>
+              <div class="small">Publicado</div>
+            </div>
+          </div>
+          <div style="text-align:center; margin-top:10px; font-size:12px; color:var(--gray-600); font-weight:600;">Contenido del Sprint 1 en línea y verificado el 11/11</div>
+        </div>
+        <div>
+          <div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 12px;">
+            <div class="kpi-card">
+              <div class="value">18,449</div>
+              <div class="label">Palabras en línea</div>
+              <div class="sub">todo el volumen del sprint</div>
+            </div>
+            <div class="kpi-card">
+              <div class="value">11</div>
+              <div class="label">URLs publicadas</div>
+              <div class="sub">6 servicios + 3 clusters + 2 hubs</div>
+            </div>
+            <div class="kpi-card">
+              <div class="value">154/159</div>
+              <div class="label">Pares de malla validados</div>
+              <div class="sub">href + ancla verificados en vivo</div>
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+            <div style="background:linear-gradient(135deg, #f0fdf4, #dcfce7); border:1px solid #bbf7d0; border-radius:10px; padding:14px 16px;">
+              <div style="font-size:11px; color:#15803d; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Verificación en vivo</div>
+              <div style="font-size:13.5px; color:var(--gray-700); margin-top:4px;">Cada URL publicada: HTTP 200, cuerpo nuevo, title/meta en Yoast, FAQ + schema FAQPage, indexable, sin marcadores pendientes.</div>
+            </div>
+            <div style="background:linear-gradient(135deg, #fcfaf7, #f8f7f4); border:1px solid var(--gold-border); border-radius:10px; padding:14px 16px;">
+              <div style="font-size:11px; color:var(--gray-500); font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Evidencia en eKyte</div>
+              <div style="font-size:13.5px; color:var(--gray-700); margin-top:4px;">26 comentarios: 12 de entrega (10/11), 7 de "PUBLICADO" y 7 de cierre "100% CONCLUÍDA" (11/11).</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background: #fef2f2; border-left:4px solid var(--red); border-radius:0 10px 10px 0; padding:16px 20px;">
+        <p style="margin:0; font-size:14px; color:var(--gray-700);"><strong style="color:var(--red);">Lectura en 30 segundos:</strong> todo el contenido del Sprint 1 está en línea y verificado. Lo pendiente depende de accesos y confirmaciones: GBP (acceso de gerente), hosting (PHP 8.x + caché de página — el mismo acceso destraba <code>/llms.txt</code> en la raíz, la plantilla del blog y los redirects), datos por confirmar (garantía, precios, zonas, reseñas) y la ejecución de galería/Core Web Vitals en diciembre. Los 7 hallazgos para decidir están en la sección 04.</p>
+      </div>
+
+      <div class="legend" style="margin-top:16px;">
+        <span><span class="status-dot ok"></span>En línea y verificado</span>
+        <span><span class="status-dot exec"></span>Listo, esperando acceso o confirmación</span>
+        <span><span class="status-dot pend"></span>Bloqueado / diciembre</span>
+        <span style="margin-left:auto; font-weight:600;">Medido el 10/11 · cuando hay una salvedad, está escrita junto al número</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 ENTREGAS -->
+  <div class="card" id="entregas">
+    <div class="card-body">
+      <h2><span class="slide-num">02</span> Entregas del Sprint 1</h2>
+      <p>Situación real de cada tarea al 11/11. Lo verde está en línea; lo ámbar está listo y esperando un acceso o una confirmación; lo gris está bloqueado o programado para diciembre.</p>
+
+      <div style="overflow-x:auto;">
+      <table>
+        <tr><th>Tarea eKyte</th><th>Entrega</th><th>Estado</th></tr>
+        <tr>
+          <td><strong>Meta descripciones</strong><br><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--gray-500);">10671140</span></td>
+          <td>120 a 155 caracteres en las páginas necesarias</td>
+          <td><span class="badge badge-ok">En línea</span></td>
+        </tr>
+        <tr>
+          <td><strong>Anclas y enlaces</strong><br><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--gray-500);">10671142</span></td>
+          <td>128 anclas descriptivas en lugar de "Read More", 156 anclas vacías corregidas, 9 enlaces <code>/page/1</code> eliminados</td>
+          <td><span class="badge badge-ok">En línea</span></td>
+        </tr>
+        <tr>
+          <td><strong>Imágenes WebP</strong><br><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--gray-500);">10671143</span></td>
+          <td>Conversión aplicada <span style="font-size:12px; color:var(--gray-600);">(1 archivo con guion en el nombre quedó fuera)</span></td>
+          <td><span class="badge badge-ok">En línea</span></td>
+        </tr>
+        <tr>
+          <td><strong>Contenido About, Contact y Gallery</strong><br><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--gray-500);">10671150</span></td>
+          <td><strong>En línea 11/11:</strong> <a href="https://diamondtintlv.com/about/">/about/</a>, <a href="https://diamondtintlv.com/contact/">/contact/</a> y <a href="https://diamondtintlv.com/gallery/">/gallery/</a> (2,707 palabras). Formulario WPForms y cuadrícula PhotoBlocks preservados; borradores en draft con noindex</td>
+          <td><span class="badge badge-ok">En línea</span></td>
+        </tr>
+        <tr>
+          <td><strong>Alt text</strong><br><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--gray-500);">10671146</span></td>
+          <td><strong>150 de 151</strong> imágenes de la biblioteca con alt escrito mirando la imagen; 0 imágenes de contenido sin alt en las 9 páginas probadas <span style="font-size:12px; color:var(--gray-600);">(en /gallery/ el PhotoBlocks mantiene su propio alt en 42 imágenes)</span></td>
+          <td><span class="badge badge-ok">En línea</span></td>
+        </tr>
+        <tr>
+          <td><strong>Contenido de los 6 servicios y FAQ</strong><br><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--gray-500);">10671155 + 10671161</span></td>
+          <td><strong>En línea 11/11:</strong> 6 páginas (1,152 a 1,219 palabras nuevas cada una; 7,107 en total), FAQ visible + schema <code>FAQPage</code> verificado en el HTML, title/meta en Yoast, indexables</td>
+          <td><span class="badge badge-ok">En línea</span></td>
+        </tr>
+        <tr>
+          <td><strong>Clusters</strong><br><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--gray-500);">10671166</span></td>
+          <td><strong>En línea 11/11:</strong> 3 posts existentes reescritos (refresh, misma URL, anti-canibalización): ceramic vs carbon (812 → 1,624), calor y UV (1,274 → 1,452), ley de Nevada (1,208 → 1,663)</td>
+          <td><span class="badge badge-ok">En línea</span></td>
+        </tr>
+        <tr>
+          <td><strong>Hubs</strong><br><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--gray-500);">10671206</span></td>
+          <td><strong>En línea 11/11:</strong> <a href="https://diamondtintlv.com/las-vegas-heat-protection-guide/">/las-vegas-heat-protection-guide/</a> (2,133 palabras) y <a href="https://diamondtintlv.com/ppf-vs-ceramic-coating-las-vegas/">/ppf-vs-ceramic-coating-las-vegas/</a> (1,763), con FAQ + FAQPage JSON-LD y Yoast</td>
+          <td><span class="badge badge-ok">En línea</span></td>
+        </tr>
+        <tr>
+          <td><strong>Malla de enlaces</strong><br><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--gray-500);">10671183</span></td>
+          <td><strong>Implementada y verificada en vivo 11/11:</strong> 154 de 159 pares del mapa validados en el sitio (href + ancla en el mismo <code>&lt;a&gt;</code>); 43 anclas realineadas al mapa en la revisión; bloque "Guides" en la home; enlace nuevo en About; post 808 con destino corregido + párrafo casa/comercio. <strong style="color:#b45309;">Única pendencia:</strong> bloque "Start here" en <code>/blog/</code> — el tema no renderiza el contenido de la página de posts (requiere plantilla vía hosting)</td>
+          <td><span class="badge badge-exec">Implementada<br>1 pendencia de plantilla</span></td>
+        </tr>
+        <tr>
+          <td><strong>Google Business Profile</strong><br><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--gray-500);">10671153</span></td>
+          <td>Kit completo (NAP, descripción, 7 servicios, 4 posts)</td>
+          <td><span class="badge badge-pend">Bloqueado: acceso de gerente al GBP</span></td>
+        </tr>
+        <tr>
+          <td><strong>Reviews</strong><br><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--gray-500);">10671196</span></td>
+          <td>Kit completo (flujo, scripts, respuestas, hoja de cálculo)</td>
+          <td><span class="badge badge-exec">Listo, esperando Place ID y canal</span></td>
+        </tr>
+        <tr>
+          <td><strong>URLs lentas</strong><br><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--gray-500);">10671148</span></td>
+          <td>Ver sección 03</td>
+          <td><span class="badge badge-exec">Diagnóstico listo, cierre depende del hosting</span></td>
+        </tr>
+        <tr>
+          <td><strong>llms.txt</strong><br><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--gray-500);">10671201</span></td>
+          <td><strong>Archivo en línea</strong> (text/plain) en <a href="https://diamondtintlv.com/wp-content/uploads/2026/11/llms.txt">/wp-content/uploads/2026/11/llms.txt</a> + regla Redirection 15 armada (<code>/llms.txt</code> → 301 → archivo). La ruta amigable aún da 404: el plugin Redirection no está ejecutando redirecciones (hallazgo 1 de la sección 04)</td>
+          <td><span class="badge badge-exec">Parcial en línea</span></td>
+        </tr>
+        <tr>
+          <td><strong>Galería y Core Web Vitals</strong><br><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--gray-500);">10671204 + 10671208</span></td>
+          <td>Línea de base medida (ver sección 03)</td>
+          <td><span class="badge badge-pend">Ejecución en diciembre</span></td>
+        </tr>
+        <tr>
+          <td><strong>Siguientes tareas</strong><br><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--gray-500);">10671212 + 10671214</span></td>
+          <td>No iniciadas</td>
+          <td><span class="badge badge-pend">Diciembre</span></td>
+        </tr>
+      </table>
+      </div>
+
+      <h3>Páginas publicadas — enlaces directos</h3>
+      <div class="url-group">Servicios (en línea 11/11)</div>
+      <div class="url-grid">
+        <a href="https://diamondtintlv.com/vehicle-window-tinting/">vehicle-window-tinting<span>servicio · 1,152–1,219 pal. c/u</span></a>
+        <a href="https://diamondtintlv.com/commercial-window-tinting/">commercial-window-tinting<span>servicio</span></a>
+        <a href="https://diamondtintlv.com/home-window-tinting/">home-window-tinting<span>servicio</span></a>
+        <a href="https://diamondtintlv.com/paint-protection/">paint-protection<span>servicio</span></a>
+        <a href="https://diamondtintlv.com/vehicle-wraps/">vehicle-wraps<span>servicio</span></a>
+        <a href="https://diamondtintlv.com/ceramic-coating/">ceramic-coating<span>servicio</span></a>
+      </div>
+      <div class="url-group">Clusters (refresh, misma URL)</div>
+      <div class="url-grid">
+        <a href="https://diamondtintlv.com/ceramic-vs-carbon-tint-whats-the-difference/">ceramic-vs-carbon-tint<span>812 → 1,624 pal.</span></a>
+        <a href="https://diamondtintlv.com/how-window-tint-can-protect-your-vehicle-from-the-sun/">calor y UV<span>1,274 → 1,452 pal.</span></a>
+        <a href="https://diamondtintlv.com/exploring-the-legal-regulations-for-window-tint-near-me/">ley de Nevada<span>1,208 → 1,663 pal.</span></a>
+      </div>
+      <div class="url-group">Hubs nuevos</div>
+      <div class="url-grid">
+        <a href="https://diamondtintlv.com/las-vegas-heat-protection-guide/">las-vegas-heat-protection-guide<span>2,133 pal.</span></a>
+        <a href="https://diamondtintlv.com/ppf-vs-ceramic-coating-las-vegas/">ppf-vs-ceramic-coating-las-vegas<span>1,763 pal.</span></a>
+      </div>
+      <div class="url-group">Institucional + llms.txt</div>
+      <div class="url-grid">
+        <a href="https://diamondtintlv.com/about/">about<span>en línea 11/11</span></a>
+        <a href="https://diamondtintlv.com/contact/">contact<span>en línea 11/11</span></a>
+        <a href="https://diamondtintlv.com/gallery/">gallery<span>en línea 11/11</span></a>
+        <a href="https://diamondtintlv.com/wp-content/uploads/2026/11/llms.txt">llms.txt<span>text/plain · ruta amigable pendiente</span></a>
+      </div>
+
+      <div class="callout" style="margin-top:24px;">
+        <h4>Volumen de contenido de esta ronda</h4>
+        <p><strong>18,449 palabras</strong> — 7,107 en servicios, 8,635 en clusters y hubs y 2,707 en About/Contact/Gallery — <strong>todo en línea el 11/11</strong>, más 12 comentarios de evidencia en eKyte (10/11) y 7 de "PUBLICADO" (11/11).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 PERFORMANCE -->
+  <div class="card" id="performance">
+    <div class="card-body">
+      <h2><span class="slide-num">03</span> Performance: tiempo de respuesta y Core Web Vitals</h2>
+
+      <h3>Tiempo de respuesta</h3>
+      <p>Las 28 URLs lentas del Screaming Frog de 02/10, remedidas el 10/11 con 3 mediciones cada una:</p>
+
+      <div class="bar-container">
+        <div class="bar-row">
+          <div class="bar-label">URLs &gt; 2 s · 02/10</div>
+          <div class="bar-track"><div class="bar-fill red" style="width:100%;">28 de 28</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">URLs &gt; 2 s · 10/11</div>
+          <div class="bar-track"><div class="bar-fill green" style="width:7%;">2</div></div>
+        </div>
+        <div class="bar-note">Las 2 que quedan: <code>/vehicle-wraps/</code> (2.13 s) y <code>/blog/</code> (2.07 s).</div>
+        <div class="bar-row">
+          <div class="bar-label">Mediana · 02/10</div>
+          <div class="bar-track"><div class="bar-fill red" style="width:92%;">2.29 s</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Mediana · 10/11</div>
+          <div class="bar-track"><div class="bar-fill green" style="width:61%;">1.52 s</div></div>
+        </div>
+      </div>
+
+      <div class="risk-box" style="border-left-color: var(--gold);">
+        <h4 style="color:#8b7a4a;">Advertencia metodológica</h4>
+        <p>La medición antigua vino del crawler y la nueva de otra red. Comparación indicativa, no exacta. Además, todas las 37 URLs del sitemap hoy registran espera del servidor con mediana de <strong>0.66 s</strong> y máximo de <strong>0.94 s</strong>.</p>
+      </div>
+
+      <div class="risk-box">
+        <h4>Causa probable de lo que resta</h4>
+        <p>Servidor Apache con PHP 7.4.33 (sin soporte desde 2022). El plugin LiteSpeed Cache está activo, pero ninguna URL devuelve header de caché. La corrección real exige acceso al hosting (PHP 8.x y caché de página) — es el pedido 2 de la sección 05.</p>
+      </div>
+
+      <h3>Core Web Vitals en laboratorio</h3>
+      <p>Mobile, CPU 4×, 1.6 Mbps. Fuente: <code>dados/cwv-2026-11-10.json</code>.</p>
+
+      <div style="overflow-x:auto;">
+      <table>
+        <tr><th>Página</th><th>LCP (meta: &lt; 2.5 s)</th><th>CLS</th><th>TBT</th></tr>
+        <tr><td>Home</td><td>3.5 s</td><td>0.018</td><td>657 ms</td></tr>
+        <tr><td>Vehicle window tinting</td><td>3.3 s</td><td>0.035</td><td>630 ms</td></tr>
+        <tr><td>Ceramic coating</td><td>3.6 s</td><td>0.026</td><td>723 ms</td></tr>
+        <tr><td>Paint protection</td><td>3.9 s</td><td><strong style="color:var(--red);">0.155</strong></td><td>816 ms</td></tr>
+        <tr><td>Vehicle wraps</td><td>3.4 s</td><td>0.026</td><td>683 ms</td></tr>
+        <tr style="background:#fcfaf7;"><td><strong>Gallery</strong></td><td>2.8 s</td><td><strong style="color:var(--red);">0.296</strong></td><td>643 ms</td></tr>
+        <tr><td>About</td><td>3.4 s</td><td>0.033</td><td>621 ms</td></tr>
+        <tr><td>Contact</td><td>3.8 s</td><td>0.020</td><td>619 ms</td></tr>
+        <tr><td>Blog</td><td>2.7 s</td><td>0.016</td><td>626 ms</td></tr>
+      </table>
+      </div>
+
+      <div class="status-note">
+        <p><strong>Lectura:</strong> la meta de LCP es menor a 2.5 s y todas las páginas están por encima. El CLS de la galería (0.30) es el peor — coincide con la tarea de galería que entra en diciembre. Son valores de laboratorio con throttling severo, no datos de campo. INP no existe en laboratorio; TBT es el proxy.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 HALLAZGOS -->
+  <div class="card" id="hallazgos">
+    <div class="card-body">
+      <h2><span class="slide-num">04</span> Hallazgos y riesgos para decidir</h2>
+
+      <div class="finding" style="border-left-color: var(--red);">
+        <div class="finding-header">
+          <span class="finding-title">1 · Redirecciones desactualizadas (hallazgo 11/11)</span>
+          <span class="badge badge-critico">Crítico · requiere hosting/admin</span>
+        </div>
+        <p>El plugin Redirection está activo, pero <strong>no ejecuta</strong> las 12 reglas del banco de datos: todas responden 404 hoy — ej.: <code>/simulator/</code> con 249 visitas registradas, <code>/photogallery</code>, <code>/the-importance-of-house-window-tint/</code>. Los redirects que sí funcionan vienen de una capa antigua (probable <code>.htaccess</code>) con <strong>destinos errados</strong>: <code>/services/paint-protection-film/</code> → <code>/testimonial/paint-protection-film/</code> y <code>/services/</code> → <code>/services-list/</code>.</p>
+        <p style="margin-top:8px;">URLs legadas con <strong>más de 30,000 visitas registradas</strong> están en 404 o yendo a un destino errado. <strong>Corrección:</strong> UI admin del plugin + revisión del <code>.htaccess</code> (hosting).</p>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-title">2 · Claims en línea: qué publicamos y por qué</span>
+          <span class="badge badge-info">Transparencia</span>
+        </div>
+        <p>"Over 20 years" ya era público antes del sprint. "4.9 en más de 200 reseñas" refleja el <code>aggregateRating</code> 4.9/210 que el JSON-LD de la homepage ya declara. Los marcadores <code>&lt;!-- CONFIRMAR COM CLIENTE --&gt;</code> fueron removidos <strong>sin escribir</strong> las frases pendientes (garantía, rango de precio, same-day, marcas de película) — <strong>nada sin confirmación entró en línea, excepto los claims reflejados y documentados</strong>. Los números reales siguen en la lista de confirmación (sección 05).</p>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-title">3 · Canibalización en el blog</span>
+          <span class="badge badge-exec">Pendiente de 301</span>
+        </div>
+        <p>El blog ya tenía 4 posts sobre calor y 3 sobre ceramic. Estrategia: reescribir el principal de cada tema (hecho — 535 y 539) y consolidar los demás. Recomendación: consolidar los posts 568 y 587 en el 535 vía 301 — con la salvedad del hallazgo 1: hoy el 301 depende de arreglar la ejecución del Redirection.</p>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-title">4 · FAQ rich result: expectativa correcta</span>
+          <span class="badge badge-medio">Gestión de expectativa</span>
+        </div>
+        <p>Desde agosto de 2023, Google solo muestra snippet de FAQ para sitios de gobierno y salud. <strong>No prometemos snippet de FAQ al cliente.</strong> El valor real es claridad para el lector y para las IAs.</p>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-title">5 · Ley de Nevada: números verificados</span>
+          <span class="badge badge-info">Verificado</span>
+        </div>
+        <p>Los números fueron conferidos contra el texto del NRS 484D.440 (espejo nevada.public.law; el sitio oficial devuelve 403). El texto en línea avisa "información general, confirme la ley vigente". No escribimos la "línea AS-1" porque el estatuto usa 29 pulgadas.</p>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-title">6 · ¿Quién es dueño de "window tint las vegas"?</span>
+          <span class="badge badge-alto">Decisión del cliente</span>
+        </div>
+        <p>About, Gallery y Vehicle compiten por la misma keyword. Recomendación: <strong>Vehicle</strong> como dueña de la keyword; About y Gallery siguen su camino sin disputar el término.</p>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-title">7 · Rastreo: píxel de Facebook</span>
+          <span class="badge badge-info">Informativo</span>
+        </div>
+        <p>El píxel de Facebook (1×1) es la única <code>&lt;img&gt;</code> sin alt, por ser invisible. Sin acción necesaria.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 SOLICITUDES -->
+  <div class="card" id="solicitudes">
+    <div class="card-body">
+      <h2><span class="slide-num">05</span> Solicitudes al cliente (agenda de la reunión)</h2>
+      <p>Ocho pedidos ordenados por impacto. Los dos primeros destraban el mayor volumen de trabajo pendiente.</p>
+
+      <ul class="check-list">
+        <li><span class="check-icon exec">1</span><span><strong>Acceso de gerente al Google Business Profile</strong> — destraba el kit de GBP (NAP, descripción, 7 servicios, 4 posts) que ya está listo.</span></li>
+        <li><span class="check-icon exec">2</span><span><strong>Acceso al panel del hosting</strong> (PHP 8.x y caché de página) — <strong>el mismo acceso</strong> resuelve <code>/llms.txt</code> en la raíz, la plantilla del blog ("Start here") y el <code>.htaccess</code> de los redirects del hallazgo 1.</span></li>
+        <li><span class="check-icon exec">3</span><span><strong>Acceso admin al WordPress</strong> — para la UI del plugin Redirection y la plantilla del blog, si se prefiere por ahí.</span></li>
+        <li><span class="check-icon exec">4</span><span><strong>Confirmar datos</strong>: garantía (texto y plazo), same-day, sábado, rango de precio, años de experiencia y número real de reseñas <span style="color:var(--gray-600);">(hoy el sitio declara 4.9/210, reflejando el schema de la home)</span>.</span></li>
+        <li><span class="check-icon exec">5</span><span><strong>Confirmar zonas atendidas</strong> (candidatas: Henderson, North Las Vegas, Summerlin, Spring Valley, Paradise, Enterprise, Centennial Hills, Southern Highlands) y la <strong>tarifa del servicio móvil</strong>.</span></li>
+        <li><span class="check-icon exec">6</span><span><strong>Informar marca y línea</strong> de las películas (Solar Gard), del PPF, del vinil y del coating.</span></li>
+        <li><span class="check-icon exec">7</span><span><strong>Autorización de uso de imagen</strong> y carpeta con fotos de antes y después.</span></li>
+        <li><span class="check-icon exec">8</span><span><strong>¿Se colecta consentimiento para SMS?</strong> — define el canal de la campaña de reseñas.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 06 DEPENDENCIAS -->
+  <div class="card" id="dependencias">
+    <div class="card-body">
+      <h2><span class="slide-num">06</span> Dependencias abiertas</h2>
+
+      <ul class="check-list">
+        <li><span class="check-icon pend">–</span><span><strong>Ubersuggest:</strong> token OAuth ausente. Quedan pendientes los volúmenes de los temas nuevos (clusters 1, 2, 4 y 5) y de commercial y home. La lista de términos está en <code>clusters/NOTAS.md</code> §2.</span></li>
+        <li><span class="check-icon pend">–</span><span><strong><code>/blog/</code> "Start here":</strong> el tema no renderiza el contenido de la página de posts — el bloque con los 5 enlaces guía requiere edición de plantilla (hosting/admin). Probado y revertido el 11/11.</span></li>
+        <li><span class="check-icon ok">✓</span><span><strong>Comentarios en eKyte:</strong> 12 de entrega (10/11, IDs 13965797–13965810) + 7 de "PUBLICADO" (11/11, IDs 13965935–13965941) + 7 de cierre "100% CONCLUÍDA" (11/11, IDs 13965962–13965968), postados y verificados en las tareas 10671150, 10671155, 10671161, 10671166, 10671183, 10671201 y 10671206.</span></li>
+      </ul>
+
+      <div class="status-note">
+        <p><strong>Regla que rigió la publicación:</strong> nada entró en línea sin confirmación del cliente, excepto los claims que ya eran públicos o que reflejan datos que el propio sitio declara. Las frases pendientes quedaron <em>fuera</em> del texto — no escritas con placeholder.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- F ARCHIVOS -->
+  <div class="card" id="archivos">
+    <div class="card-body">
+      <h2><span class="slide-num">F</span> Dónde están los archivos <span class="draft-badge" style="margin-left:8px;">uso interno</span></h2>
+
+      <details class="fold">
+        <summary>Ruta de los entregables del Sprint 1</summary>
+        <div class="fold-body">
+          <p><code>entregas/sprint1-conteudo/</code></p>
+          <ul style="margin:8px 0 16px 22px; font-size:14px; color:var(--gray-700); line-height:1.9;">
+            <li><code>servicos/</code> — 6 <code>.html</code>, 6 <code>.faq.jsonld</code>, <code>NOTAS.md</code></li>
+            <li><code>clusters/</code> — 5 <code>.html</code>, 10 <code>.jsonld</code>, <code>internal-links-map.md/.csv</code>, <code>NOTAS.md</code>, <code>validar-pecas.py</code></li>
+            <li><code>alt-text/alt-map.csv</code></li>
+            <li><code>gbp-reviews/gbp-kit.md</code> y <code>reviews-kit.md</code></li>
+          </ul>
+          <p><code>dados/cwv-2026-11-10.json</code> y <code>wp-ops/measure_cwv.py</code> (reutilizable en los reportes 2 y 3). Backups: <code>wp-ops-backup/</code> (<code>media_alt_before.json</code>, <code>servicos-live/</code>, <code>posts-before-sprint1/</code>).</p>
+        </div>
+      </details>
+
+      <details class="fold">
+        <summary>Fuente de datos de este check-in</summary>
+        <div class="fold-body">
+          <p>Este informe fue generado a partir de <code>DADOS-CHECKIN-2026-11-11.md</code>, actualizado con la publicación del 11/11. Medición del 10/11; publicación y verificación en vivo del 11/11.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <div class="footer">
+    Diamond Tint &amp; Wraps · Check-in SEO 11/11/2026 · Sprint 1 publicado y verificado · V4 Company
+  </div>
+
+</div>
+
+</body>
+</html>
