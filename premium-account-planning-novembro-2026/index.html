@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Account Planning — Premium Cleaning Services NJ &amp; NY</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root{
+    --red: rgb(229,9,20); --red-dark: rgb(180,7,16); --red-light: rgb(255,60,70);
+    --gold:#c9a96e; --gold-dark:#a8863f; --gold-soft:#f5f0e6;
+    --ink:#171717; --ink-2:#2b2b2b;
+    --g50:#fafafa; --g100:#f4f4f2; --g200:#e8e6e1; --g300:#d6d3cc;
+    --g500:#8f8b82; --g600:#6b6760; --g700:#4a473f; --g800:#302e29; --g900:#1d1c19;
+    --ok:#1f7a4d; --ok-bg:#e9f5ee; --warn:#a1670a; --warn-bg:#fdf3e3; --bad:#a1121c; --bad-bg:#fbeaec;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(0,0,0,.04), 0 8px 24px -12px rgba(0,0,0,.18);
+  }
+  html { scroll-behavior:smooth; }
+  body{ font-family:'Ubuntu',-apple-system,BlinkMacSystemFont,sans-serif; background:#f8f7f4; color:var(--ink); line-height:1.65; font-size:16px; -webkit-font-smoothing:antialiased; }
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 24px; }
+
+  /* ---------- COVER ---------- */
+  .cover{ background:linear-gradient(135deg,#0b0b0b 0%,#161513 45%,#241f18 100%); color:#fff; padding:72px 24px 56px; position:relative; overflow:hidden; }
+  .cover::after{ content:''; position:absolute; inset:0; background:radial-gradient(700px 320px at 78% -10%, rgba(201,169,110,.22), transparent 60%); pointer-events:none; }
+  .cover-inner{ position:relative; z-index:1; max-width:1080px; margin:0 auto; }
+  .kicker{ display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); border:1px solid rgba(201,169,110,.35); padding:6px 12px; border-radius:100px; }
+  .kicker::before{ content:''; width:6px; height:6px; border-radius:50%; background:var(--gold); }
+  h1{ font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:clamp(30px,4.6vw,52px); line-height:1.08; letter-spacing:-.02em; margin:22px 0 14px; }
+  h1 .accent{ color:var(--gold); }
+  .cover p.sub{ color:#cdc8bd; font-size:clamp(15px,1.7vw,18px); max-width:760px; }
+  .cover-meta{ display:flex; flex-wrap:wrap; gap:10px 28px; margin-top:30px; font-size:13px; color:#a9a396; }
+  .cover-meta strong{ color:#fff; font-weight:500; }
+  .verdict{ margin-top:36px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); border-left:3px solid var(--red); border-radius:0 12px 12px 0; padding:20px 22px; max-width:900px; }
+  .verdict .label{ font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--red-light); }
+  .verdict p{ color:#efece5; font-size:clamp(16px,2vw,20px); line-height:1.5; margin-top:6px; }
+  .verdict b{ color:#fff; }
+
+  /* ---------- NAV ---------- */
+  .toc{ position:sticky; top:0; z-index:50; background:rgba(248,247,244,.92); backdrop-filter:blur(12px); border-bottom:1px solid var(--g200); }
+  .toc-inner{ max-width:1080px; margin:0 auto; padding:10px 24px; display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; }
+  .toc-inner::-webkit-scrollbar{ display:none; }
+  .toc a{ flex:none; font-size:12.5px; font-weight:500; color:var(--g600); text-decoration:none; padding:7px 12px; border-radius:8px; white-space:nowrap; }
+  .toc a:hover{ background:var(--g100); color:var(--ink); }
+
+  main{ padding:56px 0 80px; }
+  section{ margin-bottom:64px; scroll-margin-top:64px; }
+  .sec-head{ display:flex; align-items:flex-start; gap:16px; margin-bottom:22px; }
+  .sec-num{ flex:none; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--gold-dark); border:1px solid var(--g300); background:#fff; border-radius:8px; width:38px; height:38px; display:grid; place-items:center; margin-top:3px; }
+  h2{ font-family:'Plus Jakarta Sans',sans-serif; font-size:clamp(22px,3vw,30px); font-weight:800; letter-spacing:-.02em; line-height:1.2; }
+  .sec-sub{ color:var(--g600); font-size:14.5px; margin-top:4px; }
+  h3{ font-family:'Plus Jakarta Sans',sans-serif; font-size:17px; font-weight:700; margin:28px 0 10px; letter-spacing:-.01em; }
+  h4{ font-size:14px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--g600); margin:22px 0 8px; }
+  p{ margin:10px 0; color:var(--g800); }
+  a{ color:var(--red-dark); }
+  strong{ font-weight:700; color:var(--ink); }
+  em{ color:var(--g700); }
+  ul,ol{ margin:10px 0 10px 22px; color:var(--g800); }
+  li{ margin:6px 0; }
+  code{ font-family:'JetBrains Mono',monospace; font-size:.86em; background:var(--g100); border:1px solid var(--g200); padding:1px 5px; border-radius:5px; color:var(--ink-2); }
+
+  /* ---------- CARDS ---------- */
+  .grid{ display:grid; gap:14px; }
+  .g2{ grid-template-columns:repeat(2,1fr); }
+  .g3{ grid-template-columns:repeat(3,1fr); }
+  .g4{ grid-template-columns:repeat(4,1fr); }
+  .card{ background:#fff; border:1px solid var(--g200); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow); }
+  .card h5{ font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:700; margin-bottom:6px; }
+  .card p{ font-size:13.5px; color:var(--g600); margin:0; }
+  .stat{ display:flex; flex-direction:column; gap:4px; }
+  .stat .k{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--g500); }
+  .stat .v{ font-family:'Plus Jakarta Sans',sans-serif; font-size:30px; font-weight:800; line-height:1.05; letter-spacing:-.03em; }
+  .stat .v.bad{ color:var(--bad); } .stat .v.warn{ color:var(--warn); } .stat .v.ok{ color:var(--ok); }
+  .stat .d{ font-size:12px; color:var(--g600); }
+
+  /* ---------- SCORE ---------- */
+  .score-wrap{ display:grid; grid-template-columns:260px 1fr; gap:28px; align-items:center; background:#fff; border:1px solid var(--g200); border-radius:18px; padding:28px; box-shadow:var(--shadow); }
+  .score-dial{ position:relative; width:220px; height:220px; margin:0 auto; }
+  .score-dial svg{ transform:rotate(-90deg); }
+  .score-dial .num{ position:absolute; inset:0; display:grid; place-items:center; text-align:center; }
+  .score-dial .num b{ font-family:'Plus Jakarta Sans',sans-serif; font-size:56px; font-weight:800; letter-spacing:-.04em; line-height:1; display:block; }
+  .score-dial .num span{ font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--g500); }
+  .bars{ display:flex; flex-direction:column; gap:12px; }
+  .bar-row{ display:grid; grid-template-columns:190px 1fr 42px; gap:12px; align-items:center; font-size:13px; }
+  .bar-row .lbl{ color:var(--g700); font-weight:500; }
+  .bar-track{ height:9px; background:var(--g100); border-radius:100px; overflow:hidden; }
+  .bar-fill{ height:100%; border-radius:100px; }
+  .bar-row .val{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--g600); text-align:right; }
+
+  /* ---------- TABLES ---------- */
+  .tbl-wrap{ overflow-x:auto; border:1px solid var(--g200); border-radius:12px; background:#fff; box-shadow:var(--shadow); }
+  table{ width:100%; border-collapse:collapse; font-size:13.5px; min-width:620px; }
+  thead th{ background:var(--g50); text-align:left; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--g500); font-weight:600; padding:11px 14px; border-bottom:1px solid var(--g200); white-space:nowrap; }
+  td{ padding:11px 14px; border-bottom:1px solid var(--g100); vertical-align:top; color:var(--g800); }
+  tbody tr:last-child td{ border-bottom:none; }
+  tbody tr:hover{ background:#fcfcfa; }
+  td.num, th.num{ text-align:right; font-family:'JetBrains Mono',monospace; font-size:12.5px; white-space:nowrap; }
+  .tag{ display:inline-block; font-size:10.5px; font-weight:600; letter-spacing:.04em; padding:2px 8px; border-radius:100px; white-space:nowrap; }
+  .t-bad{ background:var(--bad-bg); color:var(--bad); }
+  .t-warn{ background:var(--warn-bg); color:var(--warn); }
+  .t-ok{ background:var(--ok-bg); color:var(--ok); }
+  .t-neutral{ background:var(--g100); color:var(--g600); }
+  .mono{ font-family:'JetBrains Mono',monospace; font-size:12px; }
+
+  /* ---------- CALLOUTS ---------- */
+  .callout{ border-radius:12px; padding:18px 20px; margin:18px 0; border:1px solid; font-size:14px; }
+  .callout .ct{ font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; margin-bottom:6px; font-weight:500; }
+  .callout p:last-child{ margin-bottom:0; }
+  .c-bad{ background:var(--bad-bg); border-color:#f2c9cd; } .c-bad .ct{ color:var(--bad); }
+  .c-warn{ background:var(--warn-bg); border-color:#f0dcb8; } .c-warn .ct{ color:var(--warn); }
+  .c-ok{ background:var(--ok-bg); border-color:#c8e3d4; } .c-ok .ct{ color:var(--ok); }
+  .c-info{ background:#f2f5f8; border-color:#d9e2ea; } .c-info .ct{ color:#3d5a73; }
+
+  /* ---------- FUNNEL ---------- */
+  .funnel{ display:grid; gap:8px; }
+  .fstep{ display:grid; grid-template-columns:44px 1fr auto; gap:14px; align-items:center; background:#fff; border:1px solid var(--g200); border-radius:12px; padding:14px 18px; }
+  .fstep .n{ width:34px; height:34px; border-radius:9px; display:grid; place-items:center; font-family:'JetBrains Mono',monospace; font-size:12px; background:var(--g100); color:var(--g600); }
+  .fstep .t b{ display:block; font-size:14px; }
+  .fstep .t span{ font-size:12.5px; color:var(--g600); }
+  .fstep.broken{ border-color:#f0c6ca; background:#fffafa; }
+  .fstep.broken .n{ background:var(--bad-bg); color:var(--bad); }
+  .fstep.ok .n{ background:var(--ok-bg); color:var(--ok); }
+
+  /* ---------- TIMELINE ---------- */
+  .phase{ display:grid; grid-template-columns:150px 1fr; gap:22px; padding:22px 0; border-top:1px solid var(--g200); }
+  .phase:last-child{ border-bottom:1px solid var(--g200); }
+  .phase .when{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--gold-dark); padding-top:3px; }
+  .phase .when b{ display:block; font-family:'Plus Jakarta Sans',sans-serif; font-size:15px; color:var(--ink); letter-spacing:-.01em; text-transform:none; margin-bottom:2px; }
+  .phase ol{ margin:0 0 0 18px; }
+  .phase li{ margin:7px 0; font-size:14px; }
+  .phase li b{ font-weight:700; }
+  .phase .why{ margin-top:10px; font-size:12.5px; color:var(--g600); background:var(--g50); border-left:2px solid var(--g300); padding:8px 12px; border-radius:0 6px 6px 0; }
+
+  /* ---------- MISC ---------- */
+  .check{ list-style:none; margin-left:0; }
+  .check li{ display:flex; gap:10px; align-items:flex-start; font-size:14px; padding:8px 0; border-bottom:1px dashed var(--g200); }
+  .check li:last-child{ border-bottom:none; }
+  .check .ic{ flex:none; width:20px; height:20px; border-radius:50%; display:grid; place-items:center; font-size:11px; font-weight:700; margin-top:1px; }
+  .ic-ok{ background:var(--ok-bg); color:var(--ok); }
+  .ic-no{ background:var(--bad-bg); color:var(--bad); }
+  .foot{ border-top:1px solid var(--g200); padding-top:24px; font-size:12.5px; color:var(--g500); }
+  .method{ font-size:12.5px; color:var(--g600); background:#fff; border:1px solid var(--g200); border-radius:12px; padding:18px 20px; }
+  .method code{ font-size:11.5px; }
+
+  /* ---------- CHANNELS / SCORE DUO / TIMELINE ---------- */
+  .score-block{ margin-top:26px; }
+  .score-block .score-title{ display:flex; align-items:center; gap:10px; margin:0 0 12px; }
+  .score-block .score-title h3{ margin:0; font-size:16px; }
+  .score-block .score-title .tag{ font-size:10px; }
+  .channel-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .channel{ background:#fff; border:1px solid var(--g200); border-radius:14px; padding:20px; box-shadow:var(--shadow); border-top:3px solid var(--g300); }
+  .channel.google{ border-top-color:#1a73e8; }
+  .channel.bing{ border-top-color:#008373; }
+  .channel h5{ font-family:'Plus Jakarta Sans',sans-serif; font-size:15px; margin-bottom:6px; }
+  .channel p{ font-size:13.5px; color:var(--g600); margin:0; }
+  .channel .verdict-line{ margin-top:12px; font-size:13px; font-weight:700; color:var(--ink); }
+  .mirror tr.live td{ background:#fffafa; }
+  .mirror tr.repo td{ background:#f7fbf8; }
+  .tl{ display:grid; gap:10px; }
+  .tl-item{ display:grid; grid-template-columns:112px minmax(0,1fr) auto; gap:14px; align-items:start; background:#fff; border:1px solid var(--g200); border-radius:12px; padding:13px 16px; }
+  .tl-item .d{ font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--gold-dark); padding-top:2px; }
+  .tl-item .t{ min-width:0; }
+  .tl-item .t b{ display:block; font-size:13.5px; }
+  .tl-item .t span{ font-size:12.5px; color:var(--g600); }
+  .tl-item code{ overflow-wrap:break-word; }
+  .tl-item .s{ padding-top:1px; }
+  .src{ font-size:11px; color:var(--g500); font-family:'JetBrains Mono',monospace; }
+
+  @media (max-width:860px){
+    .score-wrap{ grid-template-columns:1fr; }
+    .channel-grid{ grid-template-columns:1fr; }
+    .tl-item{ grid-template-columns:90px minmax(0,1fr); }
+    .tl-item .s{ grid-column:2; }
+    .g3,.g4{ grid-template-columns:repeat(2,1fr); }
+    .bar-row{ grid-template-columns:140px 1fr 38px; }
+    .phase{ grid-template-columns:1fr; gap:10px; }
+  }
+  @media (max-width:600px){
+    .g2,.g3,.g4{ grid-template-columns:1fr; }
+    .cover{ padding:52px 20px 44px; }
+    main{ padding:36px 0 60px; }
+    section{ margin-bottom:48px; }
+  }
+  @media print{
+    .toc{ display:none; } body{ background:#fff; } .card,.tbl-wrap,.score-wrap{ box-shadow:none; }
+    .cover{ -webkit-print-color-adjust:exact; print-color-adjust:exact; break-after:page; }
+    main{ padding:24px 0 40px; }
+    section{ margin-bottom:40px; }
+    .sec-head{ break-after:avoid; }
+    .score-block{ break-inside:avoid; }
+    .tl-item{ break-inside:avoid; }
+    .tl-item .d{ white-space:nowrap; }
+    .channel-grid{ break-inside:avoid; }
+    .tbl-wrap{ overflow:visible; }
+    table{ min-width:0; font-size:11.5px; }
+    thead th{ font-size:9.5px; padding:8px 9px; white-space:normal; }
+    td{ padding:8px 9px; font-size:11.5px; }
+    td.mono, td code, .method code{ word-break:break-word; }
+    .score-wrap{ grid-template-columns:200px 1fr; gap:20px; }
+    .score-dial{ width:180px; height:180px; }
+    .score-dial svg{ width:180px; height:180px; }
+    .score-dial .num b{ font-size:44px; }
+    .g3,.g4{ grid-template-columns:repeat(2,1fr); }
+    .bar-row{ grid-template-columns:170px 1fr 36px; }
+    section{ break-inside:auto; }
+    .phase{ display:block; break-inside:auto; padding:18px 0; }
+    .phase .when{ margin-bottom:8px; break-after:avoid; }
+    .tbl-wrap, .callout, .card{ break-inside:avoid; }
+    h2,h3{ break-after:avoid; }
+  }
+
+  .part{ margin:8px 0 40px; padding:14px 18px; border-left:3px solid var(--gold); background:var(--gold-soft); font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--gold-dark); border-radius:0 10px 10px 0; }
+  p{ margin:10px 0; color:var(--g800); }
+  a{ color:var(--gold-dark); }
+  li{ margin:4px 0; }
+  .tbl-wrap{ margin:14px 0; }
+  section h3{ margin-top:30px; }
+  p,li,td,.verdict p,.callout p{ overflow-wrap:anywhere; }
+  a{ overflow-wrap:anywhere; }
+</style>
+</head>
+<body>
+<header class="cover">
+  <div class="cover-inner">
+    <span class="kicker">Account Planning · Bing Ads + ChatGPT Ads · SEO / AIO</span>
+    <h1>Premium Cleaning Services: <span class="accent">US$ 800 para destravar demanda B2B</span> em NJ e NY</h1>
+    <p class="sub">Account planning atualizado: histórico desde a auditoria inicial, dados de Ubersuggest e concorrentes, relatório de desempenho do Bing e plano de mídia de US$ 400 em Bing Ads e US$ 400 em ChatGPT Ads.</p>
+    <div class="cover-meta">
+      <div><strong>Cliente</strong> · Premium Cleaning Services (Premium Contractors)</div>
+      <div><strong>Domínio</strong> · premiumcleaningnj.com</div>
+      <div><strong>Data</strong> · 11/11/2026 · substitui o planning de 08/01/2026</div>
+      <div><strong>Responsável</strong> · Marcos Luciano · V4 Company · Peretto &amp; Co</div>
+    </div>
+    <div class="verdict">
+      <div class="label">Resumo em uma frase</div>
+      <p>O ICP já foi validado, mas a Premium <b>não é encontrada</b>: Bing indexa <b>10 de 65</b> URLs, o orgânico nacional está em <b>0</b>, e <b>76%</b> do gasto do Bing foi fora do alvo. A proposta é <b>destravar o índice primeiro</b>, capturar demanda no <b>Bing</b> (CPC US$ 2,11 contra US$ 11–30 no Google) e <b>testar o ChatGPT Ads</b> com regras de parada claras.</p>
+    </div>
+  </div>
+</header>
+<div class="wrap">
+  <div class="grid g4" style="margin-top:28px">
+    <div class="card stat"><span class="k">Orçamento inicial</span><span class="v">US$ 800</span><span class="d">US$ 400 Bing + US$ 400 ChatGPT Ads</span></div>
+    <div class="card stat"><span class="k">Bing fora do alvo</span><span class="v bad">76%</span><span class="d">US$ 104,92 de US$ 138,70 no search</span></div>
+    <div class="card stat"><span class="k">URLs no índice do Bing</span><span class="v bad">10<span style="font-size:16px;color:var(--g500)"> / 65</span></span><span class="d">0 das 10 páginas-alvo</span></div>
+    <div class="card stat"><span class="k">Demanda B2B (Ubersuggest)</span><span class="v">~1,35 mi</span><span class="d">buscas/mês nos EUA · 29% do dashboard é fora do ICP</span></div>
+  </div>
+</div>
+
+<nav class="toc"><div class="toc-inner">
+<a href="#s1">Mensagem de Apresentação</a>
+<a href="#s2">Informações Gerais da Em…</a>
+<a href="#s3">Contexto do Projeto</a>
+<a href="#s4">Concorrência e Benchmark</a>
+<a href="#s5">Dados e Resultados</a>
+<a href="#s6">Resumo do cliente (5 lin…</a>
+<a href="#s7">Mercados de Atuação</a>
+<a href="#s8">Análise PESTEL (Tri-Stat…</a>
+<a href="#s9">Histórico de crescimento…</a>
+<a href="#s10">Personas</a>
+<a href="#s11">Tamanho de mercado (R$)</a>
+<a href="#s12">Benchmarks de funil (inb…</a>
+<a href="#s13">Dores de negócio (venda,…</a>
+<a href="#s14">Soluções V4 correlaciona…</a>
+<a href="#s15">Dez oportunidades de ven…</a>
+<a href="#s16">Contexto e Introdução</a>
+<a href="#s17">Comparativo mensal</a>
+<a href="#s18">Insights e Recomendações…</a>
+<a href="#s19">Proposta de orçamento in…</a>
+<a href="#s20">Próximos passos (12/11 →…</a>
+<a href="#s21">Próximos testes</a>
+<a href="#s22">Metas e KPIs do ciclo (0…</a>
+<a href="#s23">Conclusão Geral</a>
+<a href="#s24">Premissas e limites dest…</a>
+<a href="#s25">Fontes</a>
+</div></nav>
+<main class="wrap">
+<section id="s1"><div class="sec-head"><div class="sec-num">01</div><div><h2>Mensagem de Apresentação</h2></div></div>
+<p>Olá, aqui é o Marcos Luciano, Estrategista de Marketing da V4 Company (unidade Peretto &amp; Co, Porto Alegre). Atuo numa squad formada por Head, Gestor de Tráfego, Designer e Copywriter, estruturando empresas no digital para que vendam mais.</p>
+<p><strong>Contexto da retomada:</strong> o projeto Premium Cleaning teve um primeiro ciclo (jan–jun/2026) com Meta Ads e Bing Ads, e a gestão foi retomada por mim em out/2026. Desde então o trabalho seguiu três frentes: (1) auditoria e retrofit SEO/AIO do site, (2) biblioteca editorial de 40 artigos (24 publicados), (3) correção do Bing Ads. Este documento junta as três frentes mais ChatGPT Ads num único planejamento.</p>
+<p><strong>Fontes usadas:</strong> account planning de jan/2026; auditoria SEO inicial (<code>premium-seo-audit</code>); check-in de 04/11 (<code>premium-checkin-outubro3</code>); plano de correção do Bing (04/10–02/11); auditoria AIO/GEO de 11/11; estratégia de mídia de jun/2026; pesquisa web (links ao final). <strong>Não tive acesso</strong> ao kick-off original, à planilha de faturamento nem ao CRM; onde isso faz falta, está sinalizado como "a confirmar".</p>
+</section>
+<section id="s2"><div class="sec-head"><div class="sec-num">02</div><div><h2>Informações Gerais da Empresa</h2></div></div>
+<div class="tbl-wrap"><table><thead><tr><th>Campo</th><th>Informação</th></tr></thead><tbody>
+<tr><td>Nome</td><td>Premium Cleaning Services (braço de limpeza da Premium Contractors, fundada em 2023)</td></tr>
+<tr><td>Website</td><td><a href="https://premiumcleaningnj.com" target="_blank" rel="noopener">https://premiumcleaningnj.com</a> (LP paga em <code>lp.premiumcleaningnj.com</code>, fora do escopo SEO por decisão do cliente)</td></tr>
+<tr><td>Redes / presença</td><td>Google Business Profile (5,0★, 43 avaliações), LinkedIn, Yelp, Facebook</td></tr>
+<tr><td>Setor</td><td>Limpeza comercial B2B (janitorial, hotelaria, escritórios, restaurantes/cozinhas, carpetes e pisos, pós-obra)</td></tr>
+<tr><td>Modelo</td><td>B2B com ciclo de 2 a 6 semanas; B2C residencial <strong>fora do ICP</strong></td></tr>
+<tr><td>Produtos/serviços</td><td>Janitorial recorrente, limpeza de hotel (housekeeping de áreas e quartos), carpet/floor care, restaurant &amp; kitchen (inclui hood/exaustão — escopo a confirmar com o cliente), pós-obra</td></tr>
+<tr><td>Ticket / LTV</td><td>Meta de jan/2026: contrato médio de ~US$ 20 mil/ano. Preço publicado nas páginas: a partir de US$ 3.000/mês. Case Madison: US$ 2.800/semana (~US$ 145 mil/ano). LTV: <strong>a confirmar</strong></td></tr>
+<tr><td>Canais ativos</td><td>Bing Ads (Search), SEO/AIO (24 artigos no ar), Google Business Profile. Meta Ads encerrado após o sprint Copa 2026</td></tr>
+<tr><td>Diferenciais</td><td>Herança operacional da construção civil; app de checklist com relatório diário (prova de execução); GBP 5,0★; resposta rápida</td></tr>
+</tbody></table></div>
+</section>
+<section id="s3"><div class="sec-head"><div class="sec-num">03</div><div><h2>Contexto do Projeto</h2></div></div>
+<p><strong>Principal desafio:</strong> transformar presença digital em <strong>demanda B2B qualificada e previsível</strong>. O gargalo mudou ao longo do projeto:</p>
+<ol><li><em>Jan–jun:</em> mídia queimando verba com tráfego sujo (Bing: US$ 895,65 para 1 lead; CPA &gt; US$ 500 em julho).</li><li><em>Out:</em> conteúdo (24 de 40 artigos) e on-page prontos (92/100), mas <strong>ninguém encontra</strong>.</li><li><em>Hoje (11/11):</em> o gargalo é <strong>retrieval</strong> — o Bing indexa 10 de 65 URLs (0 das 10 páginas-alvo), e no Google 37 dos 39 cliques de 3 meses foram para o subdomínio <code>insights.</code>, que hoje responde HTTP 000.</li></ol>
+<p><strong>Onde o projeto está agora:</strong></p>
+<ul><li>Site tecnicamente pronto; versão que corrige host canônico, schema, sitemap e IndexNow está <strong>mergeada no GitHub e não publicada</strong> (gate: Lovable Publish).</li><li>Scores AIO/GEO: Google 41/100 · Bing/IA 39/100.</li><li>Bing Ads: 30 dias, US$ 186,59, 95 cliques, 76% do gasto no search fora do alvo; 1 conversão B2B real + 1 residencial. Em 03/11 entrou a 1ª conversão que nasce do desenho correto (Carmen &amp; Pearl, "office cleaning near me").</li><li>Apostas vivas: retrieval (prioridade máxima), defender o core local, expandir raio (Harrison e Kearny), head terms.</li><li>Pendências do cliente: acesso de editor no GBP, 12 reviews novas, resposta sobre hood cleaning, oferta "25% off", provas dos cases.</li></ul>
+</section>
+<section id="s4"><div class="sec-head"><div class="sec-num">04</div><div><h2>Concorrência e Benchmark</h2></div></div>
+<div class="tbl-wrap"><table><thead><tr><th>Concorrente</th><th>Onde aparece</th><th>Força</th><th>Leitura para a Premium</th></tr></thead><tbody>
+<tr><td>Skyline</td><td>"commercial cleaning companies" (top 3 em 76% do grid)</td><td>Domínio do head term local</td><td>Principal alvo do head term; só se ataca com categoria GBP, páginas de cidade e reviews</td></tr>
+<tr><td>Office &amp; Commercial Cleaning</td><td>"office cleaning services" (top 3 em 61%)</td><td>Líder do termo</td><td>Premium é 4ª (27%); disputável</td></tr>
+<tr><td>Glen Ridge, DSY</td><td>Top 3 em pontos fora do raio da Premium</td><td>Proximidade, mesmo com 5 e 2 reviews</td><td>Prova de que o problema é categoria/proximidade, não só review</td></tr>
+<tr><td>Concorrentes com 592 e 734 reviews</td><td>GBP</td><td>Corroboração</td><td>Premium tem 43; meta 100 em 90 dias</td></tr>
+<tr><td>Jani-King / Vanguard / ABM</td><td>Nacionais (jan/2026)</td><td>Marca, escala</td><td>Contra-argumento: operação direta, app de prova, agilidade</td></tr>
+<tr><td>"Mom &amp; Pop" informais</td><td>Local</td><td>Preço</td><td>Contra-argumento: seguro, conformidade, relatório</td></tr>
+<tr><td>Leilão Bing (17 domínios)</td><td>Uline, Walmart, Amazon, care.com</td><td>—</td><td>Ruído de supply; Premium aparece em 21,5% dos leilões</td></tr>
+</tbody></table></div>
+<p><strong>Concorrentes monitorados (Ubersuggest, 27/10/2026, EUA):</strong></p>
+<div class="tbl-wrap"><table><thead><tr><th>Domínio</th><th>Tráfego orgânico/mês</th><th>Keywords orgânicas</th><th>DA</th><th>Backlinks</th><th>Domínios ref.</th></tr></thead><tbody>
+<tr><td>servicemasterclean.com</td><td>420.883</td><td>17.670</td><td>43</td><td>197.177</td><td>6.457</td></tr>
+<tr><td>abm.com</td><td>127.746</td><td>7.078</td><td>55</td><td>369.744</td><td>7.689</td></tr>
+<tr><td>janiking.com</td><td>70.472</td><td>4.756</td><td>43</td><td>62.017</td><td>4.037</td></tr>
+<tr><td>coverall.com</td><td>20.632</td><td>2.517</td><td>42</td><td>21.363</td><td>2.813</td></tr>
+<tr><td>janpro.com</td><td>0</td><td>0</td><td>12</td><td>190</td><td>131</td></tr>
+<tr><td><strong>premiumcleaningnj.com</strong></td><td><strong>0</strong></td><td><strong>5</strong></td><td><strong>5</strong></td><td><strong>54</strong></td><td><strong>43</strong></td></tr>
+</tbody></table></div>
+<ul><li>Nenhum dos 5 concorrentes tem keywords pagas no Ubersuggest: ou o paid das franquias nacionais é baixo nesses termos, ou o dado não cobre. <strong>A confirmar</strong> no Auction Insights (Bing já mostra 17 domínios, mas de supply: Uline, Walmart, Amazon).</li><li>SERPs centrais ("commercial cleaning services", "commercial cleaners near me") têm Yelp e YouTube (9 aparições cada) e ABM (5) no topo; <strong>franquias nacionais não competem em local</strong>, então a Premium disputa com diretórios e empresas locais.</li><li>DA da Premium: 5 aqui vs. 3 na estratégia de IA (outra data); backlinks 54 vs. 23; a base de dados muda a cada leitura, usar a de 27/10.</li></ul>
+<p><strong>Visibilidade em IA (AISV, 14/10, 10 prompts):</strong> Premium <strong>0% de visibilidade e 0 menções</strong>. Líderes: Jani-King 40% (rank médio 3,5), Coverall 30%, Anvil 20%, Vanguard 20%, JAN-PRO 10% (rank 1,0), Stratus 10%, Buildingstars 10%, Anago 10%. Das 95 URLs citadas pelo ChatGPT, <strong>nenhuma é da Premium</strong>; os formatos mais citados são páginas de preço/custo, páginas serviço × local e listas/how-to com ano.</p>
+<p><strong>Benchmark de conteúdo (crawl 27/10, 10 páginas):</strong> melhor rival tem 4.770 palavras e 10 tabelas; pilares da Premium têm 2.352–2.403 palavras e já empatam ou superam concorrentes antigos. Gaps: malha interna, autoridade externa, citação em IA, frescor de indexação.</p>
+</section>
+<section id="s5"><div class="sec-head"><div class="sec-num">05</div><div><h2>Dados e Resultados</h2></div></div>
+<div class="tbl-wrap"><table><thead><tr><th>Fonte</th><th>Dado</th></tr></thead><tbody>
+<tr><td>GSC (6 meses até 30/06)</td><td>59 cliques · 7,23 mil impressões · CTR 0,8% · posição média 4,2 · 530 queries. "commercial cleaning newark": posição 1,6, 201 impressões, <strong>0 cliques</strong></td></tr>
+<tr><td>Bing Ads (04/10–02/11)</td><td>US$ 186,59 · 9.026 impr. · 95 cliques · CPC US$ 1,96 · CTR 1,05% · 2 conversões (1 válida) · CPA US$ 93,30</td></tr>
+<tr><td>Bing Ads (jun/2026, ciclo anterior)</td><td>US$ 895,65 · 87.362 impr. · 1 lead (Eataly) · Audience Network = 55% do gasto</td></tr>
+<tr><td>Meta Ads (jun–jul/2026)</td><td>US$ 300 lifetime (Copa 2026, B2B + residencial); resultado final <strong>não consta na KB</strong></td></tr>
+<tr><td>SEO local (scans 19–20/10)</td><td>"commercial office cleaning service": rank 2,7, top 3 em 69% (1 mi) · top 10 cai de 82% (1 mi) para 23% (2 mi)</td></tr>
+<tr><td>AIO/GEO (11/11)</td><td>Google 41/100 · Bing 39/100 · retrieval 15/100 · 0/12 prompts citados</td></tr>
+<tr><td>Conteúdo</td><td>24/40 artigos (147.518 palavras), 425 páginas nos volumes, 65 URLs no sitemap</td></tr>
+</tbody></table></div>
+<p><strong>Qual canal performa melhor / maior potencial (insight):</strong></p>
+<ul><li><strong>Melhor hoje:</strong> Bing <strong>Search</strong> (CTR 3,85%, CPC US$ 2,11) — Audience Network não entrega (CTR 0,37%, zero conversão).</li><li><strong>Maior potencial:</strong> orgânico/AIO — a Premium já ranqueia (posição 4,2) e tem conteúdo; falta destravar índice e CTR. O pago serve de <strong>ponte de caixa</strong> enquanto isso.</li></ul>
+</section>
+<div class="part">ACCOUNT PLANNING</div>
+<section id="s6"><div class="sec-head"><div class="sec-num">06</div><div><h2>Resumo do cliente (5 linhas)</h2></div></div>
+<p>A Premium Cleaning Services é o braço de limpeza comercial da Premium Contractors (construção), com sede em Newark/NJ e foco B2B em escritórios, hotéis, restaurantes e pós-obra no Tri-State. Seu diferencial é o rigor operacional herdado da construção e um app de checklist que prova a execução. A aquisição ainda dependia de indicação; o digital foi estruturado em 2026 com SEO/AIO, Bing Ads e uma biblioteca de 40 artigos. O ICP já foi validado (Eataly, Carmen &amp; Pearl, Madison), mas o volume é baixo e o índice do Bing/Google ainda não entrega as páginas certas. A meta é fechar contratos de ticket alto (US$ 3 mil/mês ou mais) com mídia enxuta e canais de IA.</p>
+<p><em>(Alimenta: Seção 1 — Business Overview / Mercados-Alvo da Empresa)</em></p>
+</section>
+<section id="s7"><div class="sec-head"><div class="sec-num">07</div><div><h2>Mercados de Atuação</h2></div></div>
+<p><strong>Setores de atuação prioritária:</strong></p>
+<ol><li><strong>Escritórios e pequenas/médias empresas (NJ e Manhattan):</strong> é o principal ativo — "commercial office cleaning service" em top 3 em 69% do raio de 1 milha; 2 das 3 conversões vieram desse perfil.</li><li><strong>Hotelaria (NJ rede/select-service; NYC boutique):</strong> maior volume de busca (165 mil/mês no cluster) e maior ticket; em NYC o Safe Hotels Act (jan/2026) limita a subcontratação em hotéis grandes, favorecendo foco em boutique e áreas especializadas.</li><li><strong>Restaurantes e cozinhas (D1–D8 publicados):</strong> cluster com 8/8 artigos; Eataly validou o ICP. Escopo de hood cleaning depende de resposta do cliente.</li><li><strong>Carpet/floor care e pós-obra:</strong> add-on de margem alta (50%+ segundo o plano de jan/2026) e canal natural via Premium Contractors.</li></ol>
+<p><strong>Tamanho do mercado:</strong> o mercado de janitorial dos EUA é estimado em <strong>~US$ 112 bi em 2026</strong> (IBISWorld), com CAGR de 2,7% (2021–26); outras casas citam US$ 82–84 bi. Nova York cresce ~2,9% a.a. e Nova Jersey ~0,8% a.a. (IBISWorld), com ~5.000 estabelecimentos de janitorial só em NY (cerca de 6% do total dos EUA). Em demanda de busca, o dashboard Ubersuggest da Premium rastreia 50 keywords (volume bruto de 1,9 mi/mês nos EUA; <strong>~1,35 mi/mês no escopo B2B</strong>, ver 2.1 abaixo).</p>
+<h3>2.1 Demanda de busca (Ubersuggest, dashboard <code>traffic-analytics/premium</code>, leitura de 27/10/2026)</h3>
+<div class="callout c-warn"><div class="ct">Como ler os volumes</div><p>Volumes do Ubersuggest são <strong>nacionais (EUA, desktop, en)</strong>, não de NJ/NY, e termos sinônimos se sobrepõem (vários de 22.200). Servem para dimensionar e priorizar, <strong>não</strong> como número de buscas únicas.</p></div>
+<p><strong>Filtro de escopo (importante):</strong> das 50 keywords rastreadas, 3 clusters estão <strong>fora do ICP B2B</strong>. O dashboard os trata como "ponte de entrada", mas eu os tiraria da conta de demanda e da mídia paga:</p>
+<div class="tbl-wrap"><table><thead><tr><th>Cluster</th><th>Keywords</th><th>Volume/mês</th><th>No ICP?</th></tr></thead><tbody>
+<tr><td>Janitorial &amp; Escritório</td><td>29</td><td>1.280.300 (1.175.000 sem "abm american building maintenance" e "hd supply", que são navegação de marca/supply)</td><td>Sim</td></tr>
+<tr><td>Pós-Obra</td><td>4</td><td>72.400</td><td>Sim</td></tr>
+<tr><td>Pisos de Madeira (refinishing)</td><td>8</td><td>351.000</td><td><strong>Não</strong> — serviço de piso residencial/marceneiro</td></tr>
+<tr><td>Argamassa (grout cleaner, zep)</td><td>5</td><td>104.000</td><td><strong>Não</strong> — busca de produto</td></tr>
+<tr><td>Purificação de Ar (home air cleaner)</td><td>4</td><td>97.200</td><td><strong>Não</strong> — compra de eletrodoméstico</td></tr>
+<tr><td><strong>Total bruto no dashboard</strong></td><td>50</td><td><strong>1.904.900</strong></td><td><strong>29% é fora do ICP</strong></td></tr>
+</tbody></table></div>
+<p><strong>Demanda B2B útil:</strong> ~1,35 mi/mês (bruto, com sobreposição). Nota: o código do dashboard ainda traz rótulos de cluster ("Peças", "Tonelagem") que parecem herdados de outro cliente; vale limpar o template.</p>
+<p><strong>Keywords com melhor relação volume × dificuldade (ICP):</strong></p>
+<div class="tbl-wrap"><table><thead><tr><th>Keyword</th><th>Volume</th><th>CPC Google (US$)</th><th>SEO Diff.</th><th>Leitura</th></tr></thead><tbody>
+<tr><td>commercial cleaning companies</td><td>165.000</td><td>11,41</td><td>29</td><td>Alvo principal; Skyline domina o local (76%)</td></tr>
+<tr><td>commercial office cleaning service</td><td>165.000</td><td>14,98</td><td>28</td><td><strong>Maior ativo local</strong> (top 3 em 69% do grid de 1 mi)</td></tr>
+<tr><td>commercial cleaning services</td><td>165.000</td><td>14,98</td><td><strong>71</strong></td><td>Muito difícil + bloco de IA e local pack acima</td></tr>
+<tr><td>commercial cleaners near me</td><td>165.000</td><td><strong>27,74</strong></td><td>33</td><td>Local pack; CPC mais caro do conjunto</td></tr>
+<tr><td>commercial cleaning services near me</td><td>40.500</td><td>11,93</td><td>26</td><td>Home + GBP</td></tr>
+<tr><td>office cleaning services / office cleaning company</td><td>22.200 cada</td><td>14,33</td><td>22 / 30</td><td>Pilar Office</td></tr>
+<tr><td>commercial cleaning and janitorial services</td><td>22.200</td><td>6,46</td><td>18</td><td><strong>Melhor custo-benefício</strong> (CPC e dificuldade baixos)</td></tr>
+<tr><td>post construction cleaning company</td><td>18.100</td><td>9,82</td><td><strong>15</strong></td><td>Menor dificuldade do conjunto; liga ao canal Premium Contractors</td></tr>
+<tr><td>commercial janitorial services</td><td>18.100</td><td>17,45</td><td>18</td><td>Cauda de janitorial</td></tr>
+</tbody></table></div>
+<p><strong>Posição atual da Premium:</strong> das 15 keywords já lidas (35 pendentes), <strong>nenhuma está no top 100</strong> do orgânico nacional; tráfego orgânico estimado = 0/mês em todos os 12 meses; DA 5, 54 backlinks, 43 domínios de referência, 5 keywords (on-page score 95). O ativo real está no <strong>mapa local</strong> (grid), não no orgânico nacional.</p>
+<p><strong>O que isso muda no planejamento:</strong></p>
+<ol><li><strong>CPC de Google Ads para esses termos é de US$ 6,5 a 30</strong> (mediana dos principais ≈ US$ 12–15). Com US$ 400, o Google compraria só <strong>~27–35 cliques</strong> (14 no "near me"). O Bing real foi de <strong>US$ 2,11/clique</strong>: cerca de 5–7x mais barato. Isso sustenta, com dado, a escolha de Bing + ChatGPT Ads em vez de Google Ads nesta fase.</li><li><strong>Termos genéricos são um beco:</strong> "commercial cleaning services" tem SD 71 e SERP com bloco de IA + pacote local antes dos orgânicos (orgânico começa do 5º resultado). O caminho é local + serviço específico + citação em IA.</li><li><strong>Volume do ChatGPT:</strong> os 10 prompts do AISV somam <strong>199 mil/mês</strong> (a capa do documento diz 225.970; a soma dos prompts confirma 199.000), dos quais 3 respondem por 197 mil (hotel housekeeping 165k, office small business 22,2k, carpet high-traffic 9,9k).</li></ol>
+</section>
+<section id="s8"><div class="sec-head"><div class="sec-num">08</div><div><h2>Análise PESTEL (Tri-State)</h2></div></div>
+<ul><li><strong>Político/Legal:</strong> o NYC Safe Hotels Act (Local Law 104, vigente desde mai/2025 segundo o plano de jan/2026) proíbe hotéis com 100+ quartos de subcontratar housekeeping — fecha parte do TAM em NYC, mas abre boutique e serviços especializados. NJ/NY têm testes rigorosos de classificação de trabalhador (ABC), exigindo conformidade da força de trabalho. Em NJ, regras de grease trap e NFPA 96 (hood) criam demanda regulada em restaurantes.</li><li><strong>Econômico:</strong> salário mínimo de US$ 16,50/h em NYC (2025) e US$ 15,92/h em NJ (2026) pressionam margem; custo real da hora de limpeza em torno de US$ 23–25. Juros altos desaceleram construção nova, mas mantêm proprietários focados em reter inquilinos — limpeza vira argumento de retorno ao escritório. O mercado é maduro, com crescimento de 1–3% ao ano.</li><li><strong>Sociocultural:</strong> pós-COVID, a limpeza passou a ser visível e exigida como sinal de segurança; rotatividade do setor de 200–400% faz "estabilidade de equipe" ser benefício vendável. Facility managers são céticos ("trust gap").</li><li><strong>Tecnológico:</strong> prova digital (fotos, GPS, checklist, relatório diário) virou padrão mínimo contra Jani-King/ABM. A <strong>busca migrou parcialmente para IA</strong> (ChatGPT Search, Copilot, AI Overviews), e o ChatGPT abriu Ads Manager self-serve nos EUA em 2026 — a decisão de compra B2B começa a acontecer dentro do prompt.</li><li><strong>Ambiental:</strong> exigências de produtos "verdes" (CT/NY em prédios estatais) e selos (Green Seal, EPA Safer Choice) viram argumento ESG para hotel boutique e corporativo.</li><li><strong>Legal (complementar):</strong> seguro de responsabilidade (US$ 2 mi), documentação de grease/hood para seguradoras e conformidade em inspeção de saúde são ganchos de venda para restaurantes.</li></ul>
+</section>
+<section id="s9"><div class="sec-head"><div class="sec-num">09</div><div><h2>Histórico de crescimento do mercado (5 anos)</h2></div></div>
+<div class="callout c-warn"><div class="ct">Aviso metodológico</div><p><strong>Aviso metodológico:</strong> não encontrei série oficial ano a ano. Os valores abaixo são <strong>interpolação</strong> do número de 2026 da IBISWorld (US$ 112,4 bi) pelo CAGR 2021–26 de 2,7%. Servem como ordem de grandeza; para apresentar ao cliente como dado, é preciso puxar a série na fonte (IBISWorld/Census NAICS 561720).</p></div>
+<div class="tbl-wrap"><table><thead><tr><th>Ano</th><th>Mercado US janitorial (US$ bi, interpolado)</th><th>Variação</th><th>Leitura</th></tr></thead><tbody>
+<tr><td>2021</td><td>~98,4</td><td>—</td><td>Retomada pós-COVID (2020 teve queda de ~1,6% segundo Marketdata, comercial)</td></tr>
+<tr><td>2022</td><td>~101,1</td><td>+2,7%</td><td>Zippia cita US$ 97,6 bi (escopo menor)</td></tr>
+<tr><td>2023</td><td>~103,8</td><td>+2,7%</td><td>Retorno ao escritório parcial</td></tr>
+<tr><td>2024</td><td>~106,6</td><td>+2,7%</td><td>Comercial/sanitação: US$ 75,3 bi (IBISWorld, escopo menor), CAGR 1,0% em 2019–24</td></tr>
+<tr><td>2025</td><td>~109,4</td><td>+2,7%</td><td>Grand View: US$ 81,9 bi (escopo diferente)</td></tr>
+<tr><td><strong>2026 (previsão)</strong></td><td><strong>~112,4</strong></td><td>+2,7%</td><td>CMM: crescimento próximo de 2% em 2026; NY +2,9% a.a., NJ +0,8% a.a.</td></tr>
+</tbody></table></div>
+<p><strong>Leitura:</strong> mercado maduro e estável. Ganhar share depende de nicho, prova e presença em IA, não de "onda de mercado".</p>
+</section>
+<section id="s10"><div class="sec-head"><div class="sec-num">10</div><div><h2>Personas</h2></div></div>
+<h3>Persona 1 — Camila, Office/Operations Manager (escritório de pequena e média empresa)</h3>
+<ul><li><strong>Perfil / Idade:</strong> 32–48</li><li><strong>Profissão:</strong> Office manager, Operations manager, sócia-gestora</li><li><strong>Localização:</strong> Newark, Jersey City, Hoboken, Midtown Manhattan</li><li><strong>Função:</strong> decide e contrata fornecedor de limpeza recorrente (tipo Carmen &amp; Pearl, Madison)</li><li><strong>Motivações:</strong> previsibilidade, escritório sempre apresentável, fornecedor que responde rápido, preço fixo</li><li><strong>Produtos preferidos:</strong> janitorial recorrente 3–5x/semana, carpet cleaning trimestral</li><li><strong>Canais de descoberta:</strong> Google/Bing local ("office cleaning near me"), indicação, <strong>perguntas ao ChatGPT/Copilot</strong></li><li><strong>Estilo de vida:</strong> rotina corrida, resolve fornecedor entre reuniões, usa celular (mobile tem CTR 2,95% vs 0,53% no desktop no Bing da Premium)</li><li><strong>Interesses:</strong> produtividade, bem-estar no escritório, custo por sqft</li><li><strong>Comportamento de compra:</strong> compara 2–3 cotações em 1–2 semanas; sensível a prova (reviews, case) e a "cotação em 24h"</li><li><strong>Gênero:</strong> misto · <strong>Faixa etária:</strong> 32–48 · <strong>Renda:</strong> faixa salarial da função (a validar via BLS) · <strong>Localização:</strong> NJ/NYC</li></ul>
+<h3>Persona 2 — Ricardo, Facility / Property Manager (prédio comercial e multi-inquilino)</h3>
+<ul><li><strong>Perfil / Idade:</strong> 38–55 · <strong>Profissão:</strong> Property manager, Facility manager, Director of Facilities</li><li><strong>Localização:</strong> Newark, Elizabeth, Jersey City, Manhattan · <strong>Função:</strong> licita limpeza via RFP, avalia SLA e KPIs</li><li><strong>Motivações:</strong> menos reclamação de inquilino, SLA auditável, trocar fornecedor ruim sem risco</li><li><strong>Produtos preferidos:</strong> janitorial com SLA, day porter, pisos e carpets, pós-obra</li><li><strong>Canais de descoberta:</strong> busca do tipo "commercial cleaning RFP", "cleaning SLA KPIs", "how to change cleaning company" (artigos B1–B4), indicação de GCs, LinkedIn</li><li><strong>Estilo de vida:</strong> cético, já foi queimado por fornecedor; valoriza prova</li><li><strong>Interesses:</strong> conformidade, seguros, relatórios, custo por sqft</li><li><strong>Comportamento de compra:</strong> ciclo de 2–6 semanas, múltiplos decisores, exige seguro e referências</li><li><strong>Gênero:</strong> misto · <strong>Faixa etária:</strong> 38–55 · <strong>Renda:</strong> a validar · <strong>Localização:</strong> NJ/NYC</li></ul>
+<h3>Persona 3 — Daniela, Director of Operations / GM de Hotel</h3>
+<ul><li><strong>Perfil / Idade:</strong> 35–55 · <strong>Profissão:</strong> General Manager, Director of Housekeeping/Operations</li><li><strong>Localização:</strong> NJ (rede/select-service), Manhattan e Brooklyn (boutique &lt;100 quartos)</li><li><strong>Função:</strong> responde por produtividade de housekeeping, padrão de marca e custo por quarto ocupado</li><li><strong>Motivações:</strong> reduzir rotatividade de camareiras, cobrir picos e turnos, passar auditoria de marca</li><li><strong>Produtos preferidos:</strong> limpeza de áreas públicas, deep cleaning programado, cobertura de turnos (em NJ/CT), carpet</li><li><strong>Canais de descoberta:</strong> busca por padrões e checklists (artigos A1–A8, 165 mil buscas/mês no cluster), LinkedIn, indicação do setor, IA</li><li><strong>Estilo de vida:</strong> operação 24/7, decisão rápida sob pressão</li><li><strong>Interesses:</strong> custo por quarto, produtividade (quartos/hora), padrões de marca, legislação (Safe Hotels Act)</li><li><strong>Comportamento de compra:</strong> teste curto (ex.: 5 turnos) antes de contrato; exige seguro e conformidade trabalhista</li><li><strong>Gênero:</strong> misto · <strong>Faixa etária:</strong> 35–55 · <strong>Renda:</strong> a validar · <strong>Localização:</strong> NJ/NYC</li></ul>
+<h3>Persona 4 — Marco, Operations Director / Dono de Restaurante ou Grupo</h3>
+<ul><li><strong>Perfil / Idade:</strong> 35–60 · <strong>Profissão:</strong> Dono, Diretor de operações, Chef executivo</li><li><strong>Localização:</strong> Newark, Manhattan (caso Eataly), Jersey City</li><li><strong>Função:</strong> garante inspeção sanitária, evita risco de incêndio por gordura e mantém cozinha e salão limpos fora do horário</li><li><strong>Motivações:</strong> passar inspeção, zero violação, limpeza noturna sem atrapalhar operação, documentação para seguro</li><li><strong>Produtos preferidos:</strong> deep clean de cozinha, quarry tile, grease trap/hood (a confirmar), limpeza de pós-evento</li><li><strong>Canais de descoberta:</strong> busca por regulação (NFPA 96, grease trap NJ), "restaurant cleaning company" (Premium em #1 nessa query), indicação, IA</li><li><strong>Estilo de vida:</strong> horário invertido; decide à noite ou pelo celular</li><li><strong>Interesses:</strong> conformidade, tempo de virada entre serviços, custo</li><li><strong>Comportamento de compra:</strong> urgente quando há inspeção ou violação; recorrente depois da confiança</li><li><strong>Gênero:</strong> misto · <strong>Faixa etária:</strong> 35–60 · <strong>Renda:</strong> a validar · <strong>Localização:</strong> NJ/NYC</li></ul>
+<div class="callout c-info"><div class="ct">Origem das personas</div><p>As 4 personas foram montadas a partir dos verticais, queries e conversões reais da conta, não de entrevista. Precisam ser validadas na próxima call com o cliente (o Mission Control atual da Premium não existe na KB).</p></div>
+</section>
+<section id="s11"><div class="sec-head"><div class="sec-num">11</div><div><h2>Tamanho de mercado (R$)</h2></div></div>
+<div class="callout c-warn"><div class="ct">Premissa de câmbio</div><p>Câmbio <strong>assumido: R$ 5,50/US$</strong> (premissa minha; ajuste ao câmbio do dia antes de apresentar).</p></div>
+<div class="tbl-wrap"><table><thead><tr><th>Mercado</th><th>Escopo</th><th>US$</th><th><strong>R$</strong></th><th>Fonte / confiança</th></tr></thead><tbody>
+<tr><td><strong>Secundário (teto)</strong></td><td>Janitorial EUA, 2026</td><td>~112,4 bi</td><td><strong>~R$ 618 bi</strong></td><td>IBISWorld (alta); Grand View/Research and Markets dão US$ 82–84 bi → ~R$ 450 bi</td></tr>
+<tr><td><strong>Primário (proxy)</strong></td><td>Janitorial do estado de NY (≈6% dos estabelecimentos dos EUA)</td><td>~6,7 bi</td><td><strong>~R$ 37 bi</strong></td><td>Proxy por contagem de estabelecimentos; <strong>NJ não encontrei valor</strong> — soma pendente (Census CBP, NAICS 561720)</td></tr>
+<tr><td>Mercado endereçável da Premium</td><td>Escritórios/hotel/restaurante/pós-obra no raio de 2 mi de Newark + Manhattan</td><td><strong>não quantificado</strong></td><td>—</td><td>Exige base de estabelecimentos por raio; é o próximo estudo</td></tr>
+</tbody></table></div>
+<p><strong>Leitura:</strong> o mercado é grande, e o limitante da Premium é <strong>alcance e prova</strong>, não tamanho. Em termos práticos, 1 contrato de US$ 3 mil/mês (~R$ 16,5 mil/mês) já paga os US$ 800 de mídia mensal.</p>
+</section>
+<section id="s12"><div class="sec-head"><div class="sec-num">12</div><div><h2>Benchmarks de funil (inbound + mídia paga, B2B limpeza comercial)</h2></div></div>
+<div class="callout c-warn"><div class="ct">Confiança dos benchmarks</div><p>Benchmarks setoriais vêm de blogs de agência (baixa confiança) e do WordStream 2026. <strong>Não há benchmark público confiável por etapa para limpeza B2B.</strong> As taxas de MQL/SQL/Oportunidade são <strong>hipóteses de trabalho V4</strong> para calibrar com o CRM da Premium (que ainda não existe).</p></div>
+<div class="tbl-wrap"><table><thead><tr><th>Indicador</th><th>Benchmark / hipótese</th><th>Base</th></tr></thead><tbody>
+<tr><td>Custo por Lead</td><td><strong>US$ 65–140 (≈ R$ 360–770)</strong>; Premium Bing real: CPA US$ 93,30 (2 conv.), ~US$ 187 por lead válido</td><td>Blog de agência; dado real</td></tr>
+<tr><td>Taxa lead → conexão</td><td>~60–70%</td><td>Hipótese V4 (contato telefônico/email efetivo)</td></tr>
+<tr><td>Conexão → MQL</td><td>~50%</td><td>Hipótese V4</td></tr>
+<tr><td>MQL → SQL</td><td>~40–50% (jan/2026 assumia 25% de lead → proposta)</td><td>Hipótese V4 + plano jan/26</td></tr>
+<tr><td>SQL → Oportunidade (proposta)</td><td>~60–70%</td><td>Hipótese V4</td></tr>
+<tr><td>Oportunidade → Venda</td><td><strong>15–30% do lead ao fechamento</strong> (blog); 20% proposta → contrato (plano jan/26)</td><td>Benchmark; plano jan/26</td></tr>
+<tr><td>Taxa de conversão da LP</td><td>8–16% (blog) vs. <strong>~1,5% observado no Bing</strong> (1 válida em 68 cliques de search)</td><td>Benchmark vs. dado real</td></tr>
+<tr><td>CPC</td><td>US$ 8–18 (blog); <strong>Ubersuggest: US$ 6,5–30 nos termos do ICP (mediana ~12–15)</strong> vs. <strong>US$ 2,11 Bing search real</strong></td><td>Benchmark; Ubersuggest 27/10; dado real</td></tr>
+</tbody></table></div>
+<p><strong>Meta de CAC aceitável:</strong> com contrato de US$ 3.000/mês e margem bruta de 30–40%, cada contrato gera ~US$ 900–1.200/mês de margem. Mesmo um CPL de US$ 150 com fechamento de 15% (CAC ≈ US$ 1.000) paga em ~1 mês.</p>
+</section>
+<section id="s13"><div class="sec-head"><div class="sec-num">13</div><div><h2>Dores de negócio (venda, venda cruzada e adicional)</h2></div></div>
+<div class="tbl-wrap"><table><thead><tr><th>#</th><th>Dor</th><th>Evidência</th><th>Impacto</th><th>Como combater</th></tr></thead><tbody>
+<tr><td>1</td><td><strong>Perda de receita por demanda invisível</strong></td><td>Bing indexa 10 de 65 URLs; 0 das 10 páginas-alvo; busca exata retorna zero</td><td>Conteúdo pago por nada</td><td>Publicar a versão do PR #1, 301 <code>insights.</code>/<code>www</code>, IndexNow, URL Inspection (meta 10/10 em 15 dias)</td></tr>
+<tr><td>2</td><td><strong>Clique vazando</strong></td><td>37 de 39 cliques GSC → <code>insights.</code> (HTTP 000); CTR 0,8%, "commercial cleaning newark" 201 impr. e 0 clique</td><td>Perda de tráfego já conquistado</td><td>301, reescrita de title/snippet das money pages</td></tr>
+<tr><td>3</td><td><strong>Mídia desperdiçada</strong></td><td>76% do gasto Bing search fora do alvo; marca/concorrente 43%; 7.258 impr. em Audience (zero conversão válida)</td><td>Queda de eficiência, CPA inflado</td><td>161 negativas, pausar Audience, device, ad groups por vertical</td></tr>
+<tr><td>4</td><td><strong>Ticket alto, volume baixo e sem funil</strong></td><td>1–3 conversões/mês; sem CRM, follow-up manual</td><td>Ciclo longo sem nurturing</td><td>CRM simples + follow-up D1/D3/D7 (do plano de jan)</td></tr>
+<tr><td>5</td><td><strong>Prova social curta</strong></td><td>43 reviews vs 592/734 dos concorrentes; entidade com 4 nomes</td><td>Perde top 3 em pontos de 2 mi</td><td>Campanha de reviews (43→55 em 30d, 100 em 90d), NAP único</td></tr>
+<tr><td>6</td><td><strong>Venda adicional não explorada</strong></td><td>Carpet, hood, pós-obra e janelas existem como conteúdo e não como oferta</td><td>Ticket médio abaixo do potencial</td><td>Cláusula de revisão trimestral com deep clean</td></tr>
+<tr><td>7</td><td><strong>Dependência de poucos casos</strong></td><td>Madison e Eataly sustentam toda a prova</td><td>Risco de reputação</td><td>Produzir 3 cases com antes/depois e métricas</td></tr>
+<tr><td>8</td><td><strong>Risco de entrada na IA sem preparo</strong></td><td>ChatGPT Ads só mostra para Free/Go; retrieval do Bing em 15/100</td><td>Gastar sem ser encontrado</td><td>Gate: só escalar ChatGPT Ads com LP indexada e rastreada</td></tr>
+</tbody></table></div>
+</section>
+<section id="s14"><div class="sec-head"><div class="sec-num">14</div><div><h2>Soluções V4 correlacionadas às dores</h2></div></div>
+<div class="tbl-wrap"><table><thead><tr><th>Solução (produto V4)</th><th>Proposta de valor (dor que resolve)</th><th>Predição de objeções e como contornar</th></tr></thead><tbody>
+<tr><td><strong>Gestão de Mídia Paga</strong></td><td>Dor 3: corta o desperdício do Bing (de 76% fora do alvo para &lt;30%) e testa ChatGPT Ads com governança</td><td><em>"Já gastamos e não deu lead."</em> → Mostrar a abertura do gasto por termo, as 161 negativas e o gate de kill por US$</td></tr>
+<tr><td><strong>Criativos para Anúncios</strong></td><td>Dor 3 e 8: anúncios de confiança (app, relatório diário, GBP 5,0★) em vez de "25% off"</td><td><em>"25% off sempre funcionou."</em> → Teste A/B trust vs. desconto com 50/50 do budget</td></tr>
+<tr><td><strong>Web Design</strong></td><td>Dor 2: LP por vertical (Office NJ, NYC, Hotel, Restaurant) com CTA de cotação em 24h</td><td><em>"Já temos site."</em> → O site recebe 0 clique no apex; LP por intenção e rastreável</td></tr>
+<tr><td><strong>Gestão e Visualização de Dados</strong></td><td>Dor 1 e 4: painel único com GSC, Bing, ChatGPT Ads, GA4 e leads</td><td><em>"Temos o Google Analytics."</em> → GA4 conta só a 1ª página da SPA; corrigir o GTM (<code>virtual_page_view</code>)</td></tr>
+<tr><td><strong>Jornada de Relacionamento</strong></td><td>Dor 4: follow-up D1/D3/D7 e reativação</td><td><em>"Prefiro ligar eu."</em> → Sequência complementa a ligação, não a substitui</td></tr>
+<tr><td><strong>Solução para Times de Vendas</strong></td><td>Dor 4: processo de proposta, CRM e SLA de resposta (30 min)</td><td><em>"Somos 3 pessoas."</em> → CRM leve (HubSpot Free/Pipedrive), 1 hora de setup</td></tr>
+<tr><td><strong>Stack Digital</strong></td><td>Dor 1 e 2: IndexNow, Cloudflare 301, Bing Webmaster, UET/CAPI</td><td><em>"É técnico demais."</em> → Executamos e entregamos checklist de gates</td></tr>
+<tr><td><strong>Solução para Criação de Conteúdo</strong></td><td>Dor 1: 16 artigos restantes (blocos B, C, E) e malha interna</td><td><em>"Já publicamos 24."</em> → Conteúdo sem indexação não vende; priorizar B5–B8 e indexar</td></tr>
+<tr><td><strong>Assessoria de Growth</strong></td><td>Dor 5 e 6: experimentos com gates por semana (Bing P0/P1/P2, ChatGPT Ads)</td><td><em>"Quero resultado rápido."</em> → Ciclo de 30 dias com métrica de leading (CTR, IS, CPC)</td></tr>
+<tr><td><strong>Auditoria de Growth</strong></td><td>Dor 1–3: já executada (SEO, AIO/GEO, Bing)</td><td><em>"Já temos auditoria."</em> → Reauditoria a cada 30 dias com re-scan do grid e AISV</td></tr>
+<tr><td><strong>Estruturação Estratégica</strong></td><td>Todas: este planning, OKRs e roadmap ligados à meta de receita</td><td><em>"Estratégia é custo."</em> → 1 contrato de US$ 3 mil/mês paga a mídia mensal</td></tr>
+<tr><td><strong>V4Food</strong></td><td>Dor 6 e Persona 4: oferta para restaurantes/grupos (inspeção, grease, deep clean)</td><td><em>"Não somos do ramo alimentício."</em> → A Premium vende <strong>para</strong> o ramo (cluster D com 8/8 artigos)</td></tr>
+</tbody></table></div>
+</section>
+<section id="s15"><div class="sec-head"><div class="sec-num">15</div><div><h2>Dez oportunidades de venda cruzada e adicional</h2></div></div>
+<ol><li><strong>Revisão trimestral de higiene</strong> com deep clean (carpete/piso) como cláusula do contrato anual.</li><li><strong>Hood/exaustão e grease trap</strong> para restaurantes (depende da confirmação do escopo).</li><li><strong>Pós-obra</strong> via Premium Contractors ("1 mês de manutenção preventiva a preço de custo" no handover).</li><li><strong>Carpet e floor care</strong> programado (encapsulation) para escritórios e hotéis.</li><li><strong>Desinfecção eletrostática</strong> (alto valor percebido, baixo custo de execução).</li><li><strong>Janelas de baixa altura</strong> para varejo e restaurantes.</li><li><strong>Day porter / limpeza de áreas comuns</strong> em alta frequência para prédios com retorno ao escritório.</li><li><strong>Cobertura de turnos</strong> de housekeeping para hotéis em NJ/CT (o Safe Hotels Act barra isso em NYC).</li><li><strong>Limpeza de eventos e pós-evento</strong> para restaurantes e hotéis (artigo D7).</li><li><strong>Programa de indicação e relatório de prova (app)</strong> como serviço premium — crédito para clientes que indicarem outros clientes, e relatório diário como upsell de transparência.</li></ol>
+</section>
+<div class="part">RELATÓRIO DE DESEMPENHO E PLANO DE MÍDIA</div>
+<section id="s16"><div class="sec-head"><div class="sec-num">16</div><div><h2>Contexto e Introdução</h2></div></div>
+<p>Este relatório analisa <strong>04/10 a 02/11/2026 (30 dias)</strong> do canal que tem dado: <strong>Bing Ads</strong>. Não existe histórico de Google Ads nem de ChatGPT Ads; o comparativo por canal é, portanto, <strong>Bing (realizado) vs. ChatGPT Ads (a testar)</strong>, com o orgânico (GSC, SEO local, AIO) como referência. O período anterior (jun/2026) serve de base de evolução. Métricas: investimento, impressões, cliques, leads, CPC, CPL, CTR e taxa de conversão.</p>
+</section>
+<section id="s17"><div class="sec-head"><div class="sec-num">17</div><div><h2>Comparativo mensal</h2></div></div>
+<div class="tbl-wrap"><table><thead><tr><th>Métrica</th><th>Jun/2026 (Bing)</th><th>04/10–02/11 (Bing, total)</th><th>Search</th><th>Audience Network</th></tr></thead><tbody>
+<tr><td>Investimento (US$)</td><td>895,65</td><td>186,59</td><td>143,37</td><td>43,22</td></tr>
+<tr><td>Impressões</td><td>87.362</td><td>9.026</td><td>1.768</td><td>7.258</td></tr>
+<tr><td>Cliques</td><td>468</td><td>95</td><td>68</td><td>27</td></tr>
+<tr><td>CTR (%)</td><td>0,54</td><td>1,05</td><td><strong>3,85</strong></td><td>0,37</td></tr>
+<tr><td>CPC (US$)</td><td>1,91</td><td>1,96</td><td>2,11</td><td>1,60</td></tr>
+<tr><td>Leads/Conversões</td><td>1</td><td>2 (1 válida B2B)</td><td>1</td><td>1 (residencial)</td></tr>
+<tr><td>CPL / CPA (US$)</td><td>895,65</td><td>93,30 (≈ 186 por válida)</td><td>—</td><td>—</td></tr>
+<tr><td>Taxa de conversão clique→lead (%)</td><td>0,21</td><td>2,1 (1,05 válida)</td><td>1,5</td><td>3,7 (fora do ICP)</td></tr>
+</tbody></table></div>
+<p><em>Cliques de jun/2026 = 132 (Search) + 336 (Audience), da análise de jun/2026. As taxas foram calculadas por mim.</em></p>
+<p><strong>Cortes relevantes (out/2026):</strong> 76% do gasto no search (US$ 104,92 de US$ 138,70) ficou fora do alvo (marca/concorrente 43%, escopo 18%, geografia 8%, supply 4%, informacional 2%); só 24% (US$ 33,78) foi ao alvo. Impression share 8,54%; budget de US$ 36/dia com 17% gasto (US$ 6,22/dia). Desktop: CTR 0,53%, US$ 116,97; mobile: CTR 2,95%, US$ 69,62. NY somou 89% do gasto. Zero extensões; 82 negativas criadas e só 9 aplicadas; 161 termos sem status.</p>
+</section>
+<section id="s18"><div class="sec-head"><div class="sec-num">18</div><div><h2>Insights e Recomendações (análise do funil)</h2></div></div>
+<ol><li><strong>Topo (impressão → clique):</strong> o problema não é verba, é para quem entrega. O search tem CTR 3,85% (saudável); Audience tem 80% das impressões e CTR 0,37%. → pausar Audience.</li><li><strong>Meio (clique → lead):</strong> só 1,5% dos cliques de search viraram lead válido, longe dos 8–16% do benchmark. Causas prováveis: termos de marca/concorrente e fora de escopo (76%) e destino genérico. → negativas, ad group por vertical, destination por ad group.</li><li><strong>Fundo (lead → contrato):</strong> não há dado de funil (sem CRM). 1ª conversão correta (03/11) veio de "office cleaning near me". → registrar toda conversão com origem e vertical.</li><li><strong>Cross-canal:</strong> o ChatGPT Search e o Copilot dependem do <strong>índice do Bing</strong>; enquanto a Premium tiver 10/65 URLs lá, anúncio e orgânico competem pela mesma raiz. O gasto no Bing é também o laboratório de linguagem para o ChatGPT Ads.</li></ol>
+</section>
+<section id="s19"><div class="sec-head"><div class="sec-num">19</div><div><h2>Proposta de orçamento inicial — US$ 800/mês (US$ 400 + US$ 400)</h2></div></div>
+<div class="tbl-wrap"><table><thead><tr><th>Mídia</th><th>Budget</th><th>Papel</th><th>Como gastar</th><th>Expectativa (cenários, não promessa)</th></tr></thead><tbody>
+<tr><td><strong>Bing Ads (Search only)</strong></td><td><strong>US$ 400</strong> (~US$ 13/dia)</td><td>Captura de demanda declarada</td><td>Search 100%, Audience 0%; 4 ad groups (Office NJ, Office NYC, Hotel, Restaurant); 10–15 keywords por vertical; 161 negativas; mobile +10%, desktop −25%</td><td>CPC US$ 2,00–2,50 → ~160–200 cliques; conversão 1,5% (hoje) a 4% (pós-limpeza) → <strong>3 a 8 leads</strong>, CPL ~US$ 50–130</td></tr>
+<tr><td><strong>ChatGPT Ads</strong></td><td><strong>US$ 400</strong></td><td>Teste de descoberta em IA</td><td>1 campanha, 3 ad groups (Office, Hotel, Restaurant); geo NJ + Manhattan (até ZIP); lance máx. US$ 3–4; context hints de perguntas de comprador</td><td>CPC US$ 3–5 → <strong>~80–130 cliques</strong>; conversão 1–3% → <strong>1 a 4 leads</strong>. Objetivo é <strong>aprender</strong> CTR, CPC e qualidade, não CPL</td></tr>
+</tbody></table></div>
+<p><strong>Por que não Google Ads:</strong> o Ubersuggest mostra CPC de US$ 11–30 nos termos do ICP; US$ 400 comprariam ~27–35 cliques (≈ 14 em "commercial cleaners near me"), volume insuficiente para aprender. Mesmo valor no Bing rende ~160–200 cliques.</p>
+<p><strong>Racional do split 50/50:</strong> Bing já tem sinal (CTR 3,85%, ICP validado) e o orçamento de US$ 400 é ~2x o gasto real atual (US$ 6,22/dia), então é viável. O ChatGPT Ads é aposta com incerteza, e US$ 400 compra um teste mínimo de 14–16 dias.</p>
+<p><strong>Pontos que preciso validar antes de ligar o ChatGPT Ads (risco real):</strong></p>
+<ul><li><strong>Mínimo diário:</strong> as fontes divergem. Uma guia de ago/2026 cita US$ 25/dia por campanha (US$ 400 = ~16 dias); a maioria cita sem mínimo; uma fonte ainda cita o antigo mínimo de US$ 50 mil. <strong>Verificar em ads.openai.com</strong> antes de planejar o calendário.</li><li><strong>Quem vê:</strong> o check-in de 04/11 aponta que só usuários <strong>Free e Go</strong> veem anúncios. Tomadores de decisão B2B costumam estar em planos pagos/corporativos → <strong>volume potencialmente muito baixo</strong>. Por isso o teste é de aprendizado, com kill barato.</li><li><strong>Destino:</strong> anúncios precisam cair em páginas indexadas e rastreadas. Hoje a versão corrigida não está publicada (gate Lovable Publish) e o GA4 só conta a 1ª página até o GTM ser ajustado.</li><li><strong>Sem keywords/idade/renda/lookalike:</strong> a segmentação é geo + contexto + audiência, então a mensagem precisa carregar a qualificação (B2B, NJ/NYC, contrato recorrente).</li></ul>
+<p><strong>Regras de parada (kill rules):</strong></p>
+<ul><li>Bing: se após US$ 150 gastos o search fora do alvo for &gt; 30% ou CTR &lt; 3%, parar e refazer negativas antes de gastar o restante.</li><li>ChatGPT Ads: checkpoint em <strong>US$ 150</strong> — se houver 0 cliques qualificados ou CPC &gt; US$ 6, pausar e reavaliar; <strong>kill total</strong> em US$ 250 sem nenhum lead B2B válido (preservar US$ 150).</li><li>Teto de CAC: <strong>US$ 200 por lead válido</strong> (ver seção 7).</li></ul>
+</section>
+<section id="s20"><div class="sec-head"><div class="sec-num">20</div><div><h2>Próximos passos (12/11 → 15/12)</h2></div></div>
+<div class="tbl-wrap"><table><thead><tr><th>Semana</th><th>Foco</th><th>Entregas</th></tr></thead><tbody>
+<tr><td><strong>S1 (12–18/11)</strong></td><td>Retrieval + higiene Bing</td><td>Merge/Publish do PR #1; 301 de <code>insights.</code> e <code>www</code>; IndexNow; sitemap e URL Inspection nas 10 money pages; confirmar P0 do Bing (negativas, Audience pausada, device); GTM <code>virtual_page_view</code></td></tr>
+<tr><td><strong>S2 (19–25/11)</strong></td><td>Bing P1 + ChatGPT Ads setup</td><td>Ad groups por vertical, 6 sitelinks, 4 callouts, telefone; conta e pixel do ChatGPT Ads, 3 ad groups, criativos de confiança; artigos B5–B8</td></tr>
+<tr><td><strong>S3 (26/11–02/12)</strong></td><td>Rodar os dois canais</td><td>Bing US$ 100/semana; ChatGPT Ads em 14–16 dias; leitura diária de termo de busca; reviews (meta 55)</td></tr>
+<tr><td><strong>S4 (03–09/12)</strong></td><td>Re-scan e decisão</td><td>Re-scan do grid (4 keywords × 2 grids), AISV de prompts, leitura dos US$ 800; decidir escala ou kill</td></tr>
+<tr><td><strong>S5 (10–15/12)</strong></td><td>Fechamento do ciclo</td><td>Check-in com cliente; relatório com CPL real por canal; planejar janeiro</td></tr>
+</tbody></table></div>
+<p><strong>Dependências do cliente:</strong> acesso de editor ao GBP; 12 reviews com menção a serviço e cidade; resposta sobre hood cleaning; fuso da conta e oferta "25% off"; materiais de prova dos cases; confirmar ou remover "98% retention" e "126 rooms/day" e autores dos artigos.</p>
+</section>
+<section id="s21"><div class="sec-head"><div class="sec-num">21</div><div><h2>Próximos testes</h2></div></div>
+<p><strong>Teste 1 — Bing: confiança vs. desconto</strong></p>
+<ul><li><strong>GAP identificado:</strong> CTR do search é 3,85% (bom), mas conversão é só 1,5%; há uma oferta "25% off" ainda sem teste.</li><li><strong>Oportunidade de melhoria:</strong> trocar a promessa de preço por prova (relatório diário no app, GBP 5,0★ com 43 reviews, cotação em 24h) deve atrair facility managers em vez de caçadores de preço, e reduzir cliques desqualificados.</li><li><strong>Ação a ser realizada:</strong> 2 variações de RSA por ad group (trust vs. "25% Off"), 50/50; destino na money page do vertical; recursos: copy, 6 sitelinks, 4 callouts; sem custo adicional além dos US$ 400.</li><li><strong>Resultado almejado:</strong> conversão clique→lead de 1,5% para ≥ 3–4% e search fora do alvo de 76% para &lt; 30%, com CPC ≤ US$ 2,50.</li></ul>
+<p><strong>Teste 2 — ChatGPT Ads: prompt de comprador × vertical</strong></p>
+<ul><li><strong>GAP identificado:</strong> a Premium tem 0/12 prompts citados no ChatGPT/Copilot (AISV) e não aparece nem nos resultados da própria marca no Bing.</li><li><strong>Oportunidade de melhoria:</strong> aparecer pago nas conversas de compra antes que o retrieval orgânico destrave; usar perguntas reais ("how to change cleaning company", "hotel housekeeping cost per occupied room") como <strong>context hints</strong> e <strong>briefing de criativo</strong>, sem copiar texto de concorrente.</li><li><strong>Ação a ser realizada:</strong> 3 ad groups (Office, Hotel, Restaurant), geo NJ + Manhattan, 2 criativos por grupo com prova (case Madison, relatório diário), lance máx. US$ 3–4, pixel instalado; US$ 400 em 14–16 dias; destino em páginas indexadas.</li><li><strong>Resultado almejado:</strong> ≥ 80 cliques, CPC ≤ US$ 5, ≥ 1 lead B2B válido e <strong>entendimento de volume</strong>: se for &lt; 20 impressões/dia, o formato não alcança o ICP; se escalar, replicar com AI Max/Copilot.</li></ul>
+<p><strong>Teste 3 — Destravamento do índice (impacta os dois canais)</strong></p>
+<ul><li><strong>GAP identificado:</strong> Bing indexa 10/65 URLs; 0/10 money pages.</li><li><strong>Oportunidade de melhoria:</strong> sem retrieval, anúncio, artigo e SEO local dependem do mesmo gargalo.</li><li><strong>Ação a ser realizada:</strong> publicar PR #1; 301 <code>insights.</code>/<code>www</code>; IndexNow; sitemap; URL Inspection (Google e Bing); recursos: dev + SEO V4.</li><li><strong>Resultado almejado:</strong> 10/10 páginas-alvo indexadas no Bing em 15 dias e ≥ 40/65 URLs até 15/12; reduzir vazamento de cliques no Google.</li></ul>
+<p><strong>Teste 4 — Entidade e prova: reviews e NAP</strong></p>
+<ul><li><strong>GAP identificado:</strong> 43 reviews vs 592/734; entidade 35/100; prova de terceiros 25/100.</li><li><strong>Oportunidade de melhoria:</strong> subir corroboração para ganhar top 3 além de 1 milha e ser citável em IA.</li><li><strong>Ação a ser realizada:</strong> 12 reviews novas com cidade e serviço (cliente), NAP idêntico em Yelp, BBB, Bing Places, Angi, Clutch, 2 novas locations (Harrison e Kearny).</li><li><strong>Resultado almejado:</strong> reviews 43→55 em 30 dias (100 em 90), entidade 35→70 e prova 25→60 em 90 dias.</li></ul>
+</section>
+<section id="s22"><div class="sec-head"><div class="sec-num">22</div><div><h2>Metas e KPIs do ciclo (04/11–15/12)</h2></div></div>
+<div class="tbl-wrap"><table><thead><tr><th>Indicador</th><th>Baseline</th><th>Meta</th></tr></thead><tbody>
+<tr><td>Páginas-alvo indexadas no Bing</td><td>0/10</td><td>10/10</td></tr>
+<tr><td>URLs indexadas no Bing</td><td>10/65</td><td>≥ 40/65</td></tr>
+<tr><td>Prompts citados (AISV)</td><td>0/12</td><td>6/12</td></tr>
+<tr><td>Top 10 expandido (2 mi)</td><td>23%</td><td>≥ 40%</td></tr>
+<tr><td>Search Bing fora do alvo</td><td>76%</td><td>&lt; 30%</td></tr>
+<tr><td>CTR Bing Search</td><td>3,85%</td><td>≥ 5%</td></tr>
+<tr><td>Leads B2B válidos (Bing + ChatGPT Ads)</td><td>1–2/mês</td><td><strong>4–10</strong> com US$ 800</td></tr>
+<tr><td>CAC por lead válido</td><td>~US$ 187</td><td>≤ US$ 130 (teto US$ 200)</td></tr>
+<tr><td>Reviews Google</td><td>43</td><td>55+</td></tr>
+</tbody></table></div>
+</section>
+<section id="s23"><div class="sec-head"><div class="sec-num">23</div><div><h2>Conclusão Geral</h2></div></div>
+<p>Os indicadores que mais mudaram: <strong>CTR do search (3,85%)</strong> e <strong>CPA</strong> do Bing melhoraram de um ciclo para o outro (de US$ 895 por lead em jun/2026 para US$ 93 por conversão em out/2026), mas ainda escondem um problema de qualidade: 76% do gasto vai para fora do alvo. Do lado negativo, <strong>a invisibilidade</strong> (Bing 10/65, retrieval 15/100) e o <strong>vazamento no Google</strong> (37 de 39 cliques num subdomínio morto) consomem o que o conteúdo já construiu.</p>
+<p>A decisão estratégica deste ciclo: <strong>destravar retrieval primeiro, usar o Bing como canal de captura imediata e o ChatGPT Ads como experimento de descoberta</strong>, com US$ 800/mês e regras de parada claras. Um único contrato de ~US$ 3.000/mês paga a mídia de um mês inteiro; o risco é gastar sem ser encontrado.</p>
+</section>
+<section id="s24"><div class="sec-head"><div class="sec-num">24</div><div><h2>Premissas e limites deste documento</h2></div></div>
+<ul><li>"GPT Ads" interpretado como ChatGPT Ads. Google Ads fora do escopo por orçamento.</li><li>Série de 5 anos interpolada por CAGR (não é série oficial); tamanho do mercado primário é proxy de NY, sem NJ.</li><li>Câmbio de R$ 5,50/US$ é premissa. Taxas de MQL/SQL/Oportunidade são hipóteses V4 a calibrar com CRM.</li><li>Benchmarks de CPL/conversão de limpeza vêm de blogs de agência (baixa confiança).</li><li>Mínimo e alcance do ChatGPT Ads: fontes divergentes; confirmar na plataforma.</li><li>Volumes do Ubersuggest são nacionais (EUA), com sinônimos sobrepostos; só 15 das 50 keywords tiveram posição lida (leitura de 27/10, próxima em 24/11). Os números de volume mudam por fonte (199 mil prompts AISV, ~1,35 mi keywords B2B, 223 mil do check-in) e <strong>não são comparáveis entre si</strong>.</li><li>Sem acesso a kick-off, faturamento, CRM, resultado final do Meta Ads (jun–jul) nem GSC atual.</li></ul>
+</section>
+<section id="s25"><div class="sec-head"><div class="sec-num">25</div><div><h2>Fontes</h2></div></div>
+<ul><li><a href="https://www.ibisworld.com/united-states/industry/janitorial-services/1496/" target="_blank" rel="noopener">IBISWorld — Janitorial Services (US)</a> · <a href="https://www.ibisworld.com/us/industry/new-jersey/janitorial-services/13193/" target="_blank" rel="noopener">IBISWorld — NJ</a> · <a href="https://img3.ibisworld.com/united-states/industry/new-york/janitorial-services/12154" target="_blank" rel="noopener">IBISWorld — NY</a></li><li><a href="https://cmmonline.com/news/u-s-janitorial-services-market-projected-to-grow-nearly-2-in-2026" target="_blank" rel="noopener">CMM — Janitorial Services Market 2026</a> · <a href="https://www.marketresearch.com/Grand-View-Research-v4060/Janitorial-Services-44356502" target="_blank" rel="noopener">Grand View Research (MarketResearch)</a></li><li><a href="https://www.abstraktmg.com/cost-of-commercial-cleaning-leads-appointments/" target="_blank" rel="noopener">Abstrakt — custo de leads de limpeza comercial</a> · <a href="https://wordstream.com/blog/2026-google-ads-benchmarks" target="_blank" rel="noopener">WordStream — Google Ads Benchmarks 2026</a></li><li><a href="https://ppc.land/openai-opens-chatgpt-ads-manager-to-all-us-businesses-with-cpc-bidding/" target="_blank" rel="noopener">ChatGPT Ads Manager (PPC Land)</a> · <a href="https://topgrowthmarketing.com/how-much-do-chatgpt-ads-cost/" target="_blank" rel="noopener">Custo de ChatGPT Ads</a> · <a href="https://trylapis.com/resources/chatgpt-ads-manager-self-serve-setup-guide" target="_blank" rel="noopener">Guia de setup (Lapis)</a></li><li>Dashboard de tráfego e Ubersuggest: <a href="https://marcoslrvusa.github.io/traffic-analytics/premium/" target="_blank" rel="noopener">https://marcoslrvusa.github.io/traffic-analytics/premium/</a> · Estratégia de IA (AISV): <a href="https://marcoslrvusa.github.io/v4perettoco/premium-ai-strategy/" target="_blank" rel="noopener">https://marcoslrvusa.github.io/v4perettoco/premium-ai-strategy/</a></li><li>Internos: <code>premium-seo-audit</code>, <code>premium-checkin-outubro3</code>, <code>Bing/PLANO-CORRECAO.md</code>, <code>auditoria-aio-geo-novembro-2026.md</code>, <code>estrategia-midia-paga-junho-2026.md</code>, Account Planning de 08/01/2026.</li></ul>
+</section>
+<div class="foot">
+  <p>Account Planning · Premium Cleaning Services NJ &amp; NY · 11/11/2026 · Squad Prime / SEO · V4 Company · Peretto &amp; Co</p>
+  <p>Fontes internas: <code>squads/prime/clientes/premium-cleaning-services/campanhas/</code></p>
+</div>
+</main>
+</body>
+</html>
