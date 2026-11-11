@@ -344,7 +344,7 @@
 
   .slide-nav {
     display: flex;
-    gap: 8px;
+    gap: 7px;
     flex-wrap: wrap;
     margin: 18px 0 0;
     justify-content: center;
@@ -353,14 +353,14 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 7px 14px;
+    padding: 7px 11px;
     border-radius: 20px;
     background: rgba(255,255,255,0.08);
     border: 1px solid rgba(255,255,255,0.18);
     color: rgba(255,255,255,0.9);
     font-size: 11px;
     font-weight: 600;
-    letter-spacing: 0.4px;
+    letter-spacing: 0.3px;
     text-decoration: none;
     transition: all 0.2s;
   }
@@ -484,6 +484,54 @@
     .bar-note { margin-left: 0; }
     .url-grid { grid-template-columns: 1fr; }
   }
+
+  /* Timeline del proyecto (estándar Indianapolis) */
+  .timeline {
+    display: flex;
+    gap: 0;
+    margin: 32px 0 16px;
+    position: relative;
+    padding: 0 0 20px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 4%;
+    right: 4%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold-border), var(--gold), var(--gold-border));
+    border-radius: 2px;
+  }
+  .timeline-phase {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    padding: 0 6px;
+  }
+  .timeline-phase .dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    position: relative;
+    z-index: 1;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px var(--gold);
+  }
+  .timeline-phase .dot.green { background: #15803d; box-shadow: 0 0 0 2px #15803d; }
+  .timeline-phase .dot.gold { background: var(--gold); }
+  .timeline-phase .dot.gray { background: #757575; }
+  .timeline-phase .phase-name { font-size: 13px; font-weight: 700; color: var(--gray-800); margin-bottom: 2px; }
+  .timeline-phase .phase-hours { font-size: 22px; font-weight: 700; color: var(--red); letter-spacing: -0.5px; }
+  .timeline-phase .phase-pct { font-size: 12px; color: var(--gray-500); font-weight: 600; }
+  .timeline-phase .phase-bar { height: 8px; border-radius: 4px; margin: 8px auto 6px; max-width: 80%; }
+  .timeline-phase .phase-bar.green { background: linear-gradient(90deg, #15803d, #22c55e); }
+  .timeline-phase .phase-bar.gray { background: linear-gradient(90deg, #616161, #9e9e9e); }
+  @media (max-width: 900px) {
+    .timeline { flex-wrap: wrap; }
+    .timeline-phase { flex: 1 1 30%; margin-bottom: 14px; }
+  }
 </style>
 </head>
 
@@ -501,11 +549,12 @@
     </div>
     <div class="slide-nav">
       <a href="#sumario">01 <span>Sumario</span></a>
-      <a href="#entregas">02 <span>Entregas</span></a>
-      <a href="#performance">03 <span>Performance</span></a>
-      <a href="#hallazgos">04 <span>Hallazgos</span></a>
-      <a href="#solicitudes">05 <span>Solicitudes</span></a>
-      <a href="#dependencias">06 <span>Dependencias</span></a>
+      <a href="#estagio">02 <span>Dónde estamos</span></a>
+      <a href="#entregas">03 <span>Entregas</span></a>
+      <a href="#performance">04 <span>Performance</span></a>
+      <a href="#hallazgos">05 <span>Hallazgos</span></a>
+      <a href="#solicitudes">06 <span>Solicitudes</span></a>
+      <a href="#dependencias">07 <span>Dependencias</span></a>
       <a href="#archivos">F <span>Archivos</span></a>
     </div>
   </div>
@@ -560,7 +609,7 @@
       </div>
 
       <div style="background: #fef2f2; border-left:4px solid var(--red); border-radius:0 10px 10px 0; padding:16px 20px;">
-        <p style="margin:0; font-size:14px; color:var(--gray-700);"><strong style="color:var(--red);">Lectura en 30 segundos:</strong> todo el contenido del Sprint 1 está en línea y verificado. Lo pendiente depende de accesos y confirmaciones: GBP (acceso de gerente), hosting (PHP 8.x + caché de página — el mismo acceso destraba <code>/llms.txt</code> en la raíz, la plantilla del blog y los redirects), datos por confirmar (garantía, precios, zonas, reseñas) y la ejecución de galería/Core Web Vitals en diciembre. Los 7 hallazgos para decidir están en la sección 04.</p>
+        <p style="margin:0; font-size:14px; color:var(--gray-700);"><strong style="color:var(--red);">Lectura en 30 segundos:</strong> estamos dentro del plan de la <a href="https://marcoslrvusa.github.io/v4perettoco/diamond-tint-audit/" target="_blank" rel="noopener">auditoría original</a> — Fase 0 completa (7/7), Fase 1 con 6/7 en el aire, contenido de la Fase 2 100% en línea y 2 de 6 entregas de la Fase 3 adelantadas (los hubs y el llms.txt). Todo el contenido del Sprint 1 está en línea y verificado; el mapa completo por fase está en la sección 02. Lo pendiente depende de accesos y confirmaciones: GBP (acceso de gerente), hosting (PHP 8.x + caché de página — el mismo acceso destraba <code>/llms.txt</code> en la raíz, la plantilla del blog y los redirects), datos por confirmar (garantía, precios, zonas, reseñas) y la ejecución de galería/Core Web Vitals en diciembre. Los 7 hallazgos para decidir están en la sección 05.</p>
       </div>
 
       <div class="legend" style="margin-top:16px;">
@@ -572,10 +621,109 @@
     </div>
   </div>
 
-  <!-- 02 ENTREGAS -->
+  <!-- 02 DONDE ESTAMOS -->
+  <div class="card" id="estagio">
+    <div class="card-body">
+      <h2><span class="slide-num">02</span> Dónde estamos en el proyecto</h2>
+      <p>La <a href="https://marcoslrvusa.github.io/v4perettoco/diamond-tint-audit/" target="_blank" rel="noopener">auditoría SEO original</a> (octubre) definió el plan: <strong>Fase 0 (casa en orden)</strong> + <strong>Sprint 1 de 3 meses (Fases 1 a 3)</strong>, con <strong>reporte mensual por fase</strong>, y deja el <strong>Sprint 2</strong> para planificarse en diciembre con los datos de Search Console. Este es el estado real de ese plan al 11/11, leído del board de eKyte del proyecto "Auditoría SEO — Fase 0 y Sprint 1" (27 tareas). Nota: el flujo de eKyte marca 13 de 27 tareas concluidas — el mapa de abajo cuenta por lo que ya está <em>en el aire</em>, por eso puede ir por delante del flujo.</p>
+
+      <div class="timeline">
+        <div class="timeline-phase">
+          <div class="dot green"></div>
+          <div class="phase-bar green" style="width:100%;"></div>
+          <div class="phase-hours" style="color:#15803d;">✓</div>
+          <div class="phase-name">Auditoría</div>
+          <div class="phase-pct">Octubre · 26 hallazgos</div>
+        </div>
+        <div class="timeline-phase">
+          <div class="dot green"></div>
+          <div class="phase-bar green" style="width:100%;"></div>
+          <div class="phase-hours" style="color:#15803d;">7/7</div>
+          <div class="phase-name">Fase 0</div>
+          <div class="phase-pct">100% | Casa en orden</div>
+        </div>
+        <div class="timeline-phase">
+          <div class="dot gold"></div>
+          <div class="phase-bar" style="width:86%; background:linear-gradient(90deg, #15803d 86%, #e5e7eb 86%);"></div>
+          <div class="phase-hours" style="color:#b45309;">6/7</div>
+          <div class="phase-name">Fase 1</div>
+          <div class="phase-pct">86% | Fundación</div>
+        </div>
+        <div class="timeline-phase">
+          <div class="dot gold"></div>
+          <div class="phase-bar" style="width:71%; background:linear-gradient(90deg, #15803d 71%, #e5e7eb 71%);"></div>
+          <div class="phase-hours" style="color:#b45309;">5/7</div>
+          <div class="phase-name">Fase 2</div>
+          <div class="phase-pct">71% | Contenido</div>
+        </div>
+        <div class="timeline-phase">
+          <div class="dot gold"></div>
+          <div class="phase-bar" style="width:33%; background:linear-gradient(90deg, #15803d 33%, #e5e7eb 33%);"></div>
+          <div class="phase-hours" style="color:#b45309;">2/6</div>
+          <div class="phase-name">Fase 3</div>
+          <div class="phase-pct">33% | Expansión</div>
+        </div>
+        <div class="timeline-phase">
+          <div class="dot gray"></div>
+          <div class="phase-bar gray" style="width:0%; border:1px dashed var(--gray-300); background:none;"></div>
+          <div class="phase-hours" style="color:var(--gray-500);">0%</div>
+          <div class="phase-name">Sprint 2</div>
+          <div class="phase-pct">Se planifica en diciembre</div>
+        </div>
+      </div>
+
+      <div style="overflow-x:auto;">
+      <table>
+        <tr><th>Fase</th><th>Foco</th><th>Estado al 11/11</th><th>Horas (auditoría)</th></tr>
+        <tr>
+          <td><strong>Auditoría</strong></td>
+          <td>Diagnóstico: salud 6.1/10, 26 hallazgos en 44 URLs, plan de 137 h</td>
+          <td><span class="badge badge-ok">Concluida (octubre)</span> — define este plan</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><strong>Fase 0 · Casa en orden</strong></td>
+          <td>Schema, H1/H2, 404 interno, GSC + sitemap, titles/metas, security headers</td>
+          <td><span class="badge badge-ok">Concluida</span> — 7 de 7 tareas cerradas en octubre</td>
+          <td>22 h · 16%</td>
+        </tr>
+        <tr>
+          <td><strong>Fase 1 · Fundación</strong></td>
+          <td>Titles 50–60, headings en 28 páginas, metas desc, anclas, WebP, alt text, URLs lentas</td>
+          <td><span class="badge badge-exec">6/7 en el aire</span> — alt text publicado el 11/11; URLs lentas con diagnóstico listo, cierre depende del hosting</td>
+          <td>35 h · 26%</td>
+        </tr>
+        <tr>
+          <td><strong>Fase 2 · Contenido</strong></td>
+          <td>Thin content, GBP, contenido de servicios/clusters/hubs, reseñas</td>
+          <td><span class="badge badge-exec">Contenido 100% en el aire (adelantado)</span> — GBP bloqueado por acceso de gerente; reseñas listas esperando Place ID y canal</td>
+          <td>42 h · 30%</td>
+        </tr>
+        <tr>
+          <td><strong>Fase 3 · Expansión</strong></td>
+          <td>Galería, Core Web Vitals, link building, monitoreo (+ hubs y llms.txt adelantados)</td>
+          <td><span class="badge badge-exec">2/6 en el aire</span> — hubs y llms.txt (parcial) publicados por adelantado; galería, CWV, link building y monitoreo entran en diciembre</td>
+          <td>38 h · 28%</td>
+        </tr>
+        <tr>
+          <td><strong>Sprint 2</strong></td>
+          <td>Nuevo plan de 3 meses basado en los datos de Search Console</td>
+          <td><span class="badge badge-pend">0%</span> — se planifica en diciembre, cuando cierra el monitoreo del Sprint 1</td>
+          <td>—</td>
+        </tr>
+      </table>
+      </div>
+
+      <div class="status-note">
+        <p><strong>Adelantos frente al calendario:</strong> los 2 hubs de la Fase 3 (previstos hasta 18/12) y todo el contenido de la Fase 2 (previsto hasta 04/12) ya están en el aire el 11/11. Los reportes mensuales por fase: el 1 y el 2 dependen del acceso al hosting (cierre de URLs lentas + caché) y del Place ID del GBP (reseñas); el reporte 3 y el plan del Sprint 2 se cierran en diciembre.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 ENTREGAS -->
   <div class="card" id="entregas">
     <div class="card-body">
-      <h2><span class="slide-num">02</span> Entregas del Sprint 1</h2>
+      <h2><span class="slide-num">03</span> Entregas del Sprint 1</h2>
       <p>Situación real de cada tarea al 11/11. Lo verde está en línea; lo ámbar está listo y esperando un acceso o una confirmación; lo gris está bloqueado o programado para diciembre.</p>
 
       <div style="overflow-x:auto;">
@@ -638,17 +786,17 @@
         </tr>
         <tr>
           <td><strong>URLs lentas</strong><br><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--gray-500);">10671148</span></td>
-          <td>Ver sección 03</td>
+          <td>Ver sección 04</td>
           <td><span class="badge badge-exec">Diagnóstico listo, cierre depende del hosting</span></td>
         </tr>
         <tr>
           <td><strong>llms.txt</strong><br><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--gray-500);">10671201</span></td>
-          <td><strong>Archivo en línea</strong> (text/plain) en <a href="https://diamondtintlv.com/wp-content/uploads/2026/11/llms.txt">/wp-content/uploads/2026/11/llms.txt</a> + regla Redirection 15 armada (<code>/llms.txt</code> → 301 → archivo). La ruta amigable aún da 404: el plugin Redirection no está ejecutando redirecciones (hallazgo 1 de la sección 04)</td>
+          <td><strong>Archivo en línea</strong> (text/plain) en <a href="https://diamondtintlv.com/wp-content/uploads/2026/11/llms.txt">/wp-content/uploads/2026/11/llms.txt</a> + regla Redirection 15 armada (<code>/llms.txt</code> → 301 → archivo). La ruta amigable aún da 404: el plugin Redirection no está ejecutando redirecciones (hallazgo 1 de la sección 05)</td>
           <td><span class="badge badge-exec">Parcial en línea</span></td>
         </tr>
         <tr>
           <td><strong>Galería y Core Web Vitals</strong><br><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--gray-500);">10671204 + 10671208</span></td>
-          <td>Línea de base medida (ver sección 03)</td>
+          <td>Línea de base medida (ver sección 04)</td>
           <td><span class="badge badge-pend">Ejecución en diciembre</span></td>
         </tr>
         <tr>
@@ -695,10 +843,10 @@
     </div>
   </div>
 
-  <!-- 03 PERFORMANCE -->
+  <!-- 04 PERFORMANCE -->
   <div class="card" id="performance">
     <div class="card-body">
-      <h2><span class="slide-num">03</span> Performance: tiempo de respuesta y Core Web Vitals</h2>
+      <h2><span class="slide-num">04</span> Performance: tiempo de respuesta y Core Web Vitals</h2>
 
       <h3>Tiempo de respuesta</h3>
       <p>Las 28 URLs lentas del Screaming Frog de 02/10, remedidas el 10/11 con 3 mediciones cada una:</p>
@@ -730,7 +878,7 @@
 
       <div class="risk-box">
         <h4>Causa probable de lo que resta</h4>
-        <p>Servidor Apache con PHP 7.4.33 (sin soporte desde 2022). El plugin LiteSpeed Cache está activo, pero ninguna URL devuelve header de caché. La corrección real exige acceso al hosting (PHP 8.x y caché de página) — es el pedido 2 de la sección 05.</p>
+        <p>Servidor Apache con PHP 7.4.33 (sin soporte desde 2022). El plugin LiteSpeed Cache está activo, pero ninguna URL devuelve header de caché. La corrección real exige acceso al hosting (PHP 8.x y caché de página) — es el pedido 2 de la sección 06.</p>
       </div>
 
       <h3>Core Web Vitals en laboratorio</h3>
@@ -757,10 +905,10 @@
     </div>
   </div>
 
-  <!-- 04 HALLAZGOS -->
+  <!-- 05 HALLAZGOS -->
   <div class="card" id="hallazgos">
     <div class="card-body">
-      <h2><span class="slide-num">04</span> Hallazgos y riesgos para decidir</h2>
+      <h2><span class="slide-num">05</span> Hallazgos y riesgos para decidir</h2>
 
       <div class="finding" style="border-left-color: var(--red);">
         <div class="finding-header">
@@ -776,7 +924,7 @@
           <span class="finding-title">2 · Claims en línea: qué publicamos y por qué</span>
           <span class="badge badge-info">Transparencia</span>
         </div>
-        <p>"Over 20 years" ya era público antes del sprint. "4.9 en más de 200 reseñas" refleja el <code>aggregateRating</code> 4.9/210 que el JSON-LD de la homepage ya declara. Los marcadores <code>&lt;!-- CONFIRMAR COM CLIENTE --&gt;</code> fueron removidos <strong>sin escribir</strong> las frases pendientes (garantía, rango de precio, same-day, marcas de película) — <strong>nada sin confirmación entró en línea, excepto los claims reflejados y documentados</strong>. Los números reales siguen en la lista de confirmación (sección 05).</p>
+        <p>"Over 20 years" ya era público antes del sprint. "4.9 en más de 200 reseñas" refleja el <code>aggregateRating</code> 4.9/210 que el JSON-LD de la homepage ya declara. Los marcadores <code>&lt;!-- CONFIRMAR COM CLIENTE --&gt;</code> fueron removidos <strong>sin escribir</strong> las frases pendientes (garantía, rango de precio, same-day, marcas de película) — <strong>nada sin confirmación entró en línea, excepto los claims reflejados y documentados</strong>. Los números reales siguen en la lista de confirmación (sección 06).</p>
       </div>
 
       <div class="finding">
@@ -821,10 +969,10 @@
     </div>
   </div>
 
-  <!-- 05 SOLICITUDES -->
+  <!-- 06 SOLICITUDES -->
   <div class="card" id="solicitudes">
     <div class="card-body">
-      <h2><span class="slide-num">05</span> Solicitudes al cliente (agenda de la reunión)</h2>
+      <h2><span class="slide-num">06</span> Solicitudes al cliente (agenda de la reunión)</h2>
       <p>Ocho pedidos ordenados por impacto. Los dos primeros destraban el mayor volumen de trabajo pendiente.</p>
 
       <ul class="check-list">
@@ -840,10 +988,10 @@
     </div>
   </div>
 
-  <!-- 06 DEPENDENCIAS -->
+  <!-- 07 DEPENDENCIAS -->
   <div class="card" id="dependencias">
     <div class="card-body">
-      <h2><span class="slide-num">06</span> Dependencias abiertas</h2>
+      <h2><span class="slide-num">07</span> Dependencias abiertas</h2>
 
       <ul class="check-list">
         <li><span class="check-icon pend">–</span><span><strong>Ubersuggest:</strong> token OAuth ausente. Quedan pendientes los volúmenes de los temas nuevos (clusters 1, 2, 4 y 5) y de commercial y home. La lista de términos está en <code>clusters/NOTAS.md</code> §2.</span></li>
