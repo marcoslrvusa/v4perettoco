@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campanhas: Bing + ChatGPT Ads | Premium Cleaning Services NJ &amp; NY</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root{
+    --red: rgb(229,9,20); --red-dark: rgb(180,7,16); --red-light: rgb(255,60,70);
+    --gold:#c9a96e; --gold-dark:#a8863f; --gold-soft:#f5f0e6;
+    --ink:#171717; --ink-2:#2b2b2b;
+    --g50:#fafafa; --g100:#f4f4f2; --g200:#e8e6e1; --g300:#d6d3cc;
+    --g500:#8f8b82; --g600:#6b6760; --g700:#4a473f; --g800:#302e29; --g900:#1d1c19;
+    --ok:#1f7a4d; --ok-bg:#e9f5ee; --warn:#a1670a; --warn-bg:#fdf3e3; --bad:#a1121c; --bad-bg:#fbeaec;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(0,0,0,.04), 0 8px 24px -12px rgba(0,0,0,.18);
+  }
+  html { scroll-behavior:smooth; }
+  body{ font-family:'Ubuntu',-apple-system,BlinkMacSystemFont,sans-serif; background:#f8f7f4; color:var(--ink); line-height:1.65; font-size:16px; -webkit-font-smoothing:antialiased; }
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 24px; }
+
+  /* ---------- COVER ---------- */
+  .cover{ background:linear-gradient(135deg,#0b0b0b 0%,#161513 45%,#241f18 100%); color:#fff; padding:72px 24px 56px; position:relative; overflow:hidden; }
+  .cover::after{ content:''; position:absolute; inset:0; background:radial-gradient(700px 320px at 78% -10%, rgba(201,169,110,.22), transparent 60%); pointer-events:none; }
+  .cover-inner{ position:relative; z-index:1; max-width:1080px; margin:0 auto; }
+  .kicker{ display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); border:1px solid rgba(201,169,110,.35); padding:6px 12px; border-radius:100px; }
+  .kicker::before{ content:''; width:6px; height:6px; border-radius:50%; background:var(--gold); }
+  h1{ font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:clamp(30px,4.6vw,52px); line-height:1.08; letter-spacing:-.02em; margin:22px 0 14px; }
+  h1 .accent{ color:var(--gold); }
+  .cover p.sub{ color:#cdc8bd; font-size:clamp(15px,1.7vw,18px); max-width:760px; }
+  .cover-meta{ display:flex; flex-wrap:wrap; gap:10px 28px; margin-top:30px; font-size:13px; color:#a9a396; }
+  .cover-meta strong{ color:#fff; font-weight:500; }
+  .verdict{ margin-top:36px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); border-left:3px solid var(--red); border-radius:0 12px 12px 0; padding:20px 22px; max-width:900px; }
+  .verdict .label{ font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--red-light); }
+  .verdict p{ color:#efece5; font-size:clamp(16px,2vw,20px); line-height:1.5; margin-top:6px; }
+  .verdict b{ color:#fff; }
+
+  /* ---------- NAV ---------- */
+  .toc{ position:sticky; top:0; z-index:50; background:rgba(248,247,244,.92); backdrop-filter:blur(12px); border-bottom:1px solid var(--g200); }
+  .toc-inner{ max-width:1080px; margin:0 auto; padding:10px 24px; display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; }
+  .toc-inner::-webkit-scrollbar{ display:none; }
+  .toc a{ flex:none; font-size:12.5px; font-weight:500; color:var(--g600); text-decoration:none; padding:7px 12px; border-radius:8px; white-space:nowrap; }
+  .toc a:hover{ background:var(--g100); color:var(--ink); }
+
+  main{ padding:56px 0 80px; }
+  section{ margin-bottom:64px; scroll-margin-top:64px; }
+  .sec-head{ display:flex; align-items:flex-start; gap:16px; margin-bottom:22px; }
+  .sec-num{ flex:none; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--gold-dark); border:1px solid var(--g300); background:#fff; border-radius:8px; width:38px; height:38px; display:grid; place-items:center; margin-top:3px; }
+  h2{ font-family:'Plus Jakarta Sans',sans-serif; font-size:clamp(22px,3vw,30px); font-weight:800; letter-spacing:-.02em; line-height:1.2; }
+  .sec-sub{ color:var(--g600); font-size:14.5px; margin-top:4px; }
+  h3{ font-family:'Plus Jakarta Sans',sans-serif; font-size:17px; font-weight:700; margin:28px 0 10px; letter-spacing:-.01em; }
+  h4{ font-size:14px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--g600); margin:22px 0 8px; }
+  p{ margin:10px 0; color:var(--g800); }
+  a{ color:var(--red-dark); }
+  strong{ font-weight:700; color:var(--ink); }
+  em{ color:var(--g700); }
+  ul,ol{ margin:10px 0 10px 22px; color:var(--g800); }
+  li{ margin:6px 0; }
+  code{ font-family:'JetBrains Mono',monospace; font-size:.86em; background:var(--g100); border:1px solid var(--g200); padding:1px 5px; border-radius:5px; color:var(--ink-2); }
+
+  /* ---------- CARDS ---------- */
+  .grid{ display:grid; gap:14px; }
+  .g2{ grid-template-columns:repeat(2,1fr); }
+  .g3{ grid-template-columns:repeat(3,1fr); }
+  .g4{ grid-template-columns:repeat(4,1fr); }
+  .card{ background:#fff; border:1px solid var(--g200); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow); }
+  .card h5{ font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:700; margin-bottom:6px; }
+  .card p{ font-size:13.5px; color:var(--g600); margin:0; }
+  .stat{ display:flex; flex-direction:column; gap:4px; }
+  .stat .k{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--g500); }
+  .stat .v{ font-family:'Plus Jakarta Sans',sans-serif; font-size:30px; font-weight:800; line-height:1.05; letter-spacing:-.03em; }
+  .stat .v.bad{ color:var(--bad); } .stat .v.warn{ color:var(--warn); } .stat .v.ok{ color:var(--ok); }
+  .stat .d{ font-size:12px; color:var(--g600); }
+
+  /* ---------- SCORE ---------- */
+  .score-wrap{ display:grid; grid-template-columns:260px 1fr; gap:28px; align-items:center; background:#fff; border:1px solid var(--g200); border-radius:18px; padding:28px; box-shadow:var(--shadow); }
+  .score-dial{ position:relative; width:220px; height:220px; margin:0 auto; }
+  .score-dial svg{ transform:rotate(-90deg); }
+  .score-dial .num{ position:absolute; inset:0; display:grid; place-items:center; text-align:center; }
+  .score-dial .num b{ font-family:'Plus Jakarta Sans',sans-serif; font-size:56px; font-weight:800; letter-spacing:-.04em; line-height:1; display:block; }
+  .score-dial .num span{ font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--g500); }
+  .bars{ display:flex; flex-direction:column; gap:12px; }
+  .bar-row{ display:grid; grid-template-columns:190px 1fr 42px; gap:12px; align-items:center; font-size:13px; }
+  .bar-row .lbl{ color:var(--g700); font-weight:500; }
+  .bar-track{ height:9px; background:var(--g100); border-radius:100px; overflow:hidden; }
+  .bar-fill{ height:100%; border-radius:100px; }
+  .bar-row .val{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--g600); text-align:right; }
+
+  /* ---------- TABLES ---------- */
+  .tbl-wrap{ overflow-x:auto; border:1px solid var(--g200); border-radius:12px; background:#fff; box-shadow:var(--shadow); }
+  table{ width:100%; border-collapse:collapse; font-size:13.5px; min-width:620px; }
+  thead th{ background:var(--g50); text-align:left; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--g500); font-weight:600; padding:11px 14px; border-bottom:1px solid var(--g200); white-space:nowrap; }
+  td{ padding:11px 14px; border-bottom:1px solid var(--g100); vertical-align:top; color:var(--g800); }
+  tbody tr:last-child td{ border-bottom:none; }
+  tbody tr:hover{ background:#fcfcfa; }
+  td.num, th.num{ text-align:right; font-family:'JetBrains Mono',monospace; font-size:12.5px; white-space:nowrap; }
+  .tag{ display:inline-block; font-size:10.5px; font-weight:600; letter-spacing:.04em; padding:2px 8px; border-radius:100px; white-space:nowrap; }
+  .t-bad{ background:var(--bad-bg); color:var(--bad); }
+  .t-warn{ background:var(--warn-bg); color:var(--warn); }
+  .t-ok{ background:var(--ok-bg); color:var(--ok); }
+  .t-neutral{ background:var(--g100); color:var(--g600); }
+  .mono{ font-family:'JetBrains Mono',monospace; font-size:12px; }
+
+  /* ---------- CALLOUTS ---------- */
+  .callout{ border-radius:12px; padding:18px 20px; margin:18px 0; border:1px solid; font-size:14px; }
+  .callout .ct{ font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; margin-bottom:6px; font-weight:500; }
+  .callout p:last-child{ margin-bottom:0; }
+  .c-bad{ background:var(--bad-bg); border-color:#f2c9cd; } .c-bad .ct{ color:var(--bad); }
+  .c-warn{ background:var(--warn-bg); border-color:#f0dcb8; } .c-warn .ct{ color:var(--warn); }
+  .c-ok{ background:var(--ok-bg); border-color:#c8e3d4; } .c-ok .ct{ color:var(--ok); }
+  .c-info{ background:#f2f5f8; border-color:#d9e2ea; } .c-info .ct{ color:#3d5a73; }
+
+  /* ---------- FUNNEL ---------- */
+  .funnel{ display:grid; gap:8px; }
+  .fstep{ display:grid; grid-template-columns:44px 1fr auto; gap:14px; align-items:center; background:#fff; border:1px solid var(--g200); border-radius:12px; padding:14px 18px; }
+  .fstep .n{ width:34px; height:34px; border-radius:9px; display:grid; place-items:center; font-family:'JetBrains Mono',monospace; font-size:12px; background:var(--g100); color:var(--g600); }
+  .fstep .t b{ display:block; font-size:14px; }
+  .fstep .t span{ font-size:12.5px; color:var(--g600); }
+  .fstep.broken{ border-color:#f0c6ca; background:#fffafa; }
+  .fstep.broken .n{ background:var(--bad-bg); color:var(--bad); }
+  .fstep.ok .n{ background:var(--ok-bg); color:var(--ok); }
+
+  /* ---------- TIMELINE ---------- */
+  .phase{ display:grid; grid-template-columns:150px 1fr; gap:22px; padding:22px 0; border-top:1px solid var(--g200); }
+  .phase:last-child{ border-bottom:1px solid var(--g200); }
+  .phase .when{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--gold-dark); padding-top:3px; }
+  .phase .when b{ display:block; font-family:'Plus Jakarta Sans',sans-serif; font-size:15px; color:var(--ink); letter-spacing:-.01em; text-transform:none; margin-bottom:2px; }
+  .phase ol{ margin:0 0 0 18px; }
+  .phase li{ margin:7px 0; font-size:14px; }
+  .phase li b{ font-weight:700; }
+  .phase .why{ margin-top:10px; font-size:12.5px; color:var(--g600); background:var(--g50); border-left:2px solid var(--g300); padding:8px 12px; border-radius:0 6px 6px 0; }
+
+  /* ---------- MISC ---------- */
+  .check{ list-style:none; margin-left:0; }
+  .check li{ display:flex; gap:10px; align-items:flex-start; font-size:14px; padding:8px 0; border-bottom:1px dashed var(--g200); }
+  .check li:last-child{ border-bottom:none; }
+  .check .ic{ flex:none; width:20px; height:20px; border-radius:50%; display:grid; place-items:center; font-size:11px; font-weight:700; margin-top:1px; }
+  .ic-ok{ background:var(--ok-bg); color:var(--ok); }
+  .ic-no{ background:var(--bad-bg); color:var(--bad); }
+  .foot{ border-top:1px solid var(--g200); padding-top:24px; font-size:12.5px; color:var(--g500); }
+  .method{ font-size:12.5px; color:var(--g600); background:#fff; border:1px solid var(--g200); border-radius:12px; padding:18px 20px; }
+  .method code{ font-size:11.5px; }
+
+  /* ---------- CHANNELS / SCORE DUO / TIMELINE ---------- */
+  .score-block{ margin-top:26px; }
+  .score-block .score-title{ display:flex; align-items:center; gap:10px; margin:0 0 12px; }
+  .score-block .score-title h3{ margin:0; font-size:16px; }
+  .score-block .score-title .tag{ font-size:10px; }
+  .channel-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .channel{ background:#fff; border:1px solid var(--g200); border-radius:14px; padding:20px; box-shadow:var(--shadow); border-top:3px solid var(--g300); }
+  .channel.google{ border-top-color:#1a73e8; }
+  .channel.bing{ border-top-color:#008373; }
+  .channel h5{ font-family:'Plus Jakarta Sans',sans-serif; font-size:15px; margin-bottom:6px; }
+  .channel p{ font-size:13.5px; color:var(--g600); margin:0; }
+  .channel .verdict-line{ margin-top:12px; font-size:13px; font-weight:700; color:var(--ink); }
+  .mirror tr.live td{ background:#fffafa; }
+  .mirror tr.repo td{ background:#f7fbf8; }
+  .tl{ display:grid; gap:10px; }
+  .tl-item{ display:grid; grid-template-columns:112px minmax(0,1fr) auto; gap:14px; align-items:start; background:#fff; border:1px solid var(--g200); border-radius:12px; padding:13px 16px; }
+  .tl-item .d{ font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--gold-dark); padding-top:2px; }
+  .tl-item .t{ min-width:0; }
+  .tl-item .t b{ display:block; font-size:13.5px; }
+  .tl-item .t span{ font-size:12.5px; color:var(--g600); }
+  .tl-item code{ overflow-wrap:break-word; }
+  .tl-item .s{ padding-top:1px; }
+  .src{ font-size:11px; color:var(--g500); font-family:'JetBrains Mono',monospace; }
+
+  @media (max-width:860px){
+    .score-wrap{ grid-template-columns:1fr; }
+    .channel-grid{ grid-template-columns:1fr; }
+    .tl-item{ grid-template-columns:90px minmax(0,1fr); }
+    .tl-item .s{ grid-column:2; }
+    .g3,.g4{ grid-template-columns:repeat(2,1fr); }
+    .bar-row{ grid-template-columns:140px 1fr 38px; }
+    .phase{ grid-template-columns:1fr; gap:10px; }
+  }
+  @media (max-width:600px){
+    .g2,.g3,.g4{ grid-template-columns:1fr; }
+    .cover{ padding:52px 20px 44px; }
+    main{ padding:36px 0 60px; }
+    section{ margin-bottom:48px; }
+  }
+  @media print{
+    .toc{ display:none; } body{ background:#fff; } .card,.tbl-wrap,.score-wrap{ box-shadow:none; }
+    .cover{ -webkit-print-color-adjust:exact; print-color-adjust:exact; break-after:page; }
+    main{ padding:24px 0 40px; }
+    section{ margin-bottom:40px; }
+    .sec-head{ break-after:avoid; }
+    .score-block{ break-inside:avoid; }
+    .tl-item{ break-inside:avoid; }
+    .tl-item .d{ white-space:nowrap; }
+    .channel-grid{ break-inside:avoid; }
+    .tbl-wrap{ overflow:visible; }
+    table{ min-width:0; font-size:11.5px; }
+    thead th{ font-size:9.5px; padding:8px 9px; white-space:normal; }
+    td{ padding:8px 9px; font-size:11.5px; }
+    td.mono, td code, .method code{ word-break:break-word; }
+    .score-wrap{ grid-template-columns:200px 1fr; gap:20px; }
+    .score-dial{ width:180px; height:180px; }
+    .score-dial svg{ width:180px; height:180px; }
+    .score-dial .num b{ font-size:44px; }
+    .g3,.g4{ grid-template-columns:repeat(2,1fr); }
+    .bar-row{ grid-template-columns:170px 1fr 36px; }
+    section{ break-inside:auto; }
+    .phase{ display:block; break-inside:auto; padding:18px 0; }
+    .phase .when{ margin-bottom:8px; break-after:avoid; }
+    .tbl-wrap, .callout, .card{ break-inside:avoid; }
+    h2,h3{ break-after:avoid; }
+  }
+
+  /* ===== overlay v2: leitura, cards, tabelas ===== */
+  body{ font-size:16px; line-height:1.7; }
+  .wrap{ max-width:1120px; }
+  .progress{ position:fixed; top:0; left:0; height:3px; width:0; background:linear-gradient(90deg,var(--gold),var(--red)); z-index:100; transition:width .1s linear; }
+  .toc-inner{ gap:4px; padding:10px 24px; }
+  .toc a{ padding:6px 11px; border-radius:100px; }
+  .toc a.on{ background:var(--ink); color:#fff; }
+  main{ padding:40px 0 80px; }
+  section{ background:#fff; border:1px solid var(--g200); border-radius:18px; padding:34px 36px 30px; margin-bottom:26px; box-shadow:var(--shadow); }
+  .sec-head{ margin-bottom:18px; padding-bottom:16px; border-bottom:1px solid var(--g100); align-items:center; }
+  .sec-num{ background:var(--ink); color:var(--gold); border-color:var(--ink); border-radius:10px; }
+  h2{ font-size:clamp(21px,2.6vw,27px); }
+  h3{ font-size:15px; margin:30px 0 10px; padding-left:12px; border-left:3px solid var(--gold); letter-spacing:0; }
+  p{ margin:12px 0; color:var(--g800); max-width:96ch; }
+  li{ margin:5px 0; max-width:96ch; }
+  ul,ol{ margin:10px 0 10px 20px; }
+  a{ color:var(--gold-dark); text-underline-offset:2px; }
+  strong{ color:var(--ink); }
+  p,li,.verdict p,.callout p,dd{ overflow-wrap:anywhere; }
+  td{ overflow-wrap:break-word; }
+
+  .part{ margin:46px 0 22px; padding:0; background:none; border:none; display:flex; align-items:center; gap:16px; font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:clamp(20px,3vw,28px); letter-spacing:-.02em; text-transform:none; color:var(--ink); }
+  .part::before{ content:''; flex:none; width:34px; height:4px; border-radius:4px; background:linear-gradient(90deg,var(--gold),var(--red)); }
+  .part::after{ content:''; flex:1; height:1px; background:var(--g200); }
+
+  .tbl-wrap{ margin:16px 0; border-radius:12px; box-shadow:none; background:#fff; }
+  table{ min-width:560px; font-size:13.5px; }
+  thead th{ position:sticky; top:0; background:var(--g100); color:var(--g700); border-bottom:2px solid var(--g200); white-space:normal; line-height:1.35; }
+  tbody tr:nth-child(even) td{ background:#fcfbf9; }
+  tbody tr:hover td{ background:var(--gold-soft); }
+  td:first-child{ font-weight:600; color:var(--ink); }
+  td.num{ text-align:right; font-family:'JetBrains Mono',monospace; font-size:12.5px; white-space:nowrap; }
+  th.num{ text-align:right; }
+  td{ padding:12px 14px; }
+
+  .callout{ position:relative; padding:18px 22px 18px 26px; border-radius:12px; }
+  .callout::before{ content:''; position:absolute; left:0; top:12px; bottom:12px; width:4px; border-radius:4px; background:currentColor; opacity:.55; }
+  .c-warn{ color:var(--warn); } .c-info{ color:#3d5a73; } .c-ok{ color:var(--ok); } .c-bad{ color:var(--bad); }
+  .callout p{ color:var(--g800); max-width:none; }
+  .callout.big{ padding:22px 26px 22px 30px; margin:0 0 26px; }
+  .callout.big p{ font-size:15.5px; }
+
+  dl.kv{ margin:12px 0; display:flex; flex-direction:column; border:1px solid var(--g200); border-radius:12px; overflow:hidden; }
+  dl.kv > div{ display:grid; grid-template-columns:minmax(120px,190px) minmax(0,1fr); gap:6px 18px; padding:11px 16px; border-bottom:1px solid var(--g100); }
+  dl.kv > div:nth-child(even){ background:#fcfbf9; }
+  dl.kv > div:last-child{ border-bottom:none; }
+  dl.kv dt{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--gold-dark); padding-top:3px; font-weight:500; }
+  dl.kv dd{ margin:0; font-size:14px; color:var(--g800); }
+
+  .cards{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin-top:8px; }
+  .cards.one{ grid-template-columns:minmax(0,1fr); }
+  .pcard{ border:1px solid var(--g200); border-radius:14px; background:#fffefc; overflow:hidden; }
+  .pcard > h3{ margin:0; padding:14px 18px; border-left:0; border-bottom:1px solid var(--g200); background:linear-gradient(135deg,#171717,#2b2519); color:#fff; font-size:15px; }
+  .pcard > .pb{ padding:6px 16px 16px; }
+  .pcard dl.kv{ border:none; margin:6px 0 0; }
+  .pcard dl.kv > div{ grid-template-columns:1fr; padding:9px 2px; gap:2px; background:none !important; }
+  .pcard p{ font-size:13.5px; }
+  .tcard > h3{ background:var(--gold-soft); color:var(--ink); border-bottom:1px solid #e8dcc2; }
+
+  .foot{ margin-top:30px; }
+  @media (max-width:860px){
+    section{ padding:24px 18px 20px; border-radius:14px; }
+    .cards{ grid-template-columns:1fr; }
+    dl.kv > div{ grid-template-columns:1fr; }
+    .wrap{ padding:0 14px; }
+    .cover{ padding:52px 18px 40px; }
+  }
+  @media print{ .progress{ display:none; } section{ box-shadow:none; border:none; padding:0; } .cards{ grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<header class="cover">
+  <div class="cover-inner">
+    <span class="kicker">Campanhas · Bing Ads + ChatGPT Ads · Novembro 2026</span>
+    <h1>Premium Cleaning Services: <span class="accent">Bing corrigido e ChatGPT Ads com hipóteses para gerar lead desde a semana 1</span></h1>
+    <p class="sub">Diagnóstico do Bing (04/10 a 02/11), correções já preparadas em formato de upload e o desenho da campanha de ChatGPT Ads, com hipóteses, validações e regras de parada.</p>
+    <div class="cover-meta">
+      <div><strong>Cliente</strong> · Premium Cleaning Services (Premium Contractors)</div>
+      <div><strong>Domínio</strong> · premiumcleaningnj.com</div>
+      <div><strong>Data</strong> · 11/11/2026</div>
+      <div><strong>Complementa</strong> · <a href="../" style="color:var(--gold)">Account Planning de novembro/2026</a></div>
+    </div>
+    <div class="verdict">
+      <div class="label">Em uma frase</div>
+      <p>O Bing <b>não tem problema de verba, tem problema de entrega</b>: 76% do gasto de search foi para fora do alvo, e a v2 corrige isso antes de gastar mais. O <b>ChatGPT Ads</b> entra como teste de <b>US$ 400</b> com <b>5 hipóteses</b>, atendimento do lead em até 1 hora e parada em <b>US$ 150</b> se não houver cliques qualificados.</p>
+    </div>
+  </div>
+</header>
+<div class="wrap">
+  <div class="grid g4" style="margin-top:28px">
+    <div class="card stat"><span class="k">Orçamento do ciclo</span><span class="v">US$ 800</span><span class="d">US$ 400 Bing + US$ 400 ChatGPT Ads</span></div>
+    <div class="card stat"><span class="k">Bing fora do alvo</span><span class="v bad">76%</span><span class="d">US$ 104,92 de US$ 138,70 no search</span></div>
+    <div class="card stat"><span class="k">Bing v2</span><span class="v ok">59 kw</span><span class="d">161 negativas · 4 ad groups · pronta para upload</span></div>
+    <div class="card stat"><span class="k">ChatGPT Ads</span><span class="v">5 hipóteses</span><span class="d">3 ad groups · parada em US$ 150</span></div>
+  </div>
+</div>
+<nav class="toc"><div class="toc-inner"><a href="#s1">Resumo</a><a href="#s2">Bing: diagnóstico</a><a href="#s3">Bing: correções</a><a href="#s4">Bing: estrutura</a><a href="#s5">Bing: anúncios</a><a href="#s6">Bing: keywords</a><a href="#s7">ChatGPT: desenho</a><a href="#s8">ChatGPT: criativos</a><a href="#s9">ChatGPT: hipóteses</a><a href="#s10">Semana 1</a><a href="#s11">Regras e metas</a><a href="#s12">Pendências</a><a href="#s13">Premissas</a></div></nav>
+<main class="wrap">
+<section id="s1"><div class="sec-head"><div class="sec-num">01</div><div><h2>Resumo das duas campanhas</h2></div></div>
+<div class="callout c-info big"><div class="ct">O que esta página mostra</div><p>Esta página complementa o Account Planning (que permanece igual) e detalha as duas campanhas pagas do ciclo: o <strong>Bing Ads corrigido</strong> (diagnóstico, correções e a nova estrutura) e o <strong>ChatGPT Ads</strong> (desenho da campanha, hipóteses e validações para gerar lead desde a semana 1).</p></div><dl class="kv"><div><dt>Bing Ads</dt><dd>em 30 dias (04/10 a 02/11) gastou US$ 186,59 e <strong>76% do gasto de search foi para fora do alvo</strong>. A campanha corrigida (v2) está pronta em formato de upload, com orçamento de <strong>US$ 13/dia (~US$ 400/mês)</strong>.</dd></div><div><dt>ChatGPT Ads</dt><dd>teste de <strong>US$ 400 em 14 a 16 dias</strong>, 3 ad groups (Office, Hotel, Restaurant), 2 criativos por grupo, geo NJ + Manhattan, <strong>5 hipóteses</strong> com critério de decisão e parada em US$ 150.</dd></div><div><dt>Lead na semana 1</dt><dd>o desenho prioriza ter <strong>lead rastreado desde o primeiro dia</strong> (formulário e ligação), mas a expectativa realista é de <strong>0 a 2 leads na semana 1</strong>; a semana 1 prova alcance, cliques qualificados e rastreamento.</dd></div><div><dt>Onde decidimos</dt><dd>dois pontos de decisão: <strong>US$ 150 gastos</strong> no ChatGPT Ads (continuar ou pausar) e <strong>fim da semana 2</strong> para redistribuir verba entre Bing e ChatGPT Ads conforme o lead B2B válido.</dd></div></dl>
+</section>
+<section id="s2"><div class="sec-head"><div class="sec-num">02</div><div><h2>Bing Ads: diagnóstico (04/10 a 02/11)</h2></div></div>
+<div class="grid g4"><div class="card stat"><span class="k">Gasto fora do alvo</span><span class="v bad">76%</span><span class="d">US$ 104,92 de US$ 138,70 no search</span></div><div class="card stat"><span class="k">CTR Search</span><span class="v ok">3,85%</span><span class="d">Audience Network: 0,37%</span></div><div class="card stat"><span class="k">Orçamento usado</span><span class="v warn">17%</span><span class="d">US$ 6,22/dia de US$ 36/dia</span></div><div class="card stat"><span class="k">Leads válidos</span><span class="v warn">1 de 2</span><span class="d">a outra foi residencial</span></div></div><h3>Search vs. Audience Network</h3><div class="tbl-wrap"><table><thead><tr><th>Métrica</th><th class="num">Total</th><th>Search</th><th>Audience</th></tr></thead><tbody><tr><td>Impressões</td><td class="num">9.026</td><td>1.768</td><td>7.258 (80%)</td></tr><tr><td>Cliques</td><td class="num">95</td><td>68</td><td>27</td></tr><tr><td>CTR</td><td class="num">1,05%</td><td><strong>3,85%</strong></td><td>0,37%</td></tr><tr><td>CPC</td><td class="num">US$ 1,96</td><td>US$ 2,11</td><td>US$ 1,60</td></tr><tr><td>Gasto</td><td class="num">US$ 186,59</td><td>US$ 143,37</td><td>US$ 43,22</td></tr><tr><td>Conversões</td><td class="num">2</td><td>1</td><td>1 (residencial)</td></tr></tbody></table></div><h3>Para onde foi o gasto de search</h3><div class="tbl-wrap"><table><thead><tr><th>Tipo de busca</th><th class="num">Termos</th><th class="num">Cliques</th><th class="num">Gasto</th><th class="num">% do gasto</th><th class="num">CPC</th></tr></thead><tbody><tr><td>Marca ou concorrente</td><td class="num">33</td><td class="num">16</td><td class="num">US$ 59,06</td><td class="num">43%</td><td class="num">US$ 3,69</td></tr><tr><td>Serviço fora do escopo (hazmat, mold, HVAC)</td><td class="num">21</td><td class="num">29</td><td class="num">US$ 25,59</td><td class="num">18%</td><td class="num">US$ 0,88</td></tr><tr><td>Geografia ou idioma fora do ICP</td><td class="num">10</td><td class="num">4</td><td class="num">US$ 11,46</td><td class="num">8%</td><td class="num">US$ 2,87</td></tr><tr><td>Quem procura contrato para prestar o serviço</td><td class="num">2</td><td class="num">2</td><td class="num">US$ 5,49</td><td class="num">4%</td><td class="num">US$ 2,75</td></tr><tr><td>Pesquisa ou lista</td><td class="num">4</td><td class="num">1</td><td class="num">US$ 3,32</td><td class="num">2%</td><td class="num">US$ 3,32</td></tr><tr><td><strong>Dentro do alvo</strong></td><td class="num"><strong>91</strong></td><td class="num"><strong>15</strong></td><td class="num"><strong>US$ 33,78</strong></td><td class="num"><strong>24%</strong></td><td class="num"><strong>US$ 2,25</strong></td></tr></tbody></table></div><div class="callout c-warn"><div class="ct">Leitura</div><p>A campanha não tem problema de verba, tem problema de <strong>para quem entrega</strong>. Com o mesmo CPC de US$ 2,25 do tráfego bom, os US$ 105 desperdiçados teriam comprado cerca de 47 cliques no alvo; o ciclo teve 15.</p></div><p><em>Fonte: 13 relatórios exportados do Microsoft Ads (campanha, ad group, anúncio, keyword, termos de busca, negativas, auction insight, geo, idade, dispositivo, horário, audiência e assets), de 04/10 a 02/11/2026.</em></p>
+</section>
+<section id="s3"><div class="sec-head"><div class="sec-num">03</div><div><h2>Bing Ads: correções e status</h2></div></div>
+<div class="tbl-wrap"><table><thead><tr><th>Correção</th><th>Evidência</th><th>Status</th></tr></thead><tbody><tr><td>Negativas por blocos (marcas, serviço adjacente, supply, geo/idioma, pesquisa/emprego) e correção de 9 linhas coladas</td><td>18 termos não bloqueavam nada; "commercial cleaning services prices" custou US$ 4,45</td><td><span class="tag t-ok">Aplicado na campanha atual</span></td></tr><tr><td>Desligar Audience Network e syndication</td><td>80% das impressões com CTR 0,37%; a conversão residencial veio de ntp.msn.com</td><td><span class="tag t-warn">v2 pronta · confirmar na interface</span></td></tr><tr><td>Tirar as keywords embaralhadas (9 no total)</td><td>US$ 13,00 e US$ 9,73 em duas delas, trazendo marca e consultas fora do alvo</td><td><span class="tag t-warn">v2 pronta para upload</span></td></tr><tr><td>Dispositivo: Desktop −30%, Smartphone +15%, Tablet −100%</td><td>Desktop CTR 0,53% a US$ 3,16; Smartphone CTR 2,95% a US$ 1,20</td><td><span class="tag t-warn">v2 pronta para upload</span></td></tr><tr><td>Horário: incluir quinta; +15% sábado e domingo</td><td>Quinta não rodava; CTR de 1,7% no fim de semana vs. 0,7 a 0,9% nos dias úteis</td><td><span class="tag t-warn">v2 pronta para upload</span></td></tr><tr><td>Landing page por ad group</td><td>100% dos anúncios apontavam para a home; Quality Score 4</td><td><span class="tag t-warn">v2 pronta para upload</span></td></tr><tr><td>4 anúncios novos, sem copy cruzada e sem contagem de caracteres no texto</td><td>Hotel: 114 impressões e 0 cliques; headlines de hotel em anúncio de restaurante</td><td><span class="tag t-warn">v2 pronta para upload</span></td></tr><tr><td>Oferta "25% Off Your First Cleaning"</td><td>Mais servida (3.414 impressões) com o pior CTR (0,47%)</td><td><span class="tag t-neutral">Retirada por ora, validar com o cliente</span></td></tr><tr><td>Extensões: 6 sitelinks, 6 callouts, snippet de serviços, telefone</td><td>Conta sem nenhuma extensão</td><td><span class="tag t-warn">v2 pronta para upload</span></td></tr><tr><td>Estratégia de lance: de MaxConversions com tCPA US$ 95 para ECPC com lance base US$ 2,50</td><td>2 conversões por mês (o Bing pede ~15 para aprender) e uma delas residencial</td><td><span class="tag t-warn">v2 pronta para upload</span></td></tr><tr><td>Geografia: sair de cidades soltas e fora do ICP para 7 áreas (NYC, Manhattan, Newark, Jersey City/Hoboken, Bergen, Passaic, Elizabeth/Union)</td><td>Middlesex, Monmouth Junction, Morris Plains e Somerset: 0 clique; 89% do gasto em NY</td><td><span class="tag t-warn">v2 usa raios · marcar "People in"</span></td></tr><tr><td>Metas de conversão no UET (comercial, residencial, ligação, WhatsApp) e exclusão do residencial</td><td>Algoritmo aprendia com lead residencial</td><td><span class="tag t-neutral">Manual na interface</span></td></tr></tbody></table></div><div class="callout c-info"><div class="ct">Como a v2 entra no ar</div><p>A campanha v2 é nova e sobe <strong>pausada</strong>. Ela só é ativada depois da revisão e <strong>no mesmo momento em que a campanha antiga é pausada</strong>, para as duas não competirem no leilão.</p></div>
+</section>
+<section id="s4"><div class="sec-head"><div class="sec-num">04</div><div><h2>Bing Ads: estrutura da campanha v2</h2></div></div>
+<dl class="kv"><div><dt>Campanha</dt><dd><code>[V4] [BING] [AQ] B2B Commercial Cleaning NJ NY v2</code> · só Search · inglês · rede própria Bing e parceiros editoriais Microsoft, sem Audience Network</dd></div><div><dt>Orçamento</dt><dd><strong>US$ 13/dia (~US$ 400/mês)</strong>, igual ao Account Planning</dd></div><div><dt>Lance</dt><dd>ECPC com lance base de US$ 2,50 por ad group; "commercial cleaning services" e "commercial cleaning company" em Exact a US$ 3,00 e em Phrase a US$ 1,80</dd></div><div><dt>Rastreamento</dt><dd><code>utm_source=bing&amp;utm_medium=cpc&amp;utm_campaign=b2b_commercial_cleaning</code> com <code>utm_content</code> por ad group e <code>utm_term</code> da keyword</dd></div></dl><h3>Ad groups</h3><div class="tbl-wrap"><table><thead><tr><th>Ad group</th><th>Página de destino</th><th>Keywords</th><th>Caminho exibido</th></tr></thead><tbody><tr><td>Core - Commercial Cleaning</td><td><code>/commercial-cleaning-services-nj</code></td><td>12 Phrase + 7 Exact</td><td>/Commercial/Cleaning-NJ-NY</td></tr><tr><td>Office Cleaning</td><td><code>/office-cleaning</code></td><td>7 Phrase + 3 Exact</td><td>/Office-Cleaning/NJ-NYC</td></tr><tr><td>Restaurant Cleaning</td><td><code>/restaurant-cleaning</code></td><td>10 Phrase + 7 Exact</td><td>/Restaurant/Night-Cleaning</td></tr><tr><td>Hotel Cleaning</td><td><code>/hotel-cleaning</code></td><td>8 Phrase + 5 Exact</td><td>/Hotel-Cleaning/NJ-NYC</td></tr><tr><td><strong>Total</strong></td><td></td><td><strong>59 keywords</strong> · 161 negativas</td><td></td></tr></tbody></table></div><h3>Ajustes de lance</h3><div class="tbl-wrap"><table><thead><tr><th>Dimensão</th><th>Ajuste</th><th>Motivo</th></tr></thead><tbody><tr><td>Desktop</td><td>−30%</td><td>CTR 0,53% e CPC US$ 3,16</td></tr><tr><td>Smartphone</td><td>+15%</td><td>CTR 2,95% e CPC US$ 1,20</td></tr><tr><td>Tablet</td><td>−100%</td><td>37 impressões e 0 clique</td></tr><tr><td>Segunda a sexta, 08h às 21h</td><td>0%</td><td>quinta incluída</td></tr><tr><td>Sábado e domingo, 08h às 21h</td><td>+15%</td><td>CTR de 1,7%</td></tr><tr><td>Manhattan (raio de 2 milhas, corredor de luxo)</td><td>+20%</td><td>case Madison Avenue</td></tr><tr><td>Newark e Jersey City/Hoboken</td><td>+10%</td><td>demanda B2B densa</td></tr><tr><td>NYC, Bergen, Passaic, Elizabeth/Union</td><td>0%</td><td>base</td></tr></tbody></table></div><div class="callout c-warn"><div class="ct">Fuso da conta</div><p>A agenda segue o fuso da conta, e a conta precisa estar em <strong>Eastern Time</strong>. Essa configuração não vai no arquivo de upload e será conferida na interface.</p></div>
+</section>
+<section id="s5"><div class="sec-head"><div class="sec-num">05</div><div><h2>Bing Ads: anúncios e extensões</h2></div></div>
+<p>Cada ad group tem um anúncio responsivo com 7 a 15 títulos e 4 descrições (10 a 15 títulos nos grupos Core, Restaurant e Hotel; 7 no Office, depois de retirar os de CTR baixo). Amostra dos títulos por grupo:</p><div class="tbl-wrap"><table><thead><tr><th>Ad group</th><th>Títulos (amostra)</th></tr></thead><tbody><tr><td>Core - Commercial Cleaning</td><td>Commercial Cleaning NJ &amp; NY · Licensed &amp; Insured Team · Same Crew Every Visit · Premium Janitorial Services · Free Facility Assessment · Written Scope in 48h · Call (973) 204-2310</td></tr><tr><td>Office Cleaning</td><td>Office Cleaning NJ &amp; NYC · Professional Office Cleaning · Same Crew Every Visit · Background-Checked Crews · Daily &amp; Nightly Service · Dedicated Account Manager · Call (973) 204-2310</td></tr><tr><td>Restaurant Cleaning</td><td>Restaurant Cleaning NJ &amp; NY · Commercial Kitchen Experts · Night Shift Kitchen Crews · Health Code Ready Always · Spotless Before Service · Pass Inspection With Records · Overnight, Zero Downtime</td></tr><tr><td>Hotel Cleaning</td><td>Hotel Cleaning NJ &amp; NYC · Guest Room Deep Clean Pros · Free Hotel Assessment · Housekeeping That Shows Up · Lobby, Rooms &amp; Back of House · Night &amp; Weekend Crews · Walkthrough Quote in 48h</td></tr></tbody></table></div><div class="callout c-info"><div class="ct">O que saiu</div><p>Headlines de outro segmento (hotel dentro de restaurante e vice-versa), os 3 títulos com contagem de caracteres colada no texto, "25% Off Your First Cleaning" e os de pior CTR ("No Strangers In Your Office", "Green Cleaning Available", "Free Office Assessment").</p></div><h3>Extensões</h3><div class="tbl-wrap"><table><thead><tr><th>Tipo</th><th>Conteúdo</th></tr></thead><tbody><tr><td>Sitelinks (6)</td><td>Commercial Cleaning · Office Cleaning · Hotel Cleaning · Restaurant Cleaning · Carpet &amp; Floor Care · Madison Avenue Case</td></tr><tr><td>Callouts (6)</td><td>Since 2012 · Bonded &amp; Insured · 98% Client Retention · 5.0 Stars - 43 Reviews · Same Crew Every Visit · Background-Checked</td></tr><tr><td>Snippet estruturado</td><td>Services: Commercial Cleaning · Office Cleaning · Hotel Cleaning · Restaurant Cleaning · Carpet Care · Post-Construction</td></tr><tr><td>Telefone</td><td>(973) 204-2310</td></tr></tbody></table></div>
+</section>
+<section id="s6"><div class="sec-head"><div class="sec-num">06</div><div><h2>Bing Ads: keywords e negativas</h2></div></div>
+<h3>Keywords novas em Exact (vindas dos termos que já converteram ou estavam no alvo)</h3><p>nyc retail cleaning services · retail cleaning nyc · store cleaners nyc · restaurant cleaning company nyc · restaurant cleaners new york · restaurant cleaners nyc · professional cleaning services office · office cleaning services new york · janitorial services for offices new york city · commercial building maintenance companies new york · commercial cleaning provider quote · hotel cleaning services nyc · grease removal service</p><h3>Reativadas das campanhas pausadas (Hotel e Restaurant)</h3><p>hotel cleaning services · hotel housekeeping services · hotel deep cleaning nj · boutique hotel cleaning nyc · restaurant deep cleaning · commercial kitchen deep cleaning · restaurant cleaning services near me</p><h3>As 161 negativas, por bloco</h3><div class="tbl-wrap"><table><thead><tr><th>Bloco</th><th>O que bloqueia</th><th>Exemplos</th></tr></thead><tbody><tr><td>A. Marcas e concorrentes</td><td>quem procura outra empresa pelo nome</td><td>janico, cbre, servpro, stanley steemer, jan pro, thumbtack, angi, yelp</td></tr><tr><td>B. Serviço fora do escopo</td><td>hazmat, mofo, HVAC e similares</td><td>hazmat, biohazard, mold remediation, hvac, ptac, duct cleaning, dryer vent</td></tr><tr><td>C. Quem procura contrato</td><td>empresas atrás de contratos para prestar o serviço</td><td>cleaning contracts, bid on cleaning, janitorial bid</td></tr><tr><td>D. Geografia e idioma</td><td>cidades e estados fora do ICP, espanhol</td><td>miami, chicago, texas, california, limpieza, servicios de limpieza</td></tr><tr><td>E. Pesquisa, emprego e DIY</td><td>informacional, vagas e preço de lista</td><td>prices, price list, calculator, checklist, training, cleaning jobs, hiring</td></tr></tbody></table></div><div class="callout c-ok"><div class="ct">Hood cleaning liberado</div><p>As negativas de <code>hood cleaning</code>, <code>exhaust cleaning</code> e <code>NFPA 96</code> <strong>não entram</strong> na v2, porque o site tem a página de hood e exaustão. Ainda não existe ad group nem criativo para esse serviço; ele vira próximo passo depois da confirmação do cliente.</p></div><p><em>Uma keyword foi retirada para não conflitar com as próprias negativas: "commercial cleaning services prices".</em></p>
+</section>
+<section id="s7"><div class="sec-head"><div class="sec-num">07</div><div><h2>ChatGPT Ads: desenho da campanha</h2></div></div>
+<div class="grid g4"><div class="card stat"><span class="k">Orçamento do teste</span><span class="v ">US$ 400</span><span class="d">14 a 16 dias · ~US$ 25 a 29/dia</span></div><div class="card stat"><span class="k">Lance máximo (CPC)</span><span class="v ">US$ 3 a 4</span><span class="d">começa em US$ 3,00</span></div><div class="card stat"><span class="k">Estrutura</span><span class="v ">3 × 2</span><span class="d">3 ad groups × 2 criativos</span></div><div class="card stat"><span class="k">Parada de segurança</span><span class="v warn">US$ 150</span><span class="d">checkpoint de continuar ou pausar</span></div></div><dl class="kv"><div><dt>Objetivo</dt><dd>gerar <strong>lead B2B</strong> (formulário de cotação ou ligação) nas páginas de cada vertical</dd></div><div><dt>Estrutura</dt><dd>campanha → 3 ad groups (<strong>Office, Hotel, Restaurant</strong>) → 2 anúncios por grupo. Não há keywords: o direcionamento é por <strong>context hints</strong> (descrição, em linguagem natural, das conversas em que o anúncio faz sentido).</dd></div><div><dt>Geografia</dt><dd>estado de <strong>New Jersey</strong> + <strong>Manhattan</strong> (ZIPs 10001 a 10282), definida na campanha</dd></div><div><dt>Destino</dt><dd><code>/office-cleaning</code>, <code>/hotel-cleaning</code> e <code>/restaurant-cleaning</code>, com <code>utm_source=chatgpt&amp;utm_medium=cpc&amp;utm_campaign=b2b_commercial_cleaning</code> e <code>utm_content</code> por ad group e criativo</dd></div><div><dt>Rastreamento</dt><dd>pixel do ChatGPT Ads + evento de lead no formulário e no clique do telefone, <strong>testados antes de ligar</strong></dd></div><div><dt>Por que Core não entra</dt><dd>o público do ChatGPT pergunta por situação (hotel, restaurante, escritório). Três grupos com intenção clara facilitam a leitura de cada hipótese com US$ 400.</dd></div></dl><div class="callout c-warn"><div class="ct">Pontos a confirmar na plataforma antes de ligar</div><p>As fontes públicas divergem em <strong>limites de caracteres</strong>, <strong>mínimo diário</strong> e <strong>quem vê os anúncios</strong> (o check-in de 04/11 aponta usuários Free e Go, e tomadores de decisão B2B costumam usar planos pagos). Os textos desta página já respeitam o limite mais restritivo encontrado (título até 24 e texto até 48 caracteres), e o teste foi desenhado para aprender com custo baixo.</p></div>
+</section>
+<section id="s8"><div class="sec-head"><div class="sec-num">08</div><div><h2>ChatGPT Ads: context hints e criativos</h2></div></div>
+<p>Cada hint descreve a <strong>situação do comprador</strong> (trocar de fornecedor, pedir cotação, preparar inspeção), e não uma palavra solta. Os criativos A e B rodam 50/50 em cada grupo.</p><div class="cards one"><div class="pcard"><h3>Office Cleaning</h3><div class="pb"><h4>Context hints</h4><ul><li>A facility manager or office manager in New Jersey or New York City comparing commercial janitorial companies and asking for quotes for nightly or daily office cleaning.</li><li>A business owner unhappy with their current office cleaning vendor (missed shifts, rotating crews) asking how to switch to a more reliable commercial cleaning company.</li><li>Someone asking what a commercial cleaning contract for a 5,000 to 50,000 sq ft office should include, how it is priced, and how to vet a bonded and insured cleaning company in NJ or NYC.</li></ul><h4>Criativo A · benefício e velocidade</h4><p><strong>Office Cleaning NJ &amp; NYC</strong><br>Same crew every visit. Free quote in 24h.</p><h4>Criativo B · prova</h4><p><strong>Background-Checked Crews</strong><br>5.0 on Google, 43 reviews. Free quote.</p><p class="src">destino: /office-cleaning</p></div></div><div class="pcard"><h3>Hotel Cleaning</h3><div class="pb"><h4>Context hints</h4><ul><li>A hotel general manager or director of housekeeping in New Jersey or New York City looking to outsource or supplement housekeeping and public-area cleaning.</li><li>A boutique hotel owner dealing with housekeeping turnover and staffing shortages, asking about contract cleaning crews and cost per occupied room.</li><li>Someone asking how to find a reliable, insured hotel cleaning company for guest rooms, lobby and back of house in the NJ and NYC area.</li></ul><h4>Criativo A · benefício e velocidade</h4><p><strong>Hotel Cleaning NJ &amp; NYC</strong><br>One crew, one standard. Free walkthrough.</p><h4>Criativo B · prova</h4><p><strong>Hotel Housekeeping Crews</strong><br>Bonded, insured, background-checked.</p><p class="src">destino: /hotel-cleaning</p></div></div><div class="pcard"><h3>Restaurant Cleaning</h3><div class="pb"><h4>Context hints</h4><ul><li>A restaurant owner or general manager in New Jersey or New York City looking for overnight commercial kitchen and dining room cleaning from a reliable contractor.</li><li>A restaurant operator preparing for a health department inspection, asking how to keep kitchen, grease and floors inspection-ready with documented cleaning.</li><li>Someone comparing night-shift cleaning companies for restaurants and bars in the NJ and NYC area, and asking for pricing and what is included.</li></ul><h4>Criativo A · benefício e velocidade</h4><p><strong>Night Kitchen Cleaning</strong><br>Inspection-ready every morning. Free quote.</p><h4>Criativo B · prova</h4><p><strong>Pass Health Inspections</strong><br>Documented nightly cleaning. Free visit.</p><p class="src">destino: /restaurant-cleaning</p></div></div></div><p><em>Todo texto foi contado: títulos com até 24 caracteres, textos com até 48 e hints com até 280. Imagem quadrada (até 1200 × 1200 px) a definir com o cliente.</em></p>
+</section>
+<section id="s9"><div class="sec-head"><div class="sec-num">09</div><div><h2>ChatGPT Ads: hipóteses e validações</h2></div></div>
+<div class="tbl-wrap"><table><thead><tr><th>#</th><th>Hipótese</th><th>Como validamos</th><th>Sinal de sucesso</th><th>Se falhar</th></tr></thead><tbody><tr><td>H1</td><td>Hints de situação de compra (trocar de fornecedor, pedir cotação) alcançam decisores B2B de NJ e NYC</td><td>impressões por dia e CTR por ad group</td><td>≥ 20 impressões/dia somadas e CTR ≥ 1% (corte proposto, calibrar nos primeiros 300 impressões)</td><td>&lt; 20 impressões/dia: ampliar geo e hints, subir lance até US$ 4; se persistir, o formato não alcança o ICP</td></tr><tr><td>H2</td><td>Criativo de prova (B) gera mais clique qualificado que o de benefício (A)</td><td>A/B 50/50 por grupo; decisão com 300 impressões ou US$ 50 por criativo</td><td>diferença de CTR com CPC ≤ US$ 5</td><td>manter o criativo com melhor CTR e escrever uma nova variação de prova</td></tr><tr><td>H3</td><td>A vertical Office converte primeiro (a 1ª conversão válida no Bing veio de "office cleaning near me")</td><td>cliques e leads por ad group</td><td>Office com mais leads que Hotel e Restaurant</td><td>redistribuir a verba restante para o grupo com lead, com piso de US$ 50 nos demais</td></tr><tr><td>H4</td><td>Página da vertical com formulário curto e telefone converte cliques em lead</td><td>taxa clique→lead por ad group (benchmark do planning: 1 a 3%)</td><td>≥ 2% de cliques viram lead</td><td>revisar a página (formulário acima da dobra, telefone no topo) antes de gastar mais</td></tr><tr><td>H5</td><td>Quem clica é B2B válido (e não residencial ou curioso)</td><td>qualificação de cada lead em até 1 hora e % de B2B</td><td>≥ 50% dos leads são B2B válidos</td><td>estreitar hints ("business", "commercial", metragem) e excluir contextos residenciais</td></tr></tbody></table></div><div class="callout c-info"><div class="ct">Critérios de corte</div><p>Os cortes de CTR e de conversão são <strong>propostas</strong>: não há histórico de ChatGPT Ads nesta conta. Eles são ajustados com os primeiros dados, e a decisão fica registrada na seção de regras de parada.</p></div>
+</section>
+<section id="s10"><div class="sec-head"><div class="sec-num">10</div><div><h2>Semana 1: do zero ao primeiro lead</h2></div></div>
+<div class="tl"><div class="tl-item"><div class="d">Antes de ligar</div><div class="t"><b>Checklist de lançamento</b><span>pixel e eventos de lead (formulário e telefone) testados com uma conversão de teste; as 3 páginas respondem; UTMs conferidas; conta, pagamento e imagem aprovados</span></div><div class="s"><span class="tag t-warn">Bloqueia o dia 1</span></div></div><div class="tl-item"><div class="d">Dia 1</div><div class="t"><b>Ligar os 3 ad groups com 2 criativos cada</b><span>lance de US$ 3,00 (teto US$ 4); geo NJ + Manhattan; orçamento de ~US$ 25/dia</span></div><div class="s"><span class="tag t-neutral">Lançamento</span></div></div><div class="tl-item"><div class="d">Dia 2</div><div class="t"><b>Primeira leitura de alcance (H1)</b><span>impressões e CTR por grupo; se &lt; 20 impressões/dia, ampliar hints e subir o lance</span></div><div class="s"><span class="tag t-neutral">Ajuste</span></div></div><div class="tl-item"><div class="d">Dia 3</div><div class="t"><b>Primeiro corte de criativo (H2)</b><span>pausar o pior CTR em cada grupo que tenha 300 impressões ou US$ 50 gastos; escrever a variação nova</span></div><div class="s"><span class="tag t-neutral">Ajuste</span></div></div><div class="tl-item"><div class="d">Dia 4 e 5</div><div class="t"><b>Atendimento do lead em até 1 hora (H4 e H5)</b><span>ligar para cada lead, qualificar (B2B, tamanho, cidade) e registrar origem, vertical e criativo</span></div><div class="s"><span class="tag t-ok">Gera lead</span></div></div><div class="tl-item"><div class="d">~Dia 6</div><div class="t"><b>Checkpoint de US$ 150</b><span>0 clique qualificado ou CPC &gt; US$ 6: pausar e reavaliar. Caso contrário, continuar e redistribuir verba pelo H3</span></div><div class="s"><span class="tag t-bad">Decisão</span></div></div><div class="tl-item"><div class="d">Dia 7</div><div class="t"><b>Leitura da semana com o cliente</b><span>impressões, CTR, CPC, cliques, leads e % B2B por grupo e criativo; decisão de escala ou ajuste</span></div><div class="s"><span class="tag t-neutral">Relatório</span></div></div></div><div class="callout c-warn"><div class="ct">Expectativa honesta para a semana 1</div><p>O cenário do planning é de <strong>1 a 4 leads em todo o teste de US$ 400</strong>, o que dá <strong>0 a 2 leads na semana 1</strong>. O ganho esperado nessa semana é provar que há alcance, que os cliques são qualificados e que o lead chega rastreado. O Bing continua sendo o canal de captura imediata.</p></div>
+</section>
+<section id="s11"><div class="sec-head"><div class="sec-num">11</div><div><h2>Regras de parada e metas</h2></div></div>
+<div class="tbl-wrap"><table><thead><tr><th>Canal</th><th>Regra</th><th>Ação</th></tr></thead><tbody><tr><td>ChatGPT Ads</td><td>US$ 150 gastos com 0 clique qualificado ou CPC &gt; US$ 6</td><td>pausar e reavaliar hints, geo e criativos</td></tr><tr><td>ChatGPT Ads</td><td>US$ 250 gastos sem nenhum lead B2B válido</td><td>encerrar o teste e preservar US$ 150</td></tr><tr><td>Bing Ads</td><td>US$ 150 gastos com search fora do alvo &gt; 30% ou CTR &lt; 3%</td><td>parar e refazer negativas antes de gastar o restante</td></tr><tr><td>Os dois canais</td><td>custo por lead B2B válido acima de US$ 200</td><td>reduzir ou pausar o grupo ou a campanha</td></tr></tbody></table></div><h3>Metas do ciclo (de 11/11 a 15/12)</h3><div class="tbl-wrap"><table><thead><tr><th>Indicador</th><th>Hoje</th><th>Meta</th></tr></thead><tbody><tr><td>Search do Bing fora do alvo</td><td>76%</td><td>&lt; 30%</td></tr><tr><td>CTR do Bing Search</td><td>3,85%</td><td>≥ 5%</td></tr><tr><td>CPC médio no Bing</td><td>US$ 1,96</td><td>&lt; US$ 1,60</td></tr><tr><td>Leads B2B válidos (Bing + ChatGPT Ads)</td><td>1 a 2 por mês</td><td>4 a 10 com US$ 800</td></tr><tr><td>Custo por lead válido</td><td>~US$ 187</td><td>≤ US$ 130 (teto US$ 200)</td></tr><tr><td>ChatGPT Ads: cliques no teste</td><td>sem histórico</td><td>≥ 80 cliques com CPC ≤ US$ 5</td></tr></tbody></table></div>
+</section>
+<section id="s12"><div class="sec-head"><div class="sec-num">12</div><div><h2>Pendências e dependências</h2></div></div>
+<h3>Do cliente</h3><ul><li><strong>Hood cleaning é serviço ativo?</strong> A v2 já não bloqueia o termo; precisamos confirmar para criar ad group e criativo.</li><li><strong>Oferta de 25%:</strong> retirada por ora; confirmar se ainda vale e por quanto tempo.</li><li><strong>Provas usadas na copy:</strong> confirmar "98% Client Retention", "Since 2012" e "5.0 com 43 reviews".</li><li><strong>Imagens quadradas</strong> (equipe, lobby, cozinha) para os anúncios do ChatGPT Ads.</li></ul><h3>Da V4 (configuração na plataforma)</h3><ul><li>Conferir fuso Eastern Time da conta Bing e marcar "People in" na campanha v2.</li><li>Subir o arquivo de upload, revisar o relatório de erros e só então ativar a v2 e pausar a campanha antiga.</li><li>Separar metas de conversão no UET e excluir o lead residencial da otimização.</li><li>Confirmar no Ads Manager do ChatGPT os limites de texto, o mínimo diário e o evento de conversão.</li></ul><h3>Próximos passos (depois de validar)</h3><ul><li>Ad groups de hood cleaning, Manhattan Luxury e Post-Construction no Bing.</li><li>Troca dos raios por cidades específicas, com extensão de local e de imagem.</li><li>Horário até 23h em Hotel e Restaurant, com teste de lance noturno.</li></ul>
+</section>
+<section id="s13"><div class="sec-head"><div class="sec-num">13</div><div><h2>Premissas e limites</h2></div></div>
+<ul><li>"GPT Ads" interpretado como <strong>ChatGPT Ads</strong> (anúncios dentro do ChatGPT, via Ads Manager da OpenAI).</li><li>Dados do Bing: relatórios do Microsoft Ads de 04/10 a 02/11/2026. Nenhum valor estimado nos diagnósticos.</li><li>O arquivo de upload do Bing foi montado a partir da documentação oficial de formato e <strong>ainda não foi enviado</strong>; o relatório de erros do Bing pode pedir ajustes.</li><li>Geografia do Bing em raios porque o upload exige IDs de cidade do portal de desenvolvedores; trocar por cidades é uma etapa manual.</li><li>ChatGPT Ads: especificações e alcance variam entre fontes públicas; os textos seguem o limite mais restrito e os cortes de desempenho são propostas a calibrar.</li><li>Sem histórico de ChatGPT Ads, CRM ou faturamento; leads são contados pela origem registrada no atendimento.</li></ul>
+</section>
+
+<div class="foot">
+  <p>Campanhas · Premium Cleaning Services NJ &amp; NY · 11/11/2026 · Squad Prime / SEO · V4 Company · Peretto &amp; Co</p>
+  <p><a href="../">Voltar ao Account Planning de novembro/2026</a></p>
+</div>
+</main>
+<div class="progress" id="pg"></div>
+<script>
+(function(){
+  var pg=document.getElementById('pg'), links=[].slice.call(document.querySelectorAll('.toc a')), secs=links.map(function(a){return document.querySelector(a.getAttribute('href'))});
+  function upd(){
+    var h=document.documentElement; pg.style.width=(100*h.scrollTop/(h.scrollHeight-h.clientHeight||1))+'%';
+    var cur=0; secs.forEach(function(s,i){ if(s && s.getBoundingClientRect().top<120) cur=i; });
+    links.forEach(function(a,i){ a.classList.toggle('on',i===cur); });
+    var on=links[cur]; if(on){ var c=on.parentNode; c.scrollLeft=on.offsetLeft-c.clientWidth/2+on.clientWidth/2; }
+  }
+  window.addEventListener('scroll',upd,{passive:true}); upd();
+})();
+</script>
+</body>
+</html>
