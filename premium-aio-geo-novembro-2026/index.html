@@ -158,17 +158,19 @@
   .mirror tr.live td{ background:#fffafa; }
   .mirror tr.repo td{ background:#f7fbf8; }
   .tl{ display:grid; gap:10px; }
-  .tl-item{ display:grid; grid-template-columns:112px 1fr auto; gap:14px; align-items:start; background:#fff; border:1px solid var(--g200); border-radius:12px; padding:13px 16px; }
+  .tl-item{ display:grid; grid-template-columns:112px minmax(0,1fr) auto; gap:14px; align-items:start; background:#fff; border:1px solid var(--g200); border-radius:12px; padding:13px 16px; }
   .tl-item .d{ font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--gold-dark); padding-top:2px; }
+  .tl-item .t{ min-width:0; }
   .tl-item .t b{ display:block; font-size:13.5px; }
   .tl-item .t span{ font-size:12.5px; color:var(--g600); }
+  .tl-item code{ overflow-wrap:break-word; }
   .tl-item .s{ padding-top:1px; }
   .src{ font-size:11px; color:var(--g500); font-family:'JetBrains Mono',monospace; }
 
   @media (max-width:860px){
     .score-wrap{ grid-template-columns:1fr; }
     .channel-grid{ grid-template-columns:1fr; }
-    .tl-item{ grid-template-columns:90px 1fr; }
+    .tl-item{ grid-template-columns:90px minmax(0,1fr); }
     .tl-item .s{ grid-column:2; }
     .g3,.g4{ grid-template-columns:repeat(2,1fr); }
     .bar-row{ grid-template-columns:140px 1fr 38px; }
@@ -936,7 +938,7 @@
       </div>
       <div class="tl-item">
         <div class="d">10–11/11</div>
-        <div class="t"><b>Diagnóstico profundo + correção no código</b><span>Clone do repo, auditoria de 67 páginas, 3 PRs mergeados: #1 entidade/sitemap/<code>/about</code>/<code>/reviews</code>/GA4/IndexNow · #2 canibalização e claims sem fonte · #3 títulos, descrições, <code>og:image</code> e 301. 13 testes, <code>tsc</code> limpo, build e runtime Cloudflare validados.</span></div>
+        <div class="t"><b>Diagnóstico profundo + correção no código</b><span>Clone do repo, auditoria de 67 páginas, 3 PRs mergeados: #1 entidade, sitemap, <code>/about</code>, <code>/reviews</code>, GA4 e IndexNow · #2 canibalização e claims sem fonte · #3 títulos, descrições, <code>og:image</code> e 301. 13 testes, <code>tsc</code> limpo, build e runtime Cloudflare validados.</span></div>
         <div class="s"><span class="tag t-warn">mergeado · não publicado</span></div>
       </div>
       <div class="tl-item">
