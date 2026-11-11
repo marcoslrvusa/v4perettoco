@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auditoria AIO/GEO — Premium Cleaning Services NJ & NY</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root{
+    --red: rgb(229,9,20); --red-dark: rgb(180,7,16); --red-light: rgb(255,60,70);
+    --gold:#c9a96e; --gold-dark:#a8863f; --gold-soft:#f5f0e6;
+    --ink:#171717; --ink-2:#2b2b2b;
+    --g50:#fafafa; --g100:#f4f4f2; --g200:#e8e6e1; --g300:#d6d3cc;
+    --g500:#8f8b82; --g600:#6b6760; --g700:#4a473f; --g800:#302e29; --g900:#1d1c19;
+    --ok:#1f7a4d; --ok-bg:#e9f5ee; --warn:#a1670a; --warn-bg:#fdf3e3; --bad:#a1121c; --bad-bg:#fbeaec;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(0,0,0,.04), 0 8px 24px -12px rgba(0,0,0,.18);
+  }
+  html { scroll-behavior:smooth; }
+  body{ font-family:'Ubuntu',-apple-system,BlinkMacSystemFont,sans-serif; background:#f8f7f4; color:var(--ink); line-height:1.65; font-size:16px; -webkit-font-smoothing:antialiased; }
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 24px; }
+
+  /* ---------- COVER ---------- */
+  .cover{ background:linear-gradient(135deg,#0b0b0b 0%,#161513 45%,#241f18 100%); color:#fff; padding:72px 24px 56px; position:relative; overflow:hidden; }
+  .cover::after{ content:''; position:absolute; inset:0; background:radial-gradient(700px 320px at 78% -10%, rgba(201,169,110,.22), transparent 60%); pointer-events:none; }
+  .cover-inner{ position:relative; z-index:1; max-width:1080px; margin:0 auto; }
+  .kicker{ display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); border:1px solid rgba(201,169,110,.35); padding:6px 12px; border-radius:100px; }
+  .kicker::before{ content:''; width:6px; height:6px; border-radius:50%; background:var(--gold); }
+  h1{ font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:clamp(30px,4.6vw,52px); line-height:1.08; letter-spacing:-.02em; margin:22px 0 14px; }
+  h1 .accent{ color:var(--gold); }
+  .cover p.sub{ color:#cdc8bd; font-size:clamp(15px,1.7vw,18px); max-width:760px; }
+  .cover-meta{ display:flex; flex-wrap:wrap; gap:10px 28px; margin-top:30px; font-size:13px; color:#a9a396; }
+  .cover-meta strong{ color:#fff; font-weight:500; }
+  .verdict{ margin-top:36px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); border-left:3px solid var(--red); border-radius:0 12px 12px 0; padding:20px 22px; max-width:900px; }
+  .verdict .label{ font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--red-light); }
+  .verdict p{ color:#efece5; font-size:clamp(16px,2vw,20px); line-height:1.5; margin-top:6px; }
+  .verdict b{ color:#fff; }
+
+  /* ---------- NAV ---------- */
+  .toc{ position:sticky; top:0; z-index:50; background:rgba(248,247,244,.92); backdrop-filter:blur(12px); border-bottom:1px solid var(--g200); }
+  .toc-inner{ max-width:1080px; margin:0 auto; padding:10px 24px; display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; }
+  .toc-inner::-webkit-scrollbar{ display:none; }
+  .toc a{ flex:none; font-size:12.5px; font-weight:500; color:var(--g600); text-decoration:none; padding:7px 12px; border-radius:8px; white-space:nowrap; }
+  .toc a:hover{ background:var(--g100); color:var(--ink); }
+
+  main{ padding:56px 0 80px; }
+  section{ margin-bottom:64px; scroll-margin-top:64px; }
+  .sec-head{ display:flex; align-items:flex-start; gap:16px; margin-bottom:22px; }
+  .sec-num{ flex:none; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--gold-dark); border:1px solid var(--g300); background:#fff; border-radius:8px; width:38px; height:38px; display:grid; place-items:center; margin-top:3px; }
+  h2{ font-family:'Plus Jakarta Sans',sans-serif; font-size:clamp(22px,3vw,30px); font-weight:800; letter-spacing:-.02em; line-height:1.2; }
+  .sec-sub{ color:var(--g600); font-size:14.5px; margin-top:4px; }
+  h3{ font-family:'Plus Jakarta Sans',sans-serif; font-size:17px; font-weight:700; margin:28px 0 10px; letter-spacing:-.01em; }
+  h4{ font-size:14px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--g600); margin:22px 0 8px; }
+  p{ margin:10px 0; color:var(--g800); }
+  a{ color:var(--red-dark); }
+  strong{ font-weight:700; color:var(--ink); }
+  em{ color:var(--g700); }
+  ul,ol{ margin:10px 0 10px 22px; color:var(--g800); }
+  li{ margin:6px 0; }
+  code{ font-family:'JetBrains Mono',monospace; font-size:.86em; background:var(--g100); border:1px solid var(--g200); padding:1px 5px; border-radius:5px; color:var(--ink-2); }
+
+  /* ---------- CARDS ---------- */
+  .grid{ display:grid; gap:14px; }
+  .g2{ grid-template-columns:repeat(2,1fr); }
+  .g3{ grid-template-columns:repeat(3,1fr); }
+  .g4{ grid-template-columns:repeat(4,1fr); }
+  .card{ background:#fff; border:1px solid var(--g200); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow); }
+  .card h5{ font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:700; margin-bottom:6px; }
+  .card p{ font-size:13.5px; color:var(--g600); margin:0; }
+  .stat{ display:flex; flex-direction:column; gap:4px; }
+  .stat .k{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--g500); }
+  .stat .v{ font-family:'Plus Jakarta Sans',sans-serif; font-size:30px; font-weight:800; line-height:1.05; letter-spacing:-.03em; }
+  .stat .v.bad{ color:var(--bad); } .stat .v.warn{ color:var(--warn); } .stat .v.ok{ color:var(--ok); }
+  .stat .d{ font-size:12px; color:var(--g600); }
+
+  /* ---------- SCORE ---------- */
+  .score-wrap{ display:grid; grid-template-columns:260px 1fr; gap:28px; align-items:center; background:#fff; border:1px solid var(--g200); border-radius:18px; padding:28px; box-shadow:var(--shadow); }
+  .score-dial{ position:relative; width:220px; height:220px; margin:0 auto; }
+  .score-dial svg{ transform:rotate(-90deg); }
+  .score-dial .num{ position:absolute; inset:0; display:grid; place-items:center; text-align:center; }
+  .score-dial .num b{ font-family:'Plus Jakarta Sans',sans-serif; font-size:56px; font-weight:800; letter-spacing:-.04em; line-height:1; display:block; }
+  .score-dial .num span{ font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--g500); }
+  .bars{ display:flex; flex-direction:column; gap:12px; }
+  .bar-row{ display:grid; grid-template-columns:190px 1fr 42px; gap:12px; align-items:center; font-size:13px; }
+  .bar-row .lbl{ color:var(--g700); font-weight:500; }
+  .bar-track{ height:9px; background:var(--g100); border-radius:100px; overflow:hidden; }
+  .bar-fill{ height:100%; border-radius:100px; }
+  .bar-row .val{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--g600); text-align:right; }
+
+  /* ---------- TABLES ---------- */
+  .tbl-wrap{ overflow-x:auto; border:1px solid var(--g200); border-radius:12px; background:#fff; box-shadow:var(--shadow); }
+  table{ width:100%; border-collapse:collapse; font-size:13.5px; min-width:620px; }
+  thead th{ background:var(--g50); text-align:left; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--g500); font-weight:600; padding:11px 14px; border-bottom:1px solid var(--g200); white-space:nowrap; }
+  td{ padding:11px 14px; border-bottom:1px solid var(--g100); vertical-align:top; color:var(--g800); }
+  tbody tr:last-child td{ border-bottom:none; }
+  tbody tr:hover{ background:#fcfcfa; }
+  td.num, th.num{ text-align:right; font-family:'JetBrains Mono',monospace; font-size:12.5px; white-space:nowrap; }
+  .tag{ display:inline-block; font-size:10.5px; font-weight:600; letter-spacing:.04em; padding:2px 8px; border-radius:100px; white-space:nowrap; }
+  .t-bad{ background:var(--bad-bg); color:var(--bad); }
+  .t-warn{ background:var(--warn-bg); color:var(--warn); }
+  .t-ok{ background:var(--ok-bg); color:var(--ok); }
+  .t-neutral{ background:var(--g100); color:var(--g600); }
+  .mono{ font-family:'JetBrains Mono',monospace; font-size:12px; }
+
+  /* ---------- CALLOUTS ---------- */
+  .callout{ border-radius:12px; padding:18px 20px; margin:18px 0; border:1px solid; font-size:14px; }
+  .callout .ct{ font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; margin-bottom:6px; font-weight:500; }
+  .callout p:last-child{ margin-bottom:0; }
+  .c-bad{ background:var(--bad-bg); border-color:#f2c9cd; } .c-bad .ct{ color:var(--bad); }
+  .c-warn{ background:var(--warn-bg); border-color:#f0dcb8; } .c-warn .ct{ color:var(--warn); }
+  .c-ok{ background:var(--ok-bg); border-color:#c8e3d4; } .c-ok .ct{ color:var(--ok); }
+  .c-info{ background:#f2f5f8; border-color:#d9e2ea; } .c-info .ct{ color:#3d5a73; }
+
+  /* ---------- FUNNEL ---------- */
+  .funnel{ display:grid; gap:8px; }
+  .fstep{ display:grid; grid-template-columns:44px 1fr auto; gap:14px; align-items:center; background:#fff; border:1px solid var(--g200); border-radius:12px; padding:14px 18px; }
+  .fstep .n{ width:34px; height:34px; border-radius:9px; display:grid; place-items:center; font-family:'JetBrains Mono',monospace; font-size:12px; background:var(--g100); color:var(--g600); }
+  .fstep .t b{ display:block; font-size:14px; }
+  .fstep .t span{ font-size:12.5px; color:var(--g600); }
+  .fstep.broken{ border-color:#f0c6ca; background:#fffafa; }
+  .fstep.broken .n{ background:var(--bad-bg); color:var(--bad); }
+  .fstep.ok .n{ background:var(--ok-bg); color:var(--ok); }
+
+  /* ---------- TIMELINE ---------- */
+  .phase{ display:grid; grid-template-columns:150px 1fr; gap:22px; padding:22px 0; border-top:1px solid var(--g200); }
+  .phase:last-child{ border-bottom:1px solid var(--g200); }
+  .phase .when{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--gold-dark); padding-top:3px; }
+  .phase .when b{ display:block; font-family:'Plus Jakarta Sans',sans-serif; font-size:15px; color:var(--ink); letter-spacing:-.01em; text-transform:none; margin-bottom:2px; }
+  .phase ol{ margin:0 0 0 18px; }
+  .phase li{ margin:7px 0; font-size:14px; }
+  .phase li b{ font-weight:700; }
+  .phase .why{ margin-top:10px; font-size:12.5px; color:var(--g600); background:var(--g50); border-left:2px solid var(--g300); padding:8px 12px; border-radius:0 6px 6px 0; }
+
+  /* ---------- MISC ---------- */
+  .check{ list-style:none; margin-left:0; }
+  .check li{ display:flex; gap:10px; align-items:flex-start; font-size:14px; padding:8px 0; border-bottom:1px dashed var(--g200); }
+  .check li:last-child{ border-bottom:none; }
+  .check .ic{ flex:none; width:20px; height:20px; border-radius:50%; display:grid; place-items:center; font-size:11px; font-weight:700; margin-top:1px; }
+  .ic-ok{ background:var(--ok-bg); color:var(--ok); }
+  .ic-no{ background:var(--bad-bg); color:var(--bad); }
+  .foot{ border-top:1px solid var(--g200); padding-top:24px; font-size:12.5px; color:var(--g500); }
+  .method{ font-size:12.5px; color:var(--g600); background:#fff; border:1px solid var(--g200); border-radius:12px; padding:18px 20px; }
+  .method code{ font-size:11.5px; }
+
+  /* ---------- CHANNELS / SCORE DUO / TIMELINE ---------- */
+  .score-block{ margin-top:26px; }
+  .score-block .score-title{ display:flex; align-items:center; gap:10px; margin:0 0 12px; }
+  .score-block .score-title h3{ margin:0; font-size:16px; }
+  .score-block .score-title .tag{ font-size:10px; }
+  .channel-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .channel{ background:#fff; border:1px solid var(--g200); border-radius:14px; padding:20px; box-shadow:var(--shadow); border-top:3px solid var(--g300); }
+  .channel.google{ border-top-color:#1a73e8; }
+  .channel.bing{ border-top-color:#008373; }
+  .channel h5{ font-family:'Plus Jakarta Sans',sans-serif; font-size:15px; margin-bottom:6px; }
+  .channel p{ font-size:13.5px; color:var(--g600); margin:0; }
+  .channel .verdict-line{ margin-top:12px; font-size:13px; font-weight:700; color:var(--ink); }
+  .mirror tr.live td{ background:#fffafa; }
+  .mirror tr.repo td{ background:#f7fbf8; }
+  .tl{ display:grid; gap:10px; }
+  .tl-item{ display:grid; grid-template-columns:112px 1fr auto; gap:14px; align-items:start; background:#fff; border:1px solid var(--g200); border-radius:12px; padding:13px 16px; }
+  .tl-item .d{ font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--gold-dark); padding-top:2px; }
+  .tl-item .t b{ display:block; font-size:13.5px; }
+  .tl-item .t span{ font-size:12.5px; color:var(--g600); }
+  .tl-item .s{ padding-top:1px; }
+  .src{ font-size:11px; color:var(--g500); font-family:'JetBrains Mono',monospace; }
+
+  @media (max-width:860px){
+    .score-wrap{ grid-template-columns:1fr; }
+    .channel-grid{ grid-template-columns:1fr; }
+    .tl-item{ grid-template-columns:90px 1fr; }
+    .tl-item .s{ grid-column:2; }
+    .g3,.g4{ grid-template-columns:repeat(2,1fr); }
+    .bar-row{ grid-template-columns:140px 1fr 38px; }
+    .phase{ grid-template-columns:1fr; gap:10px; }
+  }
+  @media (max-width:600px){
+    .g2,.g3,.g4{ grid-template-columns:1fr; }
+    .cover{ padding:52px 20px 44px; }
+    main{ padding:36px 0 60px; }
+    section{ margin-bottom:48px; }
+  }
+  @media print{
+    .toc{ display:none; } body{ background:#fff; } .card,.tbl-wrap,.score-wrap{ box-shadow:none; }
+    .cover{ -webkit-print-color-adjust:exact; print-color-adjust:exact; break-after:page; }
+    main{ padding:24px 0 40px; }
+    section{ margin-bottom:40px; }
+    .sec-head{ break-after:avoid; }
+    .score-block{ break-inside:avoid; }
+    .tl-item{ break-inside:avoid; }
+    .tl-item .d{ white-space:nowrap; }
+    .channel-grid{ break-inside:avoid; }
+    .tbl-wrap{ overflow:visible; }
+    table{ min-width:0; font-size:11.5px; }
+    thead th{ font-size:9.5px; padding:8px 9px; white-space:normal; }
+    td{ padding:8px 9px; font-size:11.5px; }
+    td.mono, td code, .method code{ word-break:break-word; }
+    .score-wrap{ grid-template-columns:200px 1fr; gap:20px; }
+    .score-dial{ width:180px; height:180px; }
+    .score-dial svg{ width:180px; height:180px; }
+    .score-dial .num b{ font-size:44px; }
+    .g3,.g4{ grid-template-columns:repeat(2,1fr); }
+    .bar-row{ grid-template-columns:170px 1fr 36px; }
+    section{ break-inside:auto; }
+    .phase{ display:block; break-inside:auto; padding:18px 0; }
+    .phase .when{ margin-bottom:8px; break-after:avoid; }
+    .tbl-wrap, .callout, .card{ break-inside:avoid; }
+    h2,h3{ break-after:avoid; }
+  }
+</style>
+</head>
+<body>
+
+<header class="cover">
+  <div class="cover-inner">
+    <span class="kicker">Auditoria AIO / GEO · Google + Bing · Diagnóstico de retrieval</span>
+    <h1>Por que a Premium Cleaning não aparece <span class="accent">no Google nem no ChatGPT</span></h1>
+    <p class="sub">Diagnóstico de dois canais — Google (Search, AI Overviews, Gemini) e Bing (ChatGPT Search, Copilot) — com evidências de índice, CTR, entidade, prova de terceiros e o histórico completo dos esforços já feitos.</p>
+    <div class="cover-meta">
+      <div><strong>Cliente</strong> · Premium Cleaning Services NJ &amp; NY</div>
+      <div><strong>Domínio</strong> · premiumcleaningnj.com</div>
+      <div><strong>Data</strong> · 11/11/2026 · atualização da auditoria de 03/11</div>
+      <div><strong>Escopo</strong> · 65 URLs no ar · 67 no GitHub · GSC 30/06 · Bing/DDG 03/11 · schema · entidade</div>
+    </div>
+    <div class="verdict">
+      <div class="label">Veredito em uma frase</div>
+      <p>O site está <b>tecnicamente pronto</b>, mas cada canal trava por um motivo diferente. No <b>Google</b>, a marca já aparece — posição média <b>4,2</b> e <b>7,23 mil impressões</b> —, só que <b>37 dos 39 cliques</b> de três meses foram para o subdomínio <b>insights.</b>, que hoje responde <b>HTTP 000</b>. No <b>Bing</b>, <b>55 das 65 URLs</b> nem existem no índice. E a versão que corrige os dois gargalos está mergeada no GitHub, mas <b>ainda não foi publicada</b>.</p>
+    </div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="toc-inner">
+    <a href="#score">Placar</a>
+    <a href="#canais">Dois canais</a>
+    <a href="#google">Google</a>
+    <a href="#achado1">Bing</a>
+    <a href="#achado2">Entidade</a>
+    <a href="#achado3">Marca</a>
+    <a href="#achado4">Prompts</a>
+    <a href="#achado5">Prova</a>
+    <a href="#achado6">Conteúdo</a>
+    <a href="#certo">O que está certo</a>
+    <a href="#espelho">No ar vs GitHub</a>
+    <a href="#esforcos">Esforços</a>
+    <a href="#plano">Plano 90 dias</a>
+    <a href="#medicao">Medição</a>
+    <a href="#metodo">Método</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- ================= SCORE ================= -->
+  <section id="score">
+    <div class="sec-head">
+      <div class="sec-num">00</div>
+      <div>
+        <h2>Dois placares, um mesmo diagnóstico</h2>
+        <div class="sec-sub">Google e Bing falham por motivos diferentes. O on-page é o mesmo — e não é o problema.</div>
+      </div>
+    </div>
+
+    <div class="score-block">
+      <div class="score-title"><h3>Google · Search + AI Overviews + Gemini</h3><span class="tag t-warn">41/100</span></div>
+      <div class="score-wrap">
+        <div class="score-dial">
+          <svg width="220" height="220" viewBox="0 0 220 220">
+            <circle cx="110" cy="110" r="96" fill="none" stroke="#eeece7" stroke-width="14"/>
+            <circle cx="110" cy="110" r="96" fill="none" stroke="#c2410c" stroke-width="14"
+                    stroke-linecap="round" stroke-dasharray="603" stroke-dashoffset="356"/>
+          </svg>
+          <div class="num"><div><b>41</b><span>/ 100</span></div></div>
+        </div>
+        <div class="bars">
+          <div class="bar-row"><div class="lbl">Indexação e cobertura</div><div class="bar-track"><div class="bar-fill" style="width:75%;background:#a8863f"></div></div><div class="val">75</div></div>
+          <div class="bar-row"><div class="lbl">Snippet / CTR</div><div class="bar-track"><div class="bar-fill" style="width:15%;background:#a1121c"></div></div><div class="val">15</div></div>
+          <div class="bar-row"><div class="lbl">Consistência de entidade</div><div class="bar-track"><div class="bar-fill" style="width:35%;background:#c2410c"></div></div><div class="val">35</div></div>
+          <div class="bar-row"><div class="lbl">Local / Google Business</div><div class="bar-track"><div class="bar-fill" style="width:60%;background:#a8863f"></div></div><div class="val">60</div></div>
+          <div class="bar-row"><div class="lbl">Autoridade e reviews</div><div class="bar-track"><div class="bar-fill" style="width:25%;background:#c2410c"></div></div><div class="val">25</div></div>
+          <div class="bar-row"><div class="lbl">Medição e dados atuais</div><div class="bar-track"><div class="bar-fill" style="width:20%;background:#a1121c"></div></div><div class="val">20</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="score-block">
+      <div class="score-title"><h3>Bing · ChatGPT Search, Copilot e retrieval de IA</h3><span class="tag t-bad">39/100</span></div>
+      <div class="score-wrap">
+        <div class="score-dial">
+          <svg width="220" height="220" viewBox="0 0 220 220">
+            <circle cx="110" cy="110" r="96" fill="none" stroke="#eeece7" stroke-width="14"/>
+            <circle cx="110" cy="110" r="96" fill="none" stroke="#a1121c" stroke-width="14"
+                    stroke-linecap="round" stroke-dasharray="603" stroke-dashoffset="368"/>
+          </svg>
+          <div class="num"><div><b>39</b><span>/ 100</span></div></div>
+        </div>
+        <div class="bars">
+          <div class="bar-row"><div class="lbl">Retrieval / indexação</div><div class="bar-track"><div class="bar-fill" style="width:15%;background:#a1121c"></div></div><div class="val">15</div></div>
+          <div class="bar-row"><div class="lbl">Consistência de entidade</div><div class="bar-track"><div class="bar-fill" style="width:35%;background:#c2410c"></div></div><div class="val">35</div></div>
+          <div class="bar-row"><div class="lbl">Prova de terceiros</div><div class="bar-track"><div class="bar-fill" style="width:25%;background:#c2410c"></div></div><div class="val">25</div></div>
+          <div class="bar-row"><div class="lbl">Mensuração de prompts</div><div class="bar-track"><div class="bar-fill" style="width:30%;background:#c2410c"></div></div><div class="val">30</div></div>
+          <div class="bar-row"><div class="lbl">Conteúdo citável</div><div class="bar-track"><div class="bar-fill" style="width:72%;background:#a8863f"></div></div><div class="val">72</div></div>
+          <div class="bar-row"><div class="lbl">On-page técnico AEO</div><div class="bar-track"><div class="bar-fill" style="width:92%;background:#1f7a4d"></div></div><div class="val">92</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g4" style="margin-top:16px">
+      <div class="card stat"><span class="k">URLs no ar / no GitHub</span><span class="v">65<span style="font-size:16px;color:var(--g500)"> / 67</span></span><span class="d">a versão corrigida não foi publicada</span></div>
+      <div class="card stat"><span class="k">URLs recuperáveis no Bing</span><span class="v bad">10</span><span class="d">15% do site · nenhuma money page</span></div>
+      <div class="card stat"><span class="k">Cliques no Google (3 meses)</span><span class="v bad">39</span><span class="d">37 no insights. · 2 no www. · 0 no apex</span></div>
+      <div class="card stat"><span class="k">CTR Google (6 meses)</span><span class="v bad">0,8%</span><span class="d">posição média 4,2 · 7,23 mil impressões</span></div>
+    </div>
+
+    <div class="callout c-info">
+      <div class="ct">Como ler os dois scores</div>
+      <p>São heurísticos (0–100), ponderados pelo impacto de cada dimensão na probabilidade de clique ou citação. <strong>Google:</strong> 20% indexação + 20% CTR + 15% entidade + 20% local + 15% autoridade + 10% medição. <strong>Bing/IA:</strong> pesos originais da auditoria de 03/11. O Google tem indexação melhor (75) e CTR péssima (15); o Bing tem indexação quase nula (15). <strong>Os dois scores parecidos escondem gargalos opostos.</strong></p>
+    </div>
+  </section>
+
+  <!-- ================= DOIS CANAIS ================= -->
+  <section id="canais">
+    <div class="sec-head">
+      <div class="sec-num">01</div>
+      <div>
+        <h2>Dois canais, dois gargalos — e nenhum é o on-page</h2>
+        <div class="sec-sub">ChatGPT Search bebe do índice do Bing. Google AI Overviews e Gemini bebem do índice do Google. São funis separados.</div>
+      </div>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Etapa do funil</th><th>Google · Search + AIO + Gemini</th><th>Bing · ChatGPT Search + Copilot</th></tr></thead>
+        <tbody>
+          <tr><td>Rastreamento</td><td><span class="tag t-ok">OK</span> Googlebot e Google-Extended liberados</td><td><span class="tag t-ok">OK</span> Bingbot, GPTBot e OAI-SearchBot liberados</td></tr>
+          <tr><td>Indexação</td><td><span class="tag t-warn">parcial e vazada</span> índice existe, mas o clique vai para <code>insights.</code> e <code>www</code></td><td><span class="tag t-bad">10/65</span> money pages e clusters fora do índice</td></tr>
+          <tr><td>Ranking</td><td><span class="tag t-warn">já ranqueia</span> posição média 4,2 · #1–2 em "commercial cleaning newark"</td><td><span class="tag t-bad">ausente</span> nem na própria marca</td></tr>
+          <tr><td>Snippet / CTR</td><td><span class="tag t-bad">0,8%</span> 6 a 10× abaixo do esperado para a posição</td><td><span class="tag t-neutral">n/a</span> não aparece para ser clicado</td></tr>
+          <tr><td>Entidade</td><td><span class="tag t-bad">2 JSON-LD</span> <code>sameAs</code> inútil · <code>/about</code> e <code>/reviews</code> 404</td><td><span class="tag t-bad">idem</span> mesma fragmentação</td></tr>
+          <tr><td>Corroboração</td><td><span class="tag t-warn">43 reviews</span> vs 592 e 734 dos concorrentes</td><td><span class="tag t-warn">idem</span> 2 diretórios B2B relevantes</td></tr>
+          <tr><td><strong>Veredito do canal</strong></td><td><strong>Aparece — mas o clique vaza e o snippet não converte.</strong></td><td><strong>Não aparece — o problema é existir no índice.</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="channel-grid" style="margin-top:16px">
+      <div class="channel google">
+        <h5>Google · o canal da distribuição</h5>
+        <p>A propriedade está verificada, tem 530 queries e 7,23 mil impressões em seis meses. O problema não é ser descoberto: é que 37 dos 39 cliques de três meses foram para um subdomínio que hoje está fora do ar.</p>
+        <div class="verdict-line">Palavra-chave: <em>distribuição de clique</em>.</div>
+      </div>
+      <div class="channel bing">
+        <h5>Bing · o canal da existência</h5>
+        <p>O índice devolve 10 das 65 URLs — stubs antigos, <code>lp.</code>, <code>insights.</code> e <code>/cases</code>. Nenhuma money page, nenhum county, nenhum insight novo. Sem retrieval não há citação no ChatGPT.</p>
+        <div class="verdict-line">Palavra-chave: <em>indexação</em>.</div>
+      </div>
+    </div>
+
+    <div class="callout c-bad" style="margin-top:22px">
+      <div class="ct">A consequência mecânica</div>
+      <p>Quando alguém pergunta ao <strong>ChatGPT</strong> "best commercial cleaning company in Newark NJ", o modelo busca no índice do Bing e encontra Anago, ServiceMaster, Yelp e CleanNet. Quando pergunta ao <strong>Google AI Overviews</strong> ou ao <strong>Gemini</strong>, a resposta é montada com páginas que já ranqueiam no Google — e a Premium ranqueia, mas o clique vai para o host errado. <strong>São dois caminhos de entrada e os dois estão bloqueados por motivos diferentes.</strong></p>
+    </div>
+  </section>
+
+  <!-- ================= GOOGLE ================= -->
+  <section id="google">
+    <div class="sec-head">
+      <div class="sec-num">02</div>
+      <div>
+        <h2>Achado #1 — No Google, o clique vai para um subdomínio morto</h2>
+        <div class="sec-sub">A marca já ranqueia. O que falta é o clique chegar ao lugar certo — e o snippet convencer.</div>
+      </div>
+    </div>
+
+    <p>O Google é o canal onde a Premium tem mais tração — e onde a auditoria de 03/11, focada no Bing, mais subestimou o problema. A propriedade está verificada (<code>google-site-verification</code> no DNS), tem <strong>530 queries</strong> e <strong>7,23 mil impressões</strong> em seis meses. Mas o clique não chega ao apex.</p>
+
+    <div class="grid g4">
+      <div class="card stat"><span class="k">Cliques · 6 meses</span><span class="v warn">59</span><span class="d">até 30/06/2026</span></div>
+      <div class="card stat"><span class="k">Impressões · 6 meses</span><span class="v">7,23 mil</span><span class="d">530 queries</span></div>
+      <div class="card stat"><span class="k">CTR média</span><span class="v bad">0,8%</span><span class="d">posição média 4,2</span></div>
+      <div class="card stat"><span class="k">Cliques no apex</span><span class="v bad">0</span><span class="d">39 cliques em 3 meses foram para subdomínios</span></div>
+    </div>
+
+    <h3>O que o Search Console mostra</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Query</th><th class="num">Cliques</th><th class="num">Impressões</th><th class="num">Posição</th><th>Leitura</th></tr></thead>
+        <tbody>
+          <tr><td>premium cleaning services</td><td class="num">14</td><td class="num">224</td><td class="num">2,1</td><td><span class="tag t-ok">marca funciona</span> 6,3% CTR</td></tr>
+          <tr><td>cleaning services newark nj</td><td class="num">2</td><td class="num">124</td><td class="num">6,2</td><td><span class="tag t-warn">página 1</span> CTR 1,6%</td></tr>
+          <tr><td>cleaning services in newark nj</td><td class="num">1</td><td class="num">40</td><td class="num">6,2</td><td><span class="tag t-warn">página 1</span></td></tr>
+          <tr style="background:#fdf7f8"><td><strong>commercial cleaning newark</strong></td><td class="num">0</td><td class="num">201</td><td class="num">1,6</td><td><span class="tag t-bad">ranqueia #1–2 e não recebe clique</span></td></tr>
+          <tr><td>premium clean</td><td class="num">1</td><td class="num">31</td><td class="num">8,7</td><td><span class="tag t-warn">variação de marca</span></td></tr>
+          <tr><td>janitorial</td><td class="num">1</td><td class="num">16</td><td class="num">2,1</td><td><span class="tag t-neutral">termo amplo</span></td></tr>
+          <tr><td>cleaning near me</td><td class="num">1</td><td class="num">5</td><td class="num">1,4</td><td><span class="tag t-ok">intenção local</span></td></tr>
+          <tr><td>house cleaning services newark nj</td><td class="num">1</td><td class="num">5</td><td class="num">8,6</td><td><span class="tag t-neutral">fora do ICP B2B</span></td></tr>
+          <tr><td>restaurant cleaning company</td><td class="num">1</td><td class="num">4</td><td class="num">1,0</td><td><span class="tag t-ok">#1</span></td></tr>
+          <tr><td>house cleaning services newark</td><td class="num">1</td><td class="num">1</td><td class="num">21,0</td><td><span class="tag t-neutral">cauda longa</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="src">Fonte: GSC → Performance → Queries, janela de 6 meses até 30/06/2026. Export mais recente disponível na KB.</p>
+
+    <div class="callout c-bad">
+      <div class="ct">O paradoxo: posição 4,2, CTR 0,8%</div>
+      <p>Em posição 4–6, a CTR esperada para uma query comercial local é de <strong>4% a 8%</strong>. A Premium está em <strong>0,8%</strong> — de 5 a 10 vezes abaixo. Pior: <strong>"commercial cleaning newark" tem 201 impressões, posição 1,6 e zero clique</strong>. Isso não é problema de ranking. É problema de <strong>snippet, host e promessa</strong>. O usuário vê o resultado e escolhe outro.</p>
+    </div>
+
+    <h3>O vazamento de 37 cliques</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Host</th><th class="num">Cliques · 3 meses</th><th>Estado em 11/11/2026</th><th>Leitura</th></tr></thead>
+        <tbody>
+          <tr style="background:#fdf7f8"><td class="mono">insights.premiumcleaningnj.com</td><td class="num">37</td><td><span class="tag t-bad">HTTP 000</span></td><td>era a principal página de destino do Google</td></tr>
+          <tr><td class="mono">www.premiumcleaningnj.com</td><td class="num">2</td><td><span class="tag t-warn">302 → apex</span></td><td>redirecionamento temporário</td></tr>
+          <tr><td class="mono">premiumcleaningnj.com (apex)</td><td class="num">0</td><td><span class="tag t-ok">200</span></td><td>recebe impressão, não recebe clique</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="src">Fonte: GSC → Insights → "Your content", últimos 3 meses até 30/06/2026 (39 cliques / 4,46 mil impressões).</p>
+
+    <p>O <code>insights.</code> era o blog de conteúdo. Ele ainda está no índice do Bing e era a principal página de destino no Google. Hoje o DNS aponta para <code>185.158.133.1</code> — o mesmo IP do <code>www</code> — e o host não responde. <strong>Cada dia sem 301 é clique perdido e autoridade descartada.</strong></p>
+
+    <div class="callout c-warn">
+      <div class="ct">Decisão de escopo: <code>lp.</code> fica fora</div>
+      <p>O <code>lp.premiumcleaningnj.com</code> é uma landing page paga, em Cloudflare/mktlab, com canonical para si mesma. Por decisão do cliente, <strong>ele não compõe o universo SEO e não será 301ado</strong>. A recomendação de 301 vale para <code>insights.</code> e para o <code>www</code>. O <code>lp.</code> continua aparecendo em buscas de marca e pode canibalizar; o monitoramento fica no pacote de mídia, não no de SEO.</p>
+    </div>
+
+    <h3>CTR: o que o snippet está perdendo</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Faixa de posição</th><th class="num">CTR de referência</th><th>Premium hoje</th><th>Diagnóstico</th></tr></thead>
+        <tbody>
+          <tr><td>1–3</td><td class="num">15–25%</td><td class="num">—</td><td>não é o problema principal</td></tr>
+          <tr><td>4–6</td><td class="num">4–8%</td><td class="num">0,8%</td><td><span class="tag t-bad">5–10× abaixo</span></td></tr>
+          <tr><td>7–10</td><td class="num">2–4%</td><td class="num">—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="src">Faixas de referência de mercado para queries comerciais locais; não são uma promessa nem uma medição do cliente.</p>
+
+    <div class="grid g2" style="margin-top:14px">
+      <div class="card"><h5>Títulos longos demais</h5><p><strong>20 páginas</strong> com título acima de 60 caracteres — artigos chegavam a 129. O Google corta o título e a proposta de valor desaparece. Corrigido no PR #3, <strong>ainda não publicado</strong>.</p></div>
+      <div class="card"><h5>Descrições e imagem social</h5><p><strong>3 descrições</strong> acima de 160 caracteres e <strong>og:image ausente em 65 de 67 páginas</strong>. Corrigido no PR #3, <strong>ainda não publicado</strong>.</p></div>
+      <div class="card"><h5>Páginas de entidade 404</h5><p><code>/about</code> e <code>/reviews</code> respondem <strong>404</strong>. O usuário que quer validar a empresa antes de clicar não encontra "quem somos" nem prova social. Corrigido no PR #1, <strong>ainda não publicado</strong>.</p></div>
+      <div class="card"><h5>Marca genérica no título</h5><p>"Premium Cleaning" é expressão comum do setor. Sem "Services NJ &amp; NY" colado ao nome, o snippet parece mais um resultado genérico — e o concorrente Garcia usa a expressão no título.</p></div>
+    </div>
+
+    <h3>Raio local: forte em 1 milha, invisível em 2</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Keyword</th><th>Raio</th><th class="num">Avg rank</th><th class="num">Top 3</th><th class="num">Top 10</th><th>Leitura</th></tr></thead>
+        <tbody>
+          <tr><td>commercial office cleaning service</td><td>1 mi</td><td class="num">2,7</td><td class="num">69%</td><td class="num">100%</td><td><span class="tag t-ok">forte</span></td></tr>
+          <tr><td>commercial office cleaning service</td><td>2 mi</td><td class="num">4,1</td><td class="num">14%</td><td class="num">37%</td><td><span class="tag t-warn">51 de 81 pontos fora do top 10</span></td></tr>
+          <tr><td>office cleaning services</td><td>1 mi</td><td class="num">5,9</td><td class="num">27%</td><td class="num">90%</td><td><span class="tag t-warn">ok</span></td></tr>
+          <tr><td>office cleaning services</td><td>2 mi</td><td class="num">13,4</td><td class="num">6%</td><td class="num">17%</td><td><span class="tag t-bad">desmorona</span></td></tr>
+          <tr><td>commercial cleaners near me</td><td>1 mi</td><td class="num">9,6</td><td class="num">27%</td><td class="num">65%</td><td><span class="tag t-warn">misto</span></td></tr>
+          <tr><td>commercial cleaning companies</td><td>1 mi</td><td class="num">6,2</td><td class="num">27%</td><td class="num">71%</td><td><span class="tag t-warn">misto</span></td></tr>
+          <tr><td>commercial cleaning companies</td><td>2 mi</td><td class="num">11,4</td><td class="num">7%</td><td class="num">16%</td><td><span class="tag t-bad">fora</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="src">LocalSEO scan · 4 keywords × 2 grids · export 19–20/10/2026. Grid 9x9 @2mi.</p>
+
+    <p>O Google Business Profile é forte no raio de <strong>1 milha</strong> e desmorona em <strong>2 milhas</strong>. Não é falta de review: <strong>Glen Ridge (5 reviews) e DSY (2 reviews) ocupam top 3 em pontos onde a Premium não existe</strong>. É falta de categoria certa no GBP, página de cidade e sinal de proximidade — não de volume de review.</p>
+
+    <div class="callout c-info">
+      <div class="ct">A leitura que muda o plano</div>
+      <p>A Premium não precisa "ranquear mais" no Google. Precisa <strong>levar o clique que já existe para o apex</strong>, <strong>consertar o snippet</strong> e <strong>ampliar o raio do pacote local</strong>. As três coisas são operacionais e mensuráveis — e nenhuma delas é "produzir mais 40 artigos".</p>
+    </div>
+
+    <h3>AI Overviews e Gemini: a camada em cima do orgânico</h3>
+    <p>AI Overviews não é um canal separado. É uma camada sobre o índice orgânico: o Google seleciona fontes que já considera relevantes para a query — na prática, páginas que ranqueiam — e monta a resposta. O Gemini com grounding usa o mesmo índice. <strong>Não existe submissão separada, nem atalho de <code>llms.txt</code>.</strong></p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Pré-requisito do AIO / Gemini</th><th>Premium hoje</th><th>Ação</th></tr></thead>
+        <tbody>
+          <tr><td>Página indexada e elegível</td><td><span class="tag t-warn">parcial</span> apex sem clique; 67 páginas novas sem medição</td><td>Publicar + reenviar sitemap no GSC</td></tr>
+          <tr><td>Entidade resolvida</td><td><span class="tag t-bad">2 JSON-LD</span> + 4 nomes</td><td>PR #1 (no GitHub)</td></tr>
+          <tr><td>Resposta extraível</td><td><span class="tag t-ok">92/100</span> on-page</td><td>manter</td></tr>
+          <tr><td>Frescor</td><td><span class="tag t-bad">lastmod 27/10 em todas</span></td><td>sitemap dinâmico (PR #1)</td></tr>
+          <tr><td>Corroboração</td><td><span class="tag t-warn">43 reviews · 2 diretórios</span></td><td>GBP + NAP + reviews</td></tr>
+          <tr><td>Acesso do crawler</td><td><span class="tag t-ok">Google-Extended liberado</span></td><td>manter</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout c-warn">
+      <div class="ct">O que ainda não foi medido</div>
+      <p>Não há export atual do GSC nem consulta programática ao AIO/Gemini nesta rodada. O teste <code>site:</code> do Google bloqueou por captcha em 11/11. Portanto: <strong>não afirmamos que as 67 páginas estão indexadas</strong> — afirmamos que a propriedade tem histórico de indexação e que a cobertura atual precisa ser confirmada em <strong>GSC → Páginas</strong>. O AIO deve ser medido manualmente, com geo nos EUA/Newark, porque a resposta varia por localização.</p>
+    </div>
+
+    <h3>O que o Google já tem a favor</h3>
+    <ul class="check">
+      <li><span class="ic ic-ok">✓</span><div><strong>Propriedade verificada</strong> — registro TXT <code>google-site-verification</code> presente no DNS.</div></li>
+      <li><span class="ic ic-ok">✓</span><div><strong>530 queries e 7,23 mil impressões</strong> em seis meses — o Google conhece o site e o serve.</div></li>
+      <li><span class="ic ic-ok">✓</span><div><strong>Query de marca em posição 2,1</strong> — "premium cleaning services" com 14 cliques e 6,3% CTR.</div></li>
+      <li><span class="ic ic-ok">✓</span><div><strong>Raio de 1 milha forte</strong> — 2,7 de rank médio, 69% de top 3 e 100% de top 10 no termo core.</div></li>
+      <li><span class="ic ic-ok">✓</span><div><strong>On-page 92/100</strong> e Google-Extended liberado — a base para AIO já existe.</div></li>
+    </ul>
+
+    <div class="callout c-ok">
+      <div class="ct">Tradução</div>
+      <p>No Google, a Premium <strong>não está começando do zero</strong>. Está começando de um site que ranqueia, mas entrega o clique para um host morto e um snippet que não vende. É um problema mais barato de resolver do que o do Bing — e resolve antes.</p>
+    </div>
+  </section>
+
+  <!-- ================= ACHADO 1 ================= -->
+  <section id="achado1">
+    <div class="sec-head">
+      <div class="sec-num">03</div>
+      <div>
+        <h2>Achado #2 — No Bing, 55 das 65 páginas não existem</h2>
+        <div class="sec-sub">O ChatGPT Search depende de retrieval. No índice do Bing, as money pages e os clusters de outubro não aparecem.</div>
+      </div>
+    </div>
+
+    <p>Consulta executada em <strong>03/11/2026</strong>: <code>site:premiumcleaningnj.com</code>. O índice devolve <strong>10 URLs</strong> — e elas contam uma história clara: o Bing está servindo os <em>stubs</em> legados de junho e os subdomínios, não as páginas construídas em outubro para os prompts.</p>
+
+    <div class="callout c-warn">
+      <div class="ct">Nota de reconferência · 11/11/2026</div>
+      <p>A tentativa de reconferir o <code>site:</code> em 11/11 retornou resultados irrelevantes (bloqueio anti-bot do Bing: "48 results" de outro domínio). <strong>03/11 permanece a última medição válida do índice.</strong> A confirmação definitiva é o Bing Webmaster Tools → URL Inspection.</p>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>URL que o Bing devolve</th><th>Tipo</th><th class="num">Palavras</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">/office-cleaning</td><td>stub legado</td><td class="num">619</td><td><span class="tag t-warn">indexado</span></td></tr>
+          <tr><td class="mono">/hotel-cleaning</td><td>stub legado</td><td class="num">640</td><td><span class="tag t-warn">indexado</span></td></tr>
+          <tr><td class="mono">/restaurant-cleaning</td><td>stub legado</td><td class="num">629</td><td><span class="tag t-warn">indexado</span></td></tr>
+          <tr><td class="mono">/carpet-cleaning</td><td>stub legado</td><td class="num">672</td><td><span class="tag t-warn">indexado</span></td></tr>
+          <tr><td class="mono">/tile-grout-cleaning</td><td>stub legado</td><td class="num">663</td><td><span class="tag t-warn">indexado</span></td></tr>
+          <tr><td class="mono">/cases</td><td>hub de cases</td><td class="num">—</td><td><span class="tag t-neutral">indexado</span></td></tr>
+          <tr><td class="mono">lp.premiumcleaningnj.com/</td><td>LP paga · fora do escopo SEO</td><td class="num">532</td><td><span class="tag t-neutral">não 301ar</span></td></tr>
+          <tr><td class="mono">lp.premiumcleaningnj.com/form</td><td>LP paga · fora do escopo SEO</td><td class="num">—</td><td><span class="tag t-neutral">não 301ar</span></td></tr>
+          <tr><td class="mono">insights.premiumcleaningnj.com/office-cleaning</td><td>subdomínio <strong>sem resposta</strong> (HTTP 000)</td><td class="num">—</td><td><span class="tag t-bad">morto</span></td></tr>
+          <tr><td class="mono">insights.premiumcleaningnj.com/hotel-cleaning</td><td>subdomínio <strong>sem resposta</strong> (HTTP 000)</td><td class="num">—</td><td><span class="tag t-bad">morto</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="src">O <code>lp.</code> aparece no índice do Bing, mas é uma LP paga com canonical própria. Por decisão do cliente, não será 301ada nem entrará no universo SEO.</p>
+
+    <h3>O que ficou de fora (e deveria estar dentro)</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Página construída para os prompts</th><th>Prompt que ela ataca</th><th class="num">Palavras</th><th>No índice?</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">/commercial-cleaning-services-nj</td><td>Money hub comercial</td><td class="num">2.343</td><td><span class="tag t-bad">não</span></td></tr>
+          <tr><td class="mono">/hotel-housekeeping-services</td><td>P7 · 165.000/mês</td><td class="num">2.420</td><td><span class="tag t-bad">não</span></td></tr>
+          <tr><td class="mono">/commercial-carpet-cleaning</td><td>P3 · 18.100/mês</td><td class="num">1.543</td><td><span class="tag t-bad">não</span></td></tr>
+          <tr><td class="mono">/restaurant-commercial-cleaning</td><td>P5 · restaurante</td><td class="num">1.701</td><td><span class="tag t-bad">não</span></td></tr>
+          <tr><td class="mono">/best-commercial-cleaning-companies-nj-2026</td><td>Lista comparativa (ativo de citação)</td><td class="num">1.499</td><td><span class="tag t-bad">não</span></td></tr>
+          <tr><td class="mono">/commercial-cleaning-bergen-county-nj</td><td>Anel de Ferro · county</td><td class="num">—</td><td><span class="tag t-bad">não</span></td></tr>
+          <tr><td class="mono">/commercial-cleaning-essex-county-nj</td><td>Anel de Ferro · county</td><td class="num">—</td><td><span class="tag t-bad">não</span></td></tr>
+          <tr><td class="mono">/insights/* (20 artigos)</td><td>Autoridade topical</td><td class="num">844–1.187</td><td><span class="tag t-bad">não</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout c-bad">
+      <div class="ct">Teste de confirmação</div>
+      <p>Busca pela frase exata do H1 do money hub: <code>site:premiumcleaningnj.com "commercial cleaning services in new jersey"</code> → <strong>zero resultados</strong>. A página existe, responde 200, está no sitemap com <code>lastmod 2026-10-27</code> e tem 2.343 palavras — mas não está no índice que alimenta o ChatGPT.</p>
+    </div>
+
+    <h3>Por que o Bing não indexou 55 páginas</h3>
+    <div class="grid g2">
+      <div class="card"><h5>Domínio jovem + site novo</h5><p>Registro em 24/06/2025. O site atual (65 URLs) nasceu em junho/2026 e foi reescrito em outubro. O Bing é conservador com domínios sem histórico e crawl lento por padrão.</p></div>
+      <div class="card"><h5>IndexNow pronto — mas não publicado</h5><p>O PR #1 criou o key file e o <code>scripts/indexnow.mjs</code>. Em produção, o arquivo da chave ainda responde <strong>404</strong> e nenhuma URL foi submetida. Só funciona depois do Publish.</p></div>
+      <div class="card"><h5>Crawl budget dividido</h5><p>Dois hosts extras competindo: <code>lp.</code> (LP paga, canonical própria, fora do escopo) e <code>insights.</code> (fora do ar, mas ainda indexado no Bing e no Google). O Bing gasta crawl em duplicata e em host morto.</p></div>
+      <div class="card"><h5>Render <em>não</em> é o problema</h5><p>O HTML bruto do money hub vem completo — título, canonical, 1 H1, 20 H2, <strong>79 links</strong>, 7 blocos JSON-LD e ~2.360 palavras — mesmo sem JavaScript. A suspeita de "React não renderiza" foi testada e descartada em 10/11.</p></div>
+      <div class="card"><h5>Sitemap com frescor falso</h5><p>As 65 URLs têm o <strong>mesmo <code>lastmod</code> (27/10)</strong>. Para o crawler, isso não é sinal de atualização — é ruído. O PR #1 gerou o sitemap dinâmico com data real por página; não publicado.</p></div>
+      <div class="card"><h5>Autoridade praticamente zero</h5><p>Domínio de 2025, quase nenhum backlink, 43 reviews. Sem sinais externos, o Bing não tem motivo para promover um domínio novo às pressas — especialmente quando as páginas antigas já respondem às queries.</p></div>
+    </div>
+
+    <div class="callout c-warn">
+      <div class="ct">Nota de precisão</div>
+      <p>O <code>site:</code> é um proxy externo. A confirmação definitiva é <strong>Bing Webmaster Tools → URL Inspection</strong> nas 10 páginas-alvo + <strong>Index coverage</strong>. O padrão observado (stubs indexados, hubs não) é consistente em duas superfícies independentes (Bing e DuckDuckGo, que usa o índice do Bing).</p>
+    </div>
+  </section>
+
+  <!-- ================= ACHADO 2 ================= -->
+  <section id="achado2">
+    <div class="sec-head">
+      <div class="sec-num">04</div>
+      <div>
+        <h2>Achado #3 — A IA não sabe quem é "Premium Cleaning"</h2>
+        <div class="sec-sub">Entidade fragmentada: 4 nomes, 2 empresas no mesmo JSON-LD, sameAs inútil e e-mail em outro domínio.</div>
+      </div>
+    </div>
+
+    <p>Modelos de linguagem não citam "texto": citam <strong>entidades resolvidas</strong>. Para citar a Premium, o modelo precisa ter certeza de que "Premium Cleaning Services", "Premium Cleaning Services NJ &amp; NY", "Premium Cleaning NJ &amp; NY" e o e-mail <code>@premiumccs.com</code> são a mesma empresa de Newark que aparece no Yelp, no LinkedIn e no Google. Hoje, não tem.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Sinal de entidade</th><th>Estado atual</th><th>Risco para IA</th></tr></thead>
+        <tbody>
+          <tr><td>Nome canônico</td><td>4 variantes em uso simultâneo no site, schema, footer e title</td><td><span class="tag t-bad">alto</span> — embedding se dispersa</td></tr>
+          <tr><td>JSON-LD de negócio</td><td><code>CleaningService</code> "Premium Cleaning Services" + <code>ProfessionalService</code> "Premium Cleaning NJ &amp; NY" na mesma página</td><td><span class="tag t-bad">alto</span> — duas entidades concorrentes <em>(corrigido no PR #1, não publicado)</em></td></tr>
+          <tr><td>Endereço da 2ª entidade</td><td><code>addressRegion: "NJ, NY"</code>, sem rua, sem CEP, sem telefone, sem URL</td><td><span class="tag t-bad">alto</span> — entidade incompleta</td></tr>
+          <tr><td><code>sameAs</code></td><td>1 URL: um link de <em>busca</em> do Google Maps com <code>gl=br</code> e termo "trustpilot"</td><td><span class="tag t-bad">alto</span> — não é perfil, é query <em>(corrigido no PR #1, não publicado)</em></td></tr>
+          <tr><td>Perfis reais não declarados</td><td>LinkedIn, Facebook, Yelp e Google Business existem e estão ativos; nenhum no <code>sameAs</code></td><td><span class="tag t-bad">alto</span> — autoridade jogada fora <em>(corrigido no PR #1)</em></td></tr>
+          <tr><td>E-mail</td><td><code>office@premiumccs.com</code> em site <code>premiumcleaningnj.com</code></td><td><span class="tag t-warn">médio</span> — sinal cross-domain</td></tr>
+          <tr><td>Wikidata / Knowledge Graph</td><td>Nenhuma entrada Wikidata encontrada</td><td><span class="tag t-warn">médio</span> — sem âncora externa</td></tr>
+          <tr><td>Páginas de entidade</td><td><code>/about</code>, <code>/reviews</code>, <code>/team</code>, <code>/contact</code> → todas 404 no ar</td><td><span class="tag t-bad">alto</span> — "quem somos" não existe <em>(/about e /reviews prontos no PR #1)</em></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>O problema extra: o nome é genérico</h3>
+    <p>"Premium Cleaning" é uma expressão comum do setor — não um nome distintivo. Sem o qualificador geográfico colado ao nome (<em>Premium Cleaning Services NJ &amp; NY</em>), o modelo não tem como desambiguar. É por isso que a busca pela marca retorna um concorrente antes da própria empresa.</p>
+
+    <div class="callout c-ok">
+      <div class="ct">O que já está corrigido no código — PR #1, mergeado e não publicado</div>
+      <p>Entidade única <code>#business</code> por página; <code>ProfessionalService</code> e <code>LocalBusiness</code> duplicados removidos; <code>sameAs</code> com Google Business, LinkedIn, Yelp e Facebook; <code>hasMap</code> e <code>contactPoint</code>; reviews anônimas removidas do schema; <code>/about</code> e <code>/reviews</code> criadas (20 reviews verbatim do Google). <strong>Falta o Publish.</strong></p>
+    </div>
+
+    <div class="callout c-info">
+      <div class="ct">O que a IA vê hoje — no ar</div>
+      <p>Duas empresas chamadas Premium Cleaning no mesmo endereço lógico, uma com endereço completo e outra com "NJ, NY" no campo de estado; um perfil do Google Maps em português do Brasil; um e-mail de outro domínio; e nenhum link para LinkedIn, Facebook ou Yelp. <strong>É ambíguo para um humano apressado — e fatal para um modelo que precisa escolher uma entidade para citar.</strong></p>
+    </div>
+
+    <div class="callout c-warn">
+      <div class="ct">O que ainda falta — mesmo depois do Publish</div>
+      <p><strong>Nome canônico</strong> em GBP, LinkedIn, Yelp e Facebook (hoje há 4 variantes); <strong>e-mail</strong> <code>@premiumccs.com</code> (migrar ou declarar no schema); <strong>Wikidata</strong> (nenhuma entrada); <strong><code>/team</code> e <code>/contact</code></strong> (ainda 404). Nenhum desses é bloqueio de deploy — são tarefas de consistência externa.</p>
+    </div>
+  </section>
+
+  <!-- ================= ACHADO 3 ================= -->
+  <section id="achado3">
+    <div class="sec-head">
+      <div class="sec-num">05</div>
+      <div>
+        <h2>Achado #4 — No Bing, o concorrente sequestra a marca. No Google, não.</h2>
+        <div class="sec-sub">Na busca pelo nome da empresa no Bing/DDG, o site principal não aparece no top 10 e um concorrente aparece em #1. No Google, a query de marca está em posição 2,1.</div>
+      </div>
+    </div>
+
+    <p>Consulta: <strong>"premium cleaning services newark nj"</strong> · Bing/DDG · 03/11/2026.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th class="num">#</th><th>Resultado</th><th>Tipo</th><th>Leitura</th></tr></thead>
+        <tbody>
+          <tr><td class="num">1</td><td>Garcia Cleaning Company LLC — "Premium Cleaning Services in Newark, NJ"</td><td>concorrente</td><td><span class="tag t-bad">sequestro de marca</span></td></tr>
+          <tr><td class="num">2</td><td>Yelp — busca "Premium Cleaning Service" Newark</td><td>diretório</td><td><span class="tag t-warn">terceiro no controle</span></td></tr>
+          <tr><td class="num">3</td><td>Yelp — ficha Premium Cleaning Services</td><td>diretório</td><td><span class="tag t-warn">bom, mas não declarado</span></td></tr>
+          <tr><td class="num">4</td><td>Thumbtack — "Premium Cleaning Solution LLC" (232 reviews, outro negócio)</td><td>homônimo</td><td><span class="tag t-bad">confusão de entidade</span></td></tr>
+          <tr><td class="num">5</td><td>Facebook — Premium Cleaning</td><td>social</td><td><span class="tag t-neutral">neutro</span></td></tr>
+          <tr><td class="num">7</td><td><code>lp.premiumcleaningnj.com</code></td><td>subdomínio</td><td><span class="tag t-neutral">fora do escopo SEO</span></td></tr>
+          <tr><td class="num">8–10</td><td>Fieseros · LinkedIn · cleaningservicenj.com (homônimo)</td><td>misto</td><td><span class="tag t-warn">fragmentação</span></td></tr>
+          <tr style="background:#fdf7f8"><td class="num">—</td><td><strong>premiumcleaningnj.com</strong></td><td>site oficial</td><td><span class="tag t-bad">ausente do top 10</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Nas queries comerciais, o Bing não mostra a Premium — o Google mostra e não recebe clique</h3>
+    <div class="grid g2">
+      <div class="card">
+        <h5>"commercial cleaning newark nj" · Bing</h5>
+        <p>Top 10: Anago (×2), ServiceMaster, RMS, Yelp, Handled, LuzPro, Jeny, CEECEE, Dynasty. <strong>Premium ausente.</strong></p>
+      </div>
+      <div class="card">
+        <h5>"commercial cleaning services new jersey" · Bing</h5>
+        <p>Top 10: Commercial Cleaning Corp, Pritchard, Cleaning World (×2), CleanNet, AllBrite, Mac's, Jani-King, Cristi. <strong>Premium ausente.</strong></p>
+      </div>
+    </div>
+
+    <div class="callout c-warn">
+      <div class="ct">O contraponto do Google</div>
+      <p>No GSC, <strong>"commercial cleaning newark" tem 201 impressões, posição 1,6 e zero clique</strong>. Ou seja: no Google a Premium já está no topo de uma query comercial central — e mesmo assim não converte. O sequestro de marca é um problema do Bing; no Google, o problema é <strong>snippet e CTR</strong>. Tratar os dois como o mesmo fenômeno levaria à ação errada.</p>
+    </div>
+
+    <div class="callout c-bad">
+      <div class="ct">Impacto direto no ChatGPT</div>
+      <p>Quando o usuário pergunta por uma empresa específica ("o que é a Premium Cleaning Services?"), o modelo resolve para Yelp, Facebook, LinkedIn ou para o homônimo do Thumbtack. Quando pergunta pela categoria, ele nem considera a Premium. <strong>São dois caminhos de entrada — e os dois estão fechados.</strong></p>
+    </div>
+  </section>
+
+  <!-- ================= ACHADO 4 ================= -->
+  <section id="achado4">
+    <div class="sec-head">
+      <div class="sec-num">06</div>
+      <div>
+        <h2>Achado #5 — A medição está mirando um alvo impossível</h2>
+        <div class="sec-sub">Os 10 prompts do baseline são todos nacionais. Uma empresa local de 43 reviews não entra em lista nacional — nem no Google, nem no ChatGPT.</div>
+      </div>
+    </div>
+
+    <p>O baseline AISV de 14/10 mediu <strong>10 prompts, 225.970 buscas/mês, 0 menções e 0% de share</strong>. O número é real — mas o desenho do painel garante o zero.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Prompt</th><th>Geo</th><th class="num">Volume</th><th>Quem domina</th></tr></thead>
+        <tbody>
+          <tr><td>Best office cleaning services for small businesses in the US</td><td><span class="tag t-bad">nacional</span></td><td class="num">22.200</td><td>JAN-PRO, Anago, Stratus, Office Pride</td></tr>
+          <tr><td>Best commercial carpet cleaning companies for office buildings in the US</td><td><span class="tag t-bad">nacional</span></td><td class="num">18.100</td><td>Stanley Steemer, COIT, SERVPRO</td></tr>
+          <tr><td>Best commercial cleaning companies for hotel and hospitality in the US</td><td><span class="tag t-bad">nacional</span></td><td class="num">165.000</td><td>KBS/HSS, Heart of the House, HotelPRO</td></tr>
+          <tr><td>Best commercial kitchen cleaning services in the US</td><td><span class="tag t-bad">nacional</span></td><td class="num">390</td><td>HOODZ, Summit, Clean My Restaurant</td></tr>
+          <tr><td>Best floor and grout restoration for commercial properties in the US</td><td><span class="tag t-bad">nacional</span></td><td class="num">140</td><td>Grout Doctor, TCS, APEX</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid g3" style="margin-top:14px">
+      <div class="card stat"><span class="k">Prompts com geo local</span><span class="v bad">0/10</span><span class="d">nenhum "Newark", "NJ" ou "NYC"</span></div>
+      <div class="card stat"><span class="k">Prompts de marca</span><span class="v bad">0/10</span><span class="d">nenhum "Premium Cleaning"</span></div>
+      <div class="card stat"><span class="k">Prompts "near me"</span><span class="v bad">0/10</span><span class="d">a intenção que converte</span></div>
+    </div>
+
+    <div class="callout c-warn">
+      <div class="ct">Diagnóstico do diagnóstico</div>
+      <p>O 0% diz duas coisas ao mesmo tempo: (a) a Premium não está indexada e (b) o painel foi desenhado para competir com franquias nacionais no terreno delas. <strong>Enquanto a medição for 100% nacional, o número nunca vai subir</strong> — mesmo que a operação local esteja perfeita. É preciso um painel em três camadas: local (60%), segmento (30%), nacional (10%).</p>
+    </div>
+
+    <h3>O painel que deveria existir (exemplos)</h3>
+    <div class="grid g2">
+      <div class="card"><h5>Camada local · 60%</h5><p>"best commercial cleaning company in Newark NJ" · "office cleaning services near me Newark" · "hotel housekeeping company New Jersey" · "commercial carpet cleaning Jersey City" · "restaurant cleaning company North Jersey" · "post construction cleaning Newark"</p></div>
+      <div class="card"><h5>Camada segmento · 30%</h5><p>"who cleans restaurants overnight in NJ" · "outsourced hotel housekeeping NJ cost" · "commercial cleaning cost per square foot New Jersey" · "cleaning company for medical office Newark" · "hood cleaning NJ requirements"</p></div>
+      <div class="card" style="grid-column:1/-1"><h5>Camada marca · 10%</h5><p>"who is Premium Cleaning Services NJ" · "is Premium Cleaning Services legit" · "Premium Cleaning Services Newark reviews" · "Premium Cleaning Services vs CleanNet"</p></div>
+    </div>
+
+    <div class="callout c-warn">
+      <div class="ct">O mesmo painel, dois motores</div>
+      <p>O painel 60/30/10 deve rodar em <strong>Google AI Overviews/Gemini</strong> e em <strong>ChatGPT/Perplexity</strong>, com resultados separados. O Google já mostra a marca em posição 2,1 para "premium cleaning services"; o Bing não a mostra nem na própria marca. Misturar os dois num único "0% de share" esconde essa diferença e leva à ação errada.</p>
+    </div>
+  </section>
+
+  <!-- ================= ACHADO 5 ================= -->
+  <section id="achado5">
+    <div class="sec-head">
+      <div class="sec-num">07</div>
+      <div>
+        <h2>Achado #6 — Falta a prova que a IA realmente cita</h2>
+        <div class="sec-sub">LLMs não citam o site da empresa: citam o consenso sobre a empresa. No Google, isso também decide o pacote local.</div>
+      </div>
+    </div>
+
+    <div class="grid g3">
+      <div class="card stat"><span class="k">Reviews Google</span><span class="v warn">43</span><span class="d">5,0 · vs 592 (Crazy Clean) e 734 (Crystal View)</span></div>
+      <div class="card stat"><span class="k">Rank local · 1 mi</span><span class="v ok">2,7</span><span class="d">69% top3 · em 2 mi cai para 11,4</span></div>
+      <div class="card stat"><span class="k">Diretórios B2B relevantes</span><span class="v bad">2</span><span class="d">Poyst e ThreeBestRated · faltam Yelp claim, BBB, Angi, Clutch</span></div>
+    </div>
+
+    <div class="tbl-wrap" style="margin-top:14px">
+      <table>
+        <thead><tr><th>Fonte</th><th>Peso em respostas de IA</th><th>Premium hoje</th><th>Ação</th></tr></thead>
+        <tbody>
+          <tr><td>Google Business Profile</td><td>altíssimo (local pack + AIO)</td><td><span class="tag t-warn">43 reviews · 2,7 em 1 mi / 11,4 em 2 mi</span></td><td>categorias, serviços, Q&amp;A com prompts, posts, fotos, reviews</td></tr>
+          <tr><td>Yelp</td><td>alto (local + "best of")</td><td><span class="tag t-warn">ficha existe, não reivindicada/declarada</span></td><td>claim + sameAs + 10 reviews</td></tr>
+          <tr><td>BBB</td><td>alto (confiança B2B)</td><td><span class="tag t-bad">ausente</span></td><td>criar + acreditação</td></tr>
+          <tr><td>Clutch / G2</td><td>alto (prompts "best B2B")</td><td><span class="tag t-bad">ausente</span></td><td>criar perfil com cases Marriott/Madison</td></tr>
+          <tr><td>Angi / Thumbtack / Bark</td><td>médio</td><td><span class="tag t-bad">ausente (e há homônimo no Thumbtack)</span></td><td>criar e diferenciar com "Commercial"</td></tr>
+          <tr><td>Listas "best of NJ"</td><td>altíssimo</td><td><span class="tag t-warn">1 (ThreeBestRated)</span></td><td>entrar em 3–5 listas existentes</td></tr>
+          <tr><td>Reddit / Quora</td><td>alto em ChatGPT</td><td><span class="tag t-bad">zero</span></td><td>10 respostas úteis com disclosure</td></tr>
+          <tr><td>PR / data study</td><td>alto (link + citação)</td><td><span class="tag t-bad">zero</span></td><td>estudo "10 prompts de IA por 30 dias"</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout c-info">
+      <div class="ct">A assimetria que explica tudo</div>
+      <p>A Premium investiu 100% do esforço em <strong>on-page</strong> (schema, FAQ, malha, llms.txt). A IA pondera <strong>off-page</strong> muito mais do que o SEO tradicional: para responder "quem é o melhor", ela precisa de fontes independentes concordando. Hoje há 1 site dizendo que a Premium é boa — o dela mesma.</p>
+    </div>
+  </section>
+
+  <!-- ================= ACHADO 6 ================= -->
+  <section id="achado6">
+    <div class="sec-head">
+      <div class="sec-num">08</div>
+      <div>
+        <h2>Achado #7 — Conteúdo bom, com impressão digital de template</h2>
+        <div class="sec-sub">A base é sólida. Mas a forma como o retrofit foi aplicado cria três problemas de citação — e dois deles o Google já sente no CTR.</div>
+      </div>
+    </div>
+
+    <div class="grid g2">
+      <div class="card">
+        <h5>1. Todas as páginas abrem com o prompt nacional literal</h5>
+        <p>As 10 money pages começam com a mesma construção ("What are the best... in the US?"). Isso (a) mira uma query que a página não pode vencer, (b) cria assinatura de template e (c) desperdiça os 3 primeiros segundos de leitura — os que a IA usa para extrair a resposta.</p>
+      </div>
+      <div class="card">
+        <h5>2. A marca aparece tarde — ou nunca</h5>
+        <p>Nas respostas diretas, "Premium Cleaning" só surge entre o caractere <strong>212 e 333</strong>. Nas páginas de tile/grout, <strong>não aparece</strong>. A IA extrai a resposta e não tem a quem atribuir.</p>
+      </div>
+      <div class="card">
+        <h5>3. FAQ responde como vendedor, não como fonte</h5>
+        <p>Ex.: "Premium Cleaning Services offers walkthroughs and custom staffing plans...". Respostas factuais e neutras (números, prazos, critérios) são mais extraíveis e mais citáveis do que frases de venda.</p>
+      </div>
+      <div class="card">
+        <h5>4. Homepage não é página de entidade</h5>
+        <p>682 palavras, H1 sem marca ("The Definitive Standard for Commercial Cleaning in NJ &amp; NY"), copyright 2025. Para IA, a home deveria responder em 2 frases: quem, onde, desde quando, para quem, com que prova. <em>(H1 com marca corrigido no PR #1, não publicado.)</em></p>
+      </div>
+    </div>
+
+    <div class="tbl-wrap" style="margin-top:14px">
+      <table>
+        <thead><tr><th>Métrica on-page</th><th class="num">Resultado</th><th>Leitura</th></tr></thead>
+        <tbody>
+          <tr><td>FAQPage schema</td><td class="num">62/65</td><td><span class="tag t-ok">excelente</span></td></tr>
+          <tr><td>BreadcrumbList</td><td class="num">65/65</td><td><span class="tag t-ok">excelente</span></td></tr>
+          <tr><td>Palavras (mediana)</td><td class="num">1.187</td><td><span class="tag t-ok">saudável</span></td></tr>
+          <tr><td>Páginas com tabela</td><td class="num">34/65</td><td><span class="tag t-warn">metade</span></td></tr>
+          <tr><td>Páginas com dateModified</td><td class="num">18/65</td><td><span class="tag t-bad">frescor invisível</span></td></tr>
+          <tr><td>Órfãs (0 inlinks)</td><td class="num">0</td><td><span class="tag t-ok">malha feita</span></td></tr>
+          <tr><td>Links internos de saída / página</td><td class="num">25,5</td><td><span class="tag t-ok">denso</span></td></tr>
+          <tr><td>TTFB</td><td class="num">0,25s</td><td><span class="tag t-ok">rápido</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout c-ok">
+      <div class="ct">O que já foi corrigido no código — PRs #1 a #3, mergeados e não publicados</div>
+      <p><strong>20 títulos acima de 60 caracteres</strong> → agora ≤60; <strong>3 descrições acima de 160</strong> → corrigidas; <strong>og:image ausente em 65/67</strong> → 67/67; <strong>canibalização</strong> entre <code>/commercial-cleaning-services-nj</code> e <code>/commercial-cleaning-new-jersey</code> → intenções separadas; <strong>claims sem fonte</strong> ("98% retention", "126 rooms/day", "12+ years", "100% compliance", "98% allergens", autores inventados) → removidos ou corrigidos. Nada disso está no ar.</p>
+    </div>
+
+    <div class="callout c-warn">
+      <div class="ct">O que o código não resolve</div>
+      <p>As aberturas com o <strong>prompt nacional literal</strong> continuam; as <strong>FAQs de vendedor</strong> continuam; <strong>18/65 páginas</strong> com <code>dateModified</code>; e os <strong>40 artigos de novembro</strong> seguem pausados. Essas são decisões editoriais, não de deploy — e devem entrar depois que o cano estiver desentupido.</p>
+    </div>
+  </section>
+
+  <!-- ================= CERTO ================= -->
+  <section id="certo">
+    <div class="sec-head">
+      <div class="sec-num">09</div>
+      <div>
+        <h2>O que já está certo — e não deve ser mexido</h2>
+        <div class="sec-sub">A fundação técnica está acima da média. O erro seria refazê-la em vez de destravar o acesso.</div>
+      </div>
+    </div>
+
+    <ul class="check">
+      <li><span class="ic ic-ok">✓</span><div><strong>robots.txt libera todos os crawlers de IA.</strong> GPTBot, OAI-SearchBot, ChatGPT-User, PerplexityBot, ClaudeBot, Google-Extended e CCBot recebem HTTP 200.</div></li>
+      <li><span class="ic ic-ok">✓</span><div><strong>llms.txt existe</strong> (19.980 bytes) com fatos canônicos: endereço, telefone, desde 2012, clientes documentados, faixa de preço, como contratar.</div></li>
+      <li><span class="ic ic-ok">✓</span><div><strong>HTML server-rendered de verdade.</strong> O money hub entrega ~2.360 palavras, 79 links e 7 blocos JSON-LD no HTML bruto, sem JavaScript. O render foi testado e descartado como causa.</div></li>
+      <li><span class="ic ic-ok">✓</span><div><strong>Schema em escala:</strong> FAQPage 62/65, BreadcrumbList 65/65, Service 36, Article 26, Speakable 37.</div></li>
+      <li><span class="ic ic-ok">✓</span><div><strong>Malha interna completa:</strong> 0 órfãs, profundidade máxima 2, 1.656 links internos, 25,5 links de saída por página.</div></li>
+      <li><span class="ic ic-ok">✓</span><div><strong>Conteúdo com números reais:</strong> faixas de preço por quarto/hora/mês, SLAs, corredores nomeados, cases Marriott e Madison Avenue.</div></li>
+      <li><span class="ic ic-ok">✓</span><div><strong>Performance:</strong> TTFB de 0,25s — acima da média do setor.</div></li>
+      <li><span class="ic ic-ok">✓</span><div><strong>Google verificado:</strong> 530 queries e 7,23 mil impressões em seis meses. Não é começo do zero.</div></li>
+      <li><span class="ic ic-ok">✓</span><div><strong>Versão corrigida validada:</strong> 67 páginas, 0 órfãs, profundidade 2, 13 testes, <code>tsc</code> limpo, build e runtime Cloudflare (<code>wrangler dev</code>) testados. Só falta publicar.</div></li>
+    </ul>
+
+    <div class="callout c-ok">
+      <div class="ct">Tradução</div>
+      <p>A pergunta "o site está pronto para IA?" tem resposta <strong>sim</strong>. A pergunta "a IA consegue achar o site?" tem duas respostas: <strong>no Bing, não; no Google, acha — mas o clique vaza</strong>. Toda a energia do próximo ciclo deve ir para publicar e distribuir, não para produzir mais 40 artigos.</p>
+    </div>
+  </section>
+
+  <!-- ================= ESPELHO ================= -->
+  <section id="espelho">
+    <div class="sec-head">
+      <div class="sec-num">10</div>
+      <div>
+        <h2>No ar vs. GitHub — a correção existe, mas não foi publicada</h2>
+        <div class="sec-sub">Tudo o que está descrito como “corrigido” nesta auditoria está na branch <code>main</code>, não no domínio. São 19 divergências verificadas em 11/11/2026.</div>
+      </div>
+    </div>
+
+    <div class="callout c-warn">
+      <div class="ct">A distinção que muda o diagnóstico</div>
+      <p>“Não está no ar” não é a mesma coisa que “não foi feito”. O código que resolve os gargalos de entidade, sitemap, páginas 404, IndexNow e redirects <strong>existe e passou nos testes</strong>. O que falta é o <strong>Publish</strong> — um clique no Lovable que ninguém além do cliente pode dar. Enquanto isso, o Google e o Bing continuam rastreando a versão antiga.</p>
+    </div>
+
+    <div class="tbl-wrap mirror">
+      <table>
+        <thead><tr><th>Item</th><th>No ar · 11/11/2026</th><th>GitHub · main <code>3d2968e</code></th></tr></thead>
+        <tbody>
+          <tr class="live"><td>URLs no sitemap</td><td><span class="tag t-bad">65</span></td><td><span class="tag t-ok">67</span></td></tr>
+          <tr class="repo"><td><code>lastmod</code> no sitemap</td><td><span class="tag t-bad">65 iguais · 27/10</span></td><td><span class="tag t-ok">real por página</span></td></tr>
+          <tr class="live"><td><code>/about</code></td><td><span class="tag t-bad">404</span></td><td><span class="tag t-ok">200</span></td></tr>
+          <tr class="repo"><td><code>/reviews</code></td><td><span class="tag t-bad">404</span></td><td><span class="tag t-ok">200 · 20 reviews verbatim</span></td></tr>
+          <tr class="live"><td>Entidade JSON-LD</td><td><span class="tag t-bad">2 · <code>CleaningService</code> + <code>ProfessionalService</code></span></td><td><span class="tag t-ok">1 · <code>#business</code></span></td></tr>
+          <tr class="repo"><td><code>sameAs</code></td><td><span class="tag t-bad">1 URL de busca Maps · <code>gl=br</code></span></td><td><span class="tag t-ok">4 perfis reais</span></td></tr>
+          <tr class="live"><td>IndexNow (Bing)</td><td><span class="tag t-bad">key file 404</span></td><td><span class="tag t-ok">key + <code>scripts/indexnow.mjs</code></span></td></tr>
+          <tr class="repo"><td><code>www</code> → apex</td><td><span class="tag t-bad">302</span></td><td><span class="tag t-ok">301</span></td></tr>
+          <tr class="live"><td>Barra final</td><td><span class="tag t-bad">307</span></td><td><span class="tag t-ok">301</span></td></tr>
+          <tr class="repo"><td><code>/Office-Cleaning</code> (maiúsculas)</td><td><span class="tag t-bad">200 · duplicata</span></td><td><span class="tag t-ok">301</span></td></tr>
+          <tr class="live"><td>Títulos acima de 60 caracteres</td><td><span class="tag t-bad">20 páginas</span></td><td><span class="tag t-ok">0</span></td></tr>
+          <tr class="repo"><td>Descrições acima de 160</td><td><span class="tag t-bad">3 páginas</span></td><td><span class="tag t-ok">0</span></td></tr>
+          <tr class="live"><td><code>og:image</code></td><td><span class="tag t-bad">ausente em 65/67</span></td><td><span class="tag t-ok">67/67</span></td></tr>
+          <tr class="repo"><td>GA4 em navegação SPA</td><td><span class="tag t-bad">só o <code>page_view</code> inicial</span></td><td><span class="tag t-ok"><code>virtual_page_view</code></span></td></tr>
+          <tr class="live"><td>H1 da home</td><td><span class="tag t-bad">sem marca</span></td><td><span class="tag t-ok">com marca</span></td></tr>
+          <tr class="repo"><td>Copyright do rodapé</td><td><span class="tag t-bad">2025 fixo</span></td><td><span class="tag t-ok">dinâmico</span></td></tr>
+          <tr class="live"><td>Claims sem fonte</td><td><span class="tag t-bad">“98% retention”, “126 rooms/day”, autores</span></td><td><span class="tag t-ok">removidos ou corrigidos</span></td></tr>
+          <tr class="repo"><td>Canibalização NJ</td><td><span class="tag t-bad">2 páginas disputando</span></td><td><span class="tag t-ok">intenções separadas</span></td></tr>
+          <tr class="live"><td>Testes automatizados</td><td><span class="tag t-neutral">n/a</span></td><td><span class="tag t-ok">13 passando</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="src">Verificação: <code>curl -s https://premiumcleaningnj.com/sitemap.xml | grep -c "&lt;url&gt;"</code> · <code>curl -o /dev/null -w "%{http_code}" https://premiumcleaningnj.com/about</code> · <code>gh pr list --repo PerettoCo/premiumcleaningseo</code></p>
+
+    <div class="grid g4" style="margin-top:16px">
+      <div class="card stat"><span class="k">Divergências verificadas</span><span class="v">19</span><span class="d">no ar vs. main</span></div>
+      <div class="card stat"><span class="k">Publicadas</span><span class="v bad">0</span><span class="d">nenhuma chegou ao domínio</span></div>
+      <div class="card stat"><span class="k">PRs mergeados</span><span class="v ok">3</span><span class="d">#1 · #2 · #3</span></div>
+      <div class="card stat"><span class="k">Gargalo de deploy</span><span class="v warn">1</span><span class="d">Publish no Lovable</span></div>
+    </div>
+
+    <div class="callout c-bad">
+      <div class="ct">O custo de cada dia sem publicar</div>
+      <p>O Google continua servindo o <code>insights.</code> morto e o <code>www</code> com 302. O Bing continua com 10 URLs. O IndexNow continua sem chave. E as 67 páginas corrigidas — com <code>/about</code>, <code>/reviews</code>, entidade única e sitemap com data real — seguem invisíveis. <strong>Não é um problema de SEO; é um problema de release.</strong></p>
+    </div>
+  </section>
+
+  <!-- ================= ESFORCOS ================= -->
+  <section id="esforcos">
+    <div class="sec-head">
+      <div class="sec-num">11</div>
+      <div>
+        <h2>O que já foi feito — linha do tempo dos esforços</h2>
+        <div class="sec-sub">Registro reconstruído da sessão Claude Code <code>7a79eefe-4a49-45ff-a47a-ed228a39db2c</code> (1.422 registros, 10–11/11/2026) e dos artefatos na KB.</div>
+      </div>
+    </div>
+
+    <div class="tl">
+      <div class="tl-item">
+        <div class="d">Jun/2026</div>
+        <div class="t"><b>Fundação técnica e de conteúdo</b><span>Site novo com 65 URLs, topic clusters e pillar pages, 1.656 links internos, schema em escala (FAQPage 62/65, BreadcrumbList 65/65, Service 36, Article 26, Speakable 37), <code>llms.txt</code> e GSC verificado. Saída do zero absoluto de dados orgânicos.</span></div>
+        <div class="s"><span class="tag t-ok">concluído</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="d">14–29/10</div>
+        <div class="t"><b>Retrofit AIO/GEO</b><span>Money hubs, 20 insights, 5 counties, blocos de extractability e speakable, cases Marriott e Madison. OP Malha Mestra refeita: 65 páginas, 1.656 links, 0 órfãs, profundidade 2.</span></div>
+        <div class="s"><span class="tag t-ok">concluído</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="d">03/11</div>
+        <div class="t"><b>Auditoria AIO/GEO v1 — foco Bing</b><span>Diagnóstico de retrieval: 10/65 URLs no índice do Bing, entidade fragmentada, 10 prompts nacionais, prova de terceiros fraca. Relatório entregue com plano de 90 dias.</span></div>
+        <div class="s"><span class="tag t-ok">concluído</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="d">10–11/11</div>
+        <div class="t"><b>Diagnóstico profundo + correção no código</b><span>Clone do repo, auditoria de 67 páginas, 3 PRs mergeados: #1 entidade/sitemap/<code>/about</code>/<code>/reviews</code>/GA4/IndexNow · #2 canibalização e claims sem fonte · #3 títulos, descrições, <code>og:image</code> e 301. 13 testes, <code>tsc</code> limpo, build e runtime Cloudflare validados.</span></div>
+        <div class="s"><span class="tag t-warn">mergeado · não publicado</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="d">agora</div>
+        <div class="t"><b>Publicar e distribuir</b><span>Publish no Lovable, 301 de <code>insights.</code> e <code>www</code>, reenvio de sitemap no GSC e BWT, ping do IndexNow e reescrita de snippet. É a única etapa que ainda não começou.</span></div>
+        <div class="s"><span class="tag t-bad">bloqueado</span></div>
+      </div>
+    </div>
+
+    <h3>Evidências na KB</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Data</th><th>Artefato</th><th>O que comprova</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">30/06</td><td><code>screencapture-…-performance-search-analytics…png</code></td><td>59 cliques, 7,23 mil impressões, CTR 0,8%, posição 4,2, 530 queries</td></tr>
+          <tr><td class="mono">30/06</td><td><code>screencapture-…-performance-insights…pdf</code></td><td>39 cliques / 4,46 mil impressões em 3 meses · <code>insights.</code> 37 · <code>www</code> 2 · apex 0</td></tr>
+          <tr><td class="mono">15/10</td><td><code>nap-audit-premium-cleaning.md</code></td><td>lacunas de diretório e inconsistência de NAP</td></tr>
+          <tr><td class="mono">19–20/10</td><td><code>baseline-scans-local-seo-a5.md</code></td><td>rank local por raio: 2,7 em 1 mi · 4,1 / 11,4 em 2 mi</td></tr>
+          <tr><td class="mono">26/10</td><td><code>op-malha-mestra-hyperlinkagem-citacoes-novembro-2026.md</code></td><td>1.656 links internos · 65 páginas · 0 órfãs</td></tr>
+          <tr><td class="mono">27/10</td><td><code>analise-concorrentes-conteudo-benchmark-outubro-2026.md</code></td><td>benchmark de conteúdo e gaps de concorrência</td></tr>
+          <tr><td class="mono">03/11</td><td><code>auditoria-aio-geo-novembro-2026</code> v1</td><td>10/65 URLs no Bing · entidade · prompts · prova</td></tr>
+          <tr><td class="mono">10–11/11</td><td>sessão <code>7a79eefe</code> + PRs #1–#3</td><td>diagnóstico, código, validação e status de merge</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout c-info">
+      <div class="ct">Leitura honesta do esforço</div>
+      <p>O trabalho técnico e editorial foi feito em profundidade — não é falta de execução. O que separa esse esforço do resultado é <strong>uma etapa de release e duas de distribuição</strong>: publicar, redirecionar o host morto e conquistar corroboração externa. Diagnóstico sem Publish vira documento; Publish sem distribuição vira site bonito e invisível.</p>
+    </div>
+  </section>
+
+  <!-- ================= PLANO ================= -->
+  <section id="plano">
+    <div class="sec-head">
+      <div class="sec-num">12</div>
+      <div>
+        <h2>Plano de 90 dias — dois canais, uma ordem</h2>
+        <div class="sec-sub">Primeiro publicar. Depois recuperar o clique no Google e a existência no Bing. Conteúdo só escala quando o cano está desentupido.</div>
+      </div>
+    </div>
+
+    <div class="callout c-bad">
+      <div class="ct">Semana 0 — o pré-requisito de tudo</div>
+      <p><strong>Nenhuma ação abaixo produz efeito enquanto o Publish não for clicado.</strong> A versão corrigida está na <code>main</code> (<code>3d2968e</code>) e o Lovable sincroniza do repositório. Publicar é o item de maior impacto e menor esforço de toda a auditoria.</p>
+    </div>
+
+    <div class="phase">
+      <div class="when"><b>Semana 0</b>Publicar e redirecionar</div>
+      <div>
+        <ol>
+          <li><b>Publish no Lovable</b> a partir da <code>main</code> — 67 URLs, <code>/about</code>, <code>/reviews</code>, entidade única e sitemap com <code>lastmod</code> real.</li>
+          <li><b>Cloudflare — <code>www</code>:</b> trocar o 302 por <strong>301</strong> para o apex.</li>
+          <li><b>Cloudflare — <code>insights.</code>:</b> 301 de cada URL antiga para a página equivalente no apex. O host responde HTTP 000 e ainda é a principal página de destino do Google; cada dia sem 301 é clique e autoridade descartados.</li>
+          <li><b>Cloudflare — duplicatas do apex:</b> confirmar 301 de <code>/Office-Cleaning</code> e da barra final. <code>lp.premiumcleaningnj.com</code> <strong>não entra</strong> — é LP paga, com canonical própria, fora do universo SEO.</li>
+          <li><b>GSC:</b> reenviar <code>sitemap.xml</code>; Inspeção de URL + “Solicitar indexação” nas 10 money pages, <code>/about</code> e <code>/reviews</code>.</li>
+          <li><b>Bing Webmaster Tools:</b> reenviar sitemap; URL Inspection nas mesmas páginas. Rodar <code>node scripts/indexnow.mjs --dry</code> e depois o ping real.</li>
+          <li><b>GTM:</b> criar o trigger <code>virtual_page_view</code> e a tag GA4 correspondente — sem isso o GA4 segue contando só a primeira página.</li>
+        </ol>
+        <div class="why"><b>Critério de saída:</b> <code>/about</code> 200, <code>www</code> 301, key do IndexNow 200, sitemap com <code>lastmod</code> distintos e as 10 money pages solicitadas nos dois consoles.</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="when"><b>Semanas 1–4</b>Trilha Google · recuperar o clique</div>
+      <div>
+        <ol>
+          <li><b>Exportar GSC → Páginas</b> e comparar 28 dias antes/depois do Publish. Separar apex, <code>www</code> e <code>insights.</code> — hoje o número agregado esconde o vazamento.</li>
+          <li><b>Reescrever snippet das queries com impressão e posição 1–5 sem clique.</b> Caso central: “commercial cleaning newark” — 201 impressões, posição 1,6, zero clique. Título com promessa verificável + descrição com prova e CTA.</li>
+          <li><b>GBP:</b> categoria primária correta, secundárias, serviços, atributos, 10 Q&amp;A com as perguntas literais dos prompts, 1 post/semana, 10 fotos novas.</li>
+          <li><b>Raio local:</b> completar o Anel de Ferro (7 de 12 cidades) com página própria, resposta direta e 3 inlinks. O rank cai de 2,7 em 1 mi para 4,1–11,4 em 2 mi — é falta de sinal de proximidade e página de cidade, não de review.</li>
+          <li><b>Reviews:</b> pedido sistemático pós-serviço — 43 → 55 em 30 dias.</li>
+        </ol>
+        <div class="why"><b>Por quê primeiro no Google:</b> a marca já ranqueia (posição média 4,2). O ganho está em levar o clique ao host certo e converter a impressão que já existe — é a alavanca mais barata e mais rápida.</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="when"><b>Semanas 1–6</b>Trilha Bing · existir no índice</div>
+      <div>
+        <ol>
+          <li><b>BWT URL Inspection</b> nas 10 páginas-alvo (4 hubs, 5 counties, comparativo) e confirmação de cobertura. O <code>site:</code> externo é proxy; o console é a verdade.</li>
+          <li><b>IndexNow</b> nas 67 URLs após o Publish — é o caminho mais rápido para domínio jovem no Bing.</li>
+          <li><b>Consolidar stubs:</b> os 301 do PR #3 já apontam <code>/office-cleaning</code>, <code>/hotel-cleaning</code>, <code>/restaurant-cleaning</code> e <code>/carpet-cleaning</code> para as páginas completas. Confirmar depois do deploy.</li>
+          <li><b>Monitorar</b> quantas das 65 URLs aparecem em <code>site:</code> a cada 15 dias, sempre com a ressalva de que o resultado pode vir poluído por anti-bot.</li>
+        </ol>
+        <div class="why"><b>Por quê em paralelo:</b> o Bing não depende do Google e tem o pior gargalo — 55 de 65 páginas fora. É o canal que trava o ChatGPT Search e o Copilot.</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="when"><b>Semanas 3–8</b>Comum · entidade e prova</div>
+      <div>
+        <ol>
+          <li><b>Um nome canônico</b> — “Premium Cleaning Services NJ &amp; NY” em GBP, LinkedIn, Yelp, Facebook, BBB e schema. Hoje há 4 variantes.</li>
+          <li><b>E-mail:</b> migrar para <code>@premiumcleaningnj.com</code> ou declarar <code>premiumccs.com</code> como domínio corporativo no schema.</li>
+          <li><b>Diretórios:</b> claim Yelp + BBB + Angi + Clutch + Bing Places. NAP idêntico, mesma descrição e mesmas 3 fotos.</li>
+          <li><b>Listas “best of”:</b> mapear 5 listas de NJ que a IA cita e pedir inclusão (ThreeBestRated já é uma).</li>
+          <li><b>Reddit/Quora:</b> 10 respostas genuinamente úteis, com disclosure, nas queries dos prompts locais.</li>
+        </ol>
+        <div class="why"><b>Por quê:</b> é o que a IA cita. Review, diretório e consenso externo sustentam respostas do tipo “best” — nos dois motores.</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="when"><b>Semanas 9–12</b>Conteúdo e autoridade</div>
+      <div>
+        <ol>
+          <li><b>Novo painel de 20 prompts</b> (12 locais, 6 de segmento, 2 de marca) rodado em Google AIO/Gemini e em ChatGPT/Perplexity, com resultados separados.</li>
+          <li><b>Reescrever aberturas:</b> pergunta local + resposta com a marca na primeira frase + 1 número verificável. Eliminar o prompt nacional literal.</li>
+          <li><b>FAQs factuais:</b> trocar frases de venda por critérios, prazos e faixas.</li>
+          <li><b>Data study:</b> “analisamos 10 prompts de IA por 30 dias — quem é citado e por quê”. Vira PR, link magnet e fonte citável.</li>
+          <li><b>Vídeo:</b> 5 walkthroughs com título = prompt local, capítulos = FAQs, transcrição no site.</li>
+        </ol>
+        <div class="why"><b>Por quê só agora:</b> com índice e clique resolvidos, conteúdo novo passa a ser multiplicador — não mais 40 páginas invisíveis.</div>
+      </div>
+    </div>
+
+    <div class="callout c-warn">
+      <div class="ct">O que NÃO fazer agora</div>
+      <p><strong>Não 301ar o <code>lp.premiumcleaningnj.com</code></strong> — é LP paga com canonical própria e decisão de escopo do cliente. <strong>Não produzir os 40 artigos de novembro antes de publicar e indexar</strong> — hoje são 65 URLs com 10 recuperáveis; adicionar 40 cria 40 novas invisíveis. <strong>Não repetir o prompt nacional literal</strong> em todas as páginas. <strong>Não tratar <code>llms.txt</code> como atalho</strong> — não há evidência de uso pela OpenAI; é higiene, não alavanca. <strong>Não comprar links nem reviews.</strong></p>
+    </div>
+  </section>
+
+  <!-- ================= MEDICAO ================= -->
+  <section id="medicao">
+    <div class="sec-head">
+      <div class="sec-num">13</div>
+      <div>
+        <h2>Como medir — dois painéis, nenhum deles “tráfego”</h2>
+        <div class="sec-sub">Google se mede por clique recuperado e CTR; Bing/IA se mede por existência no índice e citação. Misturar os dois esconde o gargalo.</div>
+      </div>
+    </div>
+
+    <h3>Painel Google · distribuição e CTR</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Métrica</th><th>Fonte</th><th>Hoje</th><th class="num">Meta 30d</th><th class="num">Meta 60d</th><th class="num">Meta 90d</th></tr></thead>
+        <tbody>
+          <tr><td>Cobertura do apex no índice</td><td>GSC → Páginas</td><td><span class="tag t-warn">a medir</span></td><td class="num">60/67</td><td class="num">67/67</td><td class="num">67/67</td></tr>
+          <tr><td>Cliques no apex</td><td>GSC → Performance · filtro de host</td><td class="num">0</td><td class="num">15</td><td class="num">40</td><td class="num">80</td></tr>
+          <tr><td>CTR nas queries de posição 1–5</td><td>GSC → Consultas</td><td class="num">0,8%</td><td class="num">2%</td><td class="num">3,5%</td><td class="num">5%</td></tr>
+          <tr><td>Queries no top 10</td><td>GSC → Consultas</td><td><span class="tag t-warn">a medir</span></td><td class="num">40</td><td class="num">70</td><td class="num">100</td></tr>
+          <tr><td>Ações no Google Business</td><td>GBP → Insights</td><td><span class="tag t-warn">a medir</span></td><td class="num">baseline</td><td class="num">+30%</td><td class="num">+60%</td></tr>
+          <tr><td>Reviews Google</td><td>GBP</td><td class="num">43</td><td class="num">55</td><td class="num">80</td><td class="num">100</td></tr>
+          <tr><td>Aparições em AIO / Gemini</td><td>teste manual · geo EUA</td><td class="num">0 medido</td><td class="num">1/12</td><td class="num">3/12</td><td class="num">6/12</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="src">Metas são alvos de trabalho, não previsão. Cobertura e queries no top 10 dependem do export do GSC, que ainda não foi feito nesta rodada.</p>
+
+    <h3>Painel Bing / IA · existência e citação</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Métrica</th><th>Fonte</th><th>Hoje</th><th class="num">Meta 30d</th><th class="num">Meta 60d</th><th class="num">Meta 90d</th></tr></thead>
+        <tbody>
+          <tr><td>Páginas-alvo no índice do Bing</td><td>BWT → URL Inspection</td><td class="num">0/10</td><td class="num">10/10</td><td class="num">10/10</td><td class="num">10/10</td></tr>
+          <tr><td>Prompts locais com citação</td><td>teste manual · ChatGPT/Perplexity</td><td class="num">0/12</td><td class="num">1/12</td><td class="num">3/12</td><td class="num">6/12</td></tr>
+          <tr><td>Menções de marca em IA</td><td>teste manual · todas as camadas</td><td class="num">0</td><td class="num">2</td><td class="num">6</td><td class="num">12</td></tr>
+          <tr><td>Fontes de terceiros citáveis</td><td>auditoria de diretórios</td><td class="num">2</td><td class="num">5</td><td class="num">9</td><td class="num">14</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>O teste de 10 minutos (rodar hoje e a cada 15 dias)</h3>
+    <ol>
+      <li>Abra <strong>Google AI Overviews/Gemini com geo nos EUA</strong> e <strong>ChatGPT/Perplexity sem login, em inglês</strong>. São painéis separados — não some os resultados.</li>
+      <li>Rode 6 queries: 4 locais (“best commercial cleaning company in Newark NJ”, “office cleaning services near me Newark”, “hotel housekeeping company New Jersey”, “commercial carpet cleaning Jersey City”) e 2 de marca (“Premium Cleaning Services NJ reviews”, “who is Premium Cleaning Services Newark”).</li>
+      <li>Registre: <code>prompt · engine · marca citada? · posição na lista · URL citada · concorrentes citados</code>.</li>
+      <li>A meta não é “aparecer no topo”: é <strong>aparecer na lista com a URL certa</strong>. No Google, é o apex; no Bing, é a money page.</li>
+    </ol>
+
+    <div class="callout c-info">
+      <div class="ct">Baseline honesto — três janelas diferentes</div>
+      <p><strong>Clique no Google:</strong> 2 a 6 semanas após o 301 de <code>insights.</code> e do <code>www</code>, porque o Google precisa reprocessar o host. <strong>Índice no Bing:</strong> 2 a 8 semanas após IndexNow + sitemap + inspeção. <strong>Primeira citação em IA:</strong> 30 a 60 dias depois de a página estar indexada e corroborada. Qualquer promessa de “explodir em 7 dias” ignora como o retrieval funciona.</p>
+    </div>
+
+    <div class="callout c-warn">
+      <div class="ct">O que ainda não temos</div>
+      <p>Export atualizado do GSC (Páginas e Consultas); acesso programático a AIO/Gemini/ChatGPT/Perplexity; e uma medição de cobertura do índice do Google. O <code>site:</code> do Google bloqueou por captcha em 11/11 e o do Bing veio poluído. <strong>Onde não há medição, este relatório diz “a medir” — não estima.</strong></p>
+    </div>
+  </section>
+
+  <!-- ================= METODO ================= -->
+  <section id="metodo">
+    <div class="sec-head">
+      <div class="sec-num">14</div>
+      <div>
+        <h2>Método e reprodutibilidade</h2>
+        <div class="sec-sub">Tudo aqui pode ser refeito e conferido — inclusive as limitações.</div>
+      </div>
+    </div>
+
+    <div class="method">
+      <p><strong>Crawl on-page:</strong> 03/11/2026 nas 65 URLs do <code>sitemap.xml</code>; reconferência em 11/11/2026. Extração de HTML server-side, palavras, headings, JSON-LD, canonical, links internos/externos e grafo de inlinks.</p>
+      <p><strong>Google:</strong> capturas do Search Console de 30/06/2026 — Performance (6 meses, 530 queries) e Insights (3 meses, cliques por host). Registro TXT <code>google-site-verification</code> confirmado no DNS. <strong>Não houve medição de cobertura do índice:</strong> o <code>site:</code> bloqueou por captcha em 11/11 (Chrome headless, curl, Startpage, SearXNG e r.jina.ai).</p>
+      <p><strong>Bing:</strong> <code>site:premiumcleaningnj.com</code> em 03/11/2026 (web + RSS) e DuckDuckGo HTML. A reconferência de 11/11 retornou resultados de outro domínio — bloqueio anti-bot — e foi descartada. <strong>03/11 é a última medição válida.</strong></p>
+      <p><strong>Repositório:</strong> <code>PerettoCo/premiumcleaningseo</code>, <code>main</code> em <code>3d2968e</code>. PRs #1 (10/11, 18:48 UTC), #2 e #3 (11/11, 03:31–03:32 UTC) verificados via <code>gh</code>. Estado do deploy confirmado por HTTP no domínio, não por relato.</p>
+      <p><strong>Crawlers:</strong> requisições com User-Agent de GPTBot, OAI-SearchBot, ChatGPT-User, PerplexityBot, ClaudeBot, Google-Extended, Bingbot e CCBot.</p>
+      <p><strong>Entidade:</strong> parse dos blocos JSON-LD, inspeção de <code>sameAs</code>, RDAP do domínio (registro 24/06/2025), busca Wikidata e verificação de LinkedIn/Facebook/Yelp.</p>
+      <p style="margin-bottom:0"><strong>Limitações:</strong> <code>site:</code> é proxy externo — a cobertura definitiva está em GSC → Páginas e BWT → URL Inspection. ChatGPT, Perplexity, Gemini e AIO não foram consultados via API (sem credencial no ambiente). O histórico de esforços foi reconstruído da sessão Claude Code <code>7a79eefe</code> e dos artefatos da KB — não de memória.</p>
+    </div>
+
+    <h3>Fontes e data de validade</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Fonte</th><th>Data</th><th>Uso neste relatório</th></tr></thead>
+        <tbody>
+          <tr><td>GSC · Performance (screenshot)</td><td class="mono">30/06/2026</td><td>59 cliques · 7,23 mil impressões · CTR 0,8% · posição 4,2 · 530 queries</td></tr>
+          <tr><td>GSC · Insights (PDF)</td><td class="mono">30/06/2026</td><td>39 cliques / 4,46 mil impressões em 3 meses · cliques por host</td></tr>
+          <tr><td>Crawl das 65 URLs + reconferência</td><td class="mono">03/11 · 11/11</td><td>schema, entidade, links, status HTTP, redirects, sitemap</td></tr>
+          <tr><td>Bing / DuckDuckGo <code>site:</code></td><td class="mono">03/11/2026</td><td>cobertura do índice do Bing (10/65)</td></tr>
+          <tr><td>LocalSEO · 4 keywords × 2 grids</td><td class="mono">19–20/10/2026</td><td>rank local por raio (1 mi e 2 mi)</td></tr>
+          <tr><td>NAP audit</td><td class="mono">15/10/2026</td><td>lacunas de diretório e consistência de NAP</td></tr>
+          <tr><td>Benchmark de conteúdo</td><td class="mono">27/10/2026</td><td>gaps e padrões de concorrência</td></tr>
+          <tr><td>OP Malha Mestra</td><td class="mono">26/10/2026</td><td>1.656 links · 65 páginas · 0 órfãs · profundidade 2</td></tr>
+          <tr><td>GitHub <code>PerettoCo/premiumcleaningseo</code></td><td class="mono">10–11/11/2026</td><td>PRs #1–#3, <code>main</code> <code>3d2968e</code>, testes e build</td></tr>
+          <tr><td>Sessão Claude Code <code>7a79eefe</code></td><td class="mono">10–11/11/2026</td><td>reconstrução da linha do tempo dos esforços</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="foot">
+      <p>Auditoria AIO/GEO · Premium Cleaning Services NJ &amp; NY · 11/11/2026 · atualização da versão de 03/11 · Squad Prime / SEO</p>
+      <p>Fontes internas: <code>squads/prime/clientes/premium-cleaning-services/campanhas/</code> · <a href="auditoria-aio-geo-novembro-2026.pdf" style="color:var(--gold-dark)">Baixar PDF</a></p>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>
