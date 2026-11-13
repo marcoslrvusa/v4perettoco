@@ -5,7 +5,7 @@
    de uma senha forte e substitua PORTAL_HASH abaixo. Ver docs/senha-do-portal.md */
 (function () {
   'use strict';
-  var PORTAL_HASH = 'b69228f7b3538d71a85040187e5cac9624bba5399e0aaaaa38632131be64450d';
+  var PORTAL_HASH = '597b55014a9da823d86eece0ac6f06a80e15413b589350dc88082e30c1a9b249';
   var STORE_KEY = 'portal-v4-unlock-v1';
   var LOGO_SRC = 'logo-peretto-red.png';
   try {
