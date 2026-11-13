@@ -637,10 +637,10 @@ html.gated body{visibility:hidden}
     <div class="cover-meta">
       <span>Instância: n8n.fvmarketing.com.br</span>
       <span>Verificação: 03/11/2026 · 12h30 BRT</span>
+      <span>Revisão do estado: 13/11/2026</span>
       <span>Responsável atual: Marcos Peretto</span>
     </div>
     <div class="slide-nav" style="max-width:660px;margin-left:auto;margin-right:auto;">
-      <a href="#sA"><span>A</span> Guia CLI</a>
       <a href="#s01"><span>01</span> Sumário</a>
       <a href="#s02"><span>02</span> Inventário</a>
       <a href="#s03"><span>03</span> Arquitetura</a>
@@ -657,6 +657,31 @@ html.gated body{visibility:hidden}
 
 <div class="container">
 
+<!-- ===================== ESTADO REAL EM 13/11 ===================== -->
+<div class="card anchor-target" id="estado">
+  <div class="card-body">
+    <h2><span class="slide-num">!</span> Estado real em 13/11/2026: leia antes das tabelas</h2>
+    <p>Os rótulos das tabelas (<em>Saudável</em>, <em>Degradado</em>, <em>Quebrado</em>) vêm da <strong>amostra das últimas 25 execuções em 03/11</strong>. Eles dizem <em>quanto</em> falhou naquele dia, não <em>por quê</em>, e não foram reverificados em produção para esta revisão. A causa de cada falha está no incidente citado (INC-xx). Onde há informação mais nova, ela aparece abaixo e prevalece.</p>
+
+    <h3>AAFBB</h3>
+    <ul class="doc">
+      <li><strong>O que a amostra de 03/11 mostrava:</strong> SDR com 16 de 21 execuções ok, follow-up com 0 de 25 e Outbound com 25 de 25. As causas documentadas são o INC-01 (follow-up: nome de campo e referência a nó inexistente) e o INC-02 (criação de tarefa no Kommo). <strong>Este documento não confirma se esses dois foram corrigidos.</strong> Confira as execuções recentes antes de assumir que ainda estão quebrados.</li>
+      <li><strong>O que mudou entre 09 e 12/11:</strong> o Outbound LP para SDR foi reescrito (webhook <code>aafbb-lp-lead</code> com CORS liberado para a LP, criação de contato e card no Kommo, template <code>msg_lp_form</code>). O widget do formulário foi revisado e o bloco que levava o lead ao WhatsApp foi removido: depois do formulário, quem chama o lead é a SDR.</li>
+      <li><strong>O problema de saldo:</strong> a conta Meta da AAFBB estava sem saldo ou com problema na forma de pagamento, o que bloqueia mensagens iniciadas pela empresa. Foi <strong>resolvido entre 12 e 13/11</strong>, segundo o responsável. Se a SDR parar de chamar leads de novo, olhe o Business Manager antes de culpar o n8n.</li>
+      <li><strong>Falta validar:</strong> um lead de teste ponta a ponta (formulário, mensagem proativa, card no Kommo) depois da correção do saldo.</li>
+    </ul>
+
+    <h3>Signor</h3>
+    <ul class="doc">
+      <li><strong>Erro técnico:</strong> erros intermitentes de <code>Rate limit reached</code> na OpenAI (INC-07), como na amostra de 03/11.</li>
+      <li><strong>Pendência aberta:</strong> identificar a <strong>origem dos leads da IA</strong> (canal, mídia e campanha, via UTM) nas conversas de WhatsApp. O cliente teve 3 fechamentos recentes pela SDR sem saber de qual campanha vieram. Não há solução implementada. Acompanhamento na task do Ekyte 10953497.</li>
+    </ul>
+
+    <h3>Demais clientes</h3>
+    <p>Vale o que as tabelas dizem, com a data de 03/11. Nada aqui foi reverificado em produção.</p>
+  </div>
+</div>
+
 <!-- ===================== 00 — COMO USAR ===================== -->
 <div class="card">
   <div class="card-body">
@@ -669,7 +694,6 @@ html.gated body{visibility:hidden}
     </ol>
 
     <div class="toc-grid">
-      <a class="toc-item" href="#sA"><div class="toc-num">A</div><div><div class="toc-title">Guia para quem opera com Claude Code</div><div class="toc-desc">Setup, receitas, prompts, regras e recortes por cliente</div></div></a>
       <a class="toc-item" href="#s01"><div class="toc-num">01</div><div><div class="toc-title">Sumário executivo</div><div class="toc-desc">Estado real, maturidade por cliente e o risco central</div></div></a>
       <a class="toc-item" href="#s02"><div class="toc-num">02</div><div><div class="toc-title">Inventário de produção</div><div class="toc-desc">14 workflows ativos, IDs, nós, credenciais e legado</div></div></a>
       <a class="toc-item" href="#s03"><div class="toc-num gold">03</div><div><div class="toc-title">Arquitetura de referência</div><div class="toc-desc">3 camadas, padrão canônico e decisões de projeto</div></div></a>
@@ -690,274 +714,6 @@ html.gated body{visibility:hidden}
   </div>
 </div>
 
-<!-- ===================== A — GUIA PARA QUEM OPERA COM CLAUDE CODE ===================== -->
-<div class="card anchor-target" id="sA">
-  <div class="card-body">
-    <h2><span class="slide-num">A</span> Guia para quem opera com Claude Code (CLI)</h2>
-    <p>As seções 01 a 12 explicam o <strong>que</strong> existe. Esta explica <strong>como mantê-lo trabalhando pelo terminal</strong>, com o Claude Code como parceiro. Tudo aqui é recorte e atalho: cada receita aponta de volta para o runbook (R1 a R10) ou o incidente (INC-01 a INC-12) que tem o detalhe completo.</p>
-
-    <div class="toc-grid">
-      <a class="toc-item" href="#sA1"><div class="toc-num">A1</div><div><div class="toc-title">Primeiros 15 minutos</div><div class="toc-desc">Do clone ao primeiro comando seguro</div></div></a>
-      <a class="toc-item" href="#sA2"><div class="toc-num">A2</div><div><div class="toc-title">Mapa do repositório</div><div class="toc-desc">Onde fica cada coisa e o que o Claude deve ler</div></div></a>
-      <a class="toc-item" href="#sA3"><div class="toc-num gold">A3</div><div><div class="toc-title">Receitas: quero… → peça…</div><div class="toc-desc">Tarefa, prompt e comando por trás</div></div></a>
-      <a class="toc-item" href="#sA4"><div class="toc-num gold">A4</div><div><div class="toc-title">Prompts prontos</div><div class="toc-desc">Para copiar e colar na sessão</div></div></a>
-      <a class="toc-item" href="#sA5"><div class="toc-num green">A5</div><div><div class="toc-title">Regras de ouro com agente</div><div class="toc-desc">O que o Claude nunca deve fazer sozinho</div></div></a>
-      <a class="toc-item" href="#sA6"><div class="toc-num green">A6</div><div><div class="toc-title">Recorte por cliente</div><div class="toc-desc">IDs, estado, o que ler e o cuidado de cada SDR</div></div></a>
-      <a class="toc-item" href="#sA7"><div class="toc-num gray">A7</div><div><div class="toc-title">Recorte por tempo disponível</div><div class="toc-desc">1 hora, 1 dia, 1 semana</div></div></a>
-      <a class="toc-item" href="#sA8"><div class="toc-num gray">A8</div><div><div class="toc-title">O que mudou depois de 03/11</div><div class="toc-desc">Atualizações que não estão nas seções acima</div></div></a>
-    </div>
-
-    <!-- A1 -->
-    <h3 id="sA1" class="anchor-target">A1 · Primeiros 15 minutos</h3>
-    <ol class="doc">
-      <li><strong>Entre na raiz do repositório e abra o Claude Code lá.</strong> O <code>CLAUDE.md</code> da raiz é carregado automaticamente e traz as regras do projeto (português sem travessão, onde ficam clientes, quando ler <code>AGENTS.md</code> de cada cliente, regras do n8n).</li>
-      <li><strong>Confirme o ambiente n8n antes de qualquer outra coisa.</strong> É regra do projeto, não sugestão: o resultado diz para qual instância o <code>push</code> vai.</li>
-      <li><strong>Deixe a chave da API fora da conversa.</strong> Exporte no shell, nunca cole no prompt nem em arquivo versionado.</li>
-      <li><strong>Peça um diagnóstico de leitura apenas</strong> (R1) e só depois pense em editar.</li>
-    </ol>
-<pre class="code-block"><code><span class="cm"># 1. raiz do repositório + Claude Code</span>
-<span class="kw">cd</span> "$(git rev-parse --show-toplevel)"
-claude
-
-<span class="cm"># 2. (no terminal, antes ou dentro da sessão com !) ambiente n8n ativo</span>
-npx --yes n8nac env status --json
-
-<span class="cm"># 3. chave só na variável de ambiente da sua sessão de shell</span>
-<span class="kw">export</span> N8N_KEY="<span class="st">cole-aqui-sem-commitar</span>"
-
-<span class="cm"># 4. saúde da instância (não altera nada)</span>
-curl -s https://n8n.fvmarketing.com.br/healthz</code></pre>
-    <div class="status-note">
-      <p><strong>Dica de sessão:</strong> dentro do Claude Code, comandos iniciados com <code>!</code> rodam no seu shell e a saída entra na conversa. Use para <code>n8nac env status</code> e <code>healthz</code>. Nunca use <code>!</code> com a chave expandida na linha.</p>
-    </div>
-
-    <!-- A2 -->
-    <h3 id="sA2" class="anchor-target">A2 · Mapa do repositório (o que o Claude precisa saber)</h3>
-    <table class="kv-table">
-      <thead><tr><th>Caminho</th><th>O que é</th><th>Regra para o agente</th></tr></thead>
-      <tbody>
-        <tr><td><code>CLAUDE.md</code> (raiz)</td><td>Regras globais do repositório e do n8n</td><td>Lido sozinho. Se o agente ignorar algo, peça para reler.</td></tr>
-        <tr><td><code>clientes/{cliente}/AGENTS.md</code></td><td>Cartão do cliente</td><td>Ler <strong>antes</strong> de abrir qualquer documento do cliente.</td></tr>
-        <tr><td><code>clientes/{cliente}/sdr-ia/</code></td><td>Frente SDR IA: <code>docs/</code>, <code>historico/</code>, <code>workflows/</code>, <code>entregas/</code></td><td>Cada frente tem seu próprio <code>AGENTS.md</code>. Ler também.</td></tr>
-        <tr><td><code>clientes/{cliente}/sdr-ia/docs/referencia.md</code></td><td>Referência técnica <strong>gerada</strong> do workflow (nós, gatilhos, integrações)</td><td>Não editar à mão: é sobrescrita pelo <code>build_reference.py</code>.</td></tr>
-        <tr><td><code>clientes/{cliente}/sdr-ia/historico/</code></td><td>Versões antigas, JSONs originais, antes e depois</td><td>Só para diff e contexto. Não é fonte de verdade.</td></tr>
-        <tr><td><code>workflows/producao/*.workflow.ts</code></td><td>Workflows como código (n8nac), pasta sincronizada com a instância</td><td>Editar só depois de <code>pull</code>. Um <code>push</code> substitui o workflow inteiro.</td></tr>
-        <tr><td><code>bases/sdr-ia/hub/</code></td><td>Hub de consulta (<code>index.html</code>) e snapshots sanitizados em <code>data/</code></td><td>Gerado por script. Não ler <code>data/</code> bruto sem necessidade.</td></tr>
-        <tr><td><code>scripts/sdr-docs/</code></td><td><code>sync_n8n.py</code> (puxa e sanitiza), <code>build_reference.py</code> (gera referências), <code>check_secrets.py</code> (barra segredo no publicado)</td><td>Rodar nesta ordem. Ver receita “Atualizar a documentação”.</td></tr>
-        <tr><td><code>.agents/skills/n8n-architect/</code></td><td>Skill de arquitetura n8n do projeto</td><td>Ler antes de qualquer trabalho em workflow.</td></tr>
-        <tr><td><code>docs/processos/</code></td><td>Estilo (<code>estilo-ptbr.md</code>), sessões, estrutura, Ekyte</td><td>Comentários no Ekyte usam HTML (<code>ekyte.md</code>).</td></tr>
-        <tr><td><code>.sessions/</code></td><td>Sessões exportadas (ignoradas pelo git)</td><td>Útil como memória do que já foi tentado.</td></tr>
-      </tbody>
-    </table>
-    <p class="small">Pastas que o agente <strong>não</strong> deve vasculhar sem necessidade: <code>_archive/</code>, <code>_inbox/</code>, <code>node_modules/</code>, <code>bases/*/codigo/</code>, dados brutos e PDFs. Gastam contexto e raramente ajudam.</p>
-
-    <!-- A3 -->
-    <h3 id="sA3" class="anchor-target">A3 · Receitas: quero… → peça… → o que roda por trás</h3>
-    <table>
-      <thead><tr><th>Quero…</th><th>Peça ao Claude</th><th>Por trás</th><th>Detalhe</th></tr></thead>
-      <tbody>
-        <tr><td>Saber se está tudo bem</td><td>“Rode a saúde dos 14 workflows ativos e me diga quais têm erro ou silêncio.”</td><td><code>curl</code> + <code>jq</code> na API de execuções</td><td>R1</td></tr>
-        <tr><td>Entender uma falha</td><td>“Explique a execução &lt;id&gt;: nó, mensagem e dado de entrada.”</td><td><code>GET /executions/&lt;id&gt;?includeData=true</code></td><td>R2</td></tr>
-        <tr><td>Ver o que está no ambiente</td><td>“Liste os workflows do ambiente e compare com a pasta local.”</td><td><code>npx --yes n8nac list</code></td><td>5.2</td></tr>
-        <tr><td>Editar um workflow</td><td>“Faça pull, mostre o diff proposto, espere meu OK e só então dê push.”</td><td><code>n8nac pull</code> → edição → <code>n8nac push</code></td><td>R3</td></tr>
-        <tr><td>Mudar um prompt</td><td>“Liste as variáveis de expressão do prompt antes de editar e preserve todas.”</td><td>edição de <code>options.systemMessage</code></td><td>R4</td></tr>
-        <tr><td>Testar sem mensagem real</td><td>“Fixe os dados de entrada e desative o nó de envio antes de executar.”</td><td>pin data + nó de envio desativado</td><td>R5</td></tr>
-        <tr><td>Instalar o monitor de erros</td><td>“Replique o monitor do AGF (Error Trigger → evento) no cliente X.”</td><td>workflow novo + Settings → Error Workflow</td><td>R6</td></tr>
-        <tr><td>Corrigir falha conhecida</td><td>“Aplique o runbook R7 (follow-up AAFBB) e valide.”</td><td>troca de campo e referência de nó</td><td>R7 a R9</td></tr>
-        <tr><td>Rotacionar credencial</td><td>“Liste os nós que usam o valor, sem imprimir o valor.”</td><td>busca por prefixo no JSON</td><td>R10</td></tr>
-        <tr><td>Atualizar a documentação</td><td>“Sincronize os snapshots, regenere as referências e rode o check de segredos.”</td><td><code>sync_n8n.py</code> → <code>build_reference.py</code> → <code>check_secrets.py</code></td><td>A2</td></tr>
-      </tbody>
-    </table>
-<pre class="code-block"><code><span class="cm"># atualizar a documentação gerada (nesta ordem; a chave não é gravada em disco)</span>
-N8N_API_KEY="$N8N_KEY" python3 scripts/sdr-docs/sync_n8n.py
-python3 scripts/sdr-docs/build_reference.py
-python3 scripts/sdr-docs/check_secrets.py   <span class="cm"># falha se houver segredo conhecido nos artefatos</span></code></pre>
-
-    <!-- A4 -->
-    <h3 id="sA4" class="anchor-target">A4 · Prompts prontos</h3>
-    <p>Cada prompt já traz as travas. Troque só o que está entre colchetes.</p>
-    <details class="fold">
-      <summary>Retomar contexto de um cliente</summary>
-      <div class="fold-body">
-<pre class="code-block"><code>Vou trabalhar na SDR IA do cliente [CLIENTE]. Antes de qualquer coisa:
-1. Leia clientes/[CLIENTE]/AGENTS.md e clientes/[CLIENTE]/sdr-ia/AGENTS.md.
-2. Leia clientes/[CLIENTE]/sdr-ia/docs/referencia.md.
-3. Leia a seção do cliente no handoff técnico e os incidentes que o citam.
-4. Resuma em 10 linhas: o que está no ar, o que está quebrado e o que falta decidir.
-Não altere nada. Não rode comandos que escrevam na instância.</code></pre>
-      </div>
-    </details>
-    <details class="fold">
-      <summary>Diagnosticar uma falha</summary>
-      <div class="fold-body">
-<pre class="code-block"><code>O workflow [NOME] (id [ID]) está falhando. Use a API de execuções (a chave está em $N8N_KEY, não a imprima).
-Traga: nó que falhou, mensagem de erro, 3 execuções recentes com o mesmo erro e o dado que entrou no nó.
-Só leitura. Proponha a correção em texto, com o trecho exato a mudar, e espere minha aprovação.</code></pre>
-      </div>
-    </details>
-    <details class="fold">
-      <summary>Corrigir e publicar com segurança</summary>
-      <div class="fold-body">
-<pre class="code-block"><code>Quero corrigir [PROBLEMA] no workflow [NOME].
-1. Rode npx --yes n8nac env status --json e me mostre o host e o workflowsPath.
-2. Guarde um backup do JSON atual do workflow fora do git.
-3. Faça pull, altere UM nó por vez e mostre o diff.
-4. Não renomeie nenhum nó existente.
-5. Espere meu OK explícito antes do push. Depois do push, valide com uma execução de dado fixado.</code></pre>
-      </div>
-    </details>
-    <details class="fold">
-      <summary>Revisar o que mudou nos últimos dias</summary>
-      <div class="fold-body">
-<pre class="code-block"><code>Liste os workflows ativos cuja "última alteração" é dos últimos 7 dias e compare a data com o inventário do handoff (seção 02).
-Para cada diferença, diga se parece regressão ou mudança planejada. Só leitura.</code></pre>
-      </div>
-    </details>
-
-    <!-- A5 -->
-    <h3 id="sA5" class="anchor-target">A5 · Regras de ouro ao trabalhar com agente</h3>
-    <div class="risk-box">
-      <h4>O Claude nunca deve fazer sozinho</h4>
-      <ul class="doc">
-        <li><strong>Dar <code>push</code> sem pull e backup antes.</strong> O push sobrescreve o workflow inteiro, sem merge, e a validação nativa está desligada.</li>
-        <li><strong>Imprimir, copiar ou commitar credenciais.</strong> Tokens da Meta, JWTs do Supabase e chaves de API aparecem em nós de vários workflows (seção 08). Peça sempre “liste onde, sem mostrar o valor”.</li>
-        <li><strong>Renomear nó existente.</strong> Referências <code>$('Nome')</code> são por texto e quebram só em runtime.</li>
-        <li><strong>Executar workflow de atendimento ou follow-up com dado real.</strong> Grava no banco, pode criar card no Kommo e mandar WhatsApp a um lead de verdade (R5).</li>
-        <li><strong>Usar uma chave de API de arquivo antigo.</strong> Se algo retornar 401, pare e peça a chave atual. Não procure outra em arquivos soltos.</li>
-        <li><strong>Mexer no legado.</strong> Workflows de proxy, tag antiga e tracking de clientes que já tinham operação anterior (caso do AGF) não devem ser tocados sem pedido explícito.</li>
-        <li><strong>Trocar de modelo por conta própria.</strong> Modelo de raciocínio em nó que usa ferramentas já quebrou produção (400 por <code>reasoning_effort</code>; <code>temperature: 0</code> recusado em alguns modelos). Mudança de modelo é decisão do dono.</li>
-      </ul>
-    </div>
-    <div class="callout">
-      <h4>Como deixar o agente mais confiável</h4>
-      <p>Peça sempre três coisas: <strong>(1)</strong> “mostre o diff antes de aplicar”, <strong>(2)</strong> “diga o que você não conseguiu verificar” e <strong>(3)</strong> “valide com uma execução e me mostre o resultado, não só ‘deve funcionar’”. Evidência de execução é o padrão deste documento inteiro.</p>
-    </div>
-
-    <!-- A6 -->
-    <h3 id="sA6" class="anchor-target">A6 · Recorte por cliente</h3>
-    <p>Estado conforme verificação de 03/11/2026 (seção 02). Para o que mudou depois, veja A8.</p>
-    <table>
-      <thead><tr><th>Cliente</th><th>Estado</th><th>IDs dos workflows ativos</th><th>Leia primeiro</th><th>Cuidado</th></tr></thead>
-      <tbody>
-        <tr>
-          <td><strong>AAFBB</strong></td>
-          <td><span class="badge badge-alto">Degradado</span> follow-up quebrado</td>
-          <td><code>P4fU2C5x2oiocKNv</code> (SDR) · <code>fceKFeTBnRfzhfSz</code> (follow-up) · <code>OMwG6XjMB4urB4GF</code> (outbound LP)</td>
-          <td><code>clientes/aafbb/sdr-ia/docs/README.md</code> e <code>referencia.md</code>; runbooks R7 e R8</td>
-          <td>Padrão canônico do programa. Testar grava em <code>aafbb_leads</code> e pode criar card no Kommo.</td>
-        </tr>
-        <tr>
-          <td><strong>AGF</strong></td>
-          <td><span class="badge badge-ok">Saudável</span> melhor observabilidade</td>
-          <td><code>qU4iFLmZAfLj4Og0</code> (Arthur) · <code>dpz9drJCe6hfIDed</code> (gerenciador) · <code>ijRmG2eI6BrGAclM</code> (outbound LP) · <code>QhkTezmiPSn3huJu</code> (monitor)</td>
-          <td><code>clientes/agf/sdr-ia/docs/README.md</code> e <code>referencia.md</code>; eventos em <code>agf.eventos_operacao</code></td>
-          <td>Regra anti-spam: número já cadastrado não recebe boas-vindas de novo. Legado do cliente não se toca.</td>
-        </tr>
-        <tr>
-          <td><strong>Pro Análises</strong></td>
-          <td><span class="badge badge-ok">Saudável</span></td>
-          <td><code>rGUDwgv0VVp14NDZ</code> (SDR) · <code>jTtPgpwvmeDcuh9Y</code> (MQL/handoff)</td>
-          <td><code>clientes/pro-analises/sdr-ia/docs/referencia.md</code></td>
-          <td>Versão <code>[OLD FAIL]</code> (<code>AlyAebDrKSuthrng</code>) existe só para diff.</td>
-        </tr>
-        <tr>
-          <td><strong>Signor</strong></td>
-          <td><span class="badge badge-alto">Instável</span> rate limit OpenAI</td>
-          <td><code>dLdMjn2MFyQHGqRM</code> (SDR BLINDADA)</td>
-          <td><code>clientes/signor/sdr-ia/docs/referencia.md</code> e <code>prompt-arthur-persona.md</code>; INC-07</td>
-          <td>Versão anterior <code>RIf1w1Ra8CkQF2s5</code> é só histórico (142 para 68 nós).</td>
-        </tr>
-        <tr>
-          <td><strong>Genics</strong></td>
-          <td><span class="badge badge-critico">Quebrado</span> <code>Invalid schema</code></td>
-          <td><code>2emEKklEyDERCxSB</code> (SDR) · <code>QGN4103pFsi9Q2vX</code> (MQL/handoff 30min v2)</td>
-          <td><code>clientes/genics/sdr-ia/docs/README.md</code>; R9 e INC-04</td>
-          <td>4 versões antigas confundem qual é a vigente. Confirme pelo ID, não pelo nome.</td>
-        </tr>
-        <tr>
-          <td><strong>CESLA</strong></td>
-          <td><span class="badge badge-critico">Quebrado</span> falhas nos nós de arquivo</td>
-          <td><code>VknHApx3h4wiP8Xb</code> (Íris, migrado)</td>
-          <td><code>clientes/cesla/sdr-ia/docs/README.md</code>; INC-06; <code>historico/antes-depois.md</code></td>
-          <td>Há um <code>.workflow.json</code> e um <code>.workflow.ts</code> da mesma Íris em <code>workflows/producao</code>.</td>
-        </tr>
-        <tr>
-          <td><strong>Paludo</strong></td>
-          <td><span class="badge badge-critico">Falha total</span> nunca configurado</td>
-          <td><code>cc5niAhAt87FnA1l</code> (follow-up 4h); SDR principal <code>mjcdyEqKZDNxCzt5</code> está inativo</td>
-          <td><code>clientes/paludo/sdr-ia/docs/referencia.md</code>; R9 e INC-03</td>
-          <td>Follow-up ativo e falhando sozinho. Decida se desliga antes de “consertar”.</td>
-        </tr>
-        <tr>
-          <td><strong>Schwalm</strong></td>
-          <td><span class="badge badge-alto">Sem tráfego</span></td>
-          <td><code>cOVfYtSox29VwNDg</code> (Maia)</td>
-          <td><code>clientes/schwalm/sdr-ia/docs/referencia.md</code>; INC-05</td>
-          <td>Token da Meta fixo no corpo dos nós HTTP: rotacionar (R10) antes de editar.</td>
-        </tr>
-      </tbody>
-    </table>
-    <p class="small">Adplan foi o primeiro cliente do programa. Está desligado e mantido como referência (<code>23VCGqmdeVhbHukI</code>; <code>clientes/adplan/sdr-ia/docs/referencia.md</code>).</p>
-
-    <!-- A7 -->
-    <h3 id="sA7" class="anchor-target">A7 · Recorte por tempo disponível</h3>
-    <div class="finding-grid">
-      <div class="finding">
-        <div class="finding-title">Tenho 1 hora</div>
-        <div class="field">Faça</div>
-        <div class="value">A1 inteiro; R1 (saúde); leitura de 01 e 07. Anote o que está silencioso ou em erro. Não edite nada.</div>
-      </div>
-      <div class="finding">
-        <div class="finding-title">Tenho 1 dia</div>
-        <div class="field">Faça</div>
-        <div class="value">Tudo da hora 1, mais R7 e R8 (correções de 5 a 20 minutos da AAFBB) e a leitura de 03 e 05. Peça acessos do 5.4.</div>
-      </div>
-      <div class="finding">
-        <div class="finding-title">Tenho 1 semana</div>
-        <div class="field">Faça</div>
-        <div class="value">R6 (monitor de erros global) primeiro, depois R9 (schemas), R10 (rotação de credenciais) e o plano de 30 dias da seção 10.</div>
-      </div>
-    </div>
-    <div class="status-note">
-      <p><strong>Se você só puder fazer uma coisa:</strong> instale o monitor de erros (R6). Sem ele, as outras correções voltam a quebrar sem ninguém saber.</p>
-    </div>
-
-    <!-- A8 -->
-    <h3 id="sA8" class="anchor-target">A8 · O que mudou depois de 03/11</h3>
-    <p>Itens abaixo vêm das sessões de trabalho posteriores à verificação das seções 01 a 12 e <strong>não foram reverificados em produção</strong>. Confirme na instância antes de agir.</p>
-    <table>
-      <thead><tr><th>Data</th><th>Cliente</th><th>O que aconteceu</th><th>Consequência para quem mantém</th></tr></thead>
-      <tbody>
-        <tr>
-          <td>09 a 10/11</td>
-          <td>AAFBB</td>
-          <td>Diagnóstico: leads do formulário da LP não chegavam à automação (webhook não era chamado). Parte dos leads ficou presa fora do Kommo.</td>
-          <td>Webhook do outbound: <code>/webhook/aafbb-lp-lead</code>, já com CORS liberado para a LP (preflight 204). Resgate dos leads presos foi tratado à parte.</td>
-        </tr>
-        <tr>
-          <td>10 a 11/11</td>
-          <td>AAFBB</td>
-          <td>Instrução e código do widget flutuante para a designer inserir no Great Pages, com aviso de saldo.</td>
-          <td>O widget v1.1 chama o n8n; revise qualquer código que a designer enviar antes de publicar.</td>
-        </tr>
-        <tr>
-          <td>12/11</td>
-          <td>AAFBB</td>
-          <td>No teste, o widget abria o WhatsApp com mensagem pronta do lead para a AAFBB, contradizendo o fluxo (a SDR é quem chama o lead). O bloco foi removido na revisão.</td>
-          <td>Após o formulário, o lead <strong>não</strong> deve ser levado ao WhatsApp. Se reaparecer, é regressão do HTML.</td>
-        </tr>
-        <tr>
-          <td>12/11</td>
-          <td>AAFBB</td>
-          <td>Ao testar, o disparo proativo depende de saldo e método de pagamento no Business Manager da AAFBB, que acusava problema.</td>
-          <td>Se a SDR “não chama”, confira o BM antes de culpar o n8n. Validação da chegada no Kommo pendente por falta de login.</td>
-        </tr>
-      </tbody>
-    </table>
-    <p class="small">Materiais relacionados que estão fora deste documento: PDF “AAFBB, Webhook formulário no botão” (instruções para a designer) e o diagnóstico <code>projetos/sdr-ia/aafbb/diagnostico-lp-webhook-e-resgate.md</code> no worktree da AAFBB.</p>
-  </div>
-</div>
-
 <!-- ===================== 01 — SUMÁRIO EXECUTIVO ===================== -->
 <div class="card anchor-target" id="s01">
   <div class="card-body">
@@ -972,14 +728,14 @@ Para cada diferença, diga se parece regressão ou mudança planejada. Só leitu
       </div>
       <div>
         <p style="margin-bottom:12px;">O programa SDR IA roda hoje <strong>14 workflows ativos</strong> para <strong>8 marcas</strong> em uma única instância n8n. A arquitetura é sólida e repetível: mesmo esqueleto de <em>trigger → debounce → agente → qualificador → CRM</em>, com Supabase como memória e Kommo como destino comercial.</p>
-        <p><strong>O problema não é a arquitetura — é a operação sem rede de proteção.</strong> Metade dos workflows ativos tem incidente aberto, não existe teste automatizado, não existe alerta de erro global e a correção é feita direto em produção. O follow-up da AAFBB, por exemplo, está falhando em <strong>100% das execuções</strong> há semanas sem que ninguém percebesse.</p>
+        <p><strong>O problema não é a arquitetura — é a operação sem rede de proteção.</strong> Metade dos workflows ativos tem incidente aberto, não existe teste automatizado, não existe alerta de erro global e a correção é feita direto em produção. O follow-up da AAFBB, por exemplo, estava falhando em <strong>100% das execuções amostradas em 03/11</strong> sem que ninguém percebesse (INC-01; veja o quadro de estado real acima para o que mudou depois).</p>
       </div>
     </div>
 
     <div class="kpi-grid">
       <div class="kpi-card"><div class="value">14</div><div class="label">Workflows ativos</div><div class="sub">8 marcas · 1 instância</div></div>
       <div class="kpi-card"><div class="value">166</div><div class="label">Workflows na instância</div><div class="sub">39 relacionados a SDR (14 ativos)</div></div>
-      <div class="kpi-card"><div class="value">5</div><div class="label">Incidentes P0/P1</div><div class="sub">3 quebrados · 2 degradados</div></div>
+      <div class="kpi-card"><div class="value">5</div><div class="label">Incidentes P0/P1</div><div class="sub">3 quebrados · 2 degradados (amostra de 03/11)</div></div>
       <div class="kpi-card"><div class="value">0</div><div class="label">Testes automatizados</div><div class="sub">validação é manual, em produção</div></div>
     </div>
 
@@ -993,7 +749,7 @@ Para cada diferença, diga se parece regressão ou mudança planejada. Só leitu
           <td><strong>AAFBB</strong></td>
           <td>3 ativos</td>
           <td><span class="status-dot exec"></span>SDR 16/21 · FU <strong>0/25</strong> · Outbound 25/25</td>
-          <td>Follow-up parado; criação de tarefa no Kommo falha em parte das execuções</td>
+          <td>Em 03/11: follow-up parado (INC-01) e criação de tarefa no Kommo falhando em parte das execuções (INC-02). Houve mudanças e correção de saldo na Meta depois; ver quadro de estado real</td>
         </tr>
         <tr>
           <td><strong>AGF</strong></td>
@@ -1011,7 +767,7 @@ Para cada diferença, diga se parece regressão ou mudança planejada. Só leitu
           <td><strong>SIGNOR</strong></td>
           <td>1 ativo</td>
           <td><span class="status-dot exec"></span>instável</td>
-          <td>Erros intermitentes de <code>Rate limit reached</code> na OpenAI</td>
+          <td>Erros intermitentes de <code>Rate limit reached</code> na OpenAI (INC-07). Aberto: rastrear a origem dos leads (UTM/campanha) no WhatsApp</td>
         </tr>
         <tr>
           <td><strong>Genics</strong></td>
@@ -1064,16 +820,16 @@ Para cada diferença, diga se parece regressão ou mudança planejada. Só leitu
         <tr><th>Workflow</th><th>ID</th><th>Nós</th><th>Última alteração</th><th>Status</th></tr>
       </thead>
       <tbody>
-        <tr><td><strong>[AAFBB] SDR IA — Assistente da AAFBB</strong></td><td class="mono">P4fU2C5x2oiocKNv</td><td>78</td><td>20/10/2026</td><td><span class="badge badge-exec">Degradado</span></td></tr>
-        <tr><td>[AAFBB] Gerenciador Follow-up 24h e 48h</td><td class="mono">fceKFeTBnRfzhfSz</td><td>13</td><td>18/09/2026</td><td><span class="badge badge-critico">Quebrado</span></td></tr>
-        <tr><td>[AAFBB] Outbound LP para SDR</td><td class="mono">OMwG6XjMB4urB4GF</td><td>20</td><td>21/10/2026</td><td><span class="badge badge-ok">Saudável</span></td></tr>
+        <tr><td><strong>[AAFBB] SDR IA — Assistente da AAFBB</strong></td><td class="mono">P4fU2C5x2oiocKNv</td><td>78</td><td>20/10/2026</td><td><span class="badge badge-exec">Erros pontuais em 03/11</span></td></tr>
+        <tr><td>[AAFBB] Gerenciador Follow-up 24h e 48h</td><td class="mono">fceKFeTBnRfzhfSz</td><td>13</td><td>18/09/2026</td><td><span class="badge badge-critico">Quebrado em 03/11 (INC-01)</span></td></tr>
+        <tr><td>[AAFBB] Outbound LP para SDR</td><td class="mono">OMwG6XjMB4urB4GF</td><td>20</td><td>21/10/2026</td><td><span class="badge badge-ok">Saudável em 03/11</span> · reescrito 09-12/11</td></tr>
         <tr><td>[AGF] SDR IA — Arthur</td><td class="mono">qU4iFLmZAfLj4Og0</td><td>84</td><td>28/10/2026</td><td><span class="badge badge-ok">Saudável</span></td></tr>
         <tr><td>[AGF] Gerenciador MQL/Handoff + Follow-up 24h</td><td class="mono">dpz9drJCe6hfIDed</td><td>—</td><td>08/10/2026</td><td><span class="badge badge-ok">Saudável</span></td></tr>
         <tr><td>[AGF] Outbound LP para SDR</td><td class="mono">ijRmG2eI6BrGAclM</td><td>—</td><td>08/10/2026</td><td><span class="badge badge-ok">Saudável</span></td></tr>
         <tr><td>[AGF] SDR IA — Monitor de erros</td><td class="mono">QhkTezmiPSn3huJu</td><td>4</td><td>07/10/2026</td><td><span class="badge badge-ok">Saudável</span></td></tr>
         <tr><td>[PRO ANALISES] SDR IA [FIXED]</td><td class="mono">rGUDwgv0VVp14NDZ</td><td>—</td><td>03/09/2026</td><td><span class="badge badge-ok">Saudável</span></td></tr>
         <tr><td>[PRO ANALISES] Gerenciador MQL/Handoff + Follow up [FIXED]</td><td class="mono">jTtPgpwvmeDcuh9Y</td><td>—</td><td>03/09/2026</td><td><span class="badge badge-ok">Saudável</span></td></tr>
-        <tr><td>[SIGNOR] SDR IA BLINDADA</td><td class="mono">dLdMjn2MFyQHGqRM</td><td>—</td><td>30/10/2026</td><td><span class="badge badge-exec">Instável</span></td></tr>
+        <tr><td>[SIGNOR] SDR IA BLINDADA</td><td class="mono">dLdMjn2MFyQHGqRM</td><td>—</td><td>30/10/2026</td><td><span class="badge badge-exec">Instável (INC-07)</span> · UTM em aberto</td></tr>
         <tr><td>[Genics] SDR IA</td><td class="mono">2emEKklEyDERCxSB</td><td>—</td><td>22/08/2026</td><td><span class="badge badge-critico">Quebrado</span></td></tr>
         <tr><td>Genics — Gerenciador MQL/Handoff + Follow-up 30min (v2)</td><td class="mono">QGN4103pFsi9Q2vX</td><td>—</td><td>31/07/2026</td><td><span class="badge badge-pend">Sem tráfego</span></td></tr>
         <tr><td>[CESLA] SDR IA — Íris (migrado)</td><td class="mono">VknHApx3h4wiP8Xb</td><td>—</td><td>05/10/2026</td><td><span class="badge badge-critico">Quebrado</span></td></tr>
