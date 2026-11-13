@@ -1,0 +1,2161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SDR IA | Handoff Técnico — Arquitetura, Operação e Dívida Técnica</title>
+<meta name="description" content="Documentação de transferência técnica do programa SDR IA: arquitetura, inventário de produção, modelo de dados, acessos, runbooks, incidentes e plano de 30/60/90 dias.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --red: rgb(198, 30, 30);
+  --red-dark: rgb(140, 20, 20);
+  --red-light: rgb(245, 90, 90);
+  --gold: #c9a96e;
+  --gold-light: #f5f0e6;
+  --gold-border: #e8dcc8;
+  --gray-50: #fafafa;
+  --gray-100: #f5f5f5;
+  --gray-200: #eeeeee;
+  --gray-300: #e0e0e0;
+  --gray-400: #bdbdbd;
+  --gray-500: #9e9e9e;
+  --gray-600: #757575;
+  --gray-700: #616161;
+  --gray-800: #424242;
+  --gray-900: #212121;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #f8f7f4;
+  color: var(--gray-900);
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+.cover {
+  background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #2a2a2a 100%);
+  color: #fff;
+  padding: 64px 40px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(201,169,110,0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+.cover-content { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; }
+.cover-content::before {
+  content: '';
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.cover-content::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 2px;
+  background: var(--gold);
+  margin: 28px auto 0;
+  border-radius: 1px;
+}
+.cover .label {
+  display: inline-block;
+  background: rgba(201,169,110,0.12);
+  border: 1px solid rgba(201,169,110,0.3);
+  padding: 6px 20px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  color: var(--gold);
+}
+.cover h1 {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 14px;
+  letter-spacing: -0.5px;
+  font-family: 'Plus Jakarta Sans', serif;
+}
+.cover p {
+  font-size: 17px;
+  opacity: 0.85;
+  margin-bottom: 24px;
+  font-weight: 300;
+  letter-spacing: 0.2px;
+}
+.cover-meta {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+  font-size: 13px;
+  opacity: 0.7;
+  letter-spacing: 0.5px;
+}
+
+.container { max-width: 1020px; margin: -36px auto 48px; position: relative; z-index: 2; }
+.card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+  margin-bottom: 28px;
+  overflow: hidden;
+  border: 1px solid var(--gray-300);
+  position: relative;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 40px;
+  right: 40px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-border), var(--gold), var(--gold-border), transparent);
+  opacity: 0.6;
+}
+.card-body { padding: 44px 52px; }
+
+h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--red);
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--gold-border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: -0.3px;
+  position: relative;
+}
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 1px;
+}
+h2 .slide-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--red);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gray-900);
+  margin: 36px 0 18px;
+  letter-spacing: -0.2px;
+}
+h4 { font-size: 16px; font-weight: 700; color: var(--gray-800); margin: 22px 0 12px; }
+p { font-size: 16px; color: var(--gray-700); margin-bottom: 16px; line-height: 1.8; }
+p:last-child { margin-bottom: 0; }
+
+.badge {
+  display: inline-block;
+  padding: 5px 16px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+.badge-critico { background: #fef2f2; color: var(--red); border: 1px solid #fecaca; }
+.badge-alto { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+.badge-medio { background: #fefce8; color: #a16207; border: 1px solid #fef08a; }
+.badge-baixo { background: var(--gold-light); color: #8b7a4a; border: 1px solid var(--gold-border); }
+.badge-info { background: #f5f5f5; color: #616161; border: 1px solid #d4d4d4; }
+.badge-ok { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+.badge-exec { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+.badge-pend { background: #f5f5f5; color: #6b7280; border: 1px solid #d1d5db; }
+
+.severity { display: inline-block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.sev-critico { color: var(--red); }
+.sev-alto { color: #c2410c; }
+.sev-medio { color: #a16207; }
+.sev-baixo { color: #8b7a4a; }
+.sev-info { color: #616161; }
+
+table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 14px; }
+th, td { padding: 13px 14px; text-align: left; border-bottom: 1px solid var(--gray-100); vertical-align: top; }
+th {
+  background: linear-gradient(135deg, var(--gray-50), #f8f7f4);
+  font-weight: 700;
+  color: var(--gray-700);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  border-bottom: 2px solid var(--gold-border);
+  position: relative;
+}
+tr:hover td { background: #fcfaf7; }
+tr:last-child td { border-bottom: none; }
+td code, th code { white-space: nowrap; }
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 32px;
+}
+.kpi-card {
+  background: #f2f0ec;
+  border-radius: 10px;
+  padding: 20px 12px 18px;
+  text-align: center;
+  border: 1px solid var(--gold-border);
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.kpi-card:hover {
+  border-color: var(--gold);
+  box-shadow: 0 2px 12px rgba(201,169,110,0.1);
+}
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--red), var(--gold));
+}
+.kpi-card .value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--red);
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+.kpi-card .label {
+  font-size: 11px;
+  color: var(--gray-600);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 8px;
+}
+.kpi-card .sub { font-size: 11px; color: var(--gray-600); margin-top: 4px; line-height: 1.4; }
+
+.risk-box {
+  background: linear-gradient(135deg, #fcfaf7, #f8f7f4);
+  border-left: 4px solid var(--red);
+  padding: 22px 26px;
+  border-radius: 0 12px 12px 0;
+  margin-bottom: 18px;
+}
+.risk-box h4 { margin: 0 0 10px; color: var(--red); font-size: 16px; letter-spacing: -0.2px; }
+.risk-box p { font-size: 15px; color: var(--gray-700); margin: 0; line-height: 1.7; }
+
+.finding {
+  border: 1px solid var(--gray-200);
+  border-radius: 12px;
+  padding: 26px 30px;
+  margin-bottom: 18px;
+  background: #fcfcfc;
+  transition: box-shadow 0.2s, border-color 0.2s;
+  border-left: 3px solid transparent;
+}
+.finding:hover {
+  box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+  border-color: var(--gold-border);
+  border-left-color: var(--gold);
+}
+.finding-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+.finding-title { font-weight: 700; font-size: 17px; color: var(--gray-900); letter-spacing: -0.2px; }
+.finding-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 32px;
+  font-size: 15px;
+}
+.finding-grid .field { font-weight: 600; color: var(--gray-800); }
+.finding-grid .value { color: var(--gray-700); }
+.finding-grid .full { grid-column: 1 / -1; }
+
+code {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--gray-100);
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 13px;
+  color: var(--red);
+}
+
+.footer {
+  text-align: center;
+  padding: 36px;
+  font-size: 14px;
+  color: var(--gray-500);
+  border-top: 1px solid var(--gold-border);
+  letter-spacing: 0.3px;
+  position: relative;
+}
+.footer::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 3px;
+  background: var(--gold);
+  border-radius: 2px;
+}
+
+.slide-nav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 18px 0 0;
+  justify-content: center;
+}
+.slide-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.9);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.slide-nav a:hover { background: rgba(201,169,110,0.18); border-color: var(--gold); color: #fff; }
+.slide-nav a span { font-size: 10px; opacity: 0.7; }
+
+.callout {
+  background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+  color: #fff;
+  border-radius: 12px;
+  padding: 26px 28px;
+  margin: 20px 0;
+  position: relative;
+  overflow: hidden;
+}
+.callout::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--red), var(--gold)); }
+.callout h4 { color: var(--gold); margin: 0 0 8px; font-size: 15px; text-transform: uppercase; letter-spacing: 0.6px; }
+.callout p { color: rgba(255,255,255,0.82); font-size: 15px; line-height: 1.7; margin: 0; }
+.callout strong { color: #fff; }
+.callout em { color: rgba(255,255,255,0.92); }
+.callout code { background: rgba(255,255,255,0.1); color: var(--gold); }
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 1px solid;
+}
+.pill-alta { background: #fef2f2; color: var(--red); border-color: #fecaca; }
+.pill-media { background: #fffbeb; color: #92400e; border-color: #fde68a; }
+.pill-baixa { background: var(--gold-light); color: #8b7a4a; border-color: var(--gold-border); }
+.pill-ok { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
+
+.arch-diagram {
+  display: grid;
+  grid-template-columns: 1fr 120px 1fr;
+  gap: 0;
+  align-items: center;
+  margin: 22px 0;
+  text-align: center;
+}
+.arch-box { border-radius: 12px; padding: 18px 14px; border: 1px solid; }
+.arch-box.pilar { background: linear-gradient(135deg, #fef2f2, #fff7ed); border-color: #fecaca; }
+.arch-box.hub { background: linear-gradient(135deg, #fffbeb, #fef3c7); border-color: #fde68a; }
+.arch-arrow { font-size: 22px; color: var(--gold); font-weight: 700; }
+.arch-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 4px; }
+.arch-title { font-size: 15px; font-weight: 800; color: var(--gray-900); }
+.arch-desc { font-size: 12px; color: var(--gray-600); margin-top: 4px; line-height: 1.4; }
+
+.timeline {
+  display: flex;
+  gap: 0;
+  margin: 32px 0 16px;
+  position: relative;
+  padding: 0 0 20px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 28px;
+  left: 5%;
+  right: 5%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold-border), var(--gold), var(--gold-border));
+  border-radius: 2px;
+}
+.timeline-phase { flex: 1; text-align: center; position: relative; padding: 0 8px; }
+.timeline-phase .dot {
+  width: 16px; height: 16px; border-radius: 50%;
+  margin: 0 auto 12px; position: relative; z-index: 1;
+  border: 3px solid #fff; box-shadow: 0 0 0 2px var(--gold);
+}
+.timeline-phase .dot.red { background: var(--red); }
+.timeline-phase .dot.orange { background: #c2410c; }
+.timeline-phase .dot.gold { background: var(--gold); }
+.timeline-phase .dot.green { background: #15803d; box-shadow: 0 0 0 2px #15803d; }
+.timeline-phase .phase-name { font-size: 13px; font-weight: 700; color: var(--gray-800); margin-bottom: 2px; }
+.timeline-phase .phase-hours { font-size: 22px; font-weight: 700; color: var(--red); letter-spacing: -0.5px; }
+.timeline-phase .phase-pct { font-size: 12px; color: var(--gray-500); font-weight: 600; }
+
+.toc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 18px;
+}
+.toc-item {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 14px 16px;
+  border: 1px solid var(--gray-200);
+  border-radius: 10px;
+  background: #fcfcfc;
+  text-decoration: none;
+  transition: all 0.18s;
+}
+.toc-item:hover { border-color: var(--gold); background: #fefcf5; transform: translateY(-1px); }
+.toc-num {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, var(--red), var(--red-light));
+  color: #fff; font-weight: 800; font-size: 13px; flex-shrink: 0;
+}
+.toc-num.gold { background: linear-gradient(135deg, #b8963a, #d4b96a); }
+.toc-num.green { background: linear-gradient(135deg, #15803d, #22c55e); }
+.toc-num.gray { background: linear-gradient(135deg, #616161, #9e9e9e); }
+.toc-title { font-weight: 700; color: var(--gray-900); font-size: 14px; line-height: 1.2; }
+.toc-desc { font-size: 12px; color: var(--gray-600); margin-top: 2px; }
+
+.progress-ring {
+  width: 140px; height: 140px; border-radius: 50%;
+  background: conic-gradient(var(--red) 0% 70.2%, var(--gray-200) 70.2% 100%);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; margin: 0 auto;
+}
+.progress-ring::before {
+  content: '';
+  position: absolute; width: 108px; height: 108px;
+  background: #fff; border-radius: 50%;
+}
+.progress-ring-inner { position: relative; z-index: 1; text-align: center; }
+.progress-ring-inner .big { font-size: 32px; font-weight: 800; color: var(--red); line-height: 1; letter-spacing: -0.5px; }
+.progress-ring-inner .small { font-size: 11px; font-weight: 700; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.6px; margin-top: 2px; }
+
+.status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+.status-dot.ok { background: #15803d; }
+.status-dot.exec { background: #d97706; }
+.status-dot.pend { background: #9ca3af; }
+
+.vert-timeline { position: relative; padding-left: 28px; margin: 18px 0; }
+.vert-timeline::before { content: ''; position: absolute; left: 7px; top: 6px; bottom: 6px; width: 2px; background: linear-gradient(180deg, var(--red), var(--gold), var(--gray-300)); border-radius: 1px; }
+.vt-item { position: relative; padding: 14px 18px; margin-bottom: 12px; background: #fcfcfc; border: 1px solid var(--gray-200); border-radius: 10px; }
+.vt-item::before { content: ''; position: absolute; left: -24px; top: 18px; width: 10px; height: 10px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 2px var(--gold); }
+.vt-item.done::before { background: #15803d; box-shadow: 0 0 0 2px #15803d; }
+.vt-item.exec::before { background: #d97706; box-shadow: 0 0 0 2px #d97706; }
+.vt-item.pend::before { background: #9ca3af; box-shadow: 0 0 0 2px #9ca3af; }
+.vt-date { font-size: 12px; font-weight: 700; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.5px; }
+.vt-title { font-weight: 700; color: var(--gray-900); font-size: 15px; margin-top: 2px; }
+.vt-meta { font-size: 13px; color: var(--gray-600); margin-top: 4px; }
+
+.check-list { list-style: none; padding: 0; }
+.check-list li { display: flex; gap: 10px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--gray-100); font-size: 15px; color: var(--gray-700); }
+.check-list li:last-child { border: none; }
+.check-icon { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex-shrink: 0; margin-top: 1px; }
+.check-icon.ok { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+.check-icon.exec { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+.check-icon.pend { background: #f3f4f6; color: #6b7280; border: 1px solid #e5e7eb; }
+
+.fold {
+  background: #fff;
+  border: 1px solid var(--gray-300);
+  border-radius: 16px;
+  margin-bottom: 28px;
+  overflow: hidden;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+}
+.fold summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 18px 52px;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--red);
+  background: #f8f7f4;
+  border-bottom: 1px solid var(--gray-200);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  transition: background 0.15s;
+}
+.fold summary::-webkit-details-marker { display: none; }
+.fold summary::after {
+  content: '▾';
+  position: absolute; right: 28px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px; color: var(--gray-500);
+}
+.fold[open] summary::after { content: '▴'; }
+.fold summary:hover { background: #f0efe8; }
+.fold-body { padding: 32px 40px; }
+
+@media (max-width: 900px) {
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .arch-diagram { grid-template-columns: 1fr; gap: 12px; }
+  .arch-arrow { transform: rotate(90deg); }
+}
+@media (max-width: 640px) {
+  .cover h1 { font-size: 26px; }
+  .cover { padding: 40px 20px 32px; }
+  .card-body { padding: 20px; }
+  .finding-grid { grid-template-columns: 1fr; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  table { font-size: 12px; }
+  th, td { padding: 8px 10px; }
+  .toc-grid { grid-template-columns: 1fr; }
+  .fold summary { padding: 16px 20px; }
+  .fold-body { padding: 20px; }
+}
+
+/* ── Componentes específicos desta documentação ── */
+pre.code-block {
+  background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+  color: #e8e6e1;
+  border-radius: 10px;
+  padding: 18px 20px;
+  overflow-x: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  margin: 16px 0;
+  border-left: 3px solid var(--gold);
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+pre.code-block code { background: none; color: inherit; padding: 0; font-size: inherit; }
+pre.code-block .cm { color: #7f7a70; }
+pre.code-block .st { color: #d4b96a; }
+pre.code-block .kw { color: #e08585; }
+
+.flow { display: flex; flex-wrap: wrap; gap: 10px; align-items: stretch; margin: 20px 0; }
+.flow-step {
+  flex: 1 1 170px;
+  background: #fcfaf7;
+  border: 1px solid var(--gold-border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  position: relative;
+}
+.flow-step .n {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; color: #a88d54; font-weight: 700;
+  letter-spacing: 0.8px; text-transform: uppercase;
+}
+.flow-step strong { display: block; font-size: 14px; color: var(--gray-900); margin: 2px 0 4px; }
+.flow-step span { font-size: 12.5px; color: var(--gray-600); line-height: 1.5; display: block; }
+.flow-arrow { align-self: center; color: var(--gold); font-weight: 800; font-size: 18px; }
+@media (max-width: 760px) { .flow-arrow { transform: rotate(90deg); } }
+
+.kv-table td:first-child { font-weight: 700; color: var(--gray-800); width: 34%; }
+.mono { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; }
+.small { font-size: 13px; color: var(--gray-600); }
+.nowrap { white-space: nowrap; }
+.divider { height: 1px; background: var(--gray-200); margin: 32px 0; border: none; }
+.anchor-target { scroll-margin-top: 24px; }
+ul.doc, ol.doc { margin: 10px 0 18px 22px; color: var(--gray-700); font-size: 15.5px; line-height: 1.8; }
+ul.doc li, ol.doc li { margin-bottom: 6px; }
+ul.doc ul { margin: 6px 0 6px 20px; }
+strong { color: var(--gray-900); }
+a { color: var(--red); }
+html.gated body{visibility:hidden}
+</style>
+<script src="gate.js"></script>
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-brands" style="display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:20px;">
+    <img src="assets/logo-v4-white.png" alt="V4 Company" style="height:46px;">
+  </div>
+  <div class="cover-content">
+    <div class="label">Handoff técnico · Novembro 2026</div>
+    <h1>SDR IA · Documentação de transferência<br>Arquitetura, operação e dívida técnica</h1>
+    <p>O que a próxima pessoa precisa para assumir as SDRs IA em produção: 8 marcas, 14 workflows ativos, 3 camadas de integração — e 7 workflows com incidente ou risco aberto, todos com evidência de execução.</p>
+    <div class="cover-meta">
+      <span>Instância: n8n.fvmarketing.com.br</span>
+      <span>Verificação: 03/11/2026 · 12h30 BRT</span>
+      <span>Responsável atual: Marcos Peretto</span>
+    </div>
+    <div class="slide-nav" style="max-width:660px;margin-left:auto;margin-right:auto;">
+      <a href="#sA"><span>A</span> Guia CLI</a>
+      <a href="#s01"><span>01</span> Sumário</a>
+      <a href="#s02"><span>02</span> Inventário</a>
+      <a href="#s03"><span>03</span> Arquitetura</a>
+      <a href="#s04"><span>04</span> Dados</a>
+      <a href="#s05"><span>05</span> Acessos</a>
+      <a href="#s06"><span>06</span> Runbooks</a>
+      <a href="#s07"><span>07</span> Incidentes</a>
+      <a href="#s08"><span>08</span> Segurança</a>
+      <a href="#s09"><span>09</span> Observab.</a>
+      <a href="#s10"><span>10</span> Plano 30/60/90</a>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ===================== 00 — COMO USAR ===================== -->
+<div class="card">
+  <div class="card-body">
+    <h2><span class="slide-num">00</span> Como usar este documento</h2>
+    <p>Este é um documento de <strong>transferência operacional</strong>, não um manual de produto. Ele assume que você já sabe o que é n8n, Supabase e uma API REST, e responde três perguntas na ordem em que elas aparecem no primeiro dia:</p>
+    <ol class="doc">
+      <li><strong>O que existe em produção e de quem é?</strong> → seções 02 e 05.</li>
+      <li><strong>Como isso funciona e por que foi feito assim?</strong> → seções 03 e 04.</li>
+      <li><strong>O que está quebrado, como consertar e o que fazer primeiro?</strong> → seções 06, 07, 08 e 10.</li>
+    </ol>
+
+    <div class="toc-grid">
+      <a class="toc-item" href="#sA"><div class="toc-num">A</div><div><div class="toc-title">Guia para quem opera com Claude Code</div><div class="toc-desc">Setup, receitas, prompts, regras e recortes por cliente</div></div></a>
+      <a class="toc-item" href="#s01"><div class="toc-num">01</div><div><div class="toc-title">Sumário executivo</div><div class="toc-desc">Estado real, maturidade por cliente e o risco central</div></div></a>
+      <a class="toc-item" href="#s02"><div class="toc-num">02</div><div><div class="toc-title">Inventário de produção</div><div class="toc-desc">14 workflows ativos, IDs, nós, credenciais e legado</div></div></a>
+      <a class="toc-item" href="#s03"><div class="toc-num gold">03</div><div><div class="toc-title">Arquitetura de referência</div><div class="toc-desc">3 camadas, padrão canônico e decisões de projeto</div></div></a>
+      <a class="toc-item" href="#s04"><div class="toc-num gold">04</div><div><div class="toc-title">Modelo de dados</div><div class="toc-desc">Supabase, multi-schema, DDL e a armadilha do camelCase</div></div></a>
+      <a class="toc-item" href="#s05"><div class="toc-num gold">05</div><div><div class="toc-title">Ambientes e acessos</div><div class="toc-desc">Onde está cada coisa e o que pedir no dia 1</div></div></a>
+      <a class="toc-item" href="#s06"><div class="toc-num gold">06</div><div><div class="toc-title">Runbooks</div><div class="toc-desc">10 procedimentos prontos, do diagnóstico ao rollback</div></div></a>
+      <a class="toc-item" href="#s07"><div class="toc-num green">07</div><div><div class="toc-title">Incidentes e dívida técnica</div><div class="toc-desc">12 achados com evidência, causa raiz e correção</div></div></a>
+      <a class="toc-item" href="#s08"><div class="toc-num green">08</div><div><div class="toc-title">Segurança e LGPD</div><div class="toc-desc">Tokens expostos, PII, retenção e plano de correção</div></div></a>
+      <a class="toc-item" href="#s09"><div class="toc-num green">09</div><div><div class="toc-title">Observabilidade</div><div class="toc-desc">O que já monitora, o que não monitora e o mínimo viável</div></div></a>
+      <a class="toc-item" href="#s10"><div class="toc-num green">10</div><div><div class="toc-title">Plano 30/60/90</div><div class="toc-desc">Prioridades, critérios de saída e o que não fazer</div></div></a>
+      <a class="toc-item" href="#s11"><div class="toc-num gray">11</div><div><div class="toc-title">Checklist de transição</div><div class="toc-desc">O que está entregue e o que depende de você</div></div></a>
+      <a class="toc-item" href="#s12"><div class="toc-num gray">12</div><div><div class="toc-title">Glossário e referências</div><div class="toc-desc">Termos do domínio e arquivos no repositório</div></div></a>
+    </div>
+
+    <div class="status-note" style="margin-top:26px;">
+      <p><strong>Convenção de leitura:</strong> <span class="badge badge-critico">P0</span> operação parada ou dado corrompido · <span class="badge badge-alto">P1</span> função crítica degradada · <span class="badge badge-medio">P2</span> risco operacional ou de segurança sem impacto imediato · <span class="badge badge-baixo">P3</span> melhoria. Todos os números de execução citados vêm da API pública da instância e foram lidos em <strong>03/11/2026</strong>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== A — GUIA PARA QUEM OPERA COM CLAUDE CODE ===================== -->
+<div class="card anchor-target" id="sA">
+  <div class="card-body">
+    <h2><span class="slide-num">A</span> Guia para quem opera com Claude Code (CLI)</h2>
+    <p>As seções 01 a 12 explicam o <strong>que</strong> existe. Esta explica <strong>como mantê-lo trabalhando pelo terminal</strong>, com o Claude Code como parceiro. Tudo aqui é recorte e atalho: cada receita aponta de volta para o runbook (R1 a R10) ou o incidente (INC-01 a INC-12) que tem o detalhe completo.</p>
+
+    <div class="toc-grid">
+      <a class="toc-item" href="#sA1"><div class="toc-num">A1</div><div><div class="toc-title">Primeiros 15 minutos</div><div class="toc-desc">Do clone ao primeiro comando seguro</div></div></a>
+      <a class="toc-item" href="#sA2"><div class="toc-num">A2</div><div><div class="toc-title">Mapa do repositório</div><div class="toc-desc">Onde fica cada coisa e o que o Claude deve ler</div></div></a>
+      <a class="toc-item" href="#sA3"><div class="toc-num gold">A3</div><div><div class="toc-title">Receitas: quero… → peça…</div><div class="toc-desc">Tarefa, prompt e comando por trás</div></div></a>
+      <a class="toc-item" href="#sA4"><div class="toc-num gold">A4</div><div><div class="toc-title">Prompts prontos</div><div class="toc-desc">Para copiar e colar na sessão</div></div></a>
+      <a class="toc-item" href="#sA5"><div class="toc-num green">A5</div><div><div class="toc-title">Regras de ouro com agente</div><div class="toc-desc">O que o Claude nunca deve fazer sozinho</div></div></a>
+      <a class="toc-item" href="#sA6"><div class="toc-num green">A6</div><div><div class="toc-title">Recorte por cliente</div><div class="toc-desc">IDs, estado, o que ler e o cuidado de cada SDR</div></div></a>
+      <a class="toc-item" href="#sA7"><div class="toc-num gray">A7</div><div><div class="toc-title">Recorte por tempo disponível</div><div class="toc-desc">1 hora, 1 dia, 1 semana</div></div></a>
+      <a class="toc-item" href="#sA8"><div class="toc-num gray">A8</div><div><div class="toc-title">O que mudou depois de 03/11</div><div class="toc-desc">Atualizações que não estão nas seções acima</div></div></a>
+    </div>
+
+    <!-- A1 -->
+    <h3 id="sA1" class="anchor-target">A1 · Primeiros 15 minutos</h3>
+    <ol class="doc">
+      <li><strong>Entre na raiz do repositório e abra o Claude Code lá.</strong> O <code>CLAUDE.md</code> da raiz é carregado automaticamente e traz as regras do projeto (português sem travessão, onde ficam clientes, quando ler <code>AGENTS.md</code> de cada cliente, regras do n8n).</li>
+      <li><strong>Confirme o ambiente n8n antes de qualquer outra coisa.</strong> É regra do projeto, não sugestão: o resultado diz para qual instância o <code>push</code> vai.</li>
+      <li><strong>Deixe a chave da API fora da conversa.</strong> Exporte no shell, nunca cole no prompt nem em arquivo versionado.</li>
+      <li><strong>Peça um diagnóstico de leitura apenas</strong> (R1) e só depois pense em editar.</li>
+    </ol>
+<pre class="code-block"><code><span class="cm"># 1. raiz do repositório + Claude Code</span>
+<span class="kw">cd</span> "$(git rev-parse --show-toplevel)"
+claude
+
+<span class="cm"># 2. (no terminal, antes ou dentro da sessão com !) ambiente n8n ativo</span>
+npx --yes n8nac env status --json
+
+<span class="cm"># 3. chave só na variável de ambiente da sua sessão de shell</span>
+<span class="kw">export</span> N8N_KEY="<span class="st">cole-aqui-sem-commitar</span>"
+
+<span class="cm"># 4. saúde da instância (não altera nada)</span>
+curl -s https://n8n.fvmarketing.com.br/healthz</code></pre>
+    <div class="status-note">
+      <p><strong>Dica de sessão:</strong> dentro do Claude Code, comandos iniciados com <code>!</code> rodam no seu shell e a saída entra na conversa. Use para <code>n8nac env status</code> e <code>healthz</code>. Nunca use <code>!</code> com a chave expandida na linha.</p>
+    </div>
+
+    <!-- A2 -->
+    <h3 id="sA2" class="anchor-target">A2 · Mapa do repositório (o que o Claude precisa saber)</h3>
+    <table class="kv-table">
+      <thead><tr><th>Caminho</th><th>O que é</th><th>Regra para o agente</th></tr></thead>
+      <tbody>
+        <tr><td><code>CLAUDE.md</code> (raiz)</td><td>Regras globais do repositório e do n8n</td><td>Lido sozinho. Se o agente ignorar algo, peça para reler.</td></tr>
+        <tr><td><code>clientes/{cliente}/AGENTS.md</code></td><td>Cartão do cliente</td><td>Ler <strong>antes</strong> de abrir qualquer documento do cliente.</td></tr>
+        <tr><td><code>clientes/{cliente}/sdr-ia/</code></td><td>Frente SDR IA: <code>docs/</code>, <code>historico/</code>, <code>workflows/</code>, <code>entregas/</code></td><td>Cada frente tem seu próprio <code>AGENTS.md</code>. Ler também.</td></tr>
+        <tr><td><code>clientes/{cliente}/sdr-ia/docs/referencia.md</code></td><td>Referência técnica <strong>gerada</strong> do workflow (nós, gatilhos, integrações)</td><td>Não editar à mão: é sobrescrita pelo <code>build_reference.py</code>.</td></tr>
+        <tr><td><code>clientes/{cliente}/sdr-ia/historico/</code></td><td>Versões antigas, JSONs originais, antes e depois</td><td>Só para diff e contexto. Não é fonte de verdade.</td></tr>
+        <tr><td><code>workflows/producao/*.workflow.ts</code></td><td>Workflows como código (n8nac), pasta sincronizada com a instância</td><td>Editar só depois de <code>pull</code>. Um <code>push</code> substitui o workflow inteiro.</td></tr>
+        <tr><td><code>bases/sdr-ia/hub/</code></td><td>Hub de consulta (<code>index.html</code>) e snapshots sanitizados em <code>data/</code></td><td>Gerado por script. Não ler <code>data/</code> bruto sem necessidade.</td></tr>
+        <tr><td><code>scripts/sdr-docs/</code></td><td><code>sync_n8n.py</code> (puxa e sanitiza), <code>build_reference.py</code> (gera referências), <code>check_secrets.py</code> (barra segredo no publicado)</td><td>Rodar nesta ordem. Ver receita “Atualizar a documentação”.</td></tr>
+        <tr><td><code>.agents/skills/n8n-architect/</code></td><td>Skill de arquitetura n8n do projeto</td><td>Ler antes de qualquer trabalho em workflow.</td></tr>
+        <tr><td><code>docs/processos/</code></td><td>Estilo (<code>estilo-ptbr.md</code>), sessões, estrutura, Ekyte</td><td>Comentários no Ekyte usam HTML (<code>ekyte.md</code>).</td></tr>
+        <tr><td><code>.sessions/</code></td><td>Sessões exportadas (ignoradas pelo git)</td><td>Útil como memória do que já foi tentado.</td></tr>
+      </tbody>
+    </table>
+    <p class="small">Pastas que o agente <strong>não</strong> deve vasculhar sem necessidade: <code>_archive/</code>, <code>_inbox/</code>, <code>node_modules/</code>, <code>bases/*/codigo/</code>, dados brutos e PDFs. Gastam contexto e raramente ajudam.</p>
+
+    <!-- A3 -->
+    <h3 id="sA3" class="anchor-target">A3 · Receitas: quero… → peça… → o que roda por trás</h3>
+    <table>
+      <thead><tr><th>Quero…</th><th>Peça ao Claude</th><th>Por trás</th><th>Detalhe</th></tr></thead>
+      <tbody>
+        <tr><td>Saber se está tudo bem</td><td>“Rode a saúde dos 14 workflows ativos e me diga quais têm erro ou silêncio.”</td><td><code>curl</code> + <code>jq</code> na API de execuções</td><td>R1</td></tr>
+        <tr><td>Entender uma falha</td><td>“Explique a execução &lt;id&gt;: nó, mensagem e dado de entrada.”</td><td><code>GET /executions/&lt;id&gt;?includeData=true</code></td><td>R2</td></tr>
+        <tr><td>Ver o que está no ambiente</td><td>“Liste os workflows do ambiente e compare com a pasta local.”</td><td><code>npx --yes n8nac list</code></td><td>5.2</td></tr>
+        <tr><td>Editar um workflow</td><td>“Faça pull, mostre o diff proposto, espere meu OK e só então dê push.”</td><td><code>n8nac pull</code> → edição → <code>n8nac push</code></td><td>R3</td></tr>
+        <tr><td>Mudar um prompt</td><td>“Liste as variáveis de expressão do prompt antes de editar e preserve todas.”</td><td>edição de <code>options.systemMessage</code></td><td>R4</td></tr>
+        <tr><td>Testar sem mensagem real</td><td>“Fixe os dados de entrada e desative o nó de envio antes de executar.”</td><td>pin data + nó de envio desativado</td><td>R5</td></tr>
+        <tr><td>Instalar o monitor de erros</td><td>“Replique o monitor do AGF (Error Trigger → evento) no cliente X.”</td><td>workflow novo + Settings → Error Workflow</td><td>R6</td></tr>
+        <tr><td>Corrigir falha conhecida</td><td>“Aplique o runbook R7 (follow-up AAFBB) e valide.”</td><td>troca de campo e referência de nó</td><td>R7 a R9</td></tr>
+        <tr><td>Rotacionar credencial</td><td>“Liste os nós que usam o valor, sem imprimir o valor.”</td><td>busca por prefixo no JSON</td><td>R10</td></tr>
+        <tr><td>Atualizar a documentação</td><td>“Sincronize os snapshots, regenere as referências e rode o check de segredos.”</td><td><code>sync_n8n.py</code> → <code>build_reference.py</code> → <code>check_secrets.py</code></td><td>A2</td></tr>
+      </tbody>
+    </table>
+<pre class="code-block"><code><span class="cm"># atualizar a documentação gerada (nesta ordem; a chave não é gravada em disco)</span>
+N8N_API_KEY="$N8N_KEY" python3 scripts/sdr-docs/sync_n8n.py
+python3 scripts/sdr-docs/build_reference.py
+python3 scripts/sdr-docs/check_secrets.py   <span class="cm"># falha se houver segredo conhecido nos artefatos</span></code></pre>
+
+    <!-- A4 -->
+    <h3 id="sA4" class="anchor-target">A4 · Prompts prontos</h3>
+    <p>Cada prompt já traz as travas. Troque só o que está entre colchetes.</p>
+    <details class="fold">
+      <summary>Retomar contexto de um cliente</summary>
+      <div class="fold-body">
+<pre class="code-block"><code>Vou trabalhar na SDR IA do cliente [CLIENTE]. Antes de qualquer coisa:
+1. Leia clientes/[CLIENTE]/AGENTS.md e clientes/[CLIENTE]/sdr-ia/AGENTS.md.
+2. Leia clientes/[CLIENTE]/sdr-ia/docs/referencia.md.
+3. Leia a seção do cliente no handoff técnico e os incidentes que o citam.
+4. Resuma em 10 linhas: o que está no ar, o que está quebrado e o que falta decidir.
+Não altere nada. Não rode comandos que escrevam na instância.</code></pre>
+      </div>
+    </details>
+    <details class="fold">
+      <summary>Diagnosticar uma falha</summary>
+      <div class="fold-body">
+<pre class="code-block"><code>O workflow [NOME] (id [ID]) está falhando. Use a API de execuções (a chave está em $N8N_KEY, não a imprima).
+Traga: nó que falhou, mensagem de erro, 3 execuções recentes com o mesmo erro e o dado que entrou no nó.
+Só leitura. Proponha a correção em texto, com o trecho exato a mudar, e espere minha aprovação.</code></pre>
+      </div>
+    </details>
+    <details class="fold">
+      <summary>Corrigir e publicar com segurança</summary>
+      <div class="fold-body">
+<pre class="code-block"><code>Quero corrigir [PROBLEMA] no workflow [NOME].
+1. Rode npx --yes n8nac env status --json e me mostre o host e o workflowsPath.
+2. Guarde um backup do JSON atual do workflow fora do git.
+3. Faça pull, altere UM nó por vez e mostre o diff.
+4. Não renomeie nenhum nó existente.
+5. Espere meu OK explícito antes do push. Depois do push, valide com uma execução de dado fixado.</code></pre>
+      </div>
+    </details>
+    <details class="fold">
+      <summary>Revisar o que mudou nos últimos dias</summary>
+      <div class="fold-body">
+<pre class="code-block"><code>Liste os workflows ativos cuja "última alteração" é dos últimos 7 dias e compare a data com o inventário do handoff (seção 02).
+Para cada diferença, diga se parece regressão ou mudança planejada. Só leitura.</code></pre>
+      </div>
+    </details>
+
+    <!-- A5 -->
+    <h3 id="sA5" class="anchor-target">A5 · Regras de ouro ao trabalhar com agente</h3>
+    <div class="risk-box">
+      <h4>O Claude nunca deve fazer sozinho</h4>
+      <ul class="doc">
+        <li><strong>Dar <code>push</code> sem pull e backup antes.</strong> O push sobrescreve o workflow inteiro, sem merge, e a validação nativa está desligada.</li>
+        <li><strong>Imprimir, copiar ou commitar credenciais.</strong> Tokens da Meta, JWTs do Supabase e chaves de API aparecem em nós de vários workflows (seção 08). Peça sempre “liste onde, sem mostrar o valor”.</li>
+        <li><strong>Renomear nó existente.</strong> Referências <code>$('Nome')</code> são por texto e quebram só em runtime.</li>
+        <li><strong>Executar workflow de atendimento ou follow-up com dado real.</strong> Grava no banco, pode criar card no Kommo e mandar WhatsApp a um lead de verdade (R5).</li>
+        <li><strong>Usar uma chave de API de arquivo antigo.</strong> Se algo retornar 401, pare e peça a chave atual. Não procure outra em arquivos soltos.</li>
+        <li><strong>Mexer no legado.</strong> Workflows de proxy, tag antiga e tracking de clientes que já tinham operação anterior (caso do AGF) não devem ser tocados sem pedido explícito.</li>
+        <li><strong>Trocar de modelo por conta própria.</strong> Modelo de raciocínio em nó que usa ferramentas já quebrou produção (400 por <code>reasoning_effort</code>; <code>temperature: 0</code> recusado em alguns modelos). Mudança de modelo é decisão do dono.</li>
+      </ul>
+    </div>
+    <div class="callout">
+      <h4>Como deixar o agente mais confiável</h4>
+      <p>Peça sempre três coisas: <strong>(1)</strong> “mostre o diff antes de aplicar”, <strong>(2)</strong> “diga o que você não conseguiu verificar” e <strong>(3)</strong> “valide com uma execução e me mostre o resultado, não só ‘deve funcionar’”. Evidência de execução é o padrão deste documento inteiro.</p>
+    </div>
+
+    <!-- A6 -->
+    <h3 id="sA6" class="anchor-target">A6 · Recorte por cliente</h3>
+    <p>Estado conforme verificação de 03/11/2026 (seção 02). Para o que mudou depois, veja A8.</p>
+    <table>
+      <thead><tr><th>Cliente</th><th>Estado</th><th>IDs dos workflows ativos</th><th>Leia primeiro</th><th>Cuidado</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>AAFBB</strong></td>
+          <td><span class="badge badge-alto">Degradado</span> follow-up quebrado</td>
+          <td><code>P4fU2C5x2oiocKNv</code> (SDR) · <code>fceKFeTBnRfzhfSz</code> (follow-up) · <code>OMwG6XjMB4urB4GF</code> (outbound LP)</td>
+          <td><code>clientes/aafbb/sdr-ia/docs/README.md</code> e <code>referencia.md</code>; runbooks R7 e R8</td>
+          <td>Padrão canônico do programa. Testar grava em <code>aafbb_leads</code> e pode criar card no Kommo.</td>
+        </tr>
+        <tr>
+          <td><strong>AGF</strong></td>
+          <td><span class="badge badge-ok">Saudável</span> melhor observabilidade</td>
+          <td><code>qU4iFLmZAfLj4Og0</code> (Arthur) · <code>dpz9drJCe6hfIDed</code> (gerenciador) · <code>ijRmG2eI6BrGAclM</code> (outbound LP) · <code>QhkTezmiPSn3huJu</code> (monitor)</td>
+          <td><code>clientes/agf/sdr-ia/docs/README.md</code> e <code>referencia.md</code>; eventos em <code>agf.eventos_operacao</code></td>
+          <td>Regra anti-spam: número já cadastrado não recebe boas-vindas de novo. Legado do cliente não se toca.</td>
+        </tr>
+        <tr>
+          <td><strong>Pro Análises</strong></td>
+          <td><span class="badge badge-ok">Saudável</span></td>
+          <td><code>rGUDwgv0VVp14NDZ</code> (SDR) · <code>jTtPgpwvmeDcuh9Y</code> (MQL/handoff)</td>
+          <td><code>clientes/pro-analises/sdr-ia/docs/referencia.md</code></td>
+          <td>Versão <code>[OLD FAIL]</code> (<code>AlyAebDrKSuthrng</code>) existe só para diff.</td>
+        </tr>
+        <tr>
+          <td><strong>Signor</strong></td>
+          <td><span class="badge badge-alto">Instável</span> rate limit OpenAI</td>
+          <td><code>dLdMjn2MFyQHGqRM</code> (SDR BLINDADA)</td>
+          <td><code>clientes/signor/sdr-ia/docs/referencia.md</code> e <code>prompt-arthur-persona.md</code>; INC-07</td>
+          <td>Versão anterior <code>RIf1w1Ra8CkQF2s5</code> é só histórico (142 para 68 nós).</td>
+        </tr>
+        <tr>
+          <td><strong>Genics</strong></td>
+          <td><span class="badge badge-critico">Quebrado</span> <code>Invalid schema</code></td>
+          <td><code>2emEKklEyDERCxSB</code> (SDR) · <code>QGN4103pFsi9Q2vX</code> (MQL/handoff 30min v2)</td>
+          <td><code>clientes/genics/sdr-ia/docs/README.md</code>; R9 e INC-04</td>
+          <td>4 versões antigas confundem qual é a vigente. Confirme pelo ID, não pelo nome.</td>
+        </tr>
+        <tr>
+          <td><strong>CESLA</strong></td>
+          <td><span class="badge badge-critico">Quebrado</span> falhas nos nós de arquivo</td>
+          <td><code>VknHApx3h4wiP8Xb</code> (Íris, migrado)</td>
+          <td><code>clientes/cesla/sdr-ia/docs/README.md</code>; INC-06; <code>historico/antes-depois.md</code></td>
+          <td>Há um <code>.workflow.json</code> e um <code>.workflow.ts</code> da mesma Íris em <code>workflows/producao</code>.</td>
+        </tr>
+        <tr>
+          <td><strong>Paludo</strong></td>
+          <td><span class="badge badge-critico">Falha total</span> nunca configurado</td>
+          <td><code>cc5niAhAt87FnA1l</code> (follow-up 4h); SDR principal <code>mjcdyEqKZDNxCzt5</code> está inativo</td>
+          <td><code>clientes/paludo/sdr-ia/docs/referencia.md</code>; R9 e INC-03</td>
+          <td>Follow-up ativo e falhando sozinho. Decida se desliga antes de “consertar”.</td>
+        </tr>
+        <tr>
+          <td><strong>Schwalm</strong></td>
+          <td><span class="badge badge-alto">Sem tráfego</span></td>
+          <td><code>cOVfYtSox29VwNDg</code> (Maia)</td>
+          <td><code>clientes/schwalm/sdr-ia/docs/referencia.md</code>; INC-05</td>
+          <td>Token da Meta fixo no corpo dos nós HTTP: rotacionar (R10) antes de editar.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="small">Adplan foi o primeiro cliente do programa. Está desligado e mantido como referência (<code>23VCGqmdeVhbHukI</code>; <code>clientes/adplan/sdr-ia/docs/referencia.md</code>).</p>
+
+    <!-- A7 -->
+    <h3 id="sA7" class="anchor-target">A7 · Recorte por tempo disponível</h3>
+    <div class="finding-grid">
+      <div class="finding">
+        <div class="finding-title">Tenho 1 hora</div>
+        <div class="field">Faça</div>
+        <div class="value">A1 inteiro; R1 (saúde); leitura de 01 e 07. Anote o que está silencioso ou em erro. Não edite nada.</div>
+      </div>
+      <div class="finding">
+        <div class="finding-title">Tenho 1 dia</div>
+        <div class="field">Faça</div>
+        <div class="value">Tudo da hora 1, mais R7 e R8 (correções de 5 a 20 minutos da AAFBB) e a leitura de 03 e 05. Peça acessos do 5.4.</div>
+      </div>
+      <div class="finding">
+        <div class="finding-title">Tenho 1 semana</div>
+        <div class="field">Faça</div>
+        <div class="value">R6 (monitor de erros global) primeiro, depois R9 (schemas), R10 (rotação de credenciais) e o plano de 30 dias da seção 10.</div>
+      </div>
+    </div>
+    <div class="status-note">
+      <p><strong>Se você só puder fazer uma coisa:</strong> instale o monitor de erros (R6). Sem ele, as outras correções voltam a quebrar sem ninguém saber.</p>
+    </div>
+
+    <!-- A8 -->
+    <h3 id="sA8" class="anchor-target">A8 · O que mudou depois de 03/11</h3>
+    <p>Itens abaixo vêm das sessões de trabalho posteriores à verificação das seções 01 a 12 e <strong>não foram reverificados em produção</strong>. Confirme na instância antes de agir.</p>
+    <table>
+      <thead><tr><th>Data</th><th>Cliente</th><th>O que aconteceu</th><th>Consequência para quem mantém</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>09 a 10/11</td>
+          <td>AAFBB</td>
+          <td>Diagnóstico: leads do formulário da LP não chegavam à automação (webhook não era chamado). Parte dos leads ficou presa fora do Kommo.</td>
+          <td>Webhook do outbound: <code>/webhook/aafbb-lp-lead</code>, já com CORS liberado para a LP (preflight 204). Resgate dos leads presos foi tratado à parte.</td>
+        </tr>
+        <tr>
+          <td>10 a 11/11</td>
+          <td>AAFBB</td>
+          <td>Instrução e código do widget flutuante para a designer inserir no Great Pages, com aviso de saldo.</td>
+          <td>O widget v1.1 chama o n8n; revise qualquer código que a designer enviar antes de publicar.</td>
+        </tr>
+        <tr>
+          <td>12/11</td>
+          <td>AAFBB</td>
+          <td>No teste, o widget abria o WhatsApp com mensagem pronta do lead para a AAFBB, contradizendo o fluxo (a SDR é quem chama o lead). O bloco foi removido na revisão.</td>
+          <td>Após o formulário, o lead <strong>não</strong> deve ser levado ao WhatsApp. Se reaparecer, é regressão do HTML.</td>
+        </tr>
+        <tr>
+          <td>12/11</td>
+          <td>AAFBB</td>
+          <td>Ao testar, o disparo proativo depende de saldo e método de pagamento no Business Manager da AAFBB, que acusava problema.</td>
+          <td>Se a SDR “não chama”, confira o BM antes de culpar o n8n. Validação da chegada no Kommo pendente por falta de login.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="small">Materiais relacionados que estão fora deste documento: PDF “AAFBB, Webhook formulário no botão” (instruções para a designer) e o diagnóstico <code>projetos/sdr-ia/aafbb/diagnostico-lp-webhook-e-resgate.md</code> no worktree da AAFBB.</p>
+  </div>
+</div>
+
+<!-- ===================== 01 — SUMÁRIO EXECUTIVO ===================== -->
+<div class="card anchor-target" id="s01">
+  <div class="card-body">
+    <h2><span class="slide-num">01</span> Sumário executivo — o estado real</h2>
+
+    <div style="display:grid;grid-template-columns:220px 1fr;gap:32px;align-items:center;margin-bottom:28px;">
+      <div style="text-align:center;">
+        <div class="progress-ring">
+          <div class="progress-ring-inner"><div class="big">7<span style="font-size:60%">/14</span></div><div class="small">com incidente</div></div>
+        </div>
+        <div style="text-align:center;margin-top:10px;font-size:12px;color:var(--gray-600);font-weight:600;">workflows ativos com falha ou risco aberto</div>
+      </div>
+      <div>
+        <p style="margin-bottom:12px;">O programa SDR IA roda hoje <strong>14 workflows ativos</strong> para <strong>8 marcas</strong> em uma única instância n8n. A arquitetura é sólida e repetível: mesmo esqueleto de <em>trigger → debounce → agente → qualificador → CRM</em>, com Supabase como memória e Kommo como destino comercial.</p>
+        <p><strong>O problema não é a arquitetura — é a operação sem rede de proteção.</strong> Metade dos workflows ativos tem incidente aberto, não existe teste automatizado, não existe alerta de erro global e a correção é feita direto em produção. O follow-up da AAFBB, por exemplo, está falhando em <strong>100% das execuções</strong> há semanas sem que ninguém percebesse.</p>
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="value">14</div><div class="label">Workflows ativos</div><div class="sub">8 marcas · 1 instância</div></div>
+      <div class="kpi-card"><div class="value">166</div><div class="label">Workflows na instância</div><div class="sub">39 relacionados a SDR (14 ativos)</div></div>
+      <div class="kpi-card"><div class="value">5</div><div class="label">Incidentes P0/P1</div><div class="sub">3 quebrados · 2 degradados</div></div>
+      <div class="kpi-card"><div class="value">0</div><div class="label">Testes automatizados</div><div class="sub">validação é manual, em produção</div></div>
+    </div>
+
+    <h3>Maturidade por cliente</h3>
+    <table>
+      <thead>
+        <tr><th>Cliente</th><th>Workflows</th><th>Saúde (execuções amostradas)</th><th>Observação</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>AAFBB</strong></td>
+          <td>3 ativos</td>
+          <td><span class="status-dot exec"></span>SDR 16/21 · FU <strong>0/25</strong> · Outbound 25/25</td>
+          <td>Follow-up parado; criação de tarefa no Kommo falha em parte das execuções</td>
+        </tr>
+        <tr>
+          <td><strong>AGF</strong></td>
+          <td>4 ativos</td>
+          <td><span class="status-dot ok"></span>SDR 3/4 · FU 25/25 · Outbound 25/25</td>
+          <td>Único cliente com monitor de erros próprio (grava em <code>agf.eventos_operacao</code>)</td>
+        </tr>
+        <tr>
+          <td><strong>PRO ANÁLISES</strong></td>
+          <td>2 ativos</td>
+          <td><span class="status-dot ok"></span>SDR 56/59</td>
+          <td>Operação estável; 3 erros pontuais em janela de 5 dias</td>
+        </tr>
+        <tr>
+          <td><strong>SIGNOR</strong></td>
+          <td>1 ativo</td>
+          <td><span class="status-dot exec"></span>instável</td>
+          <td>Erros intermitentes de <code>Rate limit reached</code> na OpenAI</td>
+        </tr>
+        <tr>
+          <td><strong>Genics</strong></td>
+          <td>2 ativos</td>
+          <td><span class="status-dot pend"></span>SDR <strong>0/2</strong></td>
+          <td><code>Invalid schema: genics</code> — schema do Supabase não resolve</td>
+        </tr>
+        <tr>
+          <td><strong>CESLA</strong></td>
+          <td>1 ativo</td>
+          <td><span class="status-dot pend"></span><strong>0/3</strong></td>
+          <td>Falhas de rede/Drive nos nós de arquivo (<code>Arquivo Criado</code>, <code>Arquivo Alterado</code>)</td>
+        </tr>
+        <tr>
+          <td><strong>Schwalm</strong></td>
+          <td>1 ativo</td>
+          <td><span class="status-dot pend"></span>sem execuções</td>
+          <td>Workflow ativo e sem tráfego; token da Meta fixo no corpo dos nós HTTP</td>
+        </tr>
+        <tr>
+          <td><strong>Paludo</strong></td>
+          <td>2 (1 ativo)</td>
+          <td><span class="status-dot pend"></span><strong>falha total</strong></td>
+          <td><code>Invalid schema: paludo</code>; projeto nunca foi configurado por completo</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="risk-box">
+      <h4>O risco central que você herda</h4>
+      <p>Um workflow ativo no n8n tem <strong>aparência de saudável</strong> até alguém abrir as execuções. O follow-up da AAFBB ficou com 25 de 25 execuções em erro e nenhum alarme tocou — porque não há alerta. A recomendação número 1 deste documento não é corrigir os bugs: é <strong>instalar o monitor de erros global antes de qualquer outra coisa</strong> (runbook R6 e seção 09). Sem isso, você vai descobrir o próximo incidente pelo cliente, não pelo sistema.</p>
+    </div>
+
+    <div class="callout">
+      <h4>Em uma frase</h4>
+      <p>Você herda uma base tecnicamente boa, operacionalmente frágil e sem observabilidade: <strong>três correções de 15 minutos resolvem 60% dos problemas</strong>, mas só se você souber que eles existem.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 02 — INVENTÁRIO ===================== -->
+<div class="card anchor-target" id="s02">
+  <div class="card-body">
+    <h2><span class="slide-num">02</span> Inventário de produção</h2>
+    <p>Tudo abaixo está na instância <code>https://n8n.fvmarketing.com.br</code>, projeto <em>Personal</em>, e foi lido pela API pública em 03/11/2026. O ID é o identificador estável: nomes mudam, IDs não.</p>
+
+    <h3>2.1 Workflows ativos</h3>
+    <table>
+      <thead>
+        <tr><th>Workflow</th><th>ID</th><th>Nós</th><th>Última alteração</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>[AAFBB] SDR IA — Assistente da AAFBB</strong></td><td class="mono">P4fU2C5x2oiocKNv</td><td>78</td><td>20/10/2026</td><td><span class="badge badge-exec">Degradado</span></td></tr>
+        <tr><td>[AAFBB] Gerenciador Follow-up 24h e 48h</td><td class="mono">fceKFeTBnRfzhfSz</td><td>13</td><td>18/09/2026</td><td><span class="badge badge-critico">Quebrado</span></td></tr>
+        <tr><td>[AAFBB] Outbound LP para SDR</td><td class="mono">OMwG6XjMB4urB4GF</td><td>20</td><td>21/10/2026</td><td><span class="badge badge-ok">Saudável</span></td></tr>
+        <tr><td>[AGF] SDR IA — Arthur</td><td class="mono">qU4iFLmZAfLj4Og0</td><td>84</td><td>28/10/2026</td><td><span class="badge badge-ok">Saudável</span></td></tr>
+        <tr><td>[AGF] Gerenciador MQL/Handoff + Follow-up 24h</td><td class="mono">dpz9drJCe6hfIDed</td><td>—</td><td>08/10/2026</td><td><span class="badge badge-ok">Saudável</span></td></tr>
+        <tr><td>[AGF] Outbound LP para SDR</td><td class="mono">ijRmG2eI6BrGAclM</td><td>—</td><td>08/10/2026</td><td><span class="badge badge-ok">Saudável</span></td></tr>
+        <tr><td>[AGF] SDR IA — Monitor de erros</td><td class="mono">QhkTezmiPSn3huJu</td><td>4</td><td>07/10/2026</td><td><span class="badge badge-ok">Saudável</span></td></tr>
+        <tr><td>[PRO ANALISES] SDR IA [FIXED]</td><td class="mono">rGUDwgv0VVp14NDZ</td><td>—</td><td>03/09/2026</td><td><span class="badge badge-ok">Saudável</span></td></tr>
+        <tr><td>[PRO ANALISES] Gerenciador MQL/Handoff + Follow up [FIXED]</td><td class="mono">jTtPgpwvmeDcuh9Y</td><td>—</td><td>03/09/2026</td><td><span class="badge badge-ok">Saudável</span></td></tr>
+        <tr><td>[SIGNOR] SDR IA BLINDADA</td><td class="mono">dLdMjn2MFyQHGqRM</td><td>—</td><td>30/10/2026</td><td><span class="badge badge-exec">Instável</span></td></tr>
+        <tr><td>[Genics] SDR IA</td><td class="mono">2emEKklEyDERCxSB</td><td>—</td><td>22/08/2026</td><td><span class="badge badge-critico">Quebrado</span></td></tr>
+        <tr><td>Genics — Gerenciador MQL/Handoff + Follow-up 30min (v2)</td><td class="mono">QGN4103pFsi9Q2vX</td><td>—</td><td>31/07/2026</td><td><span class="badge badge-pend">Sem tráfego</span></td></tr>
+        <tr><td>[CESLA] SDR IA — Íris (migrado)</td><td class="mono">VknHApx3h4wiP8Xb</td><td>—</td><td>05/10/2026</td><td><span class="badge badge-critico">Quebrado</span></td></tr>
+        <tr><td>[PALUDO] Gerenciador Follow-up 4h</td><td class="mono">cc5niAhAt87FnA1l</td><td>—</td><td>31/07/2026</td><td><span class="badge badge-critico">Quebrado</span></td></tr>
+        <tr><td>[Schwalm] SDR IA — Maia — New</td><td class="mono">cOVfYtSox29VwNDg</td><td>—</td><td>24/07/2026</td><td><span class="badge badge-pend">Sem tráfego</span></td></tr>
+      </tbody>
+    </table>
+    <p class="small">“Saúde” = proporção de execuções com status <code>success</code> na amostra mais recente disponível na API (até 100 execuções por workflow). Amostras pequenas (AGF, Genics, CESLA) refletem volume real baixo, não necessariamente estabilidade.</p>
+
+    <h3>2.2 Workflows inativos que você vai encontrar</h3>
+    <p>Existem <strong>25 workflows com “SDR” no nome que estão desligados</strong>. A maioria é lixo de iteração — versões antigas, duplicatas e testes. Não apague nada antes de ler a seção 07 (achado DT-08); alguns são a única cópia de uma configuração que funcionou.</p>
+    <table>
+      <thead><tr><th>Workflow</th><th>ID</th><th>Por que ainda existe</th></tr></thead>
+      <tbody>
+        <tr><td>[PALUDO] SDR IA</td><td class="mono">mjcdyEqKZDNxCzt5</td><td>Workflow principal do Paludo, nunca configurado. O follow-up está ativo e falhando sozinho.</td></tr>
+        <tr><td>[SIGNOR] SDR IA-old</td><td class="mono">RIf1w1Ra8CkQF2s5</td><td>Versão anterior à consolidação (142 → 68 nós). Referência de histórico.</td></tr>
+        <tr><td>SDR IA — ADPLAN</td><td class="mono">23VCGqmdeVhbHukI</td><td>Primeiro cliente do programa; desligado, mantido como referência.</td></tr>
+        <tr><td>[PRO ANALISES] SDR IA [OLD FAIL]</td><td class="mono">AlyAebDrKSuthrng</td><td>Snapshot do estado quebrado antes do <code>[FIXED]</code>. Útil para diff.</td></tr>
+        <tr><td>[TEMP] AAFBB Outbound — teste do 204 / polling</td><td class="mono">7laEqlu0f40E7MYo · arAn2m5Iiu3aeXyg</td><td>Bancada de teste do polling do Kommo. Apagar depois de documentar.</td></tr>
+        <tr><td>Genics — 4 versões antigas</td><td class="mono">OEimrqeF… · UANjyCmm… · YJO7CTHz… · tNn2t5u9…</td><td>Iterações do mesmo workflow. Fonte de confusão: qual é o vigente?</td></tr>
+      </tbody>
+    </table>
+
+    <h3>2.3 Como consultar isso sozinho</h3>
+    <p>A API pública do n8n é a fonte de verdade. Com a chave em mãos (seção 05), qualquer listagem é reproduzível:</p>
+<pre class="code-block"><code><span class="cm"># lista todos os workflows, ordenados por status</span>
+curl -s -H "X-N8N-API-KEY: $N8N_KEY" \
+  "https://n8n.fvmarketing.com.br/api/v1/workflows?limit=250" \
+  | jq -r '.data[] | "\(if .active then "ON " else "off" end) | \(.id) | \(.name)"' | sort
+
+<span class="cm"># execuções de um workflow específico (os 25 mais recentes)</span>
+curl -s -H "X-N8N-API-KEY: $N8N_KEY" \
+  "https://n8n.fvmarketing.com.br/api/v1/executions?workflowId=fceKFeTBnRfzhfSz&amp;limit=25&amp;includeData=false" \
+  | jq -r '.data[] | "\(.startedAt) | \(.status) | \(.id)"'
+
+<span class="cm"># detalhe de uma execução com o nó que falhou</span>
+curl -s -H "X-N8N-API-KEY: $N8N_KEY" \
+  "https://n8n.fvmarketing.com.br/api/v1/executions/640477?includeData=true" \
+  | jq '.data.resultData | {lastNodeExecuted, error: .error.message}'</code></pre>
+    <p class="small">No ambiente de origem, a chave fica em <code>~/.n8n-manager/secrets.json</code> (campo <code>instanceApiKeys["environment:producao-2"]</code>). No seu ambiente, ela virá pelo onboarding de acessos — trate como credencial de produção: lê e escreve workflows.</p>
+  </div>
+</div>
+<!-- ===================== 03 — ARQUITETURA ===================== -->
+<div class="card anchor-target" id="s03">
+  <div class="card-body">
+    <h2><span class="slide-num">03</span> Arquitetura de referência</h2>
+    <p>Todos os clientes usam a mesma espinha dorsal. Mudam o prompt, o CRM, o schema do banco e as regras de qualificação — não o desenho. Entender esse padrão uma vez resolve os oito clientes.</p>
+
+    <h3>3.1 As três camadas</h3>
+    <div class="flow">
+      <div class="flow-step"><div class="n">Camada 1</div><strong>Entrada</strong><span>WhatsApp Cloud API (trigger), webhook de LP, schedule e polling do Kommo. Normaliza payload e identifica o lead.</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="n">Camada 2</div><strong>Orquestração</strong><span>Debounce em Redis, transcrição de áudio, agente conversacional, qualificador em JSON e roteamento por cenário.</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="n">Camada 3</div><strong>Persistência</strong><span>Supabase (leads + histórico + estado), Kommo (contato, card, nota, tarefa) e Redis (buffer efêmero).</span></div>
+    </div>
+
+    <table>
+      <thead><tr><th>Camada</th><th>Responsabilidade</th><th>Onde vive</th><th>Falha típica</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Entrada</strong></td><td>Receber, validar e descartar ruído (status, grupo, mensagem própria)</td><td>Nós <code>whatsAppTrigger</code>, <code>webhook</code>, <code>scheduleTrigger</code></td><td>Credencial de trigger inválida → webhook não chega e não há erro visível</td></tr>
+        <tr><td><strong>Orquestração</strong></td><td>Decidir o que responder, quando responder e para onde mandar o lead</td><td>Nós <code>code</code>, <code>agent</code>, <code>if</code>, <code>switch</code>, <code>redis</code></td><td>Expressão referenciando nó inexistente/renomeado → erro em runtime</td></tr>
+        <tr><td><strong>Persistência</strong></td><td>Guardar estado para sobreviver a reinícios e alimentar o CRM</td><td>Nós <code>supabase</code>, <code>httpRequest</code> (Kommo), <code>postgres</code></td><td>Schema/tabela errada, credencial expirada, URL malformada</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <h4>Princípio de projeto</h4>
+      <p>O n8n é <em>stateless</em> entre execuções. Todo estado de conversa vive fora dele — no Supabase (<code>aafbb_leads</code>, <code>aafbb_chat_history</code>) e no Redis (buffer de debounce com TTL curto). Se um nó falha, a próxima mensagem do lead continua de onde parou. <strong>Nunca guarde estado em variável de nó esperando que ele sobreviva.</strong></p>
+    </div>
+
+    <h3>3.2 O padrão canônico — AAFBB como referência</h3>
+    <p>O workflow <code>[AAFBB] SDR IA — Assistente da AAFBB</code> (<span class="mono">P4fU2C5x2oiocKNv</span>, 78 nós) é a implementação mais completa do padrão. A sequência abaixo é o mapa mental que você deve aplicar a qualquer cliente:</p>
+    <table>
+      <thead><tr><th>#</th><th>Etapa</th><th>Nós</th><th>O que acontece</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Recepção</td><td><code>WhatsApp Trigger AAFBB</code> → <code>Tem Mensagem?</code> → <code>⚙️ Config AAFBB</code></td><td>Filtra status e mensagens vazias; carrega telefone, pipeline e status do CRM em um único nó de configuração.</td></tr>
+        <tr><td>2</td><td>Extração</td><td><code>Campos Iniciais</code> → <code>Prompts</code> → <code>Busca Lead</code></td><td>Normaliza o payload da Meta e busca o lead por telefone no Supabase.</td></tr>
+        <tr><td>3</td><td>Identidade</td><td><code>Normaliza Lead</code> → <code>Lead Existe?</code> → <code>Criar Lead</code></td><td>Cria o registro na primeira mensagem; gera <code>sessionID</code>.</td></tr>
+        <tr><td>4</td><td>Silêncio humano</td><td><code>Humano Assumiu?</code></td><td>Se <code>handoff_done = true</code> e não houver recomeço, o bot não responde. Esse é o freio que impede a IA de atropelar o vendedor.</td></tr>
+        <tr><td>5</td><td>Mídia</td><td><code>É Audio?</code> → <code>Obter URL Audio</code> → <code>Baixar Audio Meta</code> → <code>Transcrever Audio</code></td><td>Áudio é baixado e transcrito; imagem/documento viram texto descritivo em <code>Monta Midia</code>.</td></tr>
+        <tr><td>6</td><td>Debounce</td><td><code>Empilha Mensagem</code> → <code>Obtem Lista</code> → <code>Avalia Debounce</code> → <code>Aguarda Digitacao</code> → <code>Apagar Lista</code> → <code>Monta Mensagens</code></td><td>Empilha mensagens da mesma rajada em <code>aafbb:&lt;telefone&gt;</code> no Redis (1,2 s) e só então chama o modelo. Sem isso, o lead recebe três respostas para três mensagens.</td></tr>
+        <tr><td>7</td><td>Contexto</td><td><code>Salva Msg Humana</code> → <code>Detecta Menu</code> → <code>Carrega Historico</code> → <code>Formata Historico</code></td><td>Persiste a mensagem humana e monta o histórico das últimas interações.</td></tr>
+        <tr><td>8</td><td>Cérebro</td><td><code>SDR AAFBB</code> + <code>Qualificador AAFBB</code> (paralelo)</td><td>Dois agentes independentes: um conversa, o outro classifica em JSON (cenário A/B/C/D).</td></tr>
+        <tr><td>9</td><td>Resposta</td><td><code>Limpa Resposta</code> → <code>Salva Msg IA</code> → <code>Envia Resposta WhatsApp</code> → <code>Atualiza Lead Pos Resposta</code></td><td>Envia ao lead e reseta <code>followup_stage = 0</code> — toda mensagem recebida reinicia a cadência.</td></tr>
+        <tr><td>10</td><td>CRM</td><td><code>Parse Qualificacao</code> → <code>Decide Acao CRM</code> → <code>Monta Requisicao Kommo</code> → <code>Busca/Cria Contato</code> → <code>Cria/Atualiza Card</code> → <code>Nota Resumo</code> → <code>Crea Tarea</code> → <code>Registra Estado CRM</code></td><td>Cria ou move o card no funil, aplica tags por nome, grava a nota de resumo e agenda a tarefa do representante.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>3.3 As três variantes de workflow</h3>
+    <table>
+      <thead><tr><th>Variante</th><th>Gatilho</th><th>Função</th><th>Exemplo</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Atendimento</strong></td><td>WhatsApp Trigger</td><td>Conversa, qualifica e registra no CRM</td><td><code>P4fU2C5x2oiocKNv</code> (AAFBB), <code>qU4iFLmZAfLj4Og0</code> (AGF)</td></tr>
+        <tr><td><strong>Follow-up</strong></td><td>Schedule (30 min / 4 h / 24 h)</td><td>Varre a base por inatividade e dispara a cadência</td><td><code>fceKFeTBnRfzhfSz</code> (AAFBB), <code>cc5niAhAt87FnA1l</code> (Paludo)</td></tr>
+        <tr><td><strong>Outbound</strong></td><td>Webhook de LP + polling do Kommo</td><td>Capta lead novo, envia template e semeia o atendimento</td><td><code>OMwG6XjMB4urB4GF</code> (AAFBB), <code>ijRmG2eI6BrGAclM</code> (AGF)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>3.4 Máquina de estados do lead</h3>
+    <p>Todo o comportamento de follow-up depende de três campos em <code>aafbb_leads</code>. Errar a transição aqui gera dois sintomas opostos: lead importunado ou lead esquecido.</p>
+    <table>
+      <thead><tr><th>Campo</th><th>Valores</th><th>Quem escreve</th><th>Efeito</th></tr></thead>
+      <tbody>
+        <tr><td><code>followup_stage</code></td><td>0 → aguarda FU1 (24 h)<br>1 → aguarda FU2 (48 h)<br>2 → finaliza<br>3 → encerrado</td><td>Follow-up, e o atendimento (reset para 0)</td><td>Define qual mensagem será enviada na próxima varredura</td></tr>
+        <tr><td><code>stop_followup</code></td><td><code>true</code> / <code>false</code></td><td><code>Registra Estado CRM</code></td><td>Ligado para todo lead que não é cenário B (nutrição)</td></tr>
+        <tr><td><code>handoff_done</code></td><td><code>true</code> / <code>false</code></td><td><code>Registra Estado CRM</code></td><td>Silencia o bot quando o representante assume</td></tr>
+      </tbody>
+    </table>
+    <div class="risk-box">
+      <h4>Dependência escondida entre workflows</h4>
+      <p><code>handoff_done</code> só vira <code>true</code> se a tarefa no Kommo for criada com sucesso (<code>$('Tarea OK?').isExecuted &amp;&amp; tarea_ok</code>). Como o nó <code>Crea Tarea Kommo</code> está quebrado (INC-02), o handoff nunca é marcado e o bot continua respondendo mesmo depois de um humano assumir. <strong>Um bug de URL no CRM vira um problema de experiência do cliente.</strong></p>
+    </div>
+
+    <h3>3.5 Decisões de projeto — e o custo de cada uma</h3>
+    <table>
+      <thead><tr><th>Decisão</th><th>Por quê</th><th>Custo / risco que você herda</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Redis para debounce</strong></td><td>WhatsApp fragmenta mensagens; sem debounce a IA responde várias vezes e o custo de token explode</td><td>Dependência extra na instância; se o Redis cair, a conversa trava sem erro claro</td></tr>
+        <tr><td><strong>Supabase multi-schema</strong> (um projeto, um schema por cliente)</td><td>Isolamento lógico com custo e operação de um único banco</td><td>Um <code>schema</code> errado no nó derruba o cliente inteiro (<code>Invalid schema: genics</code>)</td></tr>
+        <tr><td><strong>Kommo via HTTP Request + OAuth2</strong> (não o nó nativo)</td><td>O nó nativo não cobre tags por nome, pipelines e campos customizados da AAFBB</td><td>URLs e bodies montados em Code nodes — mais superfície para erro de expressão (INC-02)</td></tr>
+        <tr><td><strong>Agente + Qualificador separados</strong></td><td>Separar conversa de classificação evita que a IA “responda” o JSON e contamina menos o tom</td><td>Dobra o custo de token por mensagem e cria dois pontos de falha independentes</td></tr>
+        <tr><td><strong>Menu determinístico no 1º contato</strong></td><td>Reduz variabilidade e custo na abertura; garante que o lead veja as opções</td><td>Rígido — qualquer mudança de opção exige editar código, não prompt</td></tr>
+        <tr><td><strong>Config centralizada em nó <code>Set</code></strong></td><td>Phone Number ID, pipeline e status em um só lugar por workflow</td><td>Duplicada entre workflows: mudar o número exige editar 2–3 nós (e o Outbound tem os IDs no código)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>3.6 O que não existe (e deveria)</h3>
+    <ul class="doc">
+      <li><strong>Error workflow global</strong> — só o AGF tem. Nos outros, falha é invisível até alguém abrir a lista de execuções.</li>
+      <li><strong>Retry com backoff</strong> — nós HTTP e de modelo não têm política de repetição. Um <code>429</code> da OpenAI perde a mensagem do lead.</li>
+      <li><strong>Fallback de modelo</strong> — se o modelo principal falha, não há secundário.</li>
+      <li><strong>Rate limiting por lead</strong> — apenas debounce de 1,2 s; um lead que manda 20 mensagens ainda gera uma chamada por rajada.</li>
+      <li><strong>Testes / ambiente de staging</strong> — a instância é única; todo teste é em produção.</li>
+      <li><strong>Versionamento dos JSONs</strong> — os arquivos em <code>projetos/sdr-ia/</code> são snapshots manuais, não a fonte de verdade. A fonte é a instância.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===================== 04 — DADOS ===================== -->
+<div class="card anchor-target" id="s04">
+  <div class="card-body">
+    <h2><span class="slide-num">04</span> Modelo de dados</h2>
+    <p>Um único projeto Supabase (<code>gswzuzetverulcgzhynb</code>) atende todos os clientes. O isolamento é por <strong>schema</strong>, não por banco. Isso simplifica a operação e cria um modo de falha específico que já derrubou dois clientes.</p>
+
+    <h3>4.1 Estrutura</h3>
+    <table>
+      <thead><tr><th>Schema</th><th>Tabelas principais</th><th>Cliente</th><th>Observação</th></tr></thead>
+      <tbody>
+        <tr><td><code>public</code></td><td><code>aafbb_leads</code>, <code>aafbb_chat_history</code></td><td>AAFBB</td><td>Tabelas com prefixo do cliente dentro do schema público (padrão antigo)</td></tr>
+        <tr><td><code>agf</code></td><td><code>agf.eventos_operacao</code></td><td>AGF</td><td>Log de erro estruturado; o único cliente com observabilidade real</td></tr>
+        <tr><td><code>genics</code></td><td>tabelas de lead e histórico</td><td>Genics</td><td>Schema não resolve no nó → <code>Invalid schema: genics</code></td></tr>
+        <tr><td><code>paludo</code></td><td>tabelas de lead e follow-up</td><td>Paludo</td><td>Mesmo problema; projeto nunca finalizado</td></tr>
+        <tr><td><code>signor</code> / outros</td><td>leads e histórico por cliente</td><td>SIGNOR, PRO, Schwalm, CESLA</td><td>Cada workflow declara o schema no nó Supabase</td></tr>
+      </tbody>
+    </table>
+
+    <h3>4.2 DDL de referência (AAFBB)</h3>
+<pre class="code-block"><code><span class="kw">create table</span> if not exists public.aafbb_leads (
+    id                    uuid primary key default gen_random_uuid(),
+    created_at            timestamptz not null default now(),
+    updated_at            timestamptz not null default now(),
+    nomeCliente           text,
+    telefoneCliente       text unique,      <span class="cm">-- ⚠ vira "telefonecliente" no Postgres</span>
+    idMensagem            text,
+    sessionID             text,
+    last_interaction_at   timestamptz,
+    followup_stage        integer not null default 0,
+    stop_followup         boolean not null default false,
+    handoff_done          boolean not null default false,
+    lead_created_in_crm   boolean not null default false,
+    kommo_lead_id         text,
+    tags_ia               text default '',
+    cenario               text,             <span class="cm">-- A | B | C | D</span>
+    perfil                text,
+    cidade_uf             text,
+    motivo                text,
+    urgente               boolean default false,
+    ja_e_associado        boolean default false,
+    resumo_representante  text
+);
+
+<span class="kw">create table</span> if not exists public.aafbb_chat_history (
+    id           uuid primary key default gen_random_uuid(),
+    created_at   timestamptz not null default now(),
+    session_id   text,
+    role         text,          <span class="cm">-- human | assistant</span>
+    content      text
+);
+
+<span class="kw">create index</span> idx_aafbb_chat_session  <span class="kw">on</span> public.aafbb_chat_history (session_id);
+<span class="kw">create index</span> idx_aafbb_leads_followup <span class="kw">on</span> public.aafbb_leads (stop_followup, handoff_done, followup_stage);
+
+<span class="kw">alter table</span> public.aafbb_leads         <span class="kw">enable row level security</span>;
+<span class="kw">alter table</span> public.aafbb_chat_history  <span class="kw">enable row level security</span>;</code></pre>
+
+    <div class="risk-box">
+      <h4>A armadilha do camelCase — causa raiz do follow-up quebrado</h4>
+      <p>O DDL escreve <code>telefoneCliente</code> sem aspas. O Postgres faz <em>fold</em> para minúsculas e a coluna real passa a ser <code>telefonecliente</code>. A API REST devolve <code>telefonecliente</code>. Todo nó que referencia <code>$json.telefoneCliente</code> recebe <code>undefined</code> — e o erro só aparece em runtime, dentro do nó que consome o campo, não na expressão que o produziu.</p>
+    </div>
+
+    <p><strong>Regra para o futuro:</strong> ou padronize tudo em <code>snake_case</code> desde o DDL, ou cite os identificadores com aspas duplas (<code>"telefoneCliente"</code>) em todas as camadas. O estado atual é misto — e é a origem do INC-01 e de metade dos bugs silenciosos da base.</p>
+
+    <h3>4.3 Consultas que você vai usar</h3>
+<pre class="code-block"><code><span class="cm">-- funil de follow-up: quem está elegível agora</span>
+<span class="kw">select</span> followup_stage, count(*)
+<span class="kw">from</span> public.aafbb_leads
+<span class="kw">where</span> stop_followup = false <span class="kw">and</span> handoff_done = false <span class="kw">and</span> followup_stage &lt; 3
+<span class="kw">group by</span> 1 <span class="kw">order by</span> 1;
+
+<span class="cm">-- leads que nunca vão receber follow-up (last_interaction_at nulo)</span>
+<span class="kw">select</span> count(*) <span class="kw">from</span> public.aafbb_leads
+<span class="kw">where</span> last_interaction_at <span class="kw">is null and</span> stop_followup = false;
+
+<span class="cm">-- distribuição de cenários (qualidade da qualificação)</span>
+<span class="kw">select</span> cenario, perfil, count(*) <span class="kw">from</span> public.aafbb_leads
+<span class="kw">group by</span> 1,2 <span class="kw">order by</span> 3 <span class="kw">desc</span>;
+
+<span class="cm">-- histórico de uma conversa</span>
+<span class="kw">select</span> created_at, role, left(content, 120)
+<span class="kw">from</span> public.aafbb_chat_history
+<span class="kw">where</span> session_id = '&lt;session&gt;' <span class="kw">order by</span> created_at;</code></pre>
+
+    <div class="status-note">
+      <p><strong>Ponto cego conhecido:</strong> o nó <code>Filtra Tempo</code> do follow-up ignora silenciosamente qualquer lead com <code>last_interaction_at</code> nulo (<code>if (!last) continue;</code>). Lead criado pelo Outbound que nunca mandou mensagem pode ficar eternamente fora da cadência. Verifique com a segunda query acima antes de assumir que “o follow-up está lento”.</p>
+    </div>
+
+    <h3>4.4 RLS e acesso</h3>
+    <p>As tabelas têm RLS habilitado e nenhuma policy — ou seja, <strong>anon não lê nada</strong>. Os workflows usam a <em>service role</em>, que ignora RLS. O problema: alguns nós gravam a service/anon key <strong>no corpo do próprio nó</strong> em vez de usar credencial (seção 08). Se você rotacionar a chave, esses nós quebram sem aviso.</p>
+  </div>
+</div>
+
+<!-- ===================== 05 — ACESSOS ===================== -->
+<div class="card anchor-target" id="s05">
+  <div class="card-body">
+    <h2><span class="slide-num">05</span> Ambientes e acessos</h2>
+    <p>Não existe staging. Existe uma instância, um banco e o que você conseguir testar sem apertar “Execute”. O quadro abaixo é o inventário mínimo para você não depender de ninguém na primeira semana.</p>
+
+    <h3>5.1 Onde está cada coisa</h3>
+    <table class="kv-table">
+      <thead><tr><th>Recurso</th><th>Endereço / identificador</th><th>Observação</th></tr></thead>
+      <tbody>
+        <tr><td>n8n (produção)</td><td><code>https://n8n.fvmarketing.com.br</code></td><td>Health em <code>/healthz</code>. Versão não exposta publicamente — confirme em <em>Settings → About</em>.</td></tr>
+        <tr><td>Projeto n8n</td><td><code>Personal</code> (<code>personal</code>)</td><td>166 workflows no total</td></tr>
+        <tr><td>Supabase</td><td><code>gswzuzetverulcgzhynb</code></td><td>Um projeto, multi-schema</td></tr>
+        <tr><td>Redis</td><td>credencial <code>redis-v4ferramentas</code></td><td>Chaves <code>&lt;cliente&gt;:&lt;telefone&gt;</code>, TTL curto</td></tr>
+        <tr><td>Kommo (AAFBB)</td><td>subdomínio <code>josemauro</code></td><td>Funil <code>14284675</code> · stages <code>110314067</code> (triagem), <code>110314071</code> (acolhimento), <code>143</code> (perdido)</td></tr>
+        <tr><td>WhatsApp (AAFBB)</td><td>Phone Number ID <code>1265282806679290</code></td><td>Número (21) 96870-3027 — interno AAFBB</td></tr>
+        <tr><td>Repositório</td><td><code>projetos/sdr-ia/</code></td><td>Snapshots de workflow + README-SETUP + migration</td></tr>
+        <tr><td>n8nac (CLI)</td><td>ambiente <code>producao-2</code></td><td><code>workflowsPath: workflows/producao</code>, <code>folderSync: false</code></td></tr>
+      </tbody>
+    </table>
+
+    <h3>5.2 Ferramenta de linha de comando (n8nac)</h3>
+    <p>O repositório usa <code>n8nac</code> para tratar workflow como código. Antes de qualquer comando, resolva o ambiente ativo — ele é a fonte de verdade do caminho de sync:</p>
+<pre class="code-block"><code><span class="cm"># 1. sempre a partir da raiz do repositório</span>
+<span class="kw">cd</span> "$(git rev-parse --show-toplevel)"
+npx --yes n8nac env status --json
+
+<span class="cm"># 2. operações do dia a dia</span>
+npx --yes n8nac list      <span class="cm"># o que está no ambiente</span>
+npx --yes n8nac pull      <span class="cm"># traz da instância para o repositório</span>
+npx --yes n8nac push      <span class="cm"># envia do repositório para a instância</span></code></pre>
+    <div class="risk-box">
+      <h4>Antes de rodar <code>push</code></h4>
+      <p>O ambiente <code>producao-2</code> aponta para a instância real e a validação nativa está em <strong>nível 0 (off)</strong>: o <code>push</code> valida contra o schema embarcado, que pode divergir do que está rodando. Um push sobrescreve o workflow inteiro — não faz merge. <strong>Faça <code>pull</code> antes de qualquer edição e guarde o JSON atual como backup.</strong> Se precisar de validação ao vivo, peça a mudança de nível a quem administra o toolchain; não altere por conta própria.</p>
+    </div>
+
+    <h3>5.3 Credenciais em uso</h3>
+    <p>A instância tem <strong>76 credenciais</strong>. Para as SDRs, estas são as que importam:</p>
+    <table>
+      <thead><tr><th>Credencial</th><th>Tipo</th><th>Usada por</th></tr></thead>
+      <tbody>
+        <tr><td><code>Peretto</code></td><td>Supabase</td><td>Todos os clientes (alguns usam schema próprio)</td></tr>
+        <tr><td><code>OpenAi Peretto</code></td><td>OpenAI</td><td>Todos os agentes</td></tr>
+        <tr><td><code>redis-v4ferramentas</code></td><td>Redis</td><td>Debounce (AAFBB, CESLA, SIGNOR)</td></tr>
+        <tr><td><code>AAFBB - WhatsApp API</code> / <code>AAFBB - Trigger</code></td><td>WhatsApp</td><td>Envio e recepção AAFBB</td></tr>
+        <tr><td><code>AAFBB - Kommo</code></td><td>Kommo OAuth2</td><td>Contato, card, nota e tarefa</td></tr>
+        <tr><td><code>Kommo AGF</code> · <code>Genics</code> · <code>Signor Concretos</code> · <code>Schwalm - Maia</code></td><td>Kommo / CRM</td><td>Clientes respectivos</td></tr>
+        <tr><td><code>[AGF] SDR IA</code> · <code>CESLA</code> · <code>Genics</code> · <code>Paludo - WhatsApp API</code></td><td>WhatsApp</td><td>Clientes respectivos</td></tr>
+        <tr><td><code>Sofia Chatbot</code></td><td>Google</td><td>Nós de Drive/Sheets em AGF, CESLA e Genics</td></tr>
+      </tbody>
+    </table>
+    <p class="small">Não há política de rotação. Nenhuma credencial tem data de revisão. Ver seção 08 para o plano mínimo.</p>
+
+    <h3>5.4 O que pedir no dia 1</h3>
+    <ul class="check-list">
+      <li><span class="check-icon ok">✓</span><div><strong>Acesso de owner/admin ao n8n</strong> — sem isso você não vê credenciais nem configura error workflow.</div></li>
+      <li><span class="check-icon ok">✓</span><div><strong>API key da instância</strong> — para consultar execuções e automatizar diagnóstico (é a mesma que o <code>n8nac</code> usa).</div></li>
+      <li><span class="check-icon ok">✓</span><div><strong>Acesso ao projeto Supabase</strong> — SQL Editor e leitura de tabelas; service role só se for realmente necessário.</div></li>
+      <li><span class="check-icon ok">✓</span><div><strong>Admin do Kommo da AAFBB</strong> (ou um contato que gere OAuth) — tokens expiram e o refresh falha silenciosamente.</div></li>
+      <li><span class="check-icon ok">✓</span><div><strong>Business Manager da Meta</strong> — para o número (21) 96870-3027 e templates de WhatsApp.</div></li>
+      <li><span class="check-icon ok">✓</span><div><strong>Chave da OpenAI (ou proxy)</strong> — os modelos usados não são todos padrão (<code>gpt-5.1</code>, <code>gpt-5.6-luna</code>, <code>gpt-5.6-terra</code>), o que sugere roteamento por proxy.</div></li>
+      <li><span class="check-icon pend">○</span><div><strong>Acesso ao repositório</strong> e combinado de branch: hoje o trabalho vai direto em <code>sdr-ia/aafb</code>.</div></li>
+    </ul>
+
+    <h3>5.5 Quem sabe o quê</h3>
+    <table>
+      <thead><tr><th>Assunto</th><th>Referência atual</th><th>Por quê</th></tr></thead>
+      <tbody>
+        <tr><td>Arquitetura n8n, prompts, Supabase</td><td>Marcos Peretto</td><td>Autor da base; conhece as decisões não documentadas</td></tr>
+        <tr><td>Briefing, regras de qualificação e ICP</td><td>Account do cliente</td><td>Muda com frequência e não está no código</td></tr>
+        <tr><td>Kommo, pipelines e tags</td><td>Account + admin do CRM do cliente</td><td>IDs mudam por decisão comercial, não técnica</td></tr>
+        <tr><td>Meta / WhatsApp templates</td><td>Gestor de tráfego</td><td>Aprovação de template é fluxo da Meta, não do n8n</td></tr>
+        <tr><td>Infra (VPS, Docker, proxy de modelo)</td><td>Time de infraestrutura</td><td>Instância fora do repositório</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- ===================== 06 — RUNBOOKS ===================== -->
+<div class="card anchor-target" id="s06">
+  <div class="card-body">
+    <h2><span class="slide-num">06</span> Runbooks operacionais</h2>
+    <p>Dez procedimentos para as situações que realmente acontecem. Todos assumem que você tem a API key e acesso de editor. Clique para abrir.</p>
+
+    <details class="fold" open>
+      <summary>R1 · Verificar a saúde da operação em 5 minutos</summary>
+      <div class="fold-body">
+        <p>Faça isso toda segunda-feira e antes de qualquer mudança. Não confie no indicador verde do n8n: workflow ativo com 100% de erro continua “ativo”.</p>
+        <ol class="doc">
+          <li><strong>Instância viva:</strong> <code>curl -s https://n8n.fvmarketing.com.br/healthz</code> → deve retornar <code>{"status":"ok"}</code>.</li>
+          <li><strong>Workflows ativos e última alteração:</strong> listagem da seção 2.3. Alteração recente em workflow estável é sinal de regressão.</li>
+          <li><strong>Taxa de erro por workflow:</strong> para cada um dos 14 ativos, puxe as 25 execuções mais recentes e conte <code>status</code>.</li>
+          <li><strong>Execuções travadas:</strong> status <code>running</code> ou <code>waiting</code> há mais de 30 min indica nó pendurado (geralmente HTTP sem timeout).</li>
+          <li><strong>Volume zero:</strong> workflow ativo sem execução em 24 h é tão suspeito quanto workflow com erro.</li>
+        </ol>
+<pre class="code-block"><code><span class="cm"># resumo de saúde dos 14 ativos</span>
+<span class="kw">for</span> id <span class="kw">in</span> P4fU2C5x2oiocKNv fceKFeTBnRfzhfSz OMwG6XjMB4urB4GF \
+          qU4iFLmZAfLj4Og0 dpz9drJCe6hfIDed ijRmG2eI6BrGAclM QhkTezmiPSn3huJu \
+          rGUDwgv0VVp14NDZ jTtPgpwvmeDcuh9Y dLdMjn2MFyQHGqRM 2emEKklEyDERCxSB \
+          QGN4103pFsi9Q2vX VknHApx3h4wiP8Xb cc5niAhAt87FnA1l cOVfYtSox29VwNDg; <span class="kw">do</span>
+  curl -s -H "X-N8N-API-KEY: $N8N_KEY" \
+    "https://n8n.fvmarketing.com.br/api/v1/executions?workflowId=$id&amp;limit=25&amp;includeData=false" \
+    | jq -r --arg id "$id" '"\($id) \(.data | group_by(.status) | map("\(.[0].status)=\(length)") | join(" "))"'
+<span class="kw">done</span></code></pre>
+      </div>
+    </details>
+
+    <details class="fold" open>
+      <summary>R2 · Investigar uma execução que falhou</summary>
+      <div class="fold-body">
+        <p>O padrão é sempre o mesmo: descobrir <em>qual nó</em> falhou, <em>qual expressão</em> estava sendo avaliada e <em>qual dado</em> entrou nele.</p>
+        <ol class="doc">
+          <li>Abra <em>Executions</em> e filtre por <strong>Error</strong>. A coluna “Last Node” já entrega 80% do diagnóstico.</li>
+          <li>Clique na execução e depois no nó vermelho. A aba <strong>Input</strong> mostra o JSON que chegou — é ali que está o campo <code>undefined</code>.</li>
+          <li>Se o erro for de expressão, confira <strong>se o nó referenciado existe</strong> na versão atual. Renomear nó quebra toda referência <code>$('Nome Antigo')</code> — o erro só aparece em runtime.</li>
+          <li>Reproduza com <em>pin data</em>: copie o Input do nó com problema, fixe no nó anterior e execute só o trecho.</li>
+        </ol>
+<pre class="code-block"><code><span class="cm"># erro + nó + descrição de uma execução</span>
+curl -s -H "X-N8N-API-KEY: $N8N_KEY" \
+  "https://n8n.fvmarketing.com.br/api/v1/executions/&lt;id&gt;?includeData=true" \
+  | jq '.data.resultData | {lastNodeExecuted, message: .error.message, node: .error.node.name}'
+
+<span class="cm"># quais nós mais falham em um workflow (últimas 100 execuções)</span>
+curl -s -H "X-N8N-API-KEY: $N8N_KEY" \
+  "https://n8n.fvmarketing.com.br/api/v1/executions?workflowId=fceKFeTBnRfzhfSz&amp;limit=100&amp;includeData=false" \
+  | jq -r '.data[] | select(.status=="error") | .id' \
+  | <span class="kw">while read</span> eid; <span class="kw">do</span>
+      curl -s -H "X-N8N-API-KEY: $N8N_KEY" \
+        "https://n8n.fvmarketing.com.br/api/v1/executions/$eid?includeData=true" \
+        | jq -r '.data.resultData.lastNodeExecuted'
+    <span class="kw">done</span> | sort | uniq -c | sort -rn</code></pre>
+        <p class="small">Execuções completas expiram conforme a retenção configurada. Se a lista estiver vazia, o problema é retenção — não ausência de erro.</p>
+      </div>
+    </details>
+
+    <details class="fold" open>
+      <summary>R3 · Puxar, editar e publicar um workflow com segurança</summary>
+      <div class="fold-body">
+        <p>Regra de ouro: <strong>a instância é a fonte de verdade, o repositório é o backup</strong>. Nunca edite o JSON do repositório e dê push por cima de algo que mudou em produção.</p>
+        <ol class="doc">
+          <li><code>npx --yes n8nac env status --json</code> — confirme o host e o <code>workflowsPath</code>.</li>
+          <li>Faça uma cópia do estado atual: <code>curl .../workflows/&lt;id&gt; &gt; backup-&lt;data&gt;.json</code>.</li>
+          <li><code>npx --yes n8nac pull</code> — traga a versão viva para o repositório.</li>
+          <li>Edite. Se for mudança de lógica, altere <strong>um nó por vez</strong> e valide a expressão no painel de output.</li>
+          <li><code>npx --yes n8nac push</code> — o push substitui o workflow inteiro.</li>
+          <li>Abra o workflow na UI, execute <strong>uma vez</strong> com dado fixado e confira o resultado antes de considerar concluído.</li>
+        </ol>
+        <div class="risk-box">
+          <h4>Não faça</h4>
+          <p>Não edite o mesmo workflow em dois lugares (UI e repositório) sem reconciliar. Não rode <code>push</code> com o workflow em execução. Não altere nome de nó existente: as referências <code>$('Nome')</code> são por texto e quebram silenciosamente — prefira adicionar um nó novo e renomear só depois de ajustar todas as referências.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="fold" open>
+      <summary>R4 · Alterar o prompt de um agente sem quebrar o fluxo</summary>
+      <div class="fold-body">
+        <p>O prompt vive no nó <code>agent</code> (campo <code>options.systemMessage</code>), não em arquivo. Ele contém variáveis de expressão que <strong>precisam continuar existindo</strong>.</p>
+        <ol class="doc">
+          <li>Mapeie as variáveis antes de editar: <code>{{ $json.formattedHistory }}</code>, <code>{{ $('Monta Mensagens').first().json.messages }}</code>, dados do lead.</li>
+          <li>Altere o texto, preserve as variáveis. Se precisar de um campo novo, garanta que o nó anterior o produza.</li>
+          <li>Valide o JSON de saída do qualificador: o <code>Parse Qualificacao</code> faz <code>JSON.parse</code> — uma resposta com markdown quebra o fluxo inteiro.</li>
+          <li>Rode com 3 conversas de teste: abertura (menu), dúvida e pedido de humano.</li>
+          <li>Confira o custo: prompts longos + dois agentes por mensagem é o maior item de custo variável da operação.</li>
+        </ol>
+        <div class="status-note">
+          <p><strong>Sinal de alerta:</strong> se após a edição o <code>Parse Qualificacao</code> começar a falhar, o modelo está devolvendo texto fora do JSON. Reforce no system prompt “Retorne SOMENTE o JSON” e reduza a temperatura antes de culpar o código.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="fold" open>
+      <summary>R5 · Testar sem mandar mensagem real para o cliente</summary>
+      <div class="fold-body">
+        <p>Não existe sandbox. Testar em produção significa, na prática, controlar onde o fluxo para.</p>
+        <ul class="doc">
+          <li><strong>Pinned data:</strong> fixe a saída do nó <code>Campos Iniciais</code> e execute a partir dali. O caminho até o agente roda de verdade; o envio não.</li>
+          <li><strong>Desabilite o nó de envio:</strong> no editor, <em>Deactivate node</em> em <code>Envia Resposta WhatsApp</code> (ou equivalente). O fluxo segue e você inspeciona a saída do agente.</li>
+          <li><strong>Número de teste:</strong> use um WhatsApp seu no <code>Campos Iniciais</code> pinado. Nunca use o número de um lead real como cobaia.</li>
+          <li><strong>Follow-up:</strong> o disparo é por horário; para testar, ajuste temporariamente <code>fu1_horas</code> para 0 no nó <code>⚙️ Config Followup</code> e <strong>volte ao valor original</strong> depois.</li>
+        </ul>
+        <div class="risk-box">
+          <h4>Efeito colateral que ninguém lembra</h4>
+          <p>Rodar o workflow de atendimento grava em <code>aafbb_leads</code> e pode criar contato/card no Kommo. Se for só teste de prompt, prefira pin data <em>antes</em> de <code>Normaliza Lead</code> e desative os nós de CRM.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="fold" open>
+      <summary>R6 · Instalar o monitor de erros global (faça isso primeiro)</summary>
+      <div class="fold-body">
+        <p>O AGF já tem o padrão pronto: <code>Error Trigger → Montar Evento → Gravar em eventos_operacao</code>. Replique para os demais clientes e você ganha histórico consultável em vez de descoberta tardia.</p>
+        <ol class="doc">
+          <li>Crie um workflow novo com nó <strong>Error Trigger</strong>.</li>
+          <li>Nó <strong>Code</strong>: monte um envelope fixo (<code>workflow</code>, <code>execution_id</code>, <code>nível</code>, <code>etapa</code>, <code>mensagem</code>, <code>detalhe</code>). Campos fixos, sem interpretação de linguagem natural.</li>
+          <li>Nó <strong>HTTP Request</strong> para o Supabase, com <strong>credencial</strong> — nunca a chave no corpo do nó (o monitor atual do AGF faz isso; ver seção 08).</li>
+          <li>No workflow monitorado: <em>Settings → Error Workflow</em> → selecione o monitor. Sem isso o Error Trigger nunca dispara.</li>
+          <li>O monitor <strong>não deve ter error workflow próprio</strong> — evita recursão. Se o insert falhar, a falha aparece na execução dele.</li>
+        </ol>
+        <div class="status-note">
+          <p><strong>Alerta por e-mail não vai funcionar hoje:</strong> a instância está com <code>smtpSetup: false</code> (visível em <code>/rest/settings</code>). Enquanto não houver SMTP configurado, use consulta à tabela de eventos ou um webhook para Slack/Telegram. Não prometa alerta por e-mail ao cliente antes de testar.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="fold" open>
+      <summary>R7 · Corrigir o follow-up da AAFBB (INC-01) — 20 minutos</summary>
+      <div class="fold-body">
+        <p>Duas causas independentes no mesmo workflow. Corrija as duas; consertar só uma faz o fluxo avançar e falhar no nó seguinte.</p>
+
+        <h4>Causa A — campo com nome errado (falha no envio)</h4>
+        <p>O banco devolve <code>telefonecliente</code>; os nós de envio leem <code>telefoneCliente</code>. Substitua nos três nós de WhatsApp:</p>
+        <table>
+          <thead><tr><th>Nó</th><th>Campo</th><th>De</th><th>Para</th></tr></thead>
+          <tbody>
+            <tr><td><code>Envia Follow-up 1</code></td><td><code>recipientPhoneNumber</code></td><td><code>{{ $json.telefoneCliente }}</code></td><td><code>{{ $json.telefonecliente }}</code></td></tr>
+            <tr><td><code>Envia Follow-up 2</code></td><td><code>recipientPhoneNumber</code></td><td><code>{{ $json.telefoneCliente }}</code></td><td><code>{{ $json.telefonecliente }}</code></td></tr>
+            <tr><td><code>Encerra Cadencia Msg</code></td><td><code>recipientPhoneNumber</code></td><td><code>{{ $json.telefoneCliente }}</code></td><td><code>{{ $json.telefonecliente }}</code></td></tr>
+          </tbody>
+        </table>
+
+        <h4>Causa B — referência a nó inexistente (falha na atualização)</h4>
+        <p>Três nós apontam para <code>$('Roteador Followup')</code>, que não existe na versão atual. Troque pela referência ao nó que realmente produziu o item:</p>
+<pre class="code-block"><code><span class="cm">// ANTES — nó inexistente → undefined</span>
+{{ $('Roteador Followup').item.json.telefoneCliente }}
+
+<span class="cm">// DEPOIS — item pareado com o candidato do follow-up</span>
+{{ $('Filtra Tempo').item.json.telefonecliente }}</code></pre>
+        <p>Aplicar em <code>Estagio Pos FU1</code>, <code>Estagio Pos FU2</code> e <code>Finaliza Sem Resposta</code>.</p>
+
+        <h4>Validação</h4>
+        <ol class="doc">
+          <li>Rode manualmente com <strong>um</strong> lead de teste e <code>fu1_horas = 0</code>.</li>
+          <li>Confirme: mensagem recebida, <code>followup_stage</code> foi de 0 para 1, <code>last_interaction_at</code> atualizado.</li>
+          <li>Rode de novo e confirme que ele <em>não</em> reenvia o FU1 (o filtro de tempo deve segurar).</li>
+          <li>Deixe rodar um ciclo de 30 min e confira a taxa de sucesso na lista de execuções.</li>
+        </ol>
+        <div class="risk-box">
+          <h4>Antes de reativar: decida a política de <code>last_interaction_at</code> nulo</h4>
+          <p>O nó <code>Filtra Tempo</code> descarta leads sem data (<code>if (!last) continue;</code>). Se a regra de negócio é “lead sem interação entra no FU1”, preencha a data no momento da criação em vez de mudar o filtro — mudar o filtro dispara mensagem para base antiga inteira de uma vez.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="fold" open>
+      <summary>R8 · Corrigir “Crea Tarea Kommo” (INC-02) — 5 minutos</summary>
+      <div class="fold-body">
+        <p>Erro observado: <code>Invalid URL: {{ $('Monta Nota Resumo').first().json.tarea_url }}. URL must start with "http" or "https".</code> O nó está enviando o texto da expressão como se fosse a URL literal.</p>
+        <p><strong>Causa:</strong> no n8n, expressão só é avaliada quando o valor começa com <code>=</code>. O campo está sem o prefixo.</p>
+        <table>
+          <thead><tr><th>Nó</th><th>Campo</th><th>Valor atual</th><th>Valor correto</th></tr></thead>
+          <tbody>
+            <tr><td><code>Crea Tarea Kommo</code></td><td><code>url</code></td><td><code>{{ $('Monta Nota Resumo').first().json.tarea_url }}</code></td><td><code>={{ $('Monta Nota Resumo').first().json.tarea_url }}</code></td></tr>
+            <tr><td><code>Crea Tarea Kommo</code></td><td><code>jsonBody</code></td><td><code>{{ JSON.stringify(...) }}</code></td><td><code>={{ JSON.stringify(...) }}</code></td></tr>
+          </tbody>
+        </table>
+        <div class="status-note">
+          <p><strong>Efeito colateral:</strong> o nó tem <code>neverError: true</code>, então erro HTTP não derruba a execução — mas erro de <em>parse de URL</em> derruba, porque acontece antes da requisição. E como <code>handoff_done</code> depende de <code>Tarea OK?</code>, a tarefa falhando mantém o bot ativo mesmo com humano no atendimento.</p>
+        </div>
+        <p><strong>Validação:</strong> execute um caso de handoff, confirme 201 na resposta, tarefa visível no Kommo e <code>handoff_done = true</code> em <code>aafbb_leads</code>.</p>
+      </div>
+    </details>
+
+    <details class="fold" open>
+      <summary>R9 · Corrigir “Invalid schema” no Supabase (INC-03 e INC-04)</summary>
+      <div class="fold-body">
+        <p><code>Invalid schema: paludo</code> e <code>Invalid schema: genics</code> significam que o nó aponta para um schema que o PostgREST não reconhece. Não é erro de credencial nem de tabela.</p>
+        <ol class="doc">
+          <li>No Supabase, confirme o schema real: <code>select schema_name from information_schema.schemata;</code>.</li>
+          <li>No nó Supabase, abra <em>Options → Schema</em>. Se o campo estiver vazio, o padrão é <code>public</code> — e a tabela precisa estar lá.</li>
+          <li>Se o schema existe mas a tabela não, o projeto está incompleto (Paludo): não “conserte” apontando para <code>public</code> por conveniência; crie a estrutura correta.</li>
+          <li>Rode a migration de referência (<code>projetos/sdr-ia/aafbb/migration.sql</code>) como modelo de DDL.</li>
+        </ol>
+        <div class="risk-box">
+          <h4>Paludo é diferente de Genics</h4>
+          <p>Genics é cliente em produção com workflow quebrado — corrigir o schema tende a resolver. Paludo <strong>nunca foi configurado</strong>: o follow-up está ativo sozinho, sem o workflow principal. Desligar o follow-up do Paludo é a ação correta até o projeto ser retomado; deixá-lo ligado só gera erro recorrente.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="fold" open>
+      <summary>R10 · Rotacionar credencial exposta e fazer rollback</summary>
+      <div class="fold-body">
+        <h4>Rotação (tokens no corpo do workflow)</h4>
+        <ol class="doc">
+          <li>Identifique todos os nós que usam o valor: busque pelo prefixo do token no JSON do workflow.</li>
+          <li>Revogue no provedor (Meta, Supabase, Kommo) <strong>antes</strong> de editar o n8n — evita janela de uso indevido.</li>
+          <li>Crie a credencial no n8n e troque os nós para <em>Predefined Credential Type</em>.</li>
+          <li>Salve, execute um teste real e só então remova o valor antigo do JSON e do histórico do repositório.</li>
+        </ol>
+        <h4>Rollback</h4>
+        <ul class="doc">
+          <li><strong>Com histórico de versões habilitado:</strong> <em>Workflow → ⋯ → Version history</em> → restaurar a versão anterior à mudança.</li>
+          <li><strong>Sem histórico:</strong> restaure o JSON salvo antes da edição (R3, passo 2) e faça <code>push</code>. Guarde o backup com data no nome.</li>
+          <li><strong>Banco:</strong> mudanças de schema não têm rollback automático. Antes de qualquer <code>alter table</code>, exporte a tabela ou use uma migration reversível.</li>
+        </ul>
+        <div class="status-note">
+          <p><strong>Combinado:</strong> toda alteração em produção deve ter um JSON de backup nomeado (<code>backup-AAAA-MM-DD-HH.json</code>) no mesmo diretório do workflow. É o único rollback confiável hoje.</p>
+        </div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- ===================== 07 — INCIDENTES ===================== -->
+<div class="card anchor-target" id="s07">
+  <div class="card-body">
+    <h2><span class="slide-num">07</span> Incidentes e dívida técnica</h2>
+    <p>Doze achados, ordenados por impacto. Cada um traz evidência de execução, causa raiz e correção. Os três primeiros somam menos de uma hora de trabalho e resolvem a maior parte do prejuízo.</p>
+
+    <div class="finding">
+      <div class="finding-header">
+        <div class="finding-title">INC-01 · Follow-up da AAFBB falhando em 100% das execuções</div>
+        <span class="badge badge-critico">P0</span>
+      </div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">25 de 25 execuções com <code>status = error</code>; última em 03/11/2026 12:30 (exec <span class="mono">640477</span>). Nó: <code>Envia Follow-up 1</code>.</div>
+        <div class="field">Mensagem</div><div class="value"><code>Cannot read properties of undefined (reading 'replace')</code></div>
+        <div class="field">Causa raiz</div><div class="value">Duas: (a) <code>$json.telefoneCliente</code> não existe — a coluna real é <code>telefonecliente</code>; (b) <code>Estagio Pos FU1/FU2</code> e <code>Finaliza Sem Resposta</code> referenciam <code>$('Roteador Followup')</code>, nó removido.</div>
+        <div class="field">Impacto</div><div class="value">Nenhum lead em nutrição recebe follow-up. A cadência de 24 h/48 h existe no papel e não roda.</div>
+        <div class="field">Correção</div><div class="value">Runbook R7 — trocar 3 campos e 3 referências.</div>
+        <div class="field">Esforço</div><div class="value">~20 min + 1 ciclo de validação</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-header">
+        <div class="finding-title">INC-02 · <code>Crea Tarea Kommo</code> com URL literal (expressão sem <code>=</code>)</div>
+        <span class="badge badge-alto">P1</span>
+      </div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">5 erros em 21 execuções do SDR AAFBB; última em 31/10/2026 10:55 (exec <span class="mono">630937</span>).</div>
+        <div class="field">Mensagem</div><div class="value"><code>Invalid URL: {{ $('Monta Nota Resumo').first().json.tarea_url }}. URL must start with "http" or "https".</code></div>
+        <div class="field">Causa raiz</div><div class="value">Campos <code>url</code> e <code>jsonBody</code> sem o prefixo <code>=</code>; o n8n trata o texto como valor estático.</div>
+        <div class="field">Impacto</div><div class="value">Tarefa do representante não é criada e <code>handoff_done</code> fica <code>false</code> — o bot continua respondendo após o humano assumir.</div>
+        <div class="field">Correção</div><div class="value">Runbook R8 — adicionar <code>=</code> nos dois campos.</div>
+        <div class="field">Esforço</div><div class="value">~5 min</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-header">
+        <div class="finding-title">INC-03 · Paludo: follow-up ativo, projeto inexistente</div>
+        <span class="badge badge-alto">P1</span>
+      </div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">Todas as execuções recentes do <code>[PALUDO] Gerenciador Follow-up 4h</code> (<span class="mono">cc5niAhAt87FnA1l</span>) em erro.</div>
+        <div class="field">Mensagem</div><div class="value"><code>Invalid schema: paludo</code></div>
+        <div class="field">Causa raiz</div><div class="value">Projeto nunca configurado: o workflow principal (<span class="mono">mjcdyEqKZDNxCzt5</span>) está inativo, sem credenciais e sem schema criado. O follow-up ficou ligado.</div>
+        <div class="field">Impacto</div><div class="value">Ruído de erro recorrente e risco de disparo em massa se o schema for criado sem revisar a regra.</div>
+        <div class="field">Correção</div><div class="value">Desativar o follow-up até o projeto ser retomado; se retomar, seguir <code>GUIA_PROXIMOS_PASSOS.md</code>.</div>
+        <div class="field">Esforço</div><div class="value">2 min (desativar) · 1–2 dias (retomar)</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-header">
+        <div class="finding-title">INC-04 · Genics: <code>Invalid schema: genics</code></div>
+        <span class="badge badge-alto">P1</span>
+      </div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">2 de 2 execuções em erro em 03/11/2026; nó <code>Buscar Contatos</code>.</div>
+        <div class="field">Mensagem</div><div class="value"><code>Your request is invalid or could not be processed by the service: Invalid schema: genics</code></div>
+        <div class="field">Causa raiz</div><div class="value">Schema declarado no nó Supabase não existe no projeto (ou a tabela está em <code>public</code>).</div>
+        <div class="field">Impacto</div><div class="value">Atendimento não persiste; lead não é criado nem atualizado.</div>
+        <div class="field">Correção</div><div class="value">Runbook R9. Antes, confirme com o account se o Genics ainda está ativo comercialmente.</div>
+        <div class="field">Esforço</div><div class="value">~30 min</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-header">
+        <div class="finding-title">INC-05 · Schwalm: token da Meta fixo no workflow e zero tráfego</div>
+        <span class="badge badge-alto">P1</span>
+      </div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">Token <code>EAAS…</code> e JWT embutidos nos nós <code>HTTP Request</code>, <code>HTTP Request1/3/5/6/7</code> e <code>normatização-dados</code>. Nenhuma execução registrada na amostra.</div>
+        <div class="field">Causa raiz</div><div class="value">Implementação anterior ao padrão de credenciais; nunca migrada.</div>
+        <div class="field">Impacto</div><div class="value">Credencial exposta a qualquer pessoa com acesso de leitura ao workflow. Workflow “ativo” que não processa nada dá falsa sensação de cobertura.</div>
+        <div class="field">Correção</div><div class="value">Rotacionar (R10), mover para credencial e decidir com o account se o Schwalm continua no programa.</div>
+        <div class="field">Esforço</div><div class="value">1–2 h</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-header">
+        <div class="finding-title">INC-06 · CESLA: falhas de rede nos nós de arquivo</div>
+        <span class="badge badge-medio">P2</span>
+      </div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">3 de 3 execuções em erro; nós <code>Arquivo Criado</code> e <code>Arquivo Alterado</code>.</div>
+        <div class="field">Mensagens</div><div class="value"><code>The service was not able to process your request</code> · <code>The DNS server returned an error</code> · <code>The connection to the server was closed unexpectedly</code></div>
+        <div class="field">Causa raiz</div><div class="value">Instabilidade na integração Google (credencial <code>Sofia Chatbot</code>) ou rede da instância; não é bug de lógica.</div>
+        <div class="field">Impacto</div><div class="value">Mídia/documento do lead não é processado; atendimento perde contexto.</div>
+        <div class="field">Correção</div><div class="value">Adicionar retry (3×, backoff) nos nós Google e testar a credencial. Se persistir, isolar a chamada em sub-workflow com tratamento de erro.</div>
+        <div class="field">Esforço</div><div class="value">~1 h</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-header">
+        <div class="finding-title">INC-07 · SIGNOR: rate limit intermitente da OpenAI</div>
+        <span class="badge badge-medio">P2</span>
+      </div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">Erros intermitentes com <code>OpenAI: Rate limit reached</code> no workflow BLINDADA.</div>
+        <div class="field">Causa raiz</div><div class="value">Dois modelos no mesmo fluxo (<code>gpt-5.6-terra</code> e <code>gpt-4o</code>) sem controle de concorrência nem retry.</div>
+        <div class="field">Impacto</div><div class="value">Mensagem do lead é perdida quando o limite é atingido — e não há fila de reprocessamento.</div>
+        <div class="field">Correção</div><div class="value">Retry com backoff exponencial no nó do modelo; limitar concorrência; considerar fallback para um segundo modelo.</div>
+        <div class="field">Esforço</div><div class="value">~2 h</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-header">
+        <div class="finding-title">INC-08 · Observabilidade existe em um cliente só</div>
+        <span class="badge badge-medio">P2</span>
+      </div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">Apenas <code>[AGF] SDR IA - Monitor de erros</code> (<span class="mono">QhkTezmiPSn3huJu</span>) está configurado como error workflow. Os outros 13 ativos não têm.</div>
+        <div class="field">Causa raiz</div><div class="value">Monitor nasceu como solução pontual do AGF e não foi promovido a padrão.</div>
+        <div class="field">Impacto</div><div class="value">Incidentes como INC-01 passam semanas sem detecção. O tempo de descoberta é o cliente reclamar.</div>
+        <div class="field">Correção</div><div class="value">Runbook R6 — replicar o monitor e apontar cada workflow para ele.</div>
+        <div class="field">Esforço</div><div class="value">~4 h</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-header">
+        <div class="finding-title">INC-09 · 25 workflows legados com nome de SDR</div>
+        <span class="badge badge-medio">P2</span>
+      </div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">39 workflows correspondem a termos de SDR; 14 ativos e 25 desligados, incluindo 4 versões do mesmo Genics e 3 do PRO.</div>
+        <div class="field">Causa raiz</div><div class="value">Iteração direta em produção, sem convenção de nome nem arquivamento.</div>
+        <div class="field">Impacto</div><div class="value">Risco de editar/ativar a versão errada. Consumo de atenção em toda investigação.</div>
+        <div class="field">Correção</div><div class="value">Convenção <code>[CLIENTE] Função — vN</code>; arquivar (não apagar) o legado com nota de status. Fazer depois de documentar, nunca antes.</div>
+        <div class="field">Esforço</div><div class="value">~3 h</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-header">
+        <div class="finding-title">INC-10 · Sem ambiente de teste, sem CI, edição direta em produção</div>
+        <span class="badge badge-medio">P2</span>
+      </div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">Uma única instância; nenhum workflow de teste; nenhum pipeline no repositório para os JSONs de SDR.</div>
+        <div class="field">Causa raiz</div><div class="value">Prioridade em entrega, não em engenharia. Compreensível no início, caro na escala.</div>
+        <div class="field">Impacto</div><div class="value">Toda mudança é um experimento em cliente real. Regressões só aparecem no uso.</div>
+        <div class="field">Correção</div><div class="value">Mínimo viável: snapshot JSON antes de cada mudança + um workflow de teste por cliente com número dedicado. CI completo é fase 2.</div>
+        <div class="field">Esforço</div><div class="value">~1 dia (mínimo viável)</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-header">
+        <div class="finding-title">INC-11 · Nomenclatura misturada (camelCase × snake_case) — causa raiz compartilhada</div>
+        <span class="badge badge-medio">P2</span>
+      </div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value">DDL usa <code>telefoneCliente</code>, filtros usam <code>telefonecliente</code>, nós usam <code>$json.telefoneCliente</code>. Campos como <code>idmensagem</code>, <code>sessionid</code> seguem o mesmo padrão.</div>
+        <div class="field">Causa raiz</div><div class="value">Postgres faz fold de identificadores não citados; o time assumiu que o nome do DDL era o nome da API.</div>
+        <div class="field">Impacto</div><div class="value">Origem do INC-01 e de qualquer bug futuro do tipo “campo undefined”. Difícil de detectar porque não há erro de schema.</div>
+        <div class="field">Correção</div><div class="value">Padronizar <code>snake_case</code> em novas tabelas; nas existentes, documentar o mapa real de colunas e usar sempre o nome que a API devolve.</div>
+        <div class="field">Esforço</div><div class="value">Contínuo (regra de revisão)</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-header">
+        <div class="finding-title">INC-12 · Modelos não padronizados entre clientes</div>
+        <span class="badge badge-baixo">P3</span>
+      </div>
+      <div class="finding-grid">
+        <div class="field">Evidência</div><div class="value"><code>gpt-5.1</code> (AAFBB), <code>gpt-5.6-luna</code> (AGF), <code>gpt-5.6-terra</code> + <code>gpt-4o</code> (SIGNOR), <code>gpt-4o</code> (Genics, PRO).</div>
+        <div class="field">Causa raiz</div><div class="value">Escolha por cliente, sem catálogo. Modelos fora do padrão OpenAI sugerem alias via proxy.</div>
+        <div class="field">Impacto</div><div class="value">Custo e qualidade imprevisíveis; trocar de provedor exige edição workflow a workflow.</div>
+        <div class="field">Correção</div><div class="value">Documentar o catálogo disponível e o alias→modelo real; definir um padrão por caso de uso (conversa × classificação).</div>
+        <div class="field">Esforço</div><div class="value">~2 h (documentação)</div>
+      </div>
+    </div>
+
+    <h3>7.1 Ordem de execução recomendada</h3>
+    <table>
+      <thead><tr><th>#</th><th>Ação</th><th>Resolve</th><th>Tempo</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Corrigir <code>Crea Tarea Kommo</code> (R8)</td><td>INC-02 e o efeito em <code>handoff_done</code></td><td>5 min</td></tr>
+        <tr><td>2</td><td>Corrigir follow-up AAFBB (R7)</td><td>INC-01 — receita parada</td><td>20 min</td></tr>
+        <tr><td>3</td><td>Desativar follow-up do Paludo</td><td>INC-03 — ruído e risco</td><td>2 min</td></tr>
+        <tr><td>4</td><td>Instalar monitor de erros global (R6)</td><td>INC-08 e a raiz de “descobrir tarde”</td><td>4 h</td></tr>
+        <tr><td>5</td><td>Corrigir schema Genics (R9)</td><td>INC-04</td><td>30 min</td></tr>
+        <tr><td>6</td><td>Rotacionar tokens do Schwalm (R10)</td><td>INC-05</td><td>2 h</td></tr>
+        <tr><td>7</td><td>Retry + backoff nos nós de modelo e Google</td><td>INC-06 e INC-07</td><td>3 h</td></tr>
+        <tr><td>8</td><td>Convenção de nome e arquivamento do legado</td><td>INC-09</td><td>3 h</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- ===================== 08 — SEGURANÇA ===================== -->
+<div class="card anchor-target" id="s08">
+  <div class="card-body">
+    <h2><span class="slide-num">08</span> Segurança e LGPD</h2>
+    <p>Esta seção não é sobre conformidade teórica. É sobre três coisas concretas: credenciais que estão no lugar errado, dados pessoais que ficam guardados para sempre e um canal (WhatsApp) com regras próprias que, se violadas, derrubam o número do cliente.</p>
+
+    <div class="risk-box">
+      <h4>O achado mais grave: credenciais dentro do workflow</h4>
+      <p>Tokens da Meta, chaves do Supabase e JWTs estão <strong>no corpo dos nós</strong>, não em credenciais do n8n. Quem tem acesso de leitura ao workflow — ou ao JSON exportado, ou ao repositório — tem a credencial. O caso mais crítico é o monitor do AGF, que grava com a chave anon do Supabase embutida em um nó HTTP.</p>
+    </div>
+
+    <h3>8.1 Inventário de exposição</h3>
+    <table>
+      <thead><tr><th>Onde</th><th>O que está exposto</th><th>Risco</th><th>Ação</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>[AGF] SDR IA - Monitor de erros</code></td>
+          <td>URL do projeto Supabase + <code>apikey</code> e <code>Authorization: Bearer</code> (anon) no nó HTTP</td>
+          <td>Médio — anon key respeita RLS, mas expõe o projeto e permite reconhecimento</td>
+          <td>Mover para credencial <code>supabaseApi</code>; rotacionar a anon key</td>
+        </tr>
+        <tr>
+          <td><code>[Schwalm] SDR IA - Maia - New</code></td>
+          <td>Token <code>EAAS…</code> (Meta) em <code>HTTP Request</code> e <code>HTTP Request3</code>; JWT em 8 nós</td>
+          <td><strong>Alto</strong> — token de envio de mensagens em texto claro</td>
+          <td>Rotacionar imediatamente; migrar para <code>whatsAppApi</code></td>
+        </tr>
+        <tr>
+          <td>Workflows AGF (3)</td>
+          <td>Chaves Supabase em Code nodes (<code>Eval Lead MQL</code>, <code>Log Kommo</code>, <code>Avaliar Upsert</code>)</td>
+          <td>Médio</td>
+          <td>Consolidar em credencial e remover do código</td>
+        </tr>
+        <tr>
+          <td>Nós de WhatsApp em geral</td>
+          <td>Phone Number ID no nó <code>Set</code> de configuração</td>
+          <td>Baixo — identificador, não segredo</td>
+          <td>Manter, mas centralizar por cliente</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="small">A instância tem 76 credenciais e nenhuma política de rotação. Não há registro de quando cada uma foi criada ou revisada.</p>
+
+    <h3>8.2 Dados pessoais tratados</h3>
+    <table>
+      <thead><tr><th>Dado</th><th>Onde</th><th>Sensibilidade</th><th>Observação</th></tr></thead>
+      <tbody>
+        <tr><td>Telefone (WhatsApp)</td><td><code>aafbb_leads.telefonecliente</code> (único)</td><td>Pessoal</td><td>Chave de identificação do lead em todo o fluxo</td></tr>
+        <tr><td>Nome</td><td><code>nomeCliente</code>, Kommo</td><td>Pessoal</td><td>Coletado no primeiro contato</td></tr>
+        <tr><td>Histórico de conversa</td><td><code>aafbb_chat_history.content</code></td><td>Pessoal — pode conter dados sensíveis</td><td><strong>Sem prazo de retenção definido</strong></td></tr>
+        <tr><td>Cidade/UF, perfil, vínculo com o BB</td><td><code>aafbb_leads</code></td><td>Pessoal</td><td>Usado para roteamento regional</td></tr>
+        <tr><td>Resumo para o representante</td><td><code>resumo_representante</code>, nota do Kommo</td><td>Pessoal</td><td>Síntese gerada por IA — sujeita a erro</td></tr>
+        <tr><td>Áudio e imagem</td><td>Baixados da Meta durante a execução</td><td>Pessoal</td><td>Passa pelo storage da Meta; verificar retenção</td></tr>
+      </tbody>
+    </table>
+
+    <h3>8.3 Pontos de atenção para o DPO / jurídico</h3>
+    <ul class="doc">
+      <li><strong>Base legal e transparência:</strong> o lead precisa saber que fala com uma IA. Os prompts atuais apresentam a assistente pelo nome, mas nem todos declaram explicitamente que é automatizado — validar por cliente.</li>
+      <li><strong>Retenção:</strong> <code>aafbb_chat_history</code> cresce sem expurgo. Definir prazo (sugestão: 90 a 180 dias após encerramento) e um job de limpeza. Hoje o dado é eterno por omissão.</li>
+      <li><strong>Operadores e transferência internacional:</strong> OpenAI (EUA), Meta (EUA), Supabase (região do projeto — confirmar), Kommo. Precisam constar no contrato/DPA do cliente.</li>
+      <li><strong>Direitos do titular:</strong> não existe fluxo para atender exclusão/anonimização sob demanda. Mínimo: uma query de purge documentada por cliente.</li>
+      <li><strong>Minimização:</strong> o histórico completo é enviado ao modelo a cada mensagem. Avaliar janela de contexto (últimas N mensagens) — reduz custo e exposição.</li>
+      <li><strong>Logs de execução do n8n:</strong> contêm payloads com telefone e conteúdo. A retenção de execuções é uma decisão de segurança, não só de disco.</li>
+    </ul>
+
+    <h3>8.4 Regras do canal WhatsApp</h3>
+    <div class="status-note">
+      <p><strong>Janela de atendimento de 24 h:</strong> fora dela, só é possível iniciar conversa com <em>template aprovado</em>. O Outbound da AAFBB já usa <code>aafbb_boas_vindas</code> — correto. O follow-up usa texto livre (<code>textBody</code>), o que <strong>só funciona dentro da janela</strong>. Se o FU1 for disparado após 24 h de silêncio, a Meta pode rejeitar a mensagem: é um risco de arquitetura, não só de código.</p>
+    </div>
+    <ul class="doc">
+      <li><strong>Opt-in:</strong> confirme como o número foi coletado (formulário, indicação, evento). O outbound por polling do Kommo pode captar lead sem consentimento explícito para WhatsApp.</li>
+      <li><strong>Opt-out:</strong> o fluxo encerra a cadência (<code>stop_followup</code>), mas não há comando de descadastro reconhecido pelo agente. Implementar “pare/sair” como gatilho determinístico.</li>
+      <li><strong>Qualidade do número:</strong> bloqueios e denúncias derrubam o <em>quality rating</em> e podem suspender o número do cliente. Follow-up sem resposta é o principal vetor.</li>
+    </ul>
+
+    <h3>8.5 Plano mínimo de segurança</h3>
+    <table>
+      <thead><tr><th>Prioridade</th><th>Ação</th><th>Quando</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge badge-critico">Agora</span></td><td>Rotacionar o token Meta do Schwalm e a anon key do Supabase usada no monitor</td><td>Semana 1</td></tr>
+        <tr><td><span class="badge badge-alto">Curto</span></td><td>Migrar todas as chaves embutidas para credenciais do n8n; remover do repositório</td><td>Semana 2–3</td></tr>
+        <tr><td><span class="badge badge-medio">Médio</span></td><td>Definir retenção de histórico e execuções; criar rotina de purge</td><td>Dia 30–45</td></tr>
+        <tr><td><span class="badge badge-medio">Médio</span></td><td>Documentar operadores e base legal por cliente com o DPO</td><td>Dia 45–60</td></tr>
+        <tr><td><span class="badge badge-baixo">Longo</span></td><td>Política de rotação trimestral de credenciais e revisão de acessos</td><td>Dia 90</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===================== 09 — OBSERVABILIDADE ===================== -->
+<div class="card anchor-target" id="s09">
+  <div class="card-body">
+    <h2><span class="slide-num">09</span> Observabilidade</h2>
+    <p>Hoje a pergunta “o SDR está funcionando?” é respondida abrindo a lista de execuções e olhando. Isso não escala e foi exatamente o que permitiu o INC-01 passar despercebido.</p>
+
+    <h3>9.1 O que existe</h3>
+    <table>
+      <thead><tr><th>Recurso</th><th>Cobertura</th><th>Limite</th></tr></thead>
+      <tbody>
+        <tr><td>Lista de execuções do n8n</td><td>Todos os workflows</td><td>Passiva; ninguém olha. Retenção limitada por configuração da instância.</td></tr>
+        <tr><td>Error Trigger + <code>agf.eventos_operacao</code></td><td>Somente AGF</td><td>Grava erro estruturado, mas sem alerta ativo (SMTP não configurado).</td></tr>
+        <tr><td><code>/healthz</code></td><td>Instância</td><td>Diz que o n8n está de pé — não que os workflows funcionam.</td></tr>
+        <tr><td>Logs do Kommo / Supabase</td><td>Por integração</td><td>Não correlacionam com a execução do n8n.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>9.2 As quatro perguntas que ninguém consegue responder hoje</h3>
+    <ul class="doc">
+      <li><strong>Quantos leads responderam nas últimas 24 h?</strong> — depende de contar linhas em <code>aafbb_chat_history</code>.</li>
+      <li><strong>Qual a taxa de erro por workflow na semana?</strong> — exige script manual (R1).</li>
+      <li><strong>Algum lead ficou sem resposta?</strong> — não há métrica de “mensagem recebida sem resposta enviada”.</li>
+      <li><strong>Quanto custou de modelo?</strong> — não há contabilização de tokens por cliente.</li>
+    </ul>
+
+    <h3>9.3 Mínimo viável em três camadas</h3>
+    <div class="flow">
+      <div class="flow-step"><div class="n">Camada 1</div><strong>Erro</strong><span>Error workflow global gravando em <code>eventos_operacao</code> com cliente, workflow, nó e mensagem.</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="n">Camada 2</div><strong>Rotina</strong><span>Script diário (R1) que calcula taxa de sucesso e volume por workflow e grava o resultado.</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="n">Camada 3</div><strong>Alerta</strong><span>Notificação quando taxa de erro &gt; 10% ou volume cair a zero por 2 h — Slack/Telegram enquanto não houver SMTP.</span></div>
+    </div>
+
+<pre class="code-block"><code><span class="cm">-- painel mínimo: erros por cliente nas últimas 24h</span>
+<span class="kw">select</span>
+  cliente,
+  count(*) <span class="kw">filter</span> (<span class="kw">where</span> nivel = 'erro')  <span class="kw">as</span> erros,
+  count(*)                                <span class="kw">as</span> eventos,
+  max(created_at)                          <span class="kw">as</span> ultimo_evento
+<span class="kw">from</span> agf.eventos_operacao
+<span class="kw">where</span> created_at &gt; now() - <span class="kw">interval</span> '24 hours'
+<span class="kw">group by</span> cliente <span class="kw">order by</span> erros <span class="kw">desc</span>;
+
+<span class="cm">-- leads sem retorno da IA (proxy de conversa travada)</span>
+<span class="kw">select</span> l.telefonecliente, l.last_interaction_at, l.followup_stage
+<span class="kw">from</span> public.aafbb_leads l
+<span class="kw">where</span> l.last_interaction_at &lt; now() - <span class="kw">interval</span> '2 hours'
+  <span class="kw">and</span> l.stop_followup = false
+  <span class="kw">and not exists</span> (
+    <span class="kw">select</span> 1 <span class="kw">from</span> public.aafbb_chat_history h
+    <span class="kw">where</span> h.session_id = l.sessionid <span class="kw">and</span> h.role = 'assistant'
+      <span class="kw">and</span> h.created_at &gt; l.last_interaction_at
+  );</code></pre>
+
+    <h3>9.4 Métricas que valem acompanhar</h3>
+    <table>
+      <thead><tr><th>Métrica</th><th>Definição</th><th>Meta inicial</th></tr></thead>
+      <tbody>
+        <tr><td>Taxa de sucesso</td><td>execuções <code>success</code> / total por workflow (24 h)</td><td>&gt; 95%</td></tr>
+        <tr><td>Tempo até detecção</td><td>intervalo entre primeira falha e primeiro alerta</td><td>&lt; 15 min</td></tr>
+        <tr><td>Leads sem resposta</td><td>mensagem humana sem resposta da IA em 5 min</td><td>0</td></tr>
+        <tr><td>Cobertura de follow-up</td><td>leads elegíveis com <code>followup_stage</code> avançando</td><td>&gt; 90%</td></tr>
+        <tr><td>Handoff efetivo</td><td>cenário A com <code>handoff_done = true</code></td><td>100%</td></tr>
+        <tr><td>Custo por conversa</td><td>tokens consumidos / conversas iniciadas</td><td>definir baseline</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===================== 10 — PLANO ===================== -->
+<div class="card anchor-target" id="s10">
+  <div class="card-body">
+    <h2><span class="slide-num">10</span> Plano 30 / 60 / 90 dias</h2>
+    <p>A ordem não é negociável: primeiro estancar o prejuízo, depois enxergar, depois organizar. Tentar arrumar arquitetura antes de ter alerta é repetir o erro que gerou este documento.</p>
+
+    <div class="timeline">
+      <div class="timeline-phase">
+        <div class="dot red"></div>
+        <div class="phase-name"><b>Dias 1–30 · Estancar</b></div>
+        <div class="phase-pct">receita parada</div>
+      </div>
+      <div class="timeline-phase">
+        <div class="dot orange"></div>
+        <div class="phase-name"><b>Dias 31–60 · Enxergar</b></div>
+        <div class="phase-pct">observabilidade</div>
+      </div>
+      <div class="timeline-phase">
+        <div class="dot gold"></div>
+        <div class="phase-name"><b>Dias 61–90 · Organizar</b></div>
+        <div class="phase-pct">escala sustentável</div>
+      </div>
+    </div>
+
+    <h3>Dias 1–30 · Estancar o prejuízo</h3>
+    <div class="vert-timeline">
+      <div class="vt-item exec">
+        <div class="vt-date">Semana 1</div>
+        <div class="vt-title">Correções cirúrgicas + acessos</div>
+        <div class="vt-meta">R8 (tarefa Kommo) · R7 (follow-up AAFBB) · desativar follow-up Paludo · receber acessos da seção 5.4 · rodar R1 e registrar a linha de base de saúde.</div>
+      </div>
+      <div class="vt-item">
+        <div class="vt-date">Semana 2</div>
+        <div class="vt-title">Segurança mínima</div>
+        <div class="vt-meta">Rotacionar token do Schwalm e anon key do Supabase; remover chaves do corpo dos nós; confirmar que nada quebrou.</div>
+      </div>
+      <div class="vt-item">
+        <div class="vt-date">Semana 3–4</div>
+        <div class="vt-title">Monitor de erros em todos os clientes</div>
+        <div class="vt-meta">R6 aplicado aos 14 ativos; painel de consulta em SQL; definir quem olha e com que frequência.</div>
+      </div>
+    </div>
+    <div class="callout">
+      <h4>Critério de saída dos 30 dias</h4>
+      <p>Follow-up da AAFBB com taxa de sucesso &gt; 95% por 7 dias seguidos; nenhum workflow ativo com 100% de erro; todos os workflows ativos apontando para um error workflow; nenhuma credencial em texto claro em workflow de cliente ativo.</p>
+    </div>
+
+    <h3>Dias 31–60 · Enxergar</h3>
+    <ul class="check-list">
+      <li><span class="check-icon exec">→</span><div><strong>Retry e timeout padronizados</strong> em todo nó HTTP e de modelo (3 tentativas, backoff exponencial, timeout explícito). Resolve INC-06 e INC-07 na origem.</div></li>
+      <li><span class="check-icon exec">→</span><div><strong>Reduzir o tempo de detecção para &lt; 15 min</strong> com alerta ativo (Slack/Telegram) enquanto SMTP não existe.</div></li>
+      <li><span class="check-icon exec">→</span><div><strong>Corrigir Genics ou desligar com decisão registrada.</strong> Workflow quebrado e ativo é pior que workflow desligado.</div></li>
+      <li><span class="check-icon exec">→</span><div><strong>Convenção de nomes e arquivamento do legado</strong> (INC-09), com nota de status em cada workflow arquivado.</div></li>
+      <li><span class="check-icon exec">→</span><div><strong>Retenção de dados definida</strong> com o DPO e rotina de purge do histórico.</div></li>
+    </ul>
+    <div class="status-note">
+      <p><strong>Critério de saída:</strong> você consegue responder às quatro perguntas da seção 9.2 sem abrir o n8n. E nenhum cliente fica mais de 1 dia com falha silenciosa.</p>
+    </div>
+
+    <h3>Dias 61–90 · Organizar para escalar</h3>
+    <ul class="check-list">
+      <li><span class="check-icon pend">○</span><div><strong>Ambiente de teste por cliente</strong> — número dedicado + workflow clonado, mesmo que manual.</div></li>
+      <li><span class="check-icon pend">○</span><div><strong>Padronizar o modelo de dados</strong> em <code>snake_case</code> para novos clientes e documentar o mapa das tabelas existentes.</div></li>
+      <li><span class="check-icon pend">○</span><div><strong>Catálogo de modelos</strong> (alias → modelo real → custo → caso de uso) e política de fallback.</div></li>
+      <li><span class="check-icon pend">○</span><div><strong>Templates de onboarding de cliente novo</strong>: checklist de credenciais, migration, workflow base e teste de aceite.</div></li>
+      <li><span class="check-icon pend">○</span><div><strong>Runbooks versionados no repositório</strong>, não só nesta página — para sobreviver ao próximo handoff.</div></li>
+    </ul>
+
+    <h3>10.1 O que não fazer</h3>
+    <table>
+      <thead><tr><th>Não faça</th><th>Por quê</th></tr></thead>
+      <tbody>
+        <tr><td>Reescrever o workflow da AAFBB “do zero, mais limpo”</td><td>78 nós em produção com regra de negócio não documentada. Conserte o que está quebrado; refatore depois de ter teste e monitor.</td></tr>
+        <tr><td>Apagar os 25 workflows legados de uma vez</td><td>Alguns são a única cópia de configuração que funcionou (ex.: Signor antigo). Arquive com nota.</td></tr>
+        <tr><td>Trocar todos os modelos por um só</td><td>Qualidade de conversa muda por cliente e por prompt. Meça antes.</td></tr>
+        <tr><td>Ativar retry agressivo sem idempotência</td><td>Reenviar mensagem de WhatsApp duplicada é pior que falhar. Garanta chave de idempotência antes.</td></tr>
+        <tr><td>Confiar no indicador verde de “workflow ativo”</td><td>Foi exatamente isso que escondeu o INC-01.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===================== 11 — CHECKLIST ===================== -->
+<div class="card anchor-target" id="s11">
+  <div class="card-body">
+    <h2><span class="slide-num">11</span> Checklist de transição</h2>
+    <p>O que está pronto, o que depende de você e onde encontrar cada coisa. Use isto como roteiro da reunião de passagem.</p>
+
+    <h3>11.1 Entregue e verificado</h3>
+    <ul class="check-list">
+      <li><span class="check-icon ok">✓</span><div>Inventário dos 14 workflows ativos com ID, função, credenciais e estado de saúde</div></li>
+      <li><span class="check-icon ok">✓</span><div>Arquitetura de referência documentada (3 camadas + padrão canônico de 10 etapas)</div></li>
+      <li><span class="check-icon ok">✓</span><div>Modelo de dados da AAFBB (DDL, índices, RLS) e explicação do multi-schema</div></li>
+      <li><span class="check-icon ok">✓</span><div>Diagnóstico com evidência de execução dos 7 workflows com problema</div></li>
+      <li><span class="check-icon ok">✓</span><div>10 runbooks operacionais, incluindo as correções dos dois incidentes P0/P1 da AAFBB</div></li>
+      <li><span class="check-icon ok">✓</span><div>Plano de 30/60/90 com critérios de saída</div></li>
+      <li><span class="check-icon ok">✓</span><div>Inventário de exposição de credenciais e pontos de LGPD</div></li>
+    </ul>
+
+    <h3>11.2 Depende de ação sua</h3>
+    <ul class="check-list">
+      <li><span class="check-icon exec">→</span><div><strong>Acessos</strong> — n8n (admin), Supabase, Kommo AAFBB, Meta Business, OpenAI/proxy. Sem isso, nada da seção 6 é executável.</div></li>
+      <li><span class="check-icon exec">→</span><div><strong>Aplicar as correções R7 e R8</strong> e validar com um lead de teste antes de considerar o handoff concluído.</div></li>
+      <li><span class="check-icon exec">→</span><div><strong>Desativar o follow-up do Paludo</strong> ou registrar formalmente que ele segue ligado e falhando.</div></li>
+      <li><span class="check-icon exec">→</span><div><strong>Decidir o destino comercial</strong> de Genics e Schwalm — a correção técnica depende dessa resposta.</div></li>
+      <li><span class="check-icon exec">→</span><div><strong>Definir o dono da rotina semanal</strong> (R1) e o canal de alerta enquanto não houver SMTP.</div></li>
+      <li><span class="check-icon pend">○</span><div><strong>Validar com o DPO</strong> a base legal, retenção e operadores por cliente.</div></li>
+      <li><span class="check-icon pend">○</span><div><strong>Combinar o processo de mudança</strong>: pull antes de editar, backup nomeado, teste com pin data, push e validação.</div></li>
+    </ul>
+
+    <h3>11.3 Arquivos de referência no repositório</h3>
+    <table>
+      <thead><tr><th>Arquivo</th><th>O que tem</th></tr></thead>
+      <tbody>
+        <tr><td><code>projetos/sdr-ia/aafbb/README-SETUP.md</code></td><td>Diário técnico do AAFBB: arquitetura, bugs resolvidos, pendências e decisões</td></tr>
+        <tr><td><code>projetos/sdr-ia/aafbb/briefing-aafbb.txt</code></td><td>Regras de negócio, triagem, cenários A/B/C/D, follow-up e critério de MQL</td></tr>
+        <tr><td><code>projetos/sdr-ia/aafbb/migration.sql</code></td><td>DDL real das tabelas <code>aafbb_leads</code> e <code>aafbb_chat_history</code></td></tr>
+        <tr><td><code>projetos/sdr-ia/aafbb/workflows/</code></td><td>Snapshots dos 3 workflows + versões <code>.pre-refresh</code> e <code>.bak</code></td></tr>
+        <tr><td><code>projetos/sdr-ia/aafbb/prompt-lovable-dashboard.md</code></td><td>Especificação do dashboard do cliente</td></tr>
+        <tr><td><code>projetos/sdr-ia/sessoes/</code></td><td>Resumos de ADPLAN, SIGNOR, SCHWALM e GENICS — histórico de problemas e correções</td></tr>
+        <tr><td><code>projetos/SDR IA/[SDR-IA] Paludo e Pascoal/</code></td><td>Guia de implementação do Paludo (projeto nunca concluído)</td></tr>
+        <tr><td><code>_archive/sql/</code></td><td>Correções de schema de Proanálises e Genics</td></tr>
+        <tr><td><code>.opencode/agents/sdr-tech.md</code></td><td>Definição do agente técnico e protocolo operacional usado nesta base</td></tr>
+        <tr><td><code>n8nac-config.json</code></td><td>Ambiente ativo e caminho de sincronização</td></tr>
+      </tbody>
+    </table>
+
+    <h3>11.4 Definição de pronto do handoff</h3>
+    <div class="status-note">
+      <p>O handoff está concluído quando a nova pessoa consegue, <strong>sem ajuda</strong>: (1) identificar um workflow com erro em menos de 5 minutos; (2) corrigir uma expressão quebrada e publicar com segurança; (3) explicar por que o follow-up da AAFBB falhava; (4) saber quem acionar quando o problema é de CRM, de Meta ou de infra. Se qualquer uma dessas respostas depender de perguntar, o handoff não terminou.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 12 — GLOSSÁRIO ===================== -->
+<div class="card anchor-target" id="s12">
+  <div class="card-body">
+    <h2><span class="slide-num">12</span> Glossário e referências</h2>
+
+    <h3>12.1 Termos do domínio</h3>
+    <table>
+      <thead><tr><th>Termo</th><th>Significado neste contexto</th></tr></thead>
+      <tbody>
+        <tr><td><strong>SDR IA</strong></td><td>Assistente conversacional que faz triagem no WhatsApp, qualifica o lead e registra no CRM antes do handoff humano.</td></tr>
+        <tr><td><strong>Cenário A/B/C/D</strong></td><td>Classificação da AAFBB: A = MQL; B = nutrição; C = associado atual; D = fora do perfil. Define o destino no Kommo e se há follow-up.</td></tr>
+        <tr><td><strong>Handoff</strong></td><td>Passagem do atendimento para um representante humano. Marca <code>handoff_done</code> e cria tarefa no CRM.</td></tr>
+        <tr><td><strong>Debounce</strong></td><td>Janela de espera (1,2 s na AAFBB) que agrupa mensagens enviadas em sequência antes de chamar o modelo.</td></tr>
+        <tr><td><strong>Qualificador</strong></td><td>Segundo agente, que não conversa: lê a conversa e devolve JSON com cenário, perfil, cidade e urgência.</td></tr>
+        <tr><td><strong>Cadência</strong></td><td>Sequência de follow-up (FU1 em 24 h, FU2 em 48 h) controlada por <code>followup_stage</code>.</td></tr>
+        <tr><td><strong>Outbound</strong></td><td>Fluxo que capta lead novo (LP ou polling do Kommo) e envia o template de boas-vindas.</td></tr>
+        <tr><td><strong>Schema</strong></td><td>Namespace de tabelas no Postgres. Nesta base, é o mecanismo de isolamento entre clientes.</td></tr>
+        <tr><td><strong>Error workflow</strong></td><td>Workflow acionado quando outro falha (nó Error Trigger). Único mecanismo nativo de alerta do n8n.</td></tr>
+        <tr><td><strong>Pin data</strong></td><td>Dado fixado em um nó para testar sem depender do gatilho real.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>12.2 Comandos e endpoints úteis</h3>
+<pre class="code-block"><code><span class="cm"># saúde da instância</span>
+curl -s https://n8n.fvmarketing.com.br/healthz
+
+<span class="cm"># ambiente de sync</span>
+npx --yes n8nac env status --json
+
+<span class="cm"># workflow específico (JSON completo)</span>
+curl -s -H "X-N8N-API-KEY: $N8N_KEY" \
+  "https://n8n.fvmarketing.com.br/api/v1/workflows/P4fU2C5x2oiocKNv" | jq .
+
+<span class="cm"># lista de credenciais (metadados, sem segredo)</span>
+curl -s -H "X-N8N-API-KEY: $N8N_KEY" \
+  "https://n8n.fvmarketing.com.br/api/v1/credentials?limit=250" \
+  | jq -r '.data[] | "\(.type) | \(.name)"'</code></pre>
+
+    <h3>12.3 Referências externas</h3>
+    <ul class="doc">
+      <li><strong>n8n</strong> — documentação de expressões e de error workflows: <span class="mono">docs.n8n.io</span></li>
+      <li><strong>Supabase</strong> — PostgREST, schemas e RLS: <span class="mono">supabase.com/docs</span></li>
+      <li><strong>Kommo</strong> — API v4 (leads, contatos, notas, tarefas): <span class="mono">developers.kommo.com</span></li>
+      <li><strong>Meta WhatsApp Cloud API</strong> — templates, janela de 24 h e quality rating: <span class="mono">developers.facebook.com/docs/whatsapp</span></li>
+      <li><strong>n8nac</strong> — sincronização workflow-as-code: ver <code>.agents/skills/n8n-architect/SKILL.md</code></li>
+    </ul>
+
+    <div class="callout">
+      <h4>Nota final</h4>
+      <p>Este documento descreve o estado em <strong>03/11/2026</strong>. Números de execução envelhecem rápido; arquitetura e dívida técnica, não. Atualize as seções 02 e 07 a cada ciclo e mantenha os runbooks como a parte viva — eles são o que realmente reduz o tempo de recuperação.</p>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  V4 Company · SDR IA · Handoff técnico · 03/11/2026<br>
+  Fontes: API pública do n8n (166 workflows, execuções até 03/11 12h30) · Supabase · repositório <code>projetos/sdr-ia</code> · verificação de saúde da instância
+</div>
+</div>
+</body>
+</html>
