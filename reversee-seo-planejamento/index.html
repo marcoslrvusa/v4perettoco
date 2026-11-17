@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planejamento SEO + AIO + GEO | Reversee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: rgb(229, 9, 20);
+    --red-dark: rgb(180, 7, 16);
+    --red-light: rgb(255, 60, 70);
+    --gold: #c9a96e;
+    --gold-light: #f5f0e6;
+    --gold-border: #e8dcc8;
+    --green: #16a34a;
+    --gold-dark: #8b6f2f;
+    --purple: #7c3aed;
+    --gray-50: #fafafa;
+    --gray-100: #f5f5f5;
+    --gray-200: #eeeeee;
+    --gray-300: #e0e0e0;
+    --gray-400: #bdbdbd;
+    --gray-500: #9e9e9e;
+    --gray-600: #757575;
+    --gray-700: #616161;
+    --gray-800: #424242;
+    --gray-900: #212121;
+  }
+
+  body { font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, sans-serif; background: #f8f7f4; color: var(--gray-900); line-height: 1.7; font-size: 16px; }
+
+  .cover { background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #2a2a2a 100%); color: #fff; padding: 56px 40px 56px; text-align: center; position: relative; overflow: hidden; }
+  .cover::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(201,169,110,0.05) 0%, transparent 60%); pointer-events: none; }
+  .cover-content { position: relative; z-index: 1; max-width: 840px; margin: 0 auto; }
+  .cover-logos { display: flex; align-items: center; justify-content: space-between; gap: 32px; margin-bottom: 44px; }
+  .cover-logos img { height: 40px; width: auto; object-fit: contain; }
+  .cover-logos .client-logo { height: 62px; }
+  .cover .label { display: inline-block; background: rgba(201,169,110,0.12); border: 1px solid rgba(201,169,110,0.3); padding: 6px 20px; border-radius: 20px; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px; color: var(--gold); }
+  .cover h1 { font-size: 42px; font-weight: 700; line-height: 1.15; margin-bottom: 14px; letter-spacing: -0.5px; font-family: 'Plus Jakarta Sans', serif; }
+  .cover p { font-size: 18px; color: rgba(255,255,255,0.82); margin-bottom: 24px; font-weight: 300; letter-spacing: 0.2px; }
+  .cover-meta { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; font-size: 13px; opacity: 0.7; letter-spacing: 0.4px; }
+  .pillar-badges { display: flex; gap: 12px; justify-content: center; margin: 24px 0 8px; flex-wrap: wrap; }
+  .pillar-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; border-radius: 8px; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+  .pillar-badge.seo { background: rgba(201,169,110,0.15); border: 1px solid rgba(201,169,110,0.4); color: #f0e2c4; }
+  .pillar-badge.aio { background: rgba(229,9,20,0.15); border: 1px solid rgba(229,9,20,0.3); color: #fca5a5; }
+  .pillar-badge.geo { background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3); color: #c4b5fd; }
+  .cover-content::after { content: ''; display: block; width: 60px; height: 2px; background: var(--gold); margin: 28px auto 0; border-radius: 1px; }
+
+  .container { max-width: 980px; margin: -36px auto 48px; padding: 0 20px; position: relative; z-index: 2; }
+  .card { background: #fff; border-radius: 16px; box-shadow: 0 2px 20px rgba(0,0,0,0.05); margin-bottom: 28px; overflow: hidden; border: 1px solid var(--gray-300); position: relative; }
+  .card::before { content: ''; position: absolute; top: 0; left: 40px; right: 40px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-border), var(--gold), var(--gold-border), transparent); opacity: 0.6; }
+  .card-body { padding: 44px 52px; }
+  .card-pillar { border-top: 3px solid var(--gray-300); }
+  .card-pillar.seo { border-top-color: var(--gold-dark); }
+  .card-pillar.aio { border-top-color: var(--red); }
+  .card-pillar.geo { border-top-color: var(--purple); }
+  .card-pillar.gold { border-top-color: var(--gold); }
+
+  .pillar-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+  .pillar-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 800; color: #fff; flex-shrink: 0; }
+  .pillar-icon.seo { background: linear-gradient(135deg, #b8963a, #d4b96a); }
+  .pillar-icon.aio { background: linear-gradient(135deg, var(--red), var(--red-light)); }
+  .pillar-icon.geo { background: linear-gradient(135deg, var(--purple), #a78bfa); }
+  .pillar-icon.gold { background: linear-gradient(135deg, #b8963a, #d4b96a); }
+  .pillar-title { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+  .pillar-title.seo { color: var(--gold-dark); }
+  .pillar-title.aio { color: var(--red); }
+  .pillar-title.geo { color: var(--purple); }
+  .pillar-subtitle { font-size: 12px; color: var(--gray-500); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 1px; }
+
+  h2 { font-size: 24px; font-weight: 700; color: var(--red); margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--gold-border); display: flex; align-items: center; gap: 10px; letter-spacing: -0.3px; position: relative; }
+  h2::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 40px; height: 2px; background: var(--gold); border-radius: 1px; }
+  h3 { font-size: 18px; font-weight: 700; color: var(--gray-900); margin: 34px 0 16px; letter-spacing: -0.2px; }
+  h4 { font-size: 15px; font-weight: 700; color: var(--gray-800); margin: 20px 0 10px; }
+  p { font-size: 15.5px; color: var(--gray-700); margin-bottom: 14px; line-height: 1.8; }
+  p:last-child { margin-bottom: 0; }
+  ul, ol { margin: 0 0 16px 22px; }
+  li { font-size: 15.5px; color: var(--gray-700); margin-bottom: 6px; line-height: 1.75; }
+
+  .badge { display: inline-block; padding: 5px 14px; border-radius: 6px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; white-space: nowrap; }
+  .badge-critico { background: #fef2f2; color: var(--red); border: 1px solid #fecaca; }
+  .badge-alto { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+  .badge-medio { background: #fefce8; color: #a16207; border: 1px solid #fef08a; }
+  .badge-baixo { background: var(--gold-light); color: #8b7a4a; border: 1px solid var(--gold-border); }
+  .badge-info { background: #f5f5f5; color: #616161; border: 1px solid #d4d4d4; }
+  .badge-ok { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14.5px; }
+  th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--gray-100); vertical-align: top; }
+  th { background: linear-gradient(135deg, var(--gray-50), #f8f7f4); font-weight: 700; color: var(--gray-700); font-size: 11px; text-transform: uppercase; letter-spacing: 0.7px; border-bottom: 2px solid var(--gold-border); }
+  tr:hover td { background: #fcfaf7; }
+  tr:last-child td { border-bottom: none; }
+  .table-wrap { overflow-x: auto; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-bottom: 30px; }
+  .kpi-group { background: #f2f0ec; border-radius: 10px; padding: 18px 8px 16px; text-align: center; border: 1px solid var(--gold-border); position: relative; overflow: hidden; }
+  .kpi-group .value { font-size: 26px; font-weight: 700; color: var(--red); line-height: 1.1; letter-spacing: -0.5px; }
+  .kpi-group .label { font-size: 9.5px; color: var(--gray-600); font-weight: 700; text-transform: uppercase; letter-spacing: 0.2px; margin-top: 6px; line-height: 1.35; }
+  .kpi-group::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--red), var(--red-light)); }
+
+  .risk-box { background: linear-gradient(135deg, #fcfaf7, #f8f7f4); border-left: 4px solid var(--red); padding: 22px 26px; border-radius: 0 12px 12px 0; margin: 18px 0; }
+  .risk-box h4 { margin: 0 0 8px; color: var(--red); font-size: 15px; }
+  .risk-box p { font-size: 15px; margin: 0; }
+  .risk-box.gold { border-left-color: var(--gold); }
+  .risk-box.gold h4 { color: #8b7a4a; }
+
+  .finding { border: 1px solid var(--gray-200); border-radius: 12px; padding: 24px 28px; margin-bottom: 16px; background: #fcfcfc; transition: box-shadow 0.2s, border-color 0.2s; border-left: 3px solid transparent; }
+  .finding:hover { box-shadow: 0 2px 16px rgba(0,0,0,0.04); border-color: var(--gold-border); }
+  .finding.seo-finding { border-left-color: var(--gold-dark); }
+  .finding.aio-finding { border-left-color: var(--red); }
+  .finding.geo-finding { border-left-color: var(--purple); }
+  .finding.gold-finding { border-left-color: var(--gold); }
+  .finding-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; gap: 12px; }
+  .finding-title { font-weight: 700; font-size: 16.5px; color: var(--gray-900); letter-spacing: -0.2px; }
+  .finding-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 28px; font-size: 14.5px; }
+  .finding-grid .field { font-weight: 700; color: var(--gray-800); }
+  .finding-grid .value { color: var(--gray-700); }
+  .finding-grid .full { grid-column: 1 / -1; }
+  .finding-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px 24px; font-size: 14px; }
+  .finding-grid-3 .field { font-weight: 700; color: var(--gray-800); }
+  .finding-grid-3 .value { color: var(--gray-700); }
+  .finding-grid-3 .full { grid-column: 1 / -1; }
+
+  code { font-family: 'JetBrains Mono', monospace; background: var(--gray-100); padding: 2px 7px; border-radius: 3px; font-size: 13px; color: var(--red); word-break: break-word; }
+  pre { background: var(--gray-900); color: #e2e8f0; border-radius: 12px; padding: 22px 26px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; overflow-x: auto; line-height: 1.65; margin: 14px 0; }
+  pre code { background: none; color: inherit; padding: 0; font-size: 12.5px; }
+  .code-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--gray-500); margin: 18px 0 6px; }
+
+  .bar-container { margin: 20px 0; }
+  .bar-row { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+  .bar-label { width: 230px; font-size: 13.5px; font-weight: 700; color: var(--gray-700); text-align: right; flex-shrink: 0; }
+  .bar-track { flex: 1; height: 28px; background: var(--gray-100); border-radius: 6px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding-right: 12px; font-size: 12px; font-weight: 700; color: #fff; }
+  .bar-fill.gold { background: linear-gradient(90deg, #b8963a, #d4b96a); }
+  .bar-fill.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .bar-fill.purple { background: linear-gradient(90deg, var(--purple), #a78bfa); }
+  .bar-fill.orange { background: linear-gradient(90deg, #c2410c, #ea580c); }
+  .bar-fill.gray { background: linear-gradient(90deg, #616161, #9e9e9e); }
+
+  .timeline { display: flex; gap: 0; margin: 28px 0 16px; position: relative; padding: 0 0 18px; }
+  .timeline::before { content: ''; position: absolute; top: 26px; left: 6%; right: 6%; height: 3px; background: linear-gradient(90deg, var(--gold-border), var(--gold), var(--gold-border)); border-radius: 2px; }
+  .timeline-phase { flex: 1; text-align: center; position: relative; padding: 0 8px; }
+  .timeline-phase .dot { width: 16px; height: 16px; border-radius: 50%; margin: 0 auto 12px; position: relative; z-index: 1; border: 3px solid #fff; box-shadow: 0 0 0 2px var(--gold); }
+  .timeline-phase .dot.gold { background: var(--gold-dark); }
+  .timeline-phase .dot.red { background: var(--red); }
+  .timeline-phase .dot.purple { background: var(--purple); }
+  .timeline-phase .dot.orange { background: #c2410c; }
+  .timeline-phase .phase-name { font-size: 12.5px; font-weight: 700; color: var(--gray-800); margin-bottom: 2px; }
+  .timeline-phase .phase-weeks { font-size: 11px; color: var(--gray-500); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .timeline-phase .phase-hours { font-size: 20px; font-weight: 700; color: var(--red); letter-spacing: -0.5px; margin-top: 4px; }
+  .timeline-phase .phase-pillar { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+  .timeline-phase .phase-pillar.gold { color: var(--gold-dark); }
+  .timeline-phase .phase-pillar.red { color: var(--red); }
+  .timeline-phase .phase-pillar.purple { color: var(--purple); }
+  .timeline-phase .phase-pillar.orange { color: #c2410c; }
+
+  .checklist { display: grid; gap: 10px; }
+  .check-item { display: flex; gap: 12px; align-items: flex-start; padding: 13px 16px; background: #fcfcfc; border: 1px solid var(--gray-200); border-radius: 10px; }
+  .check-item .num { width: 26px; height: 26px; border-radius: 50%; background: var(--red); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .check-item .txt { font-size: 14.5px; color: var(--gray-700); }
+  .check-item .txt strong { color: var(--gray-900); }
+
+  .status { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 4px; white-space: nowrap; }
+  .status.ok { background: rgba(34,197,94,0.1); color: #16a34a; }
+  .status.warn { background: rgba(217,119,6,0.1); color: #c2410c; }
+  .status.fail { background: rgba(229,9,20,0.1); color: var(--red); }
+
+  .note { background: #f8f7f4; border: 1px solid var(--gold-border); border-radius: 10px; padding: 16px 20px; font-size: 14px; color: var(--gray-700); margin: 16px 0; }
+  .note strong { color: var(--gray-900); }
+
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .metric-big { font-size: 40px; font-weight: 800; color: var(--red); line-height: 1; letter-spacing: -1.5px; }
+  .metric-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--gray-500); margin-top: 4px; }
+
+  .footer { text-align: center; padding: 36px; font-size: 13px; color: var(--gray-500); border-top: 1px solid var(--gold-border); background: #0d0d0d; position: relative; }
+  .footer::before { content: ''; position: absolute; top: -2px; left: 50%; transform: translateX(-50%); width: 40px; height: 3px; background: var(--gold); border-radius: 2px; }
+  .footer-logos { display: flex; justify-content: center; align-items: center; gap: 40px; margin-bottom: 16px; }
+  .footer-logos img { height: 30px; width: auto; }
+  .footer-logos .client { height: 46px; }
+
+  @media print {
+    body { background: #fff; font-size: 12px; }
+    .cover { padding: 40px 30px; }
+    .container { max-width: 100%; margin: 0; padding: 0; }
+    .card { box-shadow: none; border: 1px solid var(--gray-200); page-break-inside: avoid; }
+    .card-body { padding: 20px 24px; }
+    .finding { page-break-inside: avoid; }
+    table { page-break-inside: avoid; }
+    .footer { background: #fff; color: var(--gray-700); }
+    @page { margin: 1.5cm 1cm; }
+  }
+
+  @media (max-width: 760px) {
+    .cover h1 { font-size: 27px; }
+    .cover { padding: 36px 20px 40px; }
+    .cover-logos { gap: 16px; }
+    .cover-logos img { height: 28px; }
+    .cover-logos .client-logo { height: 44px; }
+    .card-body { padding: 22px 20px; }
+    .finding-grid, .finding-grid-3, .split { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .bar-label { width: 110px; font-size: 11.5px; }
+    .bar-row { gap: 8px; }
+    .timeline { flex-wrap: wrap; gap: 14px; }
+    .timeline::before { display: none; }
+    .timeline-phase { flex: 1 1 40%; }
+    table { font-size: 13px; }
+    th, td { padding: 9px 10px; }
+  }
+
+  /* ===== Extensões do planejamento (mesmo padrão visual da auditoria) ===== */
+  a { color: var(--red); font-weight: 600; text-decoration: none; border-bottom: 1px dotted rgba(229,9,20,0.45); word-break: break-word; }
+  a:hover { border-bottom-style: solid; }
+  html { scroll-behavior: smooth; }
+  .card { scroll-margin-top: 16px; }
+  .lead { font-size: 17px; color: var(--gray-700); line-height: 1.8; margin-bottom: 20px; }
+  .sub { font-size: 13px; color: var(--gray-600); margin: -8px 0 18px; }
+
+  .toc { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 6px; }
+  .toc a { display: flex; gap: 12px; align-items: center; padding: 12px 16px; background: #fcfcfc; border: 1px solid var(--gray-200); border-radius: 10px; color: var(--gray-800); font-size: 14px; font-weight: 600; border-bottom: 1px solid var(--gray-200); }
+  .toc a:hover { border-color: var(--gold); background: var(--gold-light); }
+  .toc .n { width: 26px; height: 26px; border-radius: 50%; background: var(--red); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+  .tri { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 18px 0; }
+  .tri-card { border: 1px solid var(--gray-200); border-radius: 14px; padding: 24px 22px; background: #fcfcfc; border-top: 3px solid var(--gray-300); }
+  .tri-card.seo { border-top-color: var(--gold-dark); }
+  .tri-card.aio { border-top-color: var(--red); }
+  .tri-card.geo { border-top-color: var(--purple); }
+  .tri-card .tag { font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+  .tri-card.seo .tag { color: var(--gold-dark); } .tri-card.aio .tag { color: var(--red); } .tri-card.geo .tag { color: var(--purple); }
+  .tri-card h4 { font-size: 19px; margin: 6px 0 4px; color: var(--gray-900); }
+  .tri-card .goal { font-size: 14px; color: var(--gray-600); margin-bottom: 14px; }
+  .tri-card .q { background: #fff; border: 1px dashed var(--gray-300); border-radius: 8px; padding: 10px 12px; font-size: 13.5px; color: var(--gray-800); margin-bottom: 14px; font-style: italic; }
+  .tri-card .q b { display: block; font-style: normal; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.7px; color: var(--gray-500); margin-bottom: 3px; }
+  .tri-card ul { margin: 0 0 12px 18px; } .tri-card li { font-size: 14px; margin-bottom: 4px; line-height: 1.6; }
+  .tri-card .on { font-size: 13px; color: var(--gray-700); border-top: 1px solid var(--gray-200); padding-top: 12px; margin-top: 4px; }
+  .tri-card .on b { color: var(--gray-900); }
+
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin: 22px 0; }
+  .step { position: relative; padding: 18px 16px 16px; background: #fcfcfc; border: 1px solid var(--gray-200); text-align: left; }
+  .step:first-child { border-radius: 12px 0 0 12px; } .step:last-child { border-radius: 0 12px 12px 0; }
+  .step + .step { border-left: none; }
+  .step .sn { font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--gray-500); }
+  .step h4 { margin: 4px 0 6px; font-size: 16px; color: var(--red); }
+  .step p { font-size: 13.5px; line-height: 1.6; margin-bottom: 8px; }
+  .step .ph { font-size: 11px; font-weight: 700; color: var(--gold-dark); text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .cluster-svg { width: 100%; height: auto; display: block; margin: 8px 0 6px; background: #fcfaf7; border: 1px solid var(--gold-border); border-radius: 12px; }
+  .cl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+  .cl { border: 1px solid var(--gray-200); border-radius: 14px; background: #fff; overflow: hidden; }
+  .cl-head { padding: 16px 20px; color: #fff; }
+  .cl-head .k { font-size: 10.5px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; opacity: 0.85; }
+  .cl-head h4 { margin: 2px 0 6px; font-size: 17px; color: #fff; }
+  .cl-head .pg { font-size: 12.5px; opacity: 0.95; }
+  .cl-head .pg code { background: rgba(255,255,255,0.18); color: #fff; }
+  .cl.a .cl-head { background: linear-gradient(135deg, #8b6f2f, #b8963a); }
+  .cl.b .cl-head { background: linear-gradient(135deg, #b40710, #e50914); }
+  .cl.c .cl-head { background: linear-gradient(135deg, #5b21b6, #7c3aed); }
+  .cl.d .cl-head { background: linear-gradient(135deg, #424242, #757575); }
+  .cl-body { padding: 14px 20px 18px; }
+  .cl-body .sat { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--gray-100); font-size: 14px; color: var(--gray-800); }
+  .cl-body .sat:last-child { border-bottom: none; }
+  .cl-body .sat .meta { display: flex; gap: 6px; flex-shrink: 0; align-items: flex-start; }
+  .chip { line-height: 1.5; display: inline-block; padding: 2px 8px; border-radius: 5px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; white-space: nowrap; }
+  .chip.art { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+  .chip.geo { background: #f5f3ff; color: var(--purple); border: 1px solid #ddd6fe; }
+  .chip.cks { background: var(--gray-100); color: var(--gray-700); border: 1px solid var(--gray-300); }
+  .chip.srv { background: var(--gold-light); color: #8b7a4a; border: 1px solid var(--gold-border); }
+
+  .gantt-wrap { overflow-x: auto; margin: 18px 0 10px; }
+  .gantt { min-width: 720px; display: grid; grid-template-columns: 168px repeat(12, minmax(0, 1fr)); gap: 0; font-size: 12.5px; }
+  .gantt > div { padding: 8px 4px; border-bottom: 1px solid var(--gray-100); }
+  .g-head { font-weight: 700; text-align: center; font-size: 11px; color: var(--gray-700); background: var(--gray-50); border-bottom: 2px solid var(--gold-border) !important; line-height: 1.3; }
+  .g-head small { display: block; font-weight: 500; color: var(--gray-500); font-size: 10px; }
+  .g-label { font-weight: 600; color: var(--gray-800); display: flex; align-items: center; padding-left: 4px !important; line-height: 1.3; }
+  .g-bar { border-radius: 6px; color: #fff; font-weight: 700; font-size: 10.5px; overflow: hidden; display: flex; align-items: center; padding: 6px 10px !important; margin: 4px 3px; border-bottom: none !important; line-height: 1.25; }
+  .g-bar.gold { background: linear-gradient(90deg, #8b6f2f, #b8963a); }
+  .g-bar.orange { background: linear-gradient(90deg, #c2410c, #ea580c); }
+  .g-bar.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .g-bar.purple { background: linear-gradient(90deg, var(--purple), #a78bfa); }
+  .g-bar.gray { background: linear-gradient(90deg, #616161, #9e9e9e); }
+  .g-ck { text-align: center; padding: 8px 2px !important; }
+  .ck-pin { display: inline-block; background: var(--gray-900); color: #fff; font-size: 10px; font-weight: 800; padding: 3px 7px; border-radius: 10px; letter-spacing: 0.4px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12.5px; color: var(--gray-700); margin-top: 8px; }
+  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+
+  .ck { border: 1px solid var(--gray-200); border-left: 4px solid var(--gray-300); border-radius: 12px; padding: 22px 26px; margin-bottom: 16px; background: #fcfcfc; }
+  .ck.f1 { border-left-color: var(--gold-dark); } .ck.f2 { border-left-color: #c2410c; } .ck.f3 { border-left-color: var(--red); } .ck.f4 { border-left-color: var(--purple); }
+  .ck-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; flex-wrap: wrap; margin-bottom: 12px; }
+  .ck-top .t { font-size: 17px; font-weight: 700; color: var(--gray-900); letter-spacing: -0.2px; }
+  .ck-top .t span { display: block; font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--gray-500); margin-bottom: 2px; }
+  .ck-date { text-align: right; } .ck-date b { display: block; font-size: 22px; color: var(--red); letter-spacing: -0.5px; line-height: 1; }
+  .ck-date small { font-size: 11px; color: var(--gray-500); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .ck-cols { display: grid; grid-template-columns: 1.5fr 1fr; gap: 6px 28px; }
+  .ck-cols h5 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--gray-500); margin: 6px 0 6px; }
+  .ck-cols ul { margin: 0 0 8px 18px; } .ck-cols li { font-size: 14px; margin-bottom: 3px; line-height: 1.6; }
+
+  .evid td:first-child { width: 24%; font-weight: 600; color: var(--gray-900); }
+  .status-plan { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 4px; background: var(--gray-100); color: var(--gray-700); border: 1px solid var(--gray-300); white-space: nowrap; }
+
+  .phase-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+  .ph-card { border: 1px solid var(--gray-200); border-top: 3px solid var(--gray-300); border-radius: 14px; padding: 22px 24px; background: #fcfcfc; }
+  .ph-card.f1 { border-top-color: var(--gold-dark); } .ph-card.f2 { border-top-color: #c2410c; } .ph-card.f3 { border-top-color: var(--red); } .ph-card.f4 { border-top-color: var(--purple); }
+  .ph-card .k { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--gray-500); }
+  .ph-card h4 { margin: 3px 0 4px; font-size: 18px; }
+  .ph-card .when { font-size: 12.5px; color: var(--gray-600); margin-bottom: 12px; font-weight: 600; }
+  .ph-card p { font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+  .ph-card ul { margin: 0 0 10px 18px; } .ph-card li { font-size: 14px; margin-bottom: 3px; line-height: 1.6; }
+  .ph-card .out { font-size: 13px; border-top: 1px solid var(--gray-200); padding-top: 10px; color: var(--gray-700); }
+  .ph-card .out b { color: var(--gray-900); }
+
+  .note pre { white-space: pre-wrap; word-break: break-word; font-size: 11.5px; }
+  .split > *, .two > * { min-width: 0; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .two pre { margin: 6px 0 0; font-size: 12px; }
+  .two .code-label { margin-top: 0; }
+
+  @media (max-width: 760px) {
+    .toc, .tri, .cl-grid, .phase-grid, .two, .ck-cols { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr; }
+    .step:first-child { border-radius: 12px 12px 0 0; } .step:last-child { border-radius: 0 0 12px 12px; }
+    .step + .step { border-left: 1px solid var(--gray-200); border-top: none; }
+    .ck { padding: 18px 18px; }
+    .ck-date { text-align: left; }
+    .cl-body .sat { flex-direction: column; gap: 4px; }
+  }
+  @media print { .ck, .cl, .ph-card, .tri-card { page-break-inside: avoid; } .gantt-wrap { overflow: visible; } }
+
+  /* ===== mapa dos 100 + blocos extraíveis ===== */
+  details.map { border: 1px solid var(--gray-200); border-radius: 12px; margin: 0 0 12px; background: #fcfcfc; overflow: hidden; }
+  details.map summary { cursor: pointer; padding: 14px 20px; font-weight: 700; font-size: 15px; color: var(--gray-900); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; border-left: 4px solid var(--gray-300); }
+  details.map.a summary { border-left-color: var(--gold-dark); } details.map.b summary { border-left-color: var(--red); }
+  details.map.c summary { border-left-color: var(--purple); } details.map.d summary { border-left-color: var(--gray-600); }
+  details.map[open] summary { border-bottom: 1px solid var(--gray-200); background: #fff; }
+  details.map .table-wrap { padding: 4px 18px 14px; }
+  details.map table { font-size: 13.5px; }
+  details.map td:first-child { font-weight: 700; color: var(--gray-500); white-space: nowrap; }
+  .wire { border: 1px solid var(--gray-300); border-radius: 12px; padding: 12px; background: #fff; display: grid; gap: 8px; }
+  .wire-bar { background: var(--gray-100); border-radius: 8px; padding: 9px 12px; font-size: 12px; font-weight: 700; color: var(--gray-700); }
+  .blk { display: flex; gap: 12px; align-items: center; border-radius: 8px; padding: 10px 12px; border-left: 4px solid var(--gray-300); background: #fcfaf7; font-size: 13px; color: var(--gray-700); }
+  .blk b { display: block; color: var(--gray-900); font-size: 13.5px; }
+  .blk > span { width: 30px; height: 30px; border-radius: 8px; color: #fff; font-weight: 800; font-size: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .b1 { border-left-color: var(--red); } .b1 > span { background: var(--red); }
+  .b2 { border-left-color: var(--gold-dark); } .b2 > span { background: var(--gold-dark); }
+  .b3 { border-left-color: #c2410c; } .b3 > span { background: #c2410c; }
+  .b4 { border-left-color: var(--purple); } .b4 > span { background: var(--purple); }
+  .b5 { border-left-color: #15803d; } .b5 > span { background: #15803d; }
+  .b6 { border-left-color: #616161; } .b6 > span { background: #616161; }
+  table.matrix td, table.matrix th { text-align: center; } table.matrix td:first-child, table.matrix th:first-child { text-align: left; font-weight: 600; }
+  table.matrix td { font-size: 16px; color: var(--red); }
+</style>
+</head>
+<body>
+
+<header class="cover">
+  <div class="cover-content">
+    <div class="cover-logos">
+      <img src="assets/logo-v4-white.png" alt="V4 Company">
+      <img src="assets/logo-reversee.png" alt="Reversee" class="client-logo">
+    </div>
+    <div class="label">Planejamento · 12 semanas · Novembro 2026</div>
+    <h1>Planejamento SEO + AIO + GEO</h1>
+    <p>Reversee — Soluções em Tecnologia Reversa</p>
+    <div class="pillar-badges">
+      <span class="pillar-badge seo">SEO</span>
+      <span class="pillar-badge aio">AIO</span>
+      <span class="pillar-badge geo">GEO</span>
+    </div>
+    <div class="cover-meta">
+      <span>Base: Auditoria SEO + AIO + GEO (nov/2026)</span>
+      <span>4 fases · 12 semanas</span>
+      <span>Check-in a cada 15 dias</span>
+      <span>Início proposto: 23/11/2026</span>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<!-- ===================== SUMÁRIO ===================== -->
+<section class="card" id="sumario">
+  <div class="card-body">
+    <h2>Sumário do plano</h2>
+
+    <div class="kpi-grid">
+      <div class="kpi-group"><div class="value">12</div><div class="label">Semanas<br>de execução</div></div>
+      <div class="kpi-group"><div class="value">4</div><div class="label">Fases, da fundação<br>à citação em IA</div></div>
+      <div class="kpi-group"><div class="value">6</div><div class="label">Check-ins<br>quinzenais</div></div>
+      <div class="kpi-group"><div class="value">~270 h</div><div class="label">Base do plano<br>(produção em escala à parte)</div></div>
+      <div class="kpi-group"><div class="value">100</div><div class="label">Conteúdos no mapa<br>(40 nas 12 semanas)</div></div>
+      <div class="kpi-group"><div class="value">5</div><div class="label">Páginas de serviço<br>aprofundadas</div></div>
+    </div>
+
+    <p class="lead">A auditoria mostrou onde o site da Reversee está hoje: bem desenhado, com certificações reais, mas entregando uma página em branco para buscadores e inteligências artificiais. Este documento transforma o diagnóstico em <strong>um caminho com prazos</strong>: o que será feito, em que ordem, por quê, e como você acompanha cada passo.</p>
+
+    <div class="risk-box gold">
+      <h4>Como você acompanha: um check-in a cada 15 dias, com evidência</h4>
+      <p>A cada duas semanas apresentamos o que foi entregue no formato <strong>entregável · informações · link</strong>: cada item abre a página publicada, o antes × depois ou o arquivo que comprova a execução. Nada de “fizemos” sem prova. Entre um check-in e outro você sabe exatamente o que está em andamento e o que precisamos de vocês.</p>
+    </div>
+
+    <h3>Neste documento</h3>
+    <div class="toc">
+      <a href="#didatico"><span class="n">1</span> SEO, AIO e GEO: como se conectam</a>
+      <a href="#estrategia"><span class="n">2</span> Estratégia: Topic Clusters e Pillar Pages</a>
+      <a href="#blocos"><span class="n">3</span> Blocos extraíveis para IA</a>
+      <a href="#fases"><span class="n">4</span> As 4 fases do plano</a>
+      <a href="#cronograma"><span class="n">5</span> Cronograma de 12 semanas</a>
+      <a href="#checkins"><span class="n">6</span> Os 6 check-ins quinzenais</a>
+      <a href="#evidencias"><span class="n">7</span> Como as evidências chegam</a>
+      <a href="#medicao"><span class="n">8</span> Como medimos o resultado</a>
+      <a href="#dependencias"><span class="n">9</span> O que precisamos de vocês</a>
+      <a href="#proximo"><span class="n">10</span> Próximo passo</a>
+      <a href="#anexo-mapa"><span class="n">A</span> Anexo: mapa dos 100 conteúdos</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== DIDÁTICO ===================== -->
+<section class="card card-pillar gold" id="didatico">
+  <div class="card-body">
+    <div class="pillar-header">
+      <div class="pillar-icon gold">1</div>
+      <div>
+        <div class="pillar-title" style="color:var(--gold-dark)">SEO, AIO e GEO: como tudo se conecta</div>
+        <div class="pillar-subtitle">Antes do plano, o porquê · leitura de 5 minutos</div>
+      </div>
+    </div>
+
+    <p class="lead">O comprador B2B que procura um parceiro de ITAD hoje usa duas formas de busca na mesma jornada: <strong>pesquisa no Google</strong> (uma lista de links) e <strong>perguntas para uma IA</strong> (uma resposta pronta, com poucas fontes citadas). O plano trabalha as duas ao mesmo tempo, e elas dependem da mesma base.</p>
+
+    <h3>A analogia da biblioteca</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Sigla</th><th>O que significa</th><th>A pergunta que responde</th><th>Na biblioteca</th></tr></thead>
+        <tbody>
+          <tr><td><strong style="color:var(--gold-dark)">SEO</strong></td><td>Search Engine Optimization</td><td>“O Google encontra e posiciona minhas páginas?”</td><td>Arrumar o livro na estante certa, com etiqueta e índice.</td></tr>
+          <tr><td><strong style="color:var(--red)">AIO</strong></td><td>AI Overviews &amp; Answer Engines (camada técnica)</td><td>“A IA consegue ler e extrair uma resposta do meu site?”</td><td>Garantir que o livro esteja aberto, legível e com o resumo na capa.</td></tr>
+          <tr><td><strong style="color:var(--purple)">GEO</strong></td><td>Generative Engine Optimization (conteúdo e autoridade)</td><td>“A IA confia na Reversee a ponto de recomendar?”</td><td>Fazer o bibliotecário recomendar o seu livro.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tri">
+      <div class="tri-card seo">
+        <div class="tag">SEO</div>
+        <h4>Ser encontrado</h4>
+        <div class="goal">Google e Bing: lista de links, posição e clique.</div>
+        <div class="q"><b>Pergunta típica do comprador</b>“empresa de descarte de eletrônicos corporativo em São Paulo”</div>
+        <ul>
+          <li>Site rastreável, uma URL por assunto</li>
+          <li>Páginas que respondem à intenção de compra</li>
+          <li>Links internos, velocidade, presença local</li>
+        </ul>
+        <div class="on"><b>Na Reversee:</b> fundação técnica e páginas de serviço aprofundadas.</div>
+      </div>
+      <div class="tri-card aio">
+        <div class="tag">AIO</div>
+        <h4>Ser lido e extraído</h4>
+        <div class="goal">AI Overviews, Perplexity, Copilot: resposta resumida com fonte.</div>
+        <div class="q"><b>Pergunta típica do comprador</b>“o que é ITAD e como funciona?”</div>
+        <ul>
+          <li>HTML legível sem executar JavaScript</li>
+          <li>Resposta direta nos primeiros parágrafos</li>
+          <li>Dados estruturados, FAQ, tabelas, <code>llms.txt</code></li>
+        </ul>
+        <div class="on"><b>Na Reversee:</b> prerender, schema e blocos “resposta rápida”.</div>
+      </div>
+      <div class="tri-card geo">
+        <div class="tag">GEO</div>
+        <h4>Ser lembrado e recomendado</h4>
+        <div class="goal">ChatGPT, Gemini, Claude: respostas geradas que citam marcas.</div>
+        <div class="q"><b>Pergunta típica do comprador</b>“quais empresas fazem ITAD no Brasil com certificação R2v3?”</div>
+        <ul>
+          <li>Entidade consistente (quem é a Reversee)</li>
+          <li>Prova verificável: certificações, números, cases</li>
+          <li>Comparativos e dados próprios citáveis</li>
+        </ul>
+        <div class="on"><b>Na Reversee:</b> página /empresa, páginas de definição e relatório anual.</div>
+      </div>
+    </div>
+
+    <h3>Como uma IA chega a uma resposta, e por que a ordem das fases importa</h3>
+    <p>Uma IA não “lê” o site como uma pessoa. Ela monta a resposta em quatro passos e <strong>precisa de três portas abertas</strong>. Se uma porta está fechada, a resposta não existe: é por isso que corrigimos o acesso antes de escrever mais conteúdo.</p>
+    <div class="steps">
+      <div class="step"><div class="sn">Porta 1</div><h4>Acesso</h4><p>O robô consegue abrir a página e ver o texto? Hoje o HTML da Reversee entrega 0 palavras.</p><div class="ph">Fase 1 · semanas 1–2</div></div>
+      <div class="step"><div class="sn">Porta 2</div><h4>Entendimento</h4><p>Está claro quem é a empresa, o que faz e em que idioma? Entidade, schema, idioma por URL.</p><div class="ph">Fase 2 · semanas 3–4</div></div>
+      <div class="step"><div class="sn">Porta 3</div><h4>Extração</h4><p>Dá para tirar uma resposta pronta de um parágrafo? Respostas diretas, FAQ, tabelas.</p><div class="ph">Fase 3 · semanas 5–8</div></div>
+      <div class="step"><div class="sn">Resultado</div><h4>Citação</h4><p>Com as três portas abertas, a marca passa a ser fonte: autoridade, prova e menções.</p><div class="ph">Fase 4 · semanas 9–12</div></div>
+    </div>
+
+    <h3>O que o rastreador lê hoje × o que vai ler</h3>
+    <div class="two">
+      <div>
+        <div class="code-label">Hoje · HTML bruto da home (2.265 bytes, 0 palavras)</div>
+<pre><code>&lt;body&gt;
+  &lt;div id="root"&gt;&lt;/div&gt;
+  &lt;script src="/assets/index.js"&gt;&lt;/script&gt;
+&lt;/body&gt;</code></pre>
+      </div>
+      <div>
+        <div class="code-label">Meta · HTML de cada rota já com conteúdo</div>
+<pre><code>&lt;link rel="canonical" href=".../solucoes-datawipe"&gt;
+&lt;h1&gt;Data wipe: exclusão definitiva...&lt;/h1&gt;
+&lt;p&gt;Resposta direta em 40–60 palavras...&lt;/p&gt;
+&lt;script type="application/ld+json"&gt;{ "@type": "Service" }&lt;/script&gt;</code></pre>
+      </div>
+    </div>
+
+    <h3>Dois testes simples para entender “conteúdo extraível”</h3>
+    <div class="split">
+      <div class="note"><strong>Dados estruturados são tradução, não maquiagem.</strong> O mesmo endereço que uma pessoa lê no rodapé precisa estar escrito em formato que máquina entende. É o que o schema faz:
+<pre><code>{
+  "@type": "Organization",
+  "name": "Reversee",
+  "address": {
+    "streetAddress": "Av. Tenente Amaro Felicíssimo da Silveira, 1468",
+    "postalCode": "02177-010",
+    "addressLocality": "São Paulo"
+  }
+}</code></pre></div>
+      <div class="note"><strong>O teste do bilhete.</strong> Copie um parágrafo da página e cole sozinho em um chat de IA. Se ele ainda responde a uma pergunta, é extraível. <em>Modelo ilustrativo:</em>
+        <p style="margin-top:10px;font-size:13.5px"><span class="status fail">Não passa</span> “Oferecemos soluções completas e inovadoras em gestão de ativos, com excelência e compromisso ambiental.”</p>
+        <p style="font-size:13.5px"><span class="status ok">Passa</span> “Data wipe é a exclusão definitiva e certificada dos dados de um equipamento, o que permite reaproveitá-lo sem expor informações.” <em>(prazos, padrões e documentos entregues são confirmados com a Reversee antes de publicar)</em></p>
+      </div>
+    </div>
+
+    <div class="note"><strong>Honestidade sobre resultado:</strong> ninguém controla o que uma IA responde. O que controlamos é a qualidade da base (acesso, estrutura, conteúdo e autoridade) e medimos o efeito com um conjunto fixo de perguntas, repetido a cada ciclo. Quem promete posição em IA vende sorte, não processo.</div>
+  </div>
+</section>
+
+<!-- ===================== ESTRATÉGIA ===================== -->
+<section class="card card-pillar seo" id="estrategia">
+  <div class="card-body">
+    <div class="pillar-header">
+      <div class="pillar-icon seo">2</div>
+      <div>
+        <div class="pillar-title seo">Estratégia: Topic Clusters e Pillar Pages</div>
+        <div class="pillar-subtitle">Como o conteúdo se organiza para concentrar autoridade</div>
+      </div>
+    </div>
+
+    <p class="lead">Em vez de publicar artigos soltos, organizamos o site em <strong>4 pilares temáticos</strong>. Cada pilar tem uma <strong>Pillar Page</strong> (a página mais completa sobre o assunto) e um <strong>cluster</strong> de 25 conteúdos satélite que respondem perguntas específicas e linkam de volta ao pilar: <strong>100 conteúdos no total</strong>.</p>
+
+    <svg class="cluster-svg" viewBox="0 0 640 290" role="img" aria-label="Diagrama: uma Pillar Page central conectada a seis conteúdos satélite por links nos dois sentidos">
+      <g stroke="#c9a96e" stroke-width="1.6" fill="none">
+        <path d="M120 62 L270 118"/><path d="M320 52 L320 112"/><path d="M520 62 L370 118"/>
+        <path d="M120 228 L270 172"/><path d="M320 238 L320 178"/><path d="M520 228 L370 172"/>
+      </g>
+      <g font-family="Ubuntu, sans-serif" text-anchor="middle">
+        <rect x="230" y="112" width="180" height="66" rx="12" fill="#e50914"/>
+        <text x="320" y="140" fill="#fff" font-size="15" font-weight="700">Pillar Page</text>
+        <text x="320" y="160" fill="#ffe4e6" font-size="11.5">visão completa do tema</text>
+        <g fill="#fff" stroke="#e8dcc8" stroke-width="1.4">
+          <rect x="30" y="30" width="180" height="48" rx="10"/><rect x="230" y="10" width="180" height="48" rx="10"/><rect x="430" y="30" width="180" height="48" rx="10"/>
+          <rect x="30" y="212" width="180" height="48" rx="10"/><rect x="230" y="232" width="180" height="48" rx="10"/><rect x="430" y="212" width="180" height="48" rx="10"/>
+        </g>
+        <g fill="#424242" font-size="12" font-weight="700">
+          <text x="120" y="50">Artigo</text><text x="320" y="30">Artigo</text><text x="520" y="50">Comparativo</text>
+          <text x="120" y="232">Artigo</text><text x="320" y="252">Definição</text><text x="520" y="232">FAQ / preço</text>
+        </g>
+        <g fill="#757575" font-size="10.5">
+          <text x="120" y="66">pergunta específica 1</text><text x="320" y="46">pergunta específica 2</text><text x="520" y="66">“X vs Y”</text>
+          <text x="120" y="248">pergunta específica 3</text><text x="320" y="268">“o que é…?”</text><text x="520" y="248">decisão de compra</text>
+        </g>
+      </g>
+    </svg>
+    <p class="sub" style="margin-top:6px">Links nos dois sentidos: o satélite aponta para o pilar e o pilar distribui autoridade de volta aos satélites.</p>
+
+    <div class="split" style="margin:18px 0">
+      <div class="risk-box gold" style="margin:0"><h4>Pillar Page</h4><p>Página ampla e definitiva sobre o tema. Na Reversee, são as páginas de serviço que já existem, aprofundadas para 800–1.200 palavras com problema, etapas, prazos, certificações, FAQ e prova.</p></div>
+      <div class="risk-box" style="margin:0"><h4>Cluster (satélites)</h4><p>Artigos e páginas de definição que capturam a pergunta específica do comprador e levam, por link, ao serviço. Cada tema aparece uma única vez: sem páginas disputando a mesma busca.</p></div>
+    </div>
+
+    <h3>Por que isso serve ao SEO, ao AIO e ao GEO ao mesmo tempo</h3>
+    <ul>
+      <li><strong>SEO:</strong> autoridade concentrada em poucas páginas-chave e links internos que hoje não existem (todas as páginas repetem só o menu).</li>
+      <li><strong>AIO:</strong> cada satélite é uma resposta curta e extraível a uma pergunta real, com FAQ e schema.</li>
+      <li><strong>GEO:</strong> cobertura completa de um tema é o que faz um modelo reconhecer a Reversee como referência nele.</li>
+    </ul>
+
+    <h3>Arquitetura: 4 pilares, 100 conteúdos</h3>
+    <p>O mapa tem três camadas: <strong>4 pilares</strong> (cada um com uma Pillar Page) &times; <strong>5 subtemas</strong> por pilar &times; <strong>5 conteúdos</strong> por subtema = <strong>100 conteúdos</strong>. Cada subtema funciona como um mini-cluster: a Pillar Page lista os subtemas e cada conteúdo liga ao pilar, a conteúdos irmãos do mesmo subtema e ao serviço correspondente.</p>
+    <p class="sub">Proposta de pauta construída a partir da auditoria. Antes da produção, no check-in 2, cada título passa por validação de volume e intenção (Ubersuggest + Keyword Planner) e por uma checagem de canibalização: <strong>uma intenção de busca = uma URL</strong>. Itens sem demanda real saem ou são fundidos; o mapa pode ganhar itens novos conforme os dados de busca.</p>
+
+    <div class="cl-grid">
+<div class="cl a"><div class="cl-head"><div class="k">Cluster A · 25 conteúdos</div><h4>ITAD e logística reversa</h4><div class="pg">Pillar: <code>/solucoes-itad</code> (existente · será aprofundada)</div></div><div class="cl-body">
+<div class="sat"><span><strong>Fundamentos</strong><br><small style="color:var(--gray-600)">Ex.: O que é ITAD (gestão de ativos de TI); ITAD × descarte comum: o que muda</small></span><span class="meta"><span class="chip cks">5</span></span></div>
+<div class="sat"><span><strong>Escolha do fornecedor</strong><br><small style="color:var(--gray-600)">Ex.: Como escolher uma empresa de descarte de eletrônicos em São Paulo; Como escolher uma empresa de ITAD: 12 perguntas para o RFP</small></span><span class="meta"><span class="chip cks">5</span></span></div>
+<div class="sat"><span><strong>Processo e logística</strong><br><small style="color:var(--gray-600)">Ex.: Logística reversa de eletrônicos, passo a passo; Como funciona a coleta de equipamentos de TI na empresa</small></span><span class="meta"><span class="chip cks">5</span></span></div>
+<div class="sat"><span><strong>Por tipo de equipamento</strong><br><small style="color:var(--gray-600)">Ex.: Descarte de notebooks e desktops corporativos; Descarte de servidores e equipamentos de data center</small></span><span class="meta"><span class="chip cks">5</span></span></div>
+<div class="sat"><span><strong>Por setor</strong><br><small style="color:var(--gray-600)">Ex.: ITAD para bancos e instituições financeiras; ITAD para o setor de saúde</small></span><span class="meta"><span class="chip cks">5</span></span></div>
+</div></div>
+<div class="cl b"><div class="cl-head"><div class="k">Cluster B · 25 conteúdos</div><h4>Segurança de dados</h4><div class="pg">Pillars: <code>/solucoes-datawipe</code> + <code>/solucoes-destruicaofisica</code> (existentes)</div></div><div class="cl-body">
+<div class="sat"><span><strong>Fundamentos</strong><br><small style="color:var(--gray-600)">Ex.: O que é data wipe (exclusão definitiva de dados); Data wipe × destruição física: qual escolher</small></span><span class="meta"><span class="chip cks">5</span></span></div>
+<div class="sat"><span><strong>Métodos de eliminação</strong><br><small style="color:var(--gray-600)">Ex.: Como funciona a trituração de HDs; Desmagnetização (degauss): quando funciona e quando não</small></span><span class="meta"><span class="chip cks">5</span></span></div>
+<div class="sat"><span><strong>Riscos</strong><br><small style="color:var(--gray-600)">Ex.: 7 erros que expõem dados no descarte de HDs; Dados residuais: o que ainda existe em um HD formatado</small></span><span class="meta"><span class="chip cks">5</span></span></div>
+<div class="sat"><span><strong>Comprovação e auditoria</strong><br><small style="color:var(--gray-600)">Ex.: Certificado de destruição de dados: o que deve constar; Como comprovar o data wipe em uma auditoria</small></span><span class="meta"><span class="chip cks">5</span></span></div>
+<div class="sat"><span><strong>Decisão</strong><br><small style="color:var(--gray-600)">Ex.: Quanto custa a destruição de HDs corporativos; Destruição in loco × em planta: como decidir</small></span><span class="meta"><span class="chip cks">5</span></span></div>
+</div></div>
+<div class="cl c"><div class="cl-head"><div class="k">Cluster C · 25 conteúdos</div><h4>Reciclagem e economia circular</h4><div class="pg">Pillar: <code>/solucoes-reciclagem</code> (existente · será aprofundada)</div></div><div class="cl-body">
+<div class="sat"><span><strong>Fundamentos</strong><br><small style="color:var(--gray-600)">Ex.: O que é economia circular em TI; Economia circular em TI: métricas e ROI</small></span><span class="meta"><span class="chip cks">5</span></span></div>
+<div class="sat"><span><strong>Valor e reaproveitamento</strong><br><small style="color:var(--gray-600)">Ex.: Quanto vale o parque tecnológico da sua empresa; Valor residual de equipamentos de TI: como calcular</small></span><span class="meta"><span class="chip cks">5</span></span></div>
+<div class="sat"><span><strong>Processo de reciclagem</strong><br><small style="color:var(--gray-600)">Ex.: Como é feita a reciclagem de eletrônicos, etapa por etapa; Reciclagem de placas eletrônicas: o que é recuperado</small></span><span class="meta"><span class="chip cks">5</span></span></div>
+<div class="sat"><span><strong>ESG e relatórios</strong><br><small style="color:var(--gray-600)">Ex.: ESG e descarte de eletrônicos: o que reportar; Relatório de resíduos eletrônicos: indicadores que importam</small></span><span class="meta"><span class="chip cks">5</span></span></div>
+<div class="sat"><span><strong>Situações e fornecedor</strong><br><small style="color:var(--gray-600)">Ex.: Descarte de TI na renovação de parque tecnológico; Descarte de TI no encerramento ou mudança de escritório</small></span><span class="meta"><span class="chip cks">5</span></span></div>
+</div></div>
+<div class="cl d"><div class="cl-head"><div class="k">Cluster D · 25 conteúdos</div><h4>Compliance e certificações</h4><div class="pg">Pillar: <code>/empresa</code> (a criar) · apoio: Política Integrada</div></div><div class="cl-body">
+<div class="sat"><span><strong>Legislação</strong><br><small style="color:var(--gray-600)">Ex.: LGPD e descarte de equipamentos: obrigações práticas; PNRS e compliance ambiental para empresas</small></span><span class="meta"><span class="chip cks">5</span></span></div>
+<div class="sat"><span><strong>Certificações</strong><br><small style="color:var(--gray-600)">Ex.: O que é a certificação R2v3 e por que importa; R2v3 × e-Stewards: diferenças</small></span><span class="meta"><span class="chip cks">5</span></span></div>
+<div class="sat"><span><strong>Documentos</strong><br><small style="color:var(--gray-600)">Ex.: Manifesto de Transporte de Resíduos (MTR): o que é; Certificado de Destinação Final (CDF): o que é e quando exigir</small></span><span class="meta"><span class="chip cks">5</span></span></div>
+<div class="sat"><span><strong>Gestão de risco</strong><br><small style="color:var(--gray-600)">Ex.: Auditoria de fornecedor de ITAD: roteiro; Due diligence de recicladora: o que perguntar</small></span><span class="meta"><span class="chip cks">5</span></span></div>
+<div class="sat"><span><strong>Perfis e situações</strong><br><small style="color:var(--gray-600)">Ex.: Desfazimento de bens de TI em órgãos públicos; Descarte de TI e auditorias externas em empresas de capital aberto</small></span><span class="meta"><span class="chip cks">5</span></span></div>
+</div></div>
+</div>
+
+    <div class="note"><strong>Serviço transversal:</strong> <code>/solucoes-consultoria</code> recebe links de todos os pilares, pois é o próximo passo natural para quem tem um caso fora do padrão. <strong>Formatos:</strong> guias, comparativos, passo a passo, checklists, definições, páginas de preço, conteúdos setoriais e dados próprios. A extensão varia por formato: os guias têm 1.200–2.000 palavras; definições e checklists são mais enxutos, desde que completos.</div>
+
+    <h3>Em que ritmo os 100 conteúdos entram</h3>
+    <p>Publicamos em <strong>ondas</strong>, começando pelos conteúdos de maior intenção de compra e pelas definições que sustentam cada pilar. As quatro primeiras ondas cabem nas 12 semanas deste plano (40 conteúdos); as duas seguintes completam o mapa no ciclo 2.</p>
+    <div class="table-wrap"><table><thead><tr><th>Onda</th><th>Período</th><th>Check-in</th><th>Por pilar</th><th>Conteúdos</th><th>Acumulado</th></tr></thead><tbody><tr><td><strong>Onda 1</strong></td><td>S5–S6</td><td>04/01</td><td>A 3 · B 3 · C 3 · D 3</td><td><strong>12</strong></td><td>12</td></tr><tr><td><strong>Onda 2</strong></td><td>S7–S8</td><td>18/01</td><td>A 3 · B 3 · C 3 · D 3</td><td><strong>12</strong></td><td>24</td></tr><tr><td><strong>Onda 3</strong></td><td>S9–S10</td><td>01/02</td><td>A 2 · B 2 · C 2 · D 2</td><td><strong>8</strong></td><td>32</td></tr><tr><td><strong>Onda 4</strong></td><td>S11–S12</td><td>15/02</td><td>A 2 · B 2 · C 2 · D 2</td><td><strong>8</strong></td><td>40</td></tr><tr><td><strong>Onda 5</strong></td><td>Mar–abr/2027</td><td>Ciclo 2</td><td>A 8 · B 7 · C 8 · D 7</td><td><strong>30</strong></td><td>70</td></tr><tr><td><strong>Onda 6</strong></td><td>Mai–jun/2027</td><td>Ciclo 2</td><td>A 7 · B 8 · C 7 · D 8</td><td><strong>30</strong></td><td>100</td></tr></tbody></table></div>
+    <div class="note"><strong>Ritmo ajustável:</strong> as datas do ciclo 2 são indicativas. Se houver capacidade de produção e de validação técnica por parte da Reversee, antecipamos ondas. A regra para liberar a onda seguinte é objetiva: a anterior precisa estar sendo <strong>indexada</strong> (Search Console) e sem alertas de qualidade. Publicar 100 páginas de uma vez, sem esse controle, aumenta o risco de conteúdo raso ou repetido e de páginas que o Google decide não indexar.</div>
+
+    <h3>Regras para publicar em escala</h3>
+    <div class="checklist">
+      <div class="check-item"><div class="num">1</div><div class="txt"><strong>Uma intenção, uma URL.</strong> O mapa é checado contra canibalização antes de cada onda.</div></div>
+      <div class="check-item"><div class="num">2</div><div class="txt"><strong>Informação que só a Reversee tem:</strong> processo, documento, dado da operação ou caso. Texto genérico que qualquer concorrente (ou IA) escreveria não entra.</div></div>
+      <div class="check-item"><div class="num">3</div><div class="txt"><strong>Blocos extraíveis em todo conteúdo</strong> (seção 3): resposta direta e FAQ são obrigatórios nos 100; os demais variam por formato.</div></div>
+      <div class="check-item"><div class="num">4</div><div class="txt"><strong>Autor visível e validação do especialista</strong> da Reversee antes de publicar, em lote semanal.</div></div>
+      <div class="check-item"><div class="num">5</div><div class="txt"><strong>Links com regra:</strong> 1 para o pilar, 2–3 para irmãos do subtema, 1 para o serviço; o pilar linka todos os conteúdos do seu cluster.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ANATOMIA DO CONTEÚDO ===================== -->
+<section class="card card-pillar aio" id="blocos">
+  <div class="card-body">
+    <div class="pillar-header">
+      <div class="pillar-icon aio">3</div>
+      <div><div class="pillar-title aio">Anatomia do conteúdo: blocos extraíveis para IA</div><div class="pillar-subtitle">O que vai dentro de cada um dos 100 conteúdos</div></div>
+    </div>
+
+    <p class="lead">Uma IA não cita a página inteira: ela retira <strong>um trecho que responde sozinho</strong> a uma pergunta. Por isso cada conteúdo é escrito em blocos que podem ser extraídos e citados de forma independente, sem perder o sentido. O mesmo molde vale para artigos, pilares e páginas de serviço.</p>
+
+    <div class="split">
+      <div>
+        <div class="code-label">Molde de um conteúdo</div>
+        <div class="wire">
+          <div class="wire-bar">H1 · autor · data de publicação e atualização</div>
+          <div class="blk b1"><span>B1</span><div><b>Resposta direta</b>40–60 palavras, logo após o H1</div></div>
+          <div class="blk b2"><span>B2</span><div><b>Definição</b>o termo explicado em 1–2 frases</div></div>
+          <div class="blk b3"><span>B3</span><div><b>Passo a passo</b>lista numerada de etapas</div></div>
+          <div class="blk b4"><span>B4</span><div><b>Tabela comparativa</b>X × Y em critérios objetivos</div></div>
+          <div class="blk b5"><span>B5</span><div><b>Prova</b>dado, certificação ou caso real</div></div>
+          <div class="blk b6"><span>B6</span><div><b>FAQ</b>3–5 perguntas reais do comprador</div></div>
+          <div class="wire-bar">Links: 1 pilar · 2–3 irmãos · 1 serviço &nbsp;|&nbsp; Schema: Article + BreadcrumbList + FAQPage</div>
+        </div>
+      </div>
+      <div>
+        <div class="code-label">O que cada bloco entrega (exemplos ilustrativos)</div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Bloco</th><th>Exemplo</th><th>Marcação</th></tr></thead>
+          <tbody>
+            <tr><td><strong>B1</strong> Resposta direta</td><td>“Data wipe é a exclusão definitiva e certificada dos dados de um equipamento. Permite reaproveitá-lo sem expor informações.”</td><td>Article</td></tr>
+            <tr><td><strong>B2</strong> Definição</td><td>“<em>Cadeia de custódia</em>: registro de cada etapa pela qual o equipamento passa, da coleta ao destino final.”</td><td>DefinedTerm</td></tr>
+            <tr><td><strong>B3</strong> Passos</td><td>1. Inventário · 2. Coleta · 3. Data wipe · 4. Certificado</td><td>HowTo</td></tr>
+            <tr><td><strong>B4</strong> Comparativo</td><td>Data wipe × destruição física, por critério</td><td>Tabela HTML</td></tr>
+            <tr><td><strong>B5</strong> Prova</td><td>Certificações (R2v3, ISO, Blancco, BitRaser) e mais de 300 empresas atendidas</td><td>Organization</td></tr>
+            <tr><td><strong>B6</strong> FAQ</td><td>“Quanto tempo leva a coleta?”, “Recebo certificado?”</td><td>FAQPage</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <h3>Qual bloco entra em qual formato</h3>
+    <div class="table-wrap"><table class="matrix">
+      <thead><tr><th>Formato</th><th>B1 Resposta</th><th>B2 Definição</th><th>B3 Passos</th><th>B4 Tabela</th><th>B5 Prova</th><th>B6 FAQ</th></tr></thead>
+      <tbody>
+        <tr><td>Definição</td><td>●</td><td>●</td><td>○</td><td>○</td><td>○</td><td>●</td></tr>
+        <tr><td>Comparativo</td><td>●</td><td>○</td><td>○</td><td>●</td><td>●</td><td>●</td></tr>
+        <tr><td>Passo a passo</td><td>●</td><td>○</td><td>●</td><td>○</td><td>○</td><td>●</td></tr>
+        <tr><td>Guia / lista</td><td>●</td><td>○</td><td>○</td><td>○</td><td>●</td><td>●</td></tr>
+        <tr><td>Checklist</td><td>●</td><td>○</td><td>●</td><td>○</td><td>○</td><td>●</td></tr>
+        <tr><td>Preço / decisão</td><td>●</td><td>○</td><td>○</td><td>●</td><td>●</td><td>●</td></tr>
+        <tr><td>Setorial</td><td>●</td><td>○</td><td>○</td><td>○</td><td>●</td><td>●</td></tr>
+      </tbody>
+    </table></div>
+    <p class="sub">● obrigatório · ○ quando fizer sentido. Resposta direta (B1) e FAQ (B6) estão em 100% dos conteúdos.</p>
+
+    <div class="note"><strong>O que a marcação faz e o que não faz:</strong> schema ajuda a máquina a entender o conteúdo; ele não garante destaque nos resultados do Google nem citação em IA. O que sustenta a citação é o conteúdo ser claro, correto, assinado e confirmado por fontes externas. Por isso validamos o que publicamos com a Reversee e medimos a citação com um conjunto fixo de perguntas.</div>
+  </div>
+</section>
+
+<!-- ===================== FASES ===================== -->
+<section class="card" id="fases">
+  <div class="card-body">
+    <h2>As 4 fases do plano</h2>
+    <p>As fases seguem a ordem das três portas: primeiro o site precisa ser <em>lido</em>, depois <em>entendido</em>, depois <em>extraído</em> e, por fim, <em>recomendado</em>. Pular etapas desperdiça conteúdo: um artigo publicado num site que o robô não lê não existe.</p>
+
+    <div class="timeline">
+      <div class="timeline-phase"><div class="dot gold"></div><div class="phase-name">Fundação técnica</div><div class="phase-weeks">Semanas 1–2</div><div class="phase-hours">~40 h</div><div class="phase-pillar gold">Porta 1 · Acesso</div></div>
+      <div class="timeline-phase"><div class="dot orange"></div><div class="phase-name">Idioma &amp; entidade</div><div class="phase-weeks">Semanas 3–4</div><div class="phase-hours">~50 h</div><div class="phase-pillar orange">Porta 2 · Entendimento</div></div>
+      <div class="timeline-phase"><div class="dot red"></div><div class="phase-name">Conteúdo</div><div class="phase-weeks">Semanas 5–8</div><div class="phase-hours">~100 h+</div><div class="phase-pillar red">Porta 3 · Extração</div></div>
+      <div class="timeline-phase"><div class="dot purple"></div><div class="phase-name">Performance, AIO &amp; GEO</div><div class="phase-weeks">Semanas 9–12</div><div class="phase-hours">~80 h</div><div class="phase-pillar purple">Citação</div></div>
+    </div>
+
+    <div class="phase-grid">
+      <div class="ph-card f1">
+        <div class="k">Fase 1</div><h4>Fundação técnica</h4>
+        <div class="when">Semanas 1–2 · 23/11 a 06/12 · ~40 h · fecha no CK1</div>
+        <p><strong>Objetivo:</strong> fazer o site existir para buscadores e IAs.</p>
+        <ul>
+          <li>Prerender das 11 rotas (HTML já com H1, texto e links)</li>
+          <li>Canonical correto em cada página</li>
+          <li>404 real e redirecionamento único de host + HSTS</li>
+          <li>Sitemap gerado no build, com as 11 URLs</li>
+          <li>Hero em WebP/AVIF (de ~1 MB para ≤ 250 KB)</li>
+          <li>Search Console, Bing Webmaster e baseline de medição</li>
+        </ul>
+        <div class="out"><b>Por que primeiro:</b> hoje 10 das 11 páginas pedem ao Google para não serem indexadas e o HTML tem zero palavras. Sem isso, nada do que vem depois funciona.</div>
+      </div>
+      <div class="ph-card f2">
+        <div class="k">Fase 2</div><h4>Idioma &amp; entidade</h4>
+        <div class="when">Semanas 3–4 · 07/12 a 20/12 · ~50 h · fecha no CK2</div>
+        <p><strong>Objetivo:</strong> deixar claro para máquinas quem é a Reversee e em que idioma cada página fala.</p>
+        <ul>
+          <li>Português e inglês em URLs próprias, com hreflang</li>
+          <li>Schema: Organization, LocalBusiness, BreadcrumbList, Service</li>
+          <li>Página <code>/empresa</code> (história, certificações, CNPJ, endereço)</li>
+          <li>Open Graph por página (compartilhamento no WhatsApp/LinkedIn)</li>
+          <li>Breadcrumbs e blocos de soluções relacionadas</li>
+          <li>Mapa de clusters validado e calendário editorial aprovado</li>
+        </ul>
+        <div class="out"><b>Por que agora:</b> o idioma hoje é decidido pelo navegador, sem URL. A versão em português não tem endereço próprio para ser indexada.</div>
+      </div>
+      <div class="ph-card f3">
+        <div class="k">Fase 3</div><h4>Conteúdo</h4>
+        <div class="when">Semanas 5–8 · 21/12 a 17/01 · ~100 h base + produção em escala · fecha no CK3 e CK4</div>
+        <p><strong>Objetivo:</strong> construir os clusters com conteúdo que responde ao comprador e que uma IA consegue extrair.</p>
+        <ul>
+          <li>Blog próprio no domínio, organizado por pilar (hoje os artigos vivem no LinkedIn)</li>
+          <li>Ondas 1 e 2: 24 conteúdos dos clusters, todos com blocos extraíveis, autor, FAQ e schema</li>
+          <li>5 páginas de serviço aprofundadas (800–1.200 palavras)</li>
+          <li>Blocos “resposta rápida” de 40–60 palavras nos serviços</li>
+          <li>Links internos contextuais (≥ 5 por página)</li>
+        </ul>
+        <div class="out"><b>Ritmo:</b> 12 conteúdos e 3 serviços até o CK3; mais 12 conteúdos e 2 serviços até o CK4. As horas de produção dos conteúdos além dos 8 previstos na auditoria são dimensionadas no kickoff, conforme o modelo de produção e validação.</div>
+      </div>
+      <div class="ph-card f4">
+        <div class="k">Fase 4</div><h4>Performance, AIO &amp; GEO</h4>
+        <div class="when">Semanas 9–12 · 18/01 a 14/02 · ~80 h · fecha no CK5 e CK6</div>
+        <p><strong>Objetivo:</strong> ser rápido, citável e reconhecido como fonte.</p>
+        <ul>
+          <li>Facade de vídeo, GTM/GA4 consolidados, cache, HTTP/2 e Brotli</li>
+          <li><code>llms.txt</code> publicado e validado</li>
+          <li>Google Business Profile, NAP e citações setoriais</li>
+          <li>Acessibilidade, consentimento LGPD e security headers</li>
+          <li>Ondas 3 e 4: +16 conteúdos, incluindo comparativos, preço e dados próprios</li>
+          <li>Relatório anual com dados próprios + reauditoria completa</li>
+        </ul>
+        <div class="out"><b>Fechamento:</b> 40 conteúdos no ar, comparação baseline × resultado e plano das Ondas 5 e 6.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CRONOGRAMA ===================== -->
+<section class="card card-pillar gold" id="cronograma">
+  <div class="card-body">
+    <div class="pillar-header">
+      <div class="pillar-icon gold">5</div>
+      <div><div class="pillar-title" style="color:var(--gold-dark)">Cronograma de 12 semanas</div><div class="pillar-subtitle">23/11/2026 a 14/02/2027 · fechamento no check-in de 15/02</div></div>
+    </div>
+
+    <div class="gantt-wrap">
+      <div class="gantt">
+        <div class="g-head" style="text-align:left;padding-left:8px">Frente de trabalho</div>
+        <div class="g-head">S1<small>23/11</small></div><div class="g-head">S2<small>30/11</small></div><div class="g-head">S3<small>07/12</small></div><div class="g-head">S4<small>14/12</small></div>
+        <div class="g-head">S5<small>21/12</small></div><div class="g-head">S6<small>28/12</small></div><div class="g-head">S7<small>04/01</small></div><div class="g-head">S8<small>11/01</small></div>
+        <div class="g-head">S9<small>18/01</small></div><div class="g-head">S10<small>25/01</small></div><div class="g-head">S11<small>01/02</small></div><div class="g-head">S12<small>08/02</small></div>
+
+        <div class="g-label">Acessos e baseline</div><div class="g-bar gray" style="grid-column:2 / span 2">GSC · GA4 · Bing</div><div style="grid-column:4 / span 10"></div>
+        <div class="g-label">Fundação técnica</div><div class="g-bar gold" style="grid-column:2 / span 2">Prerender · canonical · 404 · sitemap</div><div style="grid-column:4 / span 10"></div>
+        <div class="g-label">Idioma por URL + hreflang</div><div style="grid-column:2 / span 2"></div><div class="g-bar orange" style="grid-column:4 / span 2">/pt/ · /en/</div><div style="grid-column:6 / span 8"></div>
+        <div class="g-label">Schema · /empresa · OG</div><div style="grid-column:2 / span 2"></div><div class="g-bar orange" style="grid-column:4 / span 2">Entidade</div><div style="grid-column:6 / span 8"></div>
+        <div class="g-label">Clusters e keywords</div><div style="grid-column:2 / span 2"></div><div class="g-bar orange" style="grid-column:4 / span 2">Mapa validado</div><div style="grid-column:6 / span 8"></div>
+        <div class="g-label">Blog + conteúdos dos 4 pilares</div><div style="grid-column:2 / span 4"></div><div class="g-bar red" style="grid-column:6 / span 8">Ondas 1–4: 12 → 12 → 8 → 8 = 40 conteúdos</div>
+        <div class="g-label">5 serviços + links internos</div><div style="grid-column:2 / span 4"></div><div class="g-bar red" style="grid-column:6 / span 4">3 serviços → 2 serviços</div><div style="grid-column:10 / span 4"></div>
+        <div class="g-label">Performance · tags · cache</div><div style="grid-column:2 / span 8"></div><div class="g-bar purple" style="grid-column:10 / span 2">CWV</div><div style="grid-column:12 / span 2"></div>
+        <div class="g-label">llms.txt · GBP · compliance</div><div style="grid-column:2 / span 8"></div><div class="g-bar purple" style="grid-column:10 / span 2">AIO + Local</div><div style="grid-column:12 / span 2"></div>
+        <div class="g-label">Relatório anual (dados próprios)</div><div style="grid-column:2 / span 10"></div><div class="g-bar purple" style="grid-column:12 / span 2">Relatório</div>
+        <div class="g-label">Reauditoria + plano 2º tri</div><div style="grid-column:2 / span 11"></div><div class="g-bar purple" style="grid-column:13 / span 1">Fecha</div>
+
+        <div class="g-label" style="font-weight:800;color:var(--gray-900)">Check-ins</div>
+        <div class="g-ck"></div><div class="g-ck"><span class="ck-pin">CK1</span></div><div class="g-ck"></div><div class="g-ck"><span class="ck-pin">CK2</span></div>
+        <div class="g-ck"></div><div class="g-ck"><span class="ck-pin">CK3</span></div><div class="g-ck"></div><div class="g-ck"><span class="ck-pin">CK4</span></div>
+        <div class="g-ck"></div><div class="g-ck"><span class="ck-pin">CK5</span></div><div class="g-ck"></div><div class="g-ck"><span class="ck-pin">CK6</span></div>
+      </div>
+    </div>
+    <div class="legend">
+      <span><i style="background:#b8963a"></i>Fase 1 · Fundação</span><span><i style="background:#ea580c"></i>Fase 2 · Idioma e entidade</span><span><i style="background:var(--red)"></i>Fase 3 · Conteúdo</span><span><i style="background:var(--purple)"></i>Fase 4 · Performance, AIO e GEO</span>
+    </div>
+    <p class="sub" style="margin-top:12px">O pino do check-in aparece na última semana do período coberto; a reunião acontece na segunda-feira seguinte (datas na seção 6).</p>
+
+    <div class="note"><strong>Prazos com honestidade:</strong> as semanas 1–4 dependem do time técnico do site (prerender, idioma por URL, servidor). As datas assumem acessos liberados na semana 1 e retorno de aprovações em até 3 dias úteis. Se algo atrasar, o check-in mostra o atraso e o replanejamento, sem esconder. Os check-ins de 21/12 e 04/01 caem no recesso de fim de ano e podem ser ajustados.</div>
+  </div>
+</section>
+
+<!-- ===================== CHECK-INS ===================== -->
+<section class="card" id="checkins">
+  <div class="card-body">
+    <h2>Os 6 check-ins quinzenais</h2>
+    <p>Reuniões curtas, sempre com a mesma estrutura: o que foi entregue (com evidência), o que mudou nos números, o que vem nos próximos 15 dias e o que precisamos de vocês.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Check-in</th><th>Data (proposta)</th><th>Período coberto</th><th>Fase</th><th>O que fecha</th></tr></thead>
+        <tbody>
+          <tr><td><strong>CK0 · Kickoff</strong></td><td>Semana de 23/11</td><td>—</td><td>—</td><td>Aprovação do plano, acessos e responsáveis</td></tr>
+          <tr><td><strong>CK1</strong></td><td>07/12</td><td>S1–S2</td><td>Fase 1</td><td>Site legível por robôs e baseline registrado</td></tr>
+          <tr><td><strong>CK2</strong></td><td>21/12</td><td>S3–S4</td><td>Fase 2</td><td>Idioma por URL, entidade declarada, calendário aprovado</td></tr>
+          <tr><td><strong>CK3</strong></td><td>04/01</td><td>S5–S6</td><td>Fase 3</td><td>Blog no ar, Onda 1 (12 conteúdos) e 3 serviços aprofundados</td></tr>
+          <tr><td><strong>CK4</strong></td><td>18/01</td><td>S7–S8</td><td>Fase 3</td><td>Onda 2 (24 conteúdos no total), 5 serviços e malha de links internos</td></tr>
+          <tr><td><strong>CK5</strong></td><td>01/02</td><td>S9–S10</td><td>Fase 4</td><td>Onda 3 (32 conteúdos), performance, llms.txt, GBP e compliance</td></tr>
+          <tr><td><strong>CK6 · Fechamento</strong></td><td>15/02</td><td>S11–S12</td><td>Fase 4</td><td>Onda 4 (40 conteúdos), relatório anual, reauditoria e plano das Ondas 5 e 6</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>O que cada check-in traz</h3>
+
+    <div class="ck f1">
+      <div class="ck-top"><div class="t"><span>Check-in 1 · Fase 1</span>Fundação técnica e baseline</div><div class="ck-date"><b>07/12</b><small>Segunda-feira</small></div></div>
+      <div class="ck-cols">
+        <div><h5>O que você vai ver</h5><ul>
+          <li>Prerender das 11 rotas: HTML com H1, texto e links, comprovado por requisição direta</li>
+          <li>Canonical por rota, 404 real, host único com 301 e HSTS</li>
+          <li>Sitemap com as 11 URLs enviado ao Search Console e ao Bing</li>
+          <li>Hero de ~1 MB para ≤ 250 KB (antes × depois)</li>
+          <li><strong>Baseline registrado</strong> antes de qualquer mudança: indexação, Core Web Vitals e 10 perguntas fixas feitas a ChatGPT, Perplexity e Gemini</li>
+        </ul></div>
+        <div><h5>Evidência</h5><ul><li>Re-crawl com JavaScript ligado (CSV)</li><li>Teste de HTML bruto por rota</li><li>PageSpeed antes × depois</li></ul>
+        <h5>Precisamos de vocês</h5><ul><li>Acessos e dev definidos na semana 1</li></ul></div>
+      </div>
+    </div>
+
+    <div class="ck f2">
+      <div class="ck-top"><div class="t"><span>Check-in 2 · Fase 2</span>Idioma, entidade e plano editorial</div><div class="ck-date"><b>21/12</b><small>Segunda-feira</small></div></div>
+      <div class="ck-cols">
+        <div><h5>O que você vai ver</h5><ul>
+          <li>/pt/ e /en/ com hreflang recíproco e seletor de idioma em link rastreável</li>
+          <li>Schema validado (Organization, LocalBusiness, BreadcrumbList, Service)</li>
+          <li>Página /empresa publicada, linkada no menu e no rodapé</li>
+          <li>Open Graph com imagem 1200×630 por página</li>
+          <li><strong>Mapa dos 100 conteúdos validado</strong> por volume, intenção e canibalização, com o calendário das Ondas 1–4</li>
+        </ul></div>
+        <div><h5>Evidência</h5><ul><li>Rich Results Test por tipo de schema</li><li>Validador do LinkedIn (OG)</li><li>Planilha de keywords e mapa de intenção</li></ul>
+        <h5>Precisamos de vocês</h5><ul><li>Aprovação da pauta</li><li>Autor dos artigos (nome, cargo, bio)</li></ul></div>
+      </div>
+    </div>
+
+    <div class="ck f3">
+      <div class="ck-top"><div class="t"><span>Check-in 3 · Fase 3</span>Blog no ar e primeiros serviços aprofundados</div><div class="ck-date"><b>04/01</b><small>Segunda-feira</small></div></div>
+      <div class="ck-cols">
+        <div><h5>O que você vai ver</h5><ul>
+          <li>Blog publicado no domínio, com autor, data e schema Article</li>
+          <li><strong>Onda 1: 12 conteúdos</strong> (3 por pilar), todos com os blocos extraíveis (seção 3)</li>
+          <li>3 serviços aprofundados (ITAD, Data Wipe, Destruição Física) com resposta rápida e FAQ</li>
+          <li>Primeiros links internos contextuais</li>
+        </ul></div>
+        <div><h5>Evidência</h5><ul><li>Tabela artigo · informações · link</li><li>Antes × depois de cada serviço</li><li>Contagem de palavras e FAQ por página</li></ul>
+        <h5>Precisamos de vocês</h5><ul><li>Validação técnica de cada peça (3 dias úteis)</li></ul></div>
+      </div>
+    </div>
+
+    <div class="ck f3">
+      <div class="ck-top"><div class="t"><span>Check-in 4 · Fase 3</span>Clusters completos</div><div class="ck-date"><b>18/01</b><small>Segunda-feira</small></div></div>
+      <div class="ck-cols">
+        <div><h5>O que você vai ver</h5><ul>
+          <li><strong>Onda 2: +12 conteúdos</strong> (24 no total), com malha de links por subtema</li>
+          <li>Serviços de Reciclagem e Consultoria aprofundados: 5 de 5</li>
+          <li>≥ 5 links internos contextuais por página; nenhuma página a mais de 3 cliques da home</li>
+          <li>Article, FAQPage e BreadcrumbList em 100% dos conteúdos publicados</li>
+          <li><strong>Primeiros sinais no Search Console:</strong> URLs indexadas e impressões</li>
+        </ul></div>
+        <div><h5>Evidência</h5><ul><li>Tabela artigo · informações · link</li><li>Mapa de links internos</li><li>Prints do Search Console</li></ul>
+        <h5>Precisamos de vocês</h5><ul><li>Liberar números para o relatório anual</li></ul></div>
+      </div>
+    </div>
+
+    <div class="ck f4">
+      <div class="ck-top"><div class="t"><span>Check-in 5 · Fase 4</span>Performance, AIO e presença local</div><div class="ck-date"><b>01/02</b><small>Segunda-feira</small></div></div>
+      <div class="ck-cols">
+        <div><h5>O que você vai ver</h5><ul>
+          <li><strong>Onda 3: +8 conteúdos</strong> (32 no total)</li>
+          <li>LCP, TBT e peso da home medidos contra o baseline</li>
+          <li>Vídeo em facade, GTM/GA4 consolidados, cache, HTTP/2 e Brotli</li>
+          <li><code>llms.txt</code> no ar e validado (resposta 200)</li>
+          <li>Google Business Profile verificado e NAP idêntico em site e diretórios</li>
+          <li>Consentimento LGPD, security headers e acessibilidade WCAG AA</li>
+        </ul></div>
+        <div><h5>Evidência</h5><ul><li>PageSpeed antes × depois</li><li>Link do llms.txt e do perfil GBP</li><li>Cabeçalhos HTTP por requisição</li></ul>
+        <h5>Precisamos de vocês</h5><ul><li>Verificação do GBP (código de verificação)</li></ul></div>
+      </div>
+    </div>
+
+    <div class="ck f4">
+      <div class="ck-top"><div class="t"><span>Check-in 6 · Fase 4</span>GEO e fechamento do ciclo</div><div class="ck-date"><b>15/02</b><small>Segunda-feira</small></div></div>
+      <div class="ck-cols">
+        <div><h5>O que você vai ver</h5><ul>
+          <li><strong>Onda 4: +8 conteúdos</strong> (40 no total), incluindo comparativos, página de preço e a Pillar Page /empresa completa</li>
+          <li>Relatório anual com dados próprios (publicação depende da liberação dos números pela diretoria)</li>
+          <li>Descrição canônica da Reversee replicada em fontes externas</li>
+          <li><strong>Reauditoria completa:</strong> baseline × resultado, em todos os indicadores</li>
+          <li>Plano e calendário das Ondas 5 e 6 (60 conteúdos restantes)</li>
+        </ul></div>
+        <div><h5>Evidência</h5><ul><li>Novo crawl e novo score V4</li><li>Repetição das 10 perguntas de IA</li><li>Relatório comparativo</li></ul>
+        <h5>Decisão</h5><ul><li>Continuidade e foco do 2º trimestre</li></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EVIDÊNCIAS ===================== -->
+<section class="card card-pillar aio" id="evidencias">
+  <div class="card-body">
+    <div class="pillar-header">
+      <div class="pillar-icon aio">7</div>
+      <div><div class="pillar-title aio">Como as evidências chegam</div><div class="pillar-subtitle">Entregável · informações · link: o formato de cada check-in</div></div>
+    </div>
+
+    <p>Cada check-in é uma página como esta, com uma tabela de evidências por frente de trabalho. Cada linha abre a página publicada, o arquivo ou a ferramenta de validação, para qualquer pessoa conferir sozinha. Os blocos fixos de todo check-in:</p>
+
+    <div class="checklist">
+      <div class="check-item"><div class="num">1</div><div class="txt"><strong>Entregues no período:</strong> tabela entregável · informações · link · status, com a página publicada aberta a um clique.</div></div>
+      <div class="check-item"><div class="num">2</div><div class="txt"><strong>Antes × depois:</strong> títulos, metadescrições, peso de imagem, canonical, com o motivo de cada mudança.</div></div>
+      <div class="check-item"><div class="num">3</div><div class="txt"><strong>Números:</strong> URLs indexadas, impressões, cliques, Core Web Vitals, schema válido e citações em IA, sempre contra o baseline.</div></div>
+      <div class="check-item"><div class="num">4</div><div class="txt"><strong>Próximos 15 dias:</strong> o que entra em produção e quando será evidenciado.</div></div>
+      <div class="check-item"><div class="num">5</div><div class="txt"><strong>O que precisamos de vocês:</strong> decisões, aprovações e acessos, com prazo.</div></div>
+    </div>
+
+    <h3>Exemplo do formato: como o CK1 vai aparecer</h3>
+    <p class="sub">Linhas com status “Planejado”; no dia do check-in viram “No ar” ou “Em andamento”, com a evidência anexada. Os links abaixo já abrem as páginas e ferramentas que serão usadas na verificação.</p>
+    <div class="table-wrap">
+      <table class="evid">
+        <thead><tr><th>Entregável</th><th>Informações</th><th>Evidência (clique para abrir)</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Prerender · Data Wipe</td><td>HTML bruto com H1, texto e links; hoje 422 palavras só após JavaScript</td><td><a href="https://www.reversee.com.br/solucoes-datawipe" target="_blank" rel="noopener">/solucoes-datawipe</a> · teste de HTML bruto (print)</td><td><span class="status-plan">Planejado</span></td></tr>
+          <tr><td>Canonical por rota</td><td>11 URLs, cada uma com canonical para si mesma (hoje todas apontam para a home)</td><td><a href="https://www.reversee.com.br/solucoes-itad" target="_blank" rel="noopener">/solucoes-itad</a> · tabela do re-crawl (CSV)</td><td><span class="status-plan">Planejado</span></td></tr>
+          <tr><td>404 real</td><td>URL inexistente passa a responder 404 (hoje responde 200)</td><td><a href="https://www.reversee.com.br/url-que-nao-existe" target="_blank" rel="noopener">URL de teste</a> · cabeçalho HTTP</td><td><span class="status-plan">Planejado</span></td></tr>
+          <tr><td>Sitemap</td><td>11 URLs 200 auto-canônicas, com lastmod, enviado ao GSC e ao Bing</td><td><a href="https://www.reversee.com.br/sitemap.xml" target="_blank" rel="noopener">/sitemap.xml</a> · print do GSC</td><td><span class="status-plan">Planejado</span></td></tr>
+          <tr><td>Hero em WebP/AVIF</td><td>1.005 KB → ≤ 250 KB; meta de LCP mobile ≤ 2,5 s (hoje 4,4 s)</td><td><a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.reversee.com.br%2F" target="_blank" rel="noopener">PageSpeed da home</a></td><td><span class="status-plan">Planejado</span></td></tr>
+          <tr><td>Baseline de IA</td><td>10 perguntas fixas × ChatGPT, Perplexity e Gemini; ponto de partida confirmado neste check-in</td><td>Planilha do protocolo (arquivo)</td><td><span class="status-plan">Planejado</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Evidência de conteúdo: o mesmo padrão, por conteúdo e por onda</h3>
+    <div class="table-wrap">
+      <table class="evid">
+        <thead><tr><th>Conteúdo</th><th>Informações</th><th>Link</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>7 erros que expõem dados no descarte de HDs</td><td>Cluster B · Onda 1 · blocos B1, B5 e B6 · autor, data, FAQ (5 perguntas) · schema Article + FAQPage · links para Data Wipe e Destruição Física</td><td>URL publicada (a definir)</td><td><span class="status-plan">CK3</span></td></tr>
+          <tr><td>LGPD e descarte de equipamentos</td><td>Cluster D · Onda 1 · blocos B1, B5 e B6 · autor, data, FAQ · links para /empresa e Consultoria</td><td>URL publicada (a definir)</td><td><span class="status-plan">CK3</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sub">Em cada check-in a tabela lista <strong>todos os conteúdos da onda</strong> (12, 12, 8 e 8 nas quatro primeiras). Cada linha traz o link, o pilar, o formato, os blocos extraíveis aplicados, o schema e os links internos de entrada e saída. A tabela acumulada mostra quantos dos 100 já estão no ar.</p>
+  </div>
+</section>
+
+<!-- ===================== MEDIÇÃO ===================== -->
+<section class="card" id="medicao">
+  <div class="card-body">
+    <h2>Como medimos o resultado</h2>
+    <p>Sem baseline não há como provar impacto. Por isso o primeiro passo é garantir os acessos e registrar o estado inicial <strong>antes</strong> de qualquer mudança. Indicadores técnicos são acompanhados a cada check-in; os de tráfego, mensalmente, porque oscilam no curto prazo.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Indicador</th><th>Fonte</th><th>Baseline</th><th>Meta em 12 semanas</th><th>Aparece</th></tr></thead>
+        <tbody>
+          <tr><td>URLs indexáveis</td><td>Search Console</td><td>1 de 10 no sitemap</td><td>≥ 20 como piso; cresce a cada onda publicada</td><td>CK1 em diante</td></tr>
+          <tr><td>Impressões e cliques orgânicos</td><td>Search Console / GA4</td><td>A confirmar (sem acesso hoje)</td><td>Crescimento mês a mês após a indexação</td><td>CK4 em diante</td></tr>
+          <tr><td>CTR médio das páginas de serviço</td><td>Search Console</td><td>A confirmar</td><td>≥ 3%</td><td>CK6</td></tr>
+          <tr><td>LCP mobile</td><td>PageSpeed / CrUX</td><td>4,4 s</td><td>≤ 2,5 s</td><td>Todo check-in</td></tr>
+          <tr><td>TBT mobile</td><td>Lighthouse</td><td>1.130 ms</td><td>≤ 300 ms</td><td>Todo check-in</td></tr>
+          <tr><td>Peso da home</td><td>Lighthouse</td><td>3.287 KiB</td><td>≤ 1.600 KiB</td><td>Todo check-in</td></tr>
+          <tr><td>Conteúdos publicados</td><td>Sitemap / blog</td><td>0</td><td>40 (Ondas 1–4) · 100 no mapa completo</td><td>Todo check-in</td></tr>
+          <tr><td>Dados estruturados válidos</td><td>Rich Results Test</td><td>0 tipos</td><td>≥ 8 tipos, 0 erros</td><td>CK2 em diante</td></tr>
+          <tr><td>Citações em IA</td><td>10 perguntas fixas, execução manual</td><td>0 (estimativa; confirmado no CK1)</td><td>≥ 3 perguntas com menção</td><td>CK1 (base) e CK6</td></tr>
+          <tr><td>Score V4 de saúde SEO</td><td>Reauditoria</td><td>29/100</td><td>Reavaliado no CK6</td><td>CK6</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note"><strong>O que esperar, com realismo:</strong> nas semanas 1–2 o ganho é de base, não de tráfego. A indexação das páginas começa a aparecer a partir da Fase 1; crescimento consistente de impressões e cliques tende a surgir a partir do segundo mês; citação em IA depende de conteúdo publicado e de tempo para as fontes serem recoletadas. Por isso medimos o processo (entregas e indicadores técnicos) a cada 15 dias e o resultado (tráfego e citações) ao longo do ciclo.</div>
+  </div>
+</section>
+
+<!-- ===================== DEPENDÊNCIAS ===================== -->
+<section class="card" id="dependencias">
+  <div class="card-body">
+    <h2>O que precisamos de vocês</h2>
+    <p>O plano tem ~270 horas, e parte dele é desenvolvimento no site. Estes pontos destravam o cronograma. A divisão de responsabilidades (V4 × time técnico do site) é confirmada no kickoff.</p>
+
+    <div class="checklist">
+      <div class="check-item"><div class="num">1</div><div class="txt"><strong>Acesso de proprietário ao Search Console, GA4 e Bing Webmaster</strong>, na semana 1. Sem isso não há baseline.</div></div>
+      <div class="check-item"><div class="num">2</div><div class="txt"><strong>Quem executa o desenvolvimento</strong> (prerender, idioma por URL, servidor IIS) e acesso ao repositório e ao ambiente, na semana 1. É o caminho crítico do plano.</div></div>
+      <div class="check-item"><div class="num">3</div><div class="txt"><strong>Um ou mais porta-vozes técnicos para assinar os conteúdos</strong> (um por pilar, idealmente): nome, cargo, bio e LinkedIn, até a semana 4.</div></div>
+      <div class="check-item"><div class="num">4</div><div class="txt"><strong>Validação técnica em lote semanal</strong> (processos, certificações, prazos): uma sessão curta por semana para revisar os conteúdos da onda, com retorno em até 3 dias úteis. É o gargalo mais provável do volume. Não publicamos afirmação técnica sem conferência da Reversee.</div></div>
+      <div class="check-item"><div class="num">5</div><div class="txt"><strong>Dados para o relatório anual:</strong> volumes processados, toneladas desviadas de aterro, mídias destruídas, tempo médio de coleta, taxa de reaproveitamento, e autorização para publicar. Na semana 7.</div></div>
+      <div class="check-item"><div class="num">6</div><div class="txt"><strong>Google Business Profile:</strong> acesso ou quem receberá o código de verificação, e confirmação do NAP, até a semana 8.</div></div>
+    </div>
+
+    <div class="risk-box">
+      <h4>O principal risco do plano</h4>
+      <p>O prerender é a peça que destrava todo o resto. Se a Fase 1 atrasar, seguimos produzindo conteúdo em paralelo, mas ele só é <em>publicado e indexável</em> quando o HTML estiver legível por robôs. Qualquer desvio aparece no check-in seguinte, com a nova data. Outro risco é o volume: 100 conteúdos só funcionam se cada um trouxer informação própria da Reversee e passar pela validação técnica. Por isso as ondas são liberadas conforme a indexação e a capacidade de validação, e não por calendário fixo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PRÓXIMO PASSO ===================== -->
+<section class="card card-pillar gold" id="proximo">
+  <div class="card-body">
+    <h2>Próximo passo</h2>
+    <div class="checklist">
+      <div class="check-item"><div class="num">1</div><div class="txt"><strong>Aprovar o plano e o calendário</strong> de check-ins (CK0, semana de 23/11).</div></div>
+      <div class="check-item"><div class="num">2</div><div class="txt"><strong>Liberar os acessos e definir o responsável técnico</strong> pelo desenvolvimento.</div></div>
+      <div class="check-item"><div class="num">3</div><div class="txt"><strong>Iniciar a Fase 1</strong> e registrar o baseline. O primeiro check-in, em 07/12, já traz as primeiras evidências.</div></div>
+    </div>
+    <p style="margin-top:16px">O plano detalha o <em>o quê</em> e o <em>quando</em>; a auditoria completa, com a evidência técnica de cada achado, está no relatório <a href="https://marcoslrvusa.github.io/v4perettoco/reversee-seo-audit/" target="_blank" rel="noopener">Auditoria SEO + AIO + GEO · Reversee</a>.</p>
+  </div>
+</section>
+
+<!-- ===================== ANEXO: MAPA DOS 100 ===================== -->
+<section class="card" id="anexo-mapa">
+  <div class="card-body">
+    <h2>Anexo · Mapa dos 100 conteúdos</h2>
+    <p>Lista completa por pilar, com formato, etapa do funil e onda de entrega. É a <strong>proposta inicial</strong>: será validada por volume, intenção e canibalização no check-in 2 e atualizada a cada check-in. A mesma tabela volta, com o link de cada conteúdo publicado, nos relatórios de check-in.</p>
+    <details class="map a"><summary>Cluster A · ITAD e logística reversa <span class="chip cks">25 conteúdos</span></summary><div class="table-wrap"><table><thead><tr><th>#</th><th>Conteúdo</th><th>Subtema</th><th>Formato</th><th>Funil</th><th>Entrega</th></tr></thead><tbody>
+<tr><td>A1</td><td>O que é ITAD (gestão de ativos de TI)</td><td>Fundamentos</td><td><span class="chip geo">Definição</span></td><td>Topo</td><td>Onda 1 · CK3</td></tr>
+<tr><td>A2</td><td>ITAD × descarte comum: o que muda</td><td>Fundamentos</td><td><span class="chip geo">Comparativo</span></td><td>Meio</td><td>Onda 4 · CK6</td></tr>
+<tr><td>A3</td><td>O que é logística reversa de eletrônicos</td><td>Fundamentos</td><td><span class="chip geo">Definição</span></td><td>Topo</td><td>Onda 2 · CK4</td></tr>
+<tr><td>A4</td><td>Ciclo de vida de ativos de TI: da compra ao descarte</td><td>Fundamentos</td><td><span class="chip art">Guia</span></td><td>Topo</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>A5</td><td>Inventário de ativos de TI: checklist antes do descarte</td><td>Fundamentos</td><td><span class="chip art">Checklist</span></td><td>Meio</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>A6</td><td>Como escolher uma empresa de descarte de eletrônicos em São Paulo</td><td>Escolha do fornecedor</td><td><span class="chip art">Guia</span></td><td>Fundo</td><td>Onda 1 · CK3</td></tr>
+<tr><td>A7</td><td>Como escolher uma empresa de ITAD: 12 perguntas para o RFP</td><td>Escolha do fornecedor</td><td><span class="chip art">Checklist</span></td><td>Fundo</td><td>Onda 2 · CK4</td></tr>
+<tr><td>A8</td><td>Quanto custa o descarte de eletrônicos corporativos</td><td>Escolha do fornecedor</td><td><span class="chip geo">Preço</span></td><td>Fundo</td><td>Onda 4 · CK6</td></tr>
+<tr><td>A9</td><td>ITAD interno × terceirizado: risco e custo</td><td>Escolha do fornecedor</td><td><span class="chip geo">Comparativo</span></td><td>Meio</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>A10</td><td>Contrato de ITAD: cláusulas que não podem faltar</td><td>Escolha do fornecedor</td><td><span class="chip art">Guia</span></td><td>Fundo</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>A11</td><td>Logística reversa de eletrônicos, passo a passo</td><td>Processo e logística</td><td><span class="chip art">Passo a passo</span></td><td>Meio</td><td>Onda 2 · CK4</td></tr>
+<tr><td>A12</td><td>Como funciona a coleta de equipamentos de TI na empresa</td><td>Processo e logística</td><td><span class="chip art">Passo a passo</span></td><td>Meio</td><td>Onda 3 · CK5</td></tr>
+<tr><td>A13</td><td>Cadeia de custódia de equipamentos de TI</td><td>Processo e logística</td><td><span class="chip geo">Definição</span></td><td>Meio</td><td>Onda 3 · CK5</td></tr>
+<tr><td>A14</td><td>Prazo de uma operação de ITAD: da solicitação ao certificado</td><td>Processo e logística</td><td><span class="chip art">Guia</span></td><td>Fundo</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>A15</td><td>Como preparar os equipamentos para a coleta</td><td>Processo e logística</td><td><span class="chip art">Checklist</span></td><td>Meio</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>A16</td><td>Descarte de notebooks e desktops corporativos</td><td>Por tipo de equipamento</td><td><span class="chip art">Guia</span></td><td>Fundo</td><td>Onda 1 · CK3</td></tr>
+<tr><td>A17</td><td>Descarte de servidores e equipamentos de data center</td><td>Por tipo de equipamento</td><td><span class="chip art">Guia</span></td><td>Fundo</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>A18</td><td>Descarte de celulares e tablets corporativos</td><td>Por tipo de equipamento</td><td><span class="chip art">Guia</span></td><td>Fundo</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>A19</td><td>Descarte de equipamentos de rede (switches, roteadores, firewalls)</td><td>Por tipo de equipamento</td><td><span class="chip art">Guia</span></td><td>Fundo</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>A20</td><td>Descarte de impressoras, copiadoras e periféricos</td><td>Por tipo de equipamento</td><td><span class="chip art">Guia</span></td><td>Fundo</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>A21</td><td>ITAD para bancos e instituições financeiras</td><td>Por setor</td><td><span class="chip art">Setorial</span></td><td>Fundo</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>A22</td><td>ITAD para o setor de saúde</td><td>Por setor</td><td><span class="chip art">Setorial</span></td><td>Fundo</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>A23</td><td>ITAD para indústrias e manufatura</td><td>Por setor</td><td><span class="chip art">Setorial</span></td><td>Fundo</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>A24</td><td>ITAD para varejo e e-commerce</td><td>Por setor</td><td><span class="chip art">Setorial</span></td><td>Fundo</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>A25</td><td>ITAD para empresas de tecnologia e software</td><td>Por setor</td><td><span class="chip art">Setorial</span></td><td>Fundo</td><td>Onda 6 · mai–jun/27</td></tr>
+</tbody></table></div></details>
+<details class="map b"><summary>Cluster B · Segurança de dados <span class="chip cks">25 conteúdos</span></summary><div class="table-wrap"><table><thead><tr><th>#</th><th>Conteúdo</th><th>Subtema</th><th>Formato</th><th>Funil</th><th>Entrega</th></tr></thead><tbody>
+<tr><td>B1</td><td>O que é data wipe (exclusão definitiva de dados)</td><td>Fundamentos</td><td><span class="chip geo">Definição</span></td><td>Topo</td><td>Onda 1 · CK3</td></tr>
+<tr><td>B2</td><td>Data wipe × destruição física: qual escolher</td><td>Fundamentos</td><td><span class="chip geo">Comparativo</span></td><td>Fundo</td><td>Onda 1 · CK3</td></tr>
+<tr><td>B3</td><td>Formatar não apaga: deletar, formatar e sanitizar</td><td>Fundamentos</td><td><span class="chip geo">Definição</span></td><td>Topo</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>B4</td><td>Sanitização de mídias: o que é e o que diz a NIST SP 800-88</td><td>Fundamentos</td><td><span class="chip art">Guia</span></td><td>Meio</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>B5</td><td>Clear, Purge e Destroy: os níveis da NIST SP 800-88</td><td>Fundamentos</td><td><span class="chip art">Guia</span></td><td>Meio</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>B6</td><td>Como funciona a trituração de HDs</td><td>Métodos de eliminação</td><td><span class="chip art">Passo a passo</span></td><td>Meio</td><td>Onda 2 · CK4</td></tr>
+<tr><td>B7</td><td>Desmagnetização (degauss): quando funciona e quando não</td><td>Métodos de eliminação</td><td><span class="chip art">Guia</span></td><td>Meio</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>B8</td><td>SSD e destruição de dados: por que é diferente do HD</td><td>Métodos de eliminação</td><td><span class="chip art">Guia</span></td><td>Meio</td><td>Onda 4 · CK6</td></tr>
+<tr><td>B9</td><td>Como apagar com segurança os dados de celulares e tablets corporativos</td><td>Métodos de eliminação</td><td><span class="chip art">Passo a passo</span></td><td>Meio</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>B10</td><td>Fitas, pen drives e cartões de memória: como destruir com segurança</td><td>Métodos de eliminação</td><td><span class="chip art">Guia</span></td><td>Meio</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>B11</td><td>7 erros que expõem dados no descarte de HDs</td><td>Riscos</td><td><span class="chip art">Lista</span></td><td>Topo</td><td>Onda 1 · CK3</td></tr>
+<tr><td>B12</td><td>Dados residuais: o que ainda existe em um HD formatado</td><td>Riscos</td><td><span class="chip geo">Definição</span></td><td>Topo</td><td>Onda 2 · CK4</td></tr>
+<tr><td>B13</td><td>Dados esquecidos em impressoras, copiadoras e multifuncionais</td><td>Riscos</td><td><span class="chip art">Guia</span></td><td>Meio</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>B14</td><td>Dados em servidores, storage e equipamentos de rede</td><td>Riscos</td><td><span class="chip art">Guia</span></td><td>Meio</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>B15</td><td>Como acontece um vazamento de dados no descarte de equipamentos</td><td>Riscos</td><td><span class="chip art">Guia</span></td><td>Topo</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>B16</td><td>Certificado de destruição de dados: o que deve constar</td><td>Comprovação e auditoria</td><td><span class="chip art">Guia</span></td><td>Fundo</td><td>Onda 2 · CK4</td></tr>
+<tr><td>B17</td><td>Como comprovar o data wipe em uma auditoria</td><td>Comprovação e auditoria</td><td><span class="chip art">Guia</span></td><td>Fundo</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>B18</td><td>Relatório por número de série: por que importa</td><td>Comprovação e auditoria</td><td><span class="chip geo">Definição</span></td><td>Meio</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>B19</td><td>Acompanhamento da destruição: testemunha e registro em vídeo</td><td>Comprovação e auditoria</td><td><span class="chip art">Guia</span></td><td>Fundo</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>B20</td><td>Checklist de descarte seguro de dados</td><td>Comprovação e auditoria</td><td><span class="chip art">Checklist</span></td><td>Fundo</td><td>Onda 3 · CK5</td></tr>
+<tr><td>B21</td><td>Quanto custa a destruição de HDs corporativos</td><td>Decisão</td><td><span class="chip geo">Preço</span></td><td>Fundo</td><td>Onda 3 · CK5</td></tr>
+<tr><td>B22</td><td>Destruição in loco × em planta: como decidir</td><td>Decisão</td><td><span class="chip geo">Comparativo</span></td><td>Fundo</td><td>Onda 4 · CK6</td></tr>
+<tr><td>B23</td><td>Como escolher um software de data wipe</td><td>Decisão</td><td><span class="chip geo">Comparativo</span></td><td>Meio</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>B24</td><td>Data wipe na renovação do parque tecnológico</td><td>Decisão</td><td><span class="chip art">Guia</span></td><td>Meio</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>B25</td><td>Política de descarte seguro: estrutura-modelo</td><td>Decisão</td><td><span class="chip art">Guia</span></td><td>Meio</td><td>Onda 6 · mai–jun/27</td></tr>
+</tbody></table></div></details>
+<details class="map c"><summary>Cluster C · Reciclagem e economia circular <span class="chip cks">25 conteúdos</span></summary><div class="table-wrap"><table><thead><tr><th>#</th><th>Conteúdo</th><th>Subtema</th><th>Formato</th><th>Funil</th><th>Entrega</th></tr></thead><tbody>
+<tr><td>C1</td><td>O que é economia circular em TI</td><td>Fundamentos</td><td><span class="chip geo">Definição</span></td><td>Topo</td><td>Onda 1 · CK3</td></tr>
+<tr><td>C2</td><td>Economia circular em TI: métricas e ROI</td><td>Fundamentos</td><td><span class="chip art">Guia</span></td><td>Meio</td><td>Onda 2 · CK4</td></tr>
+<tr><td>C3</td><td>Lixo eletrônico: o que é e de quem é a responsabilidade</td><td>Fundamentos</td><td><span class="chip geo">Definição</span></td><td>Topo</td><td>Onda 1 · CK3</td></tr>
+<tr><td>C4</td><td>Reúso × reciclagem de equipamentos de TI</td><td>Fundamentos</td><td><span class="chip geo">Comparativo</span></td><td>Meio</td><td>Onda 3 · CK5</td></tr>
+<tr><td>C5</td><td>Zero aterro: o que significa e como comprovar</td><td>Fundamentos</td><td><span class="chip geo">Definição</span></td><td>Meio</td><td>Onda 2 · CK4</td></tr>
+<tr><td>C6</td><td>Quanto vale o parque tecnológico da sua empresa</td><td>Valor e reaproveitamento</td><td><span class="chip art">Guia</span></td><td>Meio</td><td>Onda 1 · CK3</td></tr>
+<tr><td>C7</td><td>Valor residual de equipamentos de TI: como calcular</td><td>Valor e reaproveitamento</td><td><span class="chip art">Guia</span></td><td>Meio</td><td>Onda 3 · CK5</td></tr>
+<tr><td>C8</td><td>Remarketing de equipamentos corporativos: como funciona</td><td>Valor e reaproveitamento</td><td><span class="chip art">Guia</span></td><td>Meio</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>C9</td><td>Doação de equipamentos de TI: quando faz sentido e quais cuidados</td><td>Valor e reaproveitamento</td><td><span class="chip art">Guia</span></td><td>Meio</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>C10</td><td>Descartar ou vender equipamentos usados: o que compensa</td><td>Valor e reaproveitamento</td><td><span class="chip geo">Comparativo</span></td><td>Fundo</td><td>Onda 2 · CK4</td></tr>
+<tr><td>C11</td><td>Como é feita a reciclagem de eletrônicos, etapa por etapa</td><td>Processo de reciclagem</td><td><span class="chip art">Passo a passo</span></td><td>Topo</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>C12</td><td>Reciclagem de placas eletrônicas: o que é recuperado</td><td>Processo de reciclagem</td><td><span class="chip art">Guia</span></td><td>Topo</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>C13</td><td>Reciclagem de baterias e nobreaks corporativos</td><td>Processo de reciclagem</td><td><span class="chip art">Guia</span></td><td>Meio</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>C14</td><td>Reciclagem de cabos, fios e acessórios de TI</td><td>Processo de reciclagem</td><td><span class="chip art">Guia</span></td><td>Topo</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>C15</td><td>Rastreabilidade do material reciclado: do equipamento ao destino final</td><td>Processo de reciclagem</td><td><span class="chip art">Guia</span></td><td>Meio</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>C16</td><td>ESG e descarte de eletrônicos: o que reportar</td><td>ESG e relatórios</td><td><span class="chip art">Guia</span></td><td>Meio</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>C17</td><td>Relatório de resíduos eletrônicos: indicadores que importam</td><td>ESG e relatórios</td><td><span class="chip art">Guia</span></td><td>Meio</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>C18</td><td>Pegada de carbono e reaproveitamento de equipamentos</td><td>ESG e relatórios</td><td><span class="chip art">Guia</span></td><td>Topo</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>C19</td><td>Como incluir o descarte de TI no relatório de sustentabilidade</td><td>ESG e relatórios</td><td><span class="chip art">Passo a passo</span></td><td>Meio</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>C20</td><td>Relatório anual Reversee: números da operação (dados próprios)</td><td>ESG e relatórios</td><td><span class="chip geo">Dados próprios</span></td><td>Meio</td><td>Onda 4 · CK6</td></tr>
+<tr><td>C21</td><td>Descarte de TI na renovação de parque tecnológico</td><td>Situações e fornecedor</td><td><span class="chip art">Guia</span></td><td>Fundo</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>C22</td><td>Descarte de TI no encerramento ou mudança de escritório</td><td>Situações e fornecedor</td><td><span class="chip art">Guia</span></td><td>Fundo</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>C23</td><td>Descarte de TI em fusões e aquisições</td><td>Situações e fornecedor</td><td><span class="chip art">Guia</span></td><td>Fundo</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>C24</td><td>Greenwashing: como identificar uma recicladora confiável</td><td>Situações e fornecedor</td><td><span class="chip art">Guia</span></td><td>Fundo</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>C25</td><td>Perguntas para fazer a uma recicladora antes de contratar</td><td>Situações e fornecedor</td><td><span class="chip art">Checklist</span></td><td>Fundo</td><td>Onda 4 · CK6</td></tr>
+</tbody></table></div></details>
+<details class="map d"><summary>Cluster D · Compliance e certificações <span class="chip cks">25 conteúdos</span></summary><div class="table-wrap"><table><thead><tr><th>#</th><th>Conteúdo</th><th>Subtema</th><th>Formato</th><th>Funil</th><th>Entrega</th></tr></thead><tbody>
+<tr><td>D1</td><td>LGPD e descarte de equipamentos: obrigações práticas</td><td>Legislação</td><td><span class="chip art">Guia</span></td><td>Meio</td><td>Onda 1 · CK3</td></tr>
+<tr><td>D2</td><td>PNRS e compliance ambiental para empresas</td><td>Legislação</td><td><span class="chip art">Guia</span></td><td>Meio</td><td>Onda 1 · CK3</td></tr>
+<tr><td>D3</td><td>Decreto 10.240/2020 e a logística reversa de eletroeletrônicos</td><td>Legislação</td><td><span class="chip art">Guia</span></td><td>Topo</td><td>Onda 2 · CK4</td></tr>
+<tr><td>D4</td><td>Responsabilidade compartilhada pelo ciclo de vida: o que a PNRS exige</td><td>Legislação</td><td><span class="chip geo">Definição</span></td><td>Topo</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>D5</td><td>Responsabilidade do gerador de resíduos eletrônicos</td><td>Legislação</td><td><span class="chip art">Guia</span></td><td>Meio</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>D6</td><td>O que é a certificação R2v3 e por que importa</td><td>Certificações</td><td><span class="chip geo">Definição</span></td><td>Topo</td><td>Onda 1 · CK3</td></tr>
+<tr><td>D7</td><td>R2v3 × e-Stewards: diferenças</td><td>Certificações</td><td><span class="chip geo">Comparativo</span></td><td>Meio</td><td>Onda 2 · CK4</td></tr>
+<tr><td>D8</td><td>ISO 14001 em recicladoras: o que garante</td><td>Certificações</td><td><span class="chip geo">Definição</span></td><td>Meio</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>D9</td><td>ISO/IEC 27001 e o descarte seguro de ativos</td><td>Certificações</td><td><span class="chip art">Guia</span></td><td>Meio</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>D10</td><td>Como verificar a certificação de uma empresa de ITAD</td><td>Certificações</td><td><span class="chip art">Passo a passo</span></td><td>Fundo</td><td>Onda 3 · CK5</td></tr>
+<tr><td>D11</td><td>Manifesto de Transporte de Resíduos (MTR): o que é</td><td>Documentos</td><td><span class="chip geo">Definição</span></td><td>Meio</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>D12</td><td>Certificado de Destinação Final (CDF): o que é e quando exigir</td><td>Documentos</td><td><span class="chip geo">Definição</span></td><td>Meio</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>D13</td><td>Licenças e autorizações de uma recicladora: o que conferir</td><td>Documentos</td><td><span class="chip art">Checklist</span></td><td>Fundo</td><td>Onda 3 · CK5</td></tr>
+<tr><td>D14</td><td>Documentos que a empresa deve receber após o descarte</td><td>Documentos</td><td><span class="chip art">Checklist</span></td><td>Fundo</td><td>Onda 2 · CK4</td></tr>
+<tr><td>D15</td><td>Como arquivar a documentação de descarte para auditorias</td><td>Documentos</td><td><span class="chip art">Guia</span></td><td>Meio</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>D16</td><td>Auditoria de fornecedor de ITAD: roteiro</td><td>Gestão de risco</td><td><span class="chip art">Checklist</span></td><td>Fundo</td><td>Onda 4 · CK6</td></tr>
+<tr><td>D17</td><td>Due diligence de recicladora: o que perguntar</td><td>Gestão de risco</td><td><span class="chip art">Checklist</span></td><td>Fundo</td><td>Onda 5 · mar–abr/27</td></tr>
+<tr><td>D18</td><td>Incidente de dados ligado ao descarte: o que a LGPD exige</td><td>Gestão de risco</td><td><span class="chip art">Guia</span></td><td>Meio</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>D19</td><td>Riscos e penalidades do descarte irregular de eletrônicos</td><td>Gestão de risco</td><td><span class="chip art">Guia</span></td><td>Topo</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>D20</td><td>Política de descarte de ativos de TI: o que incluir</td><td>Gestão de risco</td><td><span class="chip art">Guia</span></td><td>Meio</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>D21</td><td>Desfazimento de bens de TI em órgãos públicos</td><td>Perfis e situações</td><td><span class="chip art">Setorial</span></td><td>Fundo</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>D22</td><td>Descarte de TI e auditorias externas em empresas de capital aberto</td><td>Perfis e situações</td><td><span class="chip art">Setorial</span></td><td>Meio</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>D23</td><td>Exigências de matrizes e auditorias globais para o descarte de TI</td><td>Perfis e situações</td><td><span class="chip art">Setorial</span></td><td>Meio</td><td>Onda 6 · mai–jun/27</td></tr>
+<tr><td>D24</td><td>Checklist de compliance para o descarte de TI</td><td>Perfis e situações</td><td><span class="chip art">Checklist</span></td><td>Fundo</td><td>Onda 4 · CK6</td></tr>
+<tr><td>D25</td><td>Perguntas frequentes sobre compliance no descarte de eletrônicos</td><td>Perfis e situações</td><td><span class="chip art">FAQ</span></td><td>Meio</td><td>Onda 6 · mai–jun/27</td></tr>
+</tbody></table></div></details>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-logos">
+    <img src="assets/logo-v4-white.png" alt="V4 Company">
+    <img src="assets/logo-reversee.png" alt="Reversee" class="client">
+  </div>
+  V4 Company &amp; peretto.co · Planejamento SEO + AIO + GEO · Reversee · Novembro 2026
+</footer>
+
+</body>
+</html>
