@@ -3,10 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Auditoria SEO + Prontidão AIO/GEO — Riglog</title>
+<title>Auditoria SEO + AIO + GEO — Riglog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
   :root {
     --red: rgb(229, 9, 20);
@@ -16,7 +19,7 @@
     --gold-light: #f5f0e6;
     --gold-border: #e8dcc8;
     --green: #16a34a;
-    --blue: #2563eb;
+    --gold-dark: #8b6f2f;
     --purple: #7c3aed;
     --gray-50: #fafafa;
     --gray-100: #f5f5f5;
@@ -30,426 +33,264 @@
     --gray-900: #212121;
   }
 
-  body {
-    font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: #f8f7f4;
-    color: var(--gray-900);
-    line-height: 1.7;
-    font-size: 16px;
-  }
+  body { font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, sans-serif; background: #f8f7f4; color: var(--gray-900); line-height: 1.7; font-size: 16px; }
 
-  .cover {
-    background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #2a2a2a 100%);
-    color: #fff;
-    padding: 64px 40px 52px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .cover::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(201,169,110,0.05) 0%, transparent 60%);
-    pointer-events: none;
-  }
-  .cover-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
-  .cover-content::before {
-    content: '';
-    position: absolute;
-    top: -18px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  }
-  .cover-content::after {
-    content: '';
-    display: block;
-    width: 60px;
-    height: 2px;
-    background: var(--gold);
-    margin: 28px auto 0;
-    border-radius: 1px;
-  }
-
-  .logo-row { display: flex; align-items: center; justify-content: center; gap: 26px; margin-bottom: 26px; flex-wrap: wrap; }
-  .logo-chip {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: #fff;
-    border-radius: 8px;
-    padding: 9px 16px;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.35);
-  }
-  .logo-row .sep { color: var(--gold); font-size: 16px; opacity: 0.45; }
-
-  .cover .label {
-    display: inline-block;
-    background: rgba(201,169,110,0.12);
-    border: 1px solid rgba(201,169,110,0.3);
-    padding: 6px 20px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    color: var(--gold);
-  }
-  .cover h1 {
-    font-size: 42px;
-    font-weight: 700;
-    line-height: 1.15;
-    margin-bottom: 14px;
-    letter-spacing: -0.5px;
-    font-family: 'Plus Jakarta Sans', serif;
-  }
-  .cover p {
-    font-size: 18px;
-    opacity: 0.85;
-    margin-bottom: 22px;
-    font-weight: 300;
-    letter-spacing: 0.2px;
-  }
-  .cover-meta {
-    display: flex;
-    gap: 10px 28px;
-    justify-content: center;
-    flex-wrap: wrap;
-    font-size: 13px;
-    opacity: 0.7;
-    letter-spacing: 0.4px;
-  }
-  .pillar-badges { display: flex; gap: 10px; justify-content: center; margin: 22px 0 6px; flex-wrap: wrap; }
-  .pillar-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 7px 16px;
-    border-radius: 7px;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.6px;
-    text-transform: uppercase;
-  }
-  .pillar-badge.seo { background: rgba(37,99,235,0.15); border: 1px solid rgba(37,99,235,0.3); color: #93c5fd; }
+  .cover { background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #2a2a2a 100%); color: #fff; padding: 56px 40px 56px; text-align: center; position: relative; overflow: hidden; }
+  .cover::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(201,169,110,0.05) 0%, transparent 60%); pointer-events: none; }
+  .cover-content { position: relative; z-index: 1; max-width: 840px; margin: 0 auto; }
+  .cover-logos { display: flex; align-items: center; justify-content: space-between; gap: 32px; margin-bottom: 44px; }
+  .cover-logos img { height: 40px; width: auto; object-fit: contain; }
+  .cover-logos .client-logo { height: 54px; background: #fff; padding: 10px 14px; border-radius: 10px; }
+  .cover-logos img:first-child, .footer-logos img:first-child { mix-blend-mode: screen; }
+  .cover .label { display: inline-block; background: rgba(201,169,110,0.12); border: 1px solid rgba(201,169,110,0.3); padding: 6px 20px; border-radius: 20px; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px; color: var(--gold); }
+  .cover h1 { font-size: 42px; font-weight: 700; line-height: 1.15; margin-bottom: 14px; letter-spacing: -0.5px; font-family: 'Plus Jakarta Sans', serif; }
+  .cover p { font-size: 18px; color: rgba(255,255,255,0.82); margin-bottom: 24px; font-weight: 300; letter-spacing: 0.2px; }
+  .cover-meta { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; font-size: 13px; opacity: 0.7; letter-spacing: 0.4px; }
+  .pillar-badges { display: flex; gap: 12px; justify-content: center; margin: 24px 0 8px; flex-wrap: wrap; }
+  .pillar-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; border-radius: 8px; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+  .pillar-badge.seo { background: rgba(201,169,110,0.15); border: 1px solid rgba(201,169,110,0.4); color: #f0e2c4; }
   .pillar-badge.aio { background: rgba(229,9,20,0.15); border: 1px solid rgba(229,9,20,0.3); color: #fca5a5; }
+  .pillar-badge.geo { background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3); color: #c4b5fd; }
+  .cover-content::after { content: ''; display: block; width: 60px; height: 2px; background: var(--gold); margin: 28px auto 0; border-radius: 1px; }
 
-  .container { max-width: 960px; margin: -36px auto 48px; position: relative; z-index: 2; }
-  .card {
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 2px 20px rgba(0,0,0,0.05);
-    margin-bottom: 28px;
-    overflow: hidden;
-    border: 1px solid var(--gray-300);
-    position: relative;
-  }
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 40px;
-    right: 40px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold-border), var(--gold), var(--gold-border), transparent);
-    opacity: 0.6;
-  }
+  .container { max-width: 980px; margin: -36px auto 48px; padding: 0 20px; position: relative; z-index: 2; }
+  .card { background: #fff; border-radius: 16px; box-shadow: 0 2px 20px rgba(0,0,0,0.05); margin-bottom: 28px; overflow: hidden; border: 1px solid var(--gray-300); position: relative; }
+  .card::before { content: ''; position: absolute; top: 0; left: 40px; right: 40px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-border), var(--gold), var(--gold-border), transparent); opacity: 0.6; }
   .card-body { padding: 44px 52px; }
+  .card-pillar { border-top: 3px solid var(--gray-300); }
+  .card-pillar.seo { border-top-color: var(--gold-dark); }
+  .card-pillar.aio { border-top-color: var(--red); }
+  .card-pillar.geo { border-top-color: var(--purple); }
+  .card-pillar.gold { border-top-color: var(--gold); }
 
-  h2 {
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--red);
-    margin-bottom: 24px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--gold-border);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    letter-spacing: -0.3px;
-    position: relative;
-  }
-  h2::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 40px;
-    height: 2px;
-    background: var(--gold);
-    border-radius: 1px;
-  }
-  h3 {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--gray-900);
-    margin: 36px 0 18px;
-    letter-spacing: -0.2px;
-  }
-  h4 { font-size: 16px; font-weight: 700; color: var(--gray-800); margin: 22px 0 12px; }
-  p { font-size: 16px; color: var(--gray-700); margin-bottom: 16px; line-height: 1.8; }
+  .pillar-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+  .pillar-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 800; color: #fff; flex-shrink: 0; }
+  .pillar-icon.seo { background: linear-gradient(135deg, #b8963a, #d4b96a); }
+  .pillar-icon.aio { background: linear-gradient(135deg, var(--red), var(--red-light)); }
+  .pillar-icon.geo { background: linear-gradient(135deg, var(--purple), #a78bfa); }
+  .pillar-icon.gold { background: linear-gradient(135deg, #b8963a, #d4b96a); }
+  .pillar-title { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+  .pillar-title.seo { color: var(--gold-dark); }
+  .pillar-title.aio { color: var(--red); }
+  .pillar-title.geo { color: var(--purple); }
+  .pillar-subtitle { font-size: 12px; color: var(--gray-500); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 1px; }
+
+  h2 { font-size: 24px; font-weight: 700; color: var(--red); margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--gold-border); display: flex; align-items: center; gap: 10px; letter-spacing: -0.3px; position: relative; }
+  h2::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 40px; height: 2px; background: var(--gold); border-radius: 1px; }
+  h3 { font-size: 18px; font-weight: 700; color: var(--gray-900); margin: 34px 0 16px; letter-spacing: -0.2px; }
+  h4 { font-size: 15px; font-weight: 700; color: var(--gray-800); margin: 20px 0 10px; }
+  p { font-size: 15.5px; color: var(--gray-700); margin-bottom: 14px; line-height: 1.8; }
   p:last-child { margin-bottom: 0; }
-  ul, ol { color: var(--gray-700); line-height: 1.8; padding-left: 22px; margin-bottom: 16px; }
-  li { margin-bottom: 8px; }
-  strong { color: var(--gray-900); }
+  ul, ol { margin: 0 0 16px 22px; }
+  li { font-size: 15.5px; color: var(--gray-700); margin-bottom: 6px; line-height: 1.75; }
 
-  .badge {
-    display: inline-block;
-    padding: 5px 16px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-  }
+  .badge { display: inline-block; padding: 5px 14px; border-radius: 6px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; white-space: nowrap; }
   .badge-critico { background: #fef2f2; color: var(--red); border: 1px solid #fecaca; }
   .badge-alto { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
   .badge-medio { background: #fefce8; color: #a16207; border: 1px solid #fef08a; }
   .badge-baixo { background: var(--gold-light); color: #8b7a4a; border: 1px solid var(--gold-border); }
   .badge-info { background: #f5f5f5; color: #616161; border: 1px solid #d4d4d4; }
+  .badge-ok { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
 
-  .severity { display: inline-block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
-  .sev-critico { color: var(--red); }
-  .sev-alto { color: #c2410c; }
-  .sev-medio { color: #a16207; }
-  .sev-baixo { color: #8b7a4a; }
-  .sev-info { color: #616161; }
-
-  table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 15px; }
-  th, td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--gray-100); vertical-align: top; }
-  th {
-    background: linear-gradient(135deg, var(--gray-50), #f8f7f4);
-    font-weight: 700;
-    color: var(--gray-700);
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    border-bottom: 2px solid var(--gold-border);
-    position: relative;
-  }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14.5px; }
+  th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--gray-100); vertical-align: top; }
+  th { background: linear-gradient(135deg, var(--gray-50), #f8f7f4); font-weight: 700; color: var(--gray-700); font-size: 11px; text-transform: uppercase; letter-spacing: 0.7px; border-bottom: 2px solid var(--gold-border); }
   tr:hover td { background: #fcfaf7; }
   tr:last-child td { border-bottom: none; }
+  .table-wrap { overflow-x: auto; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-bottom: 30px; }
+  .kpi-group { background: #f2f0ec; border-radius: 10px; padding: 18px 8px 16px; text-align: center; border: 1px solid var(--gold-border); position: relative; overflow: hidden; }
+  .kpi-group .value { font-size: 26px; font-weight: 700; color: var(--red); line-height: 1.1; letter-spacing: -0.5px; }
+  .kpi-group .label { font-size: 9.5px; color: var(--gray-600); font-weight: 700; text-transform: uppercase; letter-spacing: 0.2px; margin-top: 6px; line-height: 1.35; }
+  .kpi-group::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--red), var(--red-light)); }
+
+  .risk-box { background: linear-gradient(135deg, #fcfaf7, #f8f7f4); border-left: 4px solid var(--red); padding: 22px 26px; border-radius: 0 12px 12px 0; margin: 18px 0; }
+  .risk-box h4 { margin: 0 0 8px; color: var(--red); font-size: 15px; }
+  .risk-box p { font-size: 15px; margin: 0; }
+  .risk-box.gold { border-left-color: var(--gold); }
+  .risk-box.gold h4 { color: #8b7a4a; }
+
+  .finding { border: 1px solid var(--gray-200); border-radius: 12px; padding: 24px 28px; margin-bottom: 16px; background: #fcfcfc; transition: box-shadow 0.2s, border-color 0.2s; border-left: 3px solid transparent; }
+  .finding:hover { box-shadow: 0 2px 16px rgba(0,0,0,0.04); border-color: var(--gold-border); }
+  .finding.seo-finding { border-left-color: var(--gold-dark); }
+  .finding.aio-finding { border-left-color: var(--red); }
+  .finding.geo-finding { border-left-color: var(--purple); }
+  .finding.gold-finding { border-left-color: var(--gold); }
+  .finding-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; gap: 12px; }
+  .finding-title { font-weight: 700; font-size: 16.5px; color: var(--gray-900); letter-spacing: -0.2px; }
+  .finding-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 28px; font-size: 14.5px; }
+  .finding-grid .field { font-weight: 700; color: var(--gray-800); }
+  .finding-grid .value { color: var(--gray-700); }
+  .finding-grid .full { grid-column: 1 / -1; }
+  .finding-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px 24px; font-size: 14px; }
+  .finding-grid-3 .field { font-weight: 700; color: var(--gray-800); }
+  .finding-grid-3 .value { color: var(--gray-700); }
+  .finding-grid-3 .full { grid-column: 1 / -1; }
+
+  code { font-family: 'JetBrains Mono', monospace; background: var(--gray-100); padding: 2px 7px; border-radius: 3px; font-size: 13px; color: var(--red); word-break: break-word; }
+  pre { background: var(--gray-900); color: #e2e8f0; border-radius: 12px; padding: 22px 26px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; overflow-x: auto; line-height: 1.65; margin: 14px 0; }
+  pre code { background: none; color: inherit; padding: 0; font-size: 12.5px; }
+  .code-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--gray-500); margin: 18px 0 6px; }
+
+  .bar-container { margin: 20px 0; }
+  .bar-row { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+  .bar-label { width: 230px; font-size: 13.5px; font-weight: 700; color: var(--gray-700); text-align: right; flex-shrink: 0; }
+  .bar-track { flex: 1; height: 28px; background: var(--gray-100); border-radius: 6px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding-right: 12px; font-size: 12px; font-weight: 700; color: #fff; }
+  .bar-fill.gold { background: linear-gradient(90deg, #b8963a, #d4b96a); }
+  .bar-fill.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .bar-fill.purple { background: linear-gradient(90deg, var(--purple), #a78bfa); }
+  .bar-fill.orange { background: linear-gradient(90deg, #c2410c, #ea580c); }
+  .bar-fill.gray { background: linear-gradient(90deg, #616161, #9e9e9e); }
+
+  .timeline { display: flex; gap: 0; margin: 28px 0 16px; position: relative; padding: 0 0 18px; }
+  .timeline::before { content: ''; position: absolute; top: 26px; left: 6%; right: 6%; height: 3px; background: linear-gradient(90deg, var(--gold-border), var(--gold), var(--gold-border)); border-radius: 2px; }
+  .timeline-phase { flex: 1; text-align: center; position: relative; padding: 0 8px; }
+  .timeline-phase .dot { width: 16px; height: 16px; border-radius: 50%; margin: 0 auto 12px; position: relative; z-index: 1; border: 3px solid #fff; box-shadow: 0 0 0 2px var(--gold); }
+  .timeline-phase .dot.gold { background: var(--gold-dark); }
+  .timeline-phase .dot.red { background: var(--red); }
+  .timeline-phase .dot.purple { background: var(--purple); }
+  .timeline-phase .dot.orange { background: #c2410c; }
+  .timeline-phase .phase-name { font-size: 12.5px; font-weight: 700; color: var(--gray-800); margin-bottom: 2px; }
+  .timeline-phase .phase-weeks { font-size: 11px; color: var(--gray-500); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .timeline-phase .phase-hours { font-size: 20px; font-weight: 700; color: var(--red); letter-spacing: -0.5px; margin-top: 4px; }
+  .timeline-phase .phase-pillar { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+  .timeline-phase .phase-pillar.gold { color: var(--gold-dark); }
+  .timeline-phase .phase-pillar.red { color: var(--red); }
+  .timeline-phase .phase-pillar.purple { color: var(--purple); }
+  .timeline-phase .phase-pillar.orange { color: #c2410c; }
+
+  .checklist { display: grid; gap: 10px; }
+  .check-item { display: flex; gap: 12px; align-items: flex-start; padding: 13px 16px; background: #fcfcfc; border: 1px solid var(--gray-200); border-radius: 10px; }
+  .check-item .num { width: 26px; height: 26px; border-radius: 50%; background: var(--red); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .check-item .txt { font-size: 14.5px; color: var(--gray-700); }
+  .check-item .txt strong { color: var(--gray-900); }
+
+  .status { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 4px; white-space: nowrap; }
+  .status.ok { background: rgba(34,197,94,0.1); color: #16a34a; }
+  .status.warn { background: rgba(217,119,6,0.1); color: #c2410c; }
+  .status.fail { background: rgba(229,9,20,0.1); color: var(--red); }
+
+  .note { background: #f8f7f4; border: 1px solid var(--gold-border); border-radius: 10px; padding: 16px 20px; font-size: 14px; color: var(--gray-700); margin: 16px 0; }
+  .note strong { color: var(--gray-900); }
+
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .metric-big { font-size: 40px; font-weight: 800; color: var(--red); line-height: 1; letter-spacing: -1.5px; }
+  .metric-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--gray-500); margin-top: 4px; }
+
+  .footer { text-align: center; padding: 36px; font-size: 13px; color: var(--gray-500); border-top: 1px solid var(--gold-border); background: #0d0d0d; position: relative; }
+  .footer::before { content: ''; position: absolute; top: -2px; left: 50%; transform: translateX(-50%); width: 40px; height: 3px; background: var(--gold); border-radius: 2px; }
+  .footer-logos { display: flex; justify-content: center; align-items: center; gap: 40px; margin-bottom: 16px; }
+  .footer-logos img { height: 30px; width: auto; }
+  .footer-logos .client { height: 46px; }
+
+  /* ---- compat: componentes do relatório ---- */
   table.compact { font-size: 13px; }
   table.compact th, table.compact td { padding: 9px 10px; }
   td.num, th.num { text-align: right; white-space: nowrap; }
-  td > strong:only-child { white-space: nowrap; }
   td.num.over { color: var(--red); font-weight: 700; }
   .url { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--gray-700); word-break: break-all; }
   .url a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--gray-200); }
   .url a:hover { color: var(--red); border-bottom-color: var(--red); }
-  .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .scroll-hint { display: none; font-size: 12px; color: var(--gray-500); margin: -6px 0 6px; letter-spacing: 0.2px; }
-  @media (max-width: 640px) {
-    .table-scroll table { min-width: 560px; }
-    .scroll-hint { display: block; }
-  }
-
-  .kpi-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-    margin-bottom: 32px;
-  }
-  .kpi-card {
-    background: #f2f0ec;
-    border-radius: 10px;
-    padding: 20px 12px 18px;
-    text-align: center;
-    border: 1px solid var(--gold-border);
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-  .kpi-card:hover { border-color: var(--gold); box-shadow: 0 2px 12px rgba(201,169,110,0.1); }
-  .kpi-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--red), var(--gold));
-  }
-  .kpi-card .value { font-size: 30px; font-weight: 700; color: var(--red); line-height: 1.1; letter-spacing: -0.5px; }
-  .kpi-card .label { font-size: 12px; color: var(--gray-600); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 8px; }
-  .kpi-card .sub { font-size: 12px; color: var(--gray-600); margin-top: 4px; }
-
-  .risk-box {
-    background: linear-gradient(135deg, #fcfaf7, #f8f7f4);
-    border-left: 4px solid var(--red);
-    padding: 22px 26px;
-    border-radius: 0 12px 12px 0;
-    margin-bottom: 18px;
-  }
-  .risk-box h4 { margin: 0 0 10px; color: var(--red); font-size: 16px; letter-spacing: -0.2px; }
-  .risk-box p { font-size: 15px; color: var(--gray-700); margin: 0; line-height: 1.7; }
-  .risk-box.gold { border-left-color: var(--gold); }
-  .risk-box.gold h4 { color: #8b7a4a; }
-
-  .finding {
-    border: 1px solid var(--gray-200);
-    border-radius: 12px;
-    padding: 26px 30px;
-    margin-bottom: 18px;
-    background: #fcfcfc;
-    transition: box-shadow 0.2s, border-color 0.2s;
-    border-left: 3px solid transparent;
-  }
-  .finding:hover { box-shadow: 0 2px 16px rgba(0,0,0,0.04); border-color: var(--gold-border); border-left-color: var(--gold); }
-  .finding-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; gap: 12px; flex-wrap: wrap; }
-  .finding-title { font-weight: 700; font-size: 17px; color: var(--gray-900); letter-spacing: -0.2px; }
-  .finding-tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--gray-500); display: block; margin-bottom: 3px; letter-spacing: 0.5px; }
-  .finding-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 32px; font-size: 15px; }
-  .finding-grid .field { font-weight: 600; color: var(--gray-800); }
-  .finding-grid .value { color: var(--gray-700); }
-  .finding-grid .full { grid-column: 1 / -1; }
-
-  .bar-container { margin: 22px 0; }
-  .bar-row { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
-  .bar-label { width: 200px; font-size: 13px; font-weight: 700; color: var(--gray-700); text-align: right; flex-shrink: 0; letter-spacing: -0.1px; }
-  .bar-track { flex: 1; height: 30px; background: var(--gray-100); border-radius: 6px; overflow: hidden; }
-  .bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding-right: 14px; font-size: 13px; font-weight: 700; color: #fff; letter-spacing: 0.3px; }
-  .bar-fill.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
-  .bar-fill.orange { background: linear-gradient(90deg, #c2410c, #ea580c); }
-  .bar-fill.gold { background: linear-gradient(90deg, #b8963a, #d4b96a); }
-  .bar-fill.gray { background: linear-gradient(90deg, #616161, #9e9e9e); }
-  .bar-fill.green { background: linear-gradient(90deg, #15803d, #22c55e); }
-
-  .timeline { display: flex; gap: 0; margin: 32px 0 16px; position: relative; padding: 0 0 20px; }
-  .timeline::before {
-    content: '';
-    position: absolute;
-    top: 28px; left: 5%; right: 5%;
-    height: 3px;
-    background: linear-gradient(90deg, var(--gold-border), var(--gold), var(--gold-border));
-    border-radius: 2px;
-  }
-  .timeline-phase { flex: 1; text-align: center; position: relative; padding: 0 8px; }
-  .timeline-phase .dot {
-    width: 16px; height: 16px; border-radius: 50%;
-    margin: 0 auto 12px; position: relative; z-index: 1;
-    border: 3px solid #fff; box-shadow: 0 0 0 2px var(--gold);
-  }
-  .timeline-phase .dot.red { background: var(--red); }
-  .timeline-phase .dot.orange { background: #c2410c; }
-  .timeline-phase .dot.gold { background: var(--gold); }
-  .timeline-phase .dot.gray { background: #757575; }
-  .timeline-phase .phase-name { font-size: 13px; font-weight: 700; color: var(--gray-800); margin-bottom: 2px; }
-  .timeline-phase .phase-hours { font-size: 22px; font-weight: 700; color: var(--red); letter-spacing: -0.5px; }
-  .timeline-phase .phase-pct { font-size: 12px; color: var(--gray-500); font-weight: 600; }
-  .timeline-phase .phase-bar { height: 8px; border-radius: 4px; margin: 8px auto 6px; max-width: 80%; }
-  .timeline-phase .phase-bar.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
-  .timeline-phase .phase-bar.orange { background: linear-gradient(90deg, #c2410c, #ea580c); }
-  .timeline-phase .phase-bar.gold { background: linear-gradient(90deg, #b8963a, #d4b96a); }
-  .timeline-deliverables { display: flex; gap: 0; margin-top: 4px; }
-  .timeline-deliverables .deliv { flex: 1; text-align: center; padding: 0 6px; font-size: 12px; color: var(--gray-600); line-height: 1.4; }
-  .timeline-deliverables .deliv strong { display: block; color: var(--gray-700); font-size: 11px; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; }
-
-  code {
-    font-family: 'JetBrains Mono', monospace;
-    background: var(--gray-100);
-    padding: 2px 8px;
-    border-radius: 3px;
-    font-size: 13px;
-    color: var(--red);
-  }
-
-  .summary-nav { display: flex; flex-wrap: wrap; gap: 8px; }
-  .summary-nav a {
-    display: inline-block;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--gray-700);
-    text-decoration: none;
-    background: var(--gray-50);
-    border: 1px solid var(--gray-200);
-    border-radius: 6px;
-    padding: 6px 12px;
-    transition: all 0.15s;
-  }
-  .summary-nav a:hover { border-color: var(--gold); color: var(--red); background: #fcfaf7; }
-
-  .note {
-    font-size: 13px;
-    color: var(--gray-600);
-    background: var(--gray-50);
-    border: 1px dashed var(--gray-300);
-    border-radius: 8px;
-    padding: 14px 18px;
-    margin-top: 18px;
-    line-height: 1.65;
-  }
-  .note strong { color: var(--gray-700); }
-
-  .status { display: inline-block; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 4px; white-space: nowrap; }
-  .status.ok { background: rgba(34,197,94,0.1); color: #16a34a; }
-  .status.warn { background: rgba(217,119,6,0.1); color: #c2410c; }
-  .status.fail { background: rgba(229,9,20,0.1); color: var(--red); }
   .status.partial { background: rgba(201,169,110,0.15); color: #8b7a4a; }
-
-  .footer {
-    text-align: center;
-    padding: 36px;
-    font-size: 14px;
-    color: var(--gray-500);
-    border-top: 1px solid var(--gold-border);
-    letter-spacing: 0.3px;
-    position: relative;
-  }
-  .footer::before {
-    content: '';
-    position: absolute;
-    top: -2px; left: 50%;
-    transform: translateX(-50%);
-    width: 40px; height: 3px;
-    background: var(--gold);
-    border-radius: 2px;
-  }
+  .finding-tag { display: block; font-size: 10.5px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--gold-dark); margin-bottom: 3px; }
+  .finding.aio-finding .finding-tag { color: var(--red); }
+  .finding.geo-finding .finding-tag { color: var(--purple); }
+  .severity { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; white-space: nowrap; }
+  .sev-critico { background: #fef2f2; color: var(--red); border: 1px solid #fecaca; }
+  .sev-alto { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+  .sev-medio { background: #fefce8; color: #a16207; border: 1px solid #fef08a; }
+  .sev-baixo { background: var(--gold-light); color: #8b7a4a; border: 1px solid var(--gold-border); }
+  .kpi-card { background: #f2f0ec; border: 1px solid var(--gold-border); border-radius: 10px; padding: 18px 8px 16px; text-align: center; position: relative; overflow: hidden; }
+  .kpi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .kpi-card .value { font-size: 26px; font-weight: 700; color: var(--red); line-height: 1.1; letter-spacing: -0.5px; }
+  .kpi-card .label { font-size: 9.5px; color: var(--gray-600); font-weight: 700; text-transform: uppercase; letter-spacing: 0.2px; margin-top: 6px; line-height: 1.35; }
+  .kpi-card .sub { font-size: 10px; color: var(--gray-500); margin-top: 3px; line-height: 1.35; }
+  .timeline-deliverables { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 6px 0 20px; }
+  .timeline-deliverables .deliv { background: #fcfaf7; border: 1px solid var(--gold-border); border-radius: 10px; padding: 14px 16px; font-size: 13px; color: var(--gray-700); line-height: 1.65; }
+  .timeline-deliverables .deliv strong { display: block; color: var(--gray-900); font-size: 11px; text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 6px; }
+  #geo .geo-signals { table-layout: fixed; }
+  #geo .geo-signals .status { font-size: 10px; padding: 2px 7px; }
+  #geo .geo-signals td:first-child, #geo .geo-signals th:first-child { padding-right: 22px; }
+  #geo .geo-signals th:nth-child(1) { width: 32%; }
+  #geo .geo-signals th:nth-child(2) { width: 18%; }
+  #geo .geo-signals th:nth-child(3) { width: 50%; }
+  #geo .plan-map { table-layout: fixed; }
+  #plano table td:nth-child(3) { white-space: nowrap; }
+  #geo .plan-map th:nth-child(1) { width: 14%; }
+  #geo .plan-map th:nth-child(2) { width: 55%; }
+  #geo .plan-map th:nth-child(3) { width: 18%; }
+  #geo .plan-map th:nth-child(4) { width: 13%; }
+  #anexos .annex-a th:nth-child(1) { width: 38%; }
+  #anexos .annex-a th:nth-child(2) { width: 11%; }
+  #anexos .annex-a th:nth-child(3) { width: 13%; }
+  #anexos .annex-a th:nth-child(4) { width: 19%; }
+  #anexos .annex-a th:nth-child(5) { width: 19%; }
+  #anexos .annex-b th:nth-child(1) { width: 9%; }
+  #anexos .annex-b th:nth-child(2) { width: 44%; }
+  #anexos .annex-b th:nth-child(3) { width: 9%; }
+  #anexos .annex-b th:nth-child(4) { width: 38%; }
+  #anexos .annex-c th:nth-child(1) { width: 28%; }
+  #anexos .annex-c th:nth-child(2) { width: 16%; }
+  .bar-fill.green { background: linear-gradient(90deg, #15803d, #22c55e); }
+  .phase-bar { height: 4px; border-radius: 2px; margin: 10px auto 8px; }
+  .phase-bar.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .phase-bar.orange { background: linear-gradient(90deg, #c2410c, #ea580c); }
+  .phase-bar.gold { background: linear-gradient(90deg, #b8963a, #d4b96a); }
+  .phase-pct { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray-500); }
+  .footer p { color: var(--gray-500); font-size: 13px; margin-bottom: 4px; }
+  .footer-logos .client { background: #fff; padding: 6px 8px; border-radius: 6px; }
+  .pillar-intro { font-size: 15.5px; }
 
   @media print {
-    body { background: #fff; padding: 0; font-size: 12px; }
-    .cover {
-      padding: 40px 30px;
-      min-height: 26.3cm;
-      box-sizing: border-box;
-      display: flex;
-      align-items: center;
-      page-break-after: always;
-    }
-    .container { max-width: 100%; margin: 0; }
-    .card { box-shadow: none; border: 1px solid var(--gray-200); }
+    body { background: #fff; font-size: 12px; }
+    .cover { padding: 0 24mm; width: 210mm; height: 296mm; box-sizing: border-box; display: flex; align-items: center; justify-content: center; page-break-after: always; break-after: page; margin: 0; }
+    .cover h1 { font-size: 34pt; }
+    .container { max-width: 100%; margin: 0; padding: 0 14mm; }
+    .kpi-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .kpi-card .value { font-size: 22px; }
+    .kpi-card .label { font-size: 8.5px; }
+    .kpi-card .sub { font-size: 9px; }
+    code { white-space: nowrap; word-break: normal; }
+    .card { box-shadow: none; border: 1px solid var(--gray-200); margin-bottom: 8mm; }
     h2, h3, h4 { page-break-after: avoid; break-after: avoid; }
-    .card-body { padding: 20px 24px; }
-    .finding { page-break-inside: avoid; }
+    .finding { page-break-inside: auto; break-inside: auto; }
+    .finding-header { page-break-after: avoid; break-after: avoid; }
     table { page-break-inside: auto; }
     tr { page-break-inside: avoid; break-inside: avoid; }
     thead { display: table-header-group; }
-    .table-scroll { overflow: visible; }
-    .table-scroll table { min-width: 0; }
-    .scroll-hint { display: none; }
-    .summary-nav, .no-print { display: none; }
+    .table-wrap { overflow: visible; }
+    #anexos table { font-size: 10.5px; }
+    #anexos th, #anexos td { padding: 5px 6px; }
+    #anexos .url { font-size: 9.5px; }
+    #anexos .status { font-size: 9px; padding: 2px 6px; }
+    .timeline, .timeline-deliverables, .timeline-phase, .timeline-deliverables .deliv, .total-box { break-inside: avoid; page-break-inside: avoid; }
     .footer { display: none; }
-    @page { margin: 1.5cm 1cm; }
+    @page { margin: 0; size: A4; }
+    @page :first { margin: 0; }
   }
-
-  @media (max-width: 640px) {
+  @media (max-width: 760px) {
     .cover h1 { font-size: 27px; }
-    .cover { padding: 40px 20px 32px; }
-    .card-body { padding: 24px 20px; }
-    .finding-grid { grid-template-columns: 1fr; }
+    .cover { padding: 36px 20px 40px; }
+    .cover-logos { gap: 16px; }
+    .cover-logos img { height: 28px; }
+    .cover-logos .client-logo { height: 44px; }
+    .card-body { padding: 22px 20px; }
+    .finding-grid, .finding-grid-3, .split { grid-template-columns: 1fr; }
     .kpi-grid { grid-template-columns: repeat(2, 1fr); }
-    .bar-label { width: 110px; font-size: 11px; }
-    .timeline { flex-wrap: wrap; gap: 16px; }
+    .bar-label { width: 110px; font-size: 11.5px; }
+    .bar-row { gap: 8px; }
+    .timeline { flex-wrap: wrap; gap: 14px; }
     .timeline::before { display: none; }
-    .timeline-deliverables { flex-wrap: wrap; gap: 12px; }
-    .timeline-deliverables .deliv { flex: 1 1 40%; }
+    .timeline-phase { flex: 1 1 40%; }
     table { font-size: 13px; }
-    th, td { padding: 10px 8px; }
+    th, td { padding: 9px 10px; }
+    .compact { min-width: 560px; }
+    #anexos .compact { min-width: 700px; }
+    #geo .geo-signals { table-layout: auto; min-width: 620px; }
+    #geo .plan-map { table-layout: auto; min-width: 540px; }
+    #arquitetura table { min-width: 560px; }
   }
 </style>
 </head>
@@ -457,46 +298,27 @@
 
 <div class="cover">
   <div class="cover-content">
-    <div class="logo-row">
-      <img src="assets/logo-v4-white.png" alt="V4 Company" style="height:30px; width:auto; opacity:0.95;">
-      <span class="sep">✦</span>
-      <span class="logo-chip"><img src="assets/logo-riglog.png" alt="Riglog" style="height:34px; width:auto;"></span>
+    <div class="cover-logos">
+      <img src="assets/logo-v4-white.png" alt="V4 Company" style="border-radius:6px;">
+      <img src="assets/logo-riglog.png" alt="Riglog" class="client-logo">
     </div>
-    <div class="label">Confidencial &bull; Novembro 2026</div>
-    <h1>Auditoria SEO + Prontidão AIO/GEO</h1>
-    <p>Riglog Assessoria Aduaneira e Transportes &mdash; diagnóstico técnico, conteúdo e citabilidade</p>
+    <div class="label">Auditoria técnica &bull; Novembro 2026</div>
+    <h1>Auditoria SEO + AIO + GEO</h1>
+    <p>Riglog &mdash; Assessoria Aduaneira e Transportes</p>
     <div class="pillar-badges">
-      <span class="pillar-badge seo">SEO Técnico</span>
-      <span class="pillar-badge aio">AIO / GEO Readiness</span>
+      <span class="pillar-badge seo">SEO</span>
+      <span class="pillar-badge aio">AIO</span>
+      <span class="pillar-badge geo">GEO</span>
     </div>
     <div class="cover-meta">
-      <span>Screaming Frog SEO Spider</span>
-      <span>152 URLs rastreadas</span>
-      <span>27 páginas indexáveis</span>
-      <span>16/11/2026</span>
+      <span>Screaming Frog &bull; crawl 16/11/2026</span>
+      <span>152 URLs &bull; 27 indexáveis</span>
+      <span>WordPress + Elementor</span>
     </div>
   </div>
 </div>
 
 <div class="container">
-
-  <!-- SUMÁRIO -->
-  <div class="card no-print">
-    <div class="card-body" style="padding:26px 40px;">
-      <div class="summary-nav">
-        <a href="#resumo">Resumo executivo</a>
-        <a href="#metodo">Escopo e método</a>
-        <a href="#mapa">Mapa de conformidade</a>
-        <a href="#achados">Achados</a>
-        <a href="#aio">AIO / GEO</a>
-        <a href="#arquitetura">Arquitetura</a>
-        <a href="#plano">Plano 90 dias</a>
-        <a href="#kpis">KPIs</a>
-        <a href="#proximos">Próximos passos</a>
-        <a href="#anexos">Anexos</a>
-      </div>
-    </div>
-  </div>
 
   <!-- RESUMO -->
   <div class="card" id="resumo">
@@ -529,6 +351,11 @@
           <div class="label">Links para 404</div>
           <div class="sub">6 páginas de serviço inexistentes</div>
         </div>
+        <div class="kpi-card">
+          <div class="value">1.339</div>
+          <div class="label">Palavras no blog</div>
+          <div class="sub">mediana dos 7 posts</div>
+        </div>
       </div>
 
       <p>O site tem uma base editorial acima da média para o setor de comércio exterior: <strong>7 artigos, mediana de 1.339 palavras</strong>, pauta alinhada a dúvidas reais de importadores e exportadores (RADAR Siscomex, ex-tarifário, importação de usados, bagagem desacompanhada). O problema não é conteúdo &mdash; é <strong>engenharia e distribuição</strong>.</p>
@@ -559,15 +386,17 @@
     <div class="card-body">
       <h2>Escopo, Método e Limites</h2>
 
+      <div class="table-wrap">
       <table>
         <tr><th>Item</th><th>Detalhe</th></tr>
-        <tr><td><strong>Escopo</strong></td><td>Auditoria técnica de SEO on-page, indexação, arquitetura de links internos e prontidão para AIO/GEO</td></tr>
+        <tr><td><strong>Escopo</strong></td><td>Auditoria técnica de SEO on-page, indexação e arquitetura de links internos, mais leitura por mecanismos de resposta (AIO) e presença como entidade (GEO)</td></tr>
         <tr><td><strong>Ferramenta</strong></td><td>Screaming Frog SEO Spider (crawl completo) + inspeção de HTML renderizado e recursos no domínio</td></tr>
         <tr><td><strong>Volume rastreado</strong></td><td>152 URLs (HTML, imagens, CSS, JS), 44 respostas HTML, 27 páginas indexáveis</td></tr>
         <tr><td><strong>Data do crawl</strong></td><td>16 de novembro de 2026</td></tr>
         <tr><td><strong>Dados complementares</strong></td><td>robots.txt, sitemap XML, HTML das páginas, cabeçalhos HTTP e checagem de recursos externos</td></tr>
         <tr><td><strong>Metodologia</strong></td><td>V4 Company &mdash; padrão de auditoria técnica (Screaming Frog, Google Search Essentials, WCAG 2.1) + critérios de extractability para LLMs</td></tr>
       </table>
+      </div>
 
       <div class="risk-box gold">
         <h4>Limites desta rodada &mdash; leia antes de interpretar os números</h4>
@@ -575,7 +404,7 @@
       </div>
 
       <h3>Como ler os scores</h3>
-      <p>Os percentuais deste relatório são <strong>contagens de conformidade</strong>, não notas subjetivas. Cada barra da próxima seção informa o numerador e o denominador. A prontidão AIO/GEO segue o mesmo princípio: 15 requisitos objetivos, 3 atendidos.</p>
+      <p>Os percentuais deste relatório são <strong>contagens de conformidade</strong>, não notas subjetivas. Cada barra da próxima seção informa o numerador e o denominador. AIO e GEO aparecem mais adiante como achados com evidência, não como nota.</p>
     </div>
   </div>
 
@@ -612,7 +441,7 @@
         </div>
         <div class="bar-row">
           <div class="bar-label">Dados estruturados</div>
-          <div class="bar-track"><div class="bar-fill red" style="width:2%;">0/27</div></div>
+          <div class="bar-track"><div class="bar-fill red" style="width:2%;min-width:52px;padding:0 6px;justify-content:center;">0/27</div></div>
         </div>
       </div>
 
@@ -626,6 +455,7 @@
       <h2>Achados Priorizados</h2>
       <p style="margin-bottom:4px;">12 achados, ordenados por prioridade de execução. &ldquo;Impacto&rdquo; considera o efeito esperado em rastreamento, ranqueamento e conversão orgânica. &ldquo;Esforço&rdquo; é uma estimativa de horas de execução (V4 + dev + conteúdo).</p>
 
+      <div class="table-wrap">
       <table class="compact">
         <tr><th>ID</th><th>Achado</th><th>Severidade</th><th>Impacto</th><th class="num">Esforço</th><th>Fase</th></tr>
         <tr><td><strong>SEO-01</strong></td><td>Menu do rodapé aponta para 6 serviços inexistentes (<code>/services/</code>)</td><td><span class="badge badge-critico">Crítico</span></td><td>Alto</td><td class="num">2 h</td><td>1</td></tr>
@@ -641,6 +471,7 @@
         <tr><td><strong>SEO-11</strong></td><td>Ausência de autor, data e sinais de experiência (E-E-A-T)</td><td><span class="badge badge-medio">Médio</span></td><td>Médio</td><td class="num">8 h</td><td>2</td></tr>
         <tr><td><strong>SEO-12</strong></td><td>4 links internos 301, 1 UTM malformado e 10 links externos ruins</td><td><span class="badge badge-medio">Médio</span></td><td>Baixo</td><td class="num">3 h</td><td>1</td></tr>
       </table>
+      </div>
     </div>
   </div>
 
@@ -649,7 +480,7 @@
     <div class="card-body">
       <h2>Achados em Detalhe</h2>
 
-      <div class="finding">
+      <div class="finding seo-finding">
         <div class="finding-header">
           <div><span class="finding-tag">SEO-01 &bull; RASTREAMENTO</span><span class="finding-title">Rodapé envia 324 links internos para 6 URLs que retornam 404</span></div>
           <div><span class="severity sev-critico">Crítico</span></div>
@@ -658,12 +489,11 @@
           <div class="full"><span class="field">Evidência:</span> <span class="value">O menu &ldquo;Serviços&rdquo; do rodapé aponta para <code>/services/assessoria-internacional/</code>, <code>/services/importacao/</code>, <code>/services/exportacao/</code>, <code>/services/assessoria-aduaneira/</code>, <code>/services/ex-tarifario-reducao-de-impostos-na-importacao/</code> e <code>/services/frete-internacional/</code>. Todas retornam 404. São 54 inlinks por URL &mdash; 324 links no total. O crawl também registra 4 links sem barra final que geram 301 desnecessário.</span></div>
           <div class="full"><span class="field">Impacto:</span> <span class="value">Rastreamento desperdiçado em todas as páginas, experiência de navegação quebrada no menu de serviços e vazamento de autoridade interna &mdash; justamente para as páginas que deveriam receber força comercial.</span></div>
           <div class="full"><span class="field">Recomendação:</span> <span class="value">(1) Trocar as 6 URLs para <code>/servicos/&lt;slug&gt;/</code> com barra final. (2) Criar 301 de <code>/services/*</code> para <code>/servicos/*</code> como rede de segurança. (3) Re-crawl do rodapé para confirmar 0 links 4xx. (4) Padronizar barra final em todos os links do menu.</span></div>
-          <div><span class="field">Esforço:</span> <span class="value">2 h (Dev WordPress)</span></div>
-          <div><span class="field">Dono:</span> <span class="value">Dev + V4 (validação)</span></div>
+          <div><span class="field">Esforço:</span> <span class="value">2 h</span></div>
         </div>
       </div>
 
-      <div class="finding">
+      <div class="finding seo-finding">
         <div class="finding-header">
           <div><span class="finding-tag">SEO-02 &bull; ON-PAGE</span><span class="finding-title">Home tem 6 H1s, blog tem 8 e cinco páginas não têm H1</span></div>
           <div><span class="severity sev-critico">Crítico</span></div>
@@ -672,12 +502,11 @@
           <div class="full"><span class="field">Evidência:</span> <span class="value">Na home, os 6 H1s são títulos de posts do blog (&ldquo;7 estratégias práticas para reduzir custos de importação&rdquo;, &ldquo;Guia Completo dos Canais de parametrização...&rdquo;, etc.) &mdash; não há H1 institucional. O índice do blog tem 8 H1s. Sem H1: <code>/catalogo-de-produtos/</code>, <code>/quem-somos/</code>, <code>/quem-somos-2/</code>, <code>/cotacao/</code> e <code>/contato/</code>. O post &ldquo;Guia Completo dos Canais...&rdquo; tem 2 H1s idênticos.</span></div>
           <div class="full"><span class="field">Impacto:</span> <span class="value">O H1 é o sinal semântico mais forte da página depois do title. Com 6 H1s, a home não declara o que vende. Sem H1, a página de cotação e o hub de serviços não têm assunto para o Google nem para os LLMs. A desordem também indica módulos Elementor configurados como heading errado.</span></div>
           <div class="full"><span class="field">Recomendação:</span> <span class="value">(1) Home: 1 H1 com proposta de valor e termo comercial (&ldquo;Assessoria aduaneira e despacho de importação e exportação&rdquo;). (2) Módulos de posts na home e no blog passam a H2/H3. (3) 1 H1 nas 5 páginas sem heading. (4) Corrigir o duplicado do guia. (5) Revisar o widget de posts do Elementor para não emitir H1.</span></div>
-          <div><span class="field">Esforço:</span> <span class="value">6 h (Dev + conteúdo)</span></div>
-          <div><span class="field">Dono:</span> <span class="value">Dev WordPress</span></div>
+          <div><span class="field">Esforço:</span> <span class="value">6 h</span></div>
         </div>
       </div>
 
-      <div class="finding">
+      <div class="finding seo-finding">
         <div class="finding-header">
           <div><span class="finding-tag">SEO-03 &bull; CONTEÚDO</span><span class="finding-title">Páginas comerciais têm 78&ndash;278 palavras; a mediana do site é 194</span></div>
           <div><span class="severity sev-critico">Crítico</span></div>
@@ -686,12 +515,11 @@
           <div class="full"><span class="field">Evidência:</span> <span class="value">14 das 27 páginas indexáveis (52%) têm menos de 200 palavras. Serviços: Habilitação no RADAR (78), Certificado de Origem (88), Frete Internacional (114), Assessoria Internacional (124), Exportação (131), Assessoria Aduaneira (137), Representação de Agentes (154), Carga Projeto (194), Importação (208). Catálogo (157), Cotação (52), Contato (49). O post &ldquo;Guia Completo dos Canais de parametrização&rdquo; tem 36 palavras.</span></div>
           <div class="full"><span class="field">Impacto:</span> <span class="value">São as páginas com intenção comercial que deveriam capturar &ldquo;despachante aduaneiro&rdquo;, &ldquo;habilitação RADAR&rdquo;, &ldquo;ex-tarifário&rdquo; e &ldquo;frete internacional&rdquo;. Com esse volume, elas não competem com concorrentes e não oferecem material citável para IA. O blog tem mediana de 1.339 palavras &mdash; a força está no lugar errado do funil.</span></div>
           <div class="full"><span class="field">Recomendação:</span> <span class="value">Reescrever as 10 páginas de serviço com 600&ndash;900 palavras no template: (1) o problema do cliente, (2) como a Riglog resolve, (3) etapas e prazos, (4) documentos e requisitos, (5) modalidades e abrangência, (6) prova (cases, números, órgãos), (7) FAQ com 4&ndash;6 perguntas, (8) CTA para cotação. Aproveitar o conteúdo dos posts como base.</span></div>
-          <div><span class="field">Esforço:</span> <span class="value">30 h (Copy + SEO)</span></div>
-          <div><span class="field">Dono:</span> <span class="value">V4 (copy/SEO) + cliente (validação técnica)</span></div>
+          <div><span class="field">Esforço:</span> <span class="value">30 h</span></div>
         </div>
       </div>
 
-      <div class="finding">
+      <div class="finding seo-finding">
         <div class="finding-header">
           <div><span class="finding-tag">SEO-04 &bull; DADOS ESTRUTURADOS</span><span class="finding-title">Zero JSON-LD em 27 páginas &mdash; nenhuma entidade declarada</span></div>
           <div><span class="severity sev-critico">Crítico</span></div>
@@ -700,12 +528,11 @@
           <div class="full"><span class="field">Evidência:</span> <span class="value">Nenhuma das 27 páginas indexáveis tem bloco <code>application/ld+json</code>. Não há Organization, LocalBusiness, Service, Article, BreadcrumbList, FAQPage ou HowTo. O tema é Hello Elementor com Elementor Pro; não há plugin de schema ativo no HTML.</span></div>
           <div class="full"><span class="field">Impacto:</span> <span class="value">Sem entidade, o Google não consolida a Riglog como empresa de despacho aduaneiro (nome, telefones, áreas atendidas, serviços). Sem Service e Article, perde rich results e perde a camada que LLMs usam para extrair fatos com segurança. É a maior lacuna de AIO/GEO do site.</span></div>
           <div class="full"><span class="field">Recomendação:</span> <span class="value">Implementar via plugin de schema ou JSON-LD no Elementor: <strong>Fase 1</strong> Organization + LocalBusiness (telefones já existem no rodapé) + BreadcrumbList global. <strong>Fase 2</strong> Service nas 10 páginas, Article nos 7 posts, FAQPage nas páginas com FAQ. Validar no Rich Results Test e no Schema Markup Validator.</span></div>
-          <div><span class="field">Esforço:</span> <span class="value">10 h (Dev + SEO)</span></div>
-          <div><span class="field">Dono:</span> <span class="value">Dev + V4</span></div>
+          <div><span class="field">Esforço:</span> <span class="value">10 h</span></div>
         </div>
       </div>
 
-      <div class="finding">
+      <div class="finding seo-finding">
         <div class="finding-header">
           <div><span class="finding-tag">SEO-05 &bull; ARQUITETURA</span><span class="finding-title">O hub de Serviços vive em <code>/quem-somos-2/</code>, sem H1 e com title genérico</span></div>
           <div><span class="severity sev-alto">Alto</span></div>
@@ -715,11 +542,10 @@
           <div class="full"><span class="field">Impacto:</span> <span class="value">A URL mais importante do funil comercial tem slug de rascunho, título sem proposta de valor e nenhum H1. Toda a autoridade do hub fica presa em uma URL que não comunica o serviço &mdash; e o Google pode tratá-la como página residual.</span></div>
           <div class="full"><span class="field">Recomendação:</span> <span class="value">(1) Criar <code>/servicos/</code> como hub real, com H1 &ldquo;Serviços de comércio exterior&rdquo;, intro de 150&ndash;200 palavras, cards dos 10 serviços e CTA. (2) 301 de <code>/quem-somos-2/</code> para <code>/servicos/</code>. (3) Atualizar o menu. (4) Aplicar BreadcrumbList e ItemList.</span></div>
           <div><span class="field">Esforço:</span> <span class="value">6 h</span></div>
-          <div><span class="field">Dono:</span> <span class="value">Dev + V4</span></div>
         </div>
       </div>
 
-      <div class="finding">
+      <div class="finding seo-finding">
         <div class="finding-header">
           <div><span class="finding-tag">SEO-06 &bull; INDEXAÇÃO</span><span class="finding-title">Sitemap inclui 9 páginas de template e loja que não deveriam ser indexadas</span></div>
           <div><span class="severity sev-alto">Alto</span></div>
@@ -729,11 +555,10 @@
           <div class="full"><span class="field">Impacto:</span> <span class="value">Rastreamento e orçamento de índice gastos em páginas transacionais e resíduos de versões anteriores. <code>/carrinho/</code>, <code>/finalizar-compra/</code> e <code>/minha-conta/</code> indexadas são risco de segurança e de experiência. <code>/blog-2/</code> compete com <code>/blog/</code>.</span></div>
           <div class="full"><span class="field">Recomendação:</span> <span class="value">(1) <code>noindex</code> em loja, carrinho, checkout, minha conta, manutenção e páginas de template. (2) Remover do sitemap e do menu. (3) 301 de <code>/blog-2/</code> para <code>/blog/</code>. (4) Revisar taxonomia <code>tipos-de-servico</code> e autores. (5) Reenviar sitemap no GSC.</span></div>
           <div><span class="field">Esforço:</span> <span class="value">4 h</span></div>
-          <div><span class="field">Dono:</span> <span class="value">Dev WordPress</span></div>
         </div>
       </div>
 
-      <div class="finding">
+      <div class="finding seo-finding">
         <div class="finding-header">
           <div><span class="finding-tag">SEO-07 &bull; ON-PAGE</span><span class="finding-title">14 páginas sem meta description e 9 com descrições de até 607 caracteres</span></div>
           <div><span class="severity sev-alto">Alto</span></div>
@@ -743,11 +568,10 @@
           <div class="full"><span class="field">Impacto:</span> <span class="value">O Google reescreve o snippet, o CTR cai e a mensagem comercial fica fora do SERP. Para AIO/GEO, a meta é um dos resumos que motores de resposta usam para entender a página.</span></div>
           <div class="full"><span class="field">Recomendação:</span> <span class="value">Escrever 27 descrições únicas de 120&ndash;155 caracteres com a estrutura: benefício + prova + CTA (&ldquo;Habilitamos sua empresa no RADAR...&rdquo;). Priorizar home, 10 serviços, hub e 7 posts. Remover descrições automáticas do tema.</span></div>
           <div><span class="field">Esforço:</span> <span class="value">6 h</span></div>
-          <div><span class="field">Dono:</span> <span class="value">V4 (copy) + Dev</span></div>
         </div>
       </div>
 
-      <div class="finding">
+      <div class="finding seo-finding">
         <div class="finding-header">
           <div><span class="finding-tag">SEO-08 &bull; ON-PAGE</span><span class="finding-title">16 de 27 títulos passam de 561 px; 2 pares são duplicados</span></div>
           <div><span class="severity sev-alto">Alto</span></div>
@@ -757,11 +581,10 @@
           <div class="full"><span class="field">Impacto:</span> <span class="value">Truncamento no SERP e perda do termo mais importante justamente nas páginas de serviço. Os títulos duplicados confundem a distinção entre página comercial e categoria de blog.</span></div>
           <div class="full"><span class="field">Recomendação:</span> <span class="value">Padrão de title: <strong>Serviço + benefício | Riglog</strong> (&le;60 caracteres / 561 px). Home: &ldquo;Despacho Aduaneiro e Assessoria em Comércio Exterior | Riglog&rdquo;. Categorias: &ldquo;Blog &mdash; Importação&rdquo; e &ldquo;Blog &mdash; Exportação&rdquo;. Remover o sufixo longo do tema.</span></div>
           <div><span class="field">Esforço:</span> <span class="value">4 h</span></div>
-          <div><span class="field">Dono:</span> <span class="value">V4 (copy) + Dev</span></div>
         </div>
       </div>
 
-      <div class="finding">
+      <div class="finding seo-finding">
         <div class="finding-header">
           <div><span class="finding-tag">SEO-09 &bull; LINKS INTERNOS</span><span class="finding-title">O blog não distribui autoridade para as páginas de serviço</span></div>
           <div><span class="severity sev-alto">Alto</span></div>
@@ -771,11 +594,10 @@
           <div class="full"><span class="field">Impacto:</span> <span class="value">O ativo mais forte do site (blog) não transfere relevância para as páginas que vendem. O usuário que lê sobre RADAR não encontra um caminho contextual para &ldquo;Habilitação no RADAR&rdquo;.</span></div>
           <div class="full"><span class="field">Recomendação:</span> <span class="value">(1) Bloco &ldquo;Serviços relacionados&rdquo; em cada post (3 links contextuais). (2) Links no corpo do texto para o serviço correspondente. (3) Na home, CTAs dos cards de serviço apontam para a página do serviço, não para cotação. (4) Corrigir o template do post &ldquo;7 estratégias&rdquo;.</span></div>
           <div><span class="field">Esforço:</span> <span class="value">4 h</span></div>
-          <div><span class="field">Dono:</span> <span class="value">V4 + Dev</span></div>
         </div>
       </div>
 
-      <div class="finding">
+      <div class="finding seo-finding">
         <div class="finding-header">
           <div><span class="finding-tag">SEO-10 &bull; MÍDIA</span><span class="finding-title">4 imagens 404, 6 imagens acima de 100 KB e 20 sem alt text</span></div>
           <div><span class="severity sev-medio">Médio</span></div>
@@ -785,11 +607,10 @@
           <div class="full"><span class="field">Impacto:</span> <span class="value">Posts com imagens quebradas perdem credibilidade e retenção; imagens pesadas pioram LCP em mobile; falta de alt prejudica acessibilidade e o entendimento de contexto por buscadores.</span></div>
           <div class="full"><span class="field">Recomendação:</span> <span class="value">(1) Substituir ou remover as 4 imagens 404. (2) Converter PNGs grandes para WebP (meta &lt;100 KB). (3) Preencher alt descritivo nas imagens de conteúdo e alt vazio nas decorativas. (4) Definir width/height para reduzir CLS.</span></div>
           <div><span class="field">Esforço:</span> <span class="value">6 h</span></div>
-          <div><span class="field">Dono:</span> <span class="value">Design + Dev</span></div>
         </div>
       </div>
 
-      <div class="finding">
+      <div class="finding seo-finding">
         <div class="finding-header">
           <div><span class="finding-tag">SEO-11 &bull; E-E-A-T</span><span class="finding-title">Posts sem autor, sem data visível e sem schema de artigo</span></div>
           <div><span class="severity sev-medio">Médio</span></div>
@@ -799,11 +620,10 @@
           <div class="full"><span class="field">Impacto:</span> <span class="value">Comércio exterior é tema YMYL-adjacente (regulação, tributos, Receita Federal). Sinais de autoria e experiência pesam na avaliação de qualidade e são decisivos para que LLMs escolham a fonte.</span></div>
           <div class="full"><span class="field">Recomendação:</span> <span class="value">(1) Autor visível com nome, cargo e bio (ex.: especialista em comex). (2) Data de publicação e atualização. (3) Article schema com author e datePublished/dateModified. (4) Página &ldquo;Sobre&rdquo; com CNPJ, endereço e credenciais. (5) Cases com números reais.</span></div>
           <div><span class="field">Esforço:</span> <span class="value">8 h</span></div>
-          <div><span class="field">Dono:</span> <span class="value">Cliente (conteúdo) + V4</span></div>
         </div>
       </div>
 
-      <div class="finding">
+      <div class="finding seo-finding">
         <div class="finding-header">
           <div><span class="finding-tag">SEO-12 &bull; HIGIENE</span><span class="finding-title">301s internos, UTM malformado e 10 links externos desatualizados</span></div>
           <div><span class="severity sev-medio">Médio</span></div>
@@ -813,7 +633,6 @@
           <div class="full"><span class="field">Impacto:</span> <span class="value">Cada 301 é uma requisição extra e dilui sinal; o UTM malformado cria duplicata e quebra atribuição; links quebrados para órgãos públicos prejudicam a confiança do leitor em conteúdo regulatório.</span></div>
           <div class="full"><span class="field">Recomendação:</span> <span class="value">(1) Padronizar barra final nos links internos. (2) Corrigir o UTM para <code>&amp;utm_medium</code> etc. (3) Atualizar os 10 links externos para as URLs atuais (gov.br). (4) Monitorar trimestralmente com crawl.</span></div>
           <div><span class="field">Esforço:</span> <span class="value">3 h</span></div>
-          <div><span class="field">Dono:</span> <span class="value">V4</span></div>
         </div>
       </div>
 
@@ -821,66 +640,194 @@
   </div>
 
   <!-- AIO -->
-  <div class="card" id="aio">
+  <div class="card card-pillar aio" id="aio">
     <div class="card-body">
-      <h2>Prontidão AIO + GEO</h2>
-
-      <p>AIO (AI Optimization) e GEO (Generative Engine Optimization) tratam da capacidade de uma marca <strong>ser extraída e citada</strong> por ChatGPT, Perplexity, Gemini, Copilot e Google AI Overviews. Diferente de SEO tradicional, o objetivo não é o clique no link azul: é ser a fonte dentro da resposta.</p>
-
-      <p><strong>O que foi medido:</strong> os requisitos técnicos e de conteúdo que habilitam citação &mdash; dados estruturados, clareza de entidade, formato de resposta, FAQ, autoria, sitemap e acesso de crawlers de IA. <strong>O que não foi medido:</strong> citações reais em LLMs (não há teste de prompts neste pacote). Portanto, o número abaixo é <em>prontidão</em>, não participação de voz.</p>
-
-      <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);">
-        <div class="kpi-card">
-          <div class="value">20%</div>
-          <div class="label">Prontidão AIO/GEO</div>
-          <div class="sub">3 de 15 requisitos</div>
-        </div>
-        <div class="kpi-card">
-          <div class="value">0</div>
-          <div class="label">Blocos de definição</div>
-          <div class="sub">formato preferido por LLMs</div>
-        </div>
-        <div class="kpi-card">
-          <div class="value">404</div>
-          <div class="label">llms.txt</div>
-          <div class="sub">arquivo não existe</div>
+      <div class="pillar-header">
+        <div class="pillar-icon aio">AI</div>
+        <div>
+          <div class="pillar-title aio">Pilar AIO &mdash; AI Overviews &amp; Answer Engines</div>
+          <div class="pillar-subtitle">ChatGPT &middot; Perplexity &middot; Gemini &middot; Copilot &middot; Google AI Overviews</div>
         </div>
       </div>
 
-      <table class="compact">
-        <tr><th>#</th><th>Requisito</th><th>Status</th><th>Evidência</th></tr>
-        <tr><td>1</td><td>Organization / LocalBusiness schema</td><td><span class="status fail">Ausente</span></td><td>0 JSON-LD</td></tr>
-        <tr><td>2</td><td>Service schema nos serviços</td><td><span class="status fail">Ausente</span></td><td>0 de 10 páginas</td></tr>
-        <tr><td>3</td><td>Article / BlogPosting nos posts</td><td><span class="status fail">Ausente</span></td><td>0 de 7 posts</td></tr>
-        <tr><td>4</td><td>BreadcrumbList</td><td><span class="status fail">Ausente</span></td><td>0 páginas</td></tr>
-        <tr><td>5</td><td>FAQPage / HowTo</td><td><span class="status fail">Ausente</span></td><td>0 páginas</td></tr>
-        <tr><td>6</td><td>Meta description única e descritiva</td><td><span class="status fail">Parcial</span></td><td>13 de 27</td></tr>
-        <tr><td>7</td><td>Um H1 por página</td><td><span class="status fail">Parcial</span></td><td>19 de 27</td></tr>
-        <tr><td>8</td><td>Definition blocks de 50&ndash;80 palavras</td><td><span class="status fail">Ausente</span></td><td>0 blocos</td></tr>
-        <tr><td>9</td><td>FAQ visível nas páginas comerciais</td><td><span class="status fail">Ausente</span></td><td>0 páginas</td></tr>
-        <tr><td>10</td><td>llms.txt</td><td><span class="status fail">404</span></td><td>não publicado</td></tr>
-        <tr><td>11</td><td>robots.txt libera crawlers de IA</td><td><span class="status ok">OK</span></td><td>só <code>/wp-admin</code> bloqueado</td></tr>
-        <tr><td>12</td><td>Sitemap limpo e atualizado</td><td><span class="status partial">Parcial</span></td><td>39 URLs, 9 residuais</td></tr>
-        <tr><td>13</td><td>Conteúdo informacional próprio</td><td><span class="status ok">OK</span></td><td>7 posts, mediana 1.339 palavras</td></tr>
-        <tr><td>14</td><td>Autoria e data visíveis</td><td><span class="status fail">Ausente</span></td><td>0 posts</td></tr>
-        <tr><td>15</td><td>HTTPS + HTTP/2</td><td><span class="status ok">OK</span></td><td>Cloudflare</td></tr>
-      </table>
+      <p>AIO é a camada que decide se uma IA <strong>consegue ler e extrair</strong> o que o site diz. Não é ranking: é o crawler receber texto, entender de quem se trata e encontrar um trecho que responda à pergunta do usuário em duas ou três frases.</p>
 
-      <h3>Por que isso importa para a Riglog</h3>
-      <p>As perguntas que um importador faz a uma IA são exatamente as que a Riglog já responde no blog: <em>&ldquo;o que é RADAR Siscomex?&rdquo;</em>, <em>&ldquo;como importar máquina usada?&rdquo;</em>, <em>&ldquo;o que é ex-tarifário?&rdquo;</em>. O conteúdo existe. O que não existe é o <strong>formato que a IA consegue citar</strong>: definição curta, dado estruturado, autoria e FAQ.</p>
+      <p>Na Riglog o acesso não é o problema. O <code>robots.txt</code> libera GPTBot, ClaudeBot, PerplexityBot e Google-Extended &mdash; só <code>/wp-admin/</code> está bloqueado &mdash; e o HTML é renderizado no servidor, não é SPA. O problema é o que existe depois do acesso: <strong>nenhuma marcação semântica, nenhuma resposta curta, nenhuma assinatura</strong>.</p>
+
+      <div class="finding aio-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">AI1 &bull; ENTIDADE</span><span class="finding-title">Nenhuma entidade legível por máquina em 27 páginas</span></div>
+          <div><span class="severity sev-critico">Crítico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evidência:</span> <span class="value">Zero blocos JSON-LD no site. Não existe Organization, LocalBusiness, Service, Article, BreadcrumbList nem FAQPage. Nome, telefones e serviços existem apenas como texto solto no HTML.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Uma IA que chega ao site não encontra ficha verificável da empresa. Sem nó de entidade, o modelo não liga &ldquo;Riglog&rdquo; a &ldquo;despacho aduaneiro&rdquo; com segurança &mdash; e não cita o que não consegue atribuir.</span></div>
+          <div class="full"><span class="field">Correção:</span> <span class="value">Organization + LocalBusiness na home (razão social, CNPJ, endereço, telefones, áreas atendidas, <code>sameAs</code> para LinkedIn e demais perfis), Service nas 10 páginas de serviço e BreadcrumbList no site inteiro.</span></div>
+          <div><span class="field">Aceite:</span> <span class="value">Rich Results Test sem erro em Organization, LocalBusiness e Service.</span></div>
+          <div><span class="field">Esforço:</span> <span class="value">10 h &mdash; SEO-04</span></div>
+        </div>
+      </div>
+
+      <div class="finding aio-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">AI2 &bull; FORMATO</span><span class="finding-title">As páginas comerciais não têm resposta extraível</span></div>
+          <div><span class="severity sev-critico">Crítico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evidência:</span> <span class="value">As 10 páginas de serviço têm entre 78 e 278 palavras. <code>/cotacao/</code> tem 52. Nenhuma abre com definição direta do serviço &mdash; todas abrem com frase de marca.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">LLM extrai trechos que respondem a uma pergunta em 2&ndash;3 frases. Sem esse bloco, a página está indexada mas não tem o que ser citado: não há definição, não há número, não há passo a passo.</span></div>
+          <div class="full"><span class="field">Correção:</span> <span class="value">Bloco &ldquo;Resposta rápida&rdquo; de 40&ndash;60 palavras no topo de cada serviço, seguido de o que está incluso, prazo, documentos necessários e FAQ com as perguntas reais de importador.</span></div>
+          <div><span class="field">Aceite:</span> <span class="value">10 serviços com bloco de resposta + 5 FAQs cada.</span></div>
+          <div><span class="field">Esforço:</span> <span class="value">Dentro de SEO-03 (30 h)</span></div>
+        </div>
+      </div>
+
+      <div class="finding aio-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">AI3 &bull; ACESSO</span><span class="finding-title">Crawlers de IA liberados, mas sem <code>llms.txt</code></span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evidência:</span> <span class="value"><code>/llms.txt</code> e <code>/ai.txt</code> retornam 404. O <code>robots.txt</code> está correto: nenhum crawler de IA é bloqueado.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">O acesso está aberto, mas não existe um resumo curado do site para o crawler de IA. É o item mais barato da lista e o que mais rápido muda a leitura da marca por um modelo.</span></div>
+          <div class="full"><span class="field">Correção:</span> <span class="value">Publicar <code>llms.txt</code> com resumo da empresa, os 10 serviços (nome, URL e uma linha), blog e contato, em links absolutos.</span></div>
+          <div><span class="field">Aceite:</span> <span class="value"><code>/llms.txt</code> retorna 200 com conteúdo estruturado.</span></div>
+          <div><span class="field">Esforço:</span> <span class="value">2 h</span></div>
+        </div>
+      </div>
+
+      <div class="finding aio-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">AI4 &bull; PARSING</span><span class="finding-title">Home entrega 189 KB de HTML para 4,4% de texto</span></div>
+          <div><span class="severity sev-medio">Médio</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evidência:</span> <span class="value">189.000 bytes de HTML na home, 1.044 palavras e text ratio de 4,4%. O conteúdo útil divide espaço com markup de template Elementor e widgets não usados.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Menos sinal por byte e mais custo de leitura para crawlers com orçamento limitado. O texto da home começa depois de centenas de linhas de markup.</span></div>
+          <div class="full"><span class="field">Correção:</span> <span class="value">Enxugar o DOM do template, remover plugins e widgets sem uso e reduzir o HTML servido. Ganho duplo: Core Web Vitals e leitura por IA.</span></div>
+          <div><span class="field">Aceite:</span> <span class="value">HTML da home abaixo de 100 KB com text ratio acima de 10%.</span></div>
+          <div><span class="field">Esforço:</span> <span class="value">6 h &mdash; com SEO-10</span></div>
+        </div>
+      </div>
+
+      <div class="finding aio-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">AI5 &bull; AUTORIA</span><span class="finding-title">Nenhuma assinatura em nenhum dos 7 posts</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evidência:</span> <span class="value">Os 7 posts não têm autor visível, data de publicação nem Article schema. O sitemap lista 2 autores, mas nenhum tem página com bio ou credencial.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Para AIO, autoria separa &ldquo;texto genérico&rdquo; de &ldquo;fonte&rdquo;. Sem nome, cargo e experiência declarada, o conteúdo não tem lastro &mdash; e o modelo prefere citar quem tem.</span></div>
+          <div class="full"><span class="field">Correção:</span> <span class="value">Autor visível com bio e credencial, data de publicação e atualização, Article schema preenchido e página de autor indexável.</span></div>
+          <div><span class="field">Aceite:</span> <span class="value">7 posts com autor, data e Article válido.</span></div>
+          <div><span class="field">Esforço:</span> <span class="value">8 h &mdash; SEO-11</span></div>
+        </div>
+      </div>
 
       <div class="risk-box gold">
-        <h4>A oportunidade é de formato, não de pauta</h4>
-        <p>Transformar os 7 posts em fontes citáveis exige: (1) um definition block de 50&ndash;80 palavras no topo de cada artigo; (2) FAQPage com as perguntas reais; (3) Article schema com autor e data; (4) link para o serviço correspondente; (5) páginas de serviço com a mesma lógica. É a camada de menor esforço e maior retorno da auditoria.</p>
+        <h4>O que este diagnóstico não afirma</h4>
+        <p>Não rodamos prompts em ChatGPT, Perplexity ou AI Overviews para verificar se a Riglog é citada. Isso exige um conjunto fixo de perguntas, execução recorrente e baseline &mdash; é a próxima etapa, não o que está medido aqui. O que está medido é a capacidade técnica do site de ser lido e extraído.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- GEO -->
+  <div class="card card-pillar geo" id="geo">
+    <div class="card-body">
+      <div class="pillar-header">
+        <div class="pillar-icon geo">G</div>
+        <div>
+          <div class="pillar-title geo">Pilar GEO &mdash; Generative Engine Optimization</div>
+          <div class="pillar-subtitle">Entidade &middot; autoridade &middot; citações &middot; presença em respostas</div>
+        </div>
       </div>
 
-      <h3>Três movimentos de AIO/GEO</h3>
-      <table>
-        <tr><th>Movimento</th><th>O que fazer</th><th>Impacto</th><th class="num">Esforço</th></tr>
-        <tr><td><strong>1. Entidade</strong></td><td>Organization + LocalBusiness com nome, telefones, áreas atendidas, serviços e perfis sociais</td><td>Consolida a Riglog como entidade no grafo</td><td class="num">3 h</td></tr>
-        <tr><td><strong>2. Extração</strong></td><td>Definition block + FAQPage nos 7 posts e nas 10 páginas de serviço</td><td>Conteúdo citável em respostas</td><td class="num">16 h</td></tr>
-        <tr><td><strong>3. Confiança</strong></td><td>Autor, data, Article schema, cases e página Sobre com CNPJ</td><td>Elegibilidade como fonte confiável</td><td class="num">8 h</td></tr>
+      <p>GEO é o trabalho de fazer a marca existir no corpus que os modelos usam para responder. Não basta ter conteúdo: é preciso <strong>entidade consistente, prova verificável e menção em fontes que o modelo cita</strong>. Hoje a Riglog tem operação e clientes, mas não declara nada disso de forma rastreável.</p>
+
+      <p>As perguntas que um importador faz a uma IA são exatamente as que o blog já responde: <em>&ldquo;o que é RADAR Siscomex?&rdquo;</em>, <em>&ldquo;como importar máquina usada?&rdquo;</em>, <em>&ldquo;o que é ex-tarifário?&rdquo;</em>. O conteúdo existe. O que não existe é o formato e a prova que fazem uma IA escolher a Riglog como fonte.</p>
+
+      <h3>Sinais de GEO</h3>
+      <div class="table-wrap">
+      <table class="geo-signals">
+        <thead><tr><th>Sinal</th><th>Situação</th><th>O que fazer</th></tr></thead>
+        <tr><td><strong>Entidade com schema</strong></td><td><span class="status fail">Ausente</span></td><td>Organization + LocalBusiness + <code>sameAs</code> + <code>knowsAbout</code></td></tr>
+        <tr><td><strong>Página institucional verificável</strong></td><td><span class="status warn">Parcial</span></td><td><code>/quem-somos/</code> tem 386 palavras, sem H1, sem meta e sem CNPJ ou endereço em texto</td></tr>
+        <tr><td><strong>Conteúdo original citável</strong></td><td><span class="status fail">Ausente</span></td><td>Nenhum dado próprio publicado: volumes, prazos por modal, taxa de deferimento, cases</td></tr>
+        <tr><td><strong>Definições e glossário</strong></td><td><span class="status fail">Ausente</span></td><td>Zero blocos de definição; termos do Comex só aparecem dentro de posts longos</td></tr>
+        <tr><td><strong>Comparativos</strong></td><td><span class="status fail">Ausente</span></td><td>Ex.: ex-tarifário x drawback, RADAR x Siscomex, importação própria x trading</td></tr>
+        <tr><td><strong>Autoria e E-E-A-T</strong></td><td><span class="status fail">Ausente</span></td><td>7 posts sem autor; 2 autores no sitemap sem bio</td></tr>
+        <tr><td><strong>Menções externas</strong></td><td><span class="status partial">Não auditado</span></td><td>Sem ferramenta de menções ou backlinks neste pacote &mdash; fica para a próxima rodada</td></tr>
+        <tr><td><strong>NAP consistente</strong></td><td><span class="status partial">Não verificado</span></td><td>Comparar site, Google Business Profile, LinkedIn e associações setoriais</td></tr>
       </table>
+      </div>
+
+      <div class="finding geo-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">G1 &bull; ENTIDADE</span><span class="finding-title">A Riglog não existe como entidade no grafo</span></div>
+          <div><span class="severity sev-critico">Crítico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evidência:</span> <span class="value">Sem Organization, sem <code>sameAs</code>, sem CNPJ ou endereço em texto. A página institucional tem 386 palavras, nenhum H1 e nenhuma meta description.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Para um modelo, Riglog é um nome sem atributos verificáveis. A experiência em comex &mdash; que é o ativo mais forte &mdash; não está declarada em nenhum lugar estruturado.</span></div>
+          <div class="full"><span class="field">Correção:</span> <span class="value">Página institucional com CNPJ, endereço, tempo de operação, equipe e áreas atendidas; Organization com <code>knowsAbout</code> e <code>sameAs</code>; as mesmas informações repetidas em texto, não só em imagem.</span></div>
+          <div><span class="field">Aceite:</span> <span class="value">Entidade validada + página institucional publicada.</span></div>
+          <div><span class="field">Esforço:</span> <span class="value">8 h &mdash; Fase 3</span></div>
+        </div>
+      </div>
+
+      <div class="finding geo-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">G2 &bull; PROVA</span><span class="finding-title">Não há conteúdo original que justifique citação</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evidência:</span> <span class="value">Os 7 posts explicam conceitos (RADAR, ex-tarifário, bagagem desacompanhada, máquina usada). Nenhum publica dado da própria operação: volume de processos, prazo médio, taxa de deferimento, economia obtida.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Modelos citam quem produz o dado, não quem repete a definição. Sem número próprio, a Riglog concorre com qualquer site que explique o mesmo termo &mdash; e perde para quem tem autoridade de domínio.</span></div>
+          <div class="full"><span class="field">Correção:</span> <span class="value">Um estudo por trimestre com dados agregados da operação e um case com números verificáveis. É o conteúdo que gera menção espontânea e citação.</span></div>
+          <div><span class="field">Aceite:</span> <span class="value">1 estudo original + 2 cases publicados.</span></div>
+          <div><span class="field">Esforço:</span> <span class="value">20 h &mdash; Fase 3</span></div>
+        </div>
+      </div>
+
+      <div class="finding geo-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">G3 &bull; DISTRIBUIÇÃO</span><span class="finding-title">O blog não distribui autoridade para o comercial</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evidência:</span> <span class="value">Cada página de serviço recebe 3 inlinks únicos. Os posts não linkam serviços em nenhum ponto do corpo &mdash; o leitor termina o artigo sem caminho para a página que vende.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">A autoridade construída no blog não chega ao funil. Para IA, o sinal é o mesmo: o conteúdo informativo não aponta para a oferta, então a resposta gerada cita o blog e não a empresa.</span></div>
+          <div class="full"><span class="field">Correção:</span> <span class="value">Bloco &ldquo;serviço relacionado&rdquo; ao fim de cada post, links contextuais no corpo e breadcrumb ligando post &rarr; categoria &rarr; serviço.</span></div>
+          <div><span class="field">Aceite:</span> <span class="value">10+ inlinks únicos por serviço.</span></div>
+          <div><span class="field">Esforço:</span> <span class="value">4 h &mdash; SEO-09</span></div>
+        </div>
+      </div>
+
+      <div class="finding geo-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">G4 &bull; COBERTURA</span><span class="finding-title">Sem comparativos e sem glossário</span></div>
+          <div><span class="severity sev-medio">Médio</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evidência:</span> <span class="value">Zero páginas comparativas e zero glossário. Os termos técnicos do comércio exterior aparecem apenas diluídos em posts de 1.000+ palavras.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Comparativo e definição são os formatos que mais aparecem em resposta gerada: são curtos, extraíveis e respondem exatamente à pergunta de quem está decidindo.</span></div>
+          <div class="full"><span class="field">Correção:</span> <span class="value">4 comparativos (ex-tarifário x drawback, RADAR x Siscomex, importação própria x trading, INCOTERMS) e glossário com 30 termos e definição de uma frase cada.</span></div>
+          <div><span class="field">Aceite:</span> <span class="value">4 comparativos + 30 verbetes publicados.</span></div>
+          <div><span class="field">Esforço:</span> <span class="value">16 h &mdash; Fase 3</span></div>
+        </div>
+      </div>
+
+      <h3>Onde isso entra no plano</h3>
+      <div class="table-wrap">
+      <table class="plan-map">
+        <thead><tr><th>Frente</th><th>Entregas</th><th>Achados</th><th class="num">Horas</th></tr></thead>
+        <tr><td><strong>Fase 1</strong></td><td>Organization, LocalBusiness, BreadcrumbList, <code>llms.txt</code></td><td>AI1, AI3</td><td class="num">12 h</td></tr>
+        <tr><td><strong>Fase 2</strong></td><td>Resposta rápida + FAQ nas 10 páginas de serviço, autor e data nos posts</td><td>AI2, AI5</td><td class="num">18 h</td></tr>
+        <tr><td><strong>Fase 3</strong></td><td>Estudo original, comparativos, glossário, página institucional</td><td>G1, G2, G4</td><td class="num">44 h</td></tr>
+      </table>
+      </div>
+
+      <div class="note"><strong>Prioridade:</strong> AI1 e AI3 são os únicos itens de AIO/GEO que entram na Fase 1 &mdash; custam 12 horas e destravam a leitura da marca por qualquer modelo. O resto é consequência do trabalho de conteúdo que já está no plano.</div>
     </div>
   </div>
 
@@ -890,6 +837,7 @@
       <h2>Arquitetura de Informação</h2>
       <p>O site foi montado em Elementor com menus duplicados e páginas de versões anteriores ainda ativas. A estrutura recomendada consolida a autoridade em três níveis claros.</p>
 
+      <div class="table-wrap">
       <table>
         <tr><th>Nível</th><th>Hoje</th><th>Recomendado</th></tr>
         <tr><td><strong>Home</strong></td><td>6 H1s de posts; CTAs para <code>/cotacao/</code>; sem meta description</td><td>1 H1 comercial; cards para serviços; meta com proposta de valor; Organization schema</td></tr>
@@ -899,6 +847,7 @@
         <tr><td><strong>Conversão</strong></td><td><code>/cotacao/</code> com 52 palavras e sem H1</td><td>Página com H1, prova, formulário curto, expectativa de resposta e schema</td></tr>
         <tr><td><strong>Resíduos</strong></td><td>9 páginas de template e loja indexáveis</td><td><code>noindex</code>, fora do sitemap e do menu</td></tr>
       </table>
+      </div>
 
       <div class="note"><strong>Regra de ouro:</strong> cada página de serviço deve ser a resposta definitiva para uma intenção comercial e receber links contextuais de pelo menos 2 posts. Hoje, o blog aponta para cotação; deveria apontar primeiro para o serviço e depois para a cotação.</div>
     </div>
@@ -913,24 +862,24 @@
       <div class="timeline">
         <div class="timeline-phase">
           <div class="dot red"></div>
-          <div class="phase-bar red" style="width:68%;"></div>
+          <div class="phase-name">Fundação técnica</div>
+          <div class="phase-weeks">Dias 0&ndash;30</div>
           <div class="phase-hours">42 h</div>
-          <div class="phase-name">Fase 1 &bull; 0&ndash;30 dias</div>
-          <div class="phase-pct">34% &bull; Correções críticas</div>
+          <div class="phase-pillar red">34% do esforço</div>
         </div>
         <div class="timeline-phase">
           <div class="dot orange"></div>
-          <div class="phase-bar orange" style="width:76%;"></div>
+          <div class="phase-name">Conteúdo comercial</div>
+          <div class="phase-weeks">Dias 31&ndash;60</div>
           <div class="phase-hours">47 h</div>
-          <div class="phase-name">Fase 2 &bull; 31&ndash;60 dias</div>
-          <div class="phase-pct">38% &bull; Conteúdo comercial</div>
+          <div class="phase-pillar orange">38% do esforço</div>
         </div>
         <div class="timeline-phase">
           <div class="dot gold"></div>
-          <div class="phase-bar gold" style="width:56%;"></div>
+          <div class="phase-name">Autoridade e citação</div>
+          <div class="phase-weeks">Dias 61&ndash;90</div>
           <div class="phase-hours">35 h</div>
-          <div class="phase-name">Fase 3 &bull; 61&ndash;90 dias</div>
-          <div class="phase-pct">28% &bull; Autoridade e AIO</div>
+          <div class="phase-pillar gold">28% do esforço</div>
         </div>
       </div>
 
@@ -941,6 +890,7 @@
       </div>
 
       <h3>Fase 1 &mdash; Fundação técnica (42 h)</h3>
+      <div class="table-wrap">
       <table class="compact">
         <tr><th>#</th><th>Ação</th><th>IDs</th><th class="num">Horas</th></tr>
         <tr><td>1</td><td>Corrigir os 6 links do rodapé e criar 301 de <code>/services/*</code></td><td>SEO-01</td><td class="num">2</td></tr>
@@ -952,8 +902,10 @@
         <tr><td>7</td><td>Corrigir imagens 404, converter WebP e preencher alt</td><td>SEO-10</td><td class="num">6</td></tr>
         <tr><td>8</td><td>Padronizar barra final, UTM e links externos</td><td>SEO-12</td><td class="num">3</td></tr>
       </table>
+      </div>
 
       <h3>Fase 2 &mdash; Conteúdo comercial (47 h)</h3>
+      <div class="table-wrap">
       <table class="compact">
         <tr><th>#</th><th>Ação</th><th>IDs</th><th class="num">Horas</th></tr>
         <tr><td>9</td><td>Reescrever as 10 páginas de serviço (600&ndash;900 palavras + FAQ)</td><td>SEO-03</td><td class="num">30</td></tr>
@@ -961,16 +913,19 @@
         <tr><td>11</td><td>Links contextuais blog &rarr; serviço e bloco &ldquo;serviços relacionados&rdquo;</td><td>SEO-09</td><td class="num">4</td></tr>
         <tr><td>12</td><td>Autor, data, bio e Article schema nos 7 posts</td><td>SEO-11</td><td class="num">8</td></tr>
       </table>
+      </div>
 
       <h3>Fase 3 &mdash; Autoridade e AIO (35 h)</h3>
+      <div class="table-wrap">
       <table class="compact">
         <tr><th>#</th><th>Ação</th><th>IDs</th><th class="num">Horas</th></tr>
         <tr><td>13</td><td>4 guias pilares: RADAR, ex-tarifário, importação de usados, bagagem</td><td>SEO-03</td><td class="num">24</td></tr>
         <tr><td>14</td><td>Definition blocks + llms.txt + monitoramento de citação</td><td>AIO</td><td class="num">3</td></tr>
         <tr><td>15</td><td>Link building em diretórios e associações de comércio exterior</td><td>SEO-09</td><td class="num">8</td></tr>
       </table>
+      </div>
 
-      <div style="margin-top:24px; background:linear-gradient(135deg, #fcfaf7, #f8f7f4); border-radius:10px; padding:18px 22px; border:1px solid var(--gold-border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+      <div class="total-box" style="margin-top:24px; background:linear-gradient(135deg, #fcfaf7, #f8f7f4); border-radius:10px; padding:18px 22px; border:1px solid var(--gold-border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
         <div>
           <div style="font-size:12px; color:var(--gray-500); font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Esforço total</div>
           <div style="font-size:28px; font-weight:700; color:var(--red); letter-spacing:-0.5px;">~124 h</div>
@@ -1000,6 +955,7 @@
       <h2>KPIs de Acompanhamento</h2>
       <p>Metas técnicas verificáveis por crawl. São os indicadores que provam execução &mdash; independentes de flutuação de tráfego.</p>
 
+      <div class="table-wrap">
       <table class="compact">
         <tr><th>KPI</th><th class="num">Hoje</th><th class="num">30 dias</th><th class="num">60 dias</th><th class="num">90 dias</th></tr>
         <tr><td>Páginas com 1 H1 válido</td><td class="num">19/27</td><td class="num">27/27</td><td class="num">27/27</td><td class="num">27/27</td></tr>
@@ -1014,6 +970,7 @@
         <tr><td>llms.txt publicado</td><td class="num">Não</td><td class="num">Não</td><td class="num">Não</td><td class="num">Sim</td></tr>
         <tr><td>Core Web Vitals medidos (PSI/Lighthouse)</td><td class="num">Não</td><td class="num">Sim</td><td class="num">Sim</td><td class="num">Sim</td></tr>
       </table>
+      </div>
 
       <div class="note"><strong>Por que 3 páginas continuam abaixo de 200 palavras no dia 90:</strong> categorias de blog e páginas de contato/cotação podem ser naturalmente curtas. O critério deixa de ser &ldquo;todas acima de 200&rdquo; e passa a ser &ldquo;nenhuma página comercial abaixo de 600&rdquo;.</div>
     </div>
@@ -1039,14 +996,16 @@
       </div>
 
       <h3>Sequência imediata (primeiros 10 dias)</h3>
+      <div class="table-wrap">
       <table class="compact">
-        <tr><th>Dia</th><th>Entrega</th><th>Responsável</th></tr>
-        <tr><td>1&ndash;2</td><td>Correção dos 6 links do rodapé + 301 de <code>/services/*</code></td><td>Dev</td></tr>
-        <tr><td>3&ndash;4</td><td>H1s da home, blog, hub e 5 páginas; remoção do H1 duplicado</td><td>Dev + V4</td></tr>
-        <tr><td>5&ndash;7</td><td>Titles e metas das 27 páginas</td><td>V4</td></tr>
-        <tr><td>8&ndash;9</td><td>Noindex das 9 páginas de template + 301 de <code>/blog-2/</code></td><td>Dev</td></tr>
-        <tr><td>10</td><td>Organization + LocalBusiness + BreadcrumbList publicados e validados</td><td>Dev + V4</td></tr>
+        <tr><th>Dia</th><th>Entrega</th></tr>
+        <tr><td>1&ndash;2</td><td>Correção dos 6 links do rodapé + 301 de <code>/services/*</code></td></tr>
+        <tr><td>3&ndash;4</td><td>H1s da home, blog, hub e 5 páginas; remoção do H1 duplicado</td></tr>
+        <tr><td>5&ndash;7</td><td>Titles e metas das 27 páginas</td></tr>
+        <tr><td>8&ndash;9</td><td>Noindex das 9 páginas de template + 301 de <code>/blog-2/</code></td></tr>
+        <tr><td>10</td><td>Organization + LocalBusiness + BreadcrumbList publicados e validados</td></tr>
       </table>
+      </div>
     </div>
   </div>
 
@@ -1057,9 +1016,8 @@
 
       <h3>A. Inventário de páginas indexáveis</h3>
       <p style="font-size:14px; color:var(--gray-600);">27 páginas, ordenadas por volume de conteúdo. &ldquo;H1&rdquo; indica a situação encontrada no HTML renderizado.</p>
-      <p class="scroll-hint">Deslize a tabela para o lado para ver todas as colunas &rarr;</p>
-      <div class="table-scroll">
-<table class="compact">
+      <div class="table-wrap">
+<table class="compact annex-a">
         <thead><tr><th>URL</th><th class="num">Palavras</th><th>H1</th><th class="num">Title px</th><th class="num">Meta</th></tr></thead>
                 <tr><td class="url"><a href="https://riglog.com.br/blog/importacao-de-maquina-usada/" target="_blank" rel="noopener">/blog/importacao-de-maquina-usada/</a></td><td class="num">3.051</td><td><span class="status ok">ok</span></td><td class="num over">677</td><td class="num"><span class="status warn">196</span></td></tr>
         <tr><td class="url"><a href="https://riglog.com.br/blog/importacao-de-veiculos/" target="_blank" rel="noopener">/blog/importacao-de-veiculos/</a></td><td class="num">1.468</td><td><span class="status ok">ok</span></td><td class="num over">910</td><td class="num"><span class="status warn">316</span></td></tr>
@@ -1093,9 +1051,8 @@
 
       <h3>B. URLs internas com erro, redirecionamento ou duplicata</h3>
       <p style="font-size:14px; color:var(--gray-600);">Base: relatório de response codes do crawl. &ldquo;Inlinks&rdquo; é o número de links internos apontando para a URL.</p>
-      <p class="scroll-hint">Deslize a tabela para o lado para ver todas as colunas &rarr;</p>
-      <div class="table-scroll">
-<table class="compact">
+      <div class="table-wrap">
+<table class="compact annex-b">
         <thead><tr><th>Status</th><th>URL</th><th class="num">Inlinks</th><th>Destino / observação</th></tr></thead>
                 <tr><td><span class="badge badge-critico">404</span></td><td class="url">/services/assessoria-aduaneira/</td><td class="num over">54</td><td>Página de serviço que não existe. Link no rodapé de todo o site.</td></tr>
         <tr><td><span class="badge badge-critico">404</span></td><td class="url">/services/frete-internacional/</td><td class="num over">54</td><td>Página de serviço que não existe. Link no rodapé de todo o site.</td></tr>
@@ -1118,7 +1075,8 @@
       </div>
 
       <h3>C. Sitemap x crawl</h3>
-      <table class="compact">
+      <div class="table-wrap">
+      <table class="compact annex-c">
         <tr><th style="width:32%">Grupo</th><th class="num" style="width:18%">URLs no sitemap</th><th>Observação</th></tr>
         <tr><td>Posts</td><td class="num">7</td><td>Todos indexáveis e no crawl</td></tr>
         <tr><td>Páginas</td><td class="num">16</td><td>9 são resíduos de template/loja fora do crawl</td></tr>
@@ -1127,6 +1085,7 @@
         <tr><td>Taxonomia de serviço</td><td class="num">1</td><td>Revisar necessidade</td></tr>
         <tr><td>Autores</td><td class="num">2</td><td>Sem página de autor com credenciais</td></tr>
       </table>
+      </div>
 
       <div class="note"><strong>Reprodutibilidade:</strong> os números deste relatório vêm dos CSVs de crawl fornecidos (Screaming Frog), complementados por inspeção direta de HTML, robots.txt, sitemap e cabeçalhos HTTP em 16/11/2026. Recomenda-se re-crawl após a Fase 1 para confirmar as metas.</div>
     </div>
@@ -1135,14 +1094,13 @@
 </div>
 
 <div class="footer">
-  <div style="display:flex; align-items:center; justify-content:center; gap:18px; margin-bottom:10px; flex-wrap:wrap;">
-    <img src="assets/logo-v4-white.png" alt="V4 Company" style="height:30px; width:auto; filter:invert(1); mix-blend-mode:multiply; opacity:0.85;">
-    <span style="color:var(--gray-400); font-size:14px;">+</span>
-    <img src="assets/logo-riglog.png" alt="Riglog" style="height:30px; width:auto; opacity:0.85;">
+  <div class="footer-logos">
+    <img src="assets/logo-v4-white.png" alt="V4 Company">
+    <img src="assets/logo-riglog.png" alt="Riglog" class="client">
   </div>
-  <p>Auditoria SEO + Prontidão AIO/GEO &bull; V4 Company &bull; peretto.co</p>
-  <p style="margin-top:4px;">Confidencial &mdash; preparada para Riglog Assessoria Aduaneira e Transportes em Novembro de 2026</p>
-  <p style="margin-top:4px;">slug: riglog-seo-audit &bull; v1.0</p>
+  <p>Auditoria SEO + AIO + GEO &bull; V4 Company &bull; peretto.co</p>
+  <p>Confidencial &mdash; preparada para Riglog Assessoria Aduaneira e Transportes em Novembro de 2026</p>
+  <p>slug: riglog-seoaiogeo-audit &bull; v2.0</p>
 </div>
 
 </body>
