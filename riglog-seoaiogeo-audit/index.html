@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auditoria SEO + Prontidão AIO/GEO — Riglog</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --red: rgb(229, 9, 20);
+    --red-dark: rgb(180, 7, 16);
+    --red-light: rgb(255, 60, 70);
+    --gold: #c9a96e;
+    --gold-light: #f5f0e6;
+    --gold-border: #e8dcc8;
+    --green: #16a34a;
+    --blue: #2563eb;
+    --purple: #7c3aed;
+    --gray-50: #fafafa;
+    --gray-100: #f5f5f5;
+    --gray-200: #eeeeee;
+    --gray-300: #e0e0e0;
+    --gray-400: #bdbdbd;
+    --gray-500: #9e9e9e;
+    --gray-600: #757575;
+    --gray-700: #616161;
+    --gray-800: #424242;
+    --gray-900: #212121;
+  }
+
+  body {
+    font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f8f7f4;
+    color: var(--gray-900);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  .cover {
+    background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #2a2a2a 100%);
+    color: #fff;
+    padding: 64px 40px 52px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(201,169,110,0.05) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .cover-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+  .cover-content::before {
+    content: '';
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .cover-content::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin: 28px auto 0;
+    border-radius: 1px;
+  }
+
+  .logo-row { display: flex; align-items: center; justify-content: center; gap: 26px; margin-bottom: 26px; flex-wrap: wrap; }
+  .logo-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-radius: 8px;
+    padding: 9px 16px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+  }
+  .logo-row .sep { color: var(--gold); font-size: 16px; opacity: 0.45; }
+
+  .cover .label {
+    display: inline-block;
+    background: rgba(201,169,110,0.12);
+    border: 1px solid rgba(201,169,110,0.3);
+    padding: 6px 20px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    color: var(--gold);
+  }
+  .cover h1 {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 14px;
+    letter-spacing: -0.5px;
+    font-family: 'Plus Jakarta Sans', serif;
+  }
+  .cover p {
+    font-size: 18px;
+    opacity: 0.85;
+    margin-bottom: 22px;
+    font-weight: 300;
+    letter-spacing: 0.2px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 10px 28px;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 13px;
+    opacity: 0.7;
+    letter-spacing: 0.4px;
+  }
+  .pillar-badges { display: flex; gap: 10px; justify-content: center; margin: 22px 0 6px; flex-wrap: wrap; }
+  .pillar-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+  }
+  .pillar-badge.seo { background: rgba(37,99,235,0.15); border: 1px solid rgba(37,99,235,0.3); color: #93c5fd; }
+  .pillar-badge.aio { background: rgba(229,9,20,0.15); border: 1px solid rgba(229,9,20,0.3); color: #fca5a5; }
+
+  .container { max-width: 960px; margin: -36px auto 48px; position: relative; z-index: 2; }
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+    margin-bottom: 28px;
+    overflow: hidden;
+    border: 1px solid var(--gray-300);
+    position: relative;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 40px;
+    right: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-border), var(--gold), var(--gold-border), transparent);
+    opacity: 0.6;
+  }
+  .card-body { padding: 44px 52px; }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--gold-border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -0.3px;
+    position: relative;
+  }
+  h2::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 1px;
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin: 36px 0 18px;
+    letter-spacing: -0.2px;
+  }
+  h4 { font-size: 16px; font-weight: 700; color: var(--gray-800); margin: 22px 0 12px; }
+  p { font-size: 16px; color: var(--gray-700); margin-bottom: 16px; line-height: 1.8; }
+  p:last-child { margin-bottom: 0; }
+  ul, ol { color: var(--gray-700); line-height: 1.8; padding-left: 22px; margin-bottom: 16px; }
+  li { margin-bottom: 8px; }
+  strong { color: var(--gray-900); }
+
+  .badge {
+    display: inline-block;
+    padding: 5px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .badge-critico { background: #fef2f2; color: var(--red); border: 1px solid #fecaca; }
+  .badge-alto { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+  .badge-medio { background: #fefce8; color: #a16207; border: 1px solid #fef08a; }
+  .badge-baixo { background: var(--gold-light); color: #8b7a4a; border: 1px solid var(--gold-border); }
+  .badge-info { background: #f5f5f5; color: #616161; border: 1px solid #d4d4d4; }
+
+  .severity { display: inline-block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .sev-critico { color: var(--red); }
+  .sev-alto { color: #c2410c; }
+  .sev-medio { color: #a16207; }
+  .sev-baixo { color: #8b7a4a; }
+  .sev-info { color: #616161; }
+
+  table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 15px; }
+  th, td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--gray-100); vertical-align: top; }
+  th {
+    background: linear-gradient(135deg, var(--gray-50), #f8f7f4);
+    font-weight: 700;
+    color: var(--gray-700);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 2px solid var(--gold-border);
+    position: relative;
+  }
+  tr:hover td { background: #fcfaf7; }
+  tr:last-child td { border-bottom: none; }
+  table.compact { font-size: 13px; }
+  table.compact th, table.compact td { padding: 9px 10px; }
+  td.num, th.num { text-align: right; white-space: nowrap; }
+  td > strong:only-child { white-space: nowrap; }
+  td.num.over { color: var(--red); font-weight: 700; }
+  .url { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--gray-700); word-break: break-all; }
+  .url a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--gray-200); }
+  .url a:hover { color: var(--red); border-bottom-color: var(--red); }
+  .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .scroll-hint { display: none; font-size: 12px; color: var(--gray-500); margin: -6px 0 6px; letter-spacing: 0.2px; }
+  @media (max-width: 640px) {
+    .table-scroll table { min-width: 560px; }
+    .scroll-hint { display: block; }
+  }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .kpi-card {
+    background: #f2f0ec;
+    border-radius: 10px;
+    padding: 20px 12px 18px;
+    text-align: center;
+    border: 1px solid var(--gold-border);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .kpi-card:hover { border-color: var(--gold); box-shadow: 0 2px 12px rgba(201,169,110,0.1); }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--red), var(--gold));
+  }
+  .kpi-card .value { font-size: 30px; font-weight: 700; color: var(--red); line-height: 1.1; letter-spacing: -0.5px; }
+  .kpi-card .label { font-size: 12px; color: var(--gray-600); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 8px; }
+  .kpi-card .sub { font-size: 12px; color: var(--gray-600); margin-top: 4px; }
+
+  .risk-box {
+    background: linear-gradient(135deg, #fcfaf7, #f8f7f4);
+    border-left: 4px solid var(--red);
+    padding: 22px 26px;
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 18px;
+  }
+  .risk-box h4 { margin: 0 0 10px; color: var(--red); font-size: 16px; letter-spacing: -0.2px; }
+  .risk-box p { font-size: 15px; color: var(--gray-700); margin: 0; line-height: 1.7; }
+  .risk-box.gold { border-left-color: var(--gold); }
+  .risk-box.gold h4 { color: #8b7a4a; }
+
+  .finding {
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 26px 30px;
+    margin-bottom: 18px;
+    background: #fcfcfc;
+    transition: box-shadow 0.2s, border-color 0.2s;
+    border-left: 3px solid transparent;
+  }
+  .finding:hover { box-shadow: 0 2px 16px rgba(0,0,0,0.04); border-color: var(--gold-border); border-left-color: var(--gold); }
+  .finding-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; gap: 12px; flex-wrap: wrap; }
+  .finding-title { font-weight: 700; font-size: 17px; color: var(--gray-900); letter-spacing: -0.2px; }
+  .finding-tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--gray-500); display: block; margin-bottom: 3px; letter-spacing: 0.5px; }
+  .finding-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 32px; font-size: 15px; }
+  .finding-grid .field { font-weight: 600; color: var(--gray-800); }
+  .finding-grid .value { color: var(--gray-700); }
+  .finding-grid .full { grid-column: 1 / -1; }
+
+  .bar-container { margin: 22px 0; }
+  .bar-row { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+  .bar-label { width: 200px; font-size: 13px; font-weight: 700; color: var(--gray-700); text-align: right; flex-shrink: 0; letter-spacing: -0.1px; }
+  .bar-track { flex: 1; height: 30px; background: var(--gray-100); border-radius: 6px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding-right: 14px; font-size: 13px; font-weight: 700; color: #fff; letter-spacing: 0.3px; }
+  .bar-fill.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .bar-fill.orange { background: linear-gradient(90deg, #c2410c, #ea580c); }
+  .bar-fill.gold { background: linear-gradient(90deg, #b8963a, #d4b96a); }
+  .bar-fill.gray { background: linear-gradient(90deg, #616161, #9e9e9e); }
+  .bar-fill.green { background: linear-gradient(90deg, #15803d, #22c55e); }
+
+  .timeline { display: flex; gap: 0; margin: 32px 0 16px; position: relative; padding: 0 0 20px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 28px; left: 5%; right: 5%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold-border), var(--gold), var(--gold-border));
+    border-radius: 2px;
+  }
+  .timeline-phase { flex: 1; text-align: center; position: relative; padding: 0 8px; }
+  .timeline-phase .dot {
+    width: 16px; height: 16px; border-radius: 50%;
+    margin: 0 auto 12px; position: relative; z-index: 1;
+    border: 3px solid #fff; box-shadow: 0 0 0 2px var(--gold);
+  }
+  .timeline-phase .dot.red { background: var(--red); }
+  .timeline-phase .dot.orange { background: #c2410c; }
+  .timeline-phase .dot.gold { background: var(--gold); }
+  .timeline-phase .dot.gray { background: #757575; }
+  .timeline-phase .phase-name { font-size: 13px; font-weight: 700; color: var(--gray-800); margin-bottom: 2px; }
+  .timeline-phase .phase-hours { font-size: 22px; font-weight: 700; color: var(--red); letter-spacing: -0.5px; }
+  .timeline-phase .phase-pct { font-size: 12px; color: var(--gray-500); font-weight: 600; }
+  .timeline-phase .phase-bar { height: 8px; border-radius: 4px; margin: 8px auto 6px; max-width: 80%; }
+  .timeline-phase .phase-bar.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .timeline-phase .phase-bar.orange { background: linear-gradient(90deg, #c2410c, #ea580c); }
+  .timeline-phase .phase-bar.gold { background: linear-gradient(90deg, #b8963a, #d4b96a); }
+  .timeline-deliverables { display: flex; gap: 0; margin-top: 4px; }
+  .timeline-deliverables .deliv { flex: 1; text-align: center; padding: 0 6px; font-size: 12px; color: var(--gray-600); line-height: 1.4; }
+  .timeline-deliverables .deliv strong { display: block; color: var(--gray-700); font-size: 11px; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; }
+
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--gray-100);
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 13px;
+    color: var(--red);
+  }
+
+  .summary-nav { display: flex; flex-wrap: wrap; gap: 8px; }
+  .summary-nav a {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-700);
+    text-decoration: none;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 6px;
+    padding: 6px 12px;
+    transition: all 0.15s;
+  }
+  .summary-nav a:hover { border-color: var(--gold); color: var(--red); background: #fcfaf7; }
+
+  .note {
+    font-size: 13px;
+    color: var(--gray-600);
+    background: var(--gray-50);
+    border: 1px dashed var(--gray-300);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-top: 18px;
+    line-height: 1.65;
+  }
+  .note strong { color: var(--gray-700); }
+
+  .status { display: inline-block; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 4px; white-space: nowrap; }
+  .status.ok { background: rgba(34,197,94,0.1); color: #16a34a; }
+  .status.warn { background: rgba(217,119,6,0.1); color: #c2410c; }
+  .status.fail { background: rgba(229,9,20,0.1); color: var(--red); }
+  .status.partial { background: rgba(201,169,110,0.15); color: #8b7a4a; }
+
+  .footer {
+    text-align: center;
+    padding: 36px;
+    font-size: 14px;
+    color: var(--gray-500);
+    border-top: 1px solid var(--gold-border);
+    letter-spacing: 0.3px;
+    position: relative;
+  }
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: -2px; left: 50%;
+    transform: translateX(-50%);
+    width: 40px; height: 3px;
+    background: var(--gold);
+    border-radius: 2px;
+  }
+
+  @media print {
+    body { background: #fff; padding: 0; font-size: 12px; }
+    .cover {
+      padding: 40px 30px;
+      min-height: 26.3cm;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      page-break-after: always;
+    }
+    .container { max-width: 100%; margin: 0; }
+    .card { box-shadow: none; border: 1px solid var(--gray-200); }
+    h2, h3, h4 { page-break-after: avoid; break-after: avoid; }
+    .card-body { padding: 20px 24px; }
+    .finding { page-break-inside: avoid; }
+    table { page-break-inside: auto; }
+    tr { page-break-inside: avoid; break-inside: avoid; }
+    thead { display: table-header-group; }
+    .table-scroll { overflow: visible; }
+    .table-scroll table { min-width: 0; }
+    .scroll-hint { display: none; }
+    .summary-nav, .no-print { display: none; }
+    .footer { display: none; }
+    @page { margin: 1.5cm 1cm; }
+  }
+
+  @media (max-width: 640px) {
+    .cover h1 { font-size: 27px; }
+    .cover { padding: 40px 20px 32px; }
+    .card-body { padding: 24px 20px; }
+    .finding-grid { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .bar-label { width: 110px; font-size: 11px; }
+    .timeline { flex-wrap: wrap; gap: 16px; }
+    .timeline::before { display: none; }
+    .timeline-deliverables { flex-wrap: wrap; gap: 12px; }
+    .timeline-deliverables .deliv { flex: 1 1 40%; }
+    table { font-size: 13px; }
+    th, td { padding: 10px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-content">
+    <div class="logo-row">
+      <img src="assets/logo-v4-white.png" alt="V4 Company" style="height:30px; width:auto; opacity:0.95;">
+      <span class="sep">✦</span>
+      <span class="logo-chip"><img src="assets/logo-riglog.png" alt="Riglog" style="height:34px; width:auto;"></span>
+    </div>
+    <div class="label">Confidencial &bull; Novembro 2026</div>
+    <h1>Auditoria SEO + Prontidão AIO/GEO</h1>
+    <p>Riglog Assessoria Aduaneira e Transportes &mdash; diagnóstico técnico, conteúdo e citabilidade</p>
+    <div class="pillar-badges">
+      <span class="pillar-badge seo">SEO Técnico</span>
+      <span class="pillar-badge aio">AIO / GEO Readiness</span>
+    </div>
+    <div class="cover-meta">
+      <span>Screaming Frog SEO Spider</span>
+      <span>152 URLs rastreadas</span>
+      <span>27 páginas indexáveis</span>
+      <span>16/11/2026</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- SUMÁRIO -->
+  <div class="card no-print">
+    <div class="card-body" style="padding:26px 40px;">
+      <div class="summary-nav">
+        <a href="#resumo">Resumo executivo</a>
+        <a href="#metodo">Escopo e método</a>
+        <a href="#mapa">Mapa de conformidade</a>
+        <a href="#achados">Achados</a>
+        <a href="#aio">AIO / GEO</a>
+        <a href="#arquitetura">Arquitetura</a>
+        <a href="#plano">Plano 90 dias</a>
+        <a href="#kpis">KPIs</a>
+        <a href="#proximos">Próximos passos</a>
+        <a href="#anexos">Anexos</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESUMO -->
+  <div class="card" id="resumo">
+    <div class="card-body">
+      <h2>Resumo Executivo</h2>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="value">27</div>
+          <div class="label">Páginas indexáveis</div>
+          <div class="sub">de 44 respostas HTML</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">0</div>
+          <div class="label">Dados estruturados</div>
+          <div class="sub">JSON-LD em 27 páginas</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">52%</div>
+          <div class="label">Conteúdo raso</div>
+          <div class="sub">páginas com &lt;200 palavras</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">14</div>
+          <div class="label">Sem meta description</div>
+          <div class="sub">52% das páginas</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">324</div>
+          <div class="label">Links para 404</div>
+          <div class="sub">6 páginas de serviço inexistentes</div>
+        </div>
+      </div>
+
+      <p>O site tem uma base editorial acima da média para o setor de comércio exterior: <strong>7 artigos, mediana de 1.339 palavras</strong>, pauta alinhada a dúvidas reais de importadores e exportadores (RADAR Siscomex, ex-tarifário, importação de usados, bagagem desacompanhada). O problema não é conteúdo &mdash; é <strong>engenharia e distribuição</strong>.</p>
+
+      <p>As páginas comerciais que deveriam converter a autoridade do blog têm entre <strong>78 e 278 palavras</strong>. Cinco páginas não têm H1. O item &ldquo;Serviços&rdquo; do menu principal aponta para <code>/quem-somos-2/</code>, com título &ldquo;Serviços&rdquo; e sem H1. O rodapé de todas as páginas envia <strong>324 links internos para 6 URLs que retornam 404</strong>. E não existe um único bloco de dados estruturados no site.</p>
+
+      <p>Na prática: o Google e os mecanismos de resposta encontram o blog, mas não encontram uma página de serviço forte para ranquear ou citar quando alguém busca <em>&ldquo;despachante aduaneiro&rdquo;</em>, <em>&ldquo;assessoria aduaneira&rdquo;</em> ou <em>&ldquo;importação&rdquo;</em>. A correção é majoritariamente de execução, não de estratégia: 80% dos achados são resolvidos em até 90 dias com o plano das seções seguintes.</p>
+
+      <h3>O que já está funcionando</h3>
+      <ul>
+        <li><strong>Infraestrutura correta:</strong> HTTPS, HTTP/2, Cloudflare, e redirecionamento 301 de HTTP e de <code>www</code> para o domínio canônico.</li>
+        <li><strong>Sitemap XML nativo</strong> do WordPress publicado e acessível em <code>/wp-sitemap.xml</code>.</li>
+        <li><strong>Google Tag Manager instalado</strong> (GTM-MXXLSC2) em todas as páginas &mdash; há base para medir o impacto das correções.</li>
+        <li><strong>Blog com profundidade real:</strong> 7 posts, mediana de 1.339 palavras, o maior com 3.051.</li>
+        <li><strong>Canonical próprio em 24 de 27 páginas</strong> e blog organizado por categorias (Importação e Exportação).</li>
+        <li><strong>Telefones de atendimento visíveis</strong> no rodapé &mdash; base para schema de LocalBusiness.</li>
+      </ul>
+
+      <div class="risk-box">
+        <h4>O risco central</h4>
+        <p>O site está em um limbo de autoridade: o blog constrói relevância, mas as páginas de serviço não recebem essa força (3 inlinks únicos cada), não têm profundidade e não têm H1. Ao mesmo tempo, 6 links de menu quebrados queimam rastreamento em todas as páginas. É um problema de <strong>vazamento de autoridade</strong>, não de falta de conteúdo.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MÉTODO -->
+  <div class="card" id="metodo">
+    <div class="card-body">
+      <h2>Escopo, Método e Limites</h2>
+
+      <table>
+        <tr><th>Item</th><th>Detalhe</th></tr>
+        <tr><td><strong>Escopo</strong></td><td>Auditoria técnica de SEO on-page, indexação, arquitetura de links internos e prontidão para AIO/GEO</td></tr>
+        <tr><td><strong>Ferramenta</strong></td><td>Screaming Frog SEO Spider (crawl completo) + inspeção de HTML renderizado e recursos no domínio</td></tr>
+        <tr><td><strong>Volume rastreado</strong></td><td>152 URLs (HTML, imagens, CSS, JS), 44 respostas HTML, 27 páginas indexáveis</td></tr>
+        <tr><td><strong>Data do crawl</strong></td><td>16 de novembro de 2026</td></tr>
+        <tr><td><strong>Dados complementares</strong></td><td>robots.txt, sitemap XML, HTML das páginas, cabeçalhos HTTP e checagem de recursos externos</td></tr>
+        <tr><td><strong>Metodologia</strong></td><td>V4 Company &mdash; padrão de auditoria técnica (Screaming Frog, Google Search Essentials, WCAG 2.1) + critérios de extractability para LLMs</td></tr>
+      </table>
+
+      <div class="risk-box gold">
+        <h4>Limites desta rodada &mdash; leia antes de interpretar os números</h4>
+        <p>O pacote de dados recebido <strong>não inclui Google Search Console, GA4, base de backlinks nem teste de citação em ChatGPT/Perplexity/Gemini</strong>. Por isso: (1) não há projeção de tráfego ou receita; (2) não há afirmação de que a marca é ou não citada por IAs &mdash; apenas a avaliação dos <em>requisitos técnicos</em> que habilitam citação; (3) Core Web Vitals não foram medidos nesta rodada (a API pública do PageSpeed retornou limite de quota). A recomendação de performance se baseia no peso e na composição dos recursos rastreados.</p>
+      </div>
+
+      <h3>Como ler os scores</h3>
+      <p>Os percentuais deste relatório são <strong>contagens de conformidade</strong>, não notas subjetivas. Cada barra da próxima seção informa o numerador e o denominador. A prontidão AIO/GEO segue o mesmo princípio: 15 requisitos objetivos, 3 atendidos.</p>
+    </div>
+  </div>
+
+  <!-- MAPA -->
+  <div class="card" id="mapa">
+    <div class="card-body">
+      <h2>Mapa de Conformidade</h2>
+      <p style="margin-bottom:8px;">Percentual de páginas indexáveis que atendem a cada critério. Base: 27 páginas indexáveis e 41 imagens únicas.</p>
+
+      <div class="bar-container">
+        <div class="bar-row">
+          <div class="bar-label">Meta description presente</div>
+          <div class="bar-track"><div class="bar-fill orange" style="width:48%;">13/27 &bull; 48%</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Título ≤ 561 px</div>
+          <div class="bar-track"><div class="bar-fill orange" style="width:41%;">11/27 &bull; 41%</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">H1 único e presente</div>
+          <div class="bar-track"><div class="bar-fill gold" style="width:70%;">19/27 &bull; 70%</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Conteúdo ≥ 200 palavras</div>
+          <div class="bar-track"><div class="bar-fill orange" style="width:48%;">13/27 &bull; 48%</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Imagens com alt text</div>
+          <div class="bar-track"><div class="bar-fill gold" style="width:51%;">21/41 &bull; 51%</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Canonical próprio</div>
+          <div class="bar-track"><div class="bar-fill green" style="width:89%;">24/27 &bull; 89%</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Dados estruturados</div>
+          <div class="bar-track"><div class="bar-fill red" style="width:2%;">0/27</div></div>
+        </div>
+      </div>
+
+      <p style="font-size:14px; color:var(--gray-600);">Leitura rápida: a base técnica (canonical, HTTPS, sitemap) está de pé. O que falta é a camada que gera resultado: <strong>títulos e metas que clicam, H1 que posiciona, conteúdo que ranqueia e schema que explica</strong>.</p>
+    </div>
+  </div>
+
+  <!-- ACHADOS -->
+  <div class="card" id="achados">
+    <div class="card-body">
+      <h2>Achados Priorizados</h2>
+      <p style="margin-bottom:4px;">12 achados, ordenados por prioridade de execução. &ldquo;Impacto&rdquo; considera o efeito esperado em rastreamento, ranqueamento e conversão orgânica. &ldquo;Esforço&rdquo; é uma estimativa de horas de execução (V4 + dev + conteúdo).</p>
+
+      <table class="compact">
+        <tr><th>ID</th><th>Achado</th><th>Severidade</th><th>Impacto</th><th class="num">Esforço</th><th>Fase</th></tr>
+        <tr><td><strong>SEO-01</strong></td><td>Menu do rodapé aponta para 6 serviços inexistentes (<code>/services/</code>)</td><td><span class="badge badge-critico">Crítico</span></td><td>Alto</td><td class="num">2 h</td><td>1</td></tr>
+        <tr><td><strong>SEO-02</strong></td><td>Home com 6 H1s, blog com 8 H1s e 5 páginas sem H1</td><td><span class="badge badge-critico">Crítico</span></td><td>Alto</td><td class="num">6 h</td><td>1</td></tr>
+        <tr><td><strong>SEO-03</strong></td><td>Conteúdo comercial raso: 52% das páginas com menos de 200 palavras</td><td><span class="badge badge-critico">Crítico</span></td><td>Alto</td><td class="num">30 h</td><td>2</td></tr>
+        <tr><td><strong>SEO-04</strong></td><td>Zero dados estruturados em 27 páginas</td><td><span class="badge badge-critico">Crítico</span></td><td>Alto</td><td class="num">10 h</td><td>1&ndash;2</td></tr>
+        <tr><td><strong>SEO-05</strong></td><td>Menu &ldquo;Serviços&rdquo; aponta para <code>/quem-somos-2/</code>, sem H1</td><td><span class="badge badge-alto">Alto</span></td><td>Alto</td><td class="num">6 h</td><td>1</td></tr>
+        <tr><td><strong>SEO-06</strong></td><td>Sitemap com 9 páginas de template/loja indexáveis</td><td><span class="badge badge-alto">Alto</span></td><td>Médio</td><td class="num">4 h</td><td>1</td></tr>
+        <tr><td><strong>SEO-07</strong></td><td>14 páginas sem meta description; 9 acima de 155 caracteres</td><td><span class="badge badge-alto">Alto</span></td><td>Médio</td><td class="num">6 h</td><td>1</td></tr>
+        <tr><td><strong>SEO-08</strong></td><td>16 títulos acima de 561 px e 2 pares duplicados</td><td><span class="badge badge-alto">Alto</span></td><td>Médio</td><td class="num">4 h</td><td>1</td></tr>
+        <tr><td><strong>SEO-09</strong></td><td>Blog não distribui autoridade para as páginas de serviço</td><td><span class="badge badge-alto">Alto</span></td><td>Alto</td><td class="num">4 h</td><td>2</td></tr>
+        <tr><td><strong>SEO-10</strong></td><td>Imagens quebradas, pesadas e sem alt text</td><td><span class="badge badge-medio">Médio</span></td><td>Médio</td><td class="num">6 h</td><td>1</td></tr>
+        <tr><td><strong>SEO-11</strong></td><td>Ausência de autor, data e sinais de experiência (E-E-A-T)</td><td><span class="badge badge-medio">Médio</span></td><td>Médio</td><td class="num">8 h</td><td>2</td></tr>
+        <tr><td><strong>SEO-12</strong></td><td>4 links internos 301, 1 UTM malformado e 10 links externos ruins</td><td><span class="badge badge-medio">Médio</span></td><td>Baixo</td><td class="num">3 h</td><td>1</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- FINDINGS -->
+  <div class="card">
+    <div class="card-body">
+      <h2>Achados em Detalhe</h2>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">SEO-01 &bull; RASTREAMENTO</span><span class="finding-title">Rodapé envia 324 links internos para 6 URLs que retornam 404</span></div>
+          <div><span class="severity sev-critico">Crítico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evidência:</span> <span class="value">O menu &ldquo;Serviços&rdquo; do rodapé aponta para <code>/services/assessoria-internacional/</code>, <code>/services/importacao/</code>, <code>/services/exportacao/</code>, <code>/services/assessoria-aduaneira/</code>, <code>/services/ex-tarifario-reducao-de-impostos-na-importacao/</code> e <code>/services/frete-internacional/</code>. Todas retornam 404. São 54 inlinks por URL &mdash; 324 links no total. O crawl também registra 4 links sem barra final que geram 301 desnecessário.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Rastreamento desperdiçado em todas as páginas, experiência de navegação quebrada no menu de serviços e vazamento de autoridade interna &mdash; justamente para as páginas que deveriam receber força comercial.</span></div>
+          <div class="full"><span class="field">Recomendação:</span> <span class="value">(1) Trocar as 6 URLs para <code>/servicos/&lt;slug&gt;/</code> com barra final. (2) Criar 301 de <code>/services/*</code> para <code>/servicos/*</code> como rede de segurança. (3) Re-crawl do rodapé para confirmar 0 links 4xx. (4) Padronizar barra final em todos os links do menu.</span></div>
+          <div><span class="field">Esforço:</span> <span class="value">2 h (Dev WordPress)</span></div>
+          <div><span class="field">Dono:</span> <span class="value">Dev + V4 (validação)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">SEO-02 &bull; ON-PAGE</span><span class="finding-title">Home tem 6 H1s, blog tem 8 e cinco páginas não têm H1</span></div>
+          <div><span class="severity sev-critico">Crítico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evidência:</span> <span class="value">Na home, os 6 H1s são títulos de posts do blog (&ldquo;7 estratégias práticas para reduzir custos de importação&rdquo;, &ldquo;Guia Completo dos Canais de parametrização...&rdquo;, etc.) &mdash; não há H1 institucional. O índice do blog tem 8 H1s. Sem H1: <code>/catalogo-de-produtos/</code>, <code>/quem-somos/</code>, <code>/quem-somos-2/</code>, <code>/cotacao/</code> e <code>/contato/</code>. O post &ldquo;Guia Completo dos Canais...&rdquo; tem 2 H1s idênticos.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">O H1 é o sinal semântico mais forte da página depois do title. Com 6 H1s, a home não declara o que vende. Sem H1, a página de cotação e o hub de serviços não têm assunto para o Google nem para os LLMs. A desordem também indica módulos Elementor configurados como heading errado.</span></div>
+          <div class="full"><span class="field">Recomendação:</span> <span class="value">(1) Home: 1 H1 com proposta de valor e termo comercial (&ldquo;Assessoria aduaneira e despacho de importação e exportação&rdquo;). (2) Módulos de posts na home e no blog passam a H2/H3. (3) 1 H1 nas 5 páginas sem heading. (4) Corrigir o duplicado do guia. (5) Revisar o widget de posts do Elementor para não emitir H1.</span></div>
+          <div><span class="field">Esforço:</span> <span class="value">6 h (Dev + conteúdo)</span></div>
+          <div><span class="field">Dono:</span> <span class="value">Dev WordPress</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">SEO-03 &bull; CONTEÚDO</span><span class="finding-title">Páginas comerciais têm 78&ndash;278 palavras; a mediana do site é 194</span></div>
+          <div><span class="severity sev-critico">Crítico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evidência:</span> <span class="value">14 das 27 páginas indexáveis (52%) têm menos de 200 palavras. Serviços: Habilitação no RADAR (78), Certificado de Origem (88), Frete Internacional (114), Assessoria Internacional (124), Exportação (131), Assessoria Aduaneira (137), Representação de Agentes (154), Carga Projeto (194), Importação (208). Catálogo (157), Cotação (52), Contato (49). O post &ldquo;Guia Completo dos Canais de parametrização&rdquo; tem 36 palavras.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">São as páginas com intenção comercial que deveriam capturar &ldquo;despachante aduaneiro&rdquo;, &ldquo;habilitação RADAR&rdquo;, &ldquo;ex-tarifário&rdquo; e &ldquo;frete internacional&rdquo;. Com esse volume, elas não competem com concorrentes e não oferecem material citável para IA. O blog tem mediana de 1.339 palavras &mdash; a força está no lugar errado do funil.</span></div>
+          <div class="full"><span class="field">Recomendação:</span> <span class="value">Reescrever as 10 páginas de serviço com 600&ndash;900 palavras no template: (1) o problema do cliente, (2) como a Riglog resolve, (3) etapas e prazos, (4) documentos e requisitos, (5) modalidades e abrangência, (6) prova (cases, números, órgãos), (7) FAQ com 4&ndash;6 perguntas, (8) CTA para cotação. Aproveitar o conteúdo dos posts como base.</span></div>
+          <div><span class="field">Esforço:</span> <span class="value">30 h (Copy + SEO)</span></div>
+          <div><span class="field">Dono:</span> <span class="value">V4 (copy/SEO) + cliente (validação técnica)</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">SEO-04 &bull; DADOS ESTRUTURADOS</span><span class="finding-title">Zero JSON-LD em 27 páginas &mdash; nenhuma entidade declarada</span></div>
+          <div><span class="severity sev-critico">Crítico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evidência:</span> <span class="value">Nenhuma das 27 páginas indexáveis tem bloco <code>application/ld+json</code>. Não há Organization, LocalBusiness, Service, Article, BreadcrumbList, FAQPage ou HowTo. O tema é Hello Elementor com Elementor Pro; não há plugin de schema ativo no HTML.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Sem entidade, o Google não consolida a Riglog como empresa de despacho aduaneiro (nome, telefones, áreas atendidas, serviços). Sem Service e Article, perde rich results e perde a camada que LLMs usam para extrair fatos com segurança. É a maior lacuna de AIO/GEO do site.</span></div>
+          <div class="full"><span class="field">Recomendação:</span> <span class="value">Implementar via plugin de schema ou JSON-LD no Elementor: <strong>Fase 1</strong> Organization + LocalBusiness (telefones já existem no rodapé) + BreadcrumbList global. <strong>Fase 2</strong> Service nas 10 páginas, Article nos 7 posts, FAQPage nas páginas com FAQ. Validar no Rich Results Test e no Schema Markup Validator.</span></div>
+          <div><span class="field">Esforço:</span> <span class="value">10 h (Dev + SEO)</span></div>
+          <div><span class="field">Dono:</span> <span class="value">Dev + V4</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">SEO-05 &bull; ARQUITETURA</span><span class="finding-title">O hub de Serviços vive em <code>/quem-somos-2/</code>, sem H1 e com title genérico</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evidência:</span> <span class="value">O item &ldquo;Serviços&rdquo; do menu principal aponta para <code>https://riglog.com.br/quem-somos-2/</code>. A página tem title &ldquo;Serviços &ndash; Riglog...&rdquo;, H1 ausente e H2 &ldquo;Nossos serviços e soluções&rdquo;. É a página que lista os 10 serviços e recebe o link do menu em todas as páginas.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">A URL mais importante do funil comercial tem slug de rascunho, título sem proposta de valor e nenhum H1. Toda a autoridade do hub fica presa em uma URL que não comunica o serviço &mdash; e o Google pode tratá-la como página residual.</span></div>
+          <div class="full"><span class="field">Recomendação:</span> <span class="value">(1) Criar <code>/servicos/</code> como hub real, com H1 &ldquo;Serviços de comércio exterior&rdquo;, intro de 150&ndash;200 palavras, cards dos 10 serviços e CTA. (2) 301 de <code>/quem-somos-2/</code> para <code>/servicos/</code>. (3) Atualizar o menu. (4) Aplicar BreadcrumbList e ItemList.</span></div>
+          <div><span class="field">Esforço:</span> <span class="value">6 h</span></div>
+          <div><span class="field">Dono:</span> <span class="value">Dev + V4</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">SEO-06 &bull; INDEXAÇÃO</span><span class="finding-title">Sitemap inclui 9 páginas de template e loja que não deveriam ser indexadas</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evidência:</span> <span class="value">O sitemap publica 39 URLs. Além das páginas reais, entram <code>/loja/</code>, <code>/carrinho/</code>, <code>/finalizar-compra/</code>, <code>/minha-conta/</code>, <code>/blog-2/</code>, <code>/contato-2/</code> (&ldquo;Trabalhe conosco&rdquo;), <code>/envie-uma-pergunta/</code>, <code>/encontre-fornecedores/</code> e <code>/manutencao-programada/</code> &mdash; todas 200, indexáveis e fora do crawl por não estarem no menu. Há ainda 2 autores e a taxonomia <code>tipos-de-servico</code>.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Rastreamento e orçamento de índice gastos em páginas transacionais e resíduos de versões anteriores. <code>/carrinho/</code>, <code>/finalizar-compra/</code> e <code>/minha-conta/</code> indexadas são risco de segurança e de experiência. <code>/blog-2/</code> compete com <code>/blog/</code>.</span></div>
+          <div class="full"><span class="field">Recomendação:</span> <span class="value">(1) <code>noindex</code> em loja, carrinho, checkout, minha conta, manutenção e páginas de template. (2) Remover do sitemap e do menu. (3) 301 de <code>/blog-2/</code> para <code>/blog/</code>. (4) Revisar taxonomia <code>tipos-de-servico</code> e autores. (5) Reenviar sitemap no GSC.</span></div>
+          <div><span class="field">Esforço:</span> <span class="value">4 h</span></div>
+          <div><span class="field">Dono:</span> <span class="value">Dev WordPress</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">SEO-07 &bull; ON-PAGE</span><span class="finding-title">14 páginas sem meta description e 9 com descrições de até 607 caracteres</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evidência:</span> <span class="value">Sem meta description: home, blog, catálogo, quem somos, hub de serviços, cotação, contato, 3 categorias e 4 posts. Nas 13 existentes, 9 passam de 155 caracteres &mdash; a de Ex-Tarifário tem 607 caracteres (3.804 px). As descrições atuais são parágrafos do conteúdo, não textos persuasivos.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">O Google reescreve o snippet, o CTR cai e a mensagem comercial fica fora do SERP. Para AIO/GEO, a meta é um dos resumos que motores de resposta usam para entender a página.</span></div>
+          <div class="full"><span class="field">Recomendação:</span> <span class="value">Escrever 27 descrições únicas de 120&ndash;155 caracteres com a estrutura: benefício + prova + CTA (&ldquo;Habilitamos sua empresa no RADAR...&rdquo;). Priorizar home, 10 serviços, hub e 7 posts. Remover descrições automáticas do tema.</span></div>
+          <div><span class="field">Esforço:</span> <span class="value">6 h</span></div>
+          <div><span class="field">Dono:</span> <span class="value">V4 (copy) + Dev</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">SEO-08 &bull; ON-PAGE</span><span class="finding-title">16 de 27 títulos passam de 561 px; 2 pares são duplicados</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evidência:</span> <span class="value">Todos os títulos seguem o padrão &ldquo;Página &ndash; Riglog Assessoria Aduaneira e Transportes&rdquo;, que consome 40&ndash;50 caracteres. O maior tem 125 caracteres (1.172 px). Duplicados: <code>/servicos/exportacao/</code> e <code>/blog/category/exportacao/</code>; <code>/servicos/importacao/</code> e <code>/blog/category/importacao/</code>. A home usa apenas a marca, sem termo comercial.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Truncamento no SERP e perda do termo mais importante justamente nas páginas de serviço. Os títulos duplicados confundem a distinção entre página comercial e categoria de blog.</span></div>
+          <div class="full"><span class="field">Recomendação:</span> <span class="value">Padrão de title: <strong>Serviço + benefício | Riglog</strong> (&le;60 caracteres / 561 px). Home: &ldquo;Despacho Aduaneiro e Assessoria em Comércio Exterior | Riglog&rdquo;. Categorias: &ldquo;Blog &mdash; Importação&rdquo; e &ldquo;Blog &mdash; Exportação&rdquo;. Remover o sufixo longo do tema.</span></div>
+          <div><span class="field">Esforço:</span> <span class="value">4 h</span></div>
+          <div><span class="field">Dono:</span> <span class="value">V4 (copy) + Dev</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">SEO-09 &bull; LINKS INTERNOS</span><span class="finding-title">O blog não distribui autoridade para as páginas de serviço</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evidência:</span> <span class="value">As páginas de serviço recebem apenas 3 inlinks únicos cada. Os posts têm 2&ndash;4 inlinks. O artigo &ldquo;7 estratégias para reduzir custos de importação&rdquo; tem apenas 2 links internos no HTML, contra 26&ndash;31 dos outros posts &mdash; e os CTAs da home apontam todos para <code>/cotacao/</code>, não para os serviços.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">O ativo mais forte do site (blog) não transfere relevância para as páginas que vendem. O usuário que lê sobre RADAR não encontra um caminho contextual para &ldquo;Habilitação no RADAR&rdquo;.</span></div>
+          <div class="full"><span class="field">Recomendação:</span> <span class="value">(1) Bloco &ldquo;Serviços relacionados&rdquo; em cada post (3 links contextuais). (2) Links no corpo do texto para o serviço correspondente. (3) Na home, CTAs dos cards de serviço apontam para a página do serviço, não para cotação. (4) Corrigir o template do post &ldquo;7 estratégias&rdquo;.</span></div>
+          <div><span class="field">Esforço:</span> <span class="value">4 h</span></div>
+          <div><span class="field">Dono:</span> <span class="value">V4 + Dev</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">SEO-10 &bull; MÍDIA</span><span class="finding-title">4 imagens 404, 6 imagens acima de 100 KB e 20 sem alt text</span></div>
+          <div><span class="severity sev-medio">Médio</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evidência:</span> <span class="value">Imagens quebradas: <code>banner-importacao.jpg</code>, <code>ex-tarifario-bk.png</code>, <code>banner-radar-siscomex-importacao-exportacao-01.png</code> e <code>o-que-e-radar-siscomex-importacao-exportacao.png</code>. 6 imagens passam de 100 KB; a maior tem 591 KB. O crawl somou <strong>2,5 MB em PNG</strong> e 3,76 MB no total. Na inspeção do HTML, 98 de 130 tags <code>&lt;img&gt;</code> não têm alt preenchido.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Posts com imagens quebradas perdem credibilidade e retenção; imagens pesadas pioram LCP em mobile; falta de alt prejudica acessibilidade e o entendimento de contexto por buscadores.</span></div>
+          <div class="full"><span class="field">Recomendação:</span> <span class="value">(1) Substituir ou remover as 4 imagens 404. (2) Converter PNGs grandes para WebP (meta &lt;100 KB). (3) Preencher alt descritivo nas imagens de conteúdo e alt vazio nas decorativas. (4) Definir width/height para reduzir CLS.</span></div>
+          <div><span class="field">Esforço:</span> <span class="value">6 h</span></div>
+          <div><span class="field">Dono:</span> <span class="value">Design + Dev</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">SEO-11 &bull; E-E-A-T</span><span class="finding-title">Posts sem autor, sem data visível e sem schema de artigo</span></div>
+          <div><span class="severity sev-medio">Médio</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evidência:</span> <span class="value">Os 7 posts não exibem autor, data de publicação ou de atualização. Não há página de autor com credenciais. O HTML não tem <code>&lt;time&gt;</code> nem Article/BlogPosting schema. Na home não há CNPJ nem endereço; os telefones aparecem no rodapé e na página de contato.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Comércio exterior é tema YMYL-adjacente (regulação, tributos, Receita Federal). Sinais de autoria e experiência pesam na avaliação de qualidade e são decisivos para que LLMs escolham a fonte.</span></div>
+          <div class="full"><span class="field">Recomendação:</span> <span class="value">(1) Autor visível com nome, cargo e bio (ex.: especialista em comex). (2) Data de publicação e atualização. (3) Article schema com author e datePublished/dateModified. (4) Página &ldquo;Sobre&rdquo; com CNPJ, endereço e credenciais. (5) Cases com números reais.</span></div>
+          <div><span class="field">Esforço:</span> <span class="value">8 h</span></div>
+          <div><span class="field">Dono:</span> <span class="value">Cliente (conteúdo) + V4</span></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">SEO-12 &bull; HIGIENE</span><span class="finding-title">301s internos, UTM malformado e 10 links externos desatualizados</span></div>
+          <div><span class="severity sev-medio">Médio</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evidência:</span> <span class="value">4 links internos sem barra final geram 301. Um link de banner no post do RADAR usa <code>?utm_source=blog?utm_medium=...</code> (interrogações no lugar de &amp;), criando uma URL duplicada canonicalizada de <code>/contato/</code>. Nos links externos: 404 em <code>bcb.gov.br</code>, 403 em <code>mdic.gov.br</code>, timeouts em <code>fazenda.gov.br/sei</code> e <code>desenvolvimento.gov.br</code>, além de 6 links <code>http://</code> que redirecionam.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Cada 301 é uma requisição extra e dilui sinal; o UTM malformado cria duplicata e quebra atribuição; links quebrados para órgãos públicos prejudicam a confiança do leitor em conteúdo regulatório.</span></div>
+          <div class="full"><span class="field">Recomendação:</span> <span class="value">(1) Padronizar barra final nos links internos. (2) Corrigir o UTM para <code>&amp;utm_medium</code> etc. (3) Atualizar os 10 links externos para as URLs atuais (gov.br). (4) Monitorar trimestralmente com crawl.</span></div>
+          <div><span class="field">Esforço:</span> <span class="value">3 h</span></div>
+          <div><span class="field">Dono:</span> <span class="value">V4</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- AIO -->
+  <div class="card" id="aio">
+    <div class="card-body">
+      <h2>Prontidão AIO + GEO</h2>
+
+      <p>AIO (AI Optimization) e GEO (Generative Engine Optimization) tratam da capacidade de uma marca <strong>ser extraída e citada</strong> por ChatGPT, Perplexity, Gemini, Copilot e Google AI Overviews. Diferente de SEO tradicional, o objetivo não é o clique no link azul: é ser a fonte dentro da resposta.</p>
+
+      <p><strong>O que foi medido:</strong> os requisitos técnicos e de conteúdo que habilitam citação &mdash; dados estruturados, clareza de entidade, formato de resposta, FAQ, autoria, sitemap e acesso de crawlers de IA. <strong>O que não foi medido:</strong> citações reais em LLMs (não há teste de prompts neste pacote). Portanto, o número abaixo é <em>prontidão</em>, não participação de voz.</p>
+
+      <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);">
+        <div class="kpi-card">
+          <div class="value">20%</div>
+          <div class="label">Prontidão AIO/GEO</div>
+          <div class="sub">3 de 15 requisitos</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">0</div>
+          <div class="label">Blocos de definição</div>
+          <div class="sub">formato preferido por LLMs</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">404</div>
+          <div class="label">llms.txt</div>
+          <div class="sub">arquivo não existe</div>
+        </div>
+      </div>
+
+      <table class="compact">
+        <tr><th>#</th><th>Requisito</th><th>Status</th><th>Evidência</th></tr>
+        <tr><td>1</td><td>Organization / LocalBusiness schema</td><td><span class="status fail">Ausente</span></td><td>0 JSON-LD</td></tr>
+        <tr><td>2</td><td>Service schema nos serviços</td><td><span class="status fail">Ausente</span></td><td>0 de 10 páginas</td></tr>
+        <tr><td>3</td><td>Article / BlogPosting nos posts</td><td><span class="status fail">Ausente</span></td><td>0 de 7 posts</td></tr>
+        <tr><td>4</td><td>BreadcrumbList</td><td><span class="status fail">Ausente</span></td><td>0 páginas</td></tr>
+        <tr><td>5</td><td>FAQPage / HowTo</td><td><span class="status fail">Ausente</span></td><td>0 páginas</td></tr>
+        <tr><td>6</td><td>Meta description única e descritiva</td><td><span class="status fail">Parcial</span></td><td>13 de 27</td></tr>
+        <tr><td>7</td><td>Um H1 por página</td><td><span class="status fail">Parcial</span></td><td>19 de 27</td></tr>
+        <tr><td>8</td><td>Definition blocks de 50&ndash;80 palavras</td><td><span class="status fail">Ausente</span></td><td>0 blocos</td></tr>
+        <tr><td>9</td><td>FAQ visível nas páginas comerciais</td><td><span class="status fail">Ausente</span></td><td>0 páginas</td></tr>
+        <tr><td>10</td><td>llms.txt</td><td><span class="status fail">404</span></td><td>não publicado</td></tr>
+        <tr><td>11</td><td>robots.txt libera crawlers de IA</td><td><span class="status ok">OK</span></td><td>só <code>/wp-admin</code> bloqueado</td></tr>
+        <tr><td>12</td><td>Sitemap limpo e atualizado</td><td><span class="status partial">Parcial</span></td><td>39 URLs, 9 residuais</td></tr>
+        <tr><td>13</td><td>Conteúdo informacional próprio</td><td><span class="status ok">OK</span></td><td>7 posts, mediana 1.339 palavras</td></tr>
+        <tr><td>14</td><td>Autoria e data visíveis</td><td><span class="status fail">Ausente</span></td><td>0 posts</td></tr>
+        <tr><td>15</td><td>HTTPS + HTTP/2</td><td><span class="status ok">OK</span></td><td>Cloudflare</td></tr>
+      </table>
+
+      <h3>Por que isso importa para a Riglog</h3>
+      <p>As perguntas que um importador faz a uma IA são exatamente as que a Riglog já responde no blog: <em>&ldquo;o que é RADAR Siscomex?&rdquo;</em>, <em>&ldquo;como importar máquina usada?&rdquo;</em>, <em>&ldquo;o que é ex-tarifário?&rdquo;</em>. O conteúdo existe. O que não existe é o <strong>formato que a IA consegue citar</strong>: definição curta, dado estruturado, autoria e FAQ.</p>
+
+      <div class="risk-box gold">
+        <h4>A oportunidade é de formato, não de pauta</h4>
+        <p>Transformar os 7 posts em fontes citáveis exige: (1) um definition block de 50&ndash;80 palavras no topo de cada artigo; (2) FAQPage com as perguntas reais; (3) Article schema com autor e data; (4) link para o serviço correspondente; (5) páginas de serviço com a mesma lógica. É a camada de menor esforço e maior retorno da auditoria.</p>
+      </div>
+
+      <h3>Três movimentos de AIO/GEO</h3>
+      <table>
+        <tr><th>Movimento</th><th>O que fazer</th><th>Impacto</th><th class="num">Esforço</th></tr>
+        <tr><td><strong>1. Entidade</strong></td><td>Organization + LocalBusiness com nome, telefones, áreas atendidas, serviços e perfis sociais</td><td>Consolida a Riglog como entidade no grafo</td><td class="num">3 h</td></tr>
+        <tr><td><strong>2. Extração</strong></td><td>Definition block + FAQPage nos 7 posts e nas 10 páginas de serviço</td><td>Conteúdo citável em respostas</td><td class="num">16 h</td></tr>
+        <tr><td><strong>3. Confiança</strong></td><td>Autor, data, Article schema, cases e página Sobre com CNPJ</td><td>Elegibilidade como fonte confiável</td><td class="num">8 h</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ARQUITETURA -->
+  <div class="card" id="arquitetura">
+    <div class="card-body">
+      <h2>Arquitetura de Informação</h2>
+      <p>O site foi montado em Elementor com menus duplicados e páginas de versões anteriores ainda ativas. A estrutura recomendada consolida a autoridade em três níveis claros.</p>
+
+      <table>
+        <tr><th>Nível</th><th>Hoje</th><th>Recomendado</th></tr>
+        <tr><td><strong>Home</strong></td><td>6 H1s de posts; CTAs para <code>/cotacao/</code>; sem meta description</td><td>1 H1 comercial; cards para serviços; meta com proposta de valor; Organization schema</td></tr>
+        <tr><td><strong>Hub de serviços</strong></td><td><code>/quem-somos-2/</code>, title &ldquo;Serviços&rdquo;, sem H1</td><td><code>/servicos/</code> com H1, intro, 10 cards, ItemList e BreadcrumbList</td></tr>
+        <tr><td><strong>Serviços</strong></td><td>10 páginas de 78&ndash;278 palavras, 3 inlinks cada, sem schema</td><td>10 páginas de 600&ndash;900 palavras, FAQ, Service schema, links para posts e cotação</td></tr>
+        <tr><td><strong>Blog</strong></td><td>7 posts fortes, 8 H1s no índice, sem autor/data, sem links para serviços</td><td>1 H1 no índice; autor/data/Article schema; bloco de serviços relacionados</td></tr>
+        <tr><td><strong>Conversão</strong></td><td><code>/cotacao/</code> com 52 palavras e sem H1</td><td>Página com H1, prova, formulário curto, expectativa de resposta e schema</td></tr>
+        <tr><td><strong>Resíduos</strong></td><td>9 páginas de template e loja indexáveis</td><td><code>noindex</code>, fora do sitemap e do menu</td></tr>
+      </table>
+
+      <div class="note"><strong>Regra de ouro:</strong> cada página de serviço deve ser a resposta definitiva para uma intenção comercial e receber links contextuais de pelo menos 2 posts. Hoje, o blog aponta para cotação; deveria apontar primeiro para o serviço e depois para a cotação.</div>
+    </div>
+  </div>
+
+  <!-- PLANO -->
+  <div class="card" id="plano">
+    <div class="card-body">
+      <h2>Plano de Ação &mdash; 90 Dias</h2>
+      <p style="margin-bottom:8px;">124 horas estimadas, distribuídas em três fases. A Fase 1 corrige o que impede o site de ser rastreado e entendido; a Fase 2 constrói as páginas que vendem; a Fase 3 escala autoridade e citação.</p>
+
+      <div class="timeline">
+        <div class="timeline-phase">
+          <div class="dot red"></div>
+          <div class="phase-bar red" style="width:68%;"></div>
+          <div class="phase-hours">42 h</div>
+          <div class="phase-name">Fase 1 &bull; 0&ndash;30 dias</div>
+          <div class="phase-pct">34% &bull; Correções críticas</div>
+        </div>
+        <div class="timeline-phase">
+          <div class="dot orange"></div>
+          <div class="phase-bar orange" style="width:76%;"></div>
+          <div class="phase-hours">47 h</div>
+          <div class="phase-name">Fase 2 &bull; 31&ndash;60 dias</div>
+          <div class="phase-pct">38% &bull; Conteúdo comercial</div>
+        </div>
+        <div class="timeline-phase">
+          <div class="dot gold"></div>
+          <div class="phase-bar gold" style="width:56%;"></div>
+          <div class="phase-hours">35 h</div>
+          <div class="phase-name">Fase 3 &bull; 61&ndash;90 dias</div>
+          <div class="phase-pct">28% &bull; Autoridade e AIO</div>
+        </div>
+      </div>
+
+      <div class="timeline-deliverables">
+        <div class="deliv"><strong>Fundação</strong>Footer e 404s<br>H1s e metas<br>Schema base</div>
+        <div class="deliv"><strong>Comercial</strong>10 serviços reescritos<br>FAQ + Service schema<br>Links internos</div>
+        <div class="deliv"><strong>Escala</strong>4 guias pilares<br>E-E-A-T e cases<br>llms.txt + medição</div>
+      </div>
+
+      <h3>Fase 1 &mdash; Fundação técnica (42 h)</h3>
+      <table class="compact">
+        <tr><th>#</th><th>Ação</th><th>IDs</th><th class="num">Horas</th></tr>
+        <tr><td>1</td><td>Corrigir os 6 links do rodapé e criar 301 de <code>/services/*</code></td><td>SEO-01</td><td class="num">2</td></tr>
+        <tr><td>2</td><td>Um H1 por página; corrigir home, blog e 5 páginas sem H1</td><td>SEO-02</td><td class="num">6</td></tr>
+        <tr><td>3</td><td>Publicar <code>/servicos/</code> como hub e redirecionar <code>/quem-somos-2/</code></td><td>SEO-05</td><td class="num">6</td></tr>
+        <tr><td>4</td><td>Organization + LocalBusiness + BreadcrumbList</td><td>SEO-04</td><td class="num">5</td></tr>
+        <tr><td>5</td><td>Escrever 27 meta descriptions e revisar titles</td><td>SEO-07/08</td><td class="num">10</td></tr>
+        <tr><td>6</td><td>Limpar sitemap: noindex nas 9 páginas de template e 301 de <code>/blog-2/</code></td><td>SEO-06</td><td class="num">4</td></tr>
+        <tr><td>7</td><td>Corrigir imagens 404, converter WebP e preencher alt</td><td>SEO-10</td><td class="num">6</td></tr>
+        <tr><td>8</td><td>Padronizar barra final, UTM e links externos</td><td>SEO-12</td><td class="num">3</td></tr>
+      </table>
+
+      <h3>Fase 2 &mdash; Conteúdo comercial (47 h)</h3>
+      <table class="compact">
+        <tr><th>#</th><th>Ação</th><th>IDs</th><th class="num">Horas</th></tr>
+        <tr><td>9</td><td>Reescrever as 10 páginas de serviço (600&ndash;900 palavras + FAQ)</td><td>SEO-03</td><td class="num">30</td></tr>
+        <tr><td>10</td><td>Service schema + FAQPage nas 10 páginas</td><td>SEO-04</td><td class="num">5</td></tr>
+        <tr><td>11</td><td>Links contextuais blog &rarr; serviço e bloco &ldquo;serviços relacionados&rdquo;</td><td>SEO-09</td><td class="num">4</td></tr>
+        <tr><td>12</td><td>Autor, data, bio e Article schema nos 7 posts</td><td>SEO-11</td><td class="num">8</td></tr>
+      </table>
+
+      <h3>Fase 3 &mdash; Autoridade e AIO (35 h)</h3>
+      <table class="compact">
+        <tr><th>#</th><th>Ação</th><th>IDs</th><th class="num">Horas</th></tr>
+        <tr><td>13</td><td>4 guias pilares: RADAR, ex-tarifário, importação de usados, bagagem</td><td>SEO-03</td><td class="num">24</td></tr>
+        <tr><td>14</td><td>Definition blocks + llms.txt + monitoramento de citação</td><td>AIO</td><td class="num">3</td></tr>
+        <tr><td>15</td><td>Link building em diretórios e associações de comércio exterior</td><td>SEO-09</td><td class="num">8</td></tr>
+      </table>
+
+      <div style="margin-top:24px; background:linear-gradient(135deg, #fcfaf7, #f8f7f4); border-radius:10px; padding:18px 22px; border:1px solid var(--gold-border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+        <div>
+          <div style="font-size:12px; color:var(--gray-500); font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Esforço total</div>
+          <div style="font-size:28px; font-weight:700; color:var(--red); letter-spacing:-0.5px;">~124 h</div>
+          <div style="font-size:13px; color:var(--gray-600);">42 h correções + 47 h conteúdo + 35 h autoridade</div>
+        </div>
+        <div style="flex:1; max-width:380px;">
+          <div style="height:6px; background:var(--gray-200); border-radius:3px; overflow:hidden; margin-bottom:6px;">
+            <div style="height:100%; width:100%; background:linear-gradient(90deg, var(--red), var(--gold)); border-radius:3px;"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--gray-500);">
+            <span>Fase 1</span>
+            <span style="font-weight:600; color:var(--gray-700);">42h &rarr; 47h &rarr; 35h</span>
+            <span>90 dias</span>
+          </div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:12px; color:var(--gray-500); font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Quick wins</div>
+          <div style="font-size:16px; font-weight:700; color:var(--gold);">10 dias &bull; 12 h</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="card" id="kpis">
+    <div class="card-body">
+      <h2>KPIs de Acompanhamento</h2>
+      <p>Metas técnicas verificáveis por crawl. São os indicadores que provam execução &mdash; independentes de flutuação de tráfego.</p>
+
+      <table class="compact">
+        <tr><th>KPI</th><th class="num">Hoje</th><th class="num">30 dias</th><th class="num">60 dias</th><th class="num">90 dias</th></tr>
+        <tr><td>Páginas com 1 H1 válido</td><td class="num">19/27</td><td class="num">27/27</td><td class="num">27/27</td><td class="num">27/27</td></tr>
+        <tr><td>Metas únicas de 120&ndash;155 caracteres</td><td class="num">13/27</td><td class="num">27/27</td><td class="num">27/27</td><td class="num">27/27</td></tr>
+        <tr><td>Títulos &le; 561 px e únicos</td><td class="num">11/27</td><td class="num">25/27</td><td class="num">27/27</td><td class="num">27/27</td></tr>
+        <tr><td>URLs internas com erro 4xx</td><td class="num">12</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+        <tr><td>Páginas de template indexáveis</td><td class="num">9</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+        <tr><td>Tipos de dados estruturados</td><td class="num">0</td><td class="num">3</td><td class="num">6</td><td class="num">8</td></tr>
+        <tr><td>Páginas comerciais com 600+ palavras</td><td class="num">0/10</td><td class="num">0/10</td><td class="num">10/10</td><td class="num">10/10</td></tr>
+        <tr><td>Posts com autor, data e Article schema</td><td class="num">0/7</td><td class="num">0/7</td><td class="num">7/7</td><td class="num">7/7</td></tr>
+        <tr><td>Páginas com menos de 200 palavras</td><td class="num">14/27</td><td class="num">9/27</td><td class="num">4/27</td><td class="num">3/27</td></tr>
+        <tr><td>llms.txt publicado</td><td class="num">Não</td><td class="num">Não</td><td class="num">Não</td><td class="num">Sim</td></tr>
+        <tr><td>Core Web Vitals medidos (PSI/Lighthouse)</td><td class="num">Não</td><td class="num">Sim</td><td class="num">Sim</td><td class="num">Sim</td></tr>
+      </table>
+
+      <div class="note"><strong>Por que 3 páginas continuam abaixo de 200 palavras no dia 90:</strong> categorias de blog e páginas de contato/cotação podem ser naturalmente curtas. O critério deixa de ser &ldquo;todas acima de 200&rdquo; e passa a ser &ldquo;nenhuma página comercial abaixo de 600&rdquo;.</div>
+    </div>
+  </div>
+
+  <!-- PRÓXIMOS -->
+  <div class="card" id="proximos">
+    <div class="card-body">
+      <h2>O Que Esperar &mdash; e o Próximo Passo</h2>
+
+      <p><strong>Efeitos esperados com a execução completa:</strong></p>
+      <ul>
+        <li><strong>Rastreamento:</strong> eliminação de 324 links para 404 e de 9 páginas residuais &mdash; o crawl passa a concentrar esforço nas páginas que vendem.</li>
+        <li><strong>Relevância:</strong> 10 páginas comerciais com H1, profundidade e schema passam a competir por termos de intenção de compra, hoje ausentes do site.</li>
+        <li><strong>CTR:</strong> titles e metas reescritos recuperam o termo principal e a proposta de valor no SERP.</li>
+        <li><strong>IA:</strong> entidade + Service + Article + FAQ + definition blocks criam a camada mínima para extração e citação.</li>
+        <li><strong>Conversão:</strong> o blog passa a levar o leitor ao serviço certo, não direto ao formulário.</li>
+      </ul>
+
+      <div class="risk-box">
+        <h4>O que não prometemos sem dados</h4>
+        <p>Sem Google Search Console e GA4 não é possível projetar tráfego, leads ou receita com responsabilidade. A auditoria identifica os gargalos e define metas técnicas; a projeção de resultado vem depois do baseline. <strong>Próximo passo recomendado:</strong> liberar acessos de GSC e GA4, rodar o crawl pós-Fase 1 e estabelecer a linha de base de 30 dias.</p>
+      </div>
+
+      <h3>Sequência imediata (primeiros 10 dias)</h3>
+      <table class="compact">
+        <tr><th>Dia</th><th>Entrega</th><th>Responsável</th></tr>
+        <tr><td>1&ndash;2</td><td>Correção dos 6 links do rodapé + 301 de <code>/services/*</code></td><td>Dev</td></tr>
+        <tr><td>3&ndash;4</td><td>H1s da home, blog, hub e 5 páginas; remoção do H1 duplicado</td><td>Dev + V4</td></tr>
+        <tr><td>5&ndash;7</td><td>Titles e metas das 27 páginas</td><td>V4</td></tr>
+        <tr><td>8&ndash;9</td><td>Noindex das 9 páginas de template + 301 de <code>/blog-2/</code></td><td>Dev</td></tr>
+        <tr><td>10</td><td>Organization + LocalBusiness + BreadcrumbList publicados e validados</td><td>Dev + V4</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ANEXOS -->
+  <div class="card" id="anexos">
+    <div class="card-body">
+      <h2>Anexos</h2>
+
+      <h3>A. Inventário de páginas indexáveis</h3>
+      <p style="font-size:14px; color:var(--gray-600);">27 páginas, ordenadas por volume de conteúdo. &ldquo;H1&rdquo; indica a situação encontrada no HTML renderizado.</p>
+      <p class="scroll-hint">Deslize a tabela para o lado para ver todas as colunas &rarr;</p>
+      <div class="table-scroll">
+<table class="compact">
+        <thead><tr><th>URL</th><th class="num">Palavras</th><th>H1</th><th class="num">Title px</th><th class="num">Meta</th></tr></thead>
+                <tr><td class="url"><a href="https://riglog.com.br/blog/importacao-de-maquina-usada/" target="_blank" rel="noopener">/blog/importacao-de-maquina-usada/</a></td><td class="num">3.051</td><td><span class="status ok">ok</span></td><td class="num over">677</td><td class="num"><span class="status warn">196</span></td></tr>
+        <tr><td class="url"><a href="https://riglog.com.br/blog/importacao-de-veiculos/" target="_blank" rel="noopener">/blog/importacao-de-veiculos/</a></td><td class="num">1.468</td><td><span class="status ok">ok</span></td><td class="num over">910</td><td class="num"><span class="status warn">316</span></td></tr>
+        <tr><td class="url"><a href="https://riglog.com.br/blog/7-estrategias-praticas-para-reduzir-custos-de-importacao/" target="_blank" rel="noopener">/blog/7-estrategias-praticas-para-reduzir-custos-de-importacao/</a></td><td class="num">1.356</td><td><span class="status ok">ok</span></td><td class="num over">910</td><td class="num"><span class="status fail">ausente</span></td></tr>
+        <tr><td class="url"><a href="https://riglog.com.br/blog/o-que-e-radar-siscomex-importacao-e-exportacao-e-como-habilitar-a-minha-empresa/" target="_blank" rel="noopener">/blog/o-que-e-radar-siscomex-importacao-e-exportacao-e-como-habilitar-a-minha-empresa/</a></td><td class="num">1.339</td><td><span class="status ok">ok</span></td><td class="num over">1.172</td><td class="num"><span class="status fail">ausente</span></td></tr>
+        <tr><td class="url"><a href="https://riglog.com.br/" target="_blank" rel="noopener">/</a></td><td class="num">1.044</td><td><span class="status warn">6 H1s</span></td><td class="num">383</td><td class="num"><span class="status fail">ausente</span></td></tr>
+        <tr><td class="url"><a href="https://riglog.com.br/blog/o-que-e-ex-tarifario-tire-todas-as-duvidas-e-agilize-a-obtencao-deste-beneficio/" target="_blank" rel="noopener">/blog/o-que-e-ex-tarifario-tire-todas-as-duvidas-e-agilize-a-obtencao-deste-beneficio/</a></td><td class="num">1.007</td><td><span class="status ok">ok</span></td><td class="num over">1.106</td><td class="num"><span class="status fail">ausente</span></td></tr>
+        <tr><td class="url"><a href="https://riglog.com.br/blog/importacao-e-exportacao-de-bagagem-desacompanhada/" target="_blank" rel="noopener">/blog/importacao-e-exportacao-de-bagagem-desacompanhada/</a></td><td class="num">712</td><td><span class="status ok">ok</span></td><td class="num over">912</td><td class="num"><span class="status warn">485</span></td></tr>
+        <tr><td class="url"><a href="https://riglog.com.br/quem-somos-2/" target="_blank" rel="noopener">/quem-somos-2/</a></td><td class="num">387</td><td><span class="status fail">ausente</span></td><td class="num">482</td><td class="num"><span class="status fail">ausente</span></td></tr>
+        <tr><td class="url"><a href="https://riglog.com.br/quem-somos/" target="_blank" rel="noopener">/quem-somos/</a></td><td class="num">386</td><td><span class="status fail">ausente</span></td><td class="num">525</td><td class="num"><span class="status fail">ausente</span></td></tr>
+        <tr><td class="url"><a href="https://riglog.com.br/blog/category/importacao/" target="_blank" rel="noopener">/blog/category/importacao/</a></td><td class="num">339</td><td><span class="status ok">ok</span></td><td class="num">508</td><td class="num"><span class="status fail">ausente</span></td></tr>
+        <tr><td class="url"><a href="https://riglog.com.br/servicos/ex-tarifario-reducao-de-impostos-na-importacao/" target="_blank" rel="noopener">/servicos/ex-tarifario-reducao-de-impostos-na-importacao/</a></td><td class="num">278</td><td><span class="status ok">ok</span></td><td class="num over">852</td><td class="num"><span class="status warn">607</span></td></tr>
+        <tr><td class="url"><a href="https://riglog.com.br/blog/" target="_blank" rel="noopener">/blog/</a></td><td class="num">254</td><td><span class="status warn">8 H1s</span></td><td class="num">445</td><td class="num"><span class="status fail">ausente</span></td></tr>
+        <tr><td class="url"><a href="https://riglog.com.br/servicos/importacao/" target="_blank" rel="noopener">/servicos/importacao/</a></td><td class="num">208</td><td><span class="status ok">ok</span></td><td class="num">508</td><td class="num"><span class="status warn">235</span></td></tr>
+        <tr><td class="url"><a href="https://riglog.com.br/servicos/carga-projeto-e-logistica-integrada/" target="_blank" rel="noopener">/servicos/carga-projeto-e-logistica-integrada/</a></td><td class="num">194</td><td><span class="status ok">ok</span></td><td class="num over">721</td><td class="num"><span class="status warn">399</span></td></tr>
+        <tr><td class="url"><a href="https://riglog.com.br/blog/category/exportacao/" target="_blank" rel="noopener">/blog/category/exportacao/</a></td><td class="num">173</td><td><span class="status ok">ok</span></td><td class="num">506</td><td class="num"><span class="status fail">ausente</span></td></tr>
+        <tr><td class="url"><a href="https://riglog.com.br/catalogo-de-produtos/" target="_blank" rel="noopener">/catalogo-de-produtos/</a></td><td class="num">157</td><td><span class="status fail">ausente</span></td><td class="num over">599</td><td class="num"><span class="status fail">ausente</span></td></tr>
+        <tr><td class="url"><a href="https://riglog.com.br/servicos/representacao-de-agentes-de-carga/" target="_blank" rel="noopener">/servicos/representacao-de-agentes-de-carga/</a></td><td class="num">154</td><td><span class="status ok">ok</span></td><td class="num over">726</td><td class="num"><span class="status warn">87</span></td></tr>
+        <tr><td class="url"><a href="https://riglog.com.br/blog/category/sem-categoria/" target="_blank" rel="noopener">/blog/category/sem-categoria/</a></td><td class="num">150</td><td><span class="status ok">ok</span></td><td class="num">536</td><td class="num"><span class="status fail">ausente</span></td></tr>
+        <tr><td class="url"><a href="https://riglog.com.br/servicos/assessoria-aduaneira/" target="_blank" rel="noopener">/servicos/assessoria-aduaneira/</a></td><td class="num">137</td><td><span class="status ok">ok</span></td><td class="num over">600</td><td class="num"><span class="status ok">156</span></td></tr>
+        <tr><td class="url"><a href="https://riglog.com.br/servicos/exportacao/" target="_blank" rel="noopener">/servicos/exportacao/</a></td><td class="num">131</td><td><span class="status ok">ok</span></td><td class="num">506</td><td class="num"><span class="status warn">240</span></td></tr>
+        <tr><td class="url"><a href="https://riglog.com.br/servicos/assessoria-internacional/" target="_blank" rel="noopener">/servicos/assessoria-internacional/</a></td><td class="num">124</td><td><span class="status ok">ok</span></td><td class="num over">625</td><td class="num"><span class="status ok">134</span></td></tr>
+        <tr><td class="url"><a href="https://riglog.com.br/servicos/frete-internacional/" target="_blank" rel="noopener">/servicos/frete-internacional/</a></td><td class="num">114</td><td><span class="status ok">ok</span></td><td class="num over">574</td><td class="num"><span class="status warn">281</span></td></tr>
+        <tr><td class="url"><a href="https://riglog.com.br/servicos/certificado-de-origem/" target="_blank" rel="noopener">/servicos/certificado-de-origem/</a></td><td class="num">88</td><td><span class="status ok">ok</span></td><td class="num over">599</td><td class="num"><span class="status warn">89</span></td></tr>
+        <tr><td class="url"><a href="https://riglog.com.br/servicos/habilitacao-no-radar/" target="_blank" rel="noopener">/servicos/habilitacao-no-radar/</a></td><td class="num">78</td><td><span class="status ok">ok</span></td><td class="num over">602</td><td class="num"><span class="status warn">119</span></td></tr>
+        <tr><td class="url"><a href="https://riglog.com.br/cotacao/" target="_blank" rel="noopener">/cotacao/</a></td><td class="num">52</td><td><span class="status fail">ausente</span></td><td class="num">480</td><td class="num"><span class="status fail">ausente</span></td></tr>
+        <tr><td class="url"><a href="https://riglog.com.br/contato/" target="_blank" rel="noopener">/contato/</a></td><td class="num">49</td><td><span class="status fail">ausente</span></td><td class="num">477</td><td class="num"><span class="status fail">ausente</span></td></tr>
+        <tr><td class="url"><a href="https://riglog.com.br/blog/guia-completo-dos-canais-de-parametrizacao-no-despacho-aduaneiro/" target="_blank" rel="noopener">/blog/guia-completo-dos-canais-de-parametrizacao-no-despacho-aduaneiro/</a></td><td class="num">36</td><td><span class="status warn">2 H1s</span></td><td class="num over">1.036</td><td class="num"><span class="status fail">ausente</span></td></tr>
+      </table>
+      </div>
+
+      <h3>B. URLs internas com erro, redirecionamento ou duplicata</h3>
+      <p style="font-size:14px; color:var(--gray-600);">Base: relatório de response codes do crawl. &ldquo;Inlinks&rdquo; é o número de links internos apontando para a URL.</p>
+      <p class="scroll-hint">Deslize a tabela para o lado para ver todas as colunas &rarr;</p>
+      <div class="table-scroll">
+<table class="compact">
+        <thead><tr><th>Status</th><th>URL</th><th class="num">Inlinks</th><th>Destino / observação</th></tr></thead>
+                <tr><td><span class="badge badge-critico">404</span></td><td class="url">/services/assessoria-aduaneira/</td><td class="num over">54</td><td>Página de serviço que não existe. Link no rodapé de todo o site.</td></tr>
+        <tr><td><span class="badge badge-critico">404</span></td><td class="url">/services/frete-internacional/</td><td class="num over">54</td><td>Página de serviço que não existe. Link no rodapé de todo o site.</td></tr>
+        <tr><td><span class="badge badge-critico">404</span></td><td class="url">/services/importacao/</td><td class="num over">54</td><td>Página de serviço que não existe. Link no rodapé de todo o site.</td></tr>
+        <tr><td><span class="badge badge-critico">404</span></td><td class="url">/services/exportacao/</td><td class="num over">54</td><td>Página de serviço que não existe. Link no rodapé de todo o site.</td></tr>
+        <tr><td><span class="badge badge-critico">404</span></td><td class="url">/services/ex-tarifario-reducao-de-impostos-na-importacao/</td><td class="num over">54</td><td>Página de serviço que não existe. Link no rodapé de todo o site.</td></tr>
+        <tr><td><span class="badge badge-critico">404</span></td><td class="url">/services/assessoria-internacional/</td><td class="num over">54</td><td>Página de serviço que não existe. Link no rodapé de todo o site.</td></tr>
+        <tr><td><span class="badge badge-critico">404</span></td><td class="url">/blog/o-que-e-radar-siscomex-importacao-e-exportacao-como-habilitar/</td><td class="num">2</td><td>Post referenciado em outros conteúdos, mas removido.</td></tr>
+        <tr><td><span class="badge badge-critico">404</span></td><td class="url">/cdn-cgi/l/email-protection</td><td class="num">1</td><td>Proteção de e-mail do Cloudflare capturada como URL interna.</td></tr>
+        <tr><td><span class="badge badge-critico">404</span></td><td class="url">/wp-content/uploads/2025/11/banner-importacao.jpg</td><td class="num">0</td><td>Imagem do tema/template que não existe mais. Referenciada no HTML.</td></tr>
+        <tr><td><span class="badge badge-critico">404</span></td><td class="url">/wp-content/uploads/2019/07/ex-tarifario-bk.png</td><td class="num">0</td><td>Imagem do tema/template que não existe mais. Referenciada no HTML.</td></tr>
+        <tr><td><span class="badge badge-critico">404</span></td><td class="url">/wp-content/uploads/2019/01/banner-radar-siscomex-importacao-exportacao-01.png</td><td class="num">0</td><td>Imagem do tema/template que não existe mais. Referenciada no HTML.</td></tr>
+        <tr><td><span class="badge badge-critico">404</span></td><td class="url">/wp-content/uploads/2019/01/o-que-e-radar-siscomex-importacao-exportacao.png</td><td class="num">0</td><td>Imagem do tema/template que não existe mais. Referenciada no HTML.</td></tr>
+        <tr><td><span class="badge badge-alto">301</span></td><td class="url">/servicos/certificado-de-origem</td><td class="num over">54</td><td>Versão sem barra final &rarr; /servicos/certificado-de-origem/</td></tr>
+        <tr><td><span class="badge badge-alto">301</span></td><td class="url">/servicos/habilitacao-no-radar</td><td class="num over">54</td><td>Versão sem barra final &rarr; /servicos/habilitacao-no-radar/</td></tr>
+        <tr><td><span class="badge badge-alto">301</span></td><td class="url">/servicos/representacao-de-agentes-de-carga</td><td class="num over">54</td><td>Versão sem barra final &rarr; /servicos/representacao-de-agentes-de-carga/</td></tr>
+        <tr><td><span class="badge badge-alto">301</span></td><td class="url">/servicos/carga-projeto-e-logistica-integrada</td><td class="num over">54</td><td>Versão sem barra final &rarr; /servicos/carga-projeto-e-logistica-integrada/</td></tr>
+        <tr><td><span class="badge badge-medio">200</span></td><td class="url">/contato/?utm_source=blog?utm_medium=banner1-radar?utm_campaign=habilitamosrapidamentesuaempresanoradar?utm_content=o-que-e-radar-siscomex-importacao-e-exportacao-como-habilitar</td><td class="num">4</td><td>Query string com <code>?</code> repetido no lugar de <code>&amp;</code>. Canonicaliza para <code>/contato/</code>.</td></tr>
+      </table>
+      </div>
+
+      <h3>C. Sitemap x crawl</h3>
+      <table class="compact">
+        <tr><th style="width:32%">Grupo</th><th class="num" style="width:18%">URLs no sitemap</th><th>Observação</th></tr>
+        <tr><td>Posts</td><td class="num">7</td><td>Todos indexáveis e no crawl</td></tr>
+        <tr><td>Páginas</td><td class="num">16</td><td>9 são resíduos de template/loja fora do crawl</td></tr>
+        <tr><td>Serviços</td><td class="num">10</td><td>Todos indexáveis</td></tr>
+        <tr><td>Categorias</td><td class="num">3</td><td>Sem canonical próprio</td></tr>
+        <tr><td>Taxonomia de serviço</td><td class="num">1</td><td>Revisar necessidade</td></tr>
+        <tr><td>Autores</td><td class="num">2</td><td>Sem página de autor com credenciais</td></tr>
+      </table>
+
+      <div class="note"><strong>Reprodutibilidade:</strong> os números deste relatório vêm dos CSVs de crawl fornecidos (Screaming Frog), complementados por inspeção direta de HTML, robots.txt, sitemap e cabeçalhos HTTP em 16/11/2026. Recomenda-se re-crawl após a Fase 1 para confirmar as metas.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div style="display:flex; align-items:center; justify-content:center; gap:18px; margin-bottom:10px; flex-wrap:wrap;">
+    <img src="assets/logo-v4-white.png" alt="V4 Company" style="height:30px; width:auto; filter:invert(1); mix-blend-mode:multiply; opacity:0.85;">
+    <span style="color:var(--gray-400); font-size:14px;">+</span>
+    <img src="assets/logo-riglog.png" alt="Riglog" style="height:30px; width:auto; opacity:0.85;">
+  </div>
+  <p>Auditoria SEO + Prontidão AIO/GEO &bull; V4 Company &bull; peretto.co</p>
+  <p style="margin-top:4px;">Confidencial &mdash; preparada para Riglog Assessoria Aduaneira e Transportes em Novembro de 2026</p>
+  <p style="margin-top:4px;">slug: riglog-seo-audit &bull; v1.0</p>
+</div>
+
+</body>
+</html>
