@@ -476,6 +476,37 @@ section.band{padding:104px 0}
 .dx-story b{display:block;font:800 clamp(30px,3.4vw,42px)/1 var(--font-d);letter-spacing:-.04em;color:var(--gold)}
 .dx-story span{display:block;margin-top:10px;font-size:14.5px;color:#D5CFC2;line-height:1.45}
 
+.dx-sim{margin-top:44px;background:linear-gradient(160deg,#0E0E0C,#1E1A13);color:#fff;border-radius:24px;padding:34px;box-shadow:var(--shadow)}
+.sim-top .k{font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.sim-top h3{margin-top:12px;font-size:clamp(24px,3vw,34px);font-weight:800;max-width:760px}
+.sim-top p{margin-top:10px;font-size:15px;color:#B9B3A6;max-width:700px}
+.sim-grid{margin-top:28px;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:30px;align-items:start}
+.sim-g{margin-bottom:20px}
+.sim-g>label{display:block;font:600 11px/1.3 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#9F998C;margin-bottom:9px}
+.sim-g>label small{text-transform:none;letter-spacing:0;color:var(--gold);font:500 11.5px 'Ubuntu',sans-serif;margin-left:6px}
+.sim-chips{display:flex;flex-wrap:wrap;gap:7px}
+.sim-chip{font:600 13px/1 'Ubuntu',sans-serif;padding:10px 15px;border-radius:100px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.05);color:#CFC9BC;cursor:pointer;transition:.2s}
+.sim-chip:hover{border-color:var(--gold);color:#fff}
+.sim-chip[aria-pressed=true]{background:var(--gold);border-color:var(--gold);color:#1A1405}
+.sim-chip:focus-visible,.sim-in input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.sim-cap{margin-top:10px;font-size:13px;color:#A9A396;line-height:1.45;min-height:56px}
+.sim-in{display:flex;align-items:center;gap:8px;margin-top:10px;max-width:220px;border:1px solid rgba(255,255,255,.18);border-radius:12px;background:rgba(255,255,255,.05);padding:0 14px}
+.sim-in span{font:600 13px 'JetBrains Mono',monospace;color:#9F998C}
+.sim-in input{flex:1;min-width:0;background:transparent;border:0;color:#fff;font:700 18px 'Plus Jakarta Sans',sans-serif;padding:12px 0}
+.sim-in input::placeholder{color:#6F695D;font-weight:500;font-size:15px}
+.sim-row{display:grid;grid-template-columns:1fr auto;gap:2px 16px;align-items:end;padding:14px 0;border-bottom:1px solid #2E2A22}
+.sim-row .n{font:600 12px/1.2 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#9F998C}
+.sim-row b{font:800 30px/1 var(--font-d);letter-spacing:-.03em;color:#fff;text-align:right}
+.sim-row i{grid-column:1 / -1;font-style:normal;font-size:13px;color:var(--gold)}
+.sim-row.q b{color:var(--gold)}
+.sim-r{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sim-r>div{border-radius:16px;padding:18px 20px;border:1px solid rgba(201,169,110,.4);background:linear-gradient(120deg,rgba(201,169,110,.16),rgba(201,169,110,.04))}
+.sim-r .k{display:block;font:600 10.5px/1.3 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#B9B3A6}
+.sim-r b{display:block;margin-top:8px;font:800 clamp(30px,3.6vw,42px)/1 var(--font-d);letter-spacing:-.03em;color:var(--gold)}
+.sim-r small{display:block;margin-top:8px;font-size:12.5px;color:#B9B3A6;line-height:1.4}
+.sim-msg{padding:18px 20px;border-radius:14px;background:rgba(255,255,255,.05);font-size:14.5px;color:#D5CFC2;line-height:1.5;margin-bottom:6px}
+.sim-fine{margin-top:14px;font-size:12.5px;color:#8F897C;line-height:1.45}
+@media (max-width:980px){.sim-grid{grid-template-columns:1fr}.dx-sim{padding:24px 20px}.sim-r{grid-template-columns:1fr}}
 .dx-hist{margin-top:44px}
 .dx-hist h3{font-size:24px;font-weight:800}
 .dx-hist .callout{margin-top:18px}
@@ -546,6 +577,19 @@ section.band.dk+section.band.dk{border-top:1px solid var(--line)}
     <div class="cl rv d1" id="fc1"></div>
     <div class="cl rv d2" id="fc2"></div>
     <div class="cl hl rv d3"><div class="v">0</div><div class="t">eventos principais no GA4, em todos os meses. O formulário ainda não conta como conversão no Analytics: o lead vem do GoHighLevel.</div></div>
+  </div>
+  <div class="dx-sim rv" id="sim">
+    <div class="sim-top"><span class="k">Simulador de investimento</span><h3>Se o ritmo observado se repetir, o que cada dólar rende?</h3><p>Não é meta nem promessa: usa só taxas que já medimos. O retorno fica em aberto até validarmos ticket e margem em call.</p></div>
+    <div class="sim-grid">
+      <div class="sim-ctl">
+        <div class="sim-g"><label>Canal</label><div class="sim-chips" data-sg="ch"><button type="button" class="sim-chip" data-v="bing" aria-pressed="true">Bing Ads</button><button type="button" class="sim-chip" data-v="gpt" aria-pressed="false">ChatGPT Ads</button></div></div>
+        <div class="sim-g" id="sim-sc"><label>Cenário do topo do funil</label><div class="sim-chips" data-sg="sc"><button type="button" class="sim-chip" data-v="cons" aria-pressed="false">Conservador</button><button type="button" class="sim-chip" data-v="base" aria-pressed="true">Base</button><button type="button" class="sim-chip" data-v="opt" aria-pressed="false">Otimista</button></div><p class="sim-cap" id="simcap"></p></div>
+        <div class="sim-g" id="sim-cl"><label>Oportunidades ativas que viram contrato <small>hipótese, validar na call</small></label><div class="sim-chips" data-sg="cl"><button type="button" class="sim-chip" data-v="0.1" aria-pressed="true">10%</button><button type="button" class="sim-chip" data-v="0.2" aria-pressed="false">20%</button><button type="button" class="sim-chip" data-v="0.3" aria-pressed="false">30%</button></div></div>
+        <div class="sim-g"><label>Investimento</label><div class="sim-chips" data-sg="inv"><button type="button" class="sim-chip" data-v="200" aria-pressed="false">US$ 200</button><button type="button" class="sim-chip" data-v="400" aria-pressed="true">US$ 400</button><button type="button" class="sim-chip" data-v="800" aria-pressed="false">US$ 800</button></div><div class="sim-in"><span>US$</span><input id="siminv" type="number" min="50" step="50" value="400" inputmode="numeric" aria-label="Investimento em dólares"></div></div>
+        <div class="sim-g"><label>Ticket mensal por contrato <small>preencher na call</small></label><div class="sim-in"><span>US$</span><input id="simtk" type="number" min="0" step="100" placeholder="a definir" inputmode="numeric" aria-label="Ticket mensal por contrato"></div></div>
+      </div>
+      <div class="sim-out" id="simo" aria-live="polite"></div>
+    </div>
   </div>
   <p class="note">Barras ilustram a ordem das etapas; os números são os reais. Analytics: propriedade Premium Contractors, 01/07 a 17/11 (novembro tem 17 dias). CRM: export do GoHighLevel de 18/11, que começa em 01/09 e traz 24 oportunidades. Estágios com o nome do GoHighLevel; a ordem Initial Contact, Proposal Sent, Service Delivery é a que assumimos, a confirmar com o time comercial. “Ativas” = esses três estágios; Not Qualified e Jobs Opening ficam de fora. Amostra pequena: leia a direção, não a taxa.</p>
 </div></section>
@@ -738,11 +782,11 @@ section.band.dk+section.band.dk{border-top:1px solid var(--line)}
     <div class="callout">
       <div class="cl"><div class="v">460 → 4</div><div class="t">visitantes do Bing para oportunidades, desde 01/09: 0,9%.</div></div>
       <div class="cl"><div class="v">3 de 4</div><div class="t">dessas oportunidades seguem ativas no funil, uma já em Service Delivery.</div></div>
-      <div class="cl hl"><div class="v">Sem projeção</div><div class="t">Só projetamos contratos com a taxa de fechamento real do GoHighLevel. Até lá, cada fase avança por critério.</div></div>
+      <div class="cl hl"><div class="v">Sem meta</div><div class="t">O simulador do funil usa só taxas já medidas. A meta de contratos sai da taxa de fechamento real, definida na call.</div></div>
     </div>
   </div>
   <div class="scope rv"><div class="ic">!</div><div><b>Fora da vitrine até o seguro confirmar:</b> hood, exaustão, grease trap e anúncios de restaurante. Voltam com a lista de serviços cobertos pela apólice, assinada pelo cliente.</div></div>
-  <p class="note">Não projetamos contratos antes de ter a taxa de fechamento real do GoHighLevel. A taxa de visita para oportunidade do Bing vem de 4 oportunidades, uma amostra pequena. Ticket, margem e fee V4 serão fechados no check-in; o fee entra no CAC.</p>
+  <p class="note">Não fixamos meta de contratos antes de ter a taxa de fechamento real do GoHighLevel. A taxa de visita para oportunidade do Bing vem de 4 oportunidades, uma amostra pequena. Ticket, margem e fee V4 serão fechados no check-in; o fee entra no CAC.</p>
 </div></section>
 
 <!-- ============ 8 · MERCADO ============ -->
@@ -948,6 +992,54 @@ section.band.dk+section.band.dk{border-top:1px solid var(--line)}
   function set(o){for(var k in o)S[k]=o[k];S.all=false;render()}
   function render(){paint();funnel();quality();chartA();chartB();matrix();table()}
   chips();render();
+
+  /* ---------- simulador de investimento ---------- */
+  var SIM={ch:'bing',sc:'base',inv:400,cl:0.1,tk:0};
+  var CPC=2.11;
+  var money=function(n){return 'US$ '+Math.round(n).toLocaleString('pt-BR')};
+  var q=function(n){return (n<1?n.toFixed(2):n.toFixed(1)).replace('.',',')};
+  var pr=function(n){return (n*100).toFixed(1).replace('.',',').replace(/,0$/,'')+'%'};
+  function simRates(){
+    var bl=D.leads.filter(function(l){return l.c==='bing'}),all=D.leads,act=['ic','ps','sd'];
+    function nl(ms){return bl.filter(function(l){return ms.indexOf(l.d.slice(0,7))>-1}).length}
+    var m1=MS.slice(2),m2=MS.slice(3),m3=MS.slice(4);
+    var u1=users(['bing'],m1),u2=users(['bing'],m2),u3=users(['bing'],m3);
+    var aB=cnt(bl,act)/bl.length,aA=cnt(all,act)/all.length;
+    return {
+      cons:{r:nl(m1)/u1,a:aA,cap:'Bing desde 01/09 ('+nl(m1)+' oportunidades em '+u1+' visitantes, '+pr(nl(m1)/u1)+') e, depois do lead, a média de todos os canais ('+cnt(all,act)+' de '+all.length+' ativas).'},
+      base:{r:nl(m2)/u2,a:aB,cap:'Bing em out e nov ('+nl(m2)+' em '+u2+', '+pr(nl(m2)/u2)+') e as ativas do próprio Bing ('+cnt(bl,act)+' de '+bl.length+').'},
+      opt:{r:nl(m3)/u3,a:aB,cap:'Bing só em novembro ('+nl(m3)+' em '+u3+', '+pr(nl(m3)/u3)+') e as ativas do próprio Bing ('+cnt(bl,act)+' de '+bl.length+').'}
+    };
+  }
+  function sim(){
+    var I=Math.max(0,SIM.inv||0),o=$('#simo'),isB=SIM.ch==='bing';
+    $('#sim-sc').style.display=isB?'':'none';$('#sim-cl').style.display=isB?'':'none';
+    $$('[data-sg]').forEach(function(g){var k=g.dataset.sg;$$('.sim-chip',g).forEach(function(b){b.setAttribute('aria-pressed',String(String(SIM[k])===b.dataset.v))})});
+    if(document.activeElement!==$('#siminv'))$('#siminv').value=I;
+    if(!isB){
+      o.innerHTML='<div class="sim-msg"><b>O ChatGPT Ads não tem histórico de conversão na conta</b>, então não projetamos. O que decide é o gate: pausa em US$ 150 sem clique qualificado e teto de US$ 200 na fase 2.</div>'+
+        row('Investimento',money(I),'Teto do teste: US$ 200 na fase 2')+row('Oportunidades','?','Sem base para estimar')+row('Contratos','?','Sem base para estimar')+
+        '<div class="sim-r"><div><span class="k">ROAS · 12 meses</span><b>?</b><small>Em aberto até a call.</small></div><div><span class="k">Ticket de empate</span><b>?</b><small>Depende de uma taxa que ainda não existe.</small></div></div>';
+      return;
+    }
+    var R=simRates()[SIM.sc];$('#simcap').textContent=R.cap;
+    var clicks=I/CPC,leads=clicks*R.r,act=leads*R.a,ct=act*SIM.cl;
+    var cost=function(n){return n>0?money(I/n):'—'};
+    var rev=ct*(SIM.tk||0)*12,roas=I>0?rev/I:0;
+    o.innerHTML=
+      row('Visitantes pagos',f(Math.round(clicks)),'US$ 2,11 por clique, do export do Bing')+
+      row('Oportunidades',q(leads),cost(leads)+' por oportunidade')+
+      row('Ativas no funil',q(act),cost(act)+' por oportunidade ativa')+
+      row('Contratos',q(ct),cost(ct)+' por contrato, só mídia',true)+
+      '<div class="sim-r"><div><span class="k">ROAS · 12 meses</span><b>'+(SIM.tk>0&&I>0?roas.toFixed(1).replace('.',',')+'×':'?')+'</b><small>'+(SIM.tk>0?'Receita esperada de 12 meses: '+money(rev)+'.':'Receita de 12 meses ÷ investimento. Fica em aberto até o ticket ser validado na call.')+'</small></div>'+
+      '<div><span class="k">Ticket de empate</span><b>'+(ct>0?money(I/(ct*12)):'—')+'<span style="font-size:.4em;letter-spacing:0;color:#B9B3A6">/mês</span></b><small>Quanto cada contrato precisa valer por mês para a receita de 12 meses cobrir só a mídia.</small></div></div>'+
+      '<p class="sim-fine">Valores esperados, em frações: não são resultado garantido. Fora da conta: fee V4, margem e custo operacional. A amostra é de 4 oportunidades do Bing.</p>';
+  }
+  function row(n,v,c,qq){return '<div class="sim-row'+(qq?' q':'')+'"><span class="n">'+n+'</span><b>'+v+'</b><i>'+c+'</i></div>'}
+  $$('[data-sg]').forEach(function(g){$$('.sim-chip',g).forEach(function(b){b.addEventListener('click',function(){var k=g.dataset.sg;SIM[k]=(k==='ch'||k==='sc')?b.dataset.v:+b.dataset.v;sim()})})});
+  $('#siminv').addEventListener('input',function(e){SIM.inv=+e.target.value;sim()});
+  $('#simtk').addEventListener('input',function(e){SIM.tk=+e.target.value;sim()});
+  sim();
   $('#lmore').addEventListener('click',function(){S.all=!S.all;table()});
   /* cada grade de mapa anima célula a célula */
   document.querySelectorAll('.hm').forEach(function(g){[].slice.call(g.children).forEach(function(c,i){c.style.transitionDelay=(i*14)+'ms'})});
