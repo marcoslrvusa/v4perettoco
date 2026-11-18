@@ -386,6 +386,116 @@ section.band{padding:104px 0}
   .pc.s1,.pc.s2,.pc.s3,.pc.s4{min-height:0}
 }
 @media (max-width:560px){.wrap{padding:0 20px}.cover .logo{height:40px;margin-bottom:26px}.mxt{font-size:19px}.mini4,.ring4,.ph,.kpis{grid-template-columns:1fr}.cover{padding:64px 0 52px}.cta{padding:32px 24px}}
+
+/* ---------- dados: seletor, funil vivo, tabelas, gráficos ---------- */
+.dx-sel{margin-top:34px;display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center}
+.dx-chips{display:flex;flex-wrap:wrap;gap:8px}
+.dx-chip{font:600 13.5px/1 'Ubuntu',sans-serif;display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:100px;border:1px solid #D8D2C3;background:var(--white);color:var(--mute2);cursor:pointer;transition:.2s}
+.dx-chip i{width:9px;height:9px;border-radius:50%;background:var(--gold);display:block}
+.dx-chip:hover{border-color:var(--gold-d);color:var(--ink)}
+.dx-chip[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+.dx-chip:focus-visible,.dx-per button:focus-visible,.dx-more:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.dk .dx-chip{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.16);color:#CFC9BC}
+.dk .dx-chip:hover{border-color:var(--gold);color:#fff}
+.dk .dx-chip[aria-pressed=true]{background:var(--gold);border-color:var(--gold);color:#1A1405}
+.dx-per{display:inline-flex;padding:3px;border-radius:100px;background:var(--paper2);border:1px solid #D8D2C3}
+.dx-per button{font:600 12.5px/1 'Ubuntu',sans-serif;padding:9px 14px;border-radius:100px;border:0;background:transparent;color:var(--mute2);cursor:pointer;transition:.2s}
+.dx-per button[aria-pressed=true]{background:var(--white);color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.14)}
+.dx-fn{margin-top:36px}
+.js .dx-fn .fr .bar{transition:clip-path 1s cubic-bezier(.2,.7,.2,1),opacity .6s,width .7s cubic-bezier(.2,.7,.2,1)}
+.dx-fn .rt em{display:block;font-style:normal;font-size:13px;color:var(--mute2);line-height:1.3}
+.dx-read{margin-top:26px;padding:18px 22px;border-left:3px solid var(--gold);background:var(--gold-s);border-radius:0 14px 14px 0;font-size:16px;color:var(--ink);max-width:940px;min-height:62px}
+.dk .dx-read{background:rgba(201,169,110,.1);color:#E8E3D6}
+.dx-read b{font-weight:700}
+.cl .v small{font-size:.42em;letter-spacing:0;margin-left:3px;color:var(--mute2)}
+.cl.hl .v small{color:var(--gold)}
+
+.dx-tb{margin-top:34px;background:var(--white);border:1px solid #E4DFD2;border-radius:var(--radius);box-shadow:var(--shadow);overflow-x:auto}
+.dx-tb table{width:100%;border-collapse:collapse;min-width:680px;font-size:14.5px}
+.dx-tb th{font:600 10.5px/1.25 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute2);text-align:right;padding:14px 16px;border-bottom:1px solid #E4DFD2;background:#FBF9F4}
+.dx-tb td{padding:13px 16px;text-align:right;border-bottom:1px solid #EFEBE0;font-variant-numeric:tabular-nums;transition:background .2s}
+.dx-tb th:first-child,.dx-tb td:first-child{text-align:left}
+.dx-tb td b{font:800 17px/1 var(--font-d)}
+.dx-tb tbody tr{cursor:pointer}
+.dx-tb tbody tr:hover td{background:#FBF9F4}
+.dx-tb tr.on td{background:var(--gold-s)}
+.dx-tb tr.dim td{opacity:.42}
+.dx-tb tr.tt td{border-bottom:0;background:#FBF9F4;font-weight:700}
+.dx-tb tr.tt{cursor:default}
+.dx-dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:10px}
+
+.dx-ins{margin-top:48px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.dx-card{background:linear-gradient(180deg,var(--ink2),#14110D);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+.dx-card .v{font:800 clamp(34px,4vw,48px)/1 var(--font-d);letter-spacing:-.04em;color:var(--gold)}
+.dx-card .v small{font-size:.4em;color:#9F998C;letter-spacing:0;margin-left:3px}
+.dx-card p{margin-top:12px;font-size:14.5px;color:#BDB7AA;line-height:1.45}
+.dx-card.gd{background:linear-gradient(160deg,#8A6B2E,#C9A96E);border-color:#C9A96E}
+.dx-card.gd .v{color:#1A1405}.dx-card.gd p{color:#2A2008}
+
+.dx-mx{margin-top:10px;display:grid;grid-template-columns:150px repeat(5,1fr) 64px;gap:6px;align-items:stretch}
+.dx-mh{font:600 10px/1.25 'JetBrains Mono',monospace;letter-spacing:.07em;text-transform:uppercase;color:#9F998C;padding:0 4px 8px;display:flex;align-items:flex-end;justify-content:center;text-align:center}
+.dx-mh.g{color:var(--gold)}
+.dx-ml{display:flex;align-items:center;font:700 14.5px/1.2 var(--font-d);color:#fff;padding-right:8px}
+.dx-ml .dx-dot{flex:none}
+.dx-mc{border-radius:10px;min-height:48px;display:grid;place-items:center;font:800 19px/1 var(--font-d);color:#fff;border:1px solid rgba(255,255,255,.07);transition:opacity .25s,background .25s}
+.dx-mc.z{color:#5E5A50;font-weight:500}
+.dx-mx .dim{opacity:.28}
+.dx-mt{display:grid;place-items:center;font:800 17px/1 var(--font-d);color:#fff}
+
+.dx-lh{margin-top:48px;display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.dx-lh h3{font-size:24px;font-weight:800;color:#fff}
+.dx-lh span{font:500 12px/1 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#9F998C}
+.dx-lt{margin-top:16px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:linear-gradient(180deg,var(--ink2),#14110D)}
+.dx-lr{display:grid;grid-template-columns:78px 130px 1fr 150px;gap:14px;align-items:center;padding:13px 20px;border-bottom:1px solid #2A261F;font-size:14px;color:#CFC9BC}
+.dx-lr:last-child{border-bottom:0}
+.dx-lr .d{font:500 12.5px/1 'JetBrains Mono',monospace;color:#9F998C}
+.dx-lr .o{display:flex;align-items:center;font-weight:500;color:#fff}
+.dx-st{display:inline-block;justify-self:end;font:600 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.06em;text-transform:uppercase;padding:7px 10px;border-radius:100px;white-space:nowrap}
+.dx-st.sd{background:rgba(31,122,77,.3);color:#7EE0B0}
+.dx-st.ps{background:rgba(201,169,110,.25);color:var(--gold)}
+.dx-st.ic{border:1px solid rgba(201,169,110,.55);color:var(--gold)}
+.dx-st.nq{background:rgba(255,255,255,.08);color:#B9B3A6}
+.dx-st.jo{background:rgba(229,9,20,.18);color:#F59AA0}
+.dx-more{margin-top:14px;font:600 13.5px/1 'Ubuntu',sans-serif;padding:12px 20px;border-radius:100px;border:1px solid rgba(255,255,255,.2);background:transparent;color:#fff;cursor:pointer;transition:.2s}
+.dx-more:hover{border-color:var(--gold);color:var(--gold)}
+
+.dx-ch{margin-top:34px;display:grid;grid-template-columns:3fr 2fr;gap:16px}
+.dx-box{background:linear-gradient(180deg,var(--ink2),#14110D);border:1px solid var(--line);border-radius:var(--radius);padding:26px}
+.dx-box h4{font:600 13px/1.3 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#9F998C;margin-bottom:18px}
+.dx-bars{display:flex;align-items:flex-end;gap:14px;height:250px}
+.dx-bc{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;min-width:0}
+.dx-bc .dx-t{font:800 15px/1 var(--font-d);color:#fff;margin-bottom:7px}
+.dx-bc .dx-k{width:100%;max-width:62px;display:flex;flex-direction:column-reverse;border-radius:8px;overflow:hidden;transition:height .6s cubic-bezier(.2,.7,.2,1)}
+.dx-bc .dx-k span{display:block;width:100%;transition:height .6s cubic-bezier(.2,.7,.2,1)}
+.dx-bc .dx-m{margin-top:10px;font:600 11.5px/1 'JetBrains Mono',monospace;color:#9F998C;white-space:nowrap}
+.dx-bc .dx-e{width:100%;max-width:62px;height:8px;border-radius:4px;background:repeating-linear-gradient(45deg,#3a352c 0 4px,transparent 4px 8px)}
+.dx-leg{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:18px;font-size:12.5px;color:#BDB7AA}
+.dx-leg i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:6px}
+.dx-story{margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.dx-story div{border:1px solid rgba(201,169,110,.35);border-radius:var(--radius);padding:22px 24px;background:linear-gradient(120deg,rgba(201,169,110,.14),rgba(201,169,110,.03))}
+.dx-story b{display:block;font:800 clamp(30px,3.4vw,42px)/1 var(--font-d);letter-spacing:-.04em;color:var(--gold)}
+.dx-story span{display:block;margin-top:10px;font-size:14.5px;color:#D5CFC2;line-height:1.45}
+
+.dx-hist{margin-top:44px}
+.dx-hist h3{font-size:24px;font-weight:800}
+.dx-hist .callout{margin-top:18px}
+section.band.dk+section.band.dk{border-top:1px solid var(--line)}
+@media (max-width:980px){
+  .dx-ins,.dx-story{grid-template-columns:1fr 1fr}
+  .dx-ch{grid-template-columns:1fr}
+  .dx-mx{grid-template-columns:110px repeat(5,1fr) 40px;gap:4px}
+  .dx-ml{font-size:12.5px}.dx-mc{font-size:16px;min-height:42px}
+  .dx-lr{grid-template-columns:62px 1fr 128px;gap:10px;padding:12px 14px}
+  .dx-lr .det{grid-column:1 / -1;order:5;font-size:13px;color:#9F998C}
+}
+@media (max-width:560px){
+  .dx-ins,.dx-story{grid-template-columns:1fr}
+  .dx-chip{padding:10px 13px;font-size:13px}
+  .dx-mx{grid-template-columns:88px repeat(5,minmax(0,1fr)) 32px;gap:3px}
+  .dx-mh{font-size:7px;letter-spacing:0;min-width:0;overflow:hidden;padding:0 0 6px}
+  .dx-ml{font-size:11.5px}.dx-mc{font-size:14px;min-height:38px}
+  .dx-bars{gap:8px}
+}
 </style>
 </head>
 <body>
@@ -399,12 +509,12 @@ section.band{padding:104px 0}
     <p class="sub">Como a Premium Cleaning transforma presença local, SEO, IA e mídia em propostas e contratos, com cada dólar ligado a um número.</p>
     <div class="cover-meta">
       <div><b>Cliente</b> · Premium Cleaning Services NJ &amp; NY</div>
-      <div><b>Data</b> · 17/11/2026</div>
+      <div><b>Data</b> · 18/11/2026</div>
       <div><b>Autor</b> · Marcos Luciano, V4 Company (Peretto &amp; Co)</div>
     </div>
     <div class="kpis">
       <div class="kpi"><div class="v">69<small>%</small></div><div class="l">dos pontos no top 3 do mapa, a 1 milha, em “commercial office cleaning service”</div></div>
-      <div class="kpi"><div class="v">3</div><div class="l">leads B2B válidos em 15 dias (03 a 17/11): 2 pagos, 1 orgânico</div></div>
+      <div class="kpi"><div class="v">5<small> de 24</small></div><div class="l">oportunidades do CRM desde 01/09 seguem ativas no funil. Nenhuma das 10 do Meta passou da triagem</div></div>
       <div class="kpi"><div class="v"><small>US$</small>93</div><div class="l">custo por conversão no Bing, contra US$ 896 em junho</div></div>
       <div class="kpi"><div class="v">5,0<small>★</small></div><div class="l">no Google, com 43 reviews e rank médio de 2,7 em “commercial office cleaning service”</div></div>
     </div>
@@ -412,28 +522,32 @@ section.band{padding:104px 0}
 </header>
 
 <nav class="toc"><div class="toc-in">
-  <a href="#funil">Funil</a><a href="#corrigido">Corrigido</a><a href="#canais">Canais</a><a href="#evolucao">Evolução</a><a href="#local">Local SEO</a><a href="#aio">SEO · AIO · GEO</a><a href="#midia">Mídia</a><a href="#mercado">Mercado</a><a href="#duvidas">Dúvidas</a><a href="#roteiro">Roteiro 90 dias</a><a href="#proximos">Próximos passos</a>
+  <a href="#funil">Funil</a><a href="#corrigido">Corrigido</a><a href="#canais">Canais</a><a href="#leads">Leads</a><a href="#evolucao">Evolução</a><a href="#local">Local SEO</a><a href="#aio">SEO · AIO · GEO</a><a href="#midia">Mídia</a><a href="#mercado">Mercado</a><a href="#duvidas">Dúvidas</a><a href="#roteiro">Roteiro 90 dias</a><a href="#proximos">Próximos passos</a>
 </div></nav>
 
 <!-- ============ 1 · FUNIL ============ -->
 <section class="band lt" id="funil"><div class="wrap">
   <div class="eyebrow rv"><b>01</b>O funil</div>
-  <h2 class="h2 rv">Do clique ao contrato: onde cada etapa se decide</h2>
-  <p class="lead rv">Mídia e busca enchem o topo. O que paga a conta é proposta e contrato, e é aí que passamos a medir.</p>
-  <div class="funnel">
-    <div class="fr"><div class="st">Impressões<small>topo</small></div><div class="trk"><div class="bar" style="width:100%">9.026</div></div><div class="rt"><b>Bing, 04/10 a 02/11</b><span class="owner">V4 · Tráfego e SEO</span></div></div>
-    <div class="fr"><div class="st">Cliques<small>interesse</small></div><div class="trk"><div class="bar" style="width:78%">95</div></div><div class="rt"><b>CTR de 3,85% na busca</b><span class="owner">V4 · Tráfego</span></div></div>
-    <div class="fr"><div class="st">Leads<small>contato</small></div><div class="trk"><div class="bar" style="width:58%">2</div></div><div class="rt"><b>Conversões na plataforma</b><span class="owner">V4 · Site e CRO</span></div></div>
-    <div class="fr"><div class="st">Lead B2B válido<small>qualificação</small></div><div class="trk"><div class="bar gold" style="width:42%">1+</div></div><div class="rt"><b>Empresa, escopo e CEP certos</b><span class="owner">V4 + Premium</span></div></div>
-    <div class="fr"><div class="st">Proposta<small>oportunidade</small></div><div class="trk"><div class="bar open" style="width:28%">a medir</div></div><div class="rt"><b>Elo que falta</b><span class="owner">Premium · Comercial</span></div></div>
-    <div class="fr"><div class="st">Contrato<small>receita</small></div><div class="trk"><div class="bar open" style="width:16%">a medir</div></div><div class="rt"><b>Meta final</b><span class="owner">Premium · Comercial</span></div></div>
+  <h2 class="h2 rv">Da visita ao contrato, com todos os dados que temos</h2>
+  <p class="lead rv">Google Analytics, CRM e mídia no mesmo funil, de julho a 17/11. Escolha um canal para ver só o caminho dele.</p>
+  <div class="dx-sel rv">
+    <div class="dx-chips" data-dx></div>
+    <div class="dx-per" data-per><button type="button" data-p="s" aria-pressed="true">Desde 01/09 · GA4 + CRM</button><button type="button" data-p="a" aria-pressed="false">Todo o GA4 · jul a 17/11</button></div>
   </div>
+  <div class="funnel dx-fn">
+    <div class="fr"><div class="st">Visitantes<small>topo · Analytics</small></div><div class="trk"><div class="bar" id="fb0"></div></div><div class="rt"><b id="fr0b"></b><em id="fr0s"></em><span class="owner">V4 · Tráfego e SEO</span></div></div>
+    <div class="fr"><div class="st">Oportunidades<small>contato · CRM</small></div><div class="trk"><div class="bar" id="fb1"></div></div><div class="rt"><b id="fr1b"></b><em id="fr1s"></em><span class="owner">V4 · Site e CRO</span></div></div>
+    <div class="fr"><div class="st">Ativas no funil<small>triagem</small></div><div class="trk"><div class="bar gold" id="fb2"></div></div><div class="rt"><b id="fr2b"></b><em id="fr2s"></em><span class="owner">V4 + Premium</span></div></div>
+    <div class="fr"><div class="st">Proposta enviada<small>oportunidade</small></div><div class="trk"><div class="bar gold" id="fb3"></div></div><div class="rt"><b id="fr3b"></b><em id="fr3s"></em><span class="owner">Premium · Comercial</span></div></div>
+    <div class="fr"><div class="st">Service Delivery<small>fechamento</small></div><div class="trk"><div class="bar gold" id="fb4"></div></div><div class="rt"><b id="fr4b"></b><em id="fr4s"></em><span class="owner">Premium · Comercial</span></div></div>
+  </div>
+  <div class="dx-read rv" id="fread" aria-live="polite"></div>
   <div class="callout">
-    <div class="cl rv d1"><div class="v">3 de 3</div><div class="t">leads datados de novembro são B2B válidos: dois pagos do Office, um orgânico.</div></div>
-    <div class="cl rv d2"><div class="v">0</div><div class="t">propostas e contratos rastreados hoje. O funil é cego do lead para a frente.</div></div>
-    <div class="cl hl rv d3"><div class="v">US$ 36 mil</div><div class="t">de receita anual por contrato de US$ 3.000/mês <span class="tag tag-w">a confirmar</span></div></div>
+    <div class="cl rv d1" id="fc1"></div>
+    <div class="cl rv d2" id="fc2"></div>
+    <div class="cl hl rv d3"><div class="v">0</div><div class="t">eventos principais no GA4, em todos os meses. O formulário ainda não conta como conversão no Analytics: o lead vem do GoHighLevel.</div></div>
   </div>
-  <p class="note">Barras ilustram a proporção entre etapas; “1+” é o mínimo observado, não o total. Janelas diferentes: mídia de 04/10 a 02/11, leads de 03 a 17/11. Ticket de US$ 3.000/mês é do planning de jan/2026, ainda sem confirmação do cliente.</p>
+  <p class="note">Barras ilustram a ordem das etapas; os números são os reais. Analytics: propriedade Premium Contractors, 01/07 a 17/11 (novembro tem 17 dias). CRM: export do GoHighLevel de 18/11, que começa em 01/09 e traz 24 oportunidades. Estágios com o nome do GoHighLevel; a ordem Initial Contact, Proposal Sent, Service Delivery é a que assumimos, a confirmar com o time comercial. “Ativas” = esses três estágios; Not Qualified e Jobs Opening ficam de fora. Amostra pequena: leia a direção, não a taxa.</p>
 </div></section>
 
 <!-- ============ 2 · CORRIGIDO ============ -->
@@ -460,7 +574,10 @@ section.band{padding:104px 0}
 <section class="band lt" id="canais"><div class="wrap">
   <div class="eyebrow rv"><b>03</b>Canais</div>
   <h2 class="h2 rv">Cada canal tem um papel no funil</h2>
-  <p class="lead rv">Descoberta, decisão e captura trabalham juntas. Estes são os números de cada uma, na fonte de cada plataforma.</p>
+  <p class="lead rv">Descoberta, decisão e captura trabalham juntas. Primeiro o comportamento de cada canal no Analytics, depois os números de cada plataforma.</p>
+  <div class="dx-sel rv"><div class="dx-chips" data-dx></div><div class="dx-per" data-per><button type="button" data-p="s" aria-pressed="true">Desde 01/09</button><button type="button" data-p="a" aria-pressed="false">Jul a 17/11</button></div></div>
+  <div class="dx-tb rv" id="qtb"></div>
+  <p class="note">Tempo e sessões engajadas são médias ponderadas pelos visitantes. “Outros” inclui ferramentas da equipe (Tag Assistant, Ekyte, Lovable, GoHighLevel) e referrals pequenos. Clique numa linha para filtrar a página.</p>
   <div class="ch">
     <div class="cc dark w3 rv d1"><span class="role">Captura · Fundo</span><h3>Bing Ads</h3><div class="big">2</div><div class="cap">leads B2B de Office em 14 dias, vindos do Ad Group 2, na busca, de Manhattan</div><div class="mini"><span class="pill"><b>3,85%</b> CTR de busca</span><span class="pill"><b>US$ 2,11</b> por clique</span><span class="pill"><b>US$ 187</b> em 30 dias</span></div></div>
     <div class="cc w3 rv d2"><span class="role">Descoberta · Topo e meio</span><h3>Google orgânico</h3><div class="big">4,2</div><div class="cap">posição média em 6 meses, com 7,23 mil impressões e 530 queries. A marca converte a 6,3% de CTR.</div><div class="mini"><span class="pill"><b>59</b> cliques</span><span class="pill"><b>1</b> lead orgânico em nov</span><span class="pill"><b>0,8%</b> CTR (5 a 10x abaixo do esperado)</span></div></div>
@@ -468,20 +585,31 @@ section.band{padding:104px 0}
     <div class="cc rv d2"><span class="role">Descoberta · Topo</span><h3>IA e GEO</h3><div class="big">0/10</div><div class="cap">prompts com menção à marca no baseline de 14/10. O Bing indexa 10 de 65 URLs.</div><div class="mini"><span class="pill"><b>2,1</b> posição da marca no Google</span></div></div>
     <div class="cc rv d3"><span class="role">Teste · Topo e meio</span><h3>ChatGPT Ads</h3><div class="big">US$ 200</div><div class="cap">de teto na fase 2, só Office, depois do gate do Bing. Sem histórico na conta.</div><div class="mini"><span class="pill"><b>Pausa</b> em US$ 150</span></div></div>
   </div>
-  <div class="leadsplit rv">
-    <div><h3>De onde vieram os leads recentes</h3><p>Leads do formulário GoHighLevel, 4 recentes</p></div>
-    <div class="lb">
-      <div><span>Bing, busca (Office)</span><i style="width:100%"></i><b>2</b></div>
-      <div><span>Google orgânico</span><i class="dark" style="width:50%"></i><b>1</b></div>
-      <div><span>Bing, feed MSN (residencial)</span><i class="dark" style="width:50%;opacity:.5"></i><b>1</b></div>
-    </div>
+  <p class="note">Fontes: Google Analytics 4 (01/07 a 17/11), export de oportunidades do GoHighLevel (18/11), Microsoft Advertising, Search Console e scans do LocalSEO. Os números de Bing e Search Console têm janelas diferentes, indicadas na seção de evolução.</p>
+</div></section>
+
+<!-- ============ 4 · LEADS ============ -->
+<section class="band dk d2" id="leads"><div class="wrap">
+  <div class="eyebrow rv"><b>04</b>Leads</div>
+  <h2 class="h2 rv">O que o CRM fez com cada lead</h2>
+  <p class="lead rv">24 oportunidades desde 01/09, classificadas por origem e por estágio no GoHighLevel. O volume não conta a história sozinho.</p>
+  <div class="dx-ins">
+    <div class="dx-card rv d1"><div class="v">10<small> de 24</small></div><p>oportunidades vieram do Meta, em 9 dias de setembro. Nenhuma passou da triagem: 7 em Jobs Opening e 3 em Not Qualified.</p></div>
+    <div class="dx-card rv d2"><div class="v">3<small> de 4</small></div><p>oportunidades do Bing seguem ativas. Uma já está em Service Delivery, e as duas mais recentes são do Ad Group 2, Office.</p></div>
+    <div class="dx-card rv d3"><div class="v">1<small> de 1</small></div><p>oportunidade orgânica está em Proposal Sent, vinda do Google em novembro.</p></div>
+    <div class="dx-card gd rv d4"><div class="v">US$ 0</div><p>de valor registrado nas 24 oportunidades. Sem o campo de valor, o CRM não mede receita.</p></div>
   </div>
-  <p class="note">Esta base não tem export do Google Analytics; usamos os dados de cada plataforma (Microsoft Advertising, Search Console, scans do LocalSEO e formulário GoHighLevel). Os números de Bing e Search Console têm janelas diferentes, indicadas na seção de evolução.</p>
+  <div class="dx-sel rv"><div class="dx-chips" data-dx></div></div>
+  <div class="dx-mx rv" id="mx"></div>
+  <div class="dx-lh rv"><h3>As oportunidades, uma a uma</h3><span id="lcount"></span></div>
+  <div class="dx-lt rv" id="ltb"></div>
+  <button type="button" class="dx-more" id="lmore" hidden>Ver todas</button>
+  <p class="note">Sem nome, e-mail ou telefone: só data, origem, campanha e estágio. Jobs Opening reúne pessoas que procuravam vaga, e não o serviço (leitura pelos motivos registrados nos leads do Meta). Not Qualified e Jobs Opening ficam fora do funil comercial. Os leads de novembro ainda estão em triagem inicial, então a taxa de “ativas” deve cair quando forem classificados.</p>
 </div></section>
 
 <!-- ============ 4 · EVOLUÇÃO ============ -->
 <section class="band dk" id="evolucao"><div class="wrap">
-  <div class="eyebrow rv"><b>04</b>Evolução</div>
+  <div class="eyebrow rv"><b>05</b>Evolução</div>
   <h2 class="h2 rv">De onde viemos até aqui</h2>
   <p class="lead rv">A retomada em outubro trocou volume por eficiência. O custo por conversão no Bing caiu 90%.</p>
   <div class="tl">
@@ -492,6 +620,17 @@ section.band{padding:104px 0}
     <div class="tn rv d5"><div class="d">11/11</div><h3>Publicação</h3><p>Site corrigido no ar, 67 URLs no sitemap, IndexNow enviado.</p></div>
     <div class="tn now rv d5"><div class="d">17/11</div><h3>Leads reais</h3><p>3 leads B2B em 15 dias, 2 deles pagos, do Office em Manhattan.</p></div>
   </div>
+  <div class="dx-sel rv"><div class="dx-chips" data-dx></div></div>
+  <div class="dx-ch">
+    <div class="dx-box rv d1"><h4>Visitantes por mês · Analytics</h4><div class="dx-bars" id="mcA"></div><div class="dx-leg" id="legA"></div></div>
+    <div class="dx-box rv d2"><h4>Oportunidades por mês · CRM</h4><div class="dx-bars" id="mcB"></div><div class="dx-leg" id="legB"></div></div>
+  </div>
+  <div class="dx-story rv">
+    <div><b>295 → 0</b><span>Em setembro, 295 visitas do Bing não geraram nenhuma oportunidade.</span></div>
+    <div><b>165 → 4</b><span>Em outubro e novembro, 165 visitas do Bing geraram 4, três ainda ativas.</span></div>
+    <div><b>18 → 3</b><span>Oportunidades por mês: 18 em setembro (1 ativa), 3 em outubro (1 ativa) e 3 em novembro, até dia 17 (3 ativas).</span></div>
+  </div>
+  <p class="note">Novembro tem 17 dias: o Bing foi de 24 para 4 visitantes por dia, queda de 82% no ritmo diário contra agosto. Jul e Ago ficam sem barra de oportunidades porque o export do GoHighLevel começa em 01/09. O tráfego direto de novembro (474 visitantes, 2 s de engajamento) tem padrão típico de acesso automatizado e será filtrado.</p>
   <div class="ba">
     <div class="bm rv d1"><h4>Custo por conversão · Bing</h4>
       <div class="row"><span>Jun/26</span><i class="a" style="width:100%"></i><span>US$ 896</span></div>
@@ -515,7 +654,7 @@ section.band{padding:104px 0}
 
 <!-- ============ 5 · LOCAL SEO ============ -->
 <section class="band lt" id="local"><div class="wrap">
-  <div class="eyebrow rv"><b>05</b>Local SEO · mapas</div>
+  <div class="eyebrow rv"><b>06</b>Local SEO · mapas</div>
   <h2 class="h2 rv">Dominamos 1 milha. Falta o anel de 2.</h2>
   <p class="lead rv">Cada círculo é um ponto onde pesquisamos no Google Maps. Verde está no top 3. Os mapas são do scan real de 20/10/2026.</p>
   <div class="mapgrid">
@@ -553,7 +692,7 @@ section.band{padding:104px 0}
 
 <!-- ============ 6 · SEO · AIO · GEO ============ -->
 <section class="band dk d2" id="aio"><div class="wrap">
-  <div class="eyebrow rv"><b>06</b>SEO · AIO · GEO</div>
+  <div class="eyebrow rv"><b>07</b>SEO · AIO · GEO</div>
   <h2 class="h2 rv">Três camadas, uma ordem de ataque</h2>
   <p class="lead rv">Primeiro ser lido, depois ser reconhecido, por fim ser a resposta. Pular uma camada desperdiça a seguinte.</p>
   <div class="layers">
@@ -575,7 +714,7 @@ section.band{padding:104px 0}
 
 <!-- ============ 7 · MÍDIA ============ -->
 <section class="band lt" id="midia"><div class="wrap">
-  <div class="eyebrow rv"><b>07</b>Mídia paga</div>
+  <div class="eyebrow rv"><b>08</b>Mídia paga</div>
   <h2 class="h2 rv">Quatro fases, critério antes do dinheiro</h2>
   <p class="lead rv">O risco da primeira etapa é de US$ 400, não de US$ 800. A verba avança só quando o número da fase anterior aparece.</p>
   <div class="ph">
@@ -594,24 +733,21 @@ section.band{padding:104px 0}
     </div>
   </div>
   <div class="bonus rv"><div class="v">US$ 500 <small>+ US$ 500 de bônus</small></div><p><b>Bônus da OpenAI:</b> a conta ganhou um crédito que devolve US$ 500 em mídia de ChatGPT Ads se gastarmos US$ 500. O plano hoje prevê até US$ 400 no canal, então o bônus <b>não muda os critérios de parada</b>: só chegamos aos US$ 500 se os gates liberarem. Condições e prazo do bônus: confirmar no Ads Manager.</p></div>
-  <div class="fcast">
-    <div class="fbox rv"><h3>O que esperar de US$ 800</h3><p>Valores esperados do plano de verba, em hipóteses a calibrar com o funil real.</p>
-      <div class="sc3">
-        <div class="sc s-a"><div class="k">Conservador</div><div class="v">0,8</div><div class="t">leads B2B válidos</div><div class="c">0,3 proposta · 0,04 contrato</div></div>
-        <div class="sc base"><div class="k">Base</div><div class="v">2,2</div><div class="t">leads B2B válidos</div><div class="c">1,3 proposta · 0,26 contrato</div></div>
-        <div class="sc s-c"><div class="k">Otimista</div><div class="v">6,6</div><div class="t">leads B2B válidos</div><div class="c">6,0 propostas · 1,8 contrato</div></div>
-      </div></div>
-    <div class="worth rv d2"><span class="k">Quanto vale 1 contrato</span><div class="v">US$ 600<small>por mês</small></div><div class="t">de contribuição, com ticket de US$ 3.000/mês e margem de 20% <span class="tag tag-w">a confirmar</span></div>
-      <div class="mg"><div><b>2,7</b><span>meses a 10%</span></div><div><b>1,3</b><span>mês a 20%</span></div><div><b>0,9</b><span>mês a 30%</span></div></div>
-      <div class="t" style="margin-top:12px">para pagar US$ 800 de mídia, sem o fee V4</div></div>
+  <div class="dx-hist rv">
+    <h3>O que os dados já mostram, sem promessa</h3>
+    <div class="callout">
+      <div class="cl"><div class="v">460 → 4</div><div class="t">visitantes do Bing para oportunidades, desde 01/09: 0,9%.</div></div>
+      <div class="cl"><div class="v">3 de 4</div><div class="t">dessas oportunidades seguem ativas no funil, uma já em Service Delivery.</div></div>
+      <div class="cl hl"><div class="v">Sem projeção</div><div class="t">Só projetamos contratos com a taxa de fechamento real do GoHighLevel. Até lá, cada fase avança por critério.</div></div>
+    </div>
   </div>
   <div class="scope rv"><div class="ic">!</div><div><b>Fora da vitrine até o seguro confirmar:</b> hood, exaustão, grease trap e anúncios de restaurante. Voltam com a lista de serviços cobertos pela apólice, assinada pelo cliente.</div></div>
-  <p class="note">Um contrato não é garantido. A taxa de clique para lead do Bing vem de 1 conversão válida em 68 cliques, e o fechamento de 15 a 30% é benchmark de blog. Ticket, margem e fee V4 serão fechados no check-in; o fee entra no CAC. A planilha de forecast recalcula tudo com os números reais.</p>
+  <p class="note">Não projetamos contratos antes de ter a taxa de fechamento real do GoHighLevel. A taxa de visita para oportunidade do Bing vem de 4 oportunidades, uma amostra pequena. Ticket, margem e fee V4 serão fechados no check-in; o fee entra no CAC.</p>
 </div></section>
 
 <!-- ============ 8 · MERCADO ============ -->
 <section class="band lt" id="mercado"><div class="wrap">
-  <div class="eyebrow rv"><b>08</b>Inteligência de mercado</div>
+  <div class="eyebrow rv"><b>09</b>Inteligência de mercado</div>
   <h2 class="h2 rv">Cada decisão, com dado, mercado e concorrente</h2>
   <p class="lead rv">Não escolhemos canal por costume. Cruzamos o que os nossos números dizem com para onde o mercado vai e com o que quem disputa a mesma conta está fazendo.</p>
   <div class="mx">
@@ -623,15 +759,15 @@ section.band{padding:104px 0}
 
 <!-- ============ 9 · DÚVIDAS ============ -->
 <section class="band dk d2" id="duvidas"><div class="wrap">
-  <div class="eyebrow rv"><b>09</b>Respostas ao cliente</div>
+  <div class="eyebrow rv"><b>10</b>Respostas ao cliente</div>
   <h2 class="h2 rv">As dúvidas de 16/11, uma a uma</h2>
   <p class="lead rv">O cliente tinha razão em quase tudo. Aqui está o que mudou em cada ponto.</p>
-  <div class="qa"><div class="qc rv"><h4>Por que 50% da verba no ChatGPT Ads?</h4><p>Não havia evidência. O ChatGPT Ads agora é a <b>fase 2, só Office</b>, até US$ 200, com pausa em US$ 150.</p><span class="st a">Concordamos e corrigimos</span></div><div class="qc rv"><h4>De onde saiu “4 a 10 leads”?</h4><p>Era um cenário, não uma previsão. Para US$ 800, o cenário base dá <b>cerca de 2 leads B2B válidos</b>. Um contrato não é garantido.</p><span class="st a">Concordamos e corrigimos</span></div><div class="qc rv"><h4>Por que 76% do gasto saiu do alvo?</h4><p>Das 82 negativas, <b>só 9 estavam aplicadas</b>. Foi higiene da conta, não mercado. As 91 novas estão prontas.</p><span class="st a">Causa achada</span></div><div class="qc rv"><h4>Faturamento não é lucro, e CAC não é CPL</h4><p>Concordamos. O retorno passa a ser por <b>margem de contribuição</b>, com o fee V4 dentro do CAC. Falta o ticket e a margem reais.</p><span class="st b">Planilha pronta</span></div><div class="qc rv"><h4>Como ligar lead a proposta e contrato?</h4><p>Pelo <b>GoHighLevel</b> que vocês já usam: origem gravada, qualificação em 1 hora, proposta e contrato com data e valor.</p><span class="st b">A configurar na fase 0</span></div><div class="qc rv"><h4>E hood, grease e o seguro?</h4><p>Há exposição real em <b>25 de 67 páginas</b>. Fica pausado até a lista de serviços cobertos, assinada.</p><span class="st c">Pausado</span></div><div class="qc rv"><h4>Quanto investir para validar, e qual o mínimo?</h4><p>Até <b>US$ 400</b> nas fases 1 e 2. O resto só com 1 proposta de lead pago, CPL válido até US$ 200 e funil rastreado.</p><span class="st a">Critério escrito</span></div><div class="qc rv"><h4>US$ 400 em 3 segmentos é suficiente?</h4><p>Não: dá cerca de US$ 130 por grupo. Por isso começamos <b>só com Office</b>, que já converteu.</p><span class="st a">Concordamos e corrigimos</span></div><div class="qc rv"><h4>Os 24 artigos trouxeram resultado?</h4><p>Ainda não medimos resultado comercial, e dizemos isso. O Google já tem <b>43 de 67 páginas ok</b>; faltam 24 e o Bing está em 10 de 65.</p><span class="st b">Em validação</span></div></div>
+  <div class="qa"><div class="qc rv"><h4>Por que 50% da verba no ChatGPT Ads?</h4><p>Não havia evidência. O ChatGPT Ads agora é a <b>fase 2, só Office</b>, até US$ 200, com pausa em US$ 150.</p><span class="st a">Concordamos e corrigimos</span></div><div class="qc rv"><h4>De onde saiu “4 a 10 leads”?</h4><p>Era um cenário, não uma previsão. Agora o plano parte do que aconteceu: <b>4 oportunidades do Bing desde 01/09, 3 ativas</b>. Contratos só serão projetados com a taxa de fechamento real.</p><span class="st a">Concordamos e corrigimos</span></div><div class="qc rv"><h4>Por que 76% do gasto saiu do alvo?</h4><p>Das 82 negativas, <b>só 9 estavam aplicadas</b>. Foi higiene da conta, não mercado. As 91 novas estão prontas.</p><span class="st a">Causa achada</span></div><div class="qc rv"><h4>Faturamento não é lucro, e CAC não é CPL</h4><p>Concordamos. O retorno passa a ser por <b>margem de contribuição</b>, com o fee V4 dentro do CAC. Só usamos o ticket e a margem que vierem de vocês.</p><span class="st b">Planilha pronta</span></div><div class="qc rv"><h4>Como ligar lead a proposta e contrato?</h4><p>O <b>GoHighLevel</b> já grava origem, campanha, palavra-chave e estágio nas 24 oportunidades. Falta o <b>valor e a data de fechamento</b>: o campo de valor está vazio em todas.</p><span class="st b">A configurar na fase 0</span></div><div class="qc rv"><h4>E hood, grease e o seguro?</h4><p>Há exposição real em <b>25 de 67 páginas</b>. Fica pausado até a lista de serviços cobertos, assinada.</p><span class="st c">Pausado</span></div><div class="qc rv"><h4>Quanto investir para validar, e qual o mínimo?</h4><p>Até <b>US$ 400</b> nas fases 1 e 2. O resto só com 1 proposta de lead pago, CPL válido até US$ 200 e funil rastreado.</p><span class="st a">Critério escrito</span></div><div class="qc rv"><h4>US$ 400 em 3 segmentos é suficiente?</h4><p>Não: dá cerca de US$ 130 por grupo. Por isso começamos <b>só com Office</b>, que já converteu.</p><span class="st a">Concordamos e corrigimos</span></div><div class="qc rv"><h4>Os 24 artigos trouxeram resultado?</h4><p>Ainda não medimos resultado comercial, e dizemos isso. O Google já tem <b>43 de 67 páginas ok</b>; faltam 24 e o Bing está em 10 de 65.</p><span class="st b">Em validação</span></div></div>
 </div></section>
 
 <!-- ============ 10 · ROTEIRO ============ -->
 <section class="band lt" id="roteiro"><div class="wrap">
-  <div class="eyebrow rv"><b>10</b>Roteiro de 90 dias</div>
+  <div class="eyebrow rv"><b>11</b>Roteiro de 90 dias</div>
   <h2 class="h2 rv">Treze semanas, um check-in por semana</h2>
   <p class="lead rv">Cada barra é um trabalho em andamento. Cada losango é uma decisão que já tem critério escrito. O calendário se ajusta a cada check-in e depende dos gates.</p>
   <div class="gtw rv"><div class="gt"><div class="gx"><div></div><div class="mth" style="grid-column:2 / span 4">Mês 1 · 17/11 a 14/12</div><div class="mth" style="grid-column:6 / span 4">Mês 2 · 15/12 a 11/01</div><div class="mth" style="grid-column:10 / span 5">Mês 3 · 12/01 a 15/02</div></div><div class="gx"><div></div><div class="wk" style="grid-column:2"><b>S1</b>17/11</div><div class="wk" style="grid-column:3"><b>S2</b>24/11</div><div class="wk" style="grid-column:4"><b>S3</b>01/12</div><div class="wk" style="grid-column:5"><b>S4</b>08/12</div><div class="wk" style="grid-column:6"><b>S5</b>15/12</div><div class="wk" style="grid-column:7"><b>S6</b>22/12</div><div class="wk" style="grid-column:8"><b>S7</b>29/12</div><div class="wk" style="grid-column:9"><b>S8</b>05/01</div><div class="wk" style="grid-column:10"><b>S9</b>12/01</div><div class="wk" style="grid-column:11"><b>S10</b>19/01</div><div class="wk" style="grid-column:12"><b>S11</b>26/01</div><div class="wk" style="grid-column:13"><b>S12</b>02/02</div><div class="wk" style="grid-column:14"><b>S13</b>09/02</div></div><div class="gx"><div class="gl" style="grid-column:1">Funil e CRM<small>GoHighLevel</small></div><div class="gb f" style="grid-column:2 / span 2">Funil no GHL · margem e fee</div><div class="gb f" style="grid-column:4 / span 2">Relatório semanal</div><div class="gb f" style="grid-column:6 / span 9">Custo por etapa · CAC com fee · margem real</div></div><div class="gx"><div class="gl" style="grid-column:1">Bing<small>captura</small></div><div class="gb b" style="grid-column:2 / span 1">Aplicar</div><div class="gb b" style="grid-column:3 / span 2">Fase 1 · até US$ 200</div><div class="gb b" style="grid-column:5 / span 3">Otimizar dispositivo e geo</div><div class="gb b" style="grid-column:8 / span 7">Escalar o que provou · teste de destino A/B</div></div><div class="gx"><div class="gl" style="grid-column:1">ChatGPT Ads<small>teste Office</small></div><div class="gb c" style="grid-column:2 / span 3">Preparar: pixel, fotos reais</div><div class="gb c" style="grid-column:5 / span 2">Fase 2 · só Office</div><div class="gb c" style="grid-column:7 / span 1">Leitura</div><div class="gb h" style="grid-column:8 / span 7">Fase 3 · só se o critério for atendido</div></div><div class="gx sep"><div class="gl" style="grid-column:1">SEO · AIO · GEO<small>descoberta</small></div><div class="gb s" style="grid-column:2 / span 2">IndexNow · 301 · sitemap</div><div class="gb s" style="grid-column:4 / span 2">Painel de 20 prompts</div><div class="gb s" style="grid-column:6 / span 4">Snippets nas posições 1 a 5</div><div class="gb s" style="grid-column:10 / span 5">Prova externa: Yelp, BBB, Clutch, listas</div></div><div class="gx"><div class="gl" style="grid-column:1">Google Business<small>local</small></div><div class="gb l" style="grid-column:2 / span 2">Categorias e Q&amp;A</div><div class="gb l" style="grid-column:4 / span 4">Reviews 43 → 55</div><div class="gb l" style="grid-column:8 / span 3">NAP: corrigir e criar</div><div class="gb l" style="grid-column:11 / span 4">Posts e fotos em rotina</div></div><div class="gx"><div class="gl" style="grid-column:1">Anel de 2 milhas<small>local</small></div><div class="gb l" style="grid-column:3 / span 10">12 páginas de cidade, em ondas</div><div class="gb l" style="grid-column:13 / span 2">Comparar scans</div></div><div class="gx"><div class="gl" style="grid-column:1">Re-scan de mapas<small>a cada 14 dias</small></div><div class="sc2" style="grid-column:4" title="scan"></div><div class="sc2" style="grid-column:6" title="scan"></div><div class="sc2" style="grid-column:8" title="scan"></div><div class="sc2" style="grid-column:10" title="scan"></div><div class="sc2" style="grid-column:12" title="scan"></div><div class="sc2" style="grid-column:14" title="scan"></div></div><div class="gx sep"><div class="gl" style="grid-column:1">Check-in semanal<small>decisão da semana</small></div><div class="dt" style="grid-column:2"></div><div class="dt" style="grid-column:3"></div><div class="dt" style="grid-column:4"></div><div class="gc" style="grid-column:5"><i class="gd"></i><span>Gate 1 · Bing</span></div><div class="dt" style="grid-column:6"></div><div class="gc" style="grid-column:7"><i class="gd"></i><span>Gate 2 · ChatGPT</span></div><div class="gc" style="grid-column:8"><i class="gd"></i><span>Decisão · Fase 3</span></div><div class="dt" style="grid-column:9"></div><div class="dt" style="grid-column:10"></div><div class="dt" style="grid-column:11"></div><div class="dt" style="grid-column:12"></div><div class="dt" style="grid-column:13"></div><div class="gc" style="grid-column:14"><i class="gd"></i><span>Revisão do trimestre</span></div></div></div></div>
@@ -646,11 +782,11 @@ section.band{padding:104px 0}
 
 <!-- ============ 11 · PRÓXIMOS ============ -->
 <section class="band dk" id="proximos"><div class="wrap">
-  <div class="eyebrow rv"><b>11</b>Próximos passos</div>
+  <div class="eyebrow rv"><b>12</b>Próximos passos</div>
   <h2 class="h2 rv">O que precisamos de vocês para a fase 0</h2>
   <p class="lead rv">Com eles, medimos de ponta a ponta e liberamos a verba por critério.</p>
   <div class="need">
-    <div class="nd rv d1"><div class="n">01</div><h4>Export do GoHighLevel</h4><p>Leads, propostas e contratos de 2026, com origem.</p></div>
+    <div class="nd rv d1"><div class="n">01</div><h4>Valor e fechamento no GoHighLevel</h4><p>Já temos as 24 oportunidades desde 01/09. Faltam valor, data de fechamento e os leads de jan a ago.</p></div>
     <div class="nd rv d2"><div class="n">02</div><h4>Ticket e margem reais</h4><p>Por vertical, ao menos Office.</p></div>
     <div class="nd rv d3"><div class="n">03</div><h4>Lista do seguro</h4><p>Serviços cobertos, em apólice ou carta do corretor.</p></div>
     <div class="nd rv d1"><div class="n">04</div><h4>Fotos reais</h4><p>Equipe, obras e prédios, no lugar de imagem de IA.</p></div>
@@ -660,7 +796,7 @@ section.band{padding:104px 0}
   <div class="cta rv"><h3>Cada dólar com um critério e um número ao lado.</h3><p>Próximo passo: check-in para fechar ticket, margem, fee e a data de aplicação das correções do Bing.</p></div>
 </div></section>
 
-<footer class="foot"><div class="wrap">Account Planning estratégico · Premium Cleaning Services NJ &amp; NY · 17/11/2026 · Squad Prime · Fontes: scans LocalSEO de 19–20/10, Search Console, Microsoft Advertising, formulário GoHighLevel e auditoria AIO/GEO de 11/11/2026. Planilha de acompanhamento: forecast-midia-vendas-premium.xlsx.</div></footer>
+<footer class="foot"><div class="wrap">Account Planning estratégico · Premium Cleaning Services NJ &amp; NY · 18/11/2026 · Squad Prime · Fontes: Google Analytics 4 (01/07 a 17/11), oportunidades do GoHighLevel (18/11), scans LocalSEO de 19–20/10, Search Console, Microsoft Advertising e auditoria AIO/GEO de 11/11/2026.</div></footer>
 <script>
 (function(){
   document.documentElement.classList.add('js');
@@ -677,6 +813,142 @@ section.band{padding:104px 0}
     var act=links[cur];if(act&&act.scrollIntoView&&window.innerWidth<980){var p=act.parentNode;p.scrollLeft=act.offsetLeft-20}
   }
   window.addEventListener('scroll',on,{passive:true});on();
+
+  /* ---------- dados reais: GA4 + GoHighLevel ---------- */
+  var D={"ga":{"2026-07":{"bing":{"u":151,"eng":42.5,"es":0.53,"key":0.0},"dir":{"u":72,"eng":29.6,"es":0.71,"key":0.0},"org":{"u":20,"eng":34.5,"es":0.6,"key":0.0},"out":{"u":14,"eng":15.1,"es":0.36,"key":0.0},"meta":{"u":11,"eng":3.9,"es":0.55,"key":0.0},"ia":{"u":1,"eng":1.0,"es":1.0,"key":0.0}},"2026-08":{"bing":{"u":744,"eng":55.8,"es":0.6,"key":0.0},"dir":{"u":143,"eng":46.1,"es":0.48,"key":0.0},"meta":{"u":30,"eng":7.7,"es":0.5,"key":0.0},"org":{"u":20,"eng":102.7,"es":1.09,"key":0.0},"out":{"u":16,"eng":43.5,"es":1.12,"key":0.0},"ia":{"u":2,"eng":30.5,"es":1.0,"key":0.0}},"2026-09":{"bing":{"u":295,"eng":30.4,"es":0.55,"key":0.0},"dir":{"u":112,"eng":6.0,"es":0.28,"key":0.0},"org":{"u":17,"eng":62.2,"es":1.18,"key":0.0},"meta":{"u":22,"eng":4.1,"es":0.5,"key":0.0},"out":{"u":10,"eng":20.9,"es":0.8,"key":0.0},"ia":{"u":1,"eng":4.0,"es":1.0,"key":0.0}},"2026-10":{"dir":{"u":236,"eng":8.4,"es":0.21,"key":0.0},"bing":{"u":92,"eng":32.5,"es":0.56,"key":0.0},"org":{"u":17,"eng":16.2,"es":0.65,"key":0.0},"ia":{"u":5,"eng":9.8,"es":0.2,"key":0.0},"meta":{"u":5,"eng":1.4,"es":0.2,"key":0.0},"out":{"u":6,"eng":213.2,"es":0.5,"key":0.0}},"2026-11":{"dir":{"u":474,"eng":2.2,"es":0.07,"key":0.0},"bing":{"u":73,"eng":21.6,"es":0.47,"key":0.0},"org":{"u":16,"eng":33.2,"es":0.88,"key":0.0},"ia":{"u":7,"eng":130.0,"es":0.29,"key":0.0},"out":{"u":3,"eng":130.7,"es":2.0,"key":0.0},"meta":{"u":3,"eng":0.0,"es":0.0,"key":0.0}}},"leads":[{"d":"2026-11-17","c":"bing","s":"ic","det":"Office Cleaning Nyc · Ad Group 2","val":0.0,"status":"open"},{"d":"2026-11-09","c":"org","s":"ps","det":"Google · formulário do site","val":0.0,"status":"open"},{"d":"2026-11-03","c":"bing","s":"ic","det":"Office Cleaning Near Me · Ad Group 2","val":0.0,"status":"open"},{"d":"2026-10-29","c":"out","s":"jo","det":"Cadastro manual no CRM","val":0.0,"status":"open"},{"d":"2026-10-27","c":"bing","s":"jo","det":"Commercial Cleaning Services · Ad Group 1","val":0.0,"status":"open"},{"d":"2026-10-07","c":"bing","s":"sd","det":"Commercial Cleaning Janitorial Services · Ad Group 1","val":0.0,"status":"open"},{"d":"2026-09-21","c":"dir","s":"nq","det":"Formulário do site","val":0.0,"status":"open"},{"d":"2026-09-18","c":"dir","s":"jo","det":"Formulário do site","val":0.0,"status":"open"},{"d":"2026-09-17","c":"out","s":"nq","det":"Cadastro manual no CRM","val":0.0,"status":"open"},{"d":"2026-09-16","c":"dir","s":"nq","det":"Formulário do site","val":0.0,"status":"open"},{"d":"2026-09-11","c":"dir","s":"nq","det":"Formulário do site","val":0.0,"status":"open"},{"d":"2026-09-09","c":"meta","s":"nq","det":"Meta Ads · AD 03","val":0.0,"status":"open"},{"d":"2026-09-08","c":"meta","s":"nq","det":"Meta Ads · Vídeo 01","val":0.0,"status":"open"},{"d":"2026-09-08","c":"dir","s":"sd","det":"Formulário do site","val":0.0,"status":"open"},{"d":"2026-09-08","c":"meta","s":"jo","det":"Meta Ads · AD 01","val":0.0,"status":"open"},{"d":"2026-09-07","c":"dir","s":"nq","det":"Formulário do site","val":0.0,"status":"open"},{"d":"2026-09-04","c":"meta","s":"jo","det":"Meta Ads · AD 01","val":0.0,"status":"open"},{"d":"2026-09-03","c":"meta","s":"jo","det":"Meta Ads · AD 01","val":0.0,"status":"open"},{"d":"2026-09-03","c":"meta","s":"jo","det":"Meta Ads · AD 01","val":0.0,"status":"open"},{"d":"2026-09-02","c":"meta","s":"jo","det":"Meta Ads · AD 03","val":0.0,"status":"abandoned"},{"d":"2026-09-01","c":"meta","s":"nq","det":"Meta Ads · AD 03","val":0.0,"status":"open"},{"d":"2026-09-01","c":"meta","s":"jo","det":"Meta Ads · AD 01","val":0.0,"status":"open"},{"d":"2026-09-01","c":"dir","s":"jo","det":"Formulário do site","val":0.0,"status":"open"},{"d":"2026-09-01","c":"meta","s":"jo","det":"Meta Ads · AD 03","val":0.0,"status":"open"}]};
+  var NAME={bing:'Bing Ads',org:'Busca orgânica',meta:'Meta e redes',dir:'Direto',ia:'IA (ChatGPT)',out:'Outros'};
+  var COL={bing:'#C9A96E',org:'#34D399',meta:'#F0616A',dir:'#8D877B',ia:'#EADFC2',out:'#5B5548'};
+  var ORDER=['bing','org','meta','dir','ia','out'];
+  var MS=['2026-07','2026-08','2026-09','2026-10','2026-11'];
+  var ML={'2026-07':'Jul','2026-08':'Ago','2026-09':'Set','2026-10':'Out','2026-11':'Nov*'};
+  var SG={ic:'Initial Contact',ps:'Proposal Sent',sd:'Service Delivery',nq:'Not Qualified',jo:'Jobs Opening'};
+  var S={c:'all',p:'s',all:false};
+  var $=function(s,r){return (r||document).querySelector(s)};
+  var $$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+  var mlist=function(){return S.p==='s'?MS.slice(2):MS};
+  var chs=function(){return S.c==='all'?ORDER:[S.c]};
+  var f=function(n){return n.toLocaleString('pt-BR')};
+  var pc=function(a,b){return b>0?(a/b*100).toFixed(1).replace('.',',').replace(/,0$/,'')+'%':'—'};
+  function users(cs,ms){var t=0;ms.forEach(function(m){cs.forEach(function(c){var d=(D.ga[m]||{})[c];if(d)t+=d.u})});return t}
+  function wavg(cs,ms,k){var n=0,t=0;ms.forEach(function(m){cs.forEach(function(c){var d=(D.ga[m]||{})[c];if(d){n+=d.u;t+=d[k]*d.u}})});return n?t/n:0}
+  function leadsOf(cs){return D.leads.filter(function(l){return cs.indexOf(l.c)>-1})}
+  function cnt(ls,st){return ls.filter(function(l){return st.indexOf(l.s)>-1}).length}
+  function dot(c){return '<span class="dx-dot" style="background:'+COL[c]+'"></span>'}
+
+  var READ={
+    all:'Das <b>24 oportunidades</b>, 5 seguem ativas. Meta e tráfego direto trouxeram 17, e só 1 delas chegou a Service Delivery. Bing e orgânico trouxeram 5, e 4 estão ativas.',
+    bing:'O Bing entregou <b>4 oportunidades, 3 ativas</b>, uma delas em Service Delivery. As duas mais recentes são do Ad Group 2 (Office), buscas “office cleaning”, e estão em Initial Contact.',
+    org:'<b>1 oportunidade orgânica, já em Proposal Sent.</b> O volume é pequeno (16 visitantes em novembro), mas com 33 s de engajamento e 0,87 sessão engajada por visitante, bem acima do Bing (22 s e 0,47).',
+    meta:'<b>10 oportunidades em 9 dias de setembro e nenhuma ativa:</b> 7 em Jobs Opening e 3 em Not Qualified. Volume sem qualificação: o Meta trouxe sobretudo quem buscava vaga.',
+    dir:'<b>7 oportunidades diretas, todas em setembro</b>, e 1 chegou a Service Delivery. Em novembro o Direto passou de 470 visitantes com 2 s de engajamento: padrão de acesso automatizado, que vamos filtrar.',
+    ia:'<b>7 visitantes do ChatGPT em novembro, com 130 s de engajamento</b>, o maior do site. Ainda sem oportunidade registrada, e o canal é pequeno: por isso o ChatGPT Ads entra como teste com teto.',
+    out:'Ferramentas da equipe e referrals pequenos. As <b>2 oportunidades</b> são cadastros manuais, uma por régua de nutrição, e nenhuma está ativa.'
+  };
+
+  function funnel(){
+    var cs=chs(),ms=mlist(),ls=leadsOf(cs);
+    var u=users(cs,ms),l=ls.length,c=cnt(ls,['ic','ps','sd']),p=cnt(ls,['ps','sd']),s=cnt(ls,['sd']);
+    var vals=[u,l,c,p,s],w=[100,76,58,42,30];
+    vals.forEach(function(v,i){
+      var b=$('#fb'+i);b.textContent=f(v);b.style.width=w[i]+'%';
+      b.classList.toggle('open',v===0);
+      if(i>=2)b.classList.toggle('gold',v>0);
+    });
+    var per=S.p==='s'?'Desde 01/09':'De 01/07 a 17/11';
+    var t=[
+      ['Usuários no Analytics',per],
+      S.p!=='s'?['—','O CRM exportado começa em 01/09']:
+        S.c==='meta'?['Origem Facebook no CRM','Taxa por visitante não se aplica']:
+        S.c==='out'?['Cadastro manual','Sem visita correspondente']:
+        [pc(l,u)+' dos visitantes',S.c==='all'?'Inclui leads de origem Meta e manual':'Formulário do site → GoHighLevel'],
+      [l?pc(c,l)+' das oportunidades':'—','Initial Contact, Proposal Sent ou Service Delivery'],
+      [l?pc(p,l)+' das oportunidades':'—','Proposal Sent ou além'],
+      [l?pc(s,l)+' das oportunidades':'—','Service Delivery']
+    ];
+    t.forEach(function(x,i){$('#fr'+i+'b').textContent=x[0];$('#fr'+i+'s').textContent=x[1]});
+    $('#fread').innerHTML=READ[S.c];
+    $('#fc1').innerHTML='<div class="v">'+f(l)+'</div><div class="t">'+(l===1?'oportunidade':'oportunidades')+' no GoHighLevel desde 01/09'+(S.c==='all'?'':', em '+NAME[S.c])+'.</div>';
+    $('#fc2').innerHTML='<div class="v">'+c+'<small> de '+l+'</small></div><div class="t">'+(l?'seguem ativas no funil. As demais saíram em Not Qualified ou Jobs Opening.':'Sem oportunidade registrada neste canal.')+'</div>';
+  }
+
+  function quality(){
+    var ms=mlist(),h='<table><thead><tr><th>Canal</th><th>Visitantes</th><th>Engajamento médio</th><th>Sessões engajadas por visitante</th><th>Oportunidades</th><th>Ativas</th></tr></thead><tbody>';
+    ORDER.forEach(function(c){
+      var ls=leadsOf([c]),on=S.c===c,dim=S.c!=='all'&&!on;
+      h+='<tr data-c="'+c+'" class="'+(on?'on ':'')+(dim?'dim':'')+'"><td>'+dot(c)+'<b>'+NAME[c]+'</b></td><td>'+f(users([c],ms))+'</td><td>'+Math.round(wavg([c],ms,'eng'))+' s</td><td>'+wavg([c],ms,'es').toFixed(2).replace('.',',')+'</td><td>'+ls.length+'</td><td>'+cnt(ls,['ic','ps','sd'])+'</td></tr>';
+    });
+    var all=leadsOf(ORDER);
+    h+='<tr class="tt"><td>Total</td><td>'+f(users(ORDER,ms))+'</td><td>'+Math.round(wavg(ORDER,ms,'eng'))+' s</td><td>'+wavg(ORDER,ms,'es').toFixed(2).replace('.',',')+'</td><td>'+all.length+'</td><td>'+cnt(all,['ic','ps','sd'])+'</td></tr></tbody></table>';
+    $('#qtb').innerHTML=h;
+    $$('#qtb tbody tr[data-c]').forEach(function(tr){tr.addEventListener('click',function(){set({c:S.c===tr.dataset.c?'all':tr.dataset.c})})});
+  }
+
+  function chartA(){
+    var cs=chs(),tot=MS.map(function(m){return users(cs,[m])}),mx=Math.max.apply(null,tot)||1,H=190;
+    $('#mcA').innerHTML=MS.map(function(m,i){
+      var seg=cs.slice().reverse().map(function(c){var v=users([c],[m]);return v?'<span style="height:'+Math.max(2,v/mx*H)+'px;background:'+COL[c]+'" title="'+NAME[c]+': '+v+'"></span>':''}).join('');
+      return '<div class="dx-bc"><div class="dx-t">'+f(tot[i])+'</div><div class="dx-k">'+seg+'</div><div class="dx-m">'+ML[m]+'</div></div>';
+    }).join('');
+    $('#legA').innerHTML=(S.c==='all'?ORDER:[S.c]).map(function(c){return '<span><i style="background:'+COL[c]+'"></i>'+NAME[c]+'</span>'}).join('');
+  }
+  var GC={com:'#C9A96E',nq:'#7C766A',jo:'#C0505A'};
+  function chartB(){
+    var ls=leadsOf(chs()),H=190,bym={};
+    ls.forEach(function(l){var m=l.d.slice(0,7);(bym[m]=bym[m]||[]).push(l)});
+    var mx=Math.max.apply(null,MS.map(function(m){return (bym[m]||[]).length}))||1;
+    $('#mcB').innerHTML=MS.map(function(m){
+      var a=bym[m]||[];
+      if(m<'2026-09')return '<div class="dx-bc"><div class="dx-t" style="color:#7C766A">—</div><div class="dx-e" title="Sem registro no export do GoHighLevel"></div><div class="dx-m">'+ML[m]+'</div></div>';
+      var g={com:cnt(a,['ic','ps','sd']),nq:cnt(a,['nq']),jo:cnt(a,['jo'])};
+      var seg=['jo','nq','com'].map(function(k){return g[k]?'<span style="height:'+Math.max(4,g[k]/mx*H)+'px;background:'+GC[k]+'" title="'+g[k]+'"></span>':''}).join('');
+      return '<div class="dx-bc"><div class="dx-t">'+a.length+'</div><div class="dx-k">'+seg+'</div><div class="dx-m">'+ML[m]+'</div></div>';
+    }).join('');
+    $('#legB').innerHTML='<span><i style="background:'+GC.com+'"></i>Ativas</span><span><i style="background:'+GC.nq+'"></i>Not Qualified</span><span><i style="background:'+GC.jo+'"></i>Jobs Opening</span>';
+  }
+
+  function matrix(){
+    var st=['ic','ps','sd','nq','jo'],h='<div></div><div class="dx-mh g">Initial Contact</div><div class="dx-mh g">Proposal Sent</div><div class="dx-mh g">Service Delivery</div><div class="dx-mh">Not Qualified</div><div class="dx-mh">Jobs Opening</div><div class="dx-mh">Total</div>';
+    ORDER.forEach(function(c){
+      var ls=leadsOf([c]),dim=S.c!=='all'&&S.c!==c?' dim':'';
+      h+='<div class="dx-ml'+dim+'">'+dot(c)+NAME[c]+'</div>';
+      st.forEach(function(s,i){
+        var n=cnt(ls,[s]);
+        var a=n?(0.22+0.78*n/7):0,bg=n?(i<3?'rgba(201,169,110,'+a+')':'rgba(192,80,90,'+a*0.9+')'):'rgba(255,255,255,.03)';
+        h+='<div class="dx-mc'+(n?'':' z')+dim+'" style="background:'+bg+(n&&i<3?';color:#1A1405':'')+'">'+(n||'0')+'</div>';
+      });
+      h+='<div class="dx-mt'+dim+'">'+ls.length+'</div>';
+    });
+    $('#mx').innerHTML=h;
+  }
+
+  function table(){
+    var ls=leadsOf(chs()),lim=S.all?ls.length:8,more=$('#lmore');
+    $('#lcount').textContent=ls.length+(ls.length===1?' oportunidade':' oportunidades');
+    $('#ltb').innerHTML=ls.slice(0,lim).map(function(l){
+      var d=l.d.slice(8,10)+'/'+l.d.slice(5,7);
+      return '<div class="dx-lr"><span class="d">'+d+'</span><span class="o">'+dot(l.c)+NAME[l.c].replace('Busca orgânica','Orgânico')+'</span><span class="det">'+l.det+'</span><span class="dx-st '+l.s+'">'+SG[l.s]+'</span></div>';
+    }).join('')||'<div class="dx-lr"><span class="det" style="grid-column:1/-1">Nenhuma oportunidade registrada neste canal.</span></div>';
+    more.hidden=ls.length<=8;more.textContent=S.all?'Mostrar menos':'Ver todas as '+ls.length;
+  }
+
+  function chips(){
+    var opts=[['all','Todos os canais']].concat(ORDER.map(function(c){return [c,NAME[c]]}));
+    $$('[data-dx]').forEach(function(el){
+      el.innerHTML=opts.map(function(o){return '<button type="button" class="dx-chip" data-c="'+o[0]+'" aria-pressed="'+(S.c===o[0])+'">'+(o[0]==='all'?'':'<i style="background:'+COL[o[0]]+'"></i>')+o[1]+'</button>'}).join('');
+      $$('.dx-chip',el).forEach(function(b){b.addEventListener('click',function(){set({c:b.dataset.c})})});
+    });
+    $$('[data-per]').forEach(function(el){
+      $$('button',el).forEach(function(b){b.addEventListener('click',function(){set({p:b.dataset.p})})});
+    });
+  }
+  function paint(){
+    $$('.dx-chip').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.c===S.c))});
+    $$('[data-per] button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.p===S.p))});
+  }
+  function set(o){for(var k in o)S[k]=o[k];S.all=false;render()}
+  function render(){paint();funnel();quality();chartA();chartB();matrix();table()}
+  chips();render();
+  $('#lmore').addEventListener('click',function(){S.all=!S.all;table()});
   /* cada grade de mapa anima célula a célula */
   document.querySelectorAll('.hm').forEach(function(g){[].slice.call(g.children).forEach(function(c,i){c.style.transitionDelay=(i*14)+'ms'})});
 })();
