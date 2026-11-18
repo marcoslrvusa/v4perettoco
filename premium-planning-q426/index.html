@@ -407,6 +407,7 @@ section.band{padding:104px 0}
 .dx-read{margin-top:26px;padding:18px 22px;border-left:3px solid var(--gold);background:var(--gold-s);border-radius:0 14px 14px 0;font-size:16px;color:var(--ink);max-width:940px;min-height:62px}
 .dk .dx-read{background:rgba(201,169,110,.1);color:#E8E3D6}
 .dx-read b{font-weight:700}
+.dx-warn{display:block;margin-top:10px;padding-top:10px;border-top:1px dashed rgba(122,92,34,.4);font-size:13.5px;color:var(--gold-d)}
 .cl .v small{font-size:.42em;letter-spacing:0;margin-left:3px;color:var(--mute2)}
 .cl.hl .v small{color:var(--gold)}
 
@@ -430,9 +431,9 @@ section.band{padding:104px 0}
 .dx-card .v small{font-size:.4em;color:#9F998C;letter-spacing:0;margin-left:3px}
 .dx-card p{margin-top:12px;font-size:14.5px;color:#BDB7AA;line-height:1.45}
 .dx-card.gd{background:linear-gradient(160deg,#8A6B2E,#C9A96E);border-color:#C9A96E}
-.dx-card.gd .v{color:#1A1405}.dx-card.gd p{color:#2A2008}
+.dx-card.gd .v{color:#1A1405;font-size:clamp(26px,2.8vw,36px);white-space:nowrap}.dx-card.gd p{color:#2A2008}
 
-.dx-mx{margin-top:10px;display:grid;grid-template-columns:150px repeat(5,1fr) 64px;gap:6px;align-items:stretch}
+.dx-mx{margin-top:10px;display:grid;grid-template-columns:150px repeat(6,minmax(0,1fr)) 64px;gap:6px;align-items:stretch}
 .dx-mh{font:600 10px/1.25 'JetBrains Mono',monospace;letter-spacing:.07em;text-transform:uppercase;color:#9F998C;padding:0 4px 8px;display:flex;align-items:flex-end;justify-content:center;text-align:center}
 .dx-mh.g{color:var(--gold)}
 .dx-ml{display:flex;align-items:center;font:700 14.5px/1.2 var(--font-d);color:#fff;padding-right:8px}
@@ -459,7 +460,7 @@ section.band{padding:104px 0}
 .dx-more{margin-top:14px;font:600 13.5px/1 'Ubuntu',sans-serif;padding:12px 20px;border-radius:100px;border:1px solid rgba(255,255,255,.2);background:transparent;color:#fff;cursor:pointer;transition:.2s}
 .dx-more:hover{border-color:var(--gold);color:var(--gold)}
 
-.dx-ch{margin-top:34px;display:grid;grid-template-columns:3fr 2fr;gap:16px}
+.dx-ch{margin-top:34px;display:grid;grid-template-columns:2fr 3fr;gap:16px}
 .dx-box{background:linear-gradient(180deg,var(--ink2),#14110D);border:1px solid var(--line);border-radius:var(--radius);padding:26px}
 .dx-box h4{font:600 13px/1.3 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#9F998C;margin-bottom:18px}
 .dx-bars{display:flex;align-items:flex-end;gap:14px;height:250px}
@@ -507,6 +508,19 @@ section.band{padding:104px 0}
 .sim-msg{padding:18px 20px;border-radius:14px;background:rgba(255,255,255,.05);font-size:14.5px;color:#D5CFC2;line-height:1.5;margin-bottom:6px}
 .sim-fine{margin-top:14px;font-size:12.5px;color:#8F897C;line-height:1.45}
 @media (max-width:980px){.sim-grid{grid-template-columns:1fr}.dx-sim{padding:24px 20px}.sim-r{grid-template-columns:1fr}}
+.dx-lt.open{max-height:560px;overflow:auto}
+.dx-st.cq{border:1px solid rgba(201,169,110,.55);color:var(--gold)}
+.dx-lr .det b{color:var(--gold);font-weight:700}
+.dx-sc{overflow-x:auto}
+.dx-ch>*,.dx-box{min-width:0}
+.dx-per{max-width:100%;overflow-x:auto}
+.dx-bars.wide{min-width:600px;gap:6px}
+.dx-bars.wide .dx-t{font-size:12px}
+.dx-bars.wide .dx-m{font-size:9.5px;text-align:center;line-height:1.35}
+.dx-mh .sh{display:none}
+.dx-abbr{display:none;margin-top:8px;font-size:11px;color:#8F897C;line-height:1.5}
+.sim-use{margin-top:10px;font:600 12.5px/1 'Ubuntu',sans-serif;padding:9px 14px;border-radius:100px;border:1px dashed rgba(201,169,110,.6);background:transparent;color:var(--gold);cursor:pointer;transition:.2s}
+.sim-use:hover{background:rgba(201,169,110,.15)}
 .dx-hist{margin-top:44px}
 .dx-hist h3{font-size:24px;font-weight:800}
 .dx-hist .callout{margin-top:18px}
@@ -514,7 +528,7 @@ section.band.dk+section.band.dk{border-top:1px solid var(--line)}
 @media (max-width:980px){
   .dx-ins,.dx-story{grid-template-columns:1fr 1fr}
   .dx-ch{grid-template-columns:1fr}
-  .dx-mx{grid-template-columns:110px repeat(5,1fr) 40px;gap:4px}
+  .dx-mx{grid-template-columns:110px repeat(6,minmax(0,1fr)) 40px;gap:4px}
   .dx-ml{font-size:12.5px}.dx-mc{font-size:16px;min-height:42px}
   .dx-lr{grid-template-columns:62px 1fr 128px;gap:10px;padding:12px 14px}
   .dx-lr .det{grid-column:1 / -1;order:5;font-size:13px;color:#9F998C}
@@ -522,7 +536,8 @@ section.band.dk+section.band.dk{border-top:1px solid var(--line)}
 @media (max-width:560px){
   .dx-ins,.dx-story{grid-template-columns:1fr}
   .dx-chip{padding:10px 13px;font-size:13px}
-  .dx-mx{grid-template-columns:88px repeat(5,minmax(0,1fr)) 32px;gap:3px}
+  .dx-mx{grid-template-columns:84px repeat(6,minmax(0,1fr)) 30px;gap:3px}
+  .dx-mh .l{display:none}.dx-mh .sh{display:inline;font-size:9px}.dx-abbr{display:block}
   .dx-mh{font-size:7px;letter-spacing:0;min-width:0;overflow:hidden;padding:0 0 6px}
   .dx-ml{font-size:11.5px}.dx-mc{font-size:14px;min-height:38px}
   .dx-bars{gap:8px}
@@ -545,7 +560,7 @@ section.band.dk+section.band.dk{border-top:1px solid var(--line)}
     </div>
     <div class="kpis">
       <div class="kpi"><div class="v">69<small>%</small></div><div class="l">dos pontos no top 3 do mapa, a 1 milha, em “commercial office cleaning service”</div></div>
-      <div class="kpi"><div class="v">5<small> de 22</small></div><div class="l">oportunidades do CRM seguem ativas no funil. Nenhuma das 10 do Meta passou da triagem</div></div>
+      <div class="kpi"><div class="v">6<small> de 54</small></div><div class="l">oportunidades do CRM no período do Analytics (jul a 17/11) estão ativas, 2 em Service Delivery. O melhor lead do histórico tem contrato recorrente de US$ 2.200</div></div>
       <div class="kpi"><div class="v"><small>US$</small>93</div><div class="l">custo por conversão no Bing, contra US$ 896 em junho</div></div>
       <div class="kpi"><div class="v">5,0<small>★</small></div><div class="l">no Google, com 43 reviews e rank médio de 2,7 em “commercial office cleaning service”</div></div>
     </div>
@@ -560,10 +575,10 @@ section.band.dk+section.band.dk{border-top:1px solid var(--line)}
 <section class="band lt" id="funil"><div class="wrap">
   <div class="eyebrow rv"><b>01</b>O funil</div>
   <h2 class="h2 rv">Da visita ao contrato, com todos os dados que temos</h2>
-  <p class="lead rv">Google Analytics, CRM e mídia no mesmo funil, de julho a 17/11. Escolha um canal para ver só o caminho dele.</p>
+  <p class="lead rv">Visitantes e oportunidades sempre no mesmo período, o do Analytics: de 01/07 a 17/11. O período e o canal que você escolhe valem para a página inteira.</p>
   <div class="dx-sel rv">
     <div class="dx-chips" data-dx></div>
-    <div class="dx-per" data-per><button type="button" data-p="s" aria-pressed="true">Desde 01/09</button><button type="button" data-p="a" aria-pressed="false">Todo o período · jul a 17/11</button></div>
+    <div class="dx-per" data-per><button type="button" data-p="a" aria-pressed="true">Jul a 17/11 · todo o Analytics</button><button type="button" data-p="s" aria-pressed="false">Desde 01/09</button></div>
   </div>
   <div class="funnel dx-fn">
     <div class="fr"><div class="st">Visitantes<small>topo · Analytics</small></div><div class="trk"><div class="bar" id="fb0"></div></div><div class="rt"><b id="fr0b"></b><em id="fr0s"></em><span class="owner">V4 · Tráfego e SEO</span></div></div>
@@ -586,12 +601,12 @@ section.band.dk+section.band.dk{border-top:1px solid var(--line)}
         <div class="sim-g" id="sim-sc"><label>Cenário do topo do funil</label><div class="sim-chips" data-sg="sc"><button type="button" class="sim-chip" data-v="cons" aria-pressed="false">Conservador</button><button type="button" class="sim-chip" data-v="base" aria-pressed="true">Base</button><button type="button" class="sim-chip" data-v="opt" aria-pressed="false">Otimista</button></div><p class="sim-cap" id="simcap"></p></div>
         <div class="sim-g" id="sim-cl"><label>Oportunidades ativas que viram contrato <small>hipótese, validar na call</small></label><div class="sim-chips" data-sg="cl"><button type="button" class="sim-chip" data-v="0.1" aria-pressed="true">10%</button><button type="button" class="sim-chip" data-v="0.2" aria-pressed="false">20%</button><button type="button" class="sim-chip" data-v="0.3" aria-pressed="false">30%</button></div></div>
         <div class="sim-g"><label>Investimento</label><div class="sim-chips" data-sg="inv"><button type="button" class="sim-chip" data-v="200" aria-pressed="false">US$ 200</button><button type="button" class="sim-chip" data-v="400" aria-pressed="true">US$ 400</button><button type="button" class="sim-chip" data-v="800" aria-pressed="false">US$ 800</button></div><div class="sim-in"><span>US$</span><input id="siminv" type="number" min="50" step="50" value="400" inputmode="numeric" aria-label="Investimento em dólares"></div></div>
-        <div class="sim-g"><label>Ticket mensal por contrato <small>preencher na call</small></label><div class="sim-in"><span>US$</span><input id="simtk" type="number" min="0" step="100" placeholder="a definir" inputmode="numeric" aria-label="Ticket mensal por contrato"></div></div>
+        <div class="sim-g"><label>Ticket mensal por contrato <small>preencher na call</small></label><div class="sim-in"><span>US$</span><input id="simtk" type="number" min="0" step="100" placeholder="a definir" inputmode="numeric" aria-label="Ticket mensal por contrato"></div><button type="button" class="sim-use" id="simuse">Usar US$ 2.200, o maior valor do CRM</button><p class="sim-cap" style="min-height:0;margin-top:6px">Valor do contrato recorrente de jan/2026. Período de cobrança a confirmar.</p></div>
       </div>
       <div class="sim-out" id="simo" aria-live="polite"></div>
     </div>
   </div>
-  <p class="note">Barras ilustram a ordem das etapas; os números são os reais. Analytics: propriedade Premium Contractors, 01/07 a 17/11 (novembro tem 17 dias). CRM: export do GoHighLevel de 18/11 com todas as oportunidades (22, a primeira de 01/09, então jul e ago não têm nenhuma), sem os registros de teste. Estágios com o nome do GoHighLevel; a ordem Initial Contact, Proposal Sent, Service Delivery é a que assumimos, a confirmar com o time comercial. “Ativas” = esses três estágios; Not Qualified e Jobs Opening ficam de fora. Amostra pequena: leia a direção, não a taxa.</p>
+  <p class="note">Barras ilustram a ordem das etapas; os números são os reais. Analytics: propriedade Premium Contractors, 01/07 a 17/11 (novembro tem 17 dias). CRM: export completo do GoHighLevel de 18/11, com 180 registros de set/2025 a nov/2026. Saíram 22 registros de teste e 8 duplicados de contato, ficando 150 oportunidades. A página usa só as de 01/07 em diante (54), o mesmo período do Analytics; as 96 anteriores, de set/2025 a jun/2026, ficam fora porque não têm visitantes para comparar. Estágios com o nome do GoHighLevel; a ordem Initial Contact, Consultation &amp; Quote, Proposal Sent, Service Delivery é a que assumimos, a confirmar com o time comercial. “Ativas” = esses quatro estágios; Not Qualified e Jobs Opening ficam de fora. A origem da sessão só passou a ser gravada no CRM em 01/09: antes disso, o canal vem do campo de origem do formulário. Amostra pequena: leia a direção, não a taxa.</p>
 </div></section>
 
 <!-- ============ 2 · CORRIGIDO ============ -->
@@ -619,7 +634,7 @@ section.band.dk+section.band.dk{border-top:1px solid var(--line)}
   <div class="eyebrow rv"><b>03</b>Canais</div>
   <h2 class="h2 rv">Cada canal tem um papel no funil</h2>
   <p class="lead rv">Descoberta, decisão e captura trabalham juntas. Primeiro o comportamento de cada canal no Analytics, depois os números de cada plataforma.</p>
-  <div class="dx-sel rv"><div class="dx-chips" data-dx></div><div class="dx-per" data-per><button type="button" data-p="s" aria-pressed="true">Desde 01/09</button><button type="button" data-p="a" aria-pressed="false">Jul a 17/11</button></div></div>
+  <div class="dx-sel rv"><div class="dx-chips" data-dx></div><div class="dx-per" data-per><button type="button" data-p="a" aria-pressed="true">Jul a 17/11 · todo o Analytics</button><button type="button" data-p="s" aria-pressed="false">Desde 01/09</button></div></div>
   <div class="dx-tb rv" id="qtb"></div>
   <p class="note">Tempo e sessões engajadas são médias ponderadas pelos visitantes. “Outros” inclui ferramentas da equipe (Tag Assistant, Ekyte, Lovable, GoHighLevel) e referrals pequenos. Clique numa linha para filtrar a página.</p>
   <div class="ch">
@@ -636,19 +651,20 @@ section.band.dk+section.band.dk{border-top:1px solid var(--line)}
 <section class="band dk d2" id="leads"><div class="wrap">
   <div class="eyebrow rv"><b>04</b>Leads</div>
   <h2 class="h2 rv">O que o CRM fez com cada lead</h2>
-  <p class="lead rv">22 oportunidades, de todo o histórico do CRM, classificadas por origem e por estágio no GoHighLevel. O volume não conta a história sozinho.</p>
+  <p class="lead rv">As oportunidades do CRM, no mesmo período do funil, classificadas por origem e por estágio no GoHighLevel. O volume não conta a história sozinho.</p>
   <div class="dx-ins">
-    <div class="dx-card rv d1"><div class="v">10<small> de 22</small></div><p>oportunidades vieram do Meta, em 9 dias de setembro. Nenhuma passou da triagem: 7 em Jobs Opening e 3 em Not Qualified.</p></div>
-    <div class="dx-card rv d2"><div class="v">3<small> de 4</small></div><p>oportunidades do Bing seguem ativas. Uma já está em Service Delivery, e as duas mais recentes são do Ad Group 2, Office.</p></div>
-    <div class="dx-card rv d3"><div class="v">1<small> de 1</small></div><p>oportunidade orgânica está em Proposal Sent, vinda do Google em novembro.</p></div>
-    <div class="dx-card gd rv d4"><div class="v">US$ 0</div><p>de valor registrado nas 22 oportunidades. Sem o campo de valor, o CRM não mede receita.</p></div>
+    <div class="dx-card rv d1" id="lc1"></div>
+    <div class="dx-card rv d2" id="lc2"></div>
+    <div class="dx-card gd rv d3"><div class="v">US$ 2.200</div><p>de contrato recorrente: o melhor lead do histórico, de jan/2026, em Service Delivery. É anterior ao Analytics e veio de um formulário sem origem registrada.</p></div>
+    <div class="dx-card rv d4" id="lc4"></div>
   </div>
-  <div class="dx-sel rv"><div class="dx-chips" data-dx></div></div>
+  <div class="dx-sel rv"><div class="dx-chips" data-dx></div><div class="dx-per" data-per><button type="button" data-p="a" aria-pressed="true">Jul a 17/11 · todo o Analytics</button><button type="button" data-p="s" aria-pressed="false">Desde 01/09</button></div></div>
   <div class="dx-mx rv" id="mx"></div>
+  <p class="dx-abbr">IC Initial Contact · C&amp;Q Consultation &amp; Quote · PS Proposal Sent · SD Service Delivery · NQ Not Qualified · JO Jobs Opening</p>
   <div class="dx-lh rv"><h3>As oportunidades, uma a uma</h3><span id="lcount"></span></div>
   <div class="dx-lt rv" id="ltb"></div>
   <button type="button" class="dx-more" id="lmore" hidden>Ver todas</button>
-  <p class="note">Sem nome, e-mail ou telefone: só data, origem, campanha e estágio. Registros de teste (“Teste V4 Elisa” e “Nome Test Bing”) ficaram de fora. Jobs Opening reúne pessoas que procuravam vaga, e não o serviço (leitura pelos motivos registrados nos leads do Meta). Not Qualified e Jobs Opening ficam fora do funil comercial. Os leads de novembro ainda estão em triagem inicial, então a taxa de “ativas” deve cair quando forem classificados.</p>
+  <p class="note">Sem nome, e-mail ou telefone: só data, origem, campanha e estágio. Os registros de teste e os contatos repetidos ficaram de fora. Jobs Opening reúne pessoas que procuravam vaga, e não o serviço (leitura pelos motivos registrados nos leads do Meta). Not Qualified e Jobs Opening ficam fora do funil comercial. Os leads de novembro ainda estão em triagem inicial, então a taxa de “ativas” deve cair quando forem classificados. O CRM guarda 96 oportunidades anteriores a jul/2026, fora desta visão porque o Analytics não existia. O melhor lead do histórico não tem canal rastreado: é o argumento para medir a origem de cada oportunidade daqui para a frente.</p>
 </div></section>
 
 <!-- ============ 4 · EVOLUÇÃO ============ -->
@@ -664,7 +680,7 @@ section.band.dk+section.band.dk{border-top:1px solid var(--line)}
     <div class="tn rv d5"><div class="d">11/11</div><h3>Publicação</h3><p>Site corrigido no ar, 67 URLs no sitemap, IndexNow enviado.</p></div>
     <div class="tn now rv d5"><div class="d">17/11</div><h3>Leads reais</h3><p>3 leads B2B em 15 dias, 2 deles pagos, do Office em Manhattan.</p></div>
   </div>
-  <div class="dx-sel rv"><div class="dx-chips" data-dx></div></div>
+  <div class="dx-sel rv"><div class="dx-chips" data-dx></div><div class="dx-per" data-per><button type="button" data-p="a" aria-pressed="true">Jul a 17/11 · todo o Analytics</button><button type="button" data-p="s" aria-pressed="false">Desde 01/09</button></div></div>
   <div class="dx-ch">
     <div class="dx-box rv d1"><h4>Visitantes por mês · Analytics</h4><div class="dx-bars" id="mcA"></div><div class="dx-leg" id="legA"></div></div>
     <div class="dx-box rv d2"><h4>Oportunidades por mês · CRM</h4><div class="dx-bars" id="mcB"></div><div class="dx-leg" id="legB"></div></div>
@@ -672,9 +688,9 @@ section.band.dk+section.band.dk{border-top:1px solid var(--line)}
   <div class="dx-story rv">
     <div><b>295 → 0</b><span>Em setembro, 295 visitas do Bing não geraram nenhuma oportunidade.</span></div>
     <div><b>165 → 4</b><span>Em outubro e novembro, 165 visitas do Bing geraram 4, três ainda ativas.</span></div>
-    <div><b>16 → 3</b><span>Oportunidades por mês: 16 em setembro (1 ativa), 3 em outubro (1 ativa) e 3 em novembro, até dia 17 (3 ativas).</span></div>
+    <div id="st3"></div>
   </div>
-  <p class="note">Novembro tem 17 dias: o Bing foi de 24 para 4 visitantes por dia, queda de 82% no ritmo diário contra agosto. Jul e Ago não têm oportunidades no CRM. O tráfego direto de novembro (474 visitantes, 2 s de engajamento) tem padrão típico de acesso automatizado e será filtrado.</p>
+  <p class="note">Novembro tem 17 dias: o Bing foi de 24 para 4 visitantes por dia, queda de 82% no ritmo diário contra agosto. Visitantes e oportunidades usam o mesmo período, escolhido no seletor. O tráfego direto de novembro (474 visitantes, 2 s de engajamento) tem padrão típico de acesso automatizado e será filtrado.</p>
   <div class="ba">
     <div class="bm rv d1"><h4>Custo por conversão · Bing</h4>
       <div class="row"><span>Jun/26</span><i class="a" style="width:100%"></i><span>US$ 896</span></div>
@@ -806,7 +822,7 @@ section.band.dk+section.band.dk{border-top:1px solid var(--line)}
   <div class="eyebrow rv"><b>10</b>Respostas ao cliente</div>
   <h2 class="h2 rv">As dúvidas de 16/11, uma a uma</h2>
   <p class="lead rv">O cliente tinha razão em quase tudo. Aqui está o que mudou em cada ponto.</p>
-  <div class="qa"><div class="qc rv"><h4>Por que 50% da verba no ChatGPT Ads?</h4><p>Não havia evidência. O ChatGPT Ads agora é a <b>fase 2, só Office</b>, até US$ 200, com pausa em US$ 150.</p><span class="st a">Concordamos e corrigimos</span></div><div class="qc rv"><h4>De onde saiu “4 a 10 leads”?</h4><p>Era um cenário, não uma previsão. Agora o plano parte do que aconteceu: <b>4 oportunidades do Bing desde 01/09, 3 ativas</b>. Contratos só serão projetados com a taxa de fechamento real.</p><span class="st a">Concordamos e corrigimos</span></div><div class="qc rv"><h4>Por que 76% do gasto saiu do alvo?</h4><p>Das 82 negativas, <b>só 9 estavam aplicadas</b>. Foi higiene da conta, não mercado. As 91 novas estão prontas.</p><span class="st a">Causa achada</span></div><div class="qc rv"><h4>Faturamento não é lucro, e CAC não é CPL</h4><p>Concordamos. O retorno passa a ser por <b>margem de contribuição</b>, com o fee V4 dentro do CAC. Só usamos o ticket e a margem que vierem de vocês.</p><span class="st b">Planilha pronta</span></div><div class="qc rv"><h4>Como ligar lead a proposta e contrato?</h4><p>O <b>GoHighLevel</b> já grava origem, campanha, palavra-chave e estágio nas 22 oportunidades. Falta o <b>valor e a data de fechamento</b>: o campo de valor está vazio em todas.</p><span class="st b">A configurar na fase 0</span></div><div class="qc rv"><h4>E hood, grease e o seguro?</h4><p>Há exposição real em <b>25 de 67 páginas</b>. Fica pausado até a lista de serviços cobertos, assinada.</p><span class="st c">Pausado</span></div><div class="qc rv"><h4>Quanto investir para validar, e qual o mínimo?</h4><p>Até <b>US$ 400</b> nas fases 1 e 2. O resto só com 1 proposta de lead pago, CPL válido até US$ 200 e funil rastreado.</p><span class="st a">Critério escrito</span></div><div class="qc rv"><h4>US$ 400 em 3 segmentos é suficiente?</h4><p>Não: dá cerca de US$ 130 por grupo. Por isso começamos <b>só com Office</b>, que já converteu.</p><span class="st a">Concordamos e corrigimos</span></div><div class="qc rv"><h4>Os 24 artigos trouxeram resultado?</h4><p>Ainda não medimos resultado comercial, e dizemos isso. O Google já tem <b>43 de 67 páginas ok</b>; faltam 24 e o Bing está em 10 de 65.</p><span class="st b">Em validação</span></div></div>
+  <div class="qa"><div class="qc rv"><h4>Por que 50% da verba no ChatGPT Ads?</h4><p>Não havia evidência. O ChatGPT Ads agora é a <b>fase 2, só Office</b>, até US$ 200, com pausa em US$ 150.</p><span class="st a">Concordamos e corrigimos</span></div><div class="qc rv"><h4>De onde saiu “4 a 10 leads”?</h4><p>Era um cenário, não uma previsão. Agora o plano parte do que aconteceu: <b>4 oportunidades do Bing desde 01/09, 3 ativas</b>. Contratos só serão projetados com a taxa de fechamento real.</p><span class="st a">Concordamos e corrigimos</span></div><div class="qc rv"><h4>Por que 76% do gasto saiu do alvo?</h4><p>Das 82 negativas, <b>só 9 estavam aplicadas</b>. Foi higiene da conta, não mercado. As 91 novas estão prontas.</p><span class="st a">Causa achada</span></div><div class="qc rv"><h4>Faturamento não é lucro, e CAC não é CPL</h4><p>Concordamos. O retorno passa a ser por <b>margem de contribuição</b>, com o fee V4 dentro do CAC. Só usamos o ticket e a margem que vierem de vocês.</p><span class="st b">Planilha pronta</span></div><div class="qc rv"><h4>Como ligar lead a proposta e contrato?</h4><p>O <b>GoHighLevel</b> já grava origem e estágio nas 150 oportunidades, e campanha e palavra-chave nas mais recentes. Falta o <b>valor</b>: só 3 oportunidades têm.</p><span class="st b">A configurar na fase 0</span></div><div class="qc rv"><h4>E hood, grease e o seguro?</h4><p>Há exposição real em <b>25 de 67 páginas</b>. Fica pausado até a lista de serviços cobertos, assinada.</p><span class="st c">Pausado</span></div><div class="qc rv"><h4>Quanto investir para validar, e qual o mínimo?</h4><p>Até <b>US$ 400</b> nas fases 1 e 2. O resto só com 1 proposta de lead pago, CPL válido até US$ 200 e funil rastreado.</p><span class="st a">Critério escrito</span></div><div class="qc rv"><h4>US$ 400 em 3 segmentos é suficiente?</h4><p>Não: dá cerca de US$ 130 por grupo. Por isso começamos <b>só com Office</b>, que já converteu.</p><span class="st a">Concordamos e corrigimos</span></div><div class="qc rv"><h4>Os 24 artigos trouxeram resultado?</h4><p>Ainda não medimos resultado comercial, e dizemos isso. O Google já tem <b>43 de 67 páginas ok</b>; faltam 24 e o Bing está em 10 de 65.</p><span class="st b">Em validação</span></div></div>
 </div></section>
 
 <!-- ============ 10 · ROTEIRO ============ -->
@@ -830,7 +846,7 @@ section.band.dk+section.band.dk{border-top:1px solid var(--line)}
   <h2 class="h2 rv">O que precisamos de vocês para a fase 0</h2>
   <p class="lead rv">Com eles, medimos de ponta a ponta e liberamos a verba por critério.</p>
   <div class="need">
-    <div class="nd rv d1"><div class="n">01</div><h4>Valor e fechamento no GoHighLevel</h4><p>Já temos as 22 oportunidades do CRM. Faltam valor e data de fechamento em todas.</p></div>
+    <div class="nd rv d1"><div class="n">01</div><h4>Valor e fechamento no GoHighLevel</h4><p>O export de 150 oportunidades já está em mãos. Só 3 têm valor: faltam valor e data de fechamento nas demais.</p></div>
     <div class="nd rv d2"><div class="n">02</div><h4>Ticket e margem reais</h4><p>Por vertical, ao menos Office.</p></div>
     <div class="nd rv d3"><div class="n">03</div><h4>Lista do seguro</h4><p>Serviços cobertos, em apólice ou carta do corretor.</p></div>
     <div class="nd rv d1"><div class="n">04</div><h4>Fotos reais</h4><p>Equipe, obras e prédios, no lugar de imagem de IA.</p></div>
@@ -859,14 +875,17 @@ section.band.dk+section.band.dk{border-top:1px solid var(--line)}
   window.addEventListener('scroll',on,{passive:true});on();
 
   /* ---------- dados reais: GA4 + GoHighLevel ---------- */
-  var D={"ga":{"2026-07":{"bing":{"u":151,"eng":42.5,"es":0.53,"key":0.0},"dir":{"u":72,"eng":29.6,"es":0.71,"key":0.0},"org":{"u":20,"eng":34.5,"es":0.6,"key":0.0},"out":{"u":14,"eng":15.1,"es":0.36,"key":0.0},"meta":{"u":11,"eng":3.9,"es":0.55,"key":0.0},"ia":{"u":1,"eng":1.0,"es":1.0,"key":0.0}},"2026-08":{"bing":{"u":744,"eng":55.8,"es":0.6,"key":0.0},"dir":{"u":143,"eng":46.1,"es":0.48,"key":0.0},"meta":{"u":30,"eng":7.7,"es":0.5,"key":0.0},"org":{"u":20,"eng":102.7,"es":1.09,"key":0.0},"out":{"u":16,"eng":43.5,"es":1.12,"key":0.0},"ia":{"u":2,"eng":30.5,"es":1.0,"key":0.0}},"2026-09":{"bing":{"u":295,"eng":30.4,"es":0.55,"key":0.0},"dir":{"u":112,"eng":6.0,"es":0.28,"key":0.0},"org":{"u":17,"eng":62.2,"es":1.18,"key":0.0},"meta":{"u":22,"eng":4.1,"es":0.5,"key":0.0},"out":{"u":10,"eng":20.9,"es":0.8,"key":0.0},"ia":{"u":1,"eng":4.0,"es":1.0,"key":0.0}},"2026-10":{"dir":{"u":236,"eng":8.4,"es":0.21,"key":0.0},"bing":{"u":92,"eng":32.5,"es":0.56,"key":0.0},"org":{"u":17,"eng":16.2,"es":0.65,"key":0.0},"ia":{"u":5,"eng":9.8,"es":0.2,"key":0.0},"meta":{"u":5,"eng":1.4,"es":0.2,"key":0.0},"out":{"u":6,"eng":213.2,"es":0.5,"key":0.0}},"2026-11":{"dir":{"u":474,"eng":2.2,"es":0.07,"key":0.0},"bing":{"u":73,"eng":21.6,"es":0.47,"key":0.0},"org":{"u":16,"eng":33.2,"es":0.88,"key":0.0},"ia":{"u":7,"eng":130.0,"es":0.29,"key":0.0},"out":{"u":3,"eng":130.7,"es":2.0,"key":0.0},"meta":{"u":3,"eng":0.0,"es":0.0,"key":0.0}}},"leads":[{"d":"2026-11-17","c":"bing","s":"ic","det":"Office Cleaning Nyc · Ad Group 2","val":0.0,"status":"open"},{"d":"2026-11-09","c":"org","s":"ps","det":"Google · formulário do site","val":0.0,"status":"open"},{"d":"2026-11-03","c":"bing","s":"ic","det":"Office Cleaning Near Me · Ad Group 2","val":0.0,"status":"open"},{"d":"2026-10-29","c":"out","s":"jo","det":"Cadastro manual no CRM","val":0.0,"status":"open"},{"d":"2026-10-27","c":"bing","s":"jo","det":"Commercial Cleaning Services · Ad Group 1","val":0.0,"status":"open"},{"d":"2026-10-07","c":"bing","s":"sd","det":"Commercial Cleaning Janitorial Services · Ad Group 1","val":0.0,"status":"open"},{"d":"2026-09-21","c":"dir","s":"nq","det":"Formulário do site","val":0.0,"status":"open"},{"d":"2026-09-18","c":"dir","s":"jo","det":"Formulário do site","val":0.0,"status":"open"},{"d":"2026-09-16","c":"dir","s":"nq","det":"Formulário do site","val":0.0,"status":"open"},{"d":"2026-09-09","c":"meta","s":"nq","det":"Meta Ads · AD 03","val":0.0,"status":"open"},{"d":"2026-09-08","c":"meta","s":"nq","det":"Meta Ads · Vídeo 01","val":0.0,"status":"open"},{"d":"2026-09-08","c":"dir","s":"sd","det":"Formulário do site","val":0.0,"status":"open"},{"d":"2026-09-08","c":"meta","s":"jo","det":"Meta Ads · AD 01","val":0.0,"status":"open"},{"d":"2026-09-07","c":"dir","s":"nq","det":"Formulário do site","val":0.0,"status":"open"},{"d":"2026-09-04","c":"meta","s":"jo","det":"Meta Ads · AD 01","val":0.0,"status":"open"},{"d":"2026-09-03","c":"meta","s":"jo","det":"Meta Ads · AD 01","val":0.0,"status":"open"},{"d":"2026-09-03","c":"meta","s":"jo","det":"Meta Ads · AD 01","val":0.0,"status":"open"},{"d":"2026-09-02","c":"meta","s":"jo","det":"Meta Ads · AD 03","val":0.0,"status":"abandoned"},{"d":"2026-09-01","c":"meta","s":"nq","det":"Meta Ads · AD 03","val":0.0,"status":"open"},{"d":"2026-09-01","c":"meta","s":"jo","det":"Meta Ads · AD 01","val":0.0,"status":"open"},{"d":"2026-09-01","c":"dir","s":"jo","det":"Formulário do site","val":0.0,"status":"open"},{"d":"2026-09-01","c":"meta","s":"jo","det":"Meta Ads · AD 03","val":0.0,"status":"open"}]};
-  var NAME={bing:'Bing Ads',org:'Busca orgânica',meta:'Meta e redes',dir:'Direto',ia:'IA (ChatGPT)',out:'Outros'};
-  var COL={bing:'#C9A96E',org:'#34D399',meta:'#F0616A',dir:'#8D877B',ia:'#EADFC2',out:'#5B5548'};
-  var ORDER=['bing','org','meta','dir','ia','out'];
+  var D={"ga":{"2026-07":{"bing":{"u":151,"eng":42.5,"es":0.53},"dir":{"u":72,"eng":29.6,"es":0.71},"org":{"u":20,"eng":34.5,"es":0.6},"out":{"u":14,"eng":15.1,"es":0.36},"meta":{"u":11,"eng":3.9,"es":0.55},"ia":{"u":1,"eng":1.0,"es":1.0}},"2026-08":{"bing":{"u":744,"eng":55.8,"es":0.6},"dir":{"u":143,"eng":46.1,"es":0.48},"meta":{"u":30,"eng":7.7,"es":0.5},"org":{"u":20,"eng":102.7,"es":1.09},"out":{"u":16,"eng":43.5,"es":1.12},"ia":{"u":2,"eng":30.5,"es":1.0}},"2026-09":{"bing":{"u":295,"eng":30.4,"es":0.55},"dir":{"u":112,"eng":6.0,"es":0.28},"org":{"u":17,"eng":62.2,"es":1.18},"meta":{"u":22,"eng":4.1,"es":0.5},"out":{"u":10,"eng":20.9,"es":0.8},"ia":{"u":1,"eng":4.0,"es":1.0}},"2026-10":{"dir":{"u":236,"eng":8.4,"es":0.21},"bing":{"u":92,"eng":32.5,"es":0.56},"org":{"u":17,"eng":16.2,"es":0.65},"ia":{"u":5,"eng":9.8,"es":0.2},"meta":{"u":5,"eng":1.4,"es":0.2},"out":{"u":6,"eng":213.2,"es":0.5}},"2026-11":{"dir":{"u":474,"eng":2.2,"es":0.07},"bing":{"u":73,"eng":21.6,"es":0.47},"org":{"u":16,"eng":33.2,"es":0.88},"ia":{"u":7,"eng":130.0,"es":0.29},"out":{"u":3,"eng":130.7,"es":2.0},"meta":{"u":3,"eng":0.0,"es":0.0}}},"leads":[{"d":"2026-11-17","c":"bing","s":"ic","det":"Office Cleaning Nyc · Ad Group 2","val":0.0},{"d":"2026-11-09","c":"org","s":"ps","det":"Google · formulário do site","val":0.0},{"d":"2026-11-03","c":"bing","s":"ic","det":"Office Cleaning Near Me · Ad Group 2","val":0.0},{"d":"2026-10-29","c":"sem","s":"jo","det":"Cadastro manual no CRM","val":0.0},{"d":"2026-10-27","c":"bing","s":"jo","det":"Commercial Cleaning Services · Ad Group 1","val":0.0},{"d":"2026-10-07","c":"bing","s":"sd","det":"Commercial Cleaning Janitorial Services · Ad Group 1","val":0.0},{"d":"2026-09-21","c":"dir","s":"nq","det":"Formulário do site","val":0.0},{"d":"2026-09-18","c":"dir","s":"jo","det":"Formulário do site","val":0.0},{"d":"2026-09-16","c":"dir","s":"nq","det":"Formulário do site","val":0.0},{"d":"2026-09-09","c":"meta","s":"nq","det":"Meta Ads · AD 03","val":0.0},{"d":"2026-09-08","c":"meta","s":"nq","det":"Meta Ads · Vídeo 01","val":0.0},{"d":"2026-09-08","c":"dir","s":"sd","det":"Formulário do site","val":0.0},{"d":"2026-09-08","c":"meta","s":"jo","det":"Meta Ads · AD 01","val":0.0},{"d":"2026-09-07","c":"dir","s":"nq","det":"Formulário do site","val":0.0},{"d":"2026-09-04","c":"meta","s":"jo","det":"Meta Ads · AD 01","val":0.0},{"d":"2026-09-03","c":"meta","s":"jo","det":"Meta Ads · AD 01","val":0.0},{"d":"2026-09-03","c":"meta","s":"jo","det":"Meta Ads · AD 01","val":0.0},{"d":"2026-09-01","c":"meta","s":"nq","det":"Meta Ads · AD 03","val":0.0},{"d":"2026-09-01","c":"meta","s":"jo","det":"Meta Ads · AD 01","val":0.0},{"d":"2026-09-01","c":"dir","s":"jo","det":"Formulário do site","val":0.0},{"d":"2026-09-01","c":"meta","s":"jo","det":"Meta Ads · AD 03","val":0.0},{"d":"2026-08-31","c":"meta","s":"jo","det":"Meta Ads","val":0.0},{"d":"2026-08-29","c":"site","s":"nq","det":"Formulário do site, origem não registrada","val":0.0},{"d":"2026-08-27","c":"site","s":"nq","det":"Formulário do site, origem não registrada","val":0.0},{"d":"2026-08-26","c":"meta","s":"jo","det":"Meta Ads","val":0.0},{"d":"2026-08-25","c":"meta","s":"jo","det":"Meta Ads","val":0.0},{"d":"2026-08-24","c":"site","s":"jo","det":"Formulário do site, origem não registrada","val":0.0},{"d":"2026-08-24","c":"meta","s":"jo","det":"Meta Ads","val":0.0},{"d":"2026-08-23","c":"meta","s":"jo","det":"Meta Ads","val":0.0},{"d":"2026-08-21","c":"meta","s":"jo","det":"Meta Ads","val":0.0},{"d":"2026-08-19","c":"meta","s":"jo","det":"Meta Ads","val":0.0},{"d":"2026-08-18","c":"meta","s":"jo","det":"Meta Ads","val":0.0},{"d":"2026-08-16","c":"site","s":"jo","det":"Formulário do site, origem não registrada","val":0.0},{"d":"2026-08-14","c":"meta","s":"jo","det":"Meta Ads","val":0.0},{"d":"2026-08-13","c":"meta","s":"jo","det":"Meta Ads","val":0.0},{"d":"2026-08-13","c":"meta","s":"jo","det":"Meta Ads","val":0.0},{"d":"2026-08-12","c":"meta","s":"jo","det":"Meta Ads","val":0.0},{"d":"2026-08-12","c":"site","s":"ps","det":"Formulário do site, origem não registrada","val":0.0},{"d":"2026-08-12","c":"meta","s":"nq","det":"Meta Ads","val":0.0},{"d":"2026-08-12","c":"site","s":"nq","det":"Formulário do site, origem não registrada","val":0.0},{"d":"2026-08-12","c":"meta","s":"nq","det":"Meta Ads","val":0.0},{"d":"2026-08-11","c":"meta","s":"nq","det":"Meta Ads","val":0.0},{"d":"2026-08-11","c":"meta","s":"nq","det":"Meta Ads","val":0.0},{"d":"2026-08-10","c":"job","s":"nq","det":"Formulário de vaga","val":0.0},{"d":"2026-08-04","c":"site","s":"nq","det":"Landing page principal","val":0.0},{"d":"2026-07-30","c":"site","s":"nq","det":"Landing page principal","val":0.0},{"d":"2026-07-30","c":"site","s":"nq","det":"Landing page principal","val":0.0},{"d":"2026-07-28","c":"sem","s":"nq","det":"Sem origem registrada","val":0.0},{"d":"2026-07-26","c":"site","s":"nq","det":"Landing page principal","val":0.0},{"d":"2026-07-25","c":"site","s":"nq","det":"Landing page principal","val":0.0},{"d":"2026-07-22","c":"site","s":"nq","det":"Landing page principal","val":0.0},{"d":"2026-07-20","c":"site","s":"nq","det":"Landing page principal","val":0.0},{"d":"2026-07-18","c":"site","s":"nq","det":"Landing page principal","val":0.0},{"d":"2026-07-17","c":"site","s":"nq","det":"Landing page principal","val":0.0},{"d":"2026-06-04","c":"site","s":"nq","det":"Landing page principal","val":0.0},{"d":"2026-05-31","c":"site","s":"nq","det":"Landing page principal","val":0.0},{"d":"2026-05-15","c":"site","s":"nq","det":"Formulário do site (Form 4)","val":0.0},{"d":"2026-05-14","c":"site","s":"cq","det":"Formulário do site (Form 4)","val":0.0},{"d":"2026-05-11","c":"site","s":"jo","det":"Formulário do site (Form 4)","val":0.0},{"d":"2026-05-03","c":"job","s":"jo","det":"Formulário de vaga","val":0.0},{"d":"2026-04-27","c":"sem","s":"nq","det":"Sem origem registrada","val":0.0},{"d":"2026-04-22","c":"job","s":"nq","det":"Formulário de vaga","val":0.0},{"d":"2026-04-22","c":"job","s":"nq","det":"Formulário de vaga","val":0.0},{"d":"2026-04-21","c":"job","s":"nq","det":"Formulário de vaga","val":0.0},{"d":"2026-04-19","c":"site","s":"nq","det":"Formulário do site (Form 4)","val":0.0},{"d":"2026-04-19","c":"job","s":"nq","det":"Formulário de vaga","val":0.0},{"d":"2026-04-18","c":"job","s":"jo","det":"Formulário de vaga","val":0.0},{"d":"2026-04-15","c":"sem","s":"sd","det":"Sem origem registrada","val":110.0},{"d":"2026-04-07","c":"sem","s":"jo","det":"Sem origem registrada","val":0.0},{"d":"2026-03-19","c":"site","s":"jo","det":"Formulário do site (Form 4)","val":0.0},{"d":"2026-03-18","c":"sem","s":"nq","det":"Sem origem registrada","val":0.0},{"d":"2026-03-04","c":"sem","s":"nq","det":"Sem origem registrada","val":0.0},{"d":"2026-01-27","c":"site","s":"nq","det":"Formulário do site (Form 4)","val":0.0},{"d":"2026-01-27","c":"site","s":"jo","det":"Formulário do site (Form 4)","val":0.0},{"d":"2026-01-22","c":"site","s":"sd","det":"Formulário do site (Form 4)","val":2200.0},{"d":"2026-01-20","c":"job","s":"nq","det":"Formulário de vaga","val":0.0},{"d":"2026-01-19","c":"job","s":"nq","det":"Formulário de vaga","val":0.0},{"d":"2026-01-15","c":"job","s":"nq","det":"Formulário de vaga","val":0.0},{"d":"2026-01-09","c":"job","s":"nq","det":"Formulário de vaga","val":0.0},{"d":"2026-01-01","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-12-30","c":"sem","s":"nq","det":"Sem origem registrada","val":0.0},{"d":"2025-12-29","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-12-26","c":"job","s":"nq","det":"Formulário de vaga","val":0.0},{"d":"2025-12-26","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-12-24","c":"job","s":"nq","det":"Formulário de vaga","val":0.0},{"d":"2025-12-23","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-12-17","c":"job","s":"nq","det":"Formulário de vaga","val":0.0},{"d":"2025-12-16","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-12-15","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-12-10","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-12-09","c":"job","s":"nq","det":"Formulário de vaga","val":0.0},{"d":"2025-12-08","c":"sem","s":"nq","det":"Sem origem registrada","val":0.0},{"d":"2025-12-02","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-11-27","c":"sem","s":"nq","det":"Sem origem registrada","val":0.0},{"d":"2025-11-26","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-11-18","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-11-17","c":"sem","s":"nq","det":"Sem origem registrada","val":0.0},{"d":"2025-11-17","c":"job","s":"nq","det":"Formulário de vaga","val":0.0},{"d":"2025-11-17","c":"sem","s":"nq","det":"Sem origem registrada","val":0.0},{"d":"2025-11-13","c":"job","s":"nq","det":"Formulário de vaga","val":0.0},{"d":"2025-11-09","c":"job","s":"nq","det":"Formulário de vaga","val":0.0},{"d":"2025-11-04","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-11-03","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-11-03","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-11-03","c":"job","s":"nq","det":"Formulário de vaga","val":0.0},{"d":"2025-11-03","c":"sem","s":"nq","det":"Sem origem registrada","val":0.0},{"d":"2025-11-03","c":"job","s":"nq","det":"Formulário de vaga","val":0.0},{"d":"2025-10-31","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-31","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-31","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-31","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-30","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-30","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-30","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-30","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-30","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-30","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-29","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-29","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-29","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-28","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-27","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-24","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-24","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-24","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-23","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-23","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-22","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-22","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-22","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-21","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-21","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-20","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-20","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-20","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-17","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-17","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-17","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-17","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-15","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-15","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-15","c":"gads","s":"nq","det":"Origem v4google no CRM","val":0.0},{"d":"2025-10-07","c":"sem","s":"nq","det":"Sem origem registrada","val":0.0},{"d":"2025-10-07","c":"sem","s":"nq","det":"Sem origem registrada","val":0.0},{"d":"2025-10-03","c":"sem","s":"nq","det":"Sem origem registrada","val":0.0},{"d":"2025-10-03","c":"sem","s":"nq","det":"Sem origem registrada","val":0.0},{"d":"2025-10-03","c":"sem","s":"nq","det":"Sem origem registrada","val":0.0},{"d":"2025-10-02","c":"sem","s":"nq","det":"Sem origem registrada","val":0.0},{"d":"2025-10-02","c":"sem","s":"ps","det":"Sem origem registrada","val":1200.0},{"d":"2025-09-26","c":"sem","s":"nq","det":"Sem origem registrada","val":0.0}]};
+  var NAME={bing:'Bing Ads',org:'Busca orgânica',meta:'Meta e redes',dir:'Direto',ia:'IA (ChatGPT)',out:'Outros (referrals)',gads:'Google (v4google)',site:'Site (sem origem)',job:'Formulário de vaga',sem:'Sem origem'};
+  var COL={bing:'#C9A96E',org:'#34D399',meta:'#F0616A',dir:'#8D877B',ia:'#EADFC2',out:'#7A7366',gads:'#6EA8FE',site:'#D08A55',job:'#9C8CC0',sem:'#4F4A40'};
+  var ORDER=['bing','org','meta','dir','ia','out','gads','site','job','sem'];
+  var GAC=['bing','org','meta','dir','ia','out'];
   var MS=['2026-07','2026-08','2026-09','2026-10','2026-11'];
   var ML={'2026-07':'Jul','2026-08':'Ago','2026-09':'Set','2026-10':'Out','2026-11':'Nov*'};
-  var SG={ic:'Initial Contact',ps:'Proposal Sent',sd:'Service Delivery',nq:'Not Qualified',jo:'Jobs Opening'};
-  var S={c:'all',p:'s',all:false};
+  var SG={ic:'Initial Contact',cq:'Consultation & Quote',ps:'Proposal Sent',sd:'Service Delivery',nq:'Not Qualified',jo:'Jobs Opening'};
+  var ACT=['ic','cq','ps','sd'];
+  var PS={s:'2026-09-01',a:'2026-07-01'};
+  var S={c:'all',p:'a',all:false};
   var $=function(s,r){return (r||document).querySelector(s)};
   var $$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
   var mlist=function(){return S.p==='s'?MS.slice(2):MS};
@@ -875,88 +894,102 @@ section.band.dk+section.band.dk{border-top:1px solid var(--line)}
   var pc=function(a,b){return b>0?(a/b*100).toFixed(1).replace('.',',').replace(/,0$/,'')+'%':'—'};
   function users(cs,ms){var t=0;ms.forEach(function(m){cs.forEach(function(c){var d=(D.ga[m]||{})[c];if(d)t+=d.u})});return t}
   function wavg(cs,ms,k){var n=0,t=0;ms.forEach(function(m){cs.forEach(function(c){var d=(D.ga[m]||{})[c];if(d){n+=d.u;t+=d[k]*d.u}})});return n?t/n:0}
-  function leadsOf(cs){return D.leads.filter(function(l){return cs.indexOf(l.c)>-1})}
+  function leadsAll(cs){return D.leads.filter(function(l){return cs.indexOf(l.c)>-1})}
+  function leadsOf(cs){return leadsAll(cs).filter(function(l){return l.d>=PS[S.p]})}
   function cnt(ls,st){return ls.filter(function(l){return st.indexOf(l.s)>-1}).length}
   function dot(c){return '<span class="dx-dot" style="background:'+COL[c]+'"></span>'}
 
-  var READ={
-    all:'Das <b>22 oportunidades</b>, 5 seguem ativas. Meta e tráfego direto trouxeram 16, e só 1 delas chegou a Service Delivery. Bing e orgânico trouxeram 5, e 4 estão ativas.',
-    bing:'O Bing entregou <b>4 oportunidades, 3 ativas</b>, uma delas em Service Delivery. As duas mais recentes são do Ad Group 2 (Office), buscas “office cleaning”, e estão em Initial Contact.',
-    org:'<b>1 oportunidade orgânica, já em Proposal Sent.</b> O volume é pequeno (16 visitantes em novembro), mas com 33 s de engajamento e 0,87 sessão engajada por visitante, bem acima do Bing (22 s e 0,47).',
-    meta:'<b>10 oportunidades em 9 dias de setembro e nenhuma ativa:</b> 7 em Jobs Opening e 3 em Not Qualified. Volume sem qualificação: o Meta trouxe sobretudo quem buscava vaga.',
-    dir:'<b>6 oportunidades diretas, todas em setembro</b>, e 1 chegou a Service Delivery. Em novembro o Direto passou de 470 visitantes com 2 s de engajamento: padrão de acesso automatizado, que vamos filtrar.',
-    ia:'<b>7 visitantes do ChatGPT em novembro, com 130 s de engajamento</b>, o maior do site. Ainda sem oportunidade registrada, e o canal é pequeno: por isso o ChatGPT Ads entra como teste com teto.',
-    out:'Ferramentas da equipe e referrals pequenos. A <b>única oportunidade</b> é um cadastro da régua de nutrição, em Jobs Opening, e não está ativa.'
+  var EXTRA={
+    bing:'As duas mais recentes são do Ad Group 2 (Office), buscas “office cleaning”, e estão em Initial Contact.',
+    org:'O volume é pequeno (16 visitantes em novembro), mas com 33 s de engajamento e 0,87 sessão engajada por visitante, bem acima do Bing (22 s e 0,47).',
+    meta:'Volume sem qualificação: o Meta trouxe sobretudo quem buscava vaga.',
+    dir:'Em novembro o Direto passou de 470 visitantes com 2 s de engajamento: padrão de acesso automatizado, que vamos filtrar.',
+    ia:'7 visitantes do ChatGPT em novembro, com 130 s de engajamento, o maior do site. O canal é pequeno: por isso o ChatGPT Ads entra como teste com teto.',
+    out:'Ferramentas da equipe (Tag Assistant, Ekyte, Lovable, GoHighLevel) e referrals pequenos.',
+    site:'Antes de 01/09 o CRM não gravava a origem da sessão: parte delas pode ter vindo de Bing, orgânico ou direto.',
+    job:'Envios do formulário de vaga, fora do funil comercial.',
+    sem:'Oportunidades sem origem registrada no CRM.'
   };
 
   function funnel(){
     var cs=chs(),ms=mlist(),ls=leadsOf(cs);
-    var u=users(cs,ms),l=ls.length,c=cnt(ls,['ic','ps','sd']),p=cnt(ls,['ps','sd']),s=cnt(ls,['sd']);
+    var u=users(cs,ms),l=ls.length,c=cnt(ls,ACT),p=cnt(ls,['ps','sd']),s=cnt(ls,['sd']);
     var vals=[u,l,c,p,s],w=[100,76,58,42,30];
     vals.forEach(function(v,i){
       var b=$('#fb'+i);b.textContent=f(v);b.style.width=w[i]+'%';
       b.classList.toggle('open',v===0);
       if(i>=2)b.classList.toggle('gold',v>0);
     });
-    var per=S.p==='s'?'Desde 01/09':'De 01/07 a 17/11';
+    var per={s:'Desde 01/09',a:'De 01/07 a 17/11'}[S.p];
+    var noGA=GAC.indexOf(S.c)<0&&S.c!=='all';
     var t=[
-      ['Usuários no Analytics',per],
-      S.c==='meta'?['Origem Facebook no CRM','Taxa por visitante não se aplica']:
-        S.c==='out'?['Cadastro manual','Sem visita correspondente']:
-        [pc(l,u)+' dos visitantes',S.c==='all'?'Inclui leads de origem Meta e manual':'Formulário do site → GoHighLevel'],
-      [l?pc(c,l)+' das oportunidades':'—','Initial Contact, Proposal Sent ou Service Delivery'],
+      [noGA?'Fora do Analytics':'Usuários no Analytics',noGA?'Esta origem não gera visita rastreável':per],
+      noGA||S.c==='out'?['—','Origem fora do Analytics']:
+        S.c==='meta'?['Origem Facebook no CRM','Taxa por visitante não se aplica']:
+        [pc(l,u)+' dos visitantes',S.c==='all'?'Inclui oportunidades sem visita no Analytics':'Formulário do site → GoHighLevel'],
+      [l?pc(c,l)+' das oportunidades':'—','Initial Contact, Consultation & Quote, Proposal Sent ou Service Delivery'],
       [l?pc(p,l)+' das oportunidades':'—','Proposal Sent ou além'],
       [l?pc(s,l)+' das oportunidades':'—','Service Delivery']
     ];
     t.forEach(function(x,i){$('#fr'+i+'b').textContent=x[0];$('#fr'+i+'s').textContent=x[1]});
-    $('#fread').innerHTML=READ[S.c];
-    $('#fc1').innerHTML='<div class="v">'+f(l)+'</div><div class="t">'+(l===1?'oportunidade':'oportunidades')+' no GoHighLevel'+(S.c==='all'?'':', em '+NAME[S.c])+'.</div>';
-    $('#fc2').innerHTML='<div class="v">'+c+'<small> de '+l+'</small></div><div class="t">'+(l?'seguem ativas no funil. As demais saíram em Not Qualified ou Jobs Opening.':'Sem oportunidade registrada neste canal.')+'</div>';
+    var rd,from=S.p==='a'?'01/07':'01/09',la=cnt(ls,ACT),ls_=cnt(ls,['sd']);
+    if(S.c==='all'){rd='De '+from+' a 17/11 foram <b>'+l+' oportunidades</b>, '+la+' ativas e '+ls_+' em Service Delivery. Meta somou '+leadsOf(['meta']).length+' e nenhuma passou da triagem. O Bing tem '+cnt(leadsOf(['bing']),ACT)+' de '+leadsOf(['bing']).length+' ativas.'}
+    else{rd='<b>'+l+(l===1?' oportunidade':' oportunidades')+', '+la+(la===1?' ativa':' ativas')+'</b>'+(ls_?', '+ls_+' em Service Delivery':'')+'. '+EXTRA[S.c]}
+    if(S.p==='a'&&['bing','org','dir','ia','out','site'].indexOf(S.c)>-1)rd+='<span class="dx-warn">Antes de 01/09 o CRM não gravava a origem da sessão: as oportunidades de jul e ago aparecem em “Site (sem origem)”, então a taxa deste canal fica subestimada. Para comparar canal a canal, use “Desde 01/09”.</span>';
+    $('#fread').innerHTML=rd;
+    var when={s:' desde 01/09/2026',a:' de 01/07 a 17/11'}[S.p];
+    $('#fc1').innerHTML='<div class="v">'+f(l)+'</div><div class="t">'+(l===1?'oportunidade':'oportunidades')+' no GoHighLevel'+when+(S.c==='all'?'':', em '+NAME[S.c])+'.</div>';
+    $('#fc2').innerHTML='<div class="v">'+c+'<small> de '+l+'</small></div><div class="t">'+(l?'seguem ativas no funil. As demais saíram em Not Qualified ou Jobs Opening.':'Sem oportunidade registrada neste canal e período.')+'</div>';
   }
 
   function quality(){
     var ms=mlist(),h='<table><thead><tr><th>Canal</th><th>Visitantes</th><th>Engajamento médio</th><th>Sessões engajadas por visitante</th><th>Oportunidades</th><th>Ativas</th></tr></thead><tbody>';
     ORDER.forEach(function(c){
-      var ls=leadsOf([c]),on=S.c===c,dim=S.c!=='all'&&!on;
-      h+='<tr data-c="'+c+'" class="'+(on?'on ':'')+(dim?'dim':'')+'"><td>'+dot(c)+'<b>'+NAME[c]+'</b></td><td>'+f(users([c],ms))+'</td><td>'+Math.round(wavg([c],ms,'eng'))+' s</td><td>'+wavg([c],ms,'es').toFixed(2).replace('.',',')+'</td><td>'+ls.length+'</td><td>'+cnt(ls,['ic','ps','sd'])+'</td></tr>';
+      var ls=leadsOf([c]),on=S.c===c,dim=S.c!=='all'&&!on,g=GAC.indexOf(c)>-1;
+      h+='<tr data-c="'+c+'" class="'+(on?'on ':'')+(dim?'dim':'')+'"><td>'+dot(c)+'<b>'+NAME[c]+'</b></td><td>'+(g?f(users([c],ms)):'—')+'</td><td>'+(g?Math.round(wavg([c],ms,'eng'))+' s':'—')+'</td><td>'+(g?wavg([c],ms,'es').toFixed(2).replace('.',','):'—')+'</td><td>'+ls.length+'</td><td>'+cnt(ls,ACT)+'</td></tr>';
     });
     var all=leadsOf(ORDER);
-    h+='<tr class="tt"><td>Total</td><td>'+f(users(ORDER,ms))+'</td><td>'+Math.round(wavg(ORDER,ms,'eng'))+' s</td><td>'+wavg(ORDER,ms,'es').toFixed(2).replace('.',',')+'</td><td>'+all.length+'</td><td>'+cnt(all,['ic','ps','sd'])+'</td></tr></tbody></table>';
+    h+='<tr class="tt"><td>Total</td><td>'+f(users(GAC,ms))+'</td><td>'+Math.round(wavg(GAC,ms,'eng'))+' s</td><td>'+wavg(GAC,ms,'es').toFixed(2).replace('.',',')+'</td><td>'+all.length+'</td><td>'+cnt(all,ACT)+'</td></tr></tbody></table>';
     $('#qtb').innerHTML=h;
     $$('#qtb tbody tr[data-c]').forEach(function(tr){tr.addEventListener('click',function(){set({c:S.c===tr.dataset.c?'all':tr.dataset.c})})});
   }
 
   function chartA(){
-    var cs=chs(),tot=MS.map(function(m){return users(cs,[m])}),mx=Math.max.apply(null,tot)||1,H=190;
+    var cs=S.c==='all'?GAC:[S.c],tot=MS.map(function(m){return users(cs,[m])}),mx=Math.max.apply(null,tot),H=190;
+    if(!mx){$('#mcA').innerHTML='<p style="color:#9F998C;font-size:14px;align-self:center">Esta origem não gera visitas rastreáveis no Analytics.</p>';$('#legA').innerHTML='';return}
     $('#mcA').innerHTML=MS.map(function(m,i){
       var seg=cs.slice().reverse().map(function(c){var v=users([c],[m]);return v?'<span style="height:'+Math.max(2,v/mx*H)+'px;background:'+COL[c]+'" title="'+NAME[c]+': '+v+'"></span>':''}).join('');
       return '<div class="dx-bc"><div class="dx-t">'+f(tot[i])+'</div><div class="dx-k">'+seg+'</div><div class="dx-m">'+ML[m]+'</div></div>';
     }).join('');
-    $('#legA').innerHTML=(S.c==='all'?ORDER:[S.c]).map(function(c){return '<span><i style="background:'+COL[c]+'"></i>'+NAME[c]+'</span>'}).join('');
+    $('#legA').innerHTML=cs.map(function(c){return '<span><i style="background:'+COL[c]+'"></i>'+NAME[c]+'</span>'}).join('');
   }
-  var GC={com:'#C9A96E',nq:'#7C766A',jo:'#C0505A'};
+  var GCO={com:'#C9A96E',nq:'#7C766A',jo:'#C0505A'};
+  var MN=['','Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
   function chartB(){
-    var ls=leadsOf(chs()),H=190,bym={};
+    var ls=leadsOf(chs()),H=190,bym={},MON=mlist();
     ls.forEach(function(l){var m=l.d.slice(0,7);(bym[m]=bym[m]||[]).push(l)});
-    var mx=Math.max.apply(null,MS.map(function(m){return (bym[m]||[]).length}))||1;
-    $('#mcB').innerHTML=MS.map(function(m){
-      var a=bym[m]||[];
-      var g={com:cnt(a,['ic','ps','sd']),nq:cnt(a,['nq']),jo:cnt(a,['jo'])};
-      var seg=['jo','nq','com'].map(function(k){return g[k]?'<span style="height:'+Math.max(4,g[k]/mx*H)+'px;background:'+GC[k]+'" title="'+g[k]+'"></span>':''}).join('');
-      return '<div class="dx-bc"><div class="dx-t">'+a.length+'</div><div class="dx-k">'+seg+'</div><div class="dx-m">'+ML[m]+'</div></div>';
+    var mx=Math.max.apply(null,MON.map(function(m){return (bym[m]||[]).length}))||1;
+    $('#mcB').innerHTML=MON.map(function(m){
+      var a=bym[m]||[],mm=+m.slice(5),lab=ML[m];
+      var g={com:cnt(a,ACT),nq:cnt(a,['nq']),jo:cnt(a,['jo'])};
+      var seg=['jo','nq','com'].map(function(k){return g[k]?'<span style="height:'+Math.max(3,g[k]/mx*H)+'px;background:'+GCO[k]+'" title="'+g[k]+'"></span>':''}).join('');
+      return '<div class="dx-bc"><div class="dx-t">'+(a.length||'')+'</div><div class="dx-k">'+seg+'</div><div class="dx-m">'+lab+'</div></div>';
     }).join('');
-    $('#legB').innerHTML='<span><i style="background:'+GC.com+'"></i>Ativas</span><span><i style="background:'+GC.nq+'"></i>Not Qualified</span><span><i style="background:'+GC.jo+'"></i>Jobs Opening</span>';
+    $('#legB').innerHTML='<span><i style="background:'+GCO.com+'"></i>Ativas</span><span><i style="background:'+GCO.nq+'"></i>Not Qualified</span><span><i style="background:'+GCO.jo+'"></i>Jobs Opening</span>';
   }
 
   function matrix(){
-    var st=['ic','ps','sd','nq','jo'],h='<div></div><div class="dx-mh g">Initial Contact</div><div class="dx-mh g">Proposal Sent</div><div class="dx-mh g">Service Delivery</div><div class="dx-mh">Not Qualified</div><div class="dx-mh">Jobs Opening</div><div class="dx-mh">Total</div>';
-    ORDER.forEach(function(c){
+    var st=['ic','cq','ps','sd','nq','jo'],ab=['IC','C&Q','PS','SD','NQ','JO'],h='<div></div>';
+    st.forEach(function(s,i){h+='<div class="dx-mh'+(i<4?' g':'')+'"><span class="l">'+SG[s]+'</span><span class="sh">'+ab[i]+'</span></div>'});
+    h+='<div class="dx-mh">Total</div>';
+    var mxN=1;ORDER.forEach(function(c){var ls=leadsOf([c]);st.forEach(function(s){mxN=Math.max(mxN,cnt(ls,[s]))})});
+    ORDER.filter(function(c){return leadsOf([c]).length>0}).forEach(function(c){
       var ls=leadsOf([c]),dim=S.c!=='all'&&S.c!==c?' dim':'';
       h+='<div class="dx-ml'+dim+'">'+dot(c)+NAME[c]+'</div>';
       st.forEach(function(s,i){
-        var n=cnt(ls,[s]);
-        var a=n?(0.22+0.78*n/7):0,bg=n?(i<3?'rgba(201,169,110,'+a+')':'rgba(192,80,90,'+a*0.9+')'):'rgba(255,255,255,.03)';
-        h+='<div class="dx-mc'+(n?'':' z')+dim+'" style="background:'+bg+(n&&i<3?';color:#1A1405':'')+'">'+(n||'0')+'</div>';
+        var n=cnt(ls,[s]),a=n?(0.22+0.78*Math.sqrt(n/mxN)):0;
+        var bg=n?(i<4?'rgba(201,169,110,'+a+')':'rgba(192,80,90,'+a*0.9+')'):'rgba(255,255,255,.03)';
+        h+='<div class="dx-mc'+(n?'':' z')+dim+'" style="background:'+bg+(n&&i<4?';color:#1A1405':'')+'">'+(n||'0')+'</div>';
       });
       h+='<div class="dx-mt'+dim+'">'+ls.length+'</div>';
     });
@@ -966,30 +999,43 @@ section.band.dk+section.band.dk{border-top:1px solid var(--line)}
   function table(){
     var ls=leadsOf(chs()),lim=S.all?ls.length:8,more=$('#lmore');
     $('#lcount').textContent=ls.length+(ls.length===1?' oportunidade':' oportunidades');
+    $('#ltb').classList.toggle('open',S.all);
     $('#ltb').innerHTML=ls.slice(0,lim).map(function(l){
-      var d=l.d.slice(8,10)+'/'+l.d.slice(5,7);
-      return '<div class="dx-lr"><span class="d">'+d+'</span><span class="o">'+dot(l.c)+NAME[l.c].replace('Busca orgânica','Orgânico')+'</span><span class="det">'+l.det+'</span><span class="dx-st '+l.s+'">'+SG[l.s]+'</span></div>';
+      var d=l.d.slice(8,10)+'/'+l.d.slice(5,7)+'/'+l.d.slice(2,4);
+      return '<div class="dx-lr"><span class="d">'+d+'</span><span class="o">'+dot(l.c)+NAME[l.c]+'</span><span class="det">'+l.det+(l.val?' · <b>US$ '+f(l.val)+'</b>':'')+'</span><span class="dx-st '+l.s+'">'+SG[l.s]+'</span></div>';
     }).join('')||'<div class="dx-lr"><span class="det" style="grid-column:1/-1">Nenhuma oportunidade registrada neste canal.</span></div>';
     more.hidden=ls.length<=8;more.textContent=S.all?'Mostrar menos':'Ver todas as '+ls.length;
   }
 
-  function chips(){
-    var opts=[['all','Todos os canais']].concat(ORDER.map(function(c){return [c,NAME[c]]}));
+  function chips(again){
+    var ms=mlist(),opts=[['all','Todos os canais']].concat(ORDER.filter(function(c){return users([c],ms)>0||leadsOf([c]).length>0}).map(function(c){return [c,NAME[c]]}));
+    if(S.c!=='all'&&!opts.some(function(o){return o[0]===S.c}))S.c='all';
     $$('[data-dx]').forEach(function(el){
       el.innerHTML=opts.map(function(o){return '<button type="button" class="dx-chip" data-c="'+o[0]+'" aria-pressed="'+(S.c===o[0])+'">'+(o[0]==='all'?'':'<i style="background:'+COL[o[0]]+'"></i>')+o[1]+'</button>'}).join('');
       $$('.dx-chip',el).forEach(function(b){b.addEventListener('click',function(){set({c:b.dataset.c})})});
     });
-    $$('[data-per]').forEach(function(el){
+    if(!again)$$('[data-per]').forEach(function(el){
       $$('button',el).forEach(function(b){b.addEventListener('click',function(){set({p:b.dataset.p})})});
     });
   }
   function paint(){
+    if(paint.p!==S.p){paint.p=S.p;chips(true)}
     $$('.dx-chip').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.c===S.c))});
     $$('[data-per] button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.p===S.p))});
   }
   function set(o){for(var k in o)S[k]=o[k];S.all=false;render()}
-  function render(){paint();funnel();quality();chartA();chartB();matrix();table()}
+  function cards(){
+    var all=leadsOf(ORDER),mt=leadsOf(['meta']),bg=leadsOf(['bing']);
+    $('#lc1').innerHTML='<div class="v">'+cnt(mt,ACT)+'<small> de '+mt.length+'</small></div><p>oportunidades do Meta chegaram a um estágio ativo. Eram pessoas procurando vaga ou fora do perfil.</p>';
+    $('#lc2').innerHTML='<div class="v">'+cnt(bg,ACT)+'<small> de '+bg.length+'</small></div><p>oportunidades do Bing seguem ativas. Uma já está em Service Delivery, e as duas mais recentes são do Ad Group 2, Office.</p>';
+    var wv=all.filter(function(l){return l.val>0}).length;
+    $('#lc4').innerHTML='<div class="v">'+wv+'<small> de '+all.length+'</small></div><p>oportunidades têm valor no CRM neste período. Sem o valor, o CRM não mede receita.</p>';
+    var by=ORDER.filter(function(c){return cnt(leadsOf([c]),ACT)>0}).map(function(c){return NAME[c].toLowerCase()});
+    $('#st3').innerHTML='<b>'+cnt(all,ACT)+' de '+all.length+'</b><span>oportunidades do período seguem ativas, e nenhuma veio do Meta. As ativas vêm de: '+by.join(', ')+'.</span>';
+  }
+  function render(){paint();funnel();quality();chartA();chartB();matrix();table();cards()}
   chips();render();
+  $('#lmore').addEventListener('click',function(){S.all=!S.all;table()});
 
   /* ---------- simulador de investimento ---------- */
   var SIM={ch:'bing',sc:'base',inv:400,cl:0.1,tk:0};
@@ -998,17 +1044,18 @@ section.band.dk+section.band.dk{border-top:1px solid var(--line)}
   var q=function(n){return (n<1?n.toFixed(2):n.toFixed(1)).replace('.',',')};
   var pr=function(n){return (n*100).toFixed(1).replace('.',',').replace(/,0$/,'')+'%'};
   function simRates(){
-    var bl=D.leads.filter(function(l){return l.c==='bing'}),all=D.leads,act=['ic','ps','sd'];
+    var bl=D.leads.filter(function(l){return l.c==='bing'}),all=D.leads.filter(function(l){return l.d>='2026-09-01'});
     function nl(ms){return bl.filter(function(l){return ms.indexOf(l.d.slice(0,7))>-1}).length}
     var m1=MS.slice(2),m2=MS.slice(3),m3=MS.slice(4);
     var u1=users(['bing'],m1),u2=users(['bing'],m2),u3=users(['bing'],m3);
-    var aB=cnt(bl,act)/bl.length,aA=cnt(all,act)/all.length;
+    var aB=cnt(bl,ACT)/bl.length,aA=cnt(all,ACT)/all.length;
     return {
-      cons:{r:nl(m1)/u1,a:aA,cap:'Bing desde 01/09 ('+nl(m1)+' oportunidades em '+u1+' visitantes, '+pr(nl(m1)/u1)+') e, depois do lead, a média de todos os canais ('+cnt(all,act)+' de '+all.length+' ativas).'},
-      base:{r:nl(m2)/u2,a:aB,cap:'Bing em out e nov ('+nl(m2)+' em '+u2+', '+pr(nl(m2)/u2)+') e as ativas do próprio Bing ('+cnt(bl,act)+' de '+bl.length+').'},
-      opt:{r:nl(m3)/u3,a:aB,cap:'Bing só em novembro ('+nl(m3)+' em '+u3+', '+pr(nl(m3)/u3)+') e as ativas do próprio Bing ('+cnt(bl,act)+' de '+bl.length+').'}
+      cons:{r:nl(m1)/u1,a:aA,cap:'Bing desde 01/09 ('+nl(m1)+' oportunidades em '+u1+' visitantes, '+pr(nl(m1)/u1)+') e, depois do lead, a média de todos os canais no mesmo período ('+cnt(all,ACT)+' de '+all.length+' ativas).'},
+      base:{r:nl(m2)/u2,a:aB,cap:'Bing em out e nov ('+nl(m2)+' em '+u2+', '+pr(nl(m2)/u2)+') e as ativas do próprio Bing ('+cnt(bl,ACT)+' de '+bl.length+').'},
+      opt:{r:nl(m3)/u3,a:aB,cap:'Bing só em novembro ('+nl(m3)+' em '+u3+', '+pr(nl(m3)/u3)+') e as ativas do próprio Bing ('+cnt(bl,ACT)+' de '+bl.length+').'}
     };
   }
+  function row(n,v,c,qq){return '<div class="sim-row'+(qq?' q':'')+'"><span class="n">'+n+'</span><b>'+v+'</b><i>'+c+'</i></div>'}
   function sim(){
     var I=Math.max(0,SIM.inv||0),o=$('#simo'),isB=SIM.ch==='bing';
     $('#sim-sc').style.display=isB?'':'none';$('#sim-cl').style.display=isB?'':'none';
@@ -1033,12 +1080,11 @@ section.band.dk+section.band.dk{border-top:1px solid var(--line)}
       '<div><span class="k">Ticket de empate</span><b>'+(ct>0?money(I/(ct*12)):'—')+'<span style="font-size:.4em;letter-spacing:0;color:#B9B3A6">/mês</span></b><small>Quanto cada contrato precisa valer por mês para a receita de 12 meses cobrir só a mídia.</small></div></div>'+
       '<p class="sim-fine">Valores esperados, em frações: não são resultado garantido. Fora da conta: fee V4, margem e custo operacional. A amostra é de 4 oportunidades do Bing.</p>';
   }
-  function row(n,v,c,qq){return '<div class="sim-row'+(qq?' q':'')+'"><span class="n">'+n+'</span><b>'+v+'</b><i>'+c+'</i></div>'}
   $$('[data-sg]').forEach(function(g){$$('.sim-chip',g).forEach(function(b){b.addEventListener('click',function(){var k=g.dataset.sg;SIM[k]=(k==='ch'||k==='sc')?b.dataset.v:+b.dataset.v;sim()})})});
   $('#siminv').addEventListener('input',function(e){SIM.inv=+e.target.value;sim()});
   $('#simtk').addEventListener('input',function(e){SIM.tk=+e.target.value;sim()});
+  $('#simuse').addEventListener('click',function(){SIM.tk=2200;$('#simtk').value=2200;sim()});
   sim();
-  $('#lmore').addEventListener('click',function(){S.all=!S.all;table()});
   /* cada grade de mapa anima célula a célula */
   document.querySelectorAll('.hm').forEach(function(g){[].slice.call(g.children).forEach(function(c,i){c.style.transitionDelay=(i*14)+'ms'})});
 })();
