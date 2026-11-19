@@ -243,6 +243,53 @@
   .footer-logos .client { background: #fff; padding: 6px 8px; border-radius: 6px; }
   .pillar-intro { font-size: 15.5px; }
 
+
+  /* ===== INVESTIMENTO (bloco comercial) ===== */
+  .invest { position: relative; overflow: hidden; color: #fff; padding: 96px 20px 104px; text-align: center;
+    background:
+      radial-gradient(ellipse 60% 55% at 50% 38%, rgba(201,169,110,0.20) 0%, rgba(201,169,110,0.05) 45%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 88% 100%, rgba(229,9,20,0.16) 0%, transparent 70%),
+      linear-gradient(180deg, #1c1c1c 0%, #0d0d0d 100%);
+    -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .invest::before { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+    background-image: linear-gradient(rgba(201,169,110,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(201,169,110,0.06) 1px, transparent 1px);
+    background-size: 56px 56px; -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, #000 0%, transparent 75%); mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, #000 0%, transparent 75%); }
+  .invest-inner { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
+  .invest-eyebrow { display: inline-flex; align-items: center; gap: 14px; font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); }
+  .invest-eyebrow::before, .invest-eyebrow::after { content: ''; width: 44px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+  .invest-eyebrow::after { transform: scaleX(-1); }
+  .invest h2 { display: block; border: 0; padding: 0; margin: 18px 0 8px; font-family: 'Plus Jakarta Sans', serif; font-size: 40px; font-weight: 800; color: #fff; letter-spacing: -0.8px; }
+  .invest h2::after { display: none; }
+  .invest-sub { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.68); letter-spacing: .2px; margin-bottom: 44px; }
+
+  .invest-card { position: relative; border-radius: 24px; padding: 1.5px; background: linear-gradient(145deg, rgba(240,226,196,0.95) 0%, rgba(201,169,110,0.35) 38%, rgba(201,169,110,0.10) 62%, rgba(229,9,20,0.55) 100%);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.55), 0 0 90px rgba(201,169,110,0.14); }
+  .invest-card-in { border-radius: 22.5px; padding: 52px 40px 44px; background: linear-gradient(160deg, #181818 0%, #101010 100%); position: relative; overflow: hidden; }
+  .invest-card-in::before { content: ''; position: absolute; top: -120px; left: 50%; transform: translateX(-50%); width: 520px; height: 240px; background: radial-gradient(ellipse, rgba(201,169,110,0.16), transparent 70%); pointer-events: none; }
+  .invest-label { position: relative; font-size: 12px; font-weight: 700; letter-spacing: 2.4px; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+  .invest-price { position: relative; display: flex; align-items: baseline; justify-content: center; gap: 10px; margin: 14px 0 10px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; line-height: 1; }
+  .invest-cur { font-size: 30px; font-weight: 700; color: var(--gold); transform: translateY(-14px); }
+  .invest-amount { font-size: 92px; letter-spacing: -3px; font-variant-numeric: tabular-nums; background: linear-gradient(180deg, #fff6df 0%, #f0e2c4 35%, #c9a96e 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: #f0e2c4; filter: drop-shadow(0 6px 26px rgba(201,169,110,0.28)); }
+  .invest-cents { font-size: 34px; color: var(--gold); opacity: .85; margin-left: -8px; }
+  .invest-divider { position: relative; height: 1px; margin: 34px auto 30px; max-width: 420px; background: linear-gradient(90deg, transparent, rgba(201,169,110,0.5), transparent); }
+  .invest-divider::after { content: ''; position: absolute; left: 50%; top: 50%; width: 9px; height: 9px; transform: translate(-50%,-50%) rotate(45deg); background: var(--red); box-shadow: 0 0 14px rgba(229,9,20,0.8); }
+  .invest-terms { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; text-align: left; }
+  .invest-term { border: 1px solid rgba(201,169,110,0.22); background: rgba(255,255,255,0.03); border-radius: 14px; padding: 20px 22px; }
+  .invest-term .k { font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .invest-term .v { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 24px; font-weight: 700; color: #fff; letter-spacing: -0.3px; line-height: 1.2; }
+  .invest-term .d { font-size: 13.5px; color: rgba(255,255,255,0.6); margin-top: 4px; }
+  .invest-methods { position: relative; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 26px; }
+  .invest-chip { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border-radius: 999px; font-size: 13px; font-weight: 700; letter-spacing: .5px; color: #f0e2c4; background: rgba(201,169,110,0.10); border: 1px solid rgba(201,169,110,0.35); }
+  .invest-chip svg { width: 16px; height: 16px; stroke: var(--gold); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .invest-foot { margin-top: 30px; font-size: 13px; color: rgba(255,255,255,0.45); letter-spacing: .3px; }
+  .invest + .footer { border-top: 0; }
+  .invest + .footer::before { display: none; }
+
+  .invest .rv { opacity: 0; transform: translateY(26px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }
+  .invest .rv.d1 { transition-delay: .12s; } .invest .rv.d2 { transition-delay: .26s; } .invest .rv.d3 { transition-delay: .42s; } .invest .rv.d4 { transition-delay: .58s; }
+  .invest.on .rv, .no-js .invest .rv { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .invest .rv { opacity: 1; transform: none; transition: none; } }
+
   @media print {
     body { background: #fff; font-size: 12px; }
     .cover { padding: 0 24mm; width: 210mm; height: 296mm; box-sizing: border-box; display: flex; align-items: center; justify-content: center; page-break-after: always; break-after: page; margin: 0; }
@@ -266,11 +313,22 @@
     #anexos .url { font-size: 9.5px; }
     #anexos .status { font-size: 9px; padding: 2px 6px; }
     .timeline, .timeline-deliverables, .timeline-phase, .timeline-deliverables .deliv, .total-box { break-inside: avoid; page-break-inside: avoid; }
+    .invest { break-inside: avoid; page-break-inside: avoid; padding: 14mm 14mm; }
+    .invest .rv { opacity: 1 !important; transform: none !important; }
+    .invest-amount { font-size: 64px; }
     .footer { display: none; }
     @page { margin: 0; size: A4; }
     @page :first { margin: 0; }
   }
   @media (max-width: 760px) {
+    .invest { padding: 64px 16px 72px; }
+    .invest h2 { font-size: 30px; }
+    .invest-card-in { padding: 38px 20px 30px; }
+    .invest-amount { font-size: 54px; letter-spacing: -2px; }
+    .invest-cur { font-size: 20px; transform: translateY(-8px); }
+    .invest-cents { font-size: 22px; }
+    .invest-terms { grid-template-columns: 1fr; }
+    .invest-term .v { font-size: 21px; }
     .cover h1 { font-size: 27px; }
     .cover { padding: 36px 20px 40px; }
     .cover-logos { gap: 16px; }
@@ -1009,19 +1067,6 @@
     </div>
   </div>
 
-  <!-- INVESTIMENTO -->
-  <div class="card" id="investimento">
-    <div class="card-body">
-      <h2>Investimento</h2>
-
-      <div class="risk-box gold" style="text-align:center; padding:32px 26px;">
-        <h4 style="text-transform:uppercase; letter-spacing:1.2px; font-size:12px; color:var(--gray-600);">Investimento total</h4>
-        <p style="font-family:'Plus Jakarta Sans',sans-serif; font-size:44px; font-weight:800; color:var(--red); line-height:1.1; letter-spacing:-1px; margin:8px 0 10px;">R$&nbsp;7.950,00</p>
-        <p style="font-size:16px; color:var(--gray-700);">em até <strong>3x</strong> no boleto ou cartão</p>
-      </div>
-    </div>
-  </div>
-
   <!-- ANEXOS -->
   <div class="card" id="anexos">
     <div class="card-body">
@@ -1105,6 +1150,66 @@
   </div>
 
 </div>
+
+<!-- INVESTIMENTO -->
+<section class="invest" id="investimento">
+  <div class="invest-inner">
+    <div class="rv"><span class="invest-eyebrow">Proposta comercial</span></div>
+    <h2 class="rv d1">Investimento</h2>
+    <p class="invest-sub rv d1">Auditoria SEO + AIO + GEO &bull; Riglog</p>
+
+    <div class="invest-card rv d2">
+      <div class="invest-card-in">
+        <div class="invest-label">Valor total</div>
+        <div class="invest-price" aria-label="7.950 reais">
+          <span class="invest-cur">R$</span>
+          <span class="invest-amount" id="invest-amount" data-target="7950">7.950</span>
+          <span class="invest-cents">,00</span>
+        </div>
+
+        <div class="invest-divider"></div>
+
+        <div class="invest-terms">
+          <div class="invest-term">
+            <div class="k">Parcelamento</div>
+            <div class="v">em até 3x</div>
+            <div class="d">3 parcelas de R$&nbsp;2.650,00</div>
+          </div>
+          <div class="invest-term">
+            <div class="k">Forma de pagamento</div>
+            <div class="v">Boleto ou cartão</div>
+            <div class="d">Você escolhe a que preferir</div>
+          </div>
+        </div>
+
+        <div class="invest-methods">
+          <span class="invest-chip"><svg viewBox="0 0 24 24"><path d="M4 5v14M8 5v14M12 5v14M16 5v14M20 5v14"/></svg>Boleto</span>
+          <span class="invest-chip"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19M6.5 15h4"/></svg>Cartão de crédito</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="invest-foot rv d3">Confidencial &mdash; condições válidas para a Riglog Assessoria Aduaneira e Transportes</p>
+  </div>
+</section>
+<script>
+(function(){
+  var sec=document.getElementById('investimento'); if(!sec) return;
+  var amt=document.getElementById('invest-amount');
+  var reduce=window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function fmt(n){ return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.'); }
+  function count(){
+    if(reduce||!amt) return;
+    var target=+amt.dataset.target, t0=null, dur=1700;
+    function step(t){ if(t0===null) t0=t; var k=Math.min((t-t0)/dur,1); amt.textContent=fmt(target*(1-Math.pow(1-k,4))); if(k<1) requestAnimationFrame(step); else amt.textContent=fmt(target); }
+    amt.textContent='0'; requestAnimationFrame(step);
+  }
+  function show(){ sec.classList.add('on'); setTimeout(count,500); }
+  if(!('IntersectionObserver' in window)){ sec.classList.add('on'); return; }
+  var io=new IntersectionObserver(function(e){ if(e[0].isIntersecting){ io.disconnect(); show(); } },{threshold:0.3});
+  io.observe(sec);
+})();
+</script>
 
 <div class="footer">
   <div class="footer-logos">
