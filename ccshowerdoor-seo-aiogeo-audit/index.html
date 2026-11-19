@@ -101,6 +101,21 @@ pre{background:#141414;color:#e8eef7;padding:18px;border-radius:12px;overflow:au
 .q-note{font-size:12.5px;color:#9c968d;margin-top:14px}
 .footer{text-align:center;color:#999;font-size:12.5px;padding:26px}
 @media(max-width:760px){.card-body{padding:26px 20px}.kpi-grid{grid-template-columns:1fr 1fr}.cover h1{font-size:29px}.toc{grid-template-columns:1fr}.timeline{flex-direction:column}.timeline::before{display:none}.quote-inner{padding:30px 22px}.quote-grid{grid-template-columns:1fr;gap:26px}.quote-head{align-items:flex-start}.quote-price{text-align:left}.q-amount{font-size:42px}.quote-title{font-size:22px}}
+
+.tlp{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:22px 0 8px}
+.tlc{background:#fff;border:1px solid var(--gold-border);border-radius:16px;padding:20px 20px 12px;position:relative}
+.tlc h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;margin:0 0 4px}
+.tlc .when{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray-600);margin-bottom:12px}
+.tlc.done{border-top:5px solid #1f8a4c}.tlc.now{border-top:5px solid var(--gold);background:var(--gold-light)}.tlc.next{border-top:5px solid var(--red)}
+.tlc ul{list-style:none;margin:0;padding:0}.tlc li{padding:9px 0 9px 22px;border-top:1px solid var(--gray-200);font-size:14.5px;line-height:1.5;position:relative}
+.tlc.done li::before{content:"\2713";position:absolute;left:0;color:#1f8a4c;font-weight:700}
+.tlc.now li::before{content:"\25CF";position:absolute;left:0;color:var(--gold)}
+.tlc.next li::before{content:"\2192";position:absolute;left:0;color:var(--red);font-weight:700}
+.tlc li b{display:block;font-weight:700}.tlc li small{color:var(--gray-600)}
+.tlbar{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}
+.tlbar div{background:#fff;border:1px solid var(--gold-border);border-radius:12px;padding:14px 16px;text-align:center}
+.tlbar b{display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:26px;color:var(--red)}.tlbar span{font-size:13px;color:var(--gray-700)}
+@media(max-width:900px){.tlp{grid-template-columns:1fr}.tlbar{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
@@ -135,6 +150,7 @@ pre{background:#141414;color:#e8eef7;padding:18px;border-radius:12px;overflow:au
 <h2>📑 Como usar este plano</h2>
 <p>Este é o manual de operação das próximas 12 semanas. Ele transforma tudo o que foi alinhado no check-in em uma sequência clara: <strong>ser aprovado → corrigir → ganhar visibilidade → gerar agendamentos</strong>. Cada seção termina com quem faz o quê e o que conta como pronto, para ninguém precisar adivinhar.</p>
 <div class="toc">
+<a href="#timeline">Timeline do projeto: feito, agora e próximos passos</a>
 <a href="#comeco">Comece aqui: como o Google avalia tudo isso</a>
 <a href="#decisoes">1. O que já está decidido e por que importa</a>
 <a href="#auditoria">2. Auditoria do site, dados reais do Screaming Frog</a>
@@ -147,6 +163,38 @@ pre{background:#141414;color:#e8eef7;padding:18px;border-radius:12px;overflow:au
 <a href="#kpis">9. Metas, KPIs e placar</a>
 <a href="#investimento">10. Investimento e condições</a>
 </div>
+</div></div>
+
+<div class="card" id="timeline"><div class="card-body">
+<h2>Timeline do projeto: o que foi feito, onde estamos e para onde vamos</h2>
+<p>Posição em <strong>19/11/2026</strong> (check-in da semana 4). O plano de 12 semanas segue o cronograma do Ekyte; as datas abaixo são as tarefas abertas e as entregas já registradas.</p>
+<div class="tlbar"><div><b>80%</b><span>dos 81 pontos da Loja 2 no Top 3 (média das 8 palavras)</span></div><div><b>46</b><span>páginas novas ou reconstruídas no ar (40 artigos + 6 guias)</span></div><div><b>185</b><span>leads válidos do formulário em 2026</span></div><div><b>3 de 8</b><span>degraus do funil medidos (faltam GA4 único, ligações e CRM)</span></div></div>
+<div class="tlp">
+<div class="tlc done"><h3>Já feito</h3><div class="when">13/10 a 19/11</div><ul>
+<li><b>Plano aprovado e auditoria</b><small>Screaming Frog em 13/10; Rank Math desativado; títulos e metas</small></li>
+<li><b>Loja 2 no mapa</b><small>Perfil 2 criado, verificação por vídeo, NAP canônico, citações nível 0 e 1</small></li>
+<li><b>Higiene técnica e IA</b><small>Robôs de IA liberados, schema por template, entidade única por @id, llms.txt</small></li>
+<li><b>Páginas de prova, produtos e imagens</b><small>14 estilos reconstruídos, 40 imagens otimizadas</small></li>
+<li><b>Conteúdo local</b><small>6 guias de 3 a 5 mil palavras, 40 artigos, 22 áreas, 10 páginas estilo × cidade</small></li>
+<li><b>Home, rodapé e hubs</b><small>H1 em Jacksonville, rodapé com 2 lojas, portal do blog, /locations/, /guides/</small></li>
+<li><b>Performance</b><small>Peso da home de 4,0 para 2,8 MB, CLS 0</small></li>
+<li><b>Medição de partida</b><small>8 scans de mapa, análise de leads por CEP, recap e mapa competitivo</small></li></ul></div>
+<div class="tlc now"><h3>Onde estamos</h3><div class="when">Semana 4 · check-in de 19/11</div><ul>
+<li><b>Acessos do cliente</b><small>Business Profile, Search Console e GA4 como proprietário (hoje o funil para aqui)</small></li>
+<li><b>Citações nível 2 (2.8)</b><small>Kit pronto, falta login e verificação por telefone</small></li>
+<li><b>Baseline orgânico × pago (2.9)</b><small>Vence 20/11; depende de GA4 único e call tracking</small></li>
+<li><b>Revalidação no Google</b><small>Breadcrumbs, indexação das páginas novas, nova exportação do Search Console</small></li>
+<li><b>Decisões abertas</b><small>Preços e garantia (pilar de custo), fotos reais das lojas, autor dos artigos, regra de atuação em Georgia</small></li></ul></div>
+<div class="tlc next"><h3>Para onde vamos</h3><div class="when">27/11 a 18/12 e além</div><ul>
+<li><b>27/11 · check-in semana 4 (2.10)</b><small>Apresentar o recap e fechar acessos</small></li>
+<li><b>01/12 · pilar de custo (3.2)</b><small>Depende dos números do cliente</small></li>
+<li><b>Instrumentação em 2 semanas</b><small>GA4 oficial, evento do formulário, call tracking por loja, export do CRM</small></li>
+<li><b>04/12 · check-in semana 7 (3.4)</b><small>Primeiro número de lead por origem e loja</small></li>
+<li><b>14 a 16/12 · revisão de planejamento e citações nível 3 (3.8)</b><small>Imprensa e listas best-of</small></li>
+<li><b>18/12 · check-in semana 10 (3.10)</b><small>Novo scan de mapa comparado ao baseline de 19/11</small></li>
+<li><b>Próxima onda</b><small>Aprofundar cidades e estilo × cidade; consolidar 14 posts antigos (301)</small></li></ul></div>
+</div>
+<p><a class="btn btn-gold" href="../ccshowerdoor-recap-q426/">Abrir o recap completo</a> &nbsp; <a class="btn btn-ghost" style="color:#212121;border-color:#c9a96e" href="../ccshowerdoor-recap-q426/mapa/">Abrir o mapa competitivo</a></p>
 </div></div>
 
 <div class="card" id="comeco"><div class="card-body">
