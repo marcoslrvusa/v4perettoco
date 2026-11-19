@@ -43,7 +43,7 @@ section.tl h2{font:800 22px var(--fd);letter-spacing:-.02em}
 .leaflet-popup-content{font-size:13px;line-height:1.45;margin:12px 14px}.leaflet-popup-content b{color:var(--gold)}
 .pl{font:700 12px Ubuntu;color:#F6F3EC;text-align:center;text-shadow:0 0 4px #000,0 0 4px #000,0 0 6px #000;pointer-events:none;z-index:900}.pt{font:700 12px Ubuntu;color:#fff;display:grid;place-items:center;border-radius:50%;border:2px solid #fff;width:26px;height:26px}
 @media(max-width:1000px){#map{height:520px}}
-</style></head><body>
+#cmpt{width:100%;border-collapse:collapse;margin-top:12px;font-size:13.5px;min-width:760px}#cmpt th{font:600 10px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}#cmpt td{padding:9px 10px;border-bottom:1px solid #26221B;vertical-align:top}#cmpt tr.c{cursor:pointer}#cmpt tr.c:hover{background:#1c1913}#cmpt tr.you td{color:var(--gold);font-weight:700;background:#1a160e}#cmpt small{color:var(--mute);display:block}#cmpt .n{text-align:right;white-space:nowrap}</style></head><body>
 <header><div><div class="kick">Clear Choice Shower Door · Mapa competitivo estratégico · 19/11/2026</div><h1>Ranking, leads de formulário e concorrentes <em>por CEP</em></h1><p class="sub">Onde chegam os leads do formulário, como a Loja 2 aparece em 81 pontos do mapa para cada palavra e quem disputa a mesma região. Use os filtros: tudo se recalcula.</p></div></header>
 <div class="filters">
  <div class="fg"><label for="kw">Palavra do scan</label><select id="kw"></select></div>
@@ -53,7 +53,8 @@ section.tl h2{font:800 22px var(--fd);letter-spacing:-.02em}
  <div class="fg"><label for="t3">Concorrentes: Top 3 mínimo <b id="t3v" style="color:#C9A96E">0%</b></label><input type="range" id="t3" min="0" max="80" step="5" value="0"></div>
  <div class="fg"><label for="q">Buscar concorrente</label><input type="text" id="q" placeholder="ex.: Lee & Cates"></div>
 </div>
-<main><div id="map"></div><aside id="side"></aside></main>
+<main><div id="map"></div><section class="tl" id="cmp" style="border-top:0"><h2>Ranking dos concorrentes na região</h2><p class="sub" id="cmpsub"></p><div style="overflow-x:auto"><table id="cmpt"></table></div></section>
+<aside id="side"></aside></main>
 <div class="leg"><span><i style="background:#10B981"></i>Ranking 1 a 3</span><span><i style="background:#FBBF24"></i>4 a 10</span><span><i style="background:#F87171"></i>11 ou mais</span><span><i style="background:#C9A96E"></i>Leads perto da Loja 2</span><span><i style="background:#7FA6D8"></i>Leads perto da Loja 1</span><span><i style="background:#E50914"></i>Loja 2 (San Jose Blvd)</span><span><i style="background:#fff"></i>Loja 1 (St Johns Industrial)</span><span><i style="background:#8E8A80"></i>Concorrente (tamanho = share do Top 3)</span></div>
 <div class="ins" id="ins"></div>
 <section class="tl"><h2>Leads de formulário no tempo</h2><p class="sub" id="tlsub"></p><svg id="chart" viewBox="0 0 1100 240" preserveAspectRatio="none"></svg></section>
@@ -130,8 +131,14 @@ function ui(){var k=document.getElementById('kw');k.innerHTML='<option value="__
  chips('src',[['all','Todas']].concat(SRCS.map(function(s){return [s,s]})),function(v){return st.src===v},function(v){st.src=v});
  chips('lay',[['grid','Ranking'],['leads','Leads'],['comps','Concorrentes'],['rings','Raios'],['susp','Suspeitos']],function(v){return st.lay[v]},function(v){st.lay[v]=!st.lay[v]});
  document.getElementById('t3').oninput=function(){st.t3=+this.value;document.getElementById('t3v').textContent=this.value+'%';draw()};
- document.getElementById('q').oninput=function(){st.q=this.value;drawComps()}}
-function draw(){ui2();drawGrid();drawLeads();drawComps();drawRings();side();chart()}
+ document.getElementById('q').oninput=function(){st.q=this.value;drawComps();cmpTable()}}
+
+function cmpTable(){var q=st.q.toLowerCase(),l=compList().slice().sort(function(a,b){return b.top3-a.top3||(a.avg||99)-(b.avg||99)}).filter(function(c){return c.you||(c.top3>=st.t3&&(!q||c.name.toLowerCase().indexOf(q)>=0))});
+ document.getElementById('cmpsub').textContent=(st.kw==='__all'?'Média das 8 palavras':'“'+st.kw+'”')+' · '+l.length+' negócios, ordenados pelo share de Top 3 (como no relatório do scan). Clique numa linha para ir ao ponto no mapa.';
+ document.getElementById('cmpt').innerHTML='<thead><tr><th>#</th><th>Negócio</th><th class="n">Aparece em</th><th class="n">Rank médio</th><th class="n">Top 3</th></tr></thead><tbody>'+l.map(function(c,i){return '<tr class="c'+(c.you?' you':'')+'" data-i="'+i+'"><td>'+(i+1)+'</td><td>'+c.name+(c.you?' · VOCÊ':'')+'<small>'+(c.rating?'★ '+c.rating+' ('+c.reviews+') · ':'')+c.addr+'</small></td><td class="n">'+c.found+' de 81<small>'+(c.foundpct!=null?c.foundpct+'%':'')+'</small></td><td class="n">'+(c.avg==null?'—':c.avg)+'</td><td class="n">'+c.top3+'%</td></tr>'}).join('')+'</tbody>';
+ [].forEach.call(document.querySelectorAll('#cmpt tr.c'),function(r){r.onclick=function(){var c=l[+r.dataset.i];map.flyTo([c.lat,c.lon],13);window.scrollTo({top:0,behavior:'smooth'})}})}
+
+function draw(){ui2();cmpTable();drawGrid();drawLeads();drawComps();drawRings();side();chart()}
 function ui2(){[].forEach.call(document.querySelectorAll('#per .chip'),function(b){b.setAttribute('aria-pressed',st.per===b.dataset.v)});[].forEach.call(document.querySelectorAll('#src .chip'),function(b){b.setAttribute('aria-pressed',st.src===b.dataset.v)});[].forEach.call(document.querySelectorAll('#lay .chip'),function(b){b.setAttribute('aria-pressed',!!st.lay[b.dataset.v])})}
 ui();draw();
 </script></body></html>
