@@ -18,9 +18,9 @@ select,input[type=text]{background:#0E0E0C;color:var(--paper);border:1px solid v
 .chip{background:#0E0E0C;color:var(--mute);border:1px solid var(--line);border-radius:999px;padding:7px 13px;font:500 13px 'Ubuntu';cursor:pointer;min-height:36px}
 .chip[aria-pressed=true]{background:var(--gold);color:#1A1405;border-color:var(--gold);font-weight:700}
 input[type=range]{accent-color:#C9A96E;width:160px}
-main{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:0}
-#map{height:680px;background:#0b0b0a}.dk{filter:invert(1) hue-rotate(180deg) brightness(.85) contrast(.9) saturate(.6)}
-aside{padding:18px 20px;border-left:1px solid var(--line);background:linear-gradient(180deg,var(--ink2),#12100c);max-height:680px;overflow:auto}
+main{display:block}
+#map{height:620px;width:100%;background:#0b0b0a}.dk{filter:invert(1) hue-rotate(180deg) brightness(.85) contrast(.9) saturate(.6)}
+aside{padding:18px 28px;border-top:1px solid var(--line);background:linear-gradient(180deg,var(--ink2),#12100c);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0 28px}
 .kp{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
 .k{background:#0E0E0C;border:1px solid var(--line);border-radius:14px;padding:12px 14px}
 .k b{display:block;font:800 26px/1.1 var(--fd);letter-spacing:-.03em}.k span{font-size:12px;color:var(--mute)}
@@ -41,10 +41,10 @@ section.tl h2{font:800 22px var(--fd);letter-spacing:-.02em}
 .lbl{font:700 12px 'Ubuntu';color:#fff;text-align:center;text-shadow:0 1px 3px #000}
 .leaflet-popup-content-wrapper{background:#1A1814;color:#F6F3EC;border-radius:12px}.leaflet-popup-tip{background:#1A1814}
 .leaflet-popup-content{font-size:13px;line-height:1.45;margin:12px 14px}.leaflet-popup-content b{color:var(--gold)}
-.pt{font:700 12px Ubuntu;color:#fff;display:grid;place-items:center;border-radius:50%;border:2px solid #fff;width:26px;height:26px}
-@media(max-width:1000px){main{grid-template-columns:1fr}aside{max-height:none;border-left:0}#map{height:520px}}
+.pl{font:700 12px Ubuntu;color:#F6F3EC;text-align:center;text-shadow:0 0 4px #000,0 0 4px #000,0 0 6px #000;pointer-events:none;z-index:900}.pt{font:700 12px Ubuntu;color:#fff;display:grid;place-items:center;border-radius:50%;border:2px solid #fff;width:26px;height:26px}
+@media(max-width:1000px){#map{height:520px}}
 </style></head><body>
-<header><div><div class="kick">Clear Choice Shower Door · Mapa competitivo estratégico · 19/11/2026</div><h1>Leads, ranking e concorrentes <em>por CEP</em></h1><p class="sub">Onde chegam os leads do formulário, como a Loja 2 aparece em 81 pontos do mapa para cada palavra e quem disputa a mesma região. Use os filtros: tudo se recalcula.</p></div></header>
+<header><div><div class="kick">Clear Choice Shower Door · Mapa competitivo estratégico · 19/11/2026</div><h1>Ranking, leads de formulário e concorrentes <em>por CEP</em></h1><p class="sub">Onde chegam os leads do formulário, como a Loja 2 aparece em 81 pontos do mapa para cada palavra e quem disputa a mesma região. Use os filtros: tudo se recalcula.</p></div></header>
 <div class="filters">
  <div class="fg"><label for="kw">Palavra do scan</label><select id="kw"></select></div>
  <div class="fg"><label>Período dos leads</label><div class="chips" id="per"></div></div>
@@ -56,7 +56,7 @@ section.tl h2{font:800 22px var(--fd);letter-spacing:-.02em}
 <main><div id="map"></div><aside id="side"></aside></main>
 <div class="leg"><span><i style="background:#10B981"></i>Ranking 1 a 3</span><span><i style="background:#FBBF24"></i>4 a 10</span><span><i style="background:#F87171"></i>11 ou mais</span><span><i style="background:#C9A96E"></i>Leads perto da Loja 2</span><span><i style="background:#7FA6D8"></i>Leads perto da Loja 1</span><span><i style="background:#E50914"></i>Loja 2 (San Jose Blvd)</span><span><i style="background:#fff"></i>Loja 1 (St Johns Industrial)</span><span><i style="background:#8E8A80"></i>Concorrente (tamanho = share do Top 3)</span></div>
 <div class="ins" id="ins"></div>
-<section class="tl"><h2>Leads no tempo</h2><p class="sub" id="tlsub"></p><svg id="chart" viewBox="0 0 1100 240" preserveAspectRatio="none"></svg></section>
+<section class="tl"><h2>Leads de formulário no tempo</h2><p class="sub" id="tlsub"></p><svg id="chart" viewBox="0 0 1100 240" preserveAspectRatio="none"></svg></section>
 <p class="note">Leads: 3 exports do formulário (GoHighLevel), de jan a 11/11/2026, sem nome nem e-mail neste mapa. Suspeitos (telefone fora dos EUA), testes e duplicados ficam de fora, exceto se ligar a camada "Suspeitos". CEP vira ponto no centro do CEP (Census); a loja mais próxima é por distância em linha reta, não por tempo de carro. O arquivo 3 (jan) não tem CEP. Ranking: scans do Ubersuggest de 19/11, grade 9×9, 1 milha, centro na Loja 2; a faixa de cada ponto bate com a legenda do PDF, e o número exato em 4 a 7 pode ter erro de leitura. Concorrentes sem coordenada exata aparecem no centro do CEP (marcados como aproximados).</p>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
@@ -71,6 +71,8 @@ function near(z){var c=D.zips[z];if(!c)return null;var d1=hav(c[0],c[1],L1.lat,L
 var map=L.map('map',{zoomControl:true}).setView([30.16,-81.60],11);
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',{attribution:'Tiles © Esri',maxZoom:16,className:'dk'}).addTo(map);
 var gG=L.layerGroup().addTo(map),gL=L.layerGroup().addTo(map),gC=L.layerGroup().addTo(map),gR=L.layerGroup().addTo(map),gS=L.layerGroup().addTo(map);
+var PL=[['Mandarin',30.158,-81.640],['San Jose',30.215,-81.617],['Julington Creek',30.115,-81.605],['Bartram Park',30.105,-81.545],['Fruit Cove',30.095,-81.640],['Orange Park',30.166,-81.706],['Fleming Island',30.095,-81.715],['Oakleaf',30.215,-81.800],['Southside',30.245,-81.585],['Baymeadows',30.225,-81.560],['San Marco',30.298,-81.655],['Riverside',30.315,-81.700],['Jacksonville',30.332,-81.656],['Jax Beach',30.294,-81.393],['Atlantic Beach',30.334,-81.409],['Ponte Vedra',30.239,-81.385],['Nocatee',30.115,-81.395],['Green Cove Springs',29.993,-81.678],['St. Johns',30.080,-81.535],['St. Augustine',29.895,-81.314],['Middleburg',30.068,-81.903],['Yulee',30.631,-81.606]];
+var gN=L.layerGroup().addTo(map);PL.forEach(function(p){L.marker([p[1],p[2]],{interactive:false,icon:L.divIcon({className:'',html:'<div class="pl">'+p[0]+'</div>',iconSize:[110,16],iconAnchor:[55,8]})}).addTo(gN)});
 D.shops.forEach(function(s,i){L.marker([s.lat,s.lon],{icon:L.divIcon({className:'',html:'<div class="pt" style="background:'+(i?'#E50914':'#111')+';width:30px;height:30px;font-size:11px">L'+(i+1)+'</div>',iconSize:[30,30],iconAnchor:[15,15]}),zIndexOffset:1000}).bindPopup('<b>'+s.n+'</b>').addTo(gS)});
 function fl(){return D.leads.filter(function(l){
  if(l.f&&!st.lay.susp)return false;
@@ -120,7 +122,7 @@ function chart(){var ls=D.leads.filter(function(l){if(l.f&&!st.lay.susp)return f
   svg+='<text x="'+(x+bw/2)+'" y="'+(H-10)+'" fill="#A9A396" font-size="13" text-anchor="middle">'+MO[i]+'</text><text x="'+(x+bw/2)+'" y="'+(y-6)+'" fill="#fff" font-size="13" font-weight="700" text-anchor="middle">'+(tot[i]||'')+'</text>'}
  svg+='<line x1="'+(40+9*96-17)+'" x2="'+(40+9*96-17)+'" y1="10" y2="'+(H-30)+'" stroke="#C9A96E" stroke-dasharray="4 5"/><text x="'+(40+9*96-12)+'" y="22" fill="#C9A96E" font-size="12">Outubro em diante</text>';
  document.getElementById('chart').innerHTML=svg;
- document.getElementById('tlsub').innerHTML='Leads válidos por mês e origem'+(st.zip?' · só CEP <b style="color:#C9A96E">'+st.zip+'</b> <a href="#" id="clr" style="color:#C9A96E">limpar</a>':'')+'. Novembro vai só até 11/11.';
+ document.getElementById('tlsub').innerHTML='Leads de formulário (válidos) por mês e origem'+(st.zip?' · só CEP <b style="color:#C9A96E">'+st.zip+'</b> <a href="#" id="clr" style="color:#C9A96E">limpar</a>':'')+'. Novembro vai só até 11/11.';
  var c=document.getElementById('clr');if(c)c.onclick=function(e){e.preventDefault();st.zip=null;chart()}}
 function chips(id,opts,get,set){var el=document.getElementById(id);el.innerHTML=opts.map(function(o){return '<button class="chip" data-v="'+o[0]+'" aria-pressed="'+get(o[0])+'">'+o[1]+'</button>'}).join('');[].forEach.call(el.children,function(b){b.onclick=function(){set(b.dataset.v);draw()}})}
 function ui(){var k=document.getElementById('kw');k.innerHTML='<option value="__all">Todas as palavras (média)</option>'+allKw().map(function(x){return '<option>'+x+'</option>'}).join('');k.onchange=function(){st.kw=k.value;draw()};
