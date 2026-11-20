@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auditoria SEO + AIO + GEO — SDI Odonto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: rgb(229, 9, 20);
+    --red-dark: rgb(180, 7, 16);
+    --red-light: rgb(255, 60, 70);
+    --gold: #c9a96e;
+    --gold-light: #f5f0e6;
+    --gold-border: #e8dcc8;
+    --green: #16a34a;
+    --gold-dark: #8b6f2f;
+    --purple: #7c3aed;
+    --gray-50: #fafafa;
+    --gray-100: #f5f5f5;
+    --gray-200: #eeeeee;
+    --gray-300: #e0e0e0;
+    --gray-400: #bdbdbd;
+    --gray-500: #9e9e9e;
+    --gray-600: #757575;
+    --gray-700: #616161;
+    --gray-800: #424242;
+    --gray-900: #212121;
+  }
+
+  body { font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, sans-serif; background: #f8f7f4; color: var(--gray-900); line-height: 1.7; font-size: 16px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  .cover { background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #2a2a2a 100%); color: #fff; padding: 56px 40px 56px; text-align: center; position: relative; overflow: hidden; }
+  .cover::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(201,169,110,0.05) 0%, transparent 60%); pointer-events: none; }
+  .cover-content { position: relative; z-index: 1; max-width: 840px; margin: 0 auto; }
+  .cover-logos { display: flex; align-items: center; justify-content: space-between; gap: 32px; margin-bottom: 44px; }
+  .cover-logos img { height: 40px; width: auto; object-fit: contain; }
+  .cover-logos .client-logo { height: 54px; background: #fff; padding: 10px 14px; border-radius: 10px; }
+  .cover-logos img:first-child, .footer-logos img:first-child { mix-blend-mode: screen; }
+  .cover .label { display: inline-block; background: rgba(201,169,110,0.12); border: 1px solid rgba(201,169,110,0.3); padding: 6px 20px; border-radius: 20px; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px; color: var(--gold); }
+  .cover h1 { font-size: 42px; font-weight: 700; line-height: 1.15; margin-bottom: 14px; letter-spacing: -0.5px; font-family: 'Plus Jakarta Sans', serif; }
+  .cover p { font-size: 18px; color: rgba(255,255,255,0.82); margin-bottom: 24px; font-weight: 300; letter-spacing: 0.2px; }
+  .cover-meta { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; font-size: 13px; opacity: 0.7; letter-spacing: 0.4px; }
+  .pillar-badges { display: flex; gap: 12px; justify-content: center; margin: 24px 0 8px; flex-wrap: wrap; }
+  .pillar-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; border-radius: 8px; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+  .pillar-badge.seo { background: rgba(201,169,110,0.15); border: 1px solid rgba(201,169,110,0.4); color: #f0e2c4; }
+  .pillar-badge.aio { background: rgba(229,9,20,0.15); border: 1px solid rgba(229,9,20,0.3); color: #fca5a5; }
+  .pillar-badge.geo { background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3); color: #c4b5fd; }
+  .cover-content::after { content: ''; display: block; width: 60px; height: 2px; background: var(--gold); margin: 28px auto 0; border-radius: 1px; }
+
+  .container { max-width: 980px; margin: -36px auto 48px; padding: 0 20px; position: relative; z-index: 2; }
+  .card { background: #fff; border-radius: 16px; box-shadow: 0 2px 20px rgba(0,0,0,0.05); margin-bottom: 28px; overflow: hidden; border: 1px solid var(--gray-300); position: relative; }
+  .card::before { content: ''; position: absolute; top: 0; left: 40px; right: 40px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-border), var(--gold), var(--gold-border), transparent); opacity: 0.6; }
+  .card-body { padding: 44px 52px; }
+  .card-pillar { border-top: 3px solid var(--gray-300); }
+  .card-pillar.seo { border-top-color: var(--gold-dark); }
+  .card-pillar.aio { border-top-color: var(--red); }
+  .card-pillar.geo { border-top-color: var(--purple); }
+  .card-pillar.gold { border-top-color: var(--gold); }
+
+  .pillar-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+  .pillar-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 800; color: #fff; flex-shrink: 0; }
+  .pillar-icon.seo { background: linear-gradient(135deg, #b8963a, #d4b96a); }
+  .pillar-icon.aio { background: linear-gradient(135deg, var(--red), var(--red-light)); }
+  .pillar-icon.geo { background: linear-gradient(135deg, var(--purple), #a78bfa); }
+  .pillar-icon.gold { background: linear-gradient(135deg, #b8963a, #d4b96a); }
+  .pillar-title { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+  .pillar-title.seo { color: var(--gold-dark); }
+  .pillar-title.aio { color: var(--red); }
+  .pillar-title.geo { color: var(--purple); }
+  .pillar-subtitle { font-size: 12px; color: var(--gray-500); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 1px; }
+
+  h2 { font-size: 24px; font-weight: 700; color: var(--red); margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--gold-border); display: flex; align-items: center; gap: 10px; letter-spacing: -0.3px; position: relative; }
+  h2::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 40px; height: 2px; background: var(--gold); border-radius: 1px; }
+  h3 { font-size: 18px; font-weight: 700; color: var(--gray-900); margin: 34px 0 16px; letter-spacing: -0.2px; }
+  h4 { font-size: 15px; font-weight: 700; color: var(--gray-800); margin: 20px 0 10px; }
+  p { font-size: 15.5px; color: var(--gray-700); margin-bottom: 14px; line-height: 1.8; }
+  p:last-child { margin-bottom: 0; }
+  ul, ol { margin: 0 0 16px 22px; }
+  li { font-size: 15.5px; color: var(--gray-700); margin-bottom: 6px; line-height: 1.75; }
+
+  .badge { display: inline-block; padding: 5px 14px; border-radius: 6px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; white-space: nowrap; }
+  .badge-critico { background: #fef2f2; color: var(--red); border: 1px solid #fecaca; }
+  .badge-alto { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+  .badge-medio { background: #fefce8; color: #a16207; border: 1px solid #fef08a; }
+  .badge-baixo { background: var(--gold-light); color: #8b7a4a; border: 1px solid var(--gold-border); }
+  .badge-info { background: #f5f5f5; color: #616161; border: 1px solid #d4d4d4; }
+  .badge-ok { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14.5px; }
+  th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--gray-100); vertical-align: top; }
+  th { background: linear-gradient(135deg, var(--gray-50), #f8f7f4); font-weight: 700; color: var(--gray-700); font-size: 11px; text-transform: uppercase; letter-spacing: 0.7px; border-bottom: 2px solid var(--gold-border); }
+  tr:hover td { background: #fcfaf7; }
+  tr:last-child td { border-bottom: none; }
+  .table-wrap { overflow-x: auto; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-bottom: 30px; }
+  .kpi-card { background: #f2f0ec; border: 1px solid var(--gold-border); border-radius: 10px; padding: 18px 8px 16px; text-align: center; position: relative; overflow: hidden; }
+  .kpi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .kpi-card .value { font-size: 26px; font-weight: 700; color: var(--red); line-height: 1.1; letter-spacing: -0.5px; }
+  .kpi-card .label { font-size: 9.5px; color: var(--gray-600); font-weight: 700; text-transform: uppercase; letter-spacing: 0.2px; margin-top: 6px; line-height: 1.35; }
+  .kpi-card .sub { font-size: 10px; color: var(--gray-500); margin-top: 3px; line-height: 1.35; }
+
+  .score-hero { display: grid; grid-template-columns: 210px 1fr; gap: 30px; align-items: center; background: linear-gradient(135deg, #0d0d0d, #1c1c1c 60%, #242424); border-radius: 16px; padding: 30px 34px; margin: 10px 0 28px; color: #fff; position: relative; overflow: hidden; }
+  .score-hero::before { content: ''; position: absolute; top: -80px; right: -60px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(201,169,110,0.14), transparent 65%); pointer-events: none; }
+  .score-ring { width: 172px; height: 172px; border-radius: 50%; background: conic-gradient(var(--gold) 0 37%, rgba(255,255,255,0.12) 37% 100%); display: flex; align-items: center; justify-content: center; position: relative; margin: 0 auto; }
+  .score-ring::before { content: ''; position: absolute; inset: 13px; background: #141414; border-radius: 50%; }
+  .score-ring .inner { position: relative; z-index: 1; text-align: center; line-height: 1; }
+  .score-ring .num { font-size: 52px; font-weight: 800; letter-spacing: -2px; color: #fff; }
+  .score-ring .den { font-size: 11px; color: rgba(255,255,255,0.55); letter-spacing: 1px; text-transform: uppercase; margin-top: 5px; }
+  .score-copy h3 { color: #fff; margin: 0 0 6px; font-size: 19px; }
+  .score-copy p { color: rgba(255,255,255,0.68); font-size: 13.5px; margin: 0 0 14px; line-height: 1.6; }
+  .score-dims { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 22px; }
+  .score-dim .top { display: flex; justify-content: space-between; gap: 10px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: rgba(255,255,255,0.72); margin-bottom: 4px; }
+  .score-dim .top b { color: #fff; font-size: 11px; }
+  .score-dim .track { height: 5px; background: rgba(255,255,255,0.12); border-radius: 3px; overflow: hidden; }
+  .score-dim .fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--red), var(--gold)); }
+  .score-dim .fill.high { background: linear-gradient(90deg, #15803d, #4ade80); }
+  .score-dim .fill.mid { background: linear-gradient(90deg, #b8963a, #d4b96a); }
+  .score-dim .fill.low { background: linear-gradient(90deg, var(--red), #f97316); }
+
+  .risk-box { background: linear-gradient(135deg, #fcfaf7, #f8f7f4); border-left: 4px solid var(--red); padding: 22px 26px; border-radius: 0 12px 12px 0; margin: 18px 0; }
+  .risk-box h4 { margin: 0 0 8px; color: var(--red); font-size: 15px; }
+  .risk-box p { font-size: 15px; margin: 0; }
+  .risk-box.gold { border-left-color: var(--gold); }
+  .risk-box.gold h4 { color: #8b7a4a; }
+
+  .finding { border: 1px solid var(--gray-200); border-radius: 12px; padding: 24px 28px; margin-bottom: 16px; background: #fcfcfc; transition: box-shadow 0.2s, border-color 0.2s; border-left: 3px solid transparent; }
+  .finding:hover { box-shadow: 0 2px 16px rgba(0,0,0,0.04); border-color: var(--gold-border); }
+  .finding.seo-finding { border-left-color: var(--gold-dark); }
+  .finding.aio-finding { border-left-color: var(--red); }
+  .finding.geo-finding { border-left-color: var(--purple); }
+  .finding.gold-finding { border-left-color: var(--gold); }
+  .finding-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; gap: 12px; }
+  .finding-title { font-weight: 700; font-size: 16.5px; color: var(--gray-900); letter-spacing: -0.2px; }
+  .finding-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 28px; font-size: 14.5px; }
+  .finding-grid .field { font-weight: 700; color: var(--gray-800); }
+  .finding-grid .value { color: var(--gray-700); }
+  .finding-grid .full { grid-column: 1 / -1; }
+  .finding-tag { display: block; font-size: 10.5px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--gold-dark); margin-bottom: 3px; }
+  .finding.aio-finding .finding-tag { color: var(--red); }
+  .finding.geo-finding .finding-tag { color: var(--purple); }
+  .severity { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; white-space: nowrap; }
+  .sev-critico { background: #fef2f2; color: var(--red); border: 1px solid #fecaca; }
+  .sev-alto { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+  .sev-medio { background: #fefce8; color: #a16207; border: 1px solid #fef08a; }
+  .sev-baixo { background: var(--gold-light); color: #8b7a4a; border: 1px solid var(--gold-border); }
+
+  code { font-family: 'JetBrains Mono', monospace; background: var(--gray-100); padding: 2px 7px; border-radius: 3px; font-size: 13px; color: var(--red); word-break: break-word; }
+  pre { background: var(--gray-900); color: #e2e8f0; border-radius: 12px; padding: 22px 26px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; overflow-x: auto; line-height: 1.65; margin: 14px 0; }
+  pre code { background: none; color: inherit; padding: 0; font-size: 12.5px; }
+  .code-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--gray-500); margin: 18px 0 6px; }
+
+  .bar-container { margin: 20px 0; }
+  .bar-row { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+  .bar-label { width: 245px; font-size: 13.5px; font-weight: 700; color: var(--gray-700); text-align: right; flex-shrink: 0; }
+  .bar-track { flex: 1; height: 28px; background: var(--gray-100); border-radius: 6px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding-right: 12px; font-size: 12px; font-weight: 700; color: #fff; }
+  .bar-fill.gold { background: linear-gradient(90deg, #b8963a, #d4b96a); }
+  .bar-fill.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .bar-fill.purple { background: linear-gradient(90deg, var(--purple), #a78bfa); }
+  .bar-fill.orange { background: linear-gradient(90deg, #c2410c, #ea580c); }
+  .bar-fill.gray { background: linear-gradient(90deg, #616161, #9e9e9e); }
+  .bar-fill.green { background: linear-gradient(90deg, #15803d, #22c55e); }
+
+  .timeline { display: flex; gap: 0; margin: 28px 0 16px; position: relative; padding: 0 0 18px; }
+  .timeline::before { content: ''; position: absolute; top: 26px; left: 6%; right: 6%; height: 3px; background: linear-gradient(90deg, var(--gold-border), var(--gold), var(--gold-border)); border-radius: 2px; }
+  .timeline-phase { flex: 1; text-align: center; position: relative; padding: 0 8px; }
+  .timeline-phase .dot { width: 16px; height: 16px; border-radius: 50%; margin: 0 auto 12px; position: relative; z-index: 1; border: 3px solid #fff; box-shadow: 0 0 0 2px var(--gold); }
+  .timeline-phase .dot.gold { background: var(--gold-dark); }
+  .timeline-phase .dot.red { background: var(--red); }
+  .timeline-phase .dot.purple { background: var(--purple); }
+  .timeline-phase .dot.orange { background: #c2410c; }
+  .timeline-phase .phase-name { font-size: 12.5px; font-weight: 700; color: var(--gray-800); margin-bottom: 2px; }
+  .timeline-phase .phase-weeks { font-size: 11px; color: var(--gray-500); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .timeline-phase .phase-hours { font-size: 20px; font-weight: 700; color: var(--red); letter-spacing: -0.5px; margin-top: 4px; }
+  .timeline-phase .phase-pillar { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+  .timeline-phase .phase-pillar.gold { color: var(--gold-dark); }
+  .timeline-phase .phase-pillar.red { color: var(--red); }
+  .timeline-phase .phase-pillar.purple { color: var(--purple); }
+  .timeline-phase .phase-pillar.orange { color: #c2410c; }
+
+  .timeline-deliverables { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 6px 0 20px; }
+  .timeline-deliverables .deliv { background: #fcfaf7; border: 1px solid var(--gold-border); border-radius: 10px; padding: 14px 16px; font-size: 13px; color: var(--gray-700); line-height: 1.65; }
+  .timeline-deliverables .deliv strong { display: block; color: var(--gray-900); font-size: 11px; text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 6px; }
+
+  .status { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 4px; white-space: nowrap; }
+  .status.ok { background: rgba(34,197,94,0.1); color: #16a34a; }
+  .status.warn { background: rgba(217,119,6,0.1); color: #c2410c; }
+  .status.fail { background: rgba(229,9,20,0.1); color: var(--red); }
+  .status.partial { background: rgba(201,169,110,0.15); color: #8b7a4a; }
+
+  .note { background: #f8f7f4; border: 1px solid var(--gold-border); border-radius: 10px; padding: 16px 20px; font-size: 14px; color: var(--gray-700); margin: 16px 0; }
+  .note strong { color: var(--gray-900); }
+
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .metric-big { font-size: 40px; font-weight: 800; color: var(--red); line-height: 1; letter-spacing: -1.5px; }
+  .metric-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--gray-500); margin-top: 4px; }
+
+  .footer { text-align: center; padding: 36px; font-size: 13px; color: var(--gray-500); border-top: 1px solid var(--gold-border); background: #0d0d0d; position: relative; }
+  .footer::before { content: ''; position: absolute; top: -2px; left: 50%; transform: translateX(-50%); width: 40px; height: 3px; background: var(--gold); border-radius: 2px; }
+  .footer-logos { display: flex; justify-content: center; align-items: center; gap: 40px; margin-bottom: 16px; }
+  .footer-logos img { height: 30px; width: auto; }
+  .footer-logos .client { height: 42px; background: #fff; padding: 6px 9px; border-radius: 6px; }
+  .footer p { color: var(--gray-500); font-size: 13px; margin-bottom: 4px; }
+
+  table.compact { font-size: 13px; }
+  table.compact th, table.compact td { padding: 9px 10px; }
+  td.num, th.num { text-align: right; white-space: nowrap; }
+  td.num.over { color: var(--red); font-weight: 700; }
+  .url { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--gray-700); word-break: break-all; }
+  .url a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--gray-200); }
+  .url a:hover { color: var(--red); border-bottom-color: var(--red); }
+  .pillar-intro { font-size: 15.5px; }
+  .phase-bar { height: 4px; border-radius: 2px; margin: 10px auto 8px; }
+  .phase-bar.red { background: linear-gradient(90deg, var(--red), var(--red-light)); }
+  .phase-bar.orange { background: linear-gradient(90deg, #c2410c, #ea580c); }
+  .phase-bar.gold { background: linear-gradient(90deg, #b8963a, #d4b96a); }
+  .phase-pct { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray-500); }
+
+  .tree { background: #0d0d0d; color: #e5e7eb; border-radius: 12px; padding: 24px 28px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.95; overflow-x: auto; margin: 16px 0; }
+  .tree .root { color: var(--gold); font-weight: 700; }
+  .tree .new { color: #4ade80; font-weight: 500; }
+  .tree .muted { color: #9ca3af; }
+  .tree .bad { color: #fca5a5; }
+
+  #geo .geo-signals { table-layout: fixed; }
+  #geo .geo-signals .status { font-size: 10px; padding: 2px 7px; }
+  #geo .geo-signals th:nth-child(1) { width: 32%; }
+  #geo .geo-signals th:nth-child(2) { width: 18%; }
+  #geo .geo-signals th:nth-child(3) { width: 50%; }
+  #plano table td:nth-child(3) { white-space: nowrap; }
+  #anexos .annex-a th:nth-child(1) { width: 45%; }
+  #anexos .annex-a th:nth-child(2) { width: 9%; }
+  #anexos .annex-a th:nth-child(3) { width: 10%; }
+  #anexos .annex-a th:nth-child(4) { width: 10%; }
+  #anexos .annex-a th:nth-child(5) { width: 10%; }
+  #anexos .annex-a th:nth-child(6) { width: 10%; }
+  #anexos .annex-b th:nth-child(1) { width: 62%; }
+  #anexos .annex-b th:nth-child(2) { width: 20%; }
+  #anexos .annex-b th:nth-child(3) { width: 10%; }
+  #anexos .annex-b th:nth-child(4) { width: 8%; }
+  #anexos .annex-c th:nth-child(1) { width: 10%; }
+  #anexos .annex-c th:nth-child(2) { width: 44%; }
+  #anexos .annex-c th:nth-child(3) { width: 10%; }
+  #anexos .annex-c th:nth-child(4) { width: 36%; }
+
+  @media print {
+    body { background: #fff; font-size: 12px; }
+    .cover { padding: 0 24mm; width: 210mm; height: 296mm; box-sizing: border-box; display: flex; align-items: center; justify-content: center; page-break-after: always; break-after: page; margin: 0; }
+    .cover h1 { font-size: 34pt; }
+    .container { max-width: 100%; margin: 0; padding: 0 14mm; }
+    .kpi-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .kpi-card .value { font-size: 22px; }
+    .kpi-card .label { font-size: 8.5px; }
+    .kpi-card .sub { font-size: 9px; }
+    .score-hero { grid-template-columns: 170px 1fr; gap: 18px; padding: 20px 22px; }
+    .score-ring { width: 140px; height: 140px; }
+    .score-ring .num { font-size: 42px; }
+    .score-copy h3 { font-size: 16px; }
+    .score-dims { gap: 7px 16px; }
+    code { white-space: nowrap; word-break: normal; }
+    .card { box-shadow: none; border: 1px solid var(--gray-200); margin-bottom: 8mm; }
+    h2, h3, h4 { page-break-after: avoid; break-after: avoid; }
+    .finding { page-break-inside: avoid; break-inside: avoid; }
+    .finding-header { page-break-after: avoid; break-after: avoid; }
+    table { page-break-inside: auto; }
+    tr { page-break-inside: avoid; break-inside: avoid; }
+    thead { display: table-header-group; }
+    .table-wrap { overflow: visible; }
+    #anexos table { font-size: 10.5px; }
+    #anexos th, #anexos td { padding: 5px 6px; }
+    #anexos .url { font-size: 9.5px; }
+    #anexos .status { font-size: 9px; padding: 2px 6px; }
+    .timeline, .timeline-deliverables, .timeline-phase, .timeline-deliverables .deliv { break-inside: avoid; page-break-inside: avoid; }
+    .score-hero, .tree { break-inside: avoid; page-break-inside: avoid; }
+    .footer { display: none; }
+    @page { margin: 0; size: A4; }
+    @page :first { margin: 0; }
+  }
+  @media (max-width: 760px) {
+    .cover h1 { font-size: 27px; }
+    .cover { padding: 36px 20px 40px; }
+    .cover-logos { gap: 16px; }
+    .cover-logos img { height: 28px; }
+    .cover-logos .client-logo { height: 44px; }
+    .card-body { padding: 22px 20px; }
+    .finding-grid, .split { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .score-hero { grid-template-columns: 1fr; text-align: center; }
+    .score-ring { width: 150px; height: 150px; }
+    .score-dims { text-align: left; }
+    .bar-label { width: 120px; font-size: 11.5px; }
+    .bar-row { gap: 8px; }
+    .timeline { flex-wrap: wrap; gap: 14px; }
+    .timeline::before { display: none; }
+    .timeline-phase { flex: 1 1 40%; }
+    .timeline-deliverables { grid-template-columns: 1fr; }
+    .pillar-header { gap: 10px; }
+    .pillar-title { font-size: 18px; line-height: 1.3; }
+    .pillar-subtitle { font-size: 10px; }
+    table { font-size: 13px; }
+    th, td { padding: 9px 10px; }
+    .compact { min-width: 560px; }
+    #anexos .compact { min-width: 700px; }
+    #geo .geo-signals { table-layout: auto; min-width: 620px; }
+    #arquitetura table { min-width: 560px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-content">
+    <div class="cover-logos">
+      <img src="assets/logo-v4-white.png" alt="V4 Company" style="border-radius:6px;">
+      <img src="assets/logo-sdiodonto.png" alt="SDI Odonto" class="client-logo">
+    </div>
+    <div class="label">Auditoria técnica &bull; Novembro 2026</div>
+    <h1>Auditoria SEO + AIO + GEO</h1>
+    <p>SDI Odonto &mdash; Materiais odontológicos, clareamento e evidência clínica</p>
+    <div class="pillar-badges">
+      <span class="pillar-badge seo">SEO</span>
+      <span class="pillar-badge aio">AIO</span>
+      <span class="pillar-badge geo">GEO</span>
+    </div>
+    <div class="cover-meta">
+      <span>Screaming Frog &bull; crawl 20/11/2026</span>
+      <span>351 URLs &bull; 60 páginas indexáveis</span>
+      <span>Score V4 37/100</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- RESUMO -->
+  <div class="card" id="resumo">
+    <div class="card-body">
+      <h2>Resumo Executivo</h2>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="value">60</div>
+          <div class="label">Páginas indexáveis</div>
+          <div class="sub">de 69 respostas HTML</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">61</div>
+          <div class="label">URLs órfãs no sitemap</div>
+          <div class="sub">54 casos + 7 páginas</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">507</div>
+          <div class="label">Links malformados</div>
+          <div class="sub">14 URLs sem a barra após .br</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">15</div>
+          <div class="label">Sem meta description</div>
+          <div class="sub">41 acima de 155 caracteres</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">0</div>
+          <div class="label">Product / Article / FAQ</div>
+          <div class="sub">schema específico no site</div>
+        </div>
+        <div class="kpi-card">
+          <div class="value">31</div>
+          <div class="label">Lighthouse mobile</div>
+          <div class="sub">home &bull; LCP 6,9 s</div>
+        </div>
+      </div>
+
+      <div class="score-hero">
+        <div class="score-ring">
+          <div class="inner">
+            <div class="num">37</div>
+            <div class="den">de 100</div>
+          </div>
+        </div>
+        <div class="score-copy">
+          <h3>Score V4 &mdash; índice de conformidade</h3>
+          <p>Média ponderada de oito dimensões auditadas. Não é nota de mercado nem previsão de tráfego: &eacute; o quanto a base técnica, sem&acirc;ntica e de extra&ccedil;&atilde;o est&aacute; pronta para ranquear e ser citada.</p>
+          <div class="score-dims">
+            <div class="score-dim">
+              <div class="top"><span>Indexação e links &middot; 20%</span><b>32</b></div>
+              <div class="track"><div class="fill low" style="width:32%;"></div></div>
+            </div>
+            <div class="score-dim">
+              <div class="top"><span>Canonical &middot; 10%</span><b>90</b></div>
+              <div class="track"><div class="fill high" style="width:90%;"></div></div>
+            </div>
+            <div class="score-dim">
+              <div class="top"><span>Metadados &middot; 10%</span><b>35</b></div>
+              <div class="track"><div class="fill low" style="width:35%;"></div></div>
+            </div>
+            <div class="score-dim">
+              <div class="top"><span>Headings &middot; 10%</span><b>40</b></div>
+              <div class="track"><div class="fill low" style="width:40%;"></div></div>
+            </div>
+            <div class="score-dim">
+              <div class="top"><span>Schema &middot; 15%</span><b>10</b></div>
+              <div class="track"><div class="fill low" style="width:10%;"></div></div>
+            </div>
+            <div class="score-dim">
+              <div class="top"><span>Performance &middot; 20%</span><b>28</b></div>
+              <div class="track"><div class="fill low" style="width:28%;"></div></div>
+            </div>
+            <div class="score-dim">
+              <div class="top"><span>Conteúdo &middot; 10%</span><b>54</b></div>
+              <div class="track"><div class="fill mid" style="width:54%;"></div></div>
+            </div>
+            <div class="score-dim">
+              <div class="top"><span>AI readiness &middot; 5%</span><b>27</b></div>
+              <div class="track"><div class="fill low" style="width:27%;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p>O site da SDI n&atilde;o &eacute; um site sem conte&uacute;do. Ele tem <strong>29 produtos com mediana de 799 palavras</strong>, <strong>75 casos cl&iacute;nicos publicados</strong> (mediana de 755 palavras), <strong>100 links de DOI</strong>, autores nominados e uma hist&oacute;ria industrial que poucas marcas do setor t&ecirc;m: fundada em 1972 em Melbourne, listada na ASX desde 1985, presen&ccedil;a em 110 pa&iacute;ses e opera&ccedil;&atilde;o no Brasil desde 1994. A mat&eacute;ria-prima para SEO, AIO e GEO est&aacute; acima da m&eacute;dia do mercado odontol&oacute;gico.</p>
+
+      <p>O problema &eacute; de <strong>engenharia de distribui&ccedil;&atilde;o e de sem&acirc;ntica</strong>. Dos 75 casos cl&iacute;nicos, <strong>54 est&atilde;o no sitemap, respondem 200 e n&atilde;o t&ecirc;m um &uacute;nico link interno</strong>. O menu e o rodap&eacute; apontam para <strong>14 URLs com o host malformado</strong> &mdash; falta a barra depois de <code>.br</code>, e o navegador tenta abrir <code>sdiodonto.com.brquem-somos/</code> como se fosse outro dom&iacute;nio. S&atilde;o <strong>507 ocorr&ecirc;ncias</strong> espalhadas por todas as p&aacute;ginas. Na home, os <strong>7 H1s s&atilde;o t&iacute;tulos de casos e artigos</strong>; o slogan &ldquo;Seu Sorriso. Nossa Vis&atilde;o.&rdquo; &eacute; um H2. As p&aacute;ginas <code>/estetica/</code>, <code>/dentistica/</code> e <code>/equipamentos/</code> come&ccedil;am com o H1 de um caso cl&iacute;nico, e <code>/odontopediatria/</code> n&atilde;o tem H1.</p>
+
+      <p>Para buscadores e LLMs, o resultado &eacute; uma p&aacute;gina de arquivo, n&atilde;o uma p&aacute;gina de marca. <strong>131 de 131 imagens t&ecirc;m alt vazio</strong>, incluindo todas as fotos cl&iacute;nicas &mdash; o principal ativo visual da SDI &eacute; invis&iacute;vel para leitores de tela, para a busca de imagens e para a leitura multimodal. Os casos s&atilde;o photo essays: um H1, um H4 &ldquo;RELATO DE CASO&rdquo;, par&aacute;grafos e legendas, sem resumo, indica&ccedil;&atilde;o, discuss&atilde;o, conclus&atilde;o ou refer&ecirc;ncias estruturadas. Os produtos t&ecirc;m blocos de caracter&iacute;sticas e downloads, mas n&atilde;o abrem com &ldquo;o que &eacute;, para que serve, como usar&rdquo;. N&atilde;o existe um &uacute;nico <code>Product</code>, <code>Article</code>, <code>FAQPage</code> ou <code>Person</code> no JSON-LD.</p>
+
+      <p>Performance fecha o cerco: Lighthouse mobile de <strong>29 a 33</strong> nos tr&ecirc;s templates, LCP de <strong>6,9 s na home e 12,0 s no produto</strong>, TBT acima de 1,5 s, <strong>7,2 MB e 194 requisi&ccedil;&otilde;es</strong> na home. O servidor responde com <code>cache-control: no-store</code>, cria <code>PHPSESSID</code> em toda visita an&ocirc;nima, n&atilde;o comprime o HTML e n&atilde;o envia <code>Cache-Control</code> nas imagens. O TTFB medido fica entre 2,1 s e 5,0 s. N&atilde;o &eacute; um problema de tema: &eacute; configura&ccedil;&atilde;o de servidor, cache e empilhamento de plugins.</p>
+
+      <h3>O que j&aacute; est&aacute; funcionando</h3>
+      <ul>
+        <li><strong>Infraestrutura correta:</strong> HTTPS, HTTP/2, 301 de HTTP para HTTPS, de <code>www</code> para non-<code>www</code>, de mai&uacute;sculas para min&uacute;sculas e de URL sem barra para com barra. O 404 &eacute; real, n&atilde;o devolve 200.</li>
+        <li><strong>Canonical pr&oacute;prio em 60 de 60 p&aacute;ginas HTML</strong> &mdash; a base de consolida&ccedil;&atilde;o est&aacute; correta e n&atilde;o precisa ser refeita.</li>
+        <li><strong>robots.txt permissivo</strong> e sitemap XML declarado, com 121 URLs de conte&uacute;do. Nenhum crawler de IA est&aacute; bloqueado.</li>
+        <li><strong>Conte&uacute;do com profundidade real:</strong> produtos e casos passam de 700 palavras em mediana; n&atilde;o h&aacute; thin content generalizado.</li>
+        <li><strong>Autoridade genu&iacute;na:</strong> 100 links de DOI, ORCID, autores nominados, casos com passo a passo cl&iacute;nico e artigos em peri&oacute;dicos. &Eacute; o ativo mais valioso e o mais subaproveitado.</li>
+        <li><strong>Base de mensura&ccedil;&atilde;o instalada:</strong> GTM, GA4, Google Ads e PixelYourSite est&atilde;o presentes &mdash; h&aacute; como medir o impacto das corre&ccedil;&otilde;es, embora o excesso de stacks pese no desempenho.</li>
+      </ul>
+
+      <div class="risk-box">
+        <h4>O risco central</h4>
+        <p>A SDI tem a prova que o mercado odontol&oacute;gico compra &mdash; 75 casos cl&iacute;nicos, 29 produtos, d&eacute;cadas de pesquisa &mdash; mas o site <strong>esconde 54 desses casos</strong>, <strong>n&atilde;o declara um &uacute;nico Product</strong> e <strong>n&atilde;o conecta autor, artigo e produto</strong>. O Google v&ecirc; um arquivo de imagens; a IA v&ecirc; uma marca sem ficha. O risco n&atilde;o &eacute; perder ranking: &eacute; continuar sendo a fonte que o concorrente cita.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MÉTODO -->
+  <div class="card" id="metodo">
+    <div class="card-body">
+      <h2>Escopo, M&eacute;todo e Limites</h2>
+
+      <div class="table-wrap">
+      <table>
+        <tr><th>Item</th><th>Detalhe</th></tr>
+        <tr><td><strong>Escopo</strong></td><td>Auditoria t&eacute;cnica de SEO on-page, indexa&ccedil;&atilde;o, links internos e arquitetura; leitura por mecanismos de resposta (AIO); prontid&atilde;o de entidade e cita&ccedil;&atilde;o (GEO); performance mobile.</td></tr>
+        <tr><td><strong>Ferramentas</strong></td><td>Screaming Frog SEO Spider (crawl completo), Lighthouse local em modo mobile, inspe&ccedil;&atilde;o direta de HTML renderizado, JSON-LD, cabe&ccedil;alhos HTTP, robots.txt e sitemaps XML.</td></tr>
+        <tr><td><strong>Volume rastreado</strong></td><td>351 URLs (HTML, imagens, PDFs, CSS, JS), 69 respostas HTML, 60 p&aacute;ginas index&aacute;veis com link interno, 131 imagens &uacute;nicas e 23 PDFs.</td></tr>
+        <tr><td><strong>Data do crawl</strong></td><td>20 de novembro de 2026.</td></tr>
+        <tr><td><strong>Data do Lighthouse</strong></td><td>20 de novembro de 2026, em tr&ecirc;s templates: home, produto (<code>/produtos/luna-2/</code>) e caso cl&iacute;nico (<code>/casos-clinicos/restauracoes-classe-ii-com-resina-luna-2/</code>).</td></tr>
+        <tr><td><strong>Dados complementares</strong></td><td>CSVs de crawl, HTML das p&aacute;ginas, cabe&ccedil;alhos HTTP, sitemap_index.xml e seus quatro filhos, robots.txt, checagem manual de 404, redirecionamentos e JSON-LD.</td></tr>
+        <tr><td><strong>Metodologia</strong></td><td>V4 Company &mdash; Google Search Essentials, WCAG 2.1, schema.org e crit&eacute;rios de extractability para LLMs.</td></tr>
+      </table>
+      </div>
+
+      <div class="risk-box gold">
+        <h4>Limites desta rodada &mdash; leia antes de interpretar os n&uacute;meros</h4>
+        <p>O pacote recebido <strong>n&atilde;o inclui Google Search Console, GA4, base de backlinks nem teste de cita&ccedil;&atilde;o ao vivo em ChatGPT, Perplexity, Gemini, Copilot ou AI Overviews</strong>. Por isso: (1) n&atilde;o h&aacute; proje&ccedil;&atilde;o de tr&aacute;fego, leads ou receita; (2) n&atilde;o h&aacute; afirma&ccedil;&atilde;o de que a marca &eacute; ou n&atilde;o citada por IAs &mdash; apenas a avalia&ccedil;&atilde;o dos requisitos t&eacute;cnicos que habilitam cita&ccedil;&atilde;o; (3) a API p&uacute;blica do PageSpeed Insights retornou HTTP 429 (quota excedida), ent&atilde;o a performance foi medida com Lighthouse local, n&atilde;o com dados de campo do CrUX; (4) n&atilde;o foi feita inspe&ccedil;&atilde;o do &iacute;ndice do Google via operador <code>site:</code>, que n&atilde;o &eacute; confi&aacute;vel como censo.</p>
+      </div>
+
+      <h3>Como ler o score</h3>
+      <p>O Score V4 &eacute; uma <strong>m&eacute;dia ponderada de conformidade</strong>, n&atilde;o uma nota subjetiva. Cada dimens&atilde;o recebe uma nota de 0 a 100 a partir de contagens verific&aacute;veis no crawl e na inspe&ccedil;&atilde;o manual. Os pesos refletem o impacto estimado na capacidade de ser rastreado, entendido, ranqueado e citado.</p>
+
+      <div class="table-wrap">
+      <table class="compact">
+        <tr><th>Dimens&atilde;o</th><th class="num">Peso</th><th class="num">Nota</th><th>O que foi medido</th></tr>
+        <tr><td>Indexa&ccedil;&atilde;o e links internos</td><td class="num">20%</td><td class="num">32</td><td>URLs do sitemap com link interno, links malformados, redirecionamentos, duplicatas, profundidade</td></tr>
+        <tr><td>Canonical</td><td class="num">10%</td><td class="num">90</td><td>Canonical pr&oacute;prio no HTML, PDFs index&aacute;veis, duplicata <code>/home-2/</code></td></tr>
+        <tr><td>Metadados</td><td class="num">10%</td><td class="num">35</td><td>Title &le; 60 caracteres, meta description presente e &le; 155, duplicatas e t&iacute;tulos iguais ao H1</td></tr>
+        <tr><td>Headings</td><td class="num">10%</td><td class="num">40</td><td>Um H1 por p&aacute;gina, H1 descritivo, sequ&ecirc;ncia H1 &rarr; H2, duplicatas de H1</td></tr>
+        <tr><td>Schema</td><td class="num">15%</td><td class="num">10</td><td>Product, Article, MedicalWebPage, FAQPage, Person, Organization completo, sameAs</td></tr>
+        <tr><td>Performance</td><td class="num">20%</td><td class="num">28</td><td>Lighthouse mobile, LCP, TBT, CLS, peso, requisi&ccedil;&otilde;es, TTFB, cache e compress&atilde;o</td></tr>
+        <tr><td>Conte&uacute;do</td><td class="num">10%</td><td class="num">54</td><td>Profundidade, estrutura de resposta, readability, hubs e templates de caso/produto</td></tr>
+        <tr><td>AI readiness</td><td class="num">5%</td><td class="num">27</td><td>Acesso de crawlers, SSR, llms.txt, answer-first, FAQ, cita&ccedil;&atilde;o, clareza de entidade</td></tr>
+      </table>
+      </div>
+
+      <div class="note"><strong>C&aacute;lculo:</strong> (32&times;0,20) + (90&times;0,10) + (35&times;0,10) + (40&times;0,10) + (10&times;0,15) + (28&times;0,20) + (54&times;0,10) + (27&times;0,05) = <strong>36,75</strong>, arredondado para <strong>37/100</strong>. As barras da pr&oacute;xima se&ccedil;&atilde;o mostram numerador e denominador de cada crit&eacute;rio.</div>
+    </div>
+  </div>
+
+  <!-- MAPA -->
+  <div class="card" id="mapa">
+    <div class="card-body">
+      <h2>Mapa de Conformidade</h2>
+      <p style="margin-bottom:8px;">Percentual de p&aacute;ginas index&aacute;veis que atendem a cada crit&eacute;rio. Base: 60 p&aacute;ginas index&aacute;veis, 121 URLs de conte&uacute;do no sitemap e 131 imagens &uacute;nicas.</p>
+
+      <div class="bar-container">
+        <div class="bar-row">
+          <div class="bar-label">URLs do sitemap com link interno</div>
+          <div class="bar-track"><div class="bar-fill orange" style="width:50%;">60/121 &bull; 50%</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Exatamente 1 H1 por p&aacute;gina</div>
+          <div class="bar-track"><div class="bar-fill gold" style="width:90%;">54/60 &bull; 90%</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">H1 &eacute; o primeiro heading</div>
+          <div class="bar-track"><div class="bar-fill red" style="width:8%;min-width:72px;justify-content:center;">5/64 &bull; 8%</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Meta description presente</div>
+          <div class="bar-track"><div class="bar-fill orange" style="width:75%;">45/60 &bull; 75%</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Meta description &le; 155 caracteres</div>
+          <div class="bar-track"><div class="bar-fill red" style="width:7%;min-width:72px;justify-content:center;">4/60 &bull; 7%</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Title &le; 60 caracteres</div>
+          <div class="bar-track"><div class="bar-fill orange" style="width:53%;">32/60 &bull; 53%</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Imagens com alt preenchido</div>
+          <div class="bar-track"><div class="bar-fill red" style="width:2%;min-width:66px;padding:0 6px;justify-content:center;">0/131</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Canonical pr&oacute;prio no HTML</div>
+          <div class="bar-track"><div class="bar-fill green" style="width:100%;">60/60 &bull; 100%</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Schema espec&iacute;fico (Product/Article/FAQ)</div>
+          <div class="bar-track"><div class="bar-fill red" style="width:2%;min-width:66px;padding:0 6px;justify-content:center;">0/60</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Conte&uacute;do &ge; 300 palavras</div>
+          <div class="bar-track"><div class="bar-fill green" style="width:95%;">57/60 &bull; 95%</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Performance mobile &ge; 50</div>
+          <div class="bar-track"><div class="bar-fill red" style="width:2%;min-width:66px;padding:0 6px;justify-content:center;">0/3</div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Sinais de IA (llms.txt, sameAs, FAQ)</div>
+          <div class="bar-track"><div class="bar-fill red" style="width:2%;min-width:66px;padding:0 6px;justify-content:center;">0/3</div></div>
+        </div>
+      </div>
+
+      <p style="font-size:14px; color:var(--gray-600);">Leitura r&aacute;pida: a base t&eacute;cnica est&aacute; de p&eacute; &mdash; canonical, HTTPS, sitemap e profundidade de conte&uacute;do. O que falta &eacute; a camada que transforma conte&uacute;do em resultado: <strong>links internos que distribuam os 75 casos, H1 que declare a p&aacute;gina, metadados que clicam, schema que explica e servidor que entrega r&aacute;pido</strong>.</p>
+    </div>
+  </div>
+
+  <!-- ACHADOS -->
+  <div class="card" id="achados">
+    <div class="card-body">
+      <h2>Achados Priorizados</h2>
+      <p style="margin-bottom:4px;">14 achados, ordenados por prioridade de execu&ccedil;&atilde;o. &ldquo;Impacto&rdquo; considera o efeito esperado em rastreamento, ranqueamento, cita&ccedil;&atilde;o e convers&atilde;o. &ldquo;Esfor&ccedil;o&rdquo; &eacute; uma estimativa de horas de execu&ccedil;&atilde;o (V4 + dev + conte&uacute;do).</p>
+
+      <div class="table-wrap">
+      <table class="compact">
+        <thead><tr><th>ID</th><th>Achado</th><th>Severidade</th><th>Impacto</th><th class="num">Esfor&ccedil;o</th><th>Fase</th></tr></thead>
+        <tr><td><strong>SEO-01</strong></td><td>507 links internos para 14 URLs com host malformado (falta a barra ap&oacute;s <code>.br</code>)</td><td><span class="badge badge-critico">Cr&iacute;tico</span></td><td>Alto</td><td class="num">3 h</td><td>1</td></tr>
+        <tr><td><strong>SEO-02</strong></td><td>61 URLs do sitemap sem link interno: 54 casos cl&iacute;nicos + 7 p&aacute;ginas</td><td><span class="badge badge-critico">Cr&iacute;tico</span></td><td>Alto</td><td class="num">6 h</td><td>1</td></tr>
+        <tr><td><strong>SEO-03</strong></td><td>Home com 7 H1s de casos; categorias com 6&ndash;10; <code>/odontopediatria/</code> sem H1</td><td><span class="badge badge-critico">Cr&iacute;tico</span></td><td>Alto</td><td class="num">6 h</td><td>1</td></tr>
+        <tr><td><strong>SEO-04</strong></td><td>Zero Product/Article/FAQ/Person; Organization sem sameAs, endere&ccedil;o e contato</td><td><span class="badge badge-critico">Cr&iacute;tico</span></td><td>Alto</td><td class="num">18 h</td><td>1&ndash;2</td></tr>
+        <tr><td><strong>SEO-05</strong></td><td>15 p&aacute;ginas sem meta description; 41 acima de 155; 4 descri&ccedil;&otilde;es duplicadas</td><td><span class="badge badge-alto">Alto</span></td><td>M&eacute;dio</td><td class="num">8 h</td><td>1</td></tr>
+        <tr><td><strong>SEO-06</strong></td><td>28 de 60 t&iacute;tulos acima de 60 caracteres; 2 abaixo de 30; 10 iguais ao H1</td><td><span class="badge badge-alto">Alto</span></td><td>M&eacute;dio</td><td class="num">4 h</td><td>1</td></tr>
+        <tr><td><strong>SEO-07</strong></td><td>131 de 131 imagens com alt vazio; 49 acima de 100 KB; 5,2 MB de imagem na home</td><td><span class="badge badge-alto">Alto</span></td><td>Alto</td><td class="num">8 h</td><td>1</td></tr>
+        <tr><td><strong>SEO-08</strong></td><td>Servidor com <code>no-store</code>, <code>PHPSESSID</code>, sem gzip, sem cache de imagem e TTFB de 2,1&ndash;5,0 s</td><td><span class="badge badge-critico">Cr&iacute;tico</span></td><td>Alto</td><td class="num">10 h</td><td>1</td></tr>
+        <tr><td><strong>SEO-09</strong></td><td>Lighthouse mobile 29&ndash;33; LCP 6,9&ndash;12,0 s; TBT 1,5&ndash;2,6 s; 7,2 MB na home</td><td><span class="badge badge-alto">Alto</span></td><td>Alto</td><td class="num">12 h</td><td>1&ndash;2</td></tr>
+        <tr><td><strong>SEO-10</strong></td><td><code>/home-2/</code> &eacute; duplicata index&aacute;vel da home, com canonical para si mesma</td><td><span class="badge badge-alto">Alto</span></td><td>M&eacute;dio</td><td class="num">2 h</td><td>1</td></tr>
+        <tr><td><strong>SEO-11</strong></td><td>&ldquo;Artigos&rdquo; no menu leva a 301 para a home; 4 categorias tamb&eacute;m s&atilde;o 301</td><td><span class="badge badge-medio">M&eacute;dio</span></td><td>M&eacute;dio</td><td class="num">2 h</td><td>1</td></tr>
+        <tr><td><strong>SEO-12</strong></td><td>23 PDFs index&aacute;veis, 37,5 MB, sem canonical e com hosts <code>www</code> e non-<code>www</code> misturados</td><td><span class="badge badge-medio">M&eacute;dio</span></td><td>Baixo</td><td class="num">4 h</td><td>1</td></tr>
+        <tr><td><strong>SEO-13</strong></td><td>Autores nominados sem bio, sem Person schema e sem marca&ccedil;&atilde;o de cita&ccedil;&atilde;o para 100 DOIs</td><td><span class="badge badge-medio">M&eacute;dio</span></td><td>Alto</td><td class="num">12 h</td><td>2&ndash;3</td></tr>
+        <tr><td><strong>SEO-14</strong></td><td>Hubs rasos (236&ndash;373 palavras), casos sem resumo/conclus&atilde;o e 100% de readability dif&iacute;cil</td><td><span class="badge badge-medio">M&eacute;dio</span></td><td>M&eacute;dio</td><td class="num">30 h</td><td>2&ndash;3</td></tr>
+      </table>
+      </div>
+
+      <div class="note" style="margin-top:16px;"><strong>Como usar esta tabela:</strong> os 14 achados somam 125 h de corre&ccedil;&atilde;o. O plano de 90 dias soma 144 h porque inclui 19 h de novos ativos que n&atilde;o s&atilde;o corre&ccedil;&atilde;o de defeito: <code>llms.txt</code>, hub <code>/evidencias/</code>, guias <code>/aprenda/</code> e baseline de cita&ccedil;&atilde;o em IA.</div>
+    </div>
+  </div>
+
+  <!-- DETALHES -->
+  <div class="card" id="detalhes">
+    <div class="card-body">
+      <h2>Achados em Detalhe</h2>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">SEO-01 &bull; RASTREAMENTO</span><span class="finding-title">507 links internos apontam para 14 URLs com o host malformado</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">O menu, o rodap&eacute; e os bot&otilde;es de download concatenam o dom&iacute;nio sem a barra final. O navegador interpreta <code>sdiodonto.com.brquem-somos/</code> como um host diferente, que n&atilde;o resolve. S&atilde;o 507 inlinks no crawl para 14 URLs; a inspe&ccedil;&atilde;o manual das 60 p&aacute;ginas index&aacute;veis encontra 549 ocorr&ecirc;ncias em 81 hrefs, porque inclui imagens e PDFs que o crawl n&atilde;o trata como link. O padr&atilde;o &eacute; o mesmo e est&aacute; em todas as p&aacute;ginas.</span></div>
+        </div>
+        <div class="table-wrap" style="margin-top:14px;">
+        <table class="compact">
+          <thead><tr><th>URL malformada</th><th class="num">Inlinks</th><th>O que deveria ser</th></tr></thead>
+          <tr><td class="url">https://sdiodonto.com.brodontopediatria/</td><td class="num over">200</td><td><code>/odontopediatria/</code></td></tr>
+          <tr><td class="url">https://sdiodonto.com.brpolitica-de-seguranca-e-privacidade/</td><td class="num over">130</td><td><code>/politica-de-seguranca-e-privacidade/</code></td></tr>
+          <tr><td class="url">https://sdiodonto.com.brquem-somos/</td><td class="num over">73</td><td><code>/quem-somos/</code></td></tr>
+          <tr><td class="url">https://sdiodonto.com.brdentistica/</td><td class="num over">68</td><td><code>/dentistica/</code></td></tr>
+          <tr><td class="url">https://sdiodonto.com.brcasos/</td><td class="num over">12</td><td><code>/casos-clinicos/</code></td></tr>
+          <tr><td class="url">6 PDFs de instru&ccedil;&otilde;es em <code>/wp-content/...</code></td><td class="num">2 cada</td><td><code>/wp-content/...</code></td></tr>
+          <tr><td class="url">https://sdiodonto.com.brproduto/pola-office/</td><td class="num">4</td><td><code>/produtos/pola-office/</code></td></tr>
+          <tr><td class="url">https://sdiodonto.com.brequipamentos/</td><td class="num">4</td><td><code>/equipamentos/</code></td></tr>
+        </table>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Impacto:</span> <span class="value">A navega&ccedil;&atilde;o principal est&aacute; quebrada em todas as p&aacute;ginas para quatro itens de menu &mdash; incluindo Odontopediatria e Quem Somos. A pol&iacute;tica de privacidade s&oacute; existe na URL correta, que n&atilde;o recebe link. O crawl gasta or&ccedil;amento em URLs que falham no DNS e o usu&aacute;rio cai em erro. &Eacute; o achado mais barato de corrigir e o de maior efeito imediato.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Corrigir os templates do Elementor/JetEngine que montam a URL (header, footer, menu, abas de produto e bot&otilde;es de PDF). (2) Fazer uma busca no banco por <code>sdiodonto.com.br</code> seguido de letra, sem barra. (3) Criar um teste automatizado no deploy que falhe se o HTML p&uacute;blico contiver o padr&atilde;o <code>sdiodonto.com.br[a-z]</code>. (4) Re-crawl e exigir zero ocorr&ecirc;ncias.</span></div>
+          <div class="full"><span class="field">Aceite:</span> <span class="value">0 links com host malformado; menus de Odontopediatria, Quem Somos, Dent&iacute;stica, Equipamentos e Pol&iacute;tica de Privacidade retornando 200.</span></div>
+          <div><span class="field">Esfor&ccedil;o:</span> <span class="value">3 h</span></div>
+        </div>
+        <div class="code-label">Diagn&oacute;stico r&aacute;pido no HTML p&uacute;blico</div>
+<pre><code>curl -s https://sdiodonto.com.br/ \
+  | grep -oE 'https://sdiodonto\.com\.br[a-z][^"&lt;&gt; ]*' \
+  | sort -u</code></pre>
+      </div>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">SEO-02 &bull; INDEXA&Ccedil;&Atilde;O</span><span class="finding-title">61 URLs do sitemap n&atilde;o t&ecirc;m um &uacute;nico link interno &mdash; 54 s&atilde;o casos cl&iacute;nicos</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">O sitemap de conte&uacute;do tem 121 URLs. Todas as 61 abaixo retornam <strong>HTTP 200 e est&atilde;o index&aacute;veis</strong>, mas t&ecirc;m <strong>zero links internos</strong> no crawl. S&atilde;o 54 casos cl&iacute;nicos + 7 p&aacute;ginas. O arquivo <code>/casos-clinicos/</code> lista apenas 21 casos; os outros 54 s&oacute; existem via sitemap. A pagina&ccedil;&atilde;o do arquivo tem 2 URLs n&atilde;o presentes em <code>&lt;a&gt;</code> e 1 p&aacute;gina n&atilde;o index&aacute;vel.</span></div>
+        </div>
+        <div class="table-wrap" style="margin-top:14px;">
+        <table class="compact">
+          <thead><tr><th>Grupo</th><th class="num">URLs</th><th>Exemplos / observa&ccedil;&atilde;o</th></tr></thead>
+          <tr><td>Casos cl&iacute;nicos</td><td class="num over">54</td><td>Publicados, 200, fora do arquivo e de qualquer bloco de relacionados</td></tr>
+          <tr><td>P&aacute;ginas</td><td class="num over">7</td><td><code>/ciosp2026/</code>, <code>/ebook-clareamento/</code>, <code>/encontro-de-odontopediatria-da-amazonia/</code>, <code>/encontro-de-odontopediatria-do-triangulo-mineiro/</code>, <code>/home-2/</code>, <code>/politica-de-seguranca-e-privacidade/</code>, <code>/postagem-premiada/</code></td></tr>
+          <tr><td><strong>Total</strong></td><td class="num over">61</td><td>72% dos 75 casos publicados est&atilde;o invis&iacute;veis para quem navega</td></tr>
+        </table>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Impacto:</span> <span class="value">O caso cl&iacute;nico &eacute; o formato que mais demonstra autoridade da SDI e o que mais se aproxima de uma pergunta real (&ldquo;como restaurar classe II com Luna 2?&rdquo;). Sem link interno, ele n&atilde;o recebe autoridade, n&atilde;o aparece no menu, n&atilde;o &eacute; descoberto por quem l&ecirc; e depende do sitemap &mdash; que muitos crawlers de IA n&atilde;o buscam. Na pr&aacute;tica, 54 dos 75 casos existem para o Google, mas n&atilde;o para o usu&aacute;rio.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Corrigir a pagina&ccedil;&atilde;o do arquivo e listar os 75 casos com filtros por produto, procedimento e autor. (2) Criar o bloco &ldquo;Casos relacionados&rdquo; com 3 links em cada caso. (3) Criar o bloco &ldquo;Casos com este produto&rdquo; em cada uma das 29 p&aacute;ginas de produto. (4) Linkar os 7 orphan pages a partir do menu, do rodap&eacute; ou de uma p&aacute;gina de campanha. (5) 301 em <code>/home-2/</code> e <code>noindex</code> em <code>/postagem-premiada/</code> se a campanha terminou.</span></div>
+          <div class="full"><span class="field">Aceite:</span> <span class="value">121/121 URLs do sitemap com pelo menos 1 link interno; 75/75 casos alcan&ccedil;&aacute;veis em at&eacute; 3 cliques a partir da home.</span></div>
+          <div><span class="field">Esfor&ccedil;o:</span> <span class="value">6 h</span></div>
+        </div>
+      </div>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">SEO-03 &bull; ON-PAGE</span><span class="finding-title">A home tem 7 H1s de casos e artigos; as categorias come&ccedil;am com o H1 de um caso</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Na home, os 7 H1s s&atilde;o t&iacute;tulos de casos cl&iacute;nicos e papers (&ldquo;Facetas em Resina Composta de Opacidade Intermedi&aacute;ria&rdquo;, &ldquo;Influence of temperature and primer application...&rdquo;, etc.). O slogan &ldquo;Seu Sorriso. Nossa Vis&atilde;o.&rdquo; &eacute; um H2. <code>/estetica/</code>, <code>/dentistica/</code> e <code>/equipamentos/</code> t&ecirc;m 6 H1s cada, todos t&iacute;tulos de casos; o primeiro &eacute; &ldquo;Clareamento dental associado em dentes vitais&rdquo;. <code>/casos-clinicos/</code> tem 10 H1s. <code>/odontopediatria/</code> tem zero. Em 59 de 64 p&aacute;ginas o H1 n&atilde;o &eacute; o primeiro heading.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">O H1 &eacute; o sinal sem&acirc;ntico mais forte depois do title. Com 7 H1s, a home n&atilde;o declara o que a SDI vende. Com o H1 de um caso, a p&aacute;gina de Est&eacute;tica n&atilde;o se diferencia do artigo. Sem H1, Odontopediatria n&atilde;o tem assunto. Para acessibilidade, a ordem de headings quebra a navega&ccedil;&atilde;o por leitor de tela; para LLMs, o t&iacute;tulo extra&iacute;do da p&aacute;gina vira um caso cl&iacute;nico, n&atilde;o a categoria.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Home: 1 H1 institucional com termo de categoria (&ldquo;Materiais odontol&oacute;gicos para cl&iacute;nicas e laborat&oacute;rios&rdquo;) e o slogan como H2. (2) Categorias: H1 = nome da &aacute;rea + benef&iacute;cio (&ldquo;Dent&iacute;stica: resinas compostas para restaura&ccedil;&otilde;es diretas&rdquo;); os t&iacute;tulos de casos viram H2/H3. (3) Arquivo de casos: H1 &ldquo;Casos cl&iacute;nicos&rdquo;. (4) Odontopediatria: criar H1. (5) Revisar o widget de posts do Elementor/JetEngine para n&atilde;o emitir H1. (6) Corrigir a ordem: H1 antes de qualquer H2.</span></div>
+          <div class="full"><span class="field">Aceite:</span> <span class="value">60/60 p&aacute;ginas com exatamente 1 H1; 60/60 com H1 como primeiro heading; 0 H1s duplicados entre p&aacute;ginas.</span></div>
+          <div><span class="field">Esfor&ccedil;o:</span> <span class="value">6 h</span></div>
+        </div>
+      </div>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">SEO-04 &bull; DADOS ESTRUTURADOS</span><span class="finding-title">O site tem o grafo gen&eacute;rico do Yoast, mas nenhum Product, Article, FAQ ou Person</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Cada p&aacute;gina tem 1 bloco JSON-LD do Yoast com <code>WebPage</code>/<code>CollectionPage</code>, <code>BreadcrumbList</code>, <code>WebSite</code> + <code>SearchAction</code>, <code>Organization</code>, <code>ImageObject</code> e <code>ReadAction</code>. O <code>Organization</code> tem apenas <code>name</code> (&ldquo;SDI Odonto&rdquo;), <code>url</code> e <code>logo</code>. Falta <code>sameAs</code>, <code>address</code>, <code>contactPoint</code>, <code>foundingDate</code> e <code>parentOrganization</code> &mdash; mesmo com esses dados existindo no HTML de Quem Somos e Contato. N&atilde;o h&aacute; <strong>0 Product</strong> nas 29 p&aacute;ginas de produto, <strong>0 Article/MedicalWebPage</strong> nos 75 casos e <strong>0 FAQPage</strong>, <strong>0 Person</strong> e <strong>0 ScholarlyArticle</strong>.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">&Eacute; a maior lacuna de AIO/GEO do site. Sem Product, o Google n&atilde;o entende que Luna 2, Aura, Pola Office e Riva Star s&atilde;o produtos com indica&ccedil;&atilde;o, categoria e Apresenta&ccedil;&atilde;o. Sem Article/MedicalWebPage, os 75 casos n&atilde;o t&ecirc;m autor, data e especialidade declarados. Sem Person, os autores nominados n&atilde;o existem como entidade. Sem FAQPage, as d&uacute;vidas reais de dentista n&atilde;o t&ecirc;m formato de resposta. E sem <code>sameAs</code>, a marca n&atilde;o se conecta aos perfis que j&aacute; mant&eacute;m.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value"><strong>Fase 1:</strong> Organization completo + BreadcrumbList. <strong>Fase 2:</strong> Product nas 29 p&aacute;ginas (nome, imagem, descri&ccedil;&atilde;o, marca, categoria, <code>additionalProperty</code> para Apresenta&ccedil;&atilde;o e tempo de polimeriza&ccedil;&atilde;o, <code>isRelatedTo</code> para casos e estudos) e Article/MedicalWebPage nos 75 casos (headline, author Person, datePublished, about, citation). <strong>Fase 3:</strong> FAQPage nos produtos e hubs, Person para os autores e ScholarlyArticle no hub de evid&ecirc;ncias.</span></div>
+          <div class="full"><span class="field">Aceite:</span> <span class="value">Rich Results Test sem erro em Organization, BreadcrumbList, Product, Article e FAQPage; 29/29 produtos e 75/75 casos com schema v&aacute;lido.</span></div>
+          <div><span class="field">Esfor&ccedil;o:</span> <span class="value">18 h</span></div>
+        </div>
+        <div class="code-label">Exemplo de Organization com os dados que j&aacute; existem no site</div>
+<pre><code>{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://sdiodonto.com.br/#organization",
+  "name": "SDI Odonto",
+  "legalName": "SDI Holdings Pty Ltd do Brasil",
+  "url": "https://sdiodonto.com.br/",
+  "logo": "https://sdiodonto.com.br/wp-content/uploads/2023/08/SDI-Logo-TransparentBack.png",
+  "foundingDate": "1972",
+  "parentOrganization": { "@type": "Organization", "name": "SDI Limited" },
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Av. Doutor Reinaldo Schmithausen, 3141 A",
+    "addressLocality": "Itaja&iacute;",
+    "addressRegion": "SC",
+    "postalCode": "88310-004",
+    "addressCountry": "BR"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+55-11-3092-7100",
+    "email": "brasil@sdi.com.au",
+    "contactType": "customer service",
+    "areaServed": "BR",
+    "availableLanguage": "pt-BR"
+  },
+  "sameAs": [
+    "https://www.facebook.com/SDIBr/",
+    "https://www.instagram.com/sdiodonto/",
+    "https://www.youtube.com/@sdiodonto",
+    "https://www.tiktok.com/@sdiodonto"
+  ]
+}</code></pre>
+      </div>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">SEO-05 &bull; METADADOS</span><span class="finding-title">15 p&aacute;ginas sem meta description e s&oacute; 4 dentro do tamanho ideal</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Sem meta description: 13 casos cl&iacute;nicos + os arquivos <code>/casos-clinicos/</code> e <code>/produtos/</code>. Das 45 preenchidas, <strong>41 passam de 155 caracteres</strong> e apenas <strong>4 ficam na faixa ideal</strong> (home 126, Quem Somos 133, Points 139 e um caso com 150). As maiores t&ecirc;m 394 (Luna Flow), 373 (Luna 2), 353 (Set PP), 345 (Riva Cem) e 333 (Radii Xpert). H&aacute; dois pares duplicados e cruzados: a descri&ccedil;&atilde;o do Pola Night est&aacute; em dois casos de Stela; a descri&ccedil;&atilde;o de restaura&ccedil;&atilde;o em dente dec&iacute;duo est&aacute; em um caso de Classe II e em um de implante.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">O Google reescreve o snippet quando a descri&ccedil;&atilde;o &eacute; longa ou gen&eacute;rica, e o CTR cai. As descri&ccedil;&otilde;es cruzadas fazem o caso errado aparecer para a busca certa &mdash; pior que n&atilde;o ter descri&ccedil;&atilde;o. Para AIO, a meta &eacute; um dos primeiros resumos que o motor usa para decidir se a p&aacute;gina responde &agrave; pergunta.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Escrever 60 descri&ccedil;&otilde;es &uacute;nicas de 120&ndash;155 caracteres, com a estrutura <em>procedimento + produto + resultado + CTA</em>. (2) Priorizar os 13 casos sem meta e as 29 p&aacute;ginas de produto. (3) Corrigir os dois pares duplicados. (4) Remover a gera&ccedil;&atilde;o autom&aacute;tica de meta do tema/plugin e revisar no Yoast. (5) Criar um padr&atilde;o para casos: &ldquo;[Procedimento] com [produto]: [resultado cl&iacute;nico] &mdash; caso passo a passo da SDI.&rdquo;</span></div>
+          <div class="full"><span class="field">Aceite:</span> <span class="value">60/60 metas &uacute;nicas entre 120 e 155 caracteres; 0 duplicadas; 0 ausentes.</span></div>
+          <div><span class="field">Esfor&ccedil;o:</span> <span class="value">8 h</span></div>
+        </div>
+      </div>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">SEO-06 &bull; T&Iacute;TULOS</span><span class="finding-title">28 de 60 titles passam de 60 caracteres e 10 s&atilde;o id&ecirc;nticos ao H1</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">O maior title tem 133 caracteres (caso de Trissomia do 21), seguido por 124 (restaura&ccedil;&atilde;o atraum&aacute;tica), 122 (tratamento endod&ocirc;ntico), 106 (controle da sensibilidade), 104 (cimenta&ccedil;&atilde;o de coroa) e 103 (am&aacute;lgama). Dois t&iacute;tulos t&ecirc;m menos de 30 caracteres: &ldquo;Riva Star e Riva Star Aqua&rdquo; (26) e &ldquo;Arquivo Produtos - SDI Odonto&rdquo; (29). Dez p&aacute;ginas usam exatamente o H1 como title &mdash; todas de produto. N&atilde;o h&aacute; t&iacute;tulos ausentes nem duplicados.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">O sufixo &ldquo;- SDI Odonto&rdquo; consome 10&ndash;11 caracteres em todas as p&aacute;ginas e, nos casos longos, o termo mais importante &eacute; truncado. T&iacute;tulo igual ao H1 desperdi&ccedil;a a chance de cobrir uma varia&ccedil;&atilde;o de busca (por exemplo, &ldquo;resina composta universal&rdquo; no title e &ldquo;Luna 2&rdquo; no H1).</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">Padr&atilde;o: <strong>termo principal + diferencial | SDI</strong>, at&eacute; 60 caracteres. Produto: &ldquo;Luna 2 &mdash; Resina Composta Universal | SDI&rdquo;. Caso: &ldquo;Classe II com Luna 2: passo a passo | SDI&rdquo;. Categoria: &ldquo;Dent&iacute;stica &mdash; Resinas Compostas | SDI&rdquo;. Home: &ldquo;Materiais Odontol&oacute;gicos | SDI Odonto&rdquo;. Nos casos longos, mover o detalhe para o H1 e manter o title curto.</span></div>
+          <div class="full"><span class="field">Aceite:</span> <span class="value">60/60 titles &le; 60 caracteres, &uacute;nicos, com termo principal e marca; 0 titles iguais ao H1.</span></div>
+          <div><span class="field">Esfor&ccedil;o:</span> <span class="value">4 h</span></div>
+        </div>
+      </div>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">SEO-07 &bull; M&Iacute;DIA</span><span class="finding-title">131 de 131 imagens t&ecirc;m alt vazio &mdash; inclusive todas as fotos cl&iacute;nicas</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">O crawl encontrou 131 imagens &uacute;nicas e <strong>nenhuma</strong> com alt preenchido. Na home, 66 de 66; no produto Luna 2, 32 de 48. Al&eacute;m disso, 49 imagens passam de 100 KB e o conjunto soma 17,3 MB. No Lighthouse da home, as imagens transferem 5,2 MB em 63 requisi&ccedil;&otilde;es; as cinco maiores t&ecirc;m 473, 460, 312, 299 e 277 KB. A p&aacute;gina mistura 29 JPG e 7 PNG legados com 18 AVIF e 4 WebP.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">As fotos de antes/depois s&atilde;o a prova cl&iacute;nica da SDI. Sem alt, elas n&atilde;o existem para leitores de tela, para a busca de imagens do Google e para a leitura multimodal de LLMs. O peso empurra o LCP: a home tem LCP de 6,9 s e o produto de 12,0 s. Em odontologia, a busca por imagem (&ldquo;restaura&ccedil;&atilde;o classe II antes e depois&rdquo;) &eacute; um canal real e barato.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Alt descritivo para imagens de conte&uacute;do, com procedimento + produto + resultado: &ldquo;Restaura&ccedil;&atilde;o Classe II em pr&eacute;-molar com resina Luna 2 &mdash; aspecto final&rdquo;. (2) <code>alt=""</code> apenas em &iacute;cones decorativos. (3) Comprimir e redimensionar; servir AVIF/WebP com fallback. (4) <code>loading="lazy"</code> abaixo da dobra e <code>fetchpriority="high"</code> na imagem de LCP. (5) Definir <code>width</code>/<code>height</code> em todas. (6) Nome de arquivo descritivo, sem <code>IMG_1234</code>.</span></div>
+          <div class="full"><span class="field">Aceite:</span> <span class="value">0 imagens de conte&uacute;do sem alt; 0 imagens acima de 150 KB; LCP image abaixo de 200 KB; 0 imagens sem dimens&otilde;es.</span></div>
+          <div><span class="field">Esfor&ccedil;o:</span> <span class="value">8 h</span></div>
+        </div>
+      </div>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">SEO-08 &bull; SERVIDOR</span><span class="finding-title"><code>no-store</code> + <code>PHPSESSID</code> em toda p&aacute;gina: o site pro&iacute;be o pr&oacute;prio cache</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Toda resposta HTML vem com <code>cache-control: no-store, no-cache, must-revalidate</code>, <code>expires: Thu, 19 Nov 1981</code> e <code>set-cookie: PHPSESSID=...</code>, mesmo para visitante an&ocirc;nimo. O HTML <strong>n&atilde;o &eacute; comprimido</strong> com gzip/brotli, mesmo com <code>Accept-Encoding</code>. As imagens n&atilde;o t&ecirc;m <code>Cache-Control</code>, apenas <code>ETag</code> e <code>Last-Modified</code>. O TTFB medido fica entre 2,1 s e 5,0 s. Faltam HSTS, CSP, X-Frame-Options, X-Content-Type-Options e Referrer-Policy em 346 de 351 URLs (98,6%).</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Nenhum navegador, CDN ou proxy pode reaproveitar o HTML: cada visita &eacute; uma requisi&ccedil;&atilde;o completa ao PHP. O cookie de sess&atilde;o em p&aacute;gina an&ocirc;nima impede cache compartilhado e adiciona peso a cada request. Sem compress&atilde;o, o HTML de 342 KB viaja inteiro. Sem cache de imagem, o usu&aacute;rio baixa de novo o que j&aacute; tinha. O TTFB alto &eacute; o primeiro gargalo do LCP de 6,9&ndash;12,0 s.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) N&atilde;o iniciar sess&atilde;o PHP para visitante an&ocirc;nimo; remover o <code>PHPSESSID</code> do HTML p&uacute;blico. (2) HTML: <code>Cache-Control: public, max-age=600, s-maxage=86400, stale-while-revalidate=60</code>. (3) Est&aacute;ticos: <code>public, max-age=31536000, immutable</code>. (4) Brotli/gzip para HTML, CSS e JS. (5) HSTS, X-Content-Type-Options, Referrer-Policy, X-Frame-Options e CSP em report-only. (6) Colocar um CDN na frente e habilitar page cache/object cache no WordPress. (7) Repetir o Lighthouse depois.</span></div>
+          <div class="full"><span class="field">Aceite:</span> <span class="value">TTFB &lt; 1,5 s em 30 dias e &lt; 0,8 s em 60; HTML comprimido; <code>PHPSESSID</code> ausente em p&aacute;gina p&uacute;blica; 5 headers de seguran&ccedil;a presentes.</span></div>
+          <div><span class="field">Esfor&ccedil;o:</span> <span class="value">10 h</span></div>
+        </div>
+        <div class="code-label">Exemplo de bloco Apache (validar no ambiente antes de aplicar)</div>
+<pre><code># BEGIN SDI Performance
+&lt;IfModule mod_headers.c&gt;
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+&lt;/IfModule&gt;
+
+&lt;IfModule mod_deflate.c&gt;
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml
+&lt;/IfModule&gt;
+
+&lt;IfModule mod_expires.c&gt;
+  ExpiresActive On
+  ExpiresByType image/avif "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+&lt;/IfModule&gt;
+# END SDI Performance</code></pre>
+      </div>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">SEO-09 &bull; PERFORMANCE</span><span class="finding-title">Lighthouse mobile 29&ndash;33 e LCP de 12,0 s na p&aacute;gina de produto</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Tr&ecirc;s templates medidos em 20/11/2026, modo mobile simulado. A home pesa 7.177 KiB e faz 194 requisi&ccedil;&otilde;es; o produto pesa 4.509 KiB e faz 211; o caso pesa 5.073 KiB e faz 155. Na home, s&atilde;o 46 folhas de estilo (139 KB), 67 scripts (1,48 MB), 63 imagens (5,2 MB) e 5 fontes (311 KB).</span></div>
+        </div>
+        <div class="table-wrap" style="margin-top:14px;">
+        <table class="compact">
+          <thead><tr><th>Template</th><th class="num">Perf.</th><th class="num">A11y</th><th class="num">BP</th><th class="num">SEO</th><th class="num">FCP</th><th class="num">LCP</th><th class="num">TBT</th><th class="num">CLS</th><th class="num">TTI</th><th class="num">TTFB</th><th class="num">Peso</th></tr></thead>
+          <tr><td>Home</td><td class="num over">31</td><td class="num">85</td><td class="num">77</td><td class="num">100</td><td class="num">3,6 s</td><td class="num over">6,9 s</td><td class="num over">2.570 ms</td><td class="num">0,003</td><td class="num">23,6 s</td><td class="num">2,79 s</td><td class="num">7.177 KiB</td></tr>
+          <tr><td>Produto / Luna 2</td><td class="num over">29</td><td class="num">87</td><td class="num">77</td><td class="num">100</td><td class="num">4,0 s</td><td class="num over">12,0 s</td><td class="num over">2.560 ms</td><td class="num">0</td><td class="num">20,9 s</td><td class="num">2,51 s</td><td class="num">4.509 KiB</td></tr>
+          <tr><td>Caso cl&iacute;nico</td><td class="num over">33</td><td class="num">90</td><td class="num">77</td><td class="num">92</td><td class="num">4,0 s</td><td class="num over">6,9 s</td><td class="num over">1.550 ms</td><td class="num">0,015</td><td class="num">21,6 s</td><td class="num">2,14 s</td><td class="num">5.073 KiB</td></tr>
+        </table>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Impacto:</span> <span class="value">LCP acima de 4 s &eacute; &ldquo;ruim&rdquo; em qualquer faixa; 12 s no produto &eacute; praticamente uma p&aacute;gina que n&atilde;o carrega no 4G. TBT de 2,5 s indica main thread travada por JS &mdash; o usu&aacute;rio toca e nada acontece. Para o Google, page experience; para o LLM, or&ccedil;amento de fetch e render. A home com 194 requisi&ccedil;&otilde;es e 7,2 MB &eacute; o pior cart&atilde;o de visita poss&iacute;vel.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Auditar plugins e remover o que n&atilde;o &eacute; usado (Elementor Pro + JetEngine + 4 stacks de analytics + PixelYourSite). (2) Atrasar GA4/GTM/Pixel at&eacute; intera&ccedil;&atilde;o ou consentimento. (3) Critical CSS e remo&ccedil;&atilde;o de CSS/JS de widgets n&atilde;o usados. (4) Self-host de 1&ndash;2 fontes com <code>font-display: swap</code> e preload. (5) Imagens responsivas, AVIF/WebP e <code>srcset</code>. (6) CDN. (7) Medir de novo com PSI e Lighthouse ap&oacute;s a Fase 1.</span></div>
+          <div class="full"><span class="field">Aceite:</span> <span class="value">Lighthouse mobile &ge; 50 em 30 dias, &ge; 65 em 60 e &ge; 75 em 90; LCP &lt; 2,5 s; TBT &lt; 300 ms; peso da home &lt; 2 MB.</span></div>
+          <div><span class="field">Esfor&ccedil;o:</span> <span class="value">12 h</span></div>
+        </div>
+      </div>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">SEO-10 &bull; DUPLICATA</span><span class="finding-title"><code>/home-2/</code> &eacute; uma segunda home index&aacute;vel, com canonical para si mesma</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value"><code>https://sdiodonto.com.br/home-2/</code> retorna 200, est&aacute; no sitemap de p&aacute;ginas e tem <code>canonical</code> apontando para ela mesma. O title e a meta description s&atilde;o id&ecirc;nticos aos da home; o conte&uacute;do tem os mesmos 7 H1s e cerca de 2.074 palavras. N&atilde;o h&aacute; link no menu &mdash; &eacute; &oacute;rf&atilde;, mas index&aacute;vel.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Duas vers&otilde;es da mesma homepage competem entre si. O Google pode escolher a URL errada, dividir sinais e mostrar um resultado duplicado. Para o usu&aacute;rio, qualquer link antigo para <code>/home-2/</code> n&atilde;o &eacute; consolidado.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">301 de <code>/home-2/</code> para <code>/</code>; remover do sitemap; revisar se existe outro res&iacute;duo de vers&atilde;o (<code>-2</code>, <code>-3</code>) &mdash; <code>/produtos/pola-office-2/</code> &eacute; uma variante leg&iacute;tima (Pola Office+), n&atilde;o mexer.</span></div>
+          <div class="full"><span class="field">Aceite:</span> <span class="value">301 aplicado; 0 URLs <code>/home-2/</code> no sitemap; 0 duplicatas de home no crawl.</span></div>
+          <div><span class="field">Esfor&ccedil;o:</span> <span class="value">2 h</span></div>
+        </div>
+      </div>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">SEO-11 &bull; NAVEGA&Ccedil;&Atilde;O</span><span class="finding-title">&ldquo;Artigos&rdquo; no menu leva a 301 para a home; 4 categorias tamb&eacute;m redirecionam</span></div>
+          <div><span class="severity sev-medio">M&eacute;dio</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">O item &ldquo;Artigos&rdquo; do menu/rodap&eacute; aponta para <code>/artigos/</code>, que responde 301 para a home. S&atilde;o 16 inlinks &uacute;nicos. As URLs <code>/category/estetica/</code> (19), <code>/category/dentistica/</code> (28), <code>/category/equipamentos/</code> (19) e <code>/category/odontopediatria/</code> (8) tamb&eacute;m s&atilde;o 301 para as p&aacute;ginas equivalentes. Total: 5 redirecionamentos internos, 74 inlinks &uacute;nicos s&oacute; nas categorias.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">O menu promete uma &aacute;rea de artigos que n&atilde;o existe e entrega a home &mdash; frustra&ccedil;&atilde;o e perda de contexto. Cada clique em categoria gasta um salto 301 e parte do sinal. Para AIO/GEO, n&atilde;o h&aacute; um hub editorial que agregue os 100 DOIs e os 75 casos.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) Decidir: criar <code>/artigos/</code> como hub de evid&ecirc;ncias (recomendado) ou remover o item do menu. (2) Atualizar os links de categoria para as p&aacute;ginas can&ocirc;nicas. (3) Manter os 301 como rede de segurança, n&atilde;o como caminho principal. (4) Re-crawl para confirmar 0 links internos para 3xx.</span></div>
+          <div class="full"><span class="field">Aceite:</span> <span class="value">0 links internos para 3xx; &ldquo;Artigos&rdquo; leva a uma p&aacute;gina 200 com conte&uacute;do real.</span></div>
+          <div><span class="field">Esfor&ccedil;o:</span> <span class="value">2 h</span></div>
+        </div>
+      </div>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">SEO-12 &bull; PDFs</span><span class="finding-title">23 PDFs index&aacute;veis, 37,5 MB e dois hosts misturados</span></div>
+          <div class="severity sev-medio">M&eacute;dio</div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">S&atilde;o 23 PDFs index&aacute;veis, sem canonical, somando 37,5 MB. Os maiores: E-book SET MAXX (8,24 MB), paper Stela (5,88 MB), instru&ccedil;&otilde;es GS-80 (3,23 MB) e Permite (3,23 MB). Metade est&aacute; em <code>www.sdiodonto.com.br</code> e metade em <code>sdiodonto.com.br</code>. O conte&uacute;do inclui manuais de instru&ccedil;&atilde;o, brochuras, e-books e artigos cient&iacute;ficos.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">PDFs de manual competem com a p&aacute;gina de produto e podem ranquear no lugar dela, sem CTA e sem schema. O peso atrapalha o download em mobile. Os dois hosts criam duplicatas e confundem canonicals. Para AIO, PDF n&atilde;o &eacute; um formato t&atilde;o extra&iacute;vel quanto HTML &mdash; o conte&uacute;do fica preso.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) <code>X-Robots-Tag: noindex</code> nos PDFs de suporte (manuais, brochuras, e-books). (2) Para papers, manter index&aacute;vel mas canonicalizar para a p&aacute;gina HTML de evid&ecirc;ncia. (3) Padronizar tudo em non-<code>www</code>. (4) Comprimir com Ghostscript e servir via CDN. (5) Criar resumo HTML de 300&ndash;500 palavras para cada paper importante.</span></div>
+          <div class="full"><span class="field">Aceite:</span> <span class="value">0 PDFs acima de 3 MB; 0 PDFs em <code>www</code>; PDFs de suporte com <code>noindex</code>; papers com p&aacute;gina HTML.</span></div>
+          <div><span class="field">Esfor&ccedil;o:</span> <span class="value">4 h</span></div>
+        </div>
+      </div>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">SEO-13 &bull; E-E-A-T</span><span class="finding-title">Autores nominados, 100 DOIs e nenhuma entidade de autor</span></div>
+          <div><span class="severity sev-medio">M&eacute;dio</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Os casos citam autores (por exemplo, Bruna Luiza do Nascimento e Renato Voss Rosa), mas n&atilde;o h&aacute; bio, credenciais, foto, p&aacute;gina de autor nem <code>Person</code> schema. H&aacute; <strong>100 links de DOI</strong> e ORCIDs espalhados nos casos, mas nenhum bloco de refer&ecirc;ncias estruturado, nenhum <code>citation</code> e nenhum <code>ScholarlyArticle</code>. A p&aacute;gina Quem Somos tem 883 palavras, raz&atilde;o social, endere&ccedil;o, 1972, ASX e 110 pa&iacute;ses &mdash; fatos que n&atilde;o est&atilde;o no grafo da Organization.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Odontologia &eacute; tema YMYL-adjacente: quem assina importa. Para o Google, autoria e experi&ecirc;ncia pesam na qualidade; para LLMs, autor + institui&ccedil;&atilde;o + DOI s&atilde;o o que permite atribuir e citar. Hoje a SDI tem a evid&ecirc;ncia, mas n&atilde;o a assinatura leg&iacute;vel por m&aacute;quina.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">(1) P&aacute;gina de autor com nome, forma&ccedil;&atilde;o, institui&ccedil;&atilde;o, especialidade, foto e lista de casos/papers. (2) <code>Person</code> schema com <code>sameAs</code> para ORCID/Lattes/LinkedIn. (3) Bloco de refer&ecirc;ncias em cada caso, com DOI, ano, peri&oacute;dico e link. (4) <code>citation</code> e <code>ScholarlyArticle</code> no hub de evid&ecirc;ncias. (5) &ldquo;Revisado por&rdquo; com data. (6) Organization com os fatos de Quem Somos.</span></div>
+          <div class="full"><span class="field">Aceite:</span> <span class="value">100% dos casos com autor, bio e refer&ecirc;ncias; Person schema v&aacute;lido para todos os autores; 100 DOIs com p&aacute;gina HTML de evid&ecirc;ncia.</span></div>
+          <div><span class="field">Esfor&ccedil;o:</span> <span class="value">12 h</span></div>
+        </div>
+      </div>
+
+      <div class="finding seo-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">SEO-14 &bull; CONTE&Uacute;DO</span><span class="finding-title">Os casos s&atilde;o photo essays; os hubs t&ecirc;m 236&ndash;373 palavras</span></div>
+          <div><span class="severity sev-medio">M&eacute;dio</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">A profundidade geral &eacute; boa: 29 produtos com mediana de 799 palavras e 75 casos com mediana de 755. Mas a estrutura n&atilde;o acompanha. Os casos t&ecirc;m 1 H1, um H4 &ldquo;RELATO DE CASO&rdquo;, par&aacute;grafos e legendas &mdash; sem resumo, indica&ccedil;&atilde;o, materiais, passo a passo numerado, discuss&atilde;o, conclus&atilde;o ou refer&ecirc;ncias. Os produtos t&ecirc;m blocos de caracter&iacute;sticas, v&iacute;deos e downloads, mas n&atilde;o abrem com &ldquo;o que &eacute;, para que serve, composi&ccedil;&atilde;o, apresenta&ccedil;&atilde;o, como usar&rdquo;. Os hubs s&atilde;o rasos: <code>/produtos/</code> 236 palavras, <code>/contato/</code> 249, <code>/equipamentos/</code> 298, <code>/odontopediatria/</code> 301, <code>/estetica/</code> 367, <code>/dentistica/</code> 373. E 100% das p&aacute;ginas s&atilde;o &ldquo;Hard&rdquo; ou &ldquo;Very Hard&rdquo; no Flesch (29 Very Hard, 28 Hard, 3 Fairly Hard); a home tem 21,9.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">O dentista quer saber indica&ccedil;&atilde;o, tempo de trabalho, passo a passo e resultado. A IA quer um resumo de 2&ndash;3 frases e uma lista de materiais. O texto atual tem o detalhe, mas n&atilde;o a porta de entrada. Os hubs n&atilde;o competem por termos comerciais (&ldquo;resina composta para dentes anteriores&rdquo;, &ldquo;clareamento de consult&oacute;rio&rdquo;) porque t&ecirc;m menos de 400 palavras e nenhuma resposta direta.</span></div>
+          <div class="full"><span class="field">Recomenda&ccedil;&atilde;o:</span> <span class="value">Padronizar dois templates. <strong>Caso:</strong> Resumo (3 linhas) &rarr; Indica&ccedil;&atilde;o &rarr; Materiais &rarr; T&eacute;cnica passo a passo &rarr; Resultado &rarr; Discuss&atilde;o &rarr; Refer&ecirc;ncias &rarr; Produtos usados. <strong>Produto:</strong> O que &eacute; &rarr; Para que serve &rarr; Composi&ccedil;&atilde;o &rarr; Apresenta&ccedil;&atilde;o &rarr; Como usar &rarr; Tempo de polimeriza&ccedil;&atilde;o &rarr; Estudos &rarr; Casos &rarr; FAQ. Nos hubs, 250&ndash;400 palavras com links para produtos e casos. Reduzir frases longas e explicar termos t&eacute;cnicos na primeira men&ccedil;&atilde;o.</span></div>
+          <div class="full"><span class="field">Aceite:</span> <span class="value">75/75 casos com resumo + produtos usados; 29/29 produtos com os 9 blocos; 6 hubs com 250+ palavras e 10+ links internos.</span></div>
+          <div><span class="field">Esfor&ccedil;o:</span> <span class="value">30 h</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- AIO -->
+  <div class="card card-pillar aio" id="aio">
+    <div class="card-body">
+      <div class="pillar-header">
+        <div class="pillar-icon aio">AI</div>
+        <div>
+          <div class="pillar-title aio">Pilar AIO &mdash; AI Overviews &amp; Answer Engines</div>
+          <div class="pillar-subtitle">ChatGPT &middot; Perplexity &middot; Gemini &middot; Copilot &middot; Google AI Overviews</div>
+        </div>
+      </div>
+
+      <p>AIO &eacute; a camada que decide se uma IA <strong>consegue ler e extrair</strong> o que o site diz. N&atilde;o &eacute; ranking: &eacute; o crawler receber texto, entender de quem se trata e encontrar um trecho que responda &agrave; pergunta em duas ou tr&ecirc;s frases.</p>
+
+      <p>Na SDI o acesso n&atilde;o &eacute; o problema. O <code>robots.txt</code> libera GPTBot, ClaudeBot, PerplexityBot e Google-Extended; o HTML &eacute; renderizado no servidor (WordPress + Elementor + JetEngine), n&atilde;o &eacute; SPA; e as 60 p&aacute;ginas index&aacute;veis entregam o texto no c&oacute;digo-fonte. O problema come&ccedil;a depois do acesso: <strong>a entidade est&aacute; incompleta, as p&aacute;ginas n&atilde;o t&ecirc;m resposta curta e a prova cient&iacute;fica n&atilde;o est&aacute; assinada</strong>.</p>
+
+      <h3>O que um LLM encontra hoje</h3>
+      <div class="table-wrap">
+      <table class="compact">
+        <thead><tr><th style="width:18%">Template</th><th style="width:47%">O que o modelo v&ecirc;</th><th style="width:35%">O que falta</th></tr></thead>
+        <tr><td><strong>Home</strong></td><td>7 H1s de casos e artigos; o slogan &ldquo;Seu Sorriso. Nossa Vis&atilde;o.&rdquo; &eacute; H2; 1.944 palavras; Organization s&oacute; com nome, URL e logo</td><td>Uma frase que diga o que a SDI &eacute; e para quem trabalha</td></tr>
+        <tr><td><strong>Produto</strong></td><td>Blocos de caracter&iacute;sticas, v&iacute;deos e downloads; 799 palavras em mediana</td><td>Defini&ccedil;&atilde;o, composi&ccedil;&atilde;o, apresenta&ccedil;&atilde;o, modo de uso e FAQ</td></tr>
+        <tr><td><strong>Caso cl&iacute;nico</strong></td><td>1 H1, um H4 &ldquo;RELATO DE CASO&rdquo;, par&aacute;grafos e legendas; 755 palavras em mediana</td><td>Resumo, indica&ccedil;&atilde;o, materiais, conclus&atilde;o e refer&ecirc;ncias</td></tr>
+        <tr><td><strong>Hub de categoria</strong></td><td>298&ndash;373 palavras e 0 a 6 H1s, dependendo da p&aacute;gina</td><td>Intro, 1 H1 e lista comentada de produtos e casos</td></tr>
+        <tr><td><strong>Quem Somos</strong></td><td>883 palavras com raz&atilde;o social, endere&ccedil;o, 1972, ASX e 110 pa&iacute;ses</td><td>Os mesmos fatos em <code>Organization</code> e em uma p&aacute;gina de entidade</td></tr>
+      </table>
+      </div>
+
+      <div class="finding aio-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">AI1 &bull; ENTIDADE</span><span class="finding-title">A Organization tem s&oacute; nome, URL e logo &mdash; e o nome n&atilde;o &eacute; o da empresa</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">O JSON-LD &eacute; o grafo padr&atilde;o do Yoast: WebPage/CollectionPage, BreadcrumbList, WebSite + SearchAction, Organization, ImageObject e ReadAction. A <code>Organization</code> declara <strong>apenas name, url e logo</strong>. N&atilde;o h&aacute; <code>sameAs</code>, <code>address</code>, <code>contactPoint</code>, <code>foundingDate</code> nem <code>parentOrganization</code>. O nome &eacute; &ldquo;SDI Odonto&rdquo;, mas a opera&ccedil;&atilde;o brasileira &eacute; <strong>SDI Holdings Pty Ltd do Brasil</strong> e o grupo &eacute; <strong>SDI Limited</strong>, de Melbourne. Existem quatro perfis ativos &mdash; Facebook <code>/SDIBr</code>, Instagram <code>/siodonto</code>, YouTube <code>/@siodonto</code> e TikTok <code>/@siodonto</code> &mdash; e nenhum est&aacute; no grafo.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Um modelo que encontra &ldquo;SDI Odonto&rdquo; n&atilde;o consegue confirmar que &eacute; a mesma entidade que fabrica em Victoria, opera em 110 pa&iacute;ses e tem capital aberto na ASX desde 1985. Sem <code>sameAs</code>, n&atilde;o h&aacute; reconcilia&ccedil;&atilde;o de identidade; sem endere&ccedil;o e contato, n&atilde;o h&aacute; ficha verific&aacute;vel. A marca fica amb&iacute;gua entre a opera&ccedil;&atilde;o brasileira e a controladora australiana &mdash; e ambiguidade &eacute; o oposto de cita&ccedil;&atilde;o.</span></div>
+          <div class="full"><span class="field">Corre&ccedil;&atilde;o:</span> <span class="value">Completar a <code>Organization</code> com <code>legalName</code>, <code>alternateName</code>, <code>address</code> (Itaja&iacute;/SC), <code>contactPoint</code> (telefone, 0800 e e-mail), <code>foundingDate</code> 1972, <code>parentOrganization</code> SDI Limited, <code>sameAs</code> dos quatro perfis e <code>knowsAbout</code> com as categorias cl&iacute;nicas. Repetir os mesmos dados em texto na p&aacute;gina de entidade.</span></div>
+          <div class="full"><span class="field">Aceite:</span> <span class="value">Organization v&aacute;lida no Rich Results Test, com 4 <code>sameAs</code> e endere&ccedil;o; os tr&ecirc;s nomes mapeados (marca, raz&atilde;o social brasileira, controladora).</span></div>
+          <div><span class="field">Esfor&ccedil;o:</span> <span class="value">5 h &mdash; SEO-04</span></div>
+        </div>
+      </div>
+
+      <div class="finding aio-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">AI2 &bull; FORMATO</span><span class="finding-title">Produto e caso n&atilde;o t&ecirc;m resposta extra&iacute;vel; zero FAQPage em 60 p&aacute;ginas</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Os 29 produtos t&ecirc;m blocos de caracter&iacute;sticas, v&iacute;deos e downloads, mas n&atilde;o abrem com &ldquo;o que &eacute;, para que serve, composi&ccedil;&atilde;o, apresenta&ccedil;&atilde;o, como usar&rdquo;. Os 75 casos s&atilde;o photo essays: 1 H1, um H4 &ldquo;RELATO DE CASO&rdquo;, par&aacute;grafos e legendas &mdash; sem resumo, indica&ccedil;&atilde;o, materiais, discuss&atilde;o, conclus&atilde;o ou refer&ecirc;ncias. N&atilde;o existe <strong>um &uacute;nico <code>FAQPage</code></strong> no site. Os hubs t&ecirc;m 236&ndash;373 palavras.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">LLM extrai trechos que respondem a uma pergunta em 2&ndash;3 frases. Nenhuma p&aacute;gina responde &ldquo;o que &eacute; o Luna 2&rdquo;, &ldquo;quanto tempo de polimeriza&ccedil;&atilde;o&rdquo; ou &ldquo;quando indicar Riva Star&rdquo;. O conte&uacute;do est&aacute; indexado, mas n&atilde;o tem o que ser citado &mdash; e o dentista que pergunta &agrave; IA recebe a resposta de outro site.</span></div>
+          <div class="full"><span class="field">Corre&ccedil;&atilde;o:</span> <span class="value">Bloco &ldquo;Resposta r&aacute;pida&rdquo; de 40&ndash;60 palavras no topo de cada produto, seguido de composi&ccedil;&atilde;o, apresenta&ccedil;&atilde;o, modo de uso e 5 FAQs reais. Nos casos, &ldquo;Resumo do caso&rdquo; em 3 linhas + indica&ccedil;&atilde;o + materiais + produtos usados. Nos hubs, 250&ndash;400 palavras com intro e links.</span></div>
+          <div class="full"><span class="field">Aceite:</span> <span class="value">29/29 produtos com resposta r&aacute;pida e 5 FAQs; 75/75 casos com resumo e produtos usados; 6 hubs com 250+ palavras.</span></div>
+          <div><span class="field">Esfor&ccedil;o:</span> <span class="value">40 h &mdash; SEO-14 + FAQ</span></div>
+        </div>
+      </div>
+
+      <div class="finding aio-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">AI3 &bull; ACESSO</span><span class="finding-title">Crawlers liberados, mas 61 URLs do sitemap n&atilde;o t&ecirc;m um &uacute;nico link interno</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value"><code>robots.txt</code> permite tudo e declara o sitemap; nenhum crawler de IA est&aacute; bloqueado. Mas <code>/llms.txt</code>, <code>/ai.txt</code>, <code>/ads.txt</code>, <code>/humans.txt</code> e <code>/security.txt</code> retornam <strong>404</strong>. E <strong>61 URLs do sitemap t&ecirc;m zero links internos</strong>: 54 casos cl&iacute;nicos e 7 p&aacute;ginas, todas respondendo 200.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">O acesso est&aacute; aberto, mas n&atilde;o existe um mapa curado do site para o crawler de IA. Pior: 54 casos s&oacute; s&atilde;o descobertos pelo sitemap. Crawlers de IA t&ecirc;m or&ccedil;amento limitado e n&atilde;o varrem arquivos inteiros &mdash; sem link, o caso n&atilde;o entra no corpus.</span></div>
+          <div class="full"><span class="field">Corre&ccedil;&atilde;o:</span> <span class="value">Publicar <code>llms.txt</code> com resumo da empresa, 29 produtos, 6 hubs, hub de evid&ecirc;ncias e contato, em links absolutos. Religar os 61 &oacute;rf&atilde;os a partir dos hubs, dos produtos e dos casos relacionados.</span></div>
+          <div class="full"><span class="field">Aceite:</span> <span class="value"><code>/llms.txt</code> retorna 200 com conte&uacute;do estruturado; zero URLs do sitemap sem link interno.</span></div>
+          <div><span class="field">Esfor&ccedil;o:</span> <span class="value">4 h + 6 h &mdash; SEO-02</span></div>
+        </div>
+      </div>
+
+      <div class="finding aio-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">AI4 &bull; PARSING</span><span class="finding-title">Home entrega 342 KB de HTML para 1.944 palavras &mdash; 4,17% de texto</span></div>
+          <div><span class="severity sev-medio">M&eacute;dio</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">342 KB de HTML na home, 1.944 palavras e text ratio de <strong>4,17%</strong>. A p&aacute;gina faz <strong>194 requisi&ccedil;&otilde;es</strong>: 46 CSS (139 KB), 67 JS (1,48 MB) e 63 imagens (5,2 MB). O produto chega a 211 requisi&ccedil;&otilde;es. O markup vem de Elementor + JetEngine + JetMenu, com widgets e plugins carregados em todas as p&aacute;ginas.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Menos sinal por byte e mais custo de leitura para crawlers com or&ccedil;amento limitado. O texto &uacute;til come&ccedil;a depois de centenas de linhas de markup, e o mesmo peso que atrasa o LCP atrasa a extra&ccedil;&atilde;o.</span></div>
+          <div class="full"><span class="field">Corre&ccedil;&atilde;o:</span> <span class="value">Enxugar o DOM do template, remover widgets e plugins sem uso, adiar JS e reduzir o HTML servido. Ganho duplo: Core Web Vitals e leitura por IA.</span></div>
+          <div class="full"><span class="field">Aceite:</span> <span class="value">HTML da home abaixo de 150 KB, text ratio acima de 10% e menos de 100 requisi&ccedil;&otilde;es.</span></div>
+          <div><span class="field">Esfor&ccedil;o:</span> <span class="value">12 h &mdash; SEO-09</span></div>
+        </div>
+      </div>
+
+      <div class="finding aio-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">AI5 &bull; AUTORIA</span><span class="finding-title">100 DOIs, ORCIDs e autores nominados &mdash; sem uma &uacute;nica assinatura leg&iacute;vel por m&aacute;quina</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Os casos citam autores (por exemplo, Bruna Luiza do Nascimento e Renato Voss Rosa), mas n&atilde;o h&aacute; bio, credenciais, foto, p&aacute;gina de autor nem <code>Person</code> schema. H&aacute; <strong>100 links de DOI</strong> e ORCIDs espalhados nos casos, mas nenhum bloco de refer&ecirc;ncias estruturado, nenhum <code>citation</code> e nenhum <code>ScholarlyArticle</code>. A p&aacute;gina Quem Somos tem 883 palavras, raz&atilde;o social, endere&ccedil;o, 1972, ASX e 110 pa&iacute;ses &mdash; fatos que n&atilde;o est&atilde;o no grafo da Organization.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Odontologia &eacute; tema YMYL-adjacente: quem assina importa. Para o Google, autoria e experi&ecirc;ncia pesam na qualidade; para LLMs, autor + institui&ccedil;&atilde;o + DOI s&atilde;o o que permite atribuir e citar. Hoje a SDI tem a evid&ecirc;ncia, mas n&atilde;o a assinatura leg&iacute;vel por m&aacute;quina.</span></div>
+          <div class="full"><span class="field">Corre&ccedil;&atilde;o:</span> <span class="value">P&aacute;gina de autor com forma&ccedil;&atilde;o, institui&ccedil;&atilde;o, especialidade, foto e lista de casos; <code>Person</code> com <code>sameAs</code> para ORCID e Lattes; bloco de refer&ecirc;ncias por caso com DOI, ano e peri&oacute;dico; <code>citation</code> e <code>ScholarlyArticle</code> no hub de evid&ecirc;ncias; &ldquo;revisado por&rdquo; com data.</span></div>
+          <div class="full"><span class="field">Aceite:</span> <span class="value">100% dos casos com autor, bio e refer&ecirc;ncias; Person v&aacute;lido para todos os autores; 100 DOIs com p&aacute;gina HTML de evid&ecirc;ncia.</span></div>
+          <div><span class="field">Esfor&ccedil;o:</span> <span class="value">12 h &mdash; SEO-13</span></div>
+        </div>
+      </div>
+
+      <div class="risk-box gold">
+        <h4>O que este diagn&oacute;stico n&atilde;o afirma</h4>
+        <p>N&atilde;o rodamos prompts em ChatGPT, Perplexity, Gemini ou AI Overviews para verificar se a SDI &eacute; citada. Isso exige um conjunto fixo de perguntas, execu&ccedil;&atilde;o recorrente e baseline &mdash; &eacute; a pr&oacute;xima etapa, n&atilde;o o que est&aacute; medido aqui. O que est&aacute; medido &eacute; a capacidade t&eacute;cnica do site de ser lido e extra&iacute;do.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- GEO -->
+  <div class="card card-pillar geo" id="geo">
+    <div class="card-body">
+      <div class="pillar-header">
+        <div class="pillar-icon geo">G</div>
+        <div>
+          <div class="pillar-title geo">Pilar GEO &mdash; Generative Engine Optimization</div>
+          <div class="pillar-subtitle">Entidade &middot; autoridade &middot; cita&ccedil;&otilde;es &middot; presen&ccedil;a em respostas</div>
+        </div>
+      </div>
+
+      <p>GEO &eacute; o trabalho de fazer a marca existir no corpus que os modelos usam para responder. N&atilde;o basta ter conte&uacute;do: &eacute; preciso <strong>entidade consistente, prova verific&aacute;vel e men&ccedil;&atilde;o em fontes que o modelo cita</strong>. A SDI tem uma mat&eacute;ria-prima rara no setor &mdash; 100 DOIs, autores nominados, 75 casos, 1972, ASX, 110 pa&iacute;ses &mdash; e n&atilde;o declara quase nada disso de forma rastre&aacute;vel.</p>
+
+      <p>As perguntas que um dentista faz a uma IA s&atilde;o as que o site j&aacute; deveria responder: <em>&ldquo;qual resina composta usar em classe II?&rdquo;</em>, <em>&ldquo;Luna 2 ou Vittra APS?&rdquo;</em>, <em>&ldquo;Riva Star funciona para sensibilidade?&rdquo;</em>, <em>&ldquo;como clarear dente vital sem sensibilidade?&rdquo;</em>. O conte&uacute;do t&eacute;cnico existe. O que n&atilde;o existe &eacute; o formato e a prova que fazem uma IA escolher a SDI como fonte.</p>
+
+      <h3>Sinais de GEO</h3>
+      <div class="table-wrap">
+      <table class="geo-signals">
+        <thead><tr><th>Sinal</th><th>Situa&ccedil;&atilde;o</th><th>O que fazer</th></tr></thead>
+        <tr><td><strong>Entidade com schema</strong></td><td><span class="status fail">Parcial</span></td><td>Organization s&oacute; com nome, URL e logo; falta <code>sameAs</code>, endere&ccedil;o, contato e <code>parentOrganization</code></td></tr>
+        <tr><td><strong>P&aacute;gina institucional verific&aacute;vel</strong></td><td><span class="status warn">Parcial</span></td><td><code>/quem-somos/</code> tem 883 palavras e os fatos certos, mas nenhum schema e nenhuma p&aacute;gina de entidade dedicada</td></tr>
+        <tr><td><strong>Conte&uacute;do original cit&aacute;vel</strong></td><td><span class="status fail">Parcial</span></td><td>75 casos e 100 DOIs, mas em formato de photo essay, sem resumo, conclus&atilde;o ou refer&ecirc;ncias</td></tr>
+        <tr><td><strong>Defini&ccedil;&otilde;es e gloss&aacute;rio</strong></td><td><span class="status fail">Ausente</span></td><td>Nenhum bloco de defini&ccedil;&atilde;o; termos t&eacute;cnicos s&oacute; aparecem dentro de casos longos</td></tr>
+        <tr><td><strong>Comparativos</strong></td><td><span class="status fail">Ausente</span></td><td>Ex.: Luna 2 x Vittra APS, Riva Star x dessensibilizantes, clareamento de consult&oacute;rio x caseiro</td></tr>
+        <tr><td><strong>FAQ e resposta direta</strong></td><td><span class="status fail">Ausente</span></td><td>Zero <code>FAQPage</code>; nenhuma p&aacute;gina abre com a resposta</td></tr>
+        <tr><td><strong>Autoria e E-E-A-T</strong></td><td><span class="status fail">Parcial</span></td><td>Autores nominados e ORCIDs, mas sem bio, p&aacute;gina de autor ou <code>Person</code></td></tr>
+        <tr><td><strong>Distribui&ccedil;&atilde;o interna</strong></td><td><span class="status fail">Cr&iacute;tico</span></td><td>54 de 75 casos sem link interno; produtos n&atilde;o apontam para casos</td></tr>
+        <tr><td><strong>Men&ccedil;&otilde;es externas</strong></td><td><span class="status partial">N&atilde;o auditado</span></td><td>Sem base de backlinks ou ferramenta de men&ccedil;&otilde;es neste pacote &mdash; fica para a pr&oacute;xima rodada</td></tr>
+        <tr><td><strong>Baseline de cita&ccedil;&atilde;o em IA</strong></td><td><span class="status fail">Ausente</span></td><td>20 prompts &times; ChatGPT, Perplexity, Gemini e AI Overviews, com medi&ccedil;&atilde;o mensal</td></tr>
+      </table>
+      </div>
+
+      <div class="finding geo-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">G1 &bull; ENTIDADE</span><span class="finding-title">Tr&ecirc;s nomes para a mesma empresa e nenhum grafo que os conecte</span></div>
+          <div><span class="severity sev-critico">Cr&iacute;tico</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">O site usa &ldquo;SDI Odonto&rdquo; na marca, &ldquo;SDI Holdings Pty Ltd do Brasil&rdquo; na raz&atilde;o social e &ldquo;SDI Limited&rdquo; no grupo. O JSON-LD s&oacute; conhece o primeiro, e apenas com nome, URL e logo. N&atilde;o h&aacute; <code>parentOrganization</code>, <code>sameAs</code>, endere&ccedil;o, telefone, funda&ccedil;&atilde;o ou presen&ccedil;a em pa&iacute;ses.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Para um modelo, s&atilde;o tr&ecirc;s nomes sem rela&ccedil;&atilde;o declarada. Ele pode atribuir o conte&uacute;do brasileiro &agrave; controladora australiana, duvidar da identidade ou simplesmente n&atilde;o reconhecer a marca. A hist&oacute;ria industrial &mdash; que &eacute; o ativo de confian&ccedil;a mais forte &mdash; n&atilde;o entra na resposta.</span></div>
+          <div class="full"><span class="field">Corre&ccedil;&atilde;o:</span> <span class="value">P&aacute;gina <code>/sobre/</code> com raz&atilde;o social, endere&ccedil;o em Itaja&iacute;, telefone, 0800, e-mail, funda&ccedil;&atilde;o em 1972, listagem na ASX, 110 pa&iacute;ses e f&aacute;brica em Victoria. <code>Organization</code> com <code>legalName</code>, <code>parentOrganization</code> e <code>sameAs</code>; NAP id&ecirc;ntico no site, no LinkedIn e nos distribuidores.</span></div>
+          <div class="full"><span class="field">Aceite:</span> <span class="value">Entidade validada; os tr&ecirc;s nomes mapeados no grafo; NAP consistente em 3 fontes.</span></div>
+          <div><span class="field">Esfor&ccedil;o:</span> <span class="value">6 h &mdash; Fase 3</span></div>
+        </div>
+      </div>
+
+      <div class="finding geo-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">G2 &bull; PROVA</span><span class="finding-title">A prova científica existe fora do dom&iacute;nio: 100 DOIs apontam para o peri&oacute;dico, n&atilde;o para a SDI</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Os casos citam 100 DOIs, ORCIDs e autores nominados, mas n&atilde;o h&aacute; p&aacute;gina HTML que resuma o estudo, declare a revista, o ano e o achado. O link leva direto ao publisher. Al&eacute;m disso, <strong>54 dos 75 casos est&atilde;o &oacute;rf&atilde;os</strong> e n&atilde;o h&aacute; hub de evid&ecirc;ncias.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Modelos citam quem produz o dado, n&atilde;o quem repete a defini&ccedil;&atilde;o. A SDI tem o estudo, mas o estudo n&atilde;o est&aacute; no dom&iacute;nio em formato extra&iacute;vel. Sem p&aacute;gina de evid&ecirc;ncia, o conte&uacute;do perde para qualquer site que explique o mesmo tema com autoridade de dom&iacute;nio maior.</span></div>
+          <div class="full"><span class="field">Corre&ccedil;&atilde;o:</span> <span class="value">Criar <code>/evidencias/</code> com 20 p&aacute;ginas de paper: cita&ccedil;&atilde;o completa, DOI, autores, 3 linhas de achado e link para o caso que usou o material. Marcar <code>ScholarlyArticle</code>, <code>citation</code> e <code>Person</code>. Cada caso passa a apontar para a evid&ecirc;ncia que o sustenta.</span></div>
+          <div class="full"><span class="field">Aceite:</span> <span class="value">20 p&aacute;ginas de evid&ecirc;ncia publicadas; 100% dos casos com refer&ecirc;ncia e link.</span></div>
+          <div><span class="field">Esfor&ccedil;o:</span> <span class="value">12 h &mdash; Fase 3</span></div>
+        </div>
+      </div>
+
+      <div class="finding geo-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">G3 &bull; COBERTURA</span><span class="finding-title">Sem FAQ, sem comparativo e sem gloss&aacute;rio &mdash; os tr&ecirc;s formatos que a IA mais cita</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Zero <code>FAQPage</code>, zero p&aacute;gina comparativa e zero gloss&aacute;rio nas 60 p&aacute;ginas index&aacute;veis. Os termos t&eacute;cnicos aparecem apenas dilu&iacute;dos em casos de 755 palavras e produtos de 799.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Compara&ccedil;&atilde;o, defini&ccedil;&atilde;o e FAQ s&atilde;o os formatos que mais aparecem em resposta gerada: s&atilde;o curtos, extra&iacute;veis e respondem exatamente &agrave; pergunta de quem est&aacute; decidindo. Sem eles, a SDI s&oacute; aparece se o modelo j&aacute; souber o nome do produto.</span></div>
+          <div class="full"><span class="field">Corre&ccedil;&atilde;o:</span> <span class="value">4 comparativos (Luna 2 x Vittra APS, Riva Star x dessensibilizantes, clareamento de consult&oacute;rio x caseiro, resina microh&iacute;brida x nanoparticulada), gloss&aacute;rio com 40 termos em <code>/aprenda/</code> e 5 FAQs por produto, com <code>FAQPage</code>.</span></div>
+          <div class="full"><span class="field">Aceite:</span> <span class="value">4 comparativos + 40 verbetes + 145 FAQs (29 &times; 5) publicados.</span></div>
+          <div><span class="field">Esfor&ccedil;o:</span> <span class="value">24 h &mdash; Fase 3</span></div>
+        </div>
+      </div>
+
+      <div class="finding geo-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">G4 &bull; DISTRIBUI&ccedil;&Atilde;O</span><span class="finding-title">O maior acervo cl&iacute;nico do setor est&aacute; desconectado do produto que o tornou poss&iacute;vel</span></div>
+          <div><span class="severity sev-alto">Alto</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">54 dos 75 casos n&atilde;o t&ecirc;m link interno. Os produtos n&atilde;o apontam para os casos que usaram o material; os casos n&atilde;o apontam de volta para o produto; os hubs listam produtos, mas n&atilde;o casos. A autoridade fica concentrada em 60 p&aacute;ginas e n&atilde;o chega ao acervo.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Para o Google, o caso &oacute;rf&atildeo &eacute; p&aacute;gina sem import&acirc;ncia; para a IA, &eacute; p&aacute;gina que ela n&atilde;o encontra. E o caso &eacute; exatamente o conte&uacute;do que prova o produto na pr&aacute;tica &mdash; o elo entre evid&ecirc;ncia e compra.</span></div>
+          <div class="full"><span class="field">Corre&ccedil;&atilde;o:</span> <span class="value">Cada produto linka 3 casos que o usaram; cada caso linka os produtos usados; <code>/casos-clinicos/</code> ganha pagina&ccedil;&atilde;o e filtros por categoria e produto; os hubs linkam os casos principais. Bloco &ldquo;casos relacionados&rdquo; no fim de cada produto.</span></div>
+          <div class="full"><span class="field">Aceite:</span> <span class="value">0 casos &oacute;rf&atilde;os; 3+ inlinks por caso; 29 produtos com bloco de casos.</span></div>
+          <div><span class="field">Esfor&ccedil;o:</span> <span class="value">6 h na Fase 1 + 4 h na Fase 2 &mdash; SEO-02</span></div>
+        </div>
+      </div>
+
+      <div class="finding geo-finding">
+        <div class="finding-header">
+          <div><span class="finding-tag">G5 &bull; MEDI&Ccedil;&Atilde;O</span><span class="finding-title">N&atilde;o existe baseline de cita&ccedil;&atilde;o &mdash; n&atilde;o se sabe se a SDI &eacute; citada, onde e por quem</span></div>
+          <div><span class="severity sev-medio">M&eacute;dio</span></div>
+        </div>
+        <div class="finding-grid">
+          <div class="full"><span class="field">Evid&ecirc;ncia:</span> <span class="value">Nenhum registro de teste de cita&ccedil;&atilde;o em ChatGPT, Perplexity, Gemini, Copilot ou AI Overviews. O pacote desta auditoria tamb&eacute;m n&atilde;o inclui base de backlinks ou ferramenta de men&ccedil;&otilde;es.</span></div>
+          <div class="full"><span class="field">Impacto:</span> <span class="value">Sem baseline, n&atilde;o h&aacute; como provar evolu&ccedil;&atilde;o nem corrigir rota. GEO sem medi&ccedil;&atilde;o vira opini&atilde;o &mdash; e o cliente n&atilde;o consegue defender investimento.</span></div>
+          <div class="full"><span class="field">Corre&ccedil;&atilde;o:</span> <span class="value">Definir 20 prompts (produto, indica&ccedil;&atilde;o, compara&ccedil;&atilde;o, t&eacute;cnica e marca), rodar nos quatro motores, registrar men&ccedil;&atilde;o, link, posi&ccedil;&atilde;o e sentimento. Repetir mensalmente com o mesmo conjunto.</span></div>
+          <div class="full"><span class="field">Aceite:</span> <span class="value">Baseline v1 publicada com 20 prompts &times; 4 motores e s&eacute;rie mensal.</span></div>
+          <div><span class="field">Esfor&ccedil;o:</span> <span class="value">2 h de setup + 2 h/m&ecirc;s &mdash; Fase 3</span></div>
+        </div>
+      </div>
+
+      <h3>Onde isso entra no plano</h3>
+      <div class="table-wrap">
+      <table class="plan-map">
+        <thead><tr><th>Frente</th><th>Entregas</th><th>Achados</th><th class="num">Horas na fase</th></tr></thead>
+        <tr><td><strong>Fase 1</strong></td><td>Religar 54 casos, corrigir menu e categorias, 301 de <code>/home-2/</code></td><td>G4, AI3</td><td class="num">14 h</td></tr>
+        <tr><td><strong>Fase 2</strong></td><td>Organization completa, Product, Article, Person, FAQ e resposta r&aacute;pida</td><td>AI1, AI2, AI5, G1</td><td class="num">46 h</td></tr>
+        <tr><td><strong>Fase 3</strong></td><td><code>llms.txt</code>, <code>/evidencias/</code>, <code>/aprenda/</code>, comparativos, baseline de cita&ccedil;&atilde;o</td><td>AI3, G2, G3, G5</td><td class="num">36 h</td></tr>
+      </table>
+      </div>
+
+      <div class="note"><strong>Prioridade:</strong> G4 e AI3 s&atilde;o os &uacute;nicos itens de GEO/AIO que entram na Fase 1 &mdash; custam 14 horas e destravam a leitura do acervo por qualquer modelo. A entidade (G1) e a prova (G2) v&ecirc;m na sequ&ecirc;ncia porque dependem de decis&atilde;o de conte&uacute;do, n&atilde;o s&oacute; de marca&ccedil;&atilde;o.</div>
+    </div>
+  </div>
+
+  <!-- ARQUITETURA -->
+  <div class="card" id="arquitetura">
+    <div class="card-body">
+      <h2>Arquitetura de Informa&ccedil;&atilde;o</h2>
+      <p>O site foi montado em Elementor com menus duplicados, categorias que redirecionam e um acervo de casos que n&atilde;o aparece na navega&ccedil;&atilde;o. A estrutura recomendada organiza a autoridade em quatro n&iacute;veis: marca, produto, evid&ecirc;ncia e aprendizado.</p>
+
+      <div class="table-wrap">
+      <table>
+        <tr><th style="width:16%">N&iacute;vel</th><th style="width:40%">Hoje</th><th style="width:44%">Recomendado</th></tr>
+        <tr><td><strong>Home</strong></td><td>7 H1s de casos e artigos; slogan em H2; 1.944 palavras; Organization m&iacute;nima; <code>/home-2/</code> &eacute; duplicata index&aacute;vel</td><td>1 H1 de marca; 3 caminhos claros (produto, caso, evid&ecirc;ncia); Organization completa; 301 de <code>/home-2/</code></td></tr>
+        <tr><td><strong>Hub de produtos</strong></td><td><code>/produtos/</code> com 236 palavras e 30 itens; sem intro e sem filtro</td><td>300+ palavras, filtros por categoria, 29 cards, <code>ItemList</code> e links para casos</td></tr>
+        <tr><td><strong>Produto</strong></td><td>29 p&aacute;ginas, mediana de 799 palavras; blocos de caracter&iacute;sticas, v&iacute;deos e downloads; sem <code>Product</code></td><td>Template de 9 blocos (o que &eacute;, para que serve, composi&ccedil;&atilde;o, apresenta&ccedil;&atilde;o, como usar, tempo, estudos, casos, FAQ); <code>Product</code> + 3 casos</td></tr>
+        <tr><td><strong>Casos cl&iacute;nicos</strong></td><td>75 publicados, 21 com link e 54 &oacute;rf&atilde;os; arquivo com 10 H1s; sem filtro</td><td>Hub paginado com filtros por categoria e produto; resumo em 3 linhas; 3+ inlinks por caso</td></tr>
+        <tr><td><strong>Categorias</strong></td><td><code>/estetica/</code>, <code>/dentistica/</code> e <code>/equipamentos/</code> com 6 H1s; <code>/odontopediatria/</code> sem H1; 298&ndash;373 palavras</td><td>1 H1, intro de 250&ndash;400 palavras, lista comentada de produtos e casos, links cruzados</td></tr>
+        <tr><td><strong>Evid&ecirc;ncias</strong></td><td>N&atilde;o existe; 100 DOIs apontam para fora do dom&iacute;nio</td><td><code>/evidencias/</code> com 20 papers resumidos, DOI, autores, achado e link para o caso</td></tr>
+        <tr><td><strong>Aprendizado</strong></td><td>Menu &ldquo;Artigos&rdquo; aponta para <code>/artigos/</code>, que faz 301 para a home; n&atilde;o h&aacute; blog</td><td><code>/aprenda/</code> com 4 guias e gloss&aacute;rio de 40 termos; menu corrigido</td></tr>
+        <tr><td><strong>Institucional</strong></td><td><code>/quem-somos/</code> com 883 palavras e os fatos certos, mas sem schema; 4 categorias e <code>/artigos/</code> em 301</td><td><code>/sobre/</code> como p&aacute;gina de entidade, com NAP, hist&oacute;ria, ASX e <code>sameAs</code></td></tr>
+        <tr><td><strong>Res&iacute;duos</strong></td><td><code>/home-2/</code> index&aacute;vel; 23 PDFs index&aacute;veis, 37,5 MB; 4 categorias em 301</td><td>301 ou <code>noindex</code>; PDFs fora do &iacute;ndice e comprimidos; sitemap s&oacute; com URLs canônicas</td></tr>
+      </table>
+      </div>
+
+      <h3>&Aacute;rvore recomendada</h3>
+      <div class="note" style="font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.9; white-space:pre; overflow-x:auto;">
+/                                  1 H1 de marca + Organization
+/produtos/                         hub com filtros e ItemList
+  /produtos/luna-2/                Product + resposta r&aacute;pida + 3 casos + FAQ
+  /produtos/riva-star/             idem
+  ...                              29 produtos
+/casos-clinicos/                   hub paginado + filtros
+  /casos-clinicos/{slug}/          resumo + materiais + refer&ecirc;ncias + produtos
+/evidencias/                       hub de papers + ScholarlyArticle
+  /evidencias/{doi-slug}/          cita&ccedil;&atilde;o + achado + caso relacionado
+/aprenda/                          guias + gloss&aacute;rio
+  /aprenda/{guia}/                 defini&ccedil;&atilde;o + FAQ + links
+/estetica/ /dentistica/            categorias com 1 H1 e lista comentada
+/equipamentos/ /odontopediatria/
+/sobre/                            p&aacute;gina de entidade + NAP + sameAs
+/contato/                          contato + hor&aacute;rio + mapa
+      </div>
+
+      <div class="note"><strong>Regra de ouro:</strong> cada caso cl&iacute;nico deve ser a prova de um produto e receber links de pelo menos 2 p&aacute;ginas (o produto usado e o hub da categoria). Hoje o caso aponta para o produto apenas quando o autor lembra de citar; deveria ser parte do template.</div>
+    </div>
+  </div>
+
+  <!-- PLANO -->
+  <div class="card" id="plano">
+    <div class="card-body">
+      <h2>Plano de A&ccedil;&atilde;o &mdash; 90 Dias</h2>
+      <p style="margin-bottom:8px;">144 horas estimadas, distribu&iacute;das em tr&ecirc;s fases. A Fase 1 corrige o que impede o site de ser rastreado e entendido; a Fase 2 constr&oacute;i a camada sem&acirc;ntica e a performance; a Fase 3 escala autoridade, evid&ecirc;ncia e cita&ccedil;&atilde;o.</p>
+
+      <div class="timeline">
+        <div class="timeline-phase">
+          <div class="dot red"></div>
+          <div class="phase-name">Funda&ccedil;&atilde;o t&eacute;cnica</div>
+          <div class="phase-weeks">Dias 0&ndash;30</div>
+          <div class="phase-hours">50 h</div>
+          <div class="phase-pillar red">35% do esfor&ccedil;o</div>
+        </div>
+        <div class="timeline-phase">
+          <div class="dot orange"></div>
+          <div class="phase-name">Sem&acirc;ntica e convers&atilde;o</div>
+          <div class="phase-weeks">Dias 31&ndash;60</div>
+          <div class="phase-hours">52 h</div>
+          <div class="phase-pillar orange">36% do esfor&ccedil;o</div>
+        </div>
+        <div class="timeline-phase">
+          <div class="dot gold"></div>
+          <div class="phase-name">Autoridade e cita&ccedil;&atilde;o</div>
+          <div class="phase-weeks">Dias 61&ndash;90</div>
+          <div class="phase-hours">42 h</div>
+          <div class="phase-pillar gold">29% do esfor&ccedil;o</div>
+        </div>
+      </div>
+
+      <div class="timeline-deliverables">
+        <div class="deliv"><strong>Funda&ccedil;&atilde;o</strong>Links e &oacute;rf&atilde;os<br>H1s, titles e metas<br>Cache, gzip e headers</div>
+        <div class="deliv"><strong>Sem&acirc;ntica</strong>Organization e Product<br>Article e Person<br>Answer-first + FAQ</div>
+        <div class="deliv"><strong>Autoridade</strong>llms.txt e sameAs<br>/evidencias/ e /aprenda/<br>Baseline de cita&ccedil;&atilde;o</div>
+      </div>
+
+      <h3>Fase 1 &mdash; Funda&ccedil;&atilde;o t&eacute;cnica (50 h)</h3>
+      <div class="table-wrap">
+      <table class="compact">
+        <tr><th>#</th><th>A&ccedil;&atilde;o</th><th>IDs</th><th class="num">Horas</th></tr>
+        <tr><td>1</td><td>Corrigir as 14 URLs com host malformado (507 ocorr&ecirc;ncias no menu, rodap&eacute; e downloads)</td><td>SEO-01</td><td class="num">3</td></tr>
+        <tr><td>2</td><td>Religar os 61 &oacute;rf&atilde;os: 54 casos + 7 p&aacute;ginas, a partir de hubs, produtos e casos relacionados</td><td>SEO-02</td><td class="num">6</td></tr>
+        <tr><td>3</td><td>Um H1 por p&aacute;gina: home, 4 categorias e arquivo de casos</td><td>SEO-03</td><td class="num">6</td></tr>
+        <tr><td>4</td><td>Reescrever 28 titles acima de 60 e 56 metas (15 ausentes, 41 longas, 4 duplicadas)</td><td>SEO-05/06</td><td class="num">12</td></tr>
+        <tr><td>5</td><td>Alt text nas 131 imagens e compress&atilde;o das 49 acima de 100 KB</td><td>SEO-07</td><td class="num">6</td></tr>
+        <tr><td>6</td><td>Corrigir cache, gzip, <code>PHPSESSID</code>, TTFB e headers de seguran&ccedil;a</td><td>SEO-08</td><td class="num">9</td></tr>
+        <tr><td>7</td><td>301 de <code>/home-2/</code> para a home</td><td>SEO-10</td><td class="num">2</td></tr>
+        <tr><td>8</td><td>Corrigir o menu &ldquo;Artigos&rdquo; e os links para as 4 categorias em 301</td><td>SEO-11</td><td class="num">2</td></tr>
+        <tr><td>9</td><td>PDFs: <code>noindex</code>, host padronizado e compress&atilde;o dos 23 arquivos</td><td>SEO-12</td><td class="num">4</td></tr>
+      </table>
+      </div>
+
+      <h3>Fase 2 &mdash; Sem&acirc;ntica e convers&atilde;o (52 h)</h3>
+      <div class="table-wrap">
+      <table class="compact">
+        <tr><th>#</th><th>A&ccedil;&atilde;o</th><th>IDs</th><th class="num">Horas</th></tr>
+        <tr><td>10</td><td>Organization completa + BreadcrumbList + Product nos 29 produtos</td><td>SEO-04 / AI1</td><td class="num">12</td></tr>
+        <tr><td>11</td><td>Article/MedicalWebPage + Person nos 75 casos e mapeamento dos 100 DOIs</td><td>SEO-13 / AI5</td><td class="num">14</td></tr>
+        <tr><td>12</td><td>Resposta r&aacute;pida e FAQ nos 20 produtos de maior margem</td><td>AI2</td><td class="num">10</td></tr>
+        <tr><td>13</td><td>Performance front-end: JS, CSS, fontes, Elementor e widgets</td><td>SEO-09</td><td class="num">12</td></tr>
+        <tr><td>14</td><td>Templates de caso e produto + blocos de links cruzados</td><td>SEO-14 / G4</td><td class="num">4</td></tr>
+      </table>
+      </div>
+
+      <h3>Fase 3 &mdash; Autoridade e cita&ccedil;&atilde;o (42 h)</h3>
+      <div class="table-wrap">
+      <table class="compact">
+        <tr><th>#</th><th>A&ccedil;&atilde;o</th><th>IDs</th><th class="num">Horas</th></tr>
+        <tr><td>15</td><td><code>llms.txt</code>, <code>sameAs</code>, NAP e p&aacute;gina <code>/sobre/</code></td><td>AI3 / G1</td><td class="num">4</td></tr>
+        <tr><td>16</td><td>Hub <code>/evidencias/</code> + 20 p&aacute;ginas de paper com <code>ScholarlyArticle</code></td><td>G2</td><td class="num">12</td></tr>
+        <tr><td>17</td><td><code>/aprenda/</code> com 4 guias e gloss&aacute;rio de 40 termos</td><td>G3</td><td class="num">14</td></tr>
+        <tr><td>18</td><td>Bios de autor + marca&ccedil;&atilde;o de cita&ccedil;&atilde;o nos 100 DOIs</td><td>AI5</td><td class="num">6</td></tr>
+        <tr><td>19</td><td>CDN, compress&atilde;o final de imagem e QA de regress&atilde;o</td><td>SEO-07/09</td><td class="num">4</td></tr>
+        <tr><td>20</td><td>Baseline de cita&ccedil;&atilde;o: 20 prompts &times; 4 motores</td><td>G5</td><td class="num">2</td></tr>
+      </table>
+      </div>
+
+      <div class="total-box" style="margin-top:24px; background:linear-gradient(135deg, #fcfaf7, #f8f7f4); border-radius:10px; padding:18px 22px; border:1px solid var(--gold-border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+        <div>
+          <div style="font-size:12px; color:var(--gray-500); font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Esfor&ccedil;o total</div>
+          <div style="font-size:28px; font-weight:700; color:var(--red); letter-spacing:-0.5px;">~144 h</div>
+          <div style="font-size:13px; color:var(--gray-600);">50 h corre&ccedil;&otilde;es + 52 h sem&acirc;ntica + 42 h autoridade</div>
+        </div>
+        <div style="flex:1; max-width:380px;">
+          <div style="height:6px; background:var(--gray-200); border-radius:3px; overflow:hidden; margin-bottom:6px;">
+            <div style="height:100%; width:100%; background:linear-gradient(90deg, var(--red), var(--gold)); border-radius:3px;"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--gray-500);">
+            <span>Fase 1</span>
+            <span style="font-weight:600; color:var(--gray-700);">50h &rarr; 52h &rarr; 42h</span>
+            <span>90 dias</span>
+          </div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:12px; color:var(--gray-500); font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Quick wins</div>
+          <div style="font-size:16px; font-weight:700; color:var(--gold);">10 dias &bull; 14 h</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="card" id="kpis">
+    <div class="card-body">
+      <h2>KPIs de Acompanhamento</h2>
+      <p>Metas t&eacute;cnicas verific&aacute;veis por crawl. S&atilde;o os indicadores que provam execu&ccedil;&atilde;o &mdash; independentes de flutua&ccedil;&atilde;o de tr&aacute;fego e de atribui&ccedil;&atilde;o.</p>
+
+      <div class="table-wrap">
+      <table class="compact">
+        <tr><th>KPI</th><th class="num">Hoje</th><th class="num">30 dias</th><th class="num">60 dias</th><th class="num">90 dias</th></tr>
+        <tr><td>P&aacute;ginas com exatamente 1 H1</td><td class="num">54/60</td><td class="num">60/60</td><td class="num">60/60</td><td class="num">60/60</td></tr>
+        <tr><td>Metas entre 120 e 155 caracteres</td><td class="num">4/60</td><td class="num">30/60</td><td class="num">60/60</td><td class="num">60/60</td></tr>
+        <tr><td>Titles com at&eacute; 60 caracteres</td><td class="num">32/60</td><td class="num">50/60</td><td class="num">60/60</td><td class="num">60/60</td></tr>
+        <tr><td>URLs do sitemap com link interno</td><td class="num">60/121</td><td class="num">121/121</td><td class="num">121/121</td><td class="num">121/121</td></tr>
+        <tr><td>Links para host malformado</td><td class="num">507</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+        <tr><td>Imagens com alt preenchido</td><td class="num">0/131</td><td class="num">131/131</td><td class="num">131/131</td><td class="num">131/131</td></tr>
+        <tr><td>Tipos de schema al&eacute;m do Yoast</td><td class="num">0</td><td class="num">4</td><td class="num">7</td><td class="num">8</td></tr>
+        <tr><td>Produtos com resposta r&aacute;pida e FAQ</td><td class="num">0/29</td><td class="num">5/29</td><td class="num">29/29</td><td class="num">29/29</td></tr>
+        <tr><td>Casos com resumo e refer&ecirc;ncia</td><td class="num">0/75</td><td class="num">0/75</td><td class="num">20/75</td><td class="num">75/75</td></tr>
+        <tr><td>Casos com 3 ou mais inlinks</td><td class="num">21/75</td><td class="num">40/75</td><td class="num">75/75</td><td class="num">75/75</td></tr>
+        <tr><td>Lighthouse mobile &mdash; home</td><td class="num">31</td><td class="num">45</td><td class="num">65</td><td class="num">80</td></tr>
+        <tr><td>LCP da home (mobile)</td><td class="num">6,9 s</td><td class="num">4,5 s</td><td class="num">3,0 s</td><td class="num">2,5 s</td></tr>
+        <tr><td>TTFB do HTML</td><td class="num">2,3&ndash;5,0 s</td><td class="num">1,2 s</td><td class="num">0,8 s</td><td class="num">0,6 s</td></tr>
+        <tr><td>PDFs index&aacute;veis</td><td class="num">23</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+        <tr><td><code>llms.txt</code> publicado</td><td class="num">N&atilde;o</td><td class="num">N&atilde;o</td><td class="num">Sim</td><td class="num">Sim</td></tr>
+        <tr><td>Baseline de cita&ccedil;&atilde;o em IA</td><td class="num">N&atilde;o</td><td class="num">N&atilde;o</td><td class="num">Sim</td><td class="num">Sim (mensal)</td></tr>
+      </table>
+      </div>
+
+      <div class="note"><strong>Sobre as metas de performance:</strong> 45, 65 e 80 s&atilde;o metas de engenharia, n&atilde;o garantia. Dependem de acesso ao servidor, remo&ccedil;&atilde;o de plugins e or&ccedil;amento de imagem. O compromisso &eacute; com a execu&ccedil;&atilde;o e a medi&ccedil;&atilde;o, n&atilde;o com o n&uacute;mero exato &mdash; e o n&uacute;mero s&oacute; vale acompanhado de LCP e TBT.</div>
+    </div>
+  </div>
+
+  <!-- PRÓXIMOS -->
+  <div class="card" id="proximos">
+    <div class="card-body">
+      <h2>O Que Esperar &mdash; e o Pr&oacute;ximo Passo</h2>
+
+      <p><strong>Efeitos esperados com a execu&ccedil;&atilde;o completa:</strong></p>
+      <ul>
+        <li><strong>Rastreamento:</strong> fim dos 507 links malformados e dos 61 &oacute;rf&atilde;os &mdash; os 54 casos cl&iacute;nicos passam a receber autoridade em vez de depender s&oacute; do sitemap.</li>
+        <li><strong>Relev&acirc;ncia:</strong> 29 produtos e 6 hubs com H1, resposta direta e links cruzados passam a competir por termos de inten&ccedil;&atilde;o comercial hoje ausentes do site.</li>
+        <li><strong>CTR:</strong> titles e metas reescritos recuperam o termo principal e a proposta de valor no SERP.</li>
+        <li><strong>IA:</strong> Organization + Product + Article + Person + FAQ + <code>llms.txt</code> criam a camada m&iacute;nima para extra&ccedil;&atilde;o e cita&ccedil;&atilde;o.</li>
+        <li><strong>Convers&atilde;o:</strong> o caso cl&iacute;nico passa a levar ao produto que o viabilizou, n&atilde;o a lugar nenhum.</li>
+      </ul>
+
+      <div class="risk-box">
+        <h4>O que n&atilde;o prometemos sem dados</h4>
+        <p>Sem Google Search Console, GA4 e base de backlinks n&atilde;o &eacute; poss&iacute;vel projetar tr&aacute;fego, leads ou receita com responsabilidade. A auditoria identifica os gargalos e define metas t&eacute;cnicas; a proje&ccedil;&atilde;o de resultado vem depois do baseline. <strong>Pr&oacute;ximo passo recomendado:</strong> liberar os acessos de GSC e GA4, rodar o crawl p&oacute;s-Fase 1 e estabelecer a linha de base de 30 dias.</p>
+      </div>
+
+      <h3>Sequ&ecirc;ncia imediata (primeiros 10 dias)</h3>
+      <div class="table-wrap">
+      <table class="compact">
+        <tr><th style="width:10%">Dia</th><th>Entrega</th></tr>
+        <tr><td>1&ndash;2</td><td>Corre&ccedil;&atilde;o das 14 URLs malformadas no menu, rodap&eacute; e bot&otilde;es de download</td></tr>
+        <tr><td>3&ndash;4</td><td>301 de <code>/home-2/</code>; corre&ccedil;&atilde;o do menu &ldquo;Artigos&rdquo; e das 4 categorias</td></tr>
+        <tr><td>5&ndash;6</td><td>H1 &uacute;nico na home, nas 4 categorias e no arquivo de casos</td></tr>
+        <tr><td>7&ndash;8</td><td>10 titles e metas priorit&aacute;rios (home, produtos de maior margem, 3 casos)</td></tr>
+        <tr><td>9&ndash;10</td><td>Alt text nas imagens da home e dos 10 produtos priorit&aacute;rios + compress&atilde;o das maiores</td></tr>
+      </table>
+      </div>
+
+      <h3>Acessos e insumos necess&aacute;rios</h3>
+      <div class="table-wrap">
+      <table class="compact">
+        <tr><th style="width:32%">Item</th><th>Para qu&ecirc;</th></tr>
+        <tr><td><strong>Google Search Console</strong></td><td>Propriedade de dom&iacute;nio, para cobertura, consultas, CTR e baseline</td></tr>
+        <tr><td><strong>GA4</strong></td><td>Acesso de leitura, para eventos, p&aacute;ginas de entrada e convers&atilde;o</td></tr>
+        <tr><td><strong>WordPress</strong></td><td>Acesso de administrador ou staging, para templates, Yoast e Elementor</td></tr>
+        <tr><td><strong>Servidor / hospedagem</strong></td><td>Apache ou proxy, para cache, gzip, headers e TTFB</td></tr>
+        <tr><td><strong>Dados da empresa</strong></td><td>Raz&atilde;o social, endere&ccedil;o, telefones, funda&ccedil;&atilde;o, ASX, lista de autores e ORCIDs</td></tr>
+        <tr><td><strong>Prioriza&ccedil;&atilde;o comercial</strong></td><td>Quais 10 produtos t&ecirc;m maior margem ou meta de 2027, para come&ccedil;ar por eles</td></tr>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ANEXOS -->
+  <div class="card" id="anexos">
+    <div class="card-body">
+      <h2>Anexos</h2>
+
+      <h3>A. Invent&aacute;rio de p&aacute;ginas index&aacute;veis</h3>
+      <p style="font-size:14px; color:var(--gray-600);">60 p&aacute;ginas, ordenadas por volume de conte&uacute;do. &ldquo;H1&rdquo; indica a situa&ccedil;&atilde;o encontrada no HTML renderizado; &ldquo;Title&rdquo; e &ldquo;Meta&rdquo; est&atilde;o em caracteres; &ldquo;Inlinks&rdquo; &eacute; o n&uacute;mero de links internos &uacute;nicos.</p>
+      <div class="table-wrap">
+<table class="compact annex-a">
+        <thead><tr><th>URL</th><th class="num">Palavras</th><th>H1</th><th class="num">Title</th><th class="num">Meta</th><th class="num">Inlinks</th></tr></thead>
+        <tbody>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/" target="_blank" rel="noopener">/</a></td><td class="num">1.944</td><td><span class="status warn">7 H1s</span></td><td class="num">50</td><td class="num"><span class="status ok">126</span></td><td class="num">64</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/set-pp/" target="_blank" rel="noopener">/produtos/set-pp/</a></td><td class="num">1.825</td><td><span class="status ok">ok</span></td><td class="num">50</td><td class="num"><span class="status warn">353</span></td><td class="num">16</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/stela/" target="_blank" rel="noopener">/produtos/stela/</a></td><td class="num">1.479</td><td><span class="status ok">ok</span></td><td class="num">54</td><td class="num"><span class="status warn">255</span></td><td class="num">16</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/riva-light-cure/" target="_blank" rel="noopener">/produtos/riva-light-cure/</a></td><td class="num">1.454</td><td><span class="status ok">ok</span></td><td class="num"><span class="status fail">81</span></td><td class="num"><span class="status warn">292</span></td><td class="num">10</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/controle-da-sensibilidade-como-aumentar-a-colaboracao-do-paciente-ao-procedimento-clareador/" target="_blank" rel="noopener">/casos-clinicos/controle-da-sensibilidade-como-aumentar-a-colaboracao-do-paciente-ao-procedimento-clareador/</a></td><td class="num">1.369</td><td><span class="status ok">ok</span></td><td class="num"><span class="status fail">106</span></td><td class="num"><span class="status fail">ausente</span></td><td class="num">13</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/riva-star/" target="_blank" rel="noopener">/produtos/riva-star/</a></td><td class="num">1.282</td><td><span class="status ok">ok</span></td><td class="num"><span class="status warn">26</span></td><td class="num"><span class="status warn">262</span></td><td class="num">7</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/riva-self-cure/" target="_blank" rel="noopener">/produtos/riva-self-cure/</a></td><td class="num">1.273</td><td><span class="status ok">ok</span></td><td class="num"><span class="status fail">65</span></td><td class="num"><span class="status warn">216</span></td><td class="num">10</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/restauracoes-com-resina-autopolimerizavel-stela-automix-sdi-em-paciente-com-trissomia-do-21-e-transtorno-do-espectro-autista/" target="_blank" rel="noopener">/casos-clinicos/restauracoes-com-resina-autopolimerizavel-stela-automix-sdi-em-paciente-com-trissomia-do-21-e-transtorno-do-espectro-autista/</a></td><td class="num">1.227</td><td><span class="status ok">ok</span></td><td class="num"><span class="status fail">133</span></td><td class="num"><span class="status fail">ausente</span></td><td class="num">2</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/clareamento-dental-associado-em-dentes-vitais/" target="_blank" rel="noopener">/casos-clinicos/clareamento-dental-associado-em-dentes-vitais/</a></td><td class="num">1.180</td><td><span class="status ok">ok</span></td><td class="num">58</td><td class="num"><span class="status fail">ausente</span></td><td class="num">13</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/luna-2/" target="_blank" rel="noopener">/produtos/luna-2/</a></td><td class="num">1.145</td><td><span class="status ok">ok</span></td><td class="num">34</td><td class="num"><span class="status warn">373</span></td><td class="num">15</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/pola-office/" target="_blank" rel="noopener">/produtos/pola-office/</a></td><td class="num">1.090</td><td><span class="status ok">ok</span></td><td class="num"><span class="status fail">65</span></td><td class="num"><span class="status warn">262</span></td><td class="num">14</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/coroas-metaloceramicas-em-regiao-anterior-um-desafio-estetico/" target="_blank" rel="noopener">/casos-clinicos/coroas-metaloceramicas-em-regiao-anterior-um-desafio-estetico/</a></td><td class="num">1.075</td><td><span class="status ok">ok</span></td><td class="num"><span class="status fail">75</span></td><td class="num"><span class="status warn">181</span></td><td class="num">2</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/pola-day-pola-night/" target="_blank" rel="noopener">/produtos/pola-day-pola-night/</a></td><td class="num">1.046</td><td><span class="status ok">ok</span></td><td class="num">50</td><td class="num"><span class="status warn">170</span></td><td class="num">8</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/aura/" target="_blank" rel="noopener">/produtos/aura/</a></td><td class="num">981</td><td><span class="status ok">ok</span></td><td class="num">32</td><td class="num"><span class="status warn">227</span></td><td class="num">10</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/pola-office-2/" target="_blank" rel="noopener">/produtos/pola-office-2/</a></td><td class="num">962</td><td><span class="status ok">ok</span></td><td class="num">53</td><td class="num"><span class="status warn">270</span></td><td class="num">14</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/restauracao-com-resina-autopolimerizavel-stela/" target="_blank" rel="noopener">/casos-clinicos/restauracao-com-resina-autopolimerizavel-stela/</a></td><td class="num">943</td><td><span class="status ok">ok</span></td><td class="num">59</td><td class="num"><span class="status warn">194</span></td><td class="num">2</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/zipbond/" target="_blank" rel="noopener">/produtos/zipbond/</a></td><td class="num">928</td><td><span class="status ok">ok</span></td><td class="num">40</td><td class="num"><span class="status warn">323</span></td><td class="num">13</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/reabilitacao-com-implante/" target="_blank" rel="noopener">/casos-clinicos/reabilitacao-com-implante/</a></td><td class="num">926</td><td><span class="status ok">ok</span></td><td class="num"><span class="status fail">91</span></td><td class="num"><span class="status warn">254</span></td><td class="num">3</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/facetas-em-resina-composta-de-opacidade-intermediaria-luna-2/" target="_blank" rel="noopener">/casos-clinicos/facetas-em-resina-composta-de-opacidade-intermediaria-luna-2/</a></td><td class="num">896</td><td><span class="status ok">ok</span></td><td class="num"><span class="status fail">75</span></td><td class="num"><span class="status fail">ausente</span></td><td class="num">13</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/quem-somos/" target="_blank" rel="noopener">/quem-somos/</a></td><td class="num">883</td><td><span class="status ok">ok</span></td><td class="num">54</td><td class="num"><span class="status ok">133</span></td><td class="num">64</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/harmonizacao-do-sorriso-com-gengivoplastia-e-facetas-diretas-em-resina-composta/" target="_blank" rel="noopener">/casos-clinicos/harmonizacao-do-sorriso-com-gengivoplastia-e-facetas-diretas-em-resina-composta/</a></td><td class="num">882</td><td><span class="status ok">ok</span></td><td class="num"><span class="status fail">92</span></td><td class="num"><span class="status fail">ausente</span></td><td class="num">5</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/coroas-totais-em-dentes-severamente-escurecidos-o-passo-a-passo-da-rotina-clinica/" target="_blank" rel="noopener">/casos-clinicos/coroas-totais-em-dentes-severamente-escurecidos-o-passo-a-passo-da-rotina-clinica/</a></td><td class="num">852</td><td><span class="status ok">ok</span></td><td class="num"><span class="status fail">95</span></td><td class="num"><span class="status warn">188</span></td><td class="num">2</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/radii-cal-cx/" target="_blank" rel="noopener">/produtos/radii-cal-cx/</a></td><td class="num">849</td><td><span class="status ok">ok</span></td><td class="num">56</td><td class="num"><span class="status warn">248</span></td><td class="num">12</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/cimentacao-de-coroa-ceramica-zirconia-com-cimento-resinoso-autoadesivo-dual-set-maxx-sdi/" target="_blank" rel="noopener">/casos-clinicos/cimentacao-de-coroa-ceramica-zirconia-com-cimento-resinoso-autoadesivo-dual-set-maxx-sdi/</a></td><td class="num">842</td><td><span class="status ok">ok</span></td><td class="num"><span class="status fail">104</span></td><td class="num"><span class="status fail">ausente</span></td><td class="num">2</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/radii-xpert/" target="_blank" rel="noopener">/produtos/radii-xpert/</a></td><td class="num">835</td><td><span class="status ok">ok</span></td><td class="num">55</td><td class="num"><span class="status warn">333</span></td><td class="num">19</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/riva-cem/" target="_blank" rel="noopener">/produtos/riva-cem/</a></td><td class="num">821</td><td><span class="status ok">ok</span></td><td class="num"><span class="status fail">82</span></td><td class="num"><span class="status warn">345</span></td><td class="num">9</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/luna-flow/" target="_blank" rel="noopener">/produtos/luna-flow/</a></td><td class="num">808</td><td><span class="status ok">ok</span></td><td class="num">55</td><td class="num"><span class="status warn">394</span></td><td class="num">14</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/super-etch/" target="_blank" rel="noopener">/produtos/super-etch/</a></td><td class="num">790</td><td><span class="status ok">ok</span></td><td class="num">47</td><td class="num"><span class="status warn">261</span></td><td class="num">6</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/substituicao-de-restauracao-fraturada-em-resina-no-dente-38-face-ocluso-vestibular/" target="_blank" rel="noopener">/casos-clinicos/substituicao-de-restauracao-fraturada-em-resina-no-dente-38-face-ocluso-vestibular/</a></td><td class="num">766</td><td><span class="status ok">ok</span></td><td class="num"><span class="status fail">97</span></td><td class="num"><span class="status fail">ausente</span></td><td class="num">5</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/facetas-em-resina-composta-de-opacidade-intermediaria/" target="_blank" rel="noopener">/casos-clinicos/facetas-em-resina-composta-de-opacidade-intermediaria/</a></td><td class="num">744</td><td><span class="status ok">ok</span></td><td class="num"><span class="status fail">66</span></td><td class="num"><span class="status warn">245</span></td><td class="num">5</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/stae/" target="_blank" rel="noopener">/produtos/stae/</a></td><td class="num">737</td><td><span class="status ok">ok</span></td><td class="num">47</td><td class="num"><span class="status warn">243</span></td><td class="num">7</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/substituicao-de-restauracao-em-amalgama-por-resina-composta-no-dente-27-classe-i-oclusal/" target="_blank" rel="noopener">/casos-clinicos/substituicao-de-restauracao-em-amalgama-por-resina-composta-no-dente-27-classe-i-oclusal/</a></td><td class="num">713</td><td><span class="status ok">ok</span></td><td class="num"><span class="status fail">103</span></td><td class="num"><span class="status fail">ausente</span></td><td class="num">6</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/substituicao-de-restauracoes-em-amalgama-nos-dentes-46-e-47-por-resina-composta-direta/" target="_blank" rel="noopener">/casos-clinicos/substituicao-de-restauracoes-em-amalgama-nos-dentes-46-e-47-por-resina-composta-direta/</a></td><td class="num">711</td><td><span class="status ok">ok</span></td><td class="num"><span class="status fail">99</span></td><td class="num"><span class="status fail">ausente</span></td><td class="num">3</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/restauracao-direta-com-resina-composta-bulk-fill-autopolimerizavel/" target="_blank" rel="noopener">/casos-clinicos/restauracao-direta-com-resina-composta-bulk-fill-autopolimerizavel/</a></td><td class="num">685</td><td><span class="status ok">ok</span></td><td class="num"><span class="status fail">79</span></td><td class="num"><span class="status ok">150</span></td><td class="num">3</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/" target="_blank" rel="noopener">/casos-clinicos/</a></td><td class="num">649</td><td><span class="status warn">10 H1s</span></td><td class="num">35</td><td class="num"><span class="status fail">ausente</span></td><td class="num">64</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/riva-luting-plus/" target="_blank" rel="noopener">/produtos/riva-luting-plus/</a></td><td class="num">649</td><td><span class="status ok">ok</span></td><td class="num"><span class="status fail">94</span></td><td class="num"><span class="status warn">277</span></td><td class="num">8</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/restauracao-atraumatica-em-paciente-infantil-com-cimento-de-ionomero-de-vidro-encapsulado-modificado-por-resina/" target="_blank" rel="noopener">/casos-clinicos/restauracao-atraumatica-em-paciente-infantil-com-cimento-de-ionomero-de-vidro-encapsulado-modificado-por-resina/</a></td><td class="num">647</td><td><span class="status ok">ok</span></td><td class="num"><span class="status fail">124</span></td><td class="num"><span class="status fail">ausente</span></td><td class="num">7</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/conseal-f/" target="_blank" rel="noopener">/produtos/conseal-f/</a></td><td class="num">632</td><td><span class="status ok">ok</span></td><td class="num"><span class="status fail">65</span></td><td class="num"><span class="status warn">240</span></td><td class="num">7</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/riva-luting/" target="_blank" rel="noopener">/produtos/riva-luting/</a></td><td class="num">598</td><td><span class="status ok">ok</span></td><td class="num">57</td><td class="num"><span class="status warn">286</span></td><td class="num">8</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/aura-bulk-fill/" target="_blank" rel="noopener">/produtos/aura-bulk-fill/</a></td><td class="num">597</td><td><span class="status ok">ok</span></td><td class="num">55</td><td class="num"><span class="status warn">282</span></td><td class="num">10</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/ultramat-s/" target="_blank" rel="noopener">/produtos/ultramat-s/</a></td><td class="num">554</td><td><span class="status ok">ok</span></td><td class="num">55</td><td class="num"><span class="status warn">284</span></td><td class="num">11</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/restauracao-em-dente-deciduo-com-resina-composta-stela-autopolimerizavel-em-capsula/" target="_blank" rel="noopener">/casos-clinicos/restauracao-em-dente-deciduo-com-resina-composta-stela-autopolimerizavel-em-capsula/</a></td><td class="num">517</td><td><span class="status ok">ok</span></td><td class="num"><span class="status fail">96</span></td><td class="num"><span class="status warn">194</span></td><td class="num">2</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/restauracoes-classe-ii-com-resina-luna-2/" target="_blank" rel="noopener">/casos-clinicos/restauracoes-classe-ii-com-resina-luna-2/</a></td><td class="num">516</td><td><span class="status ok">ok</span></td><td class="num">54</td><td class="num"><span class="status fail">ausente</span></td><td class="num">9</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/facetas-diretas-com-luna-2-2/" target="_blank" rel="noopener">/casos-clinicos/facetas-diretas-com-luna-2-2/</a></td><td class="num">496</td><td><span class="status ok">ok</span></td><td class="num">39</td><td class="num"><span class="status fail">ausente</span></td><td class="num">10</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/permite/" target="_blank" rel="noopener">/produtos/permite/</a></td><td class="num">471</td><td><span class="status ok">ok</span></td><td class="num"><span class="status fail">62</span></td><td class="num"><span class="status warn">232</span></td><td class="num">6</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/tratamento-endodontico-em-sessao-unica-com-blindagem-e-restauracao-definitiva-utilizando-a-resina-stela-sdi/" target="_blank" rel="noopener">/casos-clinicos/tratamento-endodontico-em-sessao-unica-com-blindagem-e-restauracao-definitiva-utilizando-a-resina-stela-sdi/</a></td><td class="num">464</td><td><span class="status ok">ok</span></td><td class="num"><span class="status fail">122</span></td><td class="num"><span class="status fail">ausente</span></td><td class="num">2</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/responsabilidade-social/" target="_blank" rel="noopener">/responsabilidade-social/</a></td><td class="num">461</td><td><span class="status ok">ok</span></td><td class="num">36</td><td class="num"><span class="status warn">221</span></td><td class="num">64</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/radiometer-x/" target="_blank" rel="noopener">/produtos/radiometer-x/</a></td><td class="num">396</td><td><span class="status ok">ok</span></td><td class="num">60</td><td class="num"><span class="status warn">250</span></td><td class="num">11</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/restauracao-classe-ii-m-o-d-resina-stela/" target="_blank" rel="noopener">/casos-clinicos/restauracao-classe-ii-m-o-d-resina-stela/</a></td><td class="num">377</td><td><span class="status ok">ok</span></td><td class="num">55</td><td class="num"><span class="status warn">254</span></td><td class="num">2</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/dentistica/" target="_blank" rel="noopener">/dentistica/</a></td><td class="num">373</td><td><span class="status warn">6 H1s</span></td><td class="num">57</td><td class="num"><span class="status warn">232</span></td><td class="num">64</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/estetica/" target="_blank" rel="noopener">/estetica/</a></td><td class="num">367</td><td><span class="status warn">6 H1s</span></td><td class="num"><span class="status fail">64</span></td><td class="num"><span class="status warn">249</span></td><td class="num">64</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/riva-star-aqua/" target="_blank" rel="noopener">/produtos/riva-star-aqua/</a></td><td class="num">367</td><td><span class="status ok">ok</span></td><td class="num"><span class="status fail">63</span></td><td class="num"><span class="status warn">273</span></td><td class="num">8</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/points/" target="_blank" rel="noopener">/produtos/points/</a></td><td class="num">352</td><td><span class="status ok">ok</span></td><td class="num">46</td><td class="num"><span class="status ok">139</span></td><td class="num">5</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/riva-coat/" target="_blank" rel="noopener">/produtos/riva-coat/</a></td><td class="num">327</td><td><span class="status ok">ok</span></td><td class="num"><span class="status fail">70</span></td><td class="num"><span class="status warn">230</span></td><td class="num">9</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/gs-80/" target="_blank" rel="noopener">/produtos/gs-80/</a></td><td class="num">308</td><td><span class="status ok">ok</span></td><td class="num">54</td><td class="num"><span class="status warn">239</span></td><td class="num">6</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/riva-conditioner/" target="_blank" rel="noopener">/produtos/riva-conditioner/</a></td><td class="num">307</td><td><span class="status ok">ok</span></td><td class="num"><span class="status fail">64</span></td><td class="num"><span class="status warn">243</span></td><td class="num">10</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/odontopediatria/" target="_blank" rel="noopener">/odontopediatria/</a></td><td class="num">301</td><td><span class="status fail">ausente</span></td><td class="num">60</td><td class="num"><span class="status warn">247</span></td><td class="num">64</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/equipamentos/" target="_blank" rel="noopener">/equipamentos/</a></td><td class="num">298</td><td><span class="status warn">6 H1s</span></td><td class="num"><span class="status fail">65</span></td><td class="num"><span class="status warn">249</span></td><td class="num">64</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/contato/" target="_blank" rel="noopener">/contato/</a></td><td class="num">249</td><td><span class="status ok">ok</span></td><td class="num">58</td><td class="num"><span class="status warn">238</span></td><td class="num">64</td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/produtos/" target="_blank" rel="noopener">/produtos/</a></td><td class="num">236</td><td><span class="status ok">ok</span></td><td class="num"><span class="status warn">29</span></td><td class="num"><span class="status fail">ausente</span></td><td class="num">64</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3>B. URLs do sitemap sem link interno</h3>
+      <p style="font-size:14px; color:var(--gray-600);">61 URLs presentes no sitemap, ausentes de qualquer menu, rodap&eacute; ou link contextual. Todas retornam HTTP 200 e t&ecirc;m canonical pr&oacute;prio &mdash; o problema &eacute; descoberta, n&atilde;o indexabilidade t&eacute;cnica.</p>
+      <div class="table-wrap">
+<table class="compact annex-b">
+        <thead><tr><th style="width:66%">URL</th><th style="width:22%">Tipo</th><th style="width:12%">Status</th></tr></thead>
+        <tbody>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/ciosp2026/" target="_blank" rel="noopener">/ciosp2026/</a></td><td>Página</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/ebook-clareamento/" target="_blank" rel="noopener">/ebook-clareamento/</a></td><td>Página</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/encontro-de-odontopediatria-da-amazonia/" target="_blank" rel="noopener">/encontro-de-odontopediatria-da-amazonia/</a></td><td>Página</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/encontro-de-odontopediatria-do-triangulo-mineiro/" target="_blank" rel="noopener">/encontro-de-odontopediatria-do-triangulo-mineiro/</a></td><td>Página</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/home-2/" target="_blank" rel="noopener">/home-2/</a></td><td>Página</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/politica-de-seguranca-e-privacidade/" target="_blank" rel="noopener">/politica-de-seguranca-e-privacidade/</a></td><td>Página</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/postagem-premiada/" target="_blank" rel="noopener">/postagem-premiada/</a></td><td>Página</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/clareamento-caseiro-com-pola-night-10-em-paciente-com-consumo-excessivo-de-cafe/" target="_blank" rel="noopener">/casos-clinicos/clareamento-caseiro-com-pola-night-10-em-paciente-com-consumo-excessivo-de-cafe/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/clareamento-caseiro-em-paciente-com-caninos-mais-saturados-descricao-da-tecnica-parte-a/" target="_blank" rel="noopener">/casos-clinicos/clareamento-caseiro-em-paciente-com-caninos-mais-saturados-descricao-da-tecnica-parte-a/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/clareamento-caseiro-em-paciente-com-caninos-mais-saturados/" target="_blank" rel="noopener">/casos-clinicos/clareamento-caseiro-em-paciente-com-caninos-mais-saturados/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/clareamento-caseiro-para-preparar-o-paciente-antes-de-procedimentos-restauradores/" target="_blank" rel="noopener">/casos-clinicos/clareamento-caseiro-para-preparar-o-paciente-antes-de-procedimentos-restauradores/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/clareamento-com-pola-night-e-restauracoes-anteriores-com-sistema-zipbond-aura/" target="_blank" rel="noopener">/casos-clinicos/clareamento-com-pola-night-e-restauracoes-anteriores-com-sistema-zipbond-aura/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/clareamento-com-pola-office/" target="_blank" rel="noopener">/casos-clinicos/clareamento-com-pola-office/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/clareamento-combinado-potencializando-a-satisfacao-do-paciente-com-pola/" target="_blank" rel="noopener">/casos-clinicos/clareamento-combinado-potencializando-a-satisfacao-do-paciente-com-pola/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/clareamento-de-consultorio-com-a-ultilizacao-do-clareador-pola-office/" target="_blank" rel="noopener">/casos-clinicos/clareamento-de-consultorio-com-a-ultilizacao-do-clareador-pola-office/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/clareamento-de-consultorio-com-a-utilizacao-do-clareador-pola-office-2/" target="_blank" rel="noopener">/casos-clinicos/clareamento-de-consultorio-com-a-utilizacao-do-clareador-pola-office-2/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/clareamento-de-consultorio-resultado-de-excelencia-em-apenas-2-sessoes/" target="_blank" rel="noopener">/casos-clinicos/clareamento-de-consultorio-resultado-de-excelencia-em-apenas-2-sessoes/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/clareamento-de-dentes-vitais-com-peroxido-de-hidrogenio-de-alta-e-baixa-concentracao-relato-de-caso-clinico/" target="_blank" rel="noopener">/casos-clinicos/clareamento-de-dentes-vitais-com-peroxido-de-hidrogenio-de-alta-e-baixa-concentracao-relato-de-caso-clinico/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/clareamento-de-dentes-vitais-com-peroxido-de-hidrogenio-de-alta-e-baixa-concentracao/" target="_blank" rel="noopener">/casos-clinicos/clareamento-de-dentes-vitais-com-peroxido-de-hidrogenio-de-alta-e-baixa-concentracao/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/clareamento-dental-com-pola-office-2/" target="_blank" rel="noopener">/casos-clinicos/clareamento-dental-com-pola-office-2/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/clareamento-dental-com-pola-office-e-restauracoes-de-resina-composta-em-dentes-anteriores-com-aura/" target="_blank" rel="noopener">/casos-clinicos/clareamento-dental-com-pola-office-e-restauracoes-de-resina-composta-em-dentes-anteriores-com-aura/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/clareamento-dental-com-pola-office/" target="_blank" rel="noopener">/casos-clinicos/clareamento-dental-com-pola-office/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/clareamento-dental-e-substituicao-de-restauracoes-para-melhorar-a-estetica-do-sorriso/" target="_blank" rel="noopener">/casos-clinicos/clareamento-dental-e-substituicao-de-restauracoes-para-melhorar-a-estetica-do-sorriso/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/clareamento-dental-em-consultorio-com-pola-office/" target="_blank" rel="noopener">/casos-clinicos/clareamento-dental-em-consultorio-com-pola-office/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/clareamento-dentario-um-tratamento-estetico-previsivel-eficaz-e-natural/" target="_blank" rel="noopener">/casos-clinicos/clareamento-dentario-um-tratamento-estetico-previsivel-eficaz-e-natural/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/correcoes-morfologicas-dos-centrais-com-resina-composta/" target="_blank" rel="noopener">/casos-clinicos/correcoes-morfologicas-dos-centrais-com-resina-composta/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/diamino-fluoreto-de-prata-restauracao-dentaria-ha-justificativa-para-essa-associacao-2/" target="_blank" rel="noopener">/casos-clinicos/diamino-fluoreto-de-prata-restauracao-dentaria-ha-justificativa-para-essa-associacao-2/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/diamino-fluoreto-de-prata-restauracao-dentaria-ha-justificativa-para-essa-associacao/" target="_blank" rel="noopener">/casos-clinicos/diamino-fluoreto-de-prata-restauracao-dentaria-ha-justificativa-para-essa-associacao/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/espectrofotometro-para-demonstracao-da-evolucao-do-clareamento-dental-caseiro/" target="_blank" rel="noopener">/casos-clinicos/espectrofotometro-para-demonstracao-da-evolucao-do-clareamento-dental-caseiro/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/facetas-diretas-com-luna-2/" target="_blank" rel="noopener">/casos-clinicos/facetas-diretas-com-luna-2/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/facetas-diretas-em-resina-composta-com-a-linha-aura-da-sdi/" target="_blank" rel="noopener">/casos-clinicos/facetas-diretas-em-resina-composta-com-a-linha-aura-da-sdi/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/fechamento-de-diastemas-anteriores-com-zipbond-e-luna-2/" target="_blank" rel="noopener">/casos-clinicos/fechamento-de-diastemas-anteriores-com-zipbond-e-luna-2/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/fechamento-de-diastemas-com-resinas-compostas/" target="_blank" rel="noopener">/casos-clinicos/fechamento-de-diastemas-com-resinas-compostas/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/pola-night-10-para-clareamento-caseiro/" target="_blank" rel="noopener">/casos-clinicos/pola-night-10-para-clareamento-caseiro/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/protocolo-eficiente-e-seguro-para-clareamento-caseiro-com-pola-night-10/" target="_blank" rel="noopener">/casos-clinicos/protocolo-eficiente-e-seguro-para-clareamento-caseiro-com-pola-night-10/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/reabilitacao-estetica-anterior-em-multiplos-substratos/" target="_blank" rel="noopener">/casos-clinicos/reabilitacao-estetica-anterior-em-multiplos-substratos/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/reabilitacao-estetica-da-arcada-superior-com-luna-2/" target="_blank" rel="noopener">/casos-clinicos/reabilitacao-estetica-da-arcada-superior-com-luna-2/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/reabilitacoes-esteticas-do-sorriso-com-compositos/" target="_blank" rel="noopener">/casos-clinicos/reabilitacoes-esteticas-do-sorriso-com-compositos/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/reanatomizacao-de-dentes-anteriores-com-resina-composta/" target="_blank" rel="noopener">/casos-clinicos/reanatomizacao-de-dentes-anteriores-com-resina-composta/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/reanatomizacao-estetica-anterior-com-resina-composta/" target="_blank" rel="noopener">/casos-clinicos/reanatomizacao-estetica-anterior-com-resina-composta/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/recontorno-cosmetico-em-dentes-anteriores/" target="_blank" rel="noopener">/casos-clinicos/recontorno-cosmetico-em-dentes-anteriores/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/remodelacao-estetica-dos-dentes-anteriores-superiores-com-resina-composta/" target="_blank" rel="noopener">/casos-clinicos/remodelacao-estetica-dos-dentes-anteriores-superiores-com-resina-composta/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/resinas-bulk-fill-uma-excelente-alternativa-para-restauracoes-profundas/" target="_blank" rel="noopener">/casos-clinicos/resinas-bulk-fill-uma-excelente-alternativa-para-restauracoes-profundas/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/restauracao-de-dente-deciduo-posterior/" target="_blank" rel="noopener">/casos-clinicos/restauracao-de-dente-deciduo-posterior/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/restauracao-de-dente-posterior-com-aura-bulk-fill/" target="_blank" rel="noopener">/casos-clinicos/restauracao-de-dente-posterior-com-aura-bulk-fill/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/restauracao-direta-com-resina-composta-stela-automix/" target="_blank" rel="noopener">/casos-clinicos/restauracao-direta-com-resina-composta-stela-automix/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/restauracao-direta-posterior-com-luna-2-e-aura/" target="_blank" rel="noopener">/casos-clinicos/restauracao-direta-posterior-com-luna-2-e-aura/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/restauracoes-em-dentes-posteriores-funcao-e-estetica/" target="_blank" rel="noopener">/casos-clinicos/restauracoes-em-dentes-posteriores-funcao-e-estetica/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/restauracoes-em-pre-molares-superiores-com-resina-aura-bulk-fill/" target="_blank" rel="noopener">/casos-clinicos/restauracoes-em-pre-molares-superiores-com-resina-aura-bulk-fill/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/restauracoes-esteticas-conservadoras-com-luna-2/" target="_blank" rel="noopener">/casos-clinicos/restauracoes-esteticas-conservadoras-com-luna-2/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/restauracoes-posteriores-com-sistema-zipbond-e-aura-bulk-fill/" target="_blank" rel="noopener">/casos-clinicos/restauracoes-posteriores-com-sistema-zipbond-e-aura-bulk-fill/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/solucoes-esteticas-diretas-com-resinas-compostas-em-dentes-anteriores-com-restauracoes-extensas/" target="_blank" rel="noopener">/casos-clinicos/solucoes-esteticas-diretas-com-resinas-compostas-em-dentes-anteriores-com-restauracoes-extensas/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/solucoes-esteticas-diretas-em-dentes-escurecidos/" target="_blank" rel="noopener">/casos-clinicos/solucoes-esteticas-diretas-em-dentes-escurecidos/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/substituicao-de-facetas-em-resina-com-formato-insatisfatorio/" target="_blank" rel="noopener">/casos-clinicos/substituicao-de-facetas-em-resina-com-formato-insatisfatorio/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/substituicao-de-restauracao-de-amalgama-fraturado-por-resina-aura-bulk-fill/" target="_blank" rel="noopener">/casos-clinicos/substituicao-de-restauracao-de-amalgama-fraturado-por-resina-aura-bulk-fill/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/substituicao-de-restauracao-de-amalgama-por-compositos-resinosos/" target="_blank" rel="noopener">/casos-clinicos/substituicao-de-restauracao-de-amalgama-por-compositos-resinosos/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/tecnica-associada-de-clareamento-dental-para-resultados-rapidos-e-efetivos/" target="_blank" rel="noopener">/casos-clinicos/tecnica-associada-de-clareamento-dental-para-resultados-rapidos-e-efetivos/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/tecnica-de-clareamento-dental-em-consultorio-para-dentes-vitais/" target="_blank" rel="noopener">/casos-clinicos/tecnica-de-clareamento-dental-em-consultorio-para-dentes-vitais/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/uso-da-resina-aura-db-na-odontopediatria-devolvendo-estetica-e-funcao-aos-dentes-deciduos/" target="_blank" rel="noopener">/casos-clinicos/uso-da-resina-aura-db-na-odontopediatria-devolvendo-estetica-e-funcao-aos-dentes-deciduos/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/uso-do-diamino-fluoreto-de-prata-riva-star-aqua-no-tratamento-da-lesao-de-carie/" target="_blank" rel="noopener">/casos-clinicos/uso-do-diamino-fluoreto-de-prata-riva-star-aqua-no-tratamento-da-lesao-de-carie/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        <tr><td class="url"><a href="https://sdiodonto.com.br/casos-clinicos/utilizacao-da-resina-composta-aura-para-substituir-facetas-deficientes/" target="_blank" rel="noopener">/casos-clinicos/utilizacao-da-resina-composta-aura-para-substituir-facetas-deficientes/</a></td><td>Caso clínico</td><td><span class="status ok">200</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3>C. URLs internas com host malformado</h3>
+      <p style="font-size:14px; color:var(--gray-600);">14 URLs distintas, 507 ocorr&ecirc;ncias no crawl. A inspe&ccedil;&atilde;o manual das 60 p&aacute;ginas encontra 549 ocorr&ecirc;ncias em 81 hrefs, porque inclui imagens e PDFs que o crawl n&atilde;o trata como link.</p>
+      <div class="table-wrap">
+<table class="compact annex-c">
+        <thead><tr><th style="width:46%">URL malformada</th><th class="num" style="width:12%">Inlinks</th><th style="width:42%">Deveria ser</th></tr></thead>
+        <tbody>
+        <tr><td class="url">https://sdiodonto.com.brodontopediatria/</td><td class="num over">200</td><td class="url">/odontopediatria/</td></tr>
+        <tr><td class="url">https://sdiodonto.com.brpolitica-de-seguranca-e-privacidade/</td><td class="num over">130</td><td class="url">/politica-de-seguranca-e-privacidade/</td></tr>
+        <tr><td class="url">https://sdiodonto.com.brquem-somos/</td><td class="num over">73</td><td class="url">/quem-somos/</td></tr>
+        <tr><td class="url">https://sdiodonto.com.brdentistica/</td><td class="num over">68</td><td class="url">/dentistica/</td></tr>
+        <tr><td class="url">https://sdiodonto.com.brcasos/</td><td class="num over">12</td><td class="url">/casos-clinicos/</td></tr>
+        <tr><td class="url">https://sdiodonto.com.brproduto/pola-office/</td><td class="num over">4</td><td class="url">/produtos/pola-office/</td></tr>
+        <tr><td class="url">https://sdiodonto.com.brequipamentos/</td><td class="num over">4</td><td class="url">/equipamentos/</td></tr>
+        <tr><td class="url">https://sdiodonto.com.brwp-content/uploads/2026/01/BRA-SDI-Ebook-ManualClareamento.pdf</td><td class="num over">4</td><td class="url">/wp-content/uploads/2026/01/BRA-SDI-Ebook-ManualClareamento.pdf</td></tr>
+        <tr><td class="url">https://sdiodonto.com.brwp-content/uploads/2023/11/conseal-f_sdi_instructions_pt-br.pdf</td><td class="num over">2</td><td class="url">/wp-content/uploads/2023/11/conseal-f_sdi_instructions_pt-br.pdf</td></tr>
+        <tr><td class="url">https://sdiodonto.com.brwp-content/uploads/2023/11/ultramat-s_sdi_instructions_pt-br-1.pdf</td><td class="num over">2</td><td class="url">/wp-content/uploads/2023/11/ultramat-s_sdi_instructions_pt-br-1.pdf</td></tr>
+        <tr><td class="url">https://sdiodonto.com.brwp-content/uploads/2023/11/set-pp_sdi_instructions_pt-br.pdf</td><td class="num over">2</td><td class="url">/wp-content/uploads/2023/11/set-pp_sdi_instructions_pt-br.pdf</td></tr>
+        <tr><td class="url">https://sdiodonto.com.brwp-content/uploads/2023/11/permite_sdi_instructions_pt-br.pdf</td><td class="num over">2</td><td class="url">/wp-content/uploads/2023/11/permite_sdi_instructions_pt-br.pdf</td></tr>
+        <tr><td class="url">https://sdiodonto.com.brwp-content/uploads/2023/11/super-etch_sdi_instructions_pt-br-2.pdf</td><td class="num over">2</td><td class="url">/wp-content/uploads/2023/11/super-etch_sdi_instructions_pt-br-2.pdf</td></tr>
+        <tr><td class="url">https://sdiodonto.com.brwp-content/uploads/2023/11/gs-80_sdi_instructions_pt-br.pdf</td><td class="num over">2</td><td class="url">/wp-content/uploads/2023/11/gs-80_sdi_instructions_pt-br.pdf</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3>D. Redirecionamentos, duplicatas e res&iacute;duos</h3>
+      <div class="table-wrap">
+      <table class="compact">
+        <thead><tr><th style="width:16%">Status</th><th style="width:52%">URL</th><th>Observa&ccedil;&atilde;o</th></tr></thead>
+        <tr><td><span class="badge badge-alto">200</span></td><td class="url">/home-2/</td><td>Duplicata index&aacute;vel da home, no sitemap, self-canonical, mesmo title e meta, 7 H1s e ~2.074 palavras</td></tr>
+        <tr><td><span class="badge badge-alto">301</span></td><td class="url">/artigos/</td><td>Menu e rodap&eacute; apontam para c&aacute; &rarr; redireciona para a home; 16 inlinks &uacute;nicos; n&atilde;o existe blog</td></tr>
+        <tr><td><span class="badge badge-alto">301</span></td><td class="url">/category/dentistica/</td><td>28 inlinks &uacute;nicos; categoria do WordPress que n&atilde;o existe como arquivo</td></tr>
+        <tr><td><span class="badge badge-alto">301</span></td><td class="url">/category/estetica/</td><td>19 inlinks &uacute;nicos</td></tr>
+        <tr><td><span class="badge badge-alto">301</span></td><td class="url">/category/equipamentos/</td><td>19 inlinks &uacute;nicos</td></tr>
+        <tr><td><span class="badge badge-alto">301</span></td><td class="url">/category/odontopediatria/</td><td>8 inlinks &uacute;nicos</td></tr>
+        <tr><td><span class="badge badge-medio">200</span></td><td class="url">23 PDFs em /wp-content/uploads/</td><td>37,5 MB, index&aacute;veis, sem canonical, hosts <code>www</code> e non-<code>www</code> misturados</td></tr>
+      </table>
+      </div>
+
+      <h3>E. Sitemap x crawl</h3>
+      <div class="table-wrap">
+      <table class="compact annex-c">
+        <tr><th style="width:26%">Grupo</th><th class="num" style="width:18%">No sitemap</th><th style="width:56%">Observa&ccedil;&atilde;o</th></tr>
+        <tr><td>P&aacute;ginas</td><td class="num">17</td><td>7 sem link interno, incluindo <code>/home-2/</code> e <code>/politica-de-seguranca-e-privacidade/</code></td></tr>
+        <tr><td>Produtos</td><td class="num">30</td><td>29 produtos + arquivo <code>/produtos/</code>; todos index&aacute;veis</td></tr>
+        <tr><td>Casos cl&iacute;nicos</td><td class="num">76</td><td>75 casos + arquivo; 54 sem link interno</td></tr>
+        <tr><td>Duplicatas no sitemap</td><td class="num">&minus;2</td><td>URLs repetidas entre grupos</td></tr>
+        <tr><td><strong>Conte&uacute;do &uacute;nico</strong></td><td class="num"><strong>121</strong></td><td>Base do c&aacute;lculo de cobertura</td></tr>
+        <tr><td>Menus <code>jet-menu</code></td><td class="num">6</td><td>N&atilde;o s&atilde;o p&aacute;ginas de conte&uacute;do; devem sair do sitemap</td></tr>
+        <tr><td><strong>Total de entradas</strong></td><td class="num"><strong>129</strong></td><td>121 de conte&uacute;do + 6 de menu + 2 duplicatas</td></tr>
+      </table>
+      </div>
+
+      <h3>F. Lighthouse mobile &mdash; 20/11/2026</h3>
+      <div class="table-wrap">
+      <table class="compact">
+        <thead><tr><th>Template</th><th class="num">Perf.</th><th class="num">A11y</th><th class="num">BP</th><th class="num">SEO</th><th class="num">FCP</th><th class="num">LCP</th><th class="num">TBT</th><th class="num">CLS</th><th class="num">Peso</th><th class="num">Req.</th></tr></thead>
+        <tr><td><strong>Home</strong></td><td class="num over">31</td><td class="num">85</td><td class="num">77</td><td class="num">100</td><td class="num">3,6 s</td><td class="num over">6,9 s</td><td class="num over">2.570 ms</td><td class="num">0,003</td><td class="num">7.177 KiB</td><td class="num">194</td></tr>
+        <tr><td><strong>Produto</strong> <span style="font-size:10px;color:var(--gray-500);">/produtos/luna-2/</span></td><td class="num over">29</td><td class="num">87</td><td class="num">77</td><td class="num">100</td><td class="num">4,0 s</td><td class="num over">12,0 s</td><td class="num over">2.560 ms</td><td class="num">0</td><td class="num">4.509 KiB</td><td class="num">211</td></tr>
+        <tr><td><strong>Caso cl&iacute;nico</strong> <span style="font-size:10px;color:var(--gray-500);">/casos-clinicos/restauracoes-classe-ii-com-resina-luna-2/</span></td><td class="num over">33</td><td class="num">90</td><td class="num">77</td><td class="num">92</td><td class="num">4,0 s</td><td class="num over">6,9 s</td><td class="num over">1.550 ms</td><td class="num">0,015</td><td class="num">5.073 KiB</td><td class="num">155</td></tr>
+      </table>
+      </div>
+      <p style="font-size:13px; color:var(--gray-600);">O caso cl&iacute;nico perde 8 pontos de SEO por aus&ecirc;ncia de meta description. TTFB medido em requisi&ccedil;&otilde;es diretas: 2,79 s na home, 2,51 s no produto e 2,14 s no caso. A API p&uacute;blica do PageSpeed Insights retornou HTTP 429 (quota excedida); os n&uacute;meros s&atilde;o de Lighthouse local, sem dados de campo do CrUX.</p>
+
+      <h3>G. Reprodutibilidade</h3>
+      <div class="note"><strong>Base de dados:</strong> os n&uacute;meros deste relat&oacute;rio v&ecirc;m dos 30 CSVs de crawl do Screaming Frog fornecidos com o projeto, complementados por inspe&ccedil;&atilde;o direta de HTML, JSON-LD, <code>robots.txt</code>, <code>sitemap_index.xml</code> e cabe&ccedil;alhos HTTP em 20/11/2026. Recomenda-se re-crawl completo ap&oacute;s a Fase 1 e novo Lighthouse nos mesmos tr&ecirc;s templates para confirmar as metas. O c&oacute;digo-fonte deste relat&oacute;rio e os CSVs ficam na mesma pasta <code>seo/audit/</code>.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div class="footer-logos">
+    <img src="assets/logo-v4-white.png" alt="V4 Company">
+    <img src="assets/logo-sdiodonto.png" alt="SDI Odonto" class="client">
+  </div>
+  <p style="margin-bottom:14px;"><a href="sdiodonto-auditoria.pdf" style="display:inline-block;padding:9px 20px;border:1px solid rgba(201,169,110,0.45);border-radius:8px;color:#f0e2c4;text-decoration:none;font-size:12.5px;font-weight:600;letter-spacing:0.3px;">Baixar vers&atilde;o em PDF &middot; 46 p&aacute;ginas</a></p>
+  <p>Auditoria SEO + AIO + GEO &bull; V4 Company &bull; peretto.co</p>
+  <p>Documento de trabalho &mdash; preparado para SDI Odonto em Novembro de 2026</p>
+  <p>slug: sdiodonto-seoaiogeo-audit &bull; v1.0</p>
+</div>
+
+</body>
+</html>
