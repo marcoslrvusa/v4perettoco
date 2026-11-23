@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Dashboard | GPT Ads (Premium Cleaning Services)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--red:rgb(229,9,20);--red-dark:rgb(180,7,16);--gold:#c9a96e;--gold-dark:#a8863f;
+    --ink:#171717;--g100:#f4f4f2;--g200:#e8e6e1;--g300:#d6d3cc;--g500:#8f8b82;--g600:#6b6760;--g800:#302e29;
+    --ok:#1f7a4d;--ok-bg:#e9f5ee;--warn:#a1670a;--warn-bg:#fdf3e3;--bad:#a1121c;--bad-bg:#fbeaec;
+    --radius:14px;--shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px -12px rgba(0,0,0,.18)}
+  body{font-family:'Ubuntu',-apple-system,sans-serif;background:#f8f7f4;color:var(--ink);line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  .cover{background:linear-gradient(135deg,#0b0b0b 0%,#161513 45%,#241f18 100%);color:#fff;padding:56px 24px 40px;position:relative;overflow:hidden}
+  .cover::after{content:'';position:absolute;inset:0;background:radial-gradient(700px 320px at 78% -10%,rgba(201,169,110,.22),transparent 60%);pointer-events:none}
+  .cover-inner{position:relative;z-index:1;max-width:1080px;margin:0 auto}
+  .kicker{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,169,110,.3);padding:6px 12px;border-radius:99px}
+  .kicker::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold)}
+  h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(28px,4.2vw,44px);line-height:1.1;letter-spacing:-.02em;margin:20px 0 10px}
+  .cover .sub{color:#cdc8bd;font-size:16px}
+  .meta{display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:22px;font-size:13px;color:#a9a396}
+  .meta strong{color:#fff;font-weight:500}
+  main{padding:40px 0 72px}
+  section{margin-bottom:48px}
+  h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(20px,2.6vw,26px);font-weight:800;letter-spacing:-.02em;margin-bottom:6px}
+  .sec-sub{color:var(--g600);font-size:14px;margin-bottom:18px}
+  .grid{display:grid;gap:14px}
+  .k6{grid-template-columns:repeat(6,1fr)}
+  .card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+  .stat .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--g500)}
+  .stat .v{font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:800;line-height:1.1;letter-spacing:-.03em;margin-top:4px}
+  .stat .d{font-size:12px;color:var(--g600);margin-top:2px}
+  .ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}
+  .bar{height:12px;background:var(--g100);border:1px solid var(--g200);border-radius:99px;position:relative;overflow:visible;margin:26px 0 30px}
+  .bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-dark));border-radius:99px}
+  .mark{position:absolute;top:-8px;bottom:-8px;width:2px;background:var(--g800)}
+  .mark span{position:absolute;top:-20px;transform:translateX(-50%);font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--g800);white-space:nowrap}
+  .mark.b span{top:auto;bottom:-22px}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;background:#fff;border:1px solid var(--g200);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+  th{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--g500);text-align:right;padding:10px 12px;background:#faf9f6;border-bottom:1px solid var(--g200);white-space:nowrap}
+  td{padding:10px 12px;border-bottom:1px solid var(--g100);text-align:right;vertical-align:middle}
+  th:first-child,td:first-child{text-align:left}
+  tr:last-child td{border-bottom:0}
+  .tw{overflow-x:auto;border-radius:var(--radius)}
+  .name{font-weight:700}.small{display:block;font-size:11.5px;color:var(--g500);font-weight:400;max-width:300px;text-align:left}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:99px}
+  .p-on{background:var(--ok-bg);color:var(--ok)}.p-off{background:var(--g100);color:var(--g600)}.p-rev{background:var(--warn-bg);color:var(--warn)}
+  .mini{height:6px;background:var(--g100);border-radius:99px;min-width:90px}.mini i{display:block;height:100%;background:var(--gold-dark);border-radius:99px}
+  .cmp{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .cmp h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;margin-bottom:2px}
+  .cmp .q{font-size:12.5px;color:var(--g600);margin-bottom:10px}
+  .row{display:flex;justify-content:space-between;gap:10px;font-size:13.5px;padding:5px 0;border-bottom:1px dashed var(--g200)}
+  .verdict{margin-top:12px;font-size:13px;padding:9px 11px;border-radius:9px;background:var(--warn-bg);color:var(--warn)}
+  .verdict.go{background:var(--ok-bg);color:var(--ok)}
+  ul.ins{list-style:none;margin:0}
+  ul.ins li{background:#fff;border:1px solid var(--g200);border-left:3px solid var(--gold);border-radius:10px;padding:12px 14px;margin:8px 0;font-size:14px}
+  ul.ins li.bad{border-left-color:var(--red)}ul.ins li.ok{border-left-color:var(--ok)}ul.ins li.warn{border-left-color:var(--warn)}
+  ul.ins li b{color:var(--ink)}ul.ins li{color:var(--g800)}
+  .note{font-size:13px;color:var(--g600);margin-top:10px}
+  svg text{font-family:'Ubuntu',sans-serif;font-size:11px;fill:var(--g600)}
+  details{background:#fff;border:1px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:13.5px}
+  summary{cursor:pointer;font-weight:700}
+  code{font-family:'JetBrains Mono',monospace;font-size:.86em;background:var(--g100);border:1px solid var(--g200);padding:1px 5px;border-radius:5px}
+  @media(max-width:900px){.k6{grid-template-columns:repeat(2,1fr)}.cmp{grid-template-columns:1fr}.cover{padding:40px 16px 30px}.wrap{padding:0 16px}}
+</style>
+</head>
+<body>
+<header class="cover"><div class="cover-inner">
+  <span class="kicker">Leitura diária</span>
+  <h1>Dashboard | GPT Ads</h1>
+  <p class="sub" id="sub"></p>
+  <div class="meta" id="meta"></div>
+</div></header>
+<main><div class="wrap">
+  <section><h2>Resumo</h2><p class="sec-sub">Soma da campanha desde o início da veiculação.</p><div class="grid k6" id="kpis"></div></section>
+  <section><h2>Verba</h2><p class="sec-sub">Gasto até agora contra o checkpoint de decisão e o teto aprovado pelo cliente.</p><div class="card"><div id="budget"></div></div></section>
+  <section><h2>Por dia</h2><p class="sec-sub">Impressões e cliques da campanha em cada dia com entrega.</p><div class="card"><div id="chart"></div></div><div class="tw" style="margin-top:14px"><table id="daily"></table></div></section>
+  <section><h2>Por anúncio</h2><p class="sec-sub">A barra mostra o avanço até 1.000 impressões, volume mínimo para comparar anúncios.</p><div class="tw"><table id="ads"></table></div></section>
+  <section><h2>Comparativos</h2><p class="sec-sub">Cada bloco muda uma variável por vez. O controle é o Office A.</p><div class="cmp" id="cmp"></div></section>
+  <section><h2>Leitura e alertas</h2><p class="sec-sub">Gerado por regras fixas sobre os números acima, sem estimativa de resultado.</p><ul class="ins" id="ins"></ul></section>
+  <section><h2>Como ler</h2>
+    <details><summary>Regras usadas neste painel</summary>
+      <ul style="margin:10px 0 0 20px">
+        <li>Comparar anúncios só com 1.000 impressões ou mais em cada um. Antes disso a diferença de CTR é ruído.</li>
+        <li>Diferença de CTR menor que 0,5 ponto percentual é empate.</li>
+        <li>Metas do piloto: 20 impressões por dia, CTR acima de 1% e CPC médio até US$ 5.</li>
+        <li>Conversões vêm da API de conversões da OpenAI (formulário e clique no telefone somados, janela de 30 dias). Clique no telefone é sinal de interesse, não ligação completada.</li>
+        <li>Os números da OpenAI podem mudar nas últimas horas, porque o gasto e as conversões são consolidados depois.</li>
+      </ul>
+    </details>
+  </section>
+</div></main>
+<script>
+const D = {"generated_at": "22/11/2026 21:34 (horário de Nova York)", "campaign": {"name": "Premium | GPT Ads | Nov-Dez 2026", "status": "active", "objective": "clicks", "budget": 400.0, "end": "15/12/2026", "start": "2026-11-17", "conversions": 0}, "groups": [{"name": "Restaurant", "status": "paused", "bid": 3.5, "hints": ["best professional restaurant kitchen cleaning services in New Jersey", "commercial kitchen deep cleaning company", "overnight restaurant cleaning service NJ", "restaurant cleaning checklist for health inspection", "restaurant cleaning before opening"]}, {"name": "Hotel", "status": "paused", "bid": 3.5, "hints": ["best commercial cleaning companies for hotels and hospitality in New Jersey", "hospitality cleaning services for boutique hotel housekeeping contracts", "hotel housekeeping cost per occupied room", "outsourced hotel housekeeping New Jersey", "hotel room turnover cleaning checklist"]}, {"name": "Office", "status": "active", "bid": 3.5, "hints": ["best office cleaning services for small businesses in New Jersey", "commercial cleaning and janitorial services in New Jersey", "commercial office cleaning service Newark NJ", "commercial janitorial companies for daily office cleaning contracts", "how to switch janitorial companies", "office cleaning company Midtown Manhattan", "nightly janitorial service for a small business office", "what to include in a commercial cleaning contract"]}], "daily": [{"day": "2026-11-18", "impressions": 133, "clicks": 1, "spend": 3.5}, {"day": "2026-11-19", "impressions": 70, "clicks": 0, "spend": 0.0}, {"day": "2026-11-20", "impressions": 112, "clicks": 1, "spend": 3.44}, {"day": "2026-11-22", "impressions": 72, "clicks": 0, "spend": 0.0}], "ads": [{"id": "ad_cde8773cb18481979a225c3b3799804e", "name": "Office A", "group": "Office", "status": "active", "review": "approved", "title": "Office Cleaning NJ & NYC", "copy": "Nightly janitorial. Free on-site walkthrough.", "link": "https://premiumcleaningnj.com/office-cleaning-new-jersey", "file": "3a5a78", "created": 1794942296, "impressions": 183, "clicks": 2, "spend": 6.94, "conversions": 0, "days": [{"day": "2026-11-22", "impressions": 23, "clicks": 0, "spend": 0.0}, {"day": "2026-11-20", "impressions": 37, "clicks": 1, "spend": 3.44}, {"day": "2026-11-19", "impressions": 37, "clicks": 0, "spend": 0.0}, {"day": "2026-11-18", "impressions": 86, "clicks": 1, "spend": 3.5}]}, {"id": "ad_1e4773c7138c819cb333cd9f34d0f557", "name": "Office B", "group": "Office", "status": "active", "review": "approved", "title": "Switching Janitors?", "copy": "Compare scope and pricing before you sign. Request a written proposal.", "link": "https://premiumcleaningnj.com/office-cleaning-new-jersey", "file": "302726", "created": 1794942298, "impressions": 83, "clicks": 0, "spend": 0.0, "conversions": 0, "days": [{"day": "2026-11-22", "impressions": 5, "clicks": 0, "spend": 0.0}, {"day": "2026-11-20", "impressions": 24, "clicks": 0, "spend": 0.0}, {"day": "2026-11-19", "impressions": 7, "clicks": 0, "spend": 0.0}, {"day": "2026-11-18", "impressions": 47, "clicks": 0, "spend": 0.0}]}, {"id": "ad_fa290479d2688196b098c83855b9ffaa", "name": "Hotel A", "group": "Hotel", "status": "active", "review": "approved", "title": "Hotel Housekeeping NJ", "copy": "Turnover & public-area crews. Free walkthrough.", "link": "https://premiumcleaningnj.com/hotel-housekeeping-services?utm_source=chatgpt&utm_medium=cpc&utm_campaign=gpt-ads-nov26&utm_content=hotel-a", "file": "b951f1", "created": 1794942301, "impressions": 0, "clicks": 0, "spend": 0, "conversions": 0, "days": []}, {"id": "ad_de958c3867ec8199974b226ea85da226", "name": "Hotel B", "group": "Hotel", "status": "active", "review": "approved", "title": "Hotel Cleaning Partner", "copy": "Fixed crew plus supervisor. Rated 5.0 on Google.", "link": "https://premiumcleaningnj.com/hotel-housekeeping-services?utm_source=chatgpt&utm_medium=cpc&utm_campaign=gpt-ads-nov26&utm_content=hotel-b", "file": "fbd700", "created": 1794942302, "impressions": 0, "clicks": 0, "spend": 0, "conversions": 0, "days": []}, {"id": "ad_3a7695ad29ac8198b6ffc83704c98c55", "name": "Restaurant A", "group": "Restaurant", "status": "active", "review": "approved", "title": "Restaurant Cleaning NJ", "copy": "Overnight crews. Ready before you open.", "link": "https://premiumcleaningnj.com/restaurant-commercial-cleaning?utm_source=chatgpt&utm_medium=cpc&utm_campaign=gpt-ads-nov26&utm_content=restaurant-a", "file": "011c2e", "created": 1794942305, "impressions": 0, "clicks": 0, "spend": 0, "conversions": 0, "days": []}, {"id": "ad_fc2de329a9e881909820683c1913d047", "name": "Restaurant B", "group": "Restaurant", "status": "active", "review": "approved", "title": "Kitchen Cleaning NJ & NY", "copy": "Commercial kitchens, written scope, free quote.", "link": "https://premiumcleaningnj.com/restaurant-commercial-cleaning?utm_source=chatgpt&utm_medium=cpc&utm_campaign=gpt-ads-nov26&utm_content=restaurant-b", "file": "1a80f2", "created": 1794942306, "impressions": 0, "clicks": 0, "spend": 0, "conversions": 0, "days": []}, {"id": "ad_6aff44943ba881a285d350fd570bb3f5", "name": "Office C", "group": "Office", "status": "paused", "review": "approved", "title": "Commercial Office Cleaning", "copy": "Janitorial service for NJ & NYC offices. Request a site visit and quote.", "link": "https://premiumcleaningnj.com/office-cleaning-new-jersey", "file": "302726", "created": 1795114132, "impressions": 9, "clicks": 0, "spend": 0.0, "conversions": 0, "days": [{"day": "2026-11-20", "impressions": 5, "clicks": 0, "spend": 0.0}, {"day": "2026-11-19", "impressions": 4, "clicks": 0, "spend": 0.0}]}, {"id": "ad_6aff4495d298819ea4b628e2c8fb574d", "name": "Office D", "group": "Office", "status": "active", "review": "approved", "title": "Janitorial Contract Quote", "copy": "Scope, frequency and price for your office, in writing.", "link": "https://premiumcleaningnj.com/office-cleaning-new-jersey", "file": "b4d106", "created": 1795114133, "impressions": 33, "clicks": 0, "spend": 0.0, "conversions": 0, "days": [{"day": "2026-11-22", "impressions": 2, "clicks": 0, "spend": 0.0}, {"day": "2026-11-20", "impressions": 18, "clicks": 0, "spend": 0.0}, {"day": "2026-11-19", "impressions": 13, "clicks": 0, "spend": 0.0}]}, {"id": "ad_6aff4498153c81a099e21192605c03b8", "name": "Office E", "group": "Office", "status": "paused", "review": "approved", "title": "Office Cleaning in Newark, NJ", "copy": "Commercial janitorial crews for offices and suites. Get a quote.", "link": "https://premiumcleaningnj.com/office-cleaning-new-jersey", "file": "302726", "created": 1795114136, "impressions": 10, "clicks": 0, "spend": 0.0, "conversions": 0, "days": [{"day": "2026-11-20", "impressions": 9, "clicks": 0, "spend": 0.0}, {"day": "2026-11-19", "impressions": 1, "clicks": 0, "spend": 0.0}]}, {"id": "ad_6aff4499c608819bbd60a3b6002ec317", "name": "Office F", "group": "Office", "status": "paused", "review": "approved", "title": "Midtown Office Cleaning", "copy": "Janitorial service for NYC offices. Tell us your space and schedule.", "link": "https://premiumcleaningnj.com/office-cleaning-new-jersey", "file": "3a5a78", "created": 1795114137, "impressions": 27, "clicks": 0, "spend": 0.0, "conversions": 0, "days": [{"day": "2026-11-20", "impressions": 19, "clicks": 0, "spend": 0.0}, {"day": "2026-11-19", "impressions": 8, "clicks": 0, "spend": 0.0}]}, {"id": "ad_799653f883e88194be1962152db98b89", "name": "Office A (A/B Photo) · #1", "group": "Office", "status": "active", "review": "approved", "title": "Office Cleaning NJ & NYC", "copy": "Nightly janitorial. Free on-site walkthrough.", "link": "https://premiumcleaningnj.com/office-cleaning-new-jersey", "file": "cc435a", "created": 1795380841, "impressions": 19, "clicks": 0, "spend": 0.0, "conversions": 0, "days": [{"day": "2026-11-22", "impressions": 19, "clicks": 0, "spend": 0.0}]}, {"id": "ad_185d408f73508195abf59dc8adc30b15", "name": "Office A (A/B Photo) · #2", "group": "Office", "status": "active", "review": "approved", "title": "Office Cleaning NJ & NYC", "copy": "Nightly janitorial. Free on-site walkthrough.", "link": "https://premiumcleaningnj.com/office-cleaning-new-jersey", "file": "116346", "created": 1795381816, "impressions": 19, "clicks": 0, "spend": 0.0, "conversions": 0, "days": [{"day": "2026-11-22", "impressions": 19, "clicks": 0, "spend": 0.0}]}, {"id": "ad_6b038798ea6c819498d8d8c5f906d553", "name": "Office A (Home)", "group": "Office", "status": "active", "review": "approved", "title": "Office Cleaning NJ & NYC", "copy": "Nightly janitorial. Free on-site walkthrough.", "link": "https://premiumcleaningnj.com/", "file": "3a5a78", "created": 1795393432, "impressions": 4, "clicks": 0, "spend": 0.0, "conversions": 0, "days": [{"day": "2026-11-22", "impressions": 4, "clicks": 0, "spend": 0.0}]}]};
+const $ = id => document.getElementById(id);
+const n0 = v => Number(v).toLocaleString('pt-BR', {maximumFractionDigits:0});
+const usd = v => 'US$ ' + Number(v).toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
+const pct = v => (v*100).toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2}) + '%';
+const fday = s => s.slice(8,10) + '/' + s.slice(5,7);
+const sum = (a,k) => a.reduce((s,x) => s + x[k], 0);
+const activeGroups = D.groups.filter(g => g.status === 'active').map(g => g.name);
+const T = {impressions:sum(D.daily,'impressions'), clicks:sum(D.daily,'clicks'), spend:sum(D.daily,'spend'), conv:D.campaign.conversions};
+T.ctr = T.impressions ? T.clicks/T.impressions : 0;
+T.cpc = T.clicks ? T.spend/T.clicks : 0;
+T.cpm = T.impressions ? T.spend/T.impressions*1000 : 0;
+
+
+$('sub').textContent = D.campaign.name + ' · objetivo ' + D.campaign.objective + ' · grupos ativos: ' + (activeGroups.join(', ') || 'nenhum');
+$('meta').innerHTML = '<span>Atualizado em <strong>' + D.generated_at + '</strong></span><span>Início <strong>' + fday(D.campaign.start) + '</strong></span><span>Fim <strong>' + (D.campaign.end || '-') + '</strong></span><span>Verba total <strong>' + usd(D.campaign.budget) + '</strong></span><span>Status <strong>' + D.campaign.status + '</strong></span>';
+
+const ctrCls = T.ctr >= 0.01 ? 'ok' : 'warn';
+const k = (a,b,c,cls) => '<div class="card stat"><div class="k">' + a + '</div><div class="v ' + (cls||'') + '">' + b + '</div><div class="d">' + (c||'') + '</div></div>';
+$('kpis').innerHTML = k('Impressões', n0(T.impressions), D.daily.length + ' dias com entrega')
+  + k('Cliques', n0(T.clicks), 'CPM ' + usd(T.cpm))
+  + k('CTR', pct(T.ctr), 'meta acima de 1%', ctrCls)
+  + k('CPC médio', T.clicks ? usd(T.cpc) : '-', 'meta até US$ 5,00', T.clicks && T.cpc <= 5 ? 'ok' : '')
+  + k('Gasto', usd(T.spend), pct(T.spend/D.campaign.budget) + ' do teto')
+  + k('Conversões', n0(T.conv), 'lead + telefone', '');
+
+// verba
+const maxv = D.campaign.budget, w = Math.min(100, T.spend/maxv*100);
+$('budget').innerHTML = '<div class="bar"><i style="width:' + w + '%"></i>'
+  + '<div class="mark" style="left:' + (100/maxv*100) + '%"><span>US$ 100 · checkpoint</span></div>'
+  + '<div class="mark b" style="left:100%"><span style="transform:translateX(-100%)">US$ ' + n0(maxv) + ' · teto</span></div></div>'
+  + '<p class="note">Gasto: <b>' + usd(T.spend) + '</b>. Falta ' + usd(Math.max(0, 100 - T.spend)) + ' para o checkpoint de US$ 100 e ' + usd(Math.max(0, maxv - T.spend)) + ' para o teto.' + (T.cpc ? ' Com o CPC médio atual, restam cerca de ' + n0(Math.floor((maxv - T.spend)/T.cpc)) + ' cliques até o teto.' : '') + '</p>';
+
+// gráfico
+(function(){
+  const rows = D.daily; if (!rows.length) { $('chart').innerHTML = '<p class="note">Sem dados por dia.</p>'; return; }
+  const W = 980, H = 240, pl = 44, pr = 44, pt = 16, pb = 34, iw = W-pl-pr, ih = H-pt-pb;
+  const mi = Math.max(...rows.map(r => r.impressions), 1), mc = Math.max(...rows.map(r => r.clicks), 1);
+  const bw = Math.min(70, iw/rows.length*0.55);
+  let s = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" role="img" aria-label="Impressões e cliques por dia">';
+  for (let i = 0; i <= 4; i++) { const y = pt + ih - ih*i/4; s += '<line x1="' + pl + '" x2="' + (W-pr) + '" y1="' + y + '" y2="' + y + '" stroke="#e8e6e1"/><text x="' + (pl-8) + '" y="' + (y+4) + '" text-anchor="end">' + n0(mi*i/4) + '</text><text x="' + (W-pr+8) + '" y="' + (y+4) + '">' + (mc*i/4).toLocaleString('pt-BR',{maximumFractionDigits:1}) + '</text>'; }
+  const pts = [];
+  rows.forEach((r,i) => {
+    const cx = pl + iw*(i+.5)/rows.length, bh = ih*r.impressions/mi;
+    s += '<rect x="' + (cx-bw/2) + '" y="' + (pt+ih-bh) + '" width="' + bw + '" height="' + bh + '" rx="5" fill="#c9a96e"/><text x="' + cx + '" y="' + (pt+ih-bh-5) + '" text-anchor="middle">' + n0(r.impressions) + '</text><text x="' + cx + '" y="' + (H-12) + '" text-anchor="middle">' + fday(r.day) + '</text>';
+    pts.push([cx, pt + ih - ih*r.clicks/mc, r.clicks]);
+  });
+  s += '<polyline fill="none" stroke="#b40710" stroke-width="2.5" points="' + pts.map(p => p[0] + ',' + p[1]).join(' ') + '"/>';
+  pts.forEach(p => s += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="4.5" fill="#e50914"/><text x="' + p[0] + '" y="' + (p[1]-9) + '" text-anchor="middle" style="fill:#a1121c;font-weight:700">' + p[2] + '</text>');
+  s += '</svg><p class="note"><span style="color:#a8863f">■</span> impressões (eixo esquerdo) &nbsp; <span style="color:#e50914">●</span> cliques (eixo direito)</p>';
+  $('chart').innerHTML = s;
+})();
+$('daily').innerHTML = '<tr><th>Dia</th><th>Impressões</th><th>Cliques</th><th>CTR</th><th>Gasto</th></tr>' + D.daily.slice().reverse().map(r => '<tr><td>' + fday(r.day) + '</td><td>' + n0(r.impressions) + '</td><td>' + n0(r.clicks) + '</td><td>' + pct(r.impressions ? r.clicks/r.impressions : 0) + '</td><td>' + usd(r.spend) + '</td></tr>').join('');
+
+// anúncios
+const st = a => a.review !== 'approved' ? '<span class="pill p-rev">em revisão</span>' : (a.status === 'active' ? '<span class="pill p-on">ativo</span>' : '<span class="pill p-off">pausado</span>');
+const act = D.ads.filter(a => a.impressions > 0 || (a.status === 'active' && activeGroups.indexOf(a.group) > -1));
+$('ads').innerHTML = '<tr><th>Anúncio</th><th>Status</th><th>Impr.</th><th>Cliques</th><th>CTR</th><th>CPC</th><th>Gasto</th><th>Conv.</th><th>Até 1.000 impr.</th></tr>'
+  + act.map(a => { const c = a.impressions ? a.clicks/a.impressions : 0, p = Math.min(100, a.impressions/10);
+    return '<tr><td><span class="name">' + a.name + '</span><span class="small">' + (a.title||'') + ' · ' + (a.group||'') + ' · imagem …' + a.file + (a.link ? ' · ' + a.link.replace('https://premiumcleaningnj.com','') .split('?')[0] || '/' : '') + '</span></td><td>' + st(a) + '</td><td>' + n0(a.impressions) + '</td><td>' + n0(a.clicks) + '</td><td>' + pct(c) + '</td><td>' + (a.clicks ? usd(a.spend/a.clicks) : '-') + '</td><td>' + usd(a.spend) + '</td><td>' + n0(a.conversions) + '</td><td><div class="mini"><i style="width:' + p + '%"></i></div><span class="small">' + n0(a.impressions) + ' de 1.000</span></td></tr>'; }).join('');
+
+// comparativos
+const by = n => D.ads.find(a => a.name === n);
+const ctr = a => a.impressions ? a.clicks/a.impressions : 0;
+function block(title, q, ctrl, others) {
+  const list = [ctrl].concat(others).filter(Boolean);
+  if (list.length < 2) return '<div class="card"><h3>' + title + '</h3><div class="q">' + q + '</div><p class="note">Anúncios deste comparativo ainda não existem na conta.</p></div>';
+  let h = '<div class="card"><h3>' + title + '</h3><div class="q">' + q + '</div>';
+  list.forEach(a => h += '<div class="row"><span>' + a.name + (a === ctrl ? ' (controle)' : '') + '</span><span><b>' + pct(ctr(a)) + '</b> · ' + n0(a.clicks) + '/' + n0(a.impressions) + '</span></div>');
+  const low = list.filter(a => a.impressions < 1000);
+  let v, cls = '';
+  if (low.length) v = 'Amostra insuficiente: ' + low.map(a => a.name + ' ' + n0(a.impressions) + ' de 1.000').join('; ') + '. Não decidir ainda.';
+  else {
+    const best = list.slice().sort((x,y) => ctr(y)-ctr(x))[0], gap = (ctr(best) - ctr(ctrl)) * 100;
+    if (best === ctrl || gap < 0.5) v = 'Empate: diferença menor que 0,5 ponto percentual contra o controle.';
+    else { v = best.name + ' lidera por ' + gap.toLocaleString('pt-BR',{maximumFractionDigits:2}) + ' pontos percentuais sobre o controle.'; cls = 'go'; }
+  }
+  return h + '<div class="verdict ' + cls + '">' + v + '</div></div>';
+}
+const photos = D.ads.filter(a => a.name.indexOf('A/B Photo') > -1);
+$('cmp').innerHTML = block('Foto', 'Mesmo texto do Office A, imagem diferente.', by('Office A'), photos)
+  + block('Destino', 'Mesmo texto e imagem do Office A, destino na home.', by('Office A'), [by('Office A (Home)')])
+  + block('Texto', 'Ângulos de texto, com a imagem de cada anúncio.', by('Office A'), [by('Office B'), by('Office D')]);
+
+// insights
+const out = [];
+const days = D.daily.length, avgImp = days ? T.impressions/days : 0;
+out.push([avgImp >= 20 ? 'ok' : 'bad', '<b>Entrega:</b> ' + n0(avgImp) + ' impressões por dia nos dias com entrega (meta: 20 por dia).']);
+out.push([T.ctr >= 0.01 ? 'ok' : 'warn', '<b>CTR:</b> ' + pct(T.ctr) + ' com ' + n0(T.clicks) + ' cliques. ' + (T.impressions < 1000 ? 'Com ' + n0(T.impressions) + ' impressões na campanha, o número ainda oscila a cada clique.' : 'Meta: acima de 1%.')]);
+if (T.clicks) out.push([T.cpc <= 5 ? 'ok' : 'bad', '<b>CPC médio:</b> ' + usd(T.cpc) + ' (teto de planejamento: US$ 5,00).']);
+out.push([T.spend >= 100 ? 'warn' : 'ok', '<b>Verba:</b> ' + usd(T.spend) + ' gastos (' + pct(T.spend/D.campaign.budget) + ' do teto). ' + (T.spend >= 100 ? 'Passou do checkpoint de US$ 100: hora da decisão de seguir, ajustar ou parar.' : 'Ainda antes do checkpoint de US$ 100.')]);
+out.push([T.conv ? 'ok' : 'warn', '<b>Conversões:</b> ' + n0(T.conv) + ' registradas (lead e clique no telefone). ' + (T.conv ? '' : 'Com ' + n0(T.clicks) + ' cliques ainda é cedo para esperar lead; conferir também o pixel no Ads Manager.')]);
+const nActive = D.ads.filter(a => a.status === 'active' && a.review === 'approved' && activeGroups.indexOf(a.group) > -1).length;
+if (nActive > 4) out.push(['warn', '<b>Anúncios ativos:</b> ' + nActive + ' anúncios dividindo ' + n0(T.clicks) + ' cliques. Com esse volume, cada anúncio tem poucos cliques para comparar. Considerar pausar os de menor prioridade.']);
+const inReview = D.ads.filter(a => a.review !== 'approved');
+if (inReview.length) out.push(['warn', '<b>Em revisão:</b> ' + inReview.map(a => a.name).join(', ') + '. Anúncios em revisão podem não entregar.']);
+const idle = D.ads.filter(a => a.status === 'active' && a.review === 'approved' && a.impressions === 0 && activeGroups.indexOf(a.group) > -1);
+if (idle.length) out.push(['warn', '<b>Sem entrega:</b> ' + idle.map(a => a.name).join(', ') + ' estão ativos e aprovados, mas ainda sem nenhuma impressão.']);
+$('ins').innerHTML = out.map(o => '<li class="' + o[0] + '">' + o[1] + '</li>').join('');
+</script>
+</body>
+</html>
